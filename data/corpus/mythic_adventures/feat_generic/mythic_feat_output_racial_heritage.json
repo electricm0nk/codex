@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Racial Heritage",
+    "name": "Racial Heritage (Mythic)",
+    "description": "Your racial heritage mingles with your mythic power to become more pronounced.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Racial Heritage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "Your racial heritage mingles with your mythic power to become more pronounced."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a single racial trait of your choice from the race you picked when you took non-mythic Racial Heritage. That racial trait can't modify your size or ability scores. You also gain the racial language of the race (if any) if you don't already know it. For races with multiple racial languages, you gain all of them."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 344,
+    "record_key": "Mythic Feat Output ~ Racial Heritage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

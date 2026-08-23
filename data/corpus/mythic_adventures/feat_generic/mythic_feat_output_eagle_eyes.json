@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Eagle Eyes",
+    "name": "Eagle Eyes (Mythic)",
+    "description": "You eyesight rivals that of the most far-seeing raptors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Eagle Eyes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "You eyesight rivals that of the most far-seeing raptors."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You ignore up to -10 in penalties due to distance on visual Perception checks, instead of the normal -5. As a swift action, you can expend one use of mythic power to ignore all penalties due to distance on visual Perception checks for 1 round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 283,
+    "record_key": "Mythic Feat Output ~ Eagle Eyes"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

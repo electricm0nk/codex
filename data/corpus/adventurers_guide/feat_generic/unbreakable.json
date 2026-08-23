@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Unbreakable",
+    "name": "Unbreakable",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Endurance,Toughness"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CON,13"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=4"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Whenever you gain 1 hit point as a fighter favored class benefit, you gain an additional hit point. Treat your effective Constitution score as being 4 higher for the purpose of determining when you would die from hit point damage. These benefits are retroactive."
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|min(FCBhp,FigherLVL)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 79,
+    "record_key": "Unbreakable"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Cypher Magic",
+    "name": "Cypher Magic",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Scribe Scroll"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_INT,15"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You cast spells from scrolls at 1 caster level higher than the scroll's caster level. In addition, you gain a +2 bonus on caster level checks to activate a scroll with a higher caster level than your own."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 22,
+    "record_key": "Cypher Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

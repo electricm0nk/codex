@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mantis Wisdom",
+    "name": "Mantis Wisdom",
+    "description": "Your knowledge of vital areas allows you to land debilitating strikes with precision.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Unarmed Strike,Mantis Style,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=6"
+      },
+      {
+        "key": "DESC",
+        "value": "Your knowledge of vital areas allows you to land debilitating strikes with precision."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunningFistMonkLVL|NonMonkLevels/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Treat half your levels in classes other than monk as monk levels for determining effects you can apply to a target of your Stunning Fist per the Stunning Fist monk class feature. You can also use a standard action and a successful melee touch attack to remove any Stunning Fist effect you have applied to a target. While using Mantis Style, you gain a +2 bonus on unarmed attack rolls with which you are using Stunning Fist attempts."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 201,
+    "record_key": "Mantis Wisdom"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

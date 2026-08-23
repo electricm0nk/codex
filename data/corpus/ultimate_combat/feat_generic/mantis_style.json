@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mantis Style",
+    "name": "Mantis Style",
+    "description": "You have learned to target vital areas with crippling accuracy.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Unarmed Strike,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to target vital areas with crippling accuracy."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunningFistAttack|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain one additional Stunning Fist attempt per day. While using this style, you gain a +2 bonus to the DC of effects you deliver with your Stunning Fist."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 199,
+    "record_key": "Mantis Style"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

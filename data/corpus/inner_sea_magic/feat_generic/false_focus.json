@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "False Focus",
+    "name": "False Focus",
+    "description": "You can use a divine focus to cast arcane spells.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRESKILL:1,Knowledge (Religion)=1],[PRESPELLCAST:TYPE=Arcane]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a divine focus to cast arcane spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "By using a divine focus as part of casting, you can cast any spell with a material component costing the value of that divine focus (maximum 100 gp) or less without needing that component. For example, if you use a silver holy symbol worth 25 gp, you do not have to provide material components for an arcane spell if its components are worth 25 gp or less. The casting of the spell still provokes attacks of opportunity as normal. If the spell requires a material component that costs more than the value of the divine focus, you must have the material component on hand to cast the spell, as normal. &nl;Normal: A divine focus has no effect when used as a component in arcane spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_feats.lst",
+    "sha256": "f255f32b2c6894521aee43ebb941009d9cf63e0a34a905a8607bbec5ee203a3c",
+    "line": 8,
+    "record_key": "False Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

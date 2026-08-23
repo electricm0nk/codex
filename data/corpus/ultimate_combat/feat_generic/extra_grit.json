@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Extra Grit",
+    "name": "Extra Grit",
+    "description": "You have more grit than the ordinary gunslinger.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Grit"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gunslinger ~ Grit],[PREABILITY:1,CATEGORY=FEAT,Amateur Gunslinger]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have more grit than the ordinary gunslinger."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritPoints|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritLimit|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain 2 extra grit points at the start of each day, and your maximum grit increases by 2. &nl; [Normal] If you are a gunslinger, you gain your Wisdom modifier in grit points at the start of each day, which is also your maximum grit. If you have the Amateur Gunslinger feat, you gain 1 grit point at the start of each day, and your maximum grit is equal to your Wisdom modifier. &nl; [Special]If you possess levels in the gunslinger class, you can take this feat multiple times."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 111,
+    "record_key": "Extra Grit"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

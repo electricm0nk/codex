@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mantis Torment",
+    "name": "Mantis Torment",
+    "description": "Your knowledge of the mysteries of anatomy allows you to cause debilitating pain with a simple touch.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "4,CATEGORY=FEAT,Improved Unarmed Strike,Mantis Style,Mantis Wisdom,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Heal=9"
+      },
+      {
+        "key": "DESC",
+        "value": "Your knowledge of the mysteries of anatomy allows you to cause debilitating pain with a simple touch."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StunningFistAttack|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain one additional Stunning Fist attempt per day. While using Mantis Style, you make an unarmed attack that expends two daily attempts of your Stunning Fist. If you hit, your opponent must succeed at a saving throw against your Stunning Fist or become dazzled and staggered with crippling pain until the start of your next turn, and at that point the opponent becomes fatigued."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 200,
+    "record_key": "Mantis Torment"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

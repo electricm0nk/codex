@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Twilight Tattoo",
+    "name": "Twilight Tattoo",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_WIS,13"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Affiliated with the Twilight Talons"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain an invisible magical tattoo that identifies you as a member of the Twilight Talons. When you speak the command word, the tattoo becomes visible for 1 round before fading again. The tattoo has no magical aura when not visible and is not an illusion; it can't be observed through magical means. (The command word causes the tattoo to manifest rather than ending the magic concealing it.) Additionally, you gain a +2 bonus on Disguise checks, on Sleight of Hand checks to hide small objects on your person, and on Will saving throws against attempts to scry upon you or read your mind."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Sleight of Hand=Conceal Small Object|2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 on Will saves vs. attempts to scry upon you or read your mind."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 76,
+    "record_key": "Twilight Tattoo"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

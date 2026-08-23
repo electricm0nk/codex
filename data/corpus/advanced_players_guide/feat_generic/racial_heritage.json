@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Racial Heritage",
+    "name": "Racial Heritage",
+    "description": "The blood of a non-human ancestor flows in your veins.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACESUBTYPE=Human"
+      },
+      {
+        "key": "DESC",
+        "value": "The blood of a non-human ancestor flows in your veins."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Racial Heritage Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Choose another humanoid race. You count as both human and that race for any effects related to race. For example, if you choose dwarf, you are considered both a human and a dwarf for the purpose of taking traits, feats, how spells and magic items affect you, and so on."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 155,
+    "record_key": "Racial Heritage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

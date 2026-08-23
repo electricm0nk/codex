@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Forceful Charge",
+    "name": "Forceful Charge",
+    "description": "This animal's charges move its enemies.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Improved Bull Rush,Power Attack"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,TYPE=Companion"
+      },
+      {
+        "key": "DESC",
+        "value": "This animal's charges move its enemies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Once per round when this animal companion hits an opponent with a charge attack, it can initiate a bull rush against that target as a free action. If it moves its full speed as part of the charge, it gains a +4 bonus on its combat maneuver check to resolve this bull rush."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 3,
+    "record_key": "Forceful Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

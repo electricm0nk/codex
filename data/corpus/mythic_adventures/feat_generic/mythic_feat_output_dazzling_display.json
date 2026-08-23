@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Dazzling Display",
+    "name": "Dazzling Display (Mythic)",
+    "description": "You can quickly deter others with your martial mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Dazzling Display"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "You can quickly deter others with your martial mastery."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While wielding the weapon with which you have Weapon Focus, you can use Dazzling Display as a standard action with a -5 penalty on your Intimidate check, as a move action with a -10 penalty, or as a swift action with a -20 penalty. You can expend one use of mythic power when you make a Dazzling Display to make those affected by the display frightened rather than shaken."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 268,
+    "record_key": "Mythic Feat Output ~ Dazzling Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

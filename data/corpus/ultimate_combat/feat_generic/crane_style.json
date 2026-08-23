@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Crane Style",
+    "name": "Crane Style",
+    "description": "Your unarmed fighting techniques blend poise with graceful defense.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Dodge,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:2],[PREVARGTEQ:MonkFeatQualify,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your unarmed fighting techniques blend poise with graceful defense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You take only a -2 penalty on attack rolls for fighting defensively. While using this style and fighting defensively or using the total defense action, you gain an additional +1 dodge bonus to your Armor Class."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|FightingDefensivelyAttackPenalty|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 292,
+    "record_key": "Crane Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

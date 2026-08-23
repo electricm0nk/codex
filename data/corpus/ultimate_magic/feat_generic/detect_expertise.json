@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Detect Expertise",
+    "name": "Detect Expertise",
+    "description": "You can detect the mystic specialty of a foe.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESPELL",
+        "value": "1,Detect Chaos,Detect Evil,Detect Good,Detect Law,Detect Magic"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You can detect the mystic specialty of a foe."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you use any of the spells listed in this feat's prerequisites to detect a creature's alignment or its magic, you have a chance of detecting what spellcasting expertise it has. After you observe a creature with the detect spell for 3 rounds, it must make a Will save (DC %1 plus half your caster level). If it fails the saving throw, you learn what bloodlines, domains, hexes, schools, or mysteries (if any) the creature possesses. If the creature makes its save, it is immune to the effects of this feat for 24 hours.|10+INT"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 29,
+    "record_key": "Detect Expertise"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Warrior Priest",
+    "name": "Warrior Priest",
+    "description": "Your religion is both a shield and a weapon in battle.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.CF_Domain"
+      },
+      {
+        "key": "PRESPELLCAST",
+        "value": "TYPE=Divine"
+      },
+      {
+        "key": "DESC",
+        "value": "Your religion is both a shield and a weapon in battle."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +1 bonus on initiative checks and a +2 bonus on concentration checks made to cast a spell or use a spell-like ability when casting defensively or while grappled."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 167,
+    "record_key": "Warrior Priest"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

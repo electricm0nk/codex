@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Style Feat Wildcard",
+    "name": "Style Feat Wildcard",
+    "description": "This wildcard slot can be used to take on feats in a style feat path as long as the prerequisites are met. This wildcard can be changed every time the master of many styles changes styles.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Style"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=6"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Monk Archetype ~ Master Of Many Styles"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkWildcardSlot|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This wildcard slot can be used to take on feats in a style feat path as long as the prerequisites are met. This wildcard can be changed every time the master of many styles changes styles."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkWildcardSlot|1"
+      },
+      {
+        "key": "BENEFIT",
+        "value": " The master of many monks currently has %1 wildcard slots available|MonkWildcardSlot"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 391,
+    "record_key": "Style Feat Wildcard"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

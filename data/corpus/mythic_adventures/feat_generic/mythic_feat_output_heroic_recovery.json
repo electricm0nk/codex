@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Heroic Recovery",
+    "name": "Heroic Recovery (Mythic)",
+    "description": "You can shrug off the effects of harmful conditions after they've taken effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Heroic Recovery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "You can shrug off the effects of harmful conditions after they've taken effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a swift action, you can expend one use of mythic power to use Heroic Recovery additional times. Whenever you do, add +%1 to the result of the Fortitude save.|MythicLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 301,
+    "record_key": "Mythic Feat Output ~ Heroic Recovery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

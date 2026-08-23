@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Disruptive Companion",
+    "name": "Disruptive Companion",
+    "description": "The animal's presence harries nearby enemies, making concentration difficult.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal.Combat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal's presence harries nearby enemies, making concentration difficult."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptiveQualify|1|PREHD:MIN=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpellBreakerQualify|1|PREHD:MIN=10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "The animal companion is trained to interfere with its opponent's concentration, making even rote tasks difficult. Increase the concentration check DC of spells and spell-like abilities that opponents cast while within the animal companion's reach by +2. Additionally, opponents can't take 10 on d20 rolls or checks while within the animal companion's reach. If an opponent has an ability that allows it to always take 10 on certain skill checks while distracted (such as the skill mastery advanced talent), it gains the benefit of such abilities only if its number of skill ranks is at least 4 higher than the animal companion's Hit Dice. In addition, the animal companion counts as a fighter with a number of class levels equal to its Hit Dice for the purposes of qualifying for the Disruptive feat, as well as for any feat that lists the Disruptive feat as a prerequisite. The animal companion also adds those feats to the list of animal feats that it can choose from when gaining a new feat."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 152,
+    "record_key": "Disruptive Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

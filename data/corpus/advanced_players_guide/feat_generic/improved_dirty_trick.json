@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Improved Dirty Trick",
+    "name": "Improved Dirty Trick",
+    "description": "You are skilled at pulling dirty tricks on your foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Combat Expertise"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_INT,13],[PREVARGTEQ:CombatFeatIntRequirement,13],[PREVARGTEQ:DirtyTricksterIntQualify,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at pulling dirty tricks on your foes."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_DirtyTrick,CMD_DirtyTrick|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You do not provoke an attack of opportunity when performing a dirty trick combat maneuver. In addition, you receive a +2 bonus on checks made to attempt a dirty trick. You also receive a +2 bonus to your Combat Maneuver Defense when an opponent tries a dirty trick on you."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 111,
+    "record_key": "Improved Dirty Trick"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

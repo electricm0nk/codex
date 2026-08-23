@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Quarterstaff Master",
+    "name": "Quarterstaff Master",
+    "description": "You can wield a quarterstaff as either a two-handed or one-handed weapon.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus (Quarterstaff)"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeapSpecQualify|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can wield a quarterstaff as either a two-handed or one-handed weapon."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeapSpecQualify|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "By employing a number of different stances and techniques, you can wield a quarterstaff as a onehanded weapon. At the start of your turn, you decide whether or not you are going to wield the quarterstaff as a one-handed or two-handed weapon. When you wield it as a one-handed weapon, your other hand is free, and you cannot use the staff as a double weapon. You can take the feat Weapon Specialization in the quarterstaff even if you have no levels in fighter."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 99,
+    "record_key": "Quarterstaff Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Careful Sneak",
+    "name": "Careful Sneak",
+    "description": "By taking your time, you negate penalties while sneaking in most armor.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Stealth=3"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Dex 13, Stealth 3 ranks."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,13"
+      },
+      {
+        "key": "DESC",
+        "value": "By taking your time, you negate penalties while sneaking in most armor."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=Move at half speed or less|-ARMORACCHECK|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1|!PREABILITY:1,CATEGORY=FEAT,Exquisite Sneak"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You do not apply the armor check penalty for light and medium armor on Stealth skill checks as long as you move half your speed or less. You still cannot run or charge while using Stealth in this way."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 21,
+    "record_key": "Careful Sneak"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

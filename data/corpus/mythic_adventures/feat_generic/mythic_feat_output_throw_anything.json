@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Throw Anything",
+    "name": "Throw Anything (Mythic)",
+    "description": "You're so skilled at throwing weapons that it hardly matters what you throw.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Throw Anything"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "You're so skilled at throwing weapons that it hardly matters what you throw."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 bonus on attack rolls and damage rolls made using an improvised thrown weapon or splash weapon. This bonus stacks with the bonus from the non-mythic Throw Anything feat. If you miss with a thrown splash weapon, it always lands adjacent to its target regardless of how many range increments it was thrown."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 372,
+    "record_key": "Mythic Feat Output ~ Throw Anything"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

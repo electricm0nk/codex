@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Street Smarts",
+    "name": "Street Smarts",
+    "description": "You are able to navigate the streets and personalities of whatever locale you run across.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to navigate the streets and personalities of whatever locale you run across."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|if(skillinfo(\"TOTALRANK\",\"Sense Motive\")>=10,4,2)|!PREABILITY:1,CATEGORY=FEAT,Alertness"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (local)|if(skillinfo(\"TOTALRANK\",\"Knowledge (local)\")>=10,4,2)"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (local)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You get a +2 bonus on Knowledge (local) and Sense Motive checks, and Knowledge (local) is always a class skill for you. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill. The bonus on Sense Motive checks doesn't stack with Alertness."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 99,
+    "record_key": "Street Smarts"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

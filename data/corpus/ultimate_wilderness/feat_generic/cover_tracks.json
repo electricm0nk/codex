@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Cover Tracks",
+    "name": "Cover Tracks",
+    "description": "You are very difficult to follow in the wild, leaving few tracks in your wake.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Survival=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You are very difficult to follow in the wild, leaving few tracks in your wake."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You increase the DC of Survival checks to track you by 5 when moving at full speed and by 10 when moving at half speed. You can cover the tracks of %1 allies within 30 feet, increasing the DC to track them by 2 if they are moving at full speed or by 5 if they are moving at half speed.&nl;[Special] If you have the favored terrain class feature and you are in that terrain, you also add your favored terrain bonus to the DC to track you or your allies.|WIS+TL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 29,
+    "record_key": "Cover Tracks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

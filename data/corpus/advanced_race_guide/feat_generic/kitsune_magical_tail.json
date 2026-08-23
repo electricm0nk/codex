@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Kitsune ~ Magical Tail",
+    "name": "Magical Tail",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Magical Tail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Disguise Self,11+CHA|PREVARGTEQ:KitsuneTails,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Charm Person,11+CHA|PREVARGTEQ:KitsuneTails,2"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Misdirection,12+CHA|PREVARGTEQ:KitsuneTails,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Invisibility,12+CHA|PREVARGTEQ:KitsuneTails,4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Suggestion,13+CHA|PREVARGTEQ:KitsuneTails,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Displacement,13+CHA|PREVARGTEQ:KitsuneTails,6"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Confusion,14+CHA|PREVARGTEQ:KitsuneTails,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=2|CASTERLEVEL=TL|Dominate Person,15+CHA|PREVARGTEQ:KitsuneTails,8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 157,
+    "record_key": "Kitsune ~ Magical Tail"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

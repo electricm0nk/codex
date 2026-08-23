@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Additional Affiliations",
+    "name": "Additional Affiliations",
+    "description": "You have an expansive personality and can forge more affiliations than normal.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "DESC",
+        "value": "You have an expansive personality and can forge more affiliations than normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.6"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Increase your affiliation slot total by 2. [Normal] You have %1 affiliation slots. [Special] You can take this feat multiple times; each time you do so, your number of affiliation slots increases by 2.|max(1,CHA+1)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 7,
+    "record_key": "Additional Affiliations"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

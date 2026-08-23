@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Arc Slinger",
+    "name": "Arc Slinger",
+    "description": "You can twirl your sling in a way that maximizes its effectiveness.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Point-Blank Shot"
+      },
+      {
+        "key": "PREWEAPONPROF",
+        "value": "1,Sling,Sling Staff (Halfling)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can twirl your sling in a way that maximizes its effectiveness."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-FIRSTRANGE,DAMAGE-FIRSTRANGE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|GLOBALRANGEPENALTY|2|TYPE.Sling"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When using a sling or sling staff, you reduce your penalty on ranged attack rolls due to range by 2. Point-Blank Shot's damage bonus applies within the first normal range increment of your sling (50 feet) or sling staff (80 feet)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 47,
+    "record_key": "Arc Slinger"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

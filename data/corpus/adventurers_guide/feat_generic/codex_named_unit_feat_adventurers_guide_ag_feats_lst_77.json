@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_77)",
+    "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_77)",
+    "description": "You move as swiftly and unpredictably as a flickering flame.",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Combat Expertise,Perfect Style"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,Monk=9],[PRETOTALAB:9]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "[redacted PI]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 77,
+    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_77)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_feats.lst:77"
+  }
+}

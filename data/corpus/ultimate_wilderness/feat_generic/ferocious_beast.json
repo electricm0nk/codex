@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Ferocious Beast",
+    "name": "Ferocious Beast",
+    "description": "Through training or natural ability, the animal is skilled at unnerving its enemies.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal.Combat"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Intimidating Prowess"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Through training or natural ability, the animal is skilled at unnerving its enemies."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Intimidate=to demoralize|(max(1,MasterLevel/2))-CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "The animal companion uses half its master's class level in place of its Charisma bonus on Intimidate checks to demoralize an opponent, as well as on Intimidate checks to use the Antagonize feat. In addition, the animal companion can use Intimidate to demoralize an opponent as a move action. [Special] An animal companion can't take both Ferocious Beast and Intimidating Prowess.|max(1,MasterLevel/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 154,
+    "record_key": "Ferocious Beast"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

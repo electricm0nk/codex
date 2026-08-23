@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Earth Child Style",
+    "name": "Earth Child Style",
+    "description": "Your martial training makes you a dangerous and elusive target for giants.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dwarf ~ Defensive Training,Gnome ~ Defensive Training"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true,IsGnome=True"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Acrobatics=3"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your martial training makes you a dangerous and elusive target for giants."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialDefensiveTrainingBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using this style, your defensive training dodge bonus to AC increases to +6. Further, against creatures of the giant subtype, you can add your Wisdom bonus (%1) on your unarmed strike damage rolls.|WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 101,
+    "record_key": "Earth Child Style"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Improved Forceful Charge",
+    "name": "Improved Forceful Charge",
+    "description": "Enemies fall before this animal's charge.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Forceful Charge,Improved Bull Rush,Power Attack"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,TYPE=Companion"
+      },
+      {
+        "key": "DESC",
+        "value": "Enemies fall before this animal's charge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "This animal can bull rush a target that is up to two size categories larger than itself. If it pushes the target at least 10 feet as a result of this bull rush, it can attempt a trip combat maneuver check against the target as a free action. This trip combat maneuver provokes attacks of opportunity as normal. The force of the bull rush attempt itself is what allows for the trip maneuver; the target does not need to be within the animal companion's reach at the end of the bull rush. For resolving any secondary attacks of the trip such as greater trip, use the target's final position after the bull rush."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 4,
+    "record_key": "Improved Forceful Charge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

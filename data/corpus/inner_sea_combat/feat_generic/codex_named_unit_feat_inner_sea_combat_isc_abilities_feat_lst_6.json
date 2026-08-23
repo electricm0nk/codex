@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_inner_sea_combat_isc_abilities_feat_lst_6)",
+    "name": "Codex-Named Unit (feat_inner_sea_combat_isc_abilities_feat_lst_6)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 morale bonus on all Intimidate checks to demoralize opponents, and the DC of any attempt to demoralize you increases by 2. When you're participating in a duel, these bonuses increase to +4."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 6,
+    "record_key": "Codex-Named Unit (feat_inner_sea_combat_isc_abilities_feat_lst_6)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_combat:isc_abilities_feat.lst:6"
+  }
+}

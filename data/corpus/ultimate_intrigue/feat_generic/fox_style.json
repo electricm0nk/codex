@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Fox Style",
+    "name": "Fox Style",
+    "description": "Your martial training helps you manipulate foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Int 13."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_INT,13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your martial training helps you manipulate foes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using this style, you can use your base attack bonus in place of your ranks in Bluff on Bluff checks to feint in combat and to create a distraction to hide. If your Intelligence is at least 19, you gain a +4 bonus on such Bluff checks when adding your Charisma modifier."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 50,
+    "record_key": "Fox Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

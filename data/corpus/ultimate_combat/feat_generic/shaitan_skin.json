@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Shaitan Skin",
+    "name": "Shaitan Skin",
+    "description": "You can manipulate acid to shield yourself and disable your enemies.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:3,[PRESTAT:2,CON=15,WIS=15],[PREABILITY:3,CATEGORY=FEAT,Elemental Fist,Improved Unarmed Strike,Shaitan Style],[PREMULT:1,[PRETOTALAB:11],[PREVARGTEQ:MonkFeatQualify,9]]]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate acid to shield yourself and disable your enemies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain one additional Elemental Fist (Advanced Player's Guide 158) attempt per day. While using the Shaitan Style feat, you gain acid resistance equal to your base attack bonus, or your monk level plus BAB gained from levels in classes other than monk, whichever is higher. While denied your Dexterity bonus to AC you are also denied this resistance. Creatures that take acid damage from your Elemental Fist attack must succeed at a Reflex save (DC 10 + 1/2 your character level + your Wis modifier) or be staggered for 1 round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 275,
+    "record_key": "Shaitan Skin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Ferocious Feint",
+    "name": "Ferocious Feint",
+    "description": "Through training or inborn ability, the animal is naturally skilled at feinting against its foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal.Combat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Bluff=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Through training or inborn ability, the animal is naturally skilled at feinting against its foes."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Feint|(max(1,MasterLevel/2))-CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "The animal companion uses half its master's class level in place of its Charisma bonus on Bluff checks to feint an opponent. In addition, the animal companion can use Bluff to feint an opponent as a move action.|max(1,MasterLevel/2)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 155,
+    "record_key": "Ferocious Feint"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

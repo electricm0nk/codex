@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Unsanctioned Knowledge",
+    "name": "Unsanctioned Knowledge",
+    "description": "You have searched though forbidden texts and are privy to powerful but proscribed magic.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=4"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=13"
+      },
+      {
+        "key": "DESC",
+        "value": "You have searched though forbidden texts and are privy to powerful but proscribed magic."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Unsanctioned Knowledge ~ Level 1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Unsanctioned Knowledge ~ Level 2|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Unsanctioned Knowledge ~ Level 3|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Unsanctioned Knowledge ~ Level 4|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Pick one 1st-level spell, one 2nd-level spell, one 3rd-level spell, and one 4th-level spell from the bard, cleric, inquisitor, or oracle spell lists. Add these spells to your paladin spell list as paladin spells of the appropriate level. Once chosen, these spells cannot be changed."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 156,
+    "record_key": "Unsanctioned Knowledge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

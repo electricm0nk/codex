@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Totemic Initiate",
+    "name": "Totemic Initiate",
+    "description": "You were born to or have lived among the barbarian tribes of the wild and passed the trials of their sacred totems.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Athletic"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "No barbarian totem rage powers except the one you choose with this feat"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "5"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_STR,13"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,13"
+      },
+      {
+        "key": "DESC",
+        "value": "You were born to or have lived among the barbarian tribes of the wild and passed the trials of their sacred totems."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Choose one barbarian lesser totem rage power (such as lesser beast totem). As a swift action, you can gain the benefits of that rage power as though you were raging. For the purpose of determining that rage power's effects, your barbarian level is equal to your base attack bonus. You do not gain any other benefits or penalties of rage. You can gain these benefits for a number of rounds per day equal to your base attack bonus plus your Constitution modifier; these rounds do not need to be consecutive."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 101,
+    "record_key": "Totemic Initiate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

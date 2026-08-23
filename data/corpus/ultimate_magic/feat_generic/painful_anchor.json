@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Painful Anchor",
+    "name": "Painful Anchor",
+    "description": "Evil outsiders take damage when they attempt to connect to other planes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Anchoring Aura ~ Oath against Fiends"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PainfulAnchorBonusDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Evil outsiders take damage when they attempt to connect to other planes."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PainfulAnchorBonusDamage|CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When an evil outsider uses a calling, summoning, or teleportation effect, or any ability that physically transports a creature to or from another plane (such as blink or etherealness) within your anchoring aura, it takes damage equal to 4d8 + %1. This damage comes from holy power and is not subject to damage reduction, energy immunities, or energy resistances.|PainfulAnchorBonusDamage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 87,
+    "record_key": "Painful Anchor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

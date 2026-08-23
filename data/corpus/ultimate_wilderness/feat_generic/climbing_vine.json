@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Climbing Vine",
+    "name": "Climbing Vine",
+    "description": "You can climb like a vine.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Vine Leshy"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_STR,13"
+      },
+      {
+        "key": "DESC",
+        "value": "You can climb like a vine."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "MOVE",
+        "value": "Climb,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a climb speed of 10 feet. If you already have a natural climb speed, your climb speed increases by 10 feet. You can take this feat multiple times, but your climb speed can never exceed your base speed."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 143,
+    "record_key": "Climbing Vine"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

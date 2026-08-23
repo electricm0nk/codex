@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Tag-Team Interrogation",
+    "name": "Tag-Team Interrogation",
+    "description": "You and your partner work together to bewilder a target, alternating between fear and kindness.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Teamwork"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Intimidating Prowess,Persuasive"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Diplomacy=1,Intimidate=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You and your partner work together to bewilder a target, alternating between fear and kindness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using Diplomacy or Intimidate to shift the attitude of a creature, one ally you can see who also has this feat can attempt to shift the creature's attitude at the same time. You roll either a Diplomacy check or an Intimidate check, and your ally rolls a check with the other skill. If you both succeed, you choose whether to apply the Diplomacy check's or Intimidate check's effects; the other check has no direct effect but instead provides the first check a +5 circumstance bonus to its result. If only one person succeeds, ignore the failed check, but the successful skill check's effect lasts only half as long. If you both fail, any effects resulting from both failed checks apply."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 68,
+    "record_key": "Tag-Team Interrogation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

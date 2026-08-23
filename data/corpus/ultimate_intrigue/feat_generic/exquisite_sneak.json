@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Exquisite Sneak",
+    "name": "Exquisite Sneak",
+    "description": "You know how to move silently even while wearing some forms of armor.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Careful Sneak"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Stealth=6"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Dex 15, Careful Sneak, Stealth 6 ranks."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You know how to move silently even while wearing some forms of armor."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|-ARMORACCHECK|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You do not apply the armor check penalty for light and medium armor on Stealth skill checks no matter how fast you move. You still cannot use Stealth while running or charging."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 40,
+    "record_key": "Exquisite Sneak"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

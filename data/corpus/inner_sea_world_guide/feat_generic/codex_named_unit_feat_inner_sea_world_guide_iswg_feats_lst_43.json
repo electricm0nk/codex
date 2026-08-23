@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)",
+    "name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Spell Focus"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Your potency in spells from a chosen school increases, and you gain a spell-like ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 43,
+    "record_key": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_feats.lst:43"
+  }
+}

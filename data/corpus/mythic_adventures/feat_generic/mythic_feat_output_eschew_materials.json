@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mythic Feat Output ~ Eschew Materials",
+    "name": "Eschew Materials (Mythic)",
+    "description": "You can cast even the most powerful spells without using material components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Feat Output ~ Eschew Materials"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast even the most powerful spells without using material components."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can cast any spell with a material component costing %1 gp or less without providing that component. If you expend one use of mythic power while casting a spell that requires a material component costing %2 gp or less, you can cast it without providing that component. Expending two uses of mythic power instead allows you to cast a spell that requires a material component costing %3 gp or less without providing that component.|10*MythicLevel|50*MythicLevel|100*MythicLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 290,
+    "record_key": "Mythic Feat Output ~ Eschew Materials"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

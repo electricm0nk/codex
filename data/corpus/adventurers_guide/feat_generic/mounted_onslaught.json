@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mounted Onslaught",
+    "name": "Mounted Onslaught",
+    "description": "You and your mount can shatter an enemy's line with your unyielding assault.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Mounted Combat,Trample"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Ride=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You and your mount can shatter an enemy's line with your unyielding assault."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "On your turn, you can overrun more than one creature. Each overrun combat maneuver check beyond the first takes a cumulative -5 penalty. If you fail to overrun a target, your movement ends. Your mount can make only a single hoof attack against one target that is knocked prone by your overrun (not one per prone opponent). [Normal] You can perform only one overrun combat maneuver per round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 46,
+    "record_key": "Mounted Onslaught"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

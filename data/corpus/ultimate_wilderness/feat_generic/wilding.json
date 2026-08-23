@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Wilding",
+    "name": "Wilding",
+    "description": "You were touched by nature at an early age and share a kinship with wild creatures. Your body might bear animalistic features, such as bestial ears or a tail, or your presence may be subtly unlike that of others.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NG,NE,TN,CN,LN"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MAX=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You were touched by nature at an early age and share a kinship with wild creatures. Your body might bear animalistic features, such as bestial ears or a tail, or your presence may be subtly unlike that of others."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain the druid's wild empathy ability, using your character level as your druid level. If you have one or more levels in a class that grants wild empathy, you gain an additional +3 bonus on wild empathy checks. You are treated as an animal for the purpose of harmful mind-affecting effects that target animals (such as charm animal). &nl;[Special] A character who has this feat can select the Animal Soul or Aspect of the Beast feats without meeting the prerequisites."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 112,
+    "record_key": "Wilding"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

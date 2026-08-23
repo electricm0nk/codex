@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Voice of the Sibyl",
+    "name": "Voice of the Sibyl",
+    "description": "Your voice is strangely compelling.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=15"
+      },
+      {
+        "key": "DESC",
+        "value": "Your voice is strangely compelling."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Using voice|if(skillinfo(\"TOTALRANK\",\"Bluff\")>=10,3,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=Using voice|if(skillinfo(\"TOTALRANK\",\"Diplomacy\")>=10,3,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Oratory)|if(skillinfo(\"TOTALRANK\",\"Perform (Oratory)\")>=10,3,1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You get a +1 bonus on all Bluff, Diplomacy, and Perform (oratory) skill checks. If you have 10 or more ranks in one of these skills, the bonus increases to +3 for that skill. You do not get these bonuses if you do not use your voice when using the skill (such as using Bluff to feint in combat)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 166,
+    "record_key": "Voice of the Sibyl"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Touch of Serenity",
+    "name": "Touch of Serenity",
+    "description": "With a single touch you can reduce the threat of even the most savage of foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,WIS=18"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfSerenityDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfSerenityDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfSerenityTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "With a single touch you can reduce the threat of even the most savage of foes."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfSerenityDC|10+WIS+(TL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfSerenityTimes|min(1,(TL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfSerenityDuration|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You must declare that you are using this feat before you make your attack roll (thus a failed attack roll ruins the attempt). On a successful hit, the attack deals no damage and bestows no other effect or condition, but the target cannot cast spells or attack (including attacks of opportunity and attacks as immediate actions) for %1 round unless it succeeds on a Will saving throw with a DC %2 [of 10 + 1/2 your character level + your Wisdom modifier]. You may attempt a touch of serenity %3/day [for every four levels you have attained (but see Special)], and no more than once per round.|TouchOfSerenityDuration|TouchOfSerenityDC|TouchOfSerenityTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 202,
+    "record_key": "Touch of Serenity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Superior Gathlain Magic",
+    "name": "Superior Gathlain Magic",
+    "description": "Your experience has enabled you to dramatically develop your innate magical abilities.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Advanced Gathlain Magic,Greater Gathlain Magic"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=15"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGathlain=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,15"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Liveoak|Tree Stride"
+      },
+      {
+        "key": "DESC",
+        "value": "Your experience has enabled you to dramatically develop your innate magical abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain the following spells as spell-like abilities, each usable 1/day: liveoak, tree stride."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 133,
+    "record_key": "Superior Gathlain Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

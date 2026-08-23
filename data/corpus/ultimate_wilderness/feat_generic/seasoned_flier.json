@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Seasoned Flier",
+    "name": "Seasoned Flier",
+    "description": "You have trained long and hard at flight.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMOVE",
+        "value": "1,Fly=1"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGathlain=true"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Fly=5"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You have trained long and hard at flight."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Your maneuverability while flying improves to average."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 132,
+    "record_key": "Seasoned Flier"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

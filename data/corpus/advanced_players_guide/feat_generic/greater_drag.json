@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Greater Drag",
+    "name": "Greater Drag",
+    "description": "Foes that you drag around are thrown out of balance.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Drag,Power Attack"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=13"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "6"
+      },
+      {
+        "key": "DESC",
+        "value": "Foes that you drag around are thrown out of balance."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Drag|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You receive a +2 bonus on checks made to drag a foe. This bonus stacks with the bonus granted by Improved Drag. Whenever you drag a foe, his movement provokes attacks of opportunity from all of your allies (but not you)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 102,
+    "record_key": "Greater Drag"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

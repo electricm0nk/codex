@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Punishing Kick",
+    "name": "Punishing Kick",
+    "description": "Your kicks are so powerful you use them to push or knock back.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,CON=13,WIS=13"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PunishingKickDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PunishingKickTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your kicks are so powerful you use them to push or knock back."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PunishingKickDC|10+(TL/2)+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PunishingKickTimes|TL/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You must declare that you are using this feat before you make your attack roll (thus a failed attack roll ruins the attempt). On a successful hit, the attack deals damage normally and you can choose to push your target 5 feet or attempt to knock them prone. If you decide to push the target, it is moved 5 feet directly away from you. This movement does not provoke attacks of opportunity, and the target must end this move in a safe space it can stand in. If you decide to attempt to knock the target prone, the target receives a Fortitude saving throw with a DC %1 [10 + 1/2 your character level + your Wisdom modifier] to avoid the effect. You may attempt a punishing kick attack %2/day [for every four levels you have attained (but see Special)], and no more than once per round.|PunishingKickDC|PunishingKickTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 153,
+    "record_key": "Punishing Kick"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

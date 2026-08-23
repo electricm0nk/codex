@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Ironhide",
+    "name": "Ironhide",
+    "description": "Your skin is thicker and more resilient than that of most of your people.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACESUBTYPE=Dwarf,RACESUBTYPE=Orc"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CON=13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your skin is thicker and more resilient than that of most of your people."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +1 natural armor bonus due to your unusually tough hide."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 123,
+    "record_key": "Ironhide"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

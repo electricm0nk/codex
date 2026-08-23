@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Dragon Ferocity",
+    "name": "Dragon Ferocity",
+    "description": "You attack with the strength of a dragon, your telling blows striking fear into your enemies.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Improved Unarmed Strike,Dragon Style,Stunning Fist"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Acrobatics=5"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,STR=15"
+      },
+      {
+        "key": "DESC",
+        "value": "You attack with the strength of a dragon, your telling blows striking fear into your enemies."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using Dragon Style, increase your Strength bonus on unarmed strike damage rolls by an additional one-half your Strength bonus, to a total of double your Strength bonus on the first attack and 1-1/2 times your Strength bonus on the other attacks. When you score a critical hit or a successful Stunning Fist attempt against an opponent while using this style, that opponent is also shaken for a number of rounds equal to 1d4 + your Strength bonus. &nl; [Special]Taking this feat allows you to qualify for the Elemental Fist feat (Advanced Player's Guide 158) even if you do not meet that feat's prerequisites. If you do not meet that feat's prerequisites, you must choose one of the damage types that feat offers, and you can use only that damage type with your Elemental Fist attacks until you meet the feat's normal prerequisites. A monk with this feat can use Elemental Fist as if he were a monk of the four winds (Advanced Player's Guide 112)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 96,
+    "record_key": "Dragon Ferocity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

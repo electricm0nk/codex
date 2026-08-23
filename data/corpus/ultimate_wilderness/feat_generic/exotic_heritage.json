@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Exotic Heritage",
+    "name": "Exotic Heritage",
+    "description": "Your blood carries hints of an extraplanar ancestor, granting you a talent for a certain skill.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "DESC",
+        "value": "Your blood carries hints of an extraplanar ancestor, granting you a talent for a certain skill."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Choose a skill. You gain a +2 bonus on skill checks with that skill. If you have 10 or more ranks in the chosen skill, this bonus increases to +4. This bonus does not stack with that granted by Skill Focus. This feat counts as Skill Focus with the chosen skill for the purpose of meeting the prerequisites of the Eldritch Heritage feat. When you select Eldritch Heritage, if you use this feat as a prerequisite, you can choose a mutated version of your chosen bloodline as though you were a sorcerer with the wildblooded archetype. All other restrictions and requirements of Eldritch Heritage still apply."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 42,
+    "record_key": "Exotic Heritage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

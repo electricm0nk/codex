@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Sinister Reputation",
+    "name": "Sinister Reputation",
+    "description": "You need spook only a few souls to scare a whole city.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=FEAT,Persuasive],[PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Renown]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=5"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,13"
+      },
+      {
+        "key": "DESC",
+        "value": "You need spook only a few souls to scare a whole city."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "By spending 8 hours cultivating your local legend in a settlement and then succeeding at an Intimidate check, your fearsome reputation becomes common knowledge. The DC is based on the size of the settlement. If the check succeeds, you can attempt an Intimidate check to demoralize a creature that has fewer Hit Dice than you as a swift action, and using Intimidate to force a creature to act friendly to you takes only half as long. You gain these benefits only while within the settlement and while not disguised. These benefits last for %1 days. [Special] This feat's benefits always apply to a vigilante's area of renown, and he can choose whether the reputation and benefits apply to his social identity, vigilante identity, or both. You can always apply this feat's benefits to followers and cohorts gained from Leadership or similar abilities. [Settlement Size-DC] Thorp-10; Hamlet-12; Village-15; Small town-18; Large town-20; Small city-25; Large city-30; Metropolis-35|TL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 55,
+    "record_key": "Sinister Reputation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

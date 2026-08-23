@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Improved Stalwart",
+    "name": "Improved Stalwart",
+    "description": "You can roll with the punches while simultaneously striking back at your attackers.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Diehard,Endurance,Stalwart"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "11"
+      },
+      {
+        "key": "DESC",
+        "value": "You can roll with the punches while simultaneously striking back at your attackers."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StalwartDR|StalwartDRBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StalwartMaxDRBonus|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Double the DR you gain from Stalwart, to a maximum of DR 10/-."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 186,
+    "record_key": "Improved Stalwart"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

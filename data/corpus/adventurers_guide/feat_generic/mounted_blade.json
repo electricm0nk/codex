@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mounted Blade",
+    "name": "Mounted Blade",
+    "description": "You can use the momentum of your mount to carry your weapon through one foe and into another.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Mounted Combat,Ride-By Attack"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Ride=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the momentum of your mount to carry your weapon through one foe and into another."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you use the Ride-By Attack feat, if your attack hits, you can also make an attack against a target adjacent to your original target. You take a -5 penalty on this additional attack, which does not benefit from any effects of a charge."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 45,
+    "record_key": "Mounted Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

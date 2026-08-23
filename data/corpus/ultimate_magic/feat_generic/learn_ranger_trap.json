@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Learn Ranger Trap",
+    "name": "Learn Ranger Trap",
+    "description": "You learn how to create one kind of ranger trap.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Survival=5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerTrapLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to create one kind of ranger trap."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ranger Trap|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerTrapLVL|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapTimes|max(1,WIS+classlevel(\"Ranger\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapDC|10+CL/2+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapDuration|CL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Select one ranger trap (see page 64 of Ultimate Magic). You may use this trap %1 times per day. The DC for your trap is %2, and it lasts %3 days.|TrapTimes|TrapDC|TrapDuration"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "If you are not a ranger, you can only set extraordinary traps with this feat; like all extraordinary ranger traps, this decreases the trap DC by 2."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 81,
+    "record_key": "Learn Ranger Trap"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

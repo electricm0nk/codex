@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Enhanced Gnome Magic",
+    "name": "Enhanced Gnome Magic",
+    "description": "Your ties to the First World manifest in the form of magical abilities that tap into a natural element.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gnome ~ Gnome Magic"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGnome=true"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (Nature)=3"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your ties to the First World manifest in the form of magical abilities that tap into a natural element."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Enhanced Gnome Magic Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Add one of the following to your gnome magic spell-like abilities: burning hands, corrosive touch, gentle breeze, icicle dagger, or shocking grasp. You can use this spell-like ability once per day."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 41,
+    "record_key": "Enhanced Gnome Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Fencing Grace",
+    "name": "Fencing Grace",
+    "description": "Your dashing style and fluid rapier forms allow you to use agility rather than brute force to fell your foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus (rapier)"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HasWeaponFinesseFeat,1"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Dex 13, Weapon Finesse, Weapon Focus (rapier)."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your dashing style and fluid rapier forms allow you to use agility rather than brute force to fell your foes."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|DAMAGE|(max(STR,DEX)-STR)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When wielding a rapier one-handed, you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The rapier must be one appropriate for your size. You do not gain this benefit while fighting with two weapons or using flurry of blows, or anytime another hand is otherwise occupied. In addition, if you have the panache class feature, you gain a +2 bonus to your CMD against attempts to disarm you of your rapier while you have at least 1 panache point."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 44,
+    "record_key": "Fencing Grace"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

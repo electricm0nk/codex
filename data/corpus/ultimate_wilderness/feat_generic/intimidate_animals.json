@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Intimidate Animals",
+    "name": "Intimidate Animals",
+    "description": "You are skilled at intimidating animals with your bluster and fury.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PREABILITY:1,CATEGORY=Special Ability,Wild Empathy,TYPE.WildEmpathy],[PREABILITY:1,CATEGORY=FEAT,Greater Wild Empathy]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Intimidate=5,Knowledge (Nature)=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You are skilled at intimidating animals with your bluster and fury."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You add your Wisdom modifier on Intimidate checks against animals in addition to your Charisma modifier. An animal with 4 or fewer Hit Dice is frightened instead of shaken on a successful Intimidate check to demoralize it."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 72,
+    "record_key": "Intimidate Animals"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

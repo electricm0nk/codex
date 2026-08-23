@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Agile Maiden",
+    "name": "Agile Maiden",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=FEAT,Endurance],[PREABILITY:1,CATEGORY=Special Ability,Fighter ~ Armor Training]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_STR,13,PreStatScore_DEX,13"
+      },
+      {
+        "key": "PREARMORTYPE",
+        "value": "1,TYPE.Heavy"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "For the purpose of class features (such as a ranger's combat style, a barbarian's fast movement, or a magus's spellcasting), you treat Gray Maiden plate as medium armor or heavy armor, whichever is more beneficial to a given ability. This does not affect the armor's statistics, and it is still considered heavy armor for all other purposes. [NOTE] To give Grey Maidens' Plate statistics as Medium Armor, add \"Medium Grey Maiden Plate\" special ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 8,
+    "record_key": "Agile Maiden"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

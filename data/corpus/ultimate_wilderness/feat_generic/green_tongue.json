@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Green Tongue",
+    "name": "Green Tongue",
+    "description": "You know the language of the plants.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=5"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGathlain=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,13"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GathlainGreenTongueCount|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=GathlainGreenTongueCount|CASTERLEVEL=TL|Speak with Plants"
+      },
+      {
+        "key": "DESC",
+        "value": "You know the language of the plants."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GathlainGreenTongueCount|TL/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can cast speak with plants once per day, as a spell-like ability. At 10th level and every 5 levels thereafter, you can cast speak with plants an additional time per day."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 131,
+    "record_key": "Green Tongue"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

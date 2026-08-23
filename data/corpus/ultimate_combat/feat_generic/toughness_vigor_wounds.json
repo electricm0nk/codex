@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Toughness (Vigor/Wounds)",
+    "name": "Toughness (Vigor/Wounds)",
+    "description": "You have enhanced physical stamina.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRERULE",
+        "value": "1,DAMAGE_VW"
+      },
+      {
+        "key": "DESC",
+        "value": "You have enhanced physical stamina."
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|ALTHP|TL|PRERULE:1,DAMAGE_VW"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain 1 wound point for every level or Hit Die your character has."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 359,
+    "record_key": "Toughness (Vigor/Wounds)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

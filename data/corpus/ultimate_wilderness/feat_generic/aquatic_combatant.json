@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Aquatic Combatant",
+    "name": "Aquatic Combatant",
+    "description": "You have trained to fight while submerged in water.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Swim=1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have trained to fight while submerged in water."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 bonus on Swim checks and don't take the usual penalties on melee attack rolls made underwater. Your slashing melee attacks and unarmed bludgeoning attacks deal full damage underwater. &nl;[Normal] When you're underwater, most of your melee attacks take a -2 penalty and deal only half damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 14,
+    "record_key": "Aquatic Combatant"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

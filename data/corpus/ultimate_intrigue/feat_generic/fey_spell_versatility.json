@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Fey Spell Versatility",
+    "name": "Fey Spell Versatility",
+    "description": "You have learned magical secrets from the fey.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Spellcraft=1"
+      },
+      {
+        "key": "PRESPELLCAST",
+        "value": "TYPE=Divine"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Cha 13, Spellcraft 1 rank, ability to cast ranger spells."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,13"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned magical secrets from the fey."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "[NOT IMPLEMENTED] Choose a 1st-level spell, a 2nd-level spell, a 3rd-level spell, and a 4th-level spell from the bard, sorcerer/wizard, or witch spell list that is either from the enchantment or illusion school or a spell with the curse descriptor. Add those spells to your ranger spell list. Once chosen, these spells cannot be changed."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 46,
+    "record_key": "Fey Spell Versatility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

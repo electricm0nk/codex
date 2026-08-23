@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Diva Advance",
+    "name": "Diva Advance",
+    "description": "You stride forward with confidence, trusting your performance to protect you as much as your arms and armor.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Diva Strike"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,17"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:11],[PRECLASS:1,Bard=11]"
+      },
+      {
+        "key": "DESC",
+        "value": "You stride forward with confidence, trusting your performance to protect you as much as your arms and armor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using Diva Style, you do not provoke attacks of opportunity from creatures you have successfully feinted against. Additionally, you can feint against a creature using Diva Style from up to 30 feet away."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 25,
+    "record_key": "Diva Advance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

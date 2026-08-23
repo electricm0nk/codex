@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Mask Focus",
+    "name": "Mask Focus",
+    "description": "You can use your mask as an additional focus for your arcane spells, enhancing their power.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Extend Spell,Nameless One"
+      },
+      {
+        "key": "PRESPELLTYPE",
+        "value": "1,Arcane=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your mask as an additional focus for your arcane spells, enhancing their power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While you're benefiting from the Nameless One feat, the mask that you wear in order to gain the benefits of that feat satisfies the focus component of any spell you cast that requires a mask (such as mask from divination). In addition, once per day you can apply the Extend Spell metamagic feat to an arcane spell without increasing the spell's level by adding your mask as a focus component. When Extend Spell is applied in this manner, its increase to duration applies only to effects that target you; other creatures use the spell's normal duration. For example, if you use this ability with the haste spell, the spell's effects last twice as long for you, but not for any other creature that you target with the spell."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 42,
+    "record_key": "Mask Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Channeled Shield Wall",
+    "name": "Channeled Shield Wall",
+    "description": "You draw upon your channel energy to enhance the protective ability of your shield and those of allies while they are adjacent to you.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Channel Energy"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:ClericChannelEnergyLVL,5],[PREVARGTEQ:PaladinChannelLVL,5],[PREVARGTEQ:OracleChannelLVL,5]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:OracleChannelDieSize,6],[PREVARGTEQ:ClericChannelPositiveEnergyDieSize,6],[PREVARGTEQ:ClericChannelNegativeEnergyDieSize,6],[PREVARGTEQ:PaladinChannelDieSize,6],[PREVARGTEQ:ClassChannelPositiveEnergyDieSize,6],[PREVARGTEQ:ClassChannelNegativeEnergyDieSize,6]"
+      },
+      {
+        "key": "PREPROFWITHSHIELD",
+        "value": "1,TYPE.Light,TYPE.Heavy"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw upon your channel energy to enhance the protective ability of your shield and those of allies while they are adjacent to you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a swift action, you can spend a use of your channel energy to grant yourself a +2 deflection bonus while using a shield. This bonus lasts 1 minute per cleric level or effective cleric level. While you benefit from this bonus, allies with shields also gain a +2 deflection bonus while they are adjacent to you."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|2|TYPE=Deflection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 23,
+    "record_key": "Channeled Shield Wall"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

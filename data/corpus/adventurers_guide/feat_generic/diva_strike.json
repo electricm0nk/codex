@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Diva Strike",
+    "name": "Diva Strike",
+    "description": "Those distracted by your performance leave themselves open to vicious attacks.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "3,CATEGORY=FEAT,Combat Expertise,Diva Style,Improved Feint"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,15"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETOTALAB:7],[PRECLASS:1,Bard=7]"
+      },
+      {
+        "key": "DESC",
+        "value": "Those distracted by your performance leave themselves open to vicious attacks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using Diva Style, the first time you hit with a melee weapon in a round, you deal an additional amount of damage equal to your Charisma modifier to a target that is denied its Dexterity bonus to AC. This damage is precision-based, and is not multiplied on a critical hit."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 26,
+    "record_key": "Diva Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

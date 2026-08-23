@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Aspect of the Beast",
+    "name": "Aspect of the Beast",
+    "description": "Whether by magic or a curse of your blood, some part of you is more beast than man.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ranger Combat Style ~ Natural Weapon],[PREABILITY:1,CATEGORY=Special Ability,Wild Shape],[PREVARGT:Lycanthrope,0]"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "wild shape class feature, see Special."
+      },
+      {
+        "key": "DESC",
+        "value": "Whether by magic or a curse of your blood, some part of you is more beast than man."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Aspect of the Beast Selection|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Your bestial nature manifests itself in one of the following ways. You choose the manifestation when you choose the feat, and then you cannot change it."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 14,
+    "record_key": "Aspect of the Beast"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

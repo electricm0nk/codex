@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Favored Class Bonus ~ Hit Point",
+    "name": "Favored Class Bonus ~ Hit Point",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "FCBhp|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FCBhp|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 86,
+    "record_key": "Favored Class Bonus ~ Hit Point"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}
