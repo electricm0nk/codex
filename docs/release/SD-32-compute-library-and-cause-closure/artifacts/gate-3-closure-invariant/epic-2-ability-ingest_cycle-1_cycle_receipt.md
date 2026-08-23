@@ -232,6 +232,35 @@ git diff --unified=0 <pre-cycle-sha> -- scripts/ingest_ability.py \
 - `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/epic-2-ability-ingest_cycle-1_cycle_receipt.md`
   — this receipt.
 
+## A third defect found post-push, after rebasing onto sibling lanes' work
+
+After the initial push (`c240206cc`), re-running `shape_ledger.py` against the freshly-rebased
+branch showed `ability` `no_record` at **606**, not the expected 576 — a 30-unit regression. Cause:
+`scripts/shape_ledger.py::BOOK_CORPUS_DIR_ALIASES` (landed by a sibling `t9-monster-companion-race-
+no-record` cycle earlier the same day, `8970327b0`) maps the inventory's `book: "bestiary"` to the
+historical directory spelling `data/corpus/beastiary/` for the join walk — every OTHER kind's
+`bestiary`-book records already live there. This generator wrote its 30 `bestiary`-book records
+under the literal (and, for this book, wrong) `data/corpus/bestiary/ability/`, invisible to the
+join. Fixed two ways: (1) `git mv`'d the 30 existing files to `data/corpus/beastiary/ability/`
+(no content change, path only); (2) added the same `CORPUS_WRITE_DIR_ALIASES` mapping to
+`scripts/ingest_ability.py` itself so a future re-run writes to the correct directory the first
+time. Re-derived: `ability` `no_record` back to **576**, matching the run's own `name_pi_skipped`
+count exactly. Lesson applied from this bundle's own standing caution: re-check a figure after
+every rebase, not just after the first run — the alias landed on this branch WHILE this cycle was
+mid-flight, and only a post-rebase re-derive caught the interaction.
+
+## An unrelated, pre-existing defect observed (not this cycle's, not fixed)
+
+A post-rebase full-corpus `corpus_literal_sweep` run fatals immediately on
+`data/corpus/advanced_class_guide/domain/battle_spirit.json` (`source.path` missing its leading
+`pathfinder/` segment, landed by the sibling `card15-simple-filename-kinds-ingest` cycle,
+`71a6f3746`, before this cycle's rebase). This blocks a full-corpus sweep from completing post-
+rebase and is unrelated to this cycle's own diff (a different kind, a different generator, a
+pre-existing commit). This cycle's own 4,248 `ability` records were confirmed CLEAN by a full sweep
+BEFORE the rebase (0 findings, reproduced above); the rebase changed no bytes in any `ability` file
+(only the file-move above, path-only). Named here rather than silently worked around or fixed
+out-of-scope (AGENTS.md rule 3).
+
 ## Next-cycle plan
 
 1. **The 576 name-level PI stops** need an operator ruling before they can ever be transcribed (a

@@ -88,6 +88,19 @@ PI_MARKER_REDACTED = "redacted"  # src/rules_core/shape_b_v1.rs::PI_MARKER_REDAC
 SOFT_HYPHEN = "­"
 CORE_ESSENTIALS_BASENAME = "core_essentials"
 
+# `scripts/shape_ledger.py::BOOK_CORPUS_DIR_ALIASES` -- the corpus-record
+# writer must agree with the READER's directory choice, not just the
+# resolver's. `bestiary` (the inventory's own book spelling) walks
+# `data/corpus/beastiary/` (the historical directory spelling) for every
+# OTHER kind already shipped under it; an ability record for a `bestiary`
+# unit written under a literal `data/corpus/bestiary/ability/` is invisible
+# to `shape_ledger.py`'s join and reports `no_record` even though the file
+# exists -- caught live this cycle (30 units) by diffing the pre- and
+# post-push `no_record` count, not assumed correct from a clean first run.
+CORPUS_WRITE_DIR_ALIASES: dict[str, str] = {
+    "bestiary": "beastiary",
+}
+
 
 def corpus_root() -> str:
     return os.environ.get("PCGEN_CORPUS_ROOT", os.path.expanduser("~/workspace/repos/pcgen/data"))
@@ -314,7 +327,8 @@ def main() -> int:
             "pi_marker": PI_MARKER_REDACTED if pi_redacted else None,
         }
 
-        out_dir = os.path.join(REPO_ROOT, "data/corpus", book, "ability")
+        write_dir_book = CORPUS_WRITE_DIR_ALIASES.get(book, book)
+        out_dir = os.path.join(REPO_ROOT, "data/corpus", write_dir_book, "ability")
         if not dry_run:
             os.makedirs(out_dir, exist_ok=True)
             with open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8") as fh:

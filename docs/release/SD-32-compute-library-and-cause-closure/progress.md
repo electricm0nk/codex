@@ -4558,3 +4558,16 @@ otherwise.
   hidden; 17 other `decisions.md §20` kinds remain at their own `no_record` figures, untouched by
   this cycle.
 - Commit: (recorded after push).
+
+### Correction to the `ability` ingest entry above, found post-push (same cycle)
+
+Re-deriving `shape_ledger.py`'s `ability` `no_record` figure immediately after the push
+(`c240206cc`) found it at 606, not 576 — `scripts/shape_ledger.py::BOOK_CORPUS_DIR_ALIASES`
+(landed the same day by the sibling `t9-monster-companion-race-no-record` cycle, `8970327b0`,
+already rebased onto by the time this cycle pushed) maps `book: "bestiary"` to the directory
+`data/corpus/beastiary/` for the join walk; this cycle's 30 `bestiary`-book records had been
+written to the literal `data/corpus/bestiary/ability/`, invisible to that join. Fixed: `git mv`'d
+the 30 files to `data/corpus/beastiary/ability/` (path only, no content change) and added the same
+alias to `scripts/ingest_ability.py` itself. Re-derived: `ability` `no_record` back to **576**,
+exactly matching `name_pi_skipped`. See the receipt's own "A third defect found post-push" section
+for the full account. Commit: (recorded after push).
