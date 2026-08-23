@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:33:43Z",
+  "data": {
+    "key": "[redacted PI]",
+    "name": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Iobarian"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "paizo/campaign_setting/inner_sea_races/isr_templates.lst",
+    "sha256": "812af64526cb7cb6f368279af82ee41cb338326f3b7d65d8381307685273f27a",
+    "line": 16,
+    "record_key": "Human Ethnicity (Iobarian)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted"
+}

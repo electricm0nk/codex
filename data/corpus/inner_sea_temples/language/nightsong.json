@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:33:43Z",
+  "data": {
+    "key": "Nightsong",
+    "name": "Nightsong",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Pharasma"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "paizo/campaign_setting/inner_sea_temples/istem_languages.lst",
+    "sha256": "51cb44ad4e18376e82e0537909f17c131677822e1e36676e0a9a2286b41f7f9f",
+    "line": 3,
+    "record_key": "Nightsong"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

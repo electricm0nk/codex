@@ -1,0 +1,334 @@
+#!/usr/bin/env python3
+"""SD-32 `decisions.md §20` — generic ingest for the `SIMPLE_FILENAME_KINDS`
+population (`decisions.md §17` item 1, `src/bin/v06_work_inventory.rs`
+`file_kind`): `template`, `power`, `domain`, `language`, `skill`.
+
+**Why one script for five kinds.** All five were enumerated by a single
+filename-substring rule (`SIMPLE_FILENAME_KINDS`) because their corpus rows
+share one shape: a flat, single-line PCGen LST record with no `.MOD`/`.COPY=`
+overlay chain of its own. `deity` shares the same filename-rule shape but is
+DELIBERATELY EXCLUDED from this script's `TARGET_KINDS` — see "Why `deity`
+is not ingested here" below.
+
+**What this does.** For every not-yet-ingested unit of the five target kinds
+in `docs/work-inventory.json`:
+1. Locates the unit's own book directory via `census_independent.py`'s own
+   `discover_book_dirs`/`classify_scope` (reused, not re-derived).
+2. Re-reads the cited `(source_file, source_line)` from the pinned oracle and
+   asserts the row's own leading field matches the unit's `corpus_key` —
+   the same citation-verification discipline
+   `scripts/transcribe_monster_tables.py`'s module docstring describes
+   ("every emitted value is a substring of the cited row").
+3. Parses the row's tab-delimited `KEY:VALUE` fields into `raw_tokens` —
+   this is what `scripts/shape_ledger.py`'s join reads to classify the
+   unit's formula family; a record with no `source.path`/`source.line`
+   match is `no_record` (`decisions.md §20`), and this step is what makes
+   the join succeed.
+4. PI-screens the row per `docs/governance/ogl-pi-blacklist.md §2.3a`
+   (imports the SAME `PI_BLACKLIST_TERMS`/`normalized_term_hit`/
+   `canonicalize` this bundle's T9 review scripts use — no second copy of
+   the term list) plus PCGen's own declared `NAMEISPI:YES`/`DESCISPI:YES`
+   tokens. A hit redacts the offending field to the standing
+   `"[redacted PI]"` marker (`src/rules_core/shape_b_v1.rs::REDACTED_PI_MARKER`)
+   and stamps `license: "PI-REDACTED"`; no hit stamps `license: "OGL"`.
+5. Writes `data/corpus/<book>/<kind>/<slug>.json` in Shape B v1
+   (`src/rules_core/shape_b_v1.rs::CorpusRecordV1`) — the same schema
+   `gen_book_cache.rs`'s Rust generators emit, byte-compatible (a v1 JSON
+   record from either path deserializes into the same Rust type).
+
+**Why `deity` is not ingested here (decisions.md §15 disposition 2).**
+`ogl-pi-blacklist.md §2.1` names `deity`/`deity_name` as "Product Identity in
+CRB" as a FIELD CATEGORY, not as a closed list of terms — but the mechanized
+screen this script (and every other ingest tool in this repo) uses is a
+57-60 TERM list, not a field-category rule, and that term list covers only
+the ~20 core Golarion deities plus a few incident-driven additions. A
+`deity` record's own row identity (its `KEY`/name field) IS a deity's proper
+name in every case — unlike `template`/`power`/`domain`/`language`/`skill`,
+whose identity strings are game-mechanical labels (a template's name, a
+skill's name) the blacklist's own §2.2 table classifies as OGL-inlinable.
+`deity` has no `ogl-pi-blacklist.md §2.3` per-field judgment entry at all —
+the exact gap `decisions.md §19a` amendment 3a closed for `companion`/
+`monster_ability` by operator ruling. Transcribing the ~440 non-core-20
+deity names on this script's own authority, using a term list that was never
+built to cover them, is exactly the shape `decisions.md §15` exists to
+refuse: land everything else, stop on this kind, report it by name and
+count. See this cycle's own receipt for the exact escalation text.
+
+Usage::
+
+    python3 scripts/ingest_simple_filename_kinds.py \
+        --inventory docs/work-inventory.json \
+        --pcgen-root "$PCGEN_CORPUS_ROOT" \
+        --out-root data/corpus \
+        [--kind template] [--dry-run]
+
+`--dry-run` performs every step (citation re-read, PI screen) but does not
+write any file — used to produce the pre-flight summary in the cycle
+receipt without touching `data/corpus`.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import re
+import sys
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import census_independent as ci  # noqa: E402
+from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
+    PI_BLACKLIST_TERMS,
+    canonicalize,
+    normalized_term_hit,
+)
+
+REDACTED_PI_MARKER = "[redacted PI]"
+
+# `deity` is deliberately excluded — see module docstring "Why `deity` is
+# not ingested here".
+TARGET_KINDS = ("template", "power", "domain", "language", "skill")
+
+FREE_TEXT_TAG_PREFIXES = ("DESC:", "BENEFIT:", "SPECIALS:", "SA:")
+
+
+def slugify(name: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "_", name.strip().lower())
+    return s.strip("_") or "unnamed"
+
+
+def parse_row(raw_line: str) -> list[dict]:
+    """Tab-delimited `KEY:VALUE` fields -> raw_tokens list, same shape as
+    every existing corpus record's `data.raw_tokens` (see
+    `scripts/shape_ledger.py`'s own docstring for the join contract)."""
+    tokens = []
+    for field in raw_line.split("\t"):
+        field = field.strip()
+        if not field or ":" not in field:
+            continue
+        key, _, value = field.partition(":")
+        key = key.strip()
+        if not key:
+            continue
+        tokens.append({"key": key, "value": value})
+    return tokens
+
+
+def declared_pi(raw_tokens: list[dict]) -> tuple[bool, bool]:
+    """(name_is_pi, desc_is_pi) from PCGen's own NAMEISPI:/DESCISPI: tokens."""
+    name_pi = any(
+        t["key"].upper() == "NAMEISPI" and t["value"].strip().upper() == "YES"
+        for t in raw_tokens
+    )
+    desc_pi = any(
+        t["key"].upper() == "DESCISPI" and t["value"].strip().upper() == "YES"
+        for t in raw_tokens
+    )
+    return name_pi, desc_pi
+
+
+def free_text_of(raw_tokens: list[dict]) -> str:
+    parts = []
+    for t in raw_tokens:
+        if f"{t['key'].upper()}:" in FREE_TEXT_TAG_PREFIXES:
+            parts.append(t["value"].split("|", 1)[0])
+    return " ".join(parts).strip()
+
+
+def build_book_index(pcgen_root: str, inv: dict) -> tuple[dict[str, str], dict[str, list[str]]]:
+    """(book_id -> absolute book directory path, book_id -> pcc_includes ids),
+    in-scope books only. A unit's own `source_file` sometimes resolves not in
+    its own book's directory but in a `pcc_includes` dependency's directory
+    (e.g. `core_essentials/ce_templates.lst`, shared via PCC include rather
+    than duplicated per book — `docs/work-inventory.json` `.books[].
+    pcc_includes`) — `find_file` below falls back to these."""
+    book_dirs = ci.discover_book_dirs(pcgen_root)
+    scope = ci.classify_scope(book_dirs, inv)
+    pathfinder_root = os.path.join(pcgen_root, "pathfinder")
+    paths = {bd.book_id: os.path.join(pathfinder_root, bd.rel_path) for bd in scope.in_scope}
+    includes = {b["id"]: b.get("pcc_includes") or [] for b in inv["books"]}
+    return paths, includes
+
+
+def find_file(book: str, book_paths: dict, includes: dict, basename: str, cache: dict) -> str | None:
+    def index_for(bdir: str) -> dict:
+        if bdir not in cache:
+            idx = {}
+            for dirpath, _dn, filenames in os.walk(bdir):
+                for fn in filenames:
+                    idx.setdefault(fn, os.path.join(dirpath, fn))
+            cache[bdir] = idx
+        return cache[bdir]
+
+    own_dir = book_paths.get(book)
+    if own_dir is not None:
+        hit = index_for(own_dir).get(basename)
+        if hit is not None:
+            return hit
+    for dep in includes.get(book, []):
+        dep_dir = book_paths.get(dep)
+        if dep_dir is None:
+            continue
+        hit = index_for(dep_dir).get(basename)
+        if hit is not None:
+            return hit
+    return None
+
+
+def sha256_of(path: str) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        h.update(fh.read())
+    return h.hexdigest()
+
+
+def read_line(path: str, line_no: int) -> str | None:
+    with open(path, "r", encoding="utf-8", errors="replace") as fh:
+        for i, raw in enumerate(fh, start=1):
+            if i == line_no:
+                return raw.rstrip("\n").replace("­", "-")
+    return None
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--inventory", default="docs/work-inventory.json")
+    ap.add_argument("--pcgen-root", required=True)
+    ap.add_argument("--out-root", default="data/corpus")
+    ap.add_argument("--kind", action="append", choices=TARGET_KINDS)
+    ap.add_argument("--dry-run", action="store_true")
+    args = ap.parse_args(argv)
+
+    kinds = set(args.kind) if args.kind else set(TARGET_KINDS)
+
+    with open(args.inventory, "r", encoding="utf-8") as fh:
+        inv = json.load(fh)
+
+    book_paths, book_includes = build_book_index(args.pcgen_root, inv)
+    file_cache: dict = {}
+    slug_seen: dict[tuple[str, str], set] = defaultdict(set)
+
+    stats = Counter()
+    citation_mismatches = []
+    written = []
+    pi_hits = Counter()
+
+    for unit in inv["units"]:
+        kind = unit.get("kind")
+        if kind not in kinds:
+            continue
+        book = unit["book"]
+        basename = unit["source_file"]
+        line_no = unit["source_line"]
+        corpus_key = unit["corpus_key"]
+        name = unit["name"]
+        stats[f"{kind}:seen"] += 1
+
+        if book not in book_paths:
+            stats[f"{kind}:no_book_dir"] += 1
+            continue
+        file_path = find_file(book, book_paths, book_includes, basename, file_cache)
+        if file_path is None:
+            stats[f"{kind}:no_file"] += 1
+            continue
+        raw_line = read_line(file_path, line_no)
+        if raw_line is None:
+            stats[f"{kind}:no_line"] += 1
+            continue
+        identity = raw_line.split("\t", 1)[0].strip()
+        # `v06_work_inventory.rs` composes some kinds' `corpus_key` as
+        # "<group header> ~ <row identity>" (grouping context prepended,
+        # same convention already shipped e.g. `data/corpus/.../
+        # air_domain/lightning_arc.json`'s `record_key: "Air Domain ~
+        # Lightning Arc"`) while the LST row's own leading field is the
+        # bare leaf identity -- accept that shape as a citation match, not
+        # only a byte-exact one.
+        if identity != corpus_key and not corpus_key.endswith(" ~ " + identity):
+            citation_mismatches.append(
+                {"book": book, "file": basename, "line": line_no, "expected": corpus_key, "found": identity}
+            )
+            stats[f"{kind}:citation_mismatch"] += 1
+            continue
+
+        raw_tokens = parse_row(raw_line)
+        name_pi, desc_pi = declared_pi(raw_tokens)
+        term_hit_name = normalized_term_hit(name)
+        free_text = free_text_of(raw_tokens)
+        term_hit_desc = normalized_term_hit(free_text) if free_text else None
+
+        redact_name = name_pi or bool(term_hit_name)
+        redact_desc = desc_pi or bool(term_hit_desc)
+
+        out_name = REDACTED_PI_MARKER if redact_name else name
+        out_key = REDACTED_PI_MARKER if redact_name else corpus_key
+        out_tokens = []
+        for t in raw_tokens:
+            v = t["value"]
+            if redact_desc and f"{t['key'].upper()}:" in FREE_TEXT_TAG_PREFIXES:
+                head, _, tail = v.partition("|")
+                v = REDACTED_PI_MARKER + (("|" + tail) if tail else "")
+            out_tokens.append({"key": t["key"], "value": v})
+
+        if redact_name or redact_desc:
+            license_val = "PI-REDACTED"
+            pi_field = "name" if redact_name else "description"
+            pi_marker = "redacted"
+            pi_hits[kind] += 1
+        else:
+            license_val = "OGL"
+            pi_field = None
+            pi_marker = None
+
+        rec = {
+            "population": "in_scope",
+            "completeness": "full" if free_text else "chassis_only",
+            "ingested_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "data": {
+                "key": out_key,
+                "name": out_name,
+                "raw_tokens": out_tokens,
+            },
+            "source": {
+                "kind": "lst_token",
+                "path": os.path.relpath(file_path, os.path.join(args.pcgen_root, "pathfinder")),
+                "sha256": sha256_of(file_path),
+                "line": line_no,
+                "record_key": corpus_key,
+            },
+            "wiring_class": "display",
+            "wiring_class_signals": ["display:sd32_simple_filename_kind_ingest"],
+            "license": license_val,
+            "pi_field": pi_field,
+            "pi_marker": pi_marker,
+        }
+
+        slug = slugify(corpus_key)
+        seen = slug_seen[(book, kind)]
+        if slug in seen:
+            slug = f"{slug}_{line_no}"
+        seen.add(slug)
+
+        out_dir = os.path.join(args.out_root, book, kind)
+        out_path = os.path.join(out_dir, f"{slug}.json")
+        if not args.dry_run:
+            os.makedirs(out_dir, exist_ok=True)
+            with open(out_path, "w", encoding="utf-8") as fh:
+                json.dump(rec, fh, indent=2, ensure_ascii=False)
+                fh.write("\n")
+        written.append(out_path)
+        stats[f"{kind}:written"] += 1
+
+    summary = {
+        "stats": dict(stats),
+        "pi_redacted_by_kind": dict(pi_hits),
+        "citation_mismatches": citation_mismatches,
+        "written_count": len(written),
+    }
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
