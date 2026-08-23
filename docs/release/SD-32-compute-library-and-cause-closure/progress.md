@@ -1121,6 +1121,54 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 - **Next-cycle plan:** Card 15 (`census-scope-closure`) is unblocked. Receipt:
   `artifacts/gate-1-shape-closure/002_cycle_receipt.md`.
 
+### Cycle epic-2-t8/3 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T8 — warm-cache-invalidation fix
+
+- **Card ID:** `epic-2-cause-closure` (T8 lane follow-up).
+- **Commit SHA:** `5f5d82813`
+- **Files touched:** `scripts/observer/pf1e_dashboard_producer.py`,
+  `scripts/tests/test_pf1e_dashboard_producer.py`,
+  `docs/retro/events/epic-2-t8-cache-fix.jsonl` (new).
+- **Acceptance criterion:** `decisions.md §11` condition 2, re-verified against the REAL default
+  `WIRING_CLASS_CACHE`, warm — cycle epic-2-t8/2's own condition-2 proof ran `main()` against a
+  scratch `--out` path with a cold cache and never exercised the warm-cache branch.
+- **Status:** T8 warm-cache defect **fixed**. This is a correction of cycle epic-2-t8/2's own
+  claimed closure, not new scope; T8 was closed prematurely because its own proof was tested
+  somewhere other than where it makes its confident claim.
+- **Summary:** Cycle epic-2-t8/2 (`e3f3559dd`) added `classifier_reclassified_units` to
+  `compute_wiring_class_summary()`'s return dict but never bumped `WIRING_SUMMARY_SCHEMA` (stayed
+  `12`). A cache written by the pre-fix producer therefore carries schema `12`, is newer than
+  `docs/work-inventory.json`, and passes the warm-cache equality check unchanged — so the
+  reclassification never fired against the real `WIRING_CLASS_CACHE`. Reproduced live on tip before
+  this cycle's fix: cached schema `12`, `classifier_reclassified_units` absent, `corpus_wide`
+  `computed=9464 display=14285` (the pre-fix values). Fixed by bumping
+  `WIRING_SUMMARY_SCHEMA` `12 -> 13`. New regression test `StaleSchemaCacheIsRejectedTest` writes a
+  pre-T8-shaped cache (schema 12, no `classifier_reclassified_units`, newer mtime than the source
+  doc) and asserts it is rejected — RED confirmed against the un-bumped constant, GREEN after the
+  bump. Also added `WiringSummaryTopLevelKeysCanaryTest` (pins the return dict's top-level key set)
+  so a future field addition without a schema bump fails CI loud instead of silently — a
+  test-enforced trip-wire, not a fully automatic derivation (the warm-cache-hit branch's whole point
+  is to avoid rebuilding `result`, so there is no fresh key set to hash against at validation time
+  without defeating the cache; a runtime auto-derivation would need its own hand-maintained parallel
+  structure, the same hazard shape in a different form — judgment call, stated in the receipt).
+  **Every figure the fix moves, re-derived against the real warm cache, matches cycle epic-2-t8/2's
+  claimed figures exactly:** `corpus_wide.display` 14285→14273, `corpus_wide.computed` 9464→9476,
+  `doneness.done` 13458→13470, `doneness.held` 1230→1218 (all four deltas ±12) — the fix's own math
+  was correct all along, it simply never reached the dashboard. No figure-correction was needed;
+  instead logged a `scripts/retro.py correction`
+  (`docs/retro/events/epic-2-t8-cache-fix.jsonl`, id `1787447916117-epic-2-t8-cache-fix-d7261c`)
+  against cycle epic-2-t8/2's condition-2 proof methodology itself. Pinned-count sweep across
+  `tests/`, `src/`, `scripts/`, `apps/` for the four before/after figures: 5 hits, all coincidental
+  digit substrings (`source_line:` fields, `Cargo.lock`), none a dashboard assertion.
+  `site/dashboard/PF1e-dashboard.json` was NOT regenerated (out of scope per the brief) — its
+  pre-existing `STALE` state (unrelated corpus drift, logged by cycle epic-2-t8/2) is unchanged by
+  this cycle. Full detail:
+  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-3_t8-cache-fix_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** T8 now needs no further work, including against the real warm cache. Card
+  11's remaining lanes (T2a+T12, T2b, T9, T4, and a consolidation cycle once every lane reports) are
+  unchanged by this cycle. Per `workflow-instruction.md §6` step 8, `kanban.md` row 11 stays
+  `in-progress` — a consolidation cycle owns marking it `complete`.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
