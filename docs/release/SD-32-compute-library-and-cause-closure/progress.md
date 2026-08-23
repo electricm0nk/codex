@@ -1213,6 +1213,78 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   `_classify_kind_by_filename` with the new branches this memo names, re-runs `shape_ledger.py`
   over the widened population, and re-verifies `unclassified_count` stays 0.
 
+### Cycle epic-2-t2a-t12/1 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T2a+T12 (combined) — CLOSED at the cause, honest residual
+
+- **Card ID:** `epic-2-cause-closure` (T2a+T12 combined lane, per card 11's own cycle-1 receipt:
+  "T2a and T12 need one combined cycle, not two independent half-measures").
+- **Commit SHA:** `b22d2281bc68e71a14db2d6e05909b1104bca756` (pre-rebase; landed SHA on `tranche/12`
+  after push retry may differ — see the git log for the actual merged SHA if so).
+- **Files touched:** `src/rules_core/cache_gen/class_feature.rs` (the cause site — new
+  pool-catalog/type-facet/corpus-class resolution tiers, +9 tests),
+  `src/bin/gen_cache_class_feature.rs` (threads the new argument),
+  `src/rules_core/class_feature_pool_catalog.rs` (consumer-conflict fix, found live by this cycle),
+  `apps/desktop/src-tauri/src/class_feature_descriptions.rs` (one pre-existing test assertion
+  corrected to the now-true value), `data/corpus/**/class_feature/**/*.json` (12,382 records
+  regenerated), `docs/retro/events/epic-2-t2a-t12.jsonl` (new).
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — T2a and T12, combined
+  per this card's own cycle-1 note (overlap 1,354-2,124 units, cannot close independently).
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (pinned oracle, matched exactly).
+- **Status:** CLOSED at the cause, corpus-wide, with an honest residual — same shape as this card's
+  own T1 closure (a structural proof plus a standing test, not a claim every instance is
+  individually resolved). `kanban.md` row 11 left `in-progress`, per the dispatch brief's explicit
+  instruction — a consolidation cycle marks the shared row `complete`.
+- **Summary:** Re-derived |T2a| first rather than trusting the cited 8,243 — found **5,678**
+  (already stale by cycle start; an earlier wave-22/23 grant-fact fix had landed in between, correction
+  logged). Root cause confirmed by reading the generator, not guessed: `cache_gen::class_feature::
+  generate()` fell back to the raw corpus-key group-prefix text for `data.class` whenever no grant
+  fact resolved it — T2a's own defect shape verbatim. Fixed by reproducing two of
+  `v06_work_inventory.rs`'s own already-tested owner-resolution mechanisms locally (this package's
+  disjoint-file-touch convention) as two new resolution tiers, tried before the raw fallback: a
+  27-entry pool-catalog match against the 34 dispatched classes (closes true T2a plumbing), and a
+  match against the FULL corpus-declared class roster, not only the dispatched 34 (closes the
+  T2a/T12 overlap — a genuinely-undispatched class like Vigilante now gets its own real name instead
+  of a category label like "Vigilante Talent", correct either way it is later modelled). Both RED→
+  GREEN proven via two new end-to-end `generate()` tests, each mutated to fail for the intended
+  reason and reverted. Regenerated the corpus against the pinned oracle: 12,384 records across the
+  generator's 21-book scope; `corpus_literal_sweep` ran clean (`0 findings`) afterward, confirming
+  `raw_tokens` fidelity untouched. Diffed every regenerated file's non-`class`/non-`ingested_at`
+  fields against its HEAD pre-image before committing — 12,382 of 12,384 changed only those two
+  fields as expected; 2 diverged in `key`/`description`/`raw_tokens` too (pre-existing citation-line
+  drift, unrelated to this fix, reverted to HEAD and logged as an incident rather than shipped).
+  **4,936 records' `data.class` corrected corpus-wide.** Running the FULL desktop test suite (not
+  just the lib suite) after regenerating surfaced a real, load-bearing consumer conflict this fix
+  would otherwise have silently broken: `class_feature_pool_catalog.rs` (the Rogue Talent/Rage Power
+  level-up picker) filtered records by `data.class == "Rogue Talent"`/`"Rage Power"` LITERALLY — the
+  exact category-label strings this fix removes. Fixed at the actual point of ambiguity (one field
+  meaning two things): that module now derives its pool-group filter from the corpus `key` directly
+  (untouched by this cycle), never from `data.class`. Re-ran the full desktop suite clean (516/516).
+  One `class_feature_descriptions.rs` test hard-asserted the OLD buggy value
+  (`class_slug == "aberrant_bloodline"` for a Sorcerer bloodline feature) — updated to the now-true
+  `"sorcerer"`, with a comment explaining this is the fix's own intended effect, not a loosened
+  assertion. **Final numbers, each with its own re-derive command in the cycle receipt:** |T2a|
+  4,284 (post-fix), |T12| 2,453 (unchanged — `v06_work_inventory.rs` never reads `data.class`, so
+  nothing about this fix could move it), |T2a ∩ T12| 1,509 (the canonical `sweeps.md` S20 join
+  method: T12's keys joined to the live corpus on `data.key`, counting non-dispatched `data.class`),
+  |T2a ∪ T12| = 4,284 + 2,453 − 1,509 = **5,228**. A second, independent cross-check (T2a-value-driven
+  rather than T12-key-driven) gives 1,644 for the overlap — same order of magnitude, gap explained by
+  join direction, not an error. **Residual, honestly reported, not fabricated:** ~2,775 records still
+  carry a category label none of the four resolution signals resolve without guessing (`Domain
+  Power` 172, `Wild Talent` 128, `Refined Education` 94, `Ki Power` 80, and ~35 more distinct
+  labels) — each needs the same per-group, hand-verified corpus-row-read `CLASS_FEATURE_POOLS`'s own
+  27 entries were built through; logged as a `scripts/retro.py deferral`, not guessed at to shrink
+  the number. Full lib suite 2,388/2,388 pass (post-rebase, includes sibling lanes' own new tests);
+  full desktop suite 516/516 pass. Both dual-audit gates `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS` on the
+  final code diff. Full detail, including every re-derive command verbatim:
+  `artifacts/gate-3-closure-invariant/epic-2-t2a-t12_cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card — the pool-catalog consumer conflict and the
+  citation-line-drift incident are both logged against this cycle's own scope.
+- **Next-cycle plan:** the ~2,775-unit residual is this lane's own natural continuation if the
+  operator wants T2a driven further before the row closes — same per-group verification discipline
+  `CLASS_FEATURE_POOLS` used. T2b and T9 remain open per their own lanes' entries above (both
+  requested a ruling, neither this lane's scope). Per `workflow-instruction.md §6` step 8, `kanban.md`
+  row 11 stays `in-progress` — a consolidation cycle owns marking it `complete` once every lane has
+  landed.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
@@ -1244,6 +1316,21 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   (`progress.md` Cycles 2/3, Gate 1 Cycle 1, Gate 2 Cycles, Gate 3 Cycle 1, below). AT-32-CLOSE-001's
   "complete or filed under Open blockers" condition is satisfied by this filing, not by closing the
   card's remaining scope.
+
+**Addendum (post `decisions.md §10`, superseded — this filing is no longer the governing
+disposition):** the operator rejected this filing's premise outright (`decisions.md §10`: "Filing
+under `## Open blockers` is a request for an operator ruling, not a disposition and not a closure
+path. It pauses the bundle."). Six lanes were subsequently dispatched against card 11's row to
+actually close the named shapes rather than defer them. As of this addendum: **T1** closed (this
+cycle, above); **T7** closed corpus-wide (`epic-2-t7-t8/1`); **T8** closed (`epic-2-t8/2`,
+`epic-2-t8/3`); **T4** closed for its L8 population (`epic-2-t4/1`); **T2a and T12** closed at the
+cause, corpus-wide, with an honest residual (`epic-2-t2a-t12/1`); **T2b** and **T9** each ran a
+real, re-derivable measurement cycle that banked zero units and requested an operator ruling on how
+to proceed (both logged, neither fabricated a close). The "each is not attemptable without
+fabricating numbers" claim this entry made has not held up — every shape WAS attempted, and most
+closed. This entry is left in place as the historical record of what card 13's closure epilogue
+filed and why the operator rejected it, not edited to look retroactively correct; see each lane's
+own cycle entry above (and `kanban.md` row 11) for the current, real state.
 
 ## Closure epilogue — full worktree/branch sweep (card 13, `workflow-instruction.md §13` step 3)
 
