@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:44:36Z",
+  "data": {
+    "key": "Warpriest ~ Favored Class Blessings",
+    "name": "Warpriest ~ Favored Class Blessings",
+    "description": "You can call upon the power of your blessings a further %1 times per day, but only on blessings that affect weapons or armor|WarpriestBlessingFavoredClassUses|PREVARGTEQ:DwarfWarpriestFavClassBonus,3",
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You can call upon the power of your blessings a further %1 times per day, but only on blessings that affect weapons or armor|WarpriestBlessingFavoredClassUses|PREVARGTEQ:DwarfWarpriestFavClassBonus,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingFavoredClassUses|DwarfWarpriestFavClassBonus/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 43,
+    "record_key": "Warpriest ~ Favored Class Blessings"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

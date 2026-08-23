@@ -1,0 +1,170 @@
+{
+  "kind": "monster",
+  "population": 28,
+  "written": 28,
+  "name_pi_renamed": 19,
+  "unresolved": [],
+  "written_by_book": {
+    "bestiary": 4,
+    "bestiary_2": 2,
+    "bestiary_4": 14,
+    "inner_sea_bestiary": 2,
+    "inner_sea_world_guide": 5,
+    "occult_adventures": 1
+  },
+  "renamed_records": [
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 40,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_40)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 41,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_41)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 42,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_42)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 66,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_66)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 67,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_67)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 68,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_68)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 110,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_110)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 111,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_111)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 112,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_112)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 139,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_139)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 140,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_140)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 141,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_141)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 219,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_219)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "bestiary_4",
+      "source_file": "b4_races.lst",
+      "source_line": 222,
+      "codex_name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_222)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 13,
+      "codex_name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_13)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_races.lst",
+      "source_line": 13,
+      "codex_name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 14,
+      "codex_name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_14)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_races.lst",
+      "source_line": 14,
+      "codex_name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_14)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "monster",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_races.lst",
+      "source_line": 16,
+      "codex_name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_16)",
+      "reason": "name_pi_blocked"
+    }
+  ],
+  "term_list_size": 60
+}

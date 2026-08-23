@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Skeleton",
+    "name": "Skeleton",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "MOVE",
+        "value": "Walk,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monster ~ Skeleton"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead (Mindless):1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Skeleton"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 439,
+    "record_key": "Skeleton"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

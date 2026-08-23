@@ -1,0 +1,183 @@
+{
+  "kind": "class",
+  "population": 21,
+  "written": 21,
+  "name_pi_renamed": 21,
+  "unresolved": [],
+  "written_by_book": {
+    "adventurers_guide": 16,
+    "inner_sea_magic": 1,
+    "inner_sea_world_guide": 4
+  },
+  "renamed_records": [
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 3,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_3)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 61,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_61)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 76,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_76)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 136,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_136)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 170,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_170)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 186,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_186)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 213,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_213)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 231,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_231)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 279,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_279)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 297,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_297)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 325,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_325)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 360,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_360)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 397,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_397)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 413,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_413)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 460,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_460)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "adventurers_guide",
+      "source_file": "ag_classes.lst",
+      "source_line": 474,
+      "codex_name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_474)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "inner_sea_magic",
+      "source_file": "ism_classes.lst",
+      "source_line": 62,
+      "codex_name": "Codex-Named Unit (class_inner_sea_magic_ism_classes_lst_62)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_classes_race.lst",
+      "source_line": 6,
+      "codex_name": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_race_lst_6)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_classes.lst",
+      "source_line": 5,
+      "codex_name": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_5)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_classes.lst",
+      "source_line": 23,
+      "codex_name": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_23)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "class",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_classes.lst",
+      "source_line": 57,
+      "codex_name": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_57)",
+      "reason": "name_pi_blocked"
+    }
+  ],
+  "term_list_size": 60
+}

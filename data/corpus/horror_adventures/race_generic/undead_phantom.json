@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Undead Phantom",
+    "name": "Undead Phantom",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead Phantom:1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Undead Phantom"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Phantom"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Undead Phantom Default"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Bluff|TYPE=Craft|Fly|Intimidate|Knowledge (planes)|Perception|Sense Motive|Stealth"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89",
+    "line": 8,
+    "record_key": "Undead Phantom"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

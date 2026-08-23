@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Homunculus Companion",
+    "name": "Homunculus Companion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,30"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Bluff|TYPE=Craft|Fly|Knowledge (arcana)|Perception|Sense Motive|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Homunculus Companion"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Homunculus Companion:1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Homunculus Companion Default"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst",
+    "sha256": "e71f81ae154977c520a7c032dc48145a70bf4aec85e65fa05808ab7816f9114c",
+    "line": 9,
+    "record_key": "Homunculus Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

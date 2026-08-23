@@ -1,0 +1,183 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "data": {
+    "key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_141)",
+    "name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_141)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,100,Swim,100"
+      },
+      {
+        "key": "REACH",
+        "value": "60"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|16|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|40"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|40|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeeInvisibilityRange|600|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDice|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDice|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDieSize|8"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Fly|Perception|Stealth|Swim"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan (cannot speak)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,8d6,SPROP=plus grab"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,1d6|Tail Slap,Natural.Melee.Finesseable.Weapon,*2,6d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Firebolt,Natural.Ranged.Weapon.Touch,*1,varies"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:34"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "CR",
+        "value": "28"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.170"
+      },
+      {
+        "key": "KIT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 141,
+    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_141)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_races.lst:141"
+  }
+}

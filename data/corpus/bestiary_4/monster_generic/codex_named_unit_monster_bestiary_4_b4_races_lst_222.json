@@ -1,0 +1,179 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "data": {
+    "key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_222)",
+    "name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_222)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60,Swim,40"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|32"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|27|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|150"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|200"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleAttacks|4"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "SR",
+        "value": "31"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:25"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.254"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 222,
+    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_222)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_races.lst:222"
+  }
+}

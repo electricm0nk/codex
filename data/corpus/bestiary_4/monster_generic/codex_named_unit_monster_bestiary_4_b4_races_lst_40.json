@@ -1,0 +1,207 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "data": {
+    "key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_40)",
+    "name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_40)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Swim,120"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|4|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|12|TYPE=Profane"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|34"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|120"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleAttacks|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tentacle|REACH|15"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Bluff|Intimidate|Knowledge (arcana)|Knowledge (nature)|Knowledge (planes)|Perception|Sense Motive|Spellcraft|Stealth|Swim"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Aquan|Celestial|Common|Draconic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,6d6"
+      },
+      {
+        "key": "SR",
+        "value": "39"
+      },
+      {
+        "key": "DR",
+        "value": "20/Cold Iron, Epic, and Good"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):33"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "CR",
+        "value": "28"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "KIT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 40,
+    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_40)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_races.lst:40"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Caligni",
+    "name": "Caligni",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Caligni"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Dark Folk"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid.PC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "FACT",
+        "value": "Hands|2"
+      },
+      {
+        "key": "FACT",
+        "value": "Legs|2"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_pc.lst",
+    "sha256": "0a5a37389090ae8096bd0badce3a3d059ef19b61791f9096cb4b085a5903c73d",
+    "line": 9,
+    "record_key": "Caligni"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

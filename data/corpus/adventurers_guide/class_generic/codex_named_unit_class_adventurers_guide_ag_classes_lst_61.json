@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:39Z",
+  "data": {
+    "key": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_61)",
+    "name": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_61)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "PC.Prestige"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|(classlevel(\"APPLIEDAS=NONEPIC\")+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Will|(classlevel(\"APPLIEDAS=NONEPIC\")+1)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Asp"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
+    "sha256": "9326f2b4410218d6865654b045c06f8ee50a13f4669fde4cecf332ce72c5601e",
+    "line": 61,
+    "record_key": "Codex-Named Unit (class_adventurers_guide_ag_classes_lst_61)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_classes.lst:61"
+  }
+}

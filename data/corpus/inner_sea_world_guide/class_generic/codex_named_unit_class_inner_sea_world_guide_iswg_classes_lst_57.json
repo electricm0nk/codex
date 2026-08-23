@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:39Z",
+  "data": {
+    "key": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_57)",
+    "name": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_57)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "PC.Prestige"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex,BASE.Will|(classlevel(\"APPLIEDAS=NONEPIC\")+1)/2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|(classlevel(\"APPLIEDAS=NONEPIC\")+1)/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|RMA"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst",
+    "sha256": "2bef4b3976efd161d8b008835b8bc6031b9730b53d7a794df1d61df36bc47a74",
+    "line": 57,
+    "record_key": "Codex-Named Unit (class_inner_sea_world_guide_iswg_classes_lst_57)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_classes.lst:57"
+  }
+}
