@@ -48,7 +48,7 @@ fn main() {
                 report.equipment_written, report.equipment_modifier_written
             );
             println!(
-                "  dropped, NAMEISPI:YES (name is Product Identity, row cannot be published): {}",
+                "  renamed under a Codex-generated neutral identity, NAMEISPI:YES (`decisions.md §24`): {}",
                 report.name_pi_dropped.len()
             );
             for line in &report.name_pi_dropped {

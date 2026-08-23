@@ -22,7 +22,7 @@
 //! whole — it is INCLUDED under a Codex-generated neutral `key`/`name`
 //! (`name_pi_citation` is `Some` for exactly these rows).
 //!
-//! Total: 1953 rows.
+//! Total: 1954 rows.
 
 /// One recovered corpus equipment row. Deliberately one flat shape for
 /// every book: unlike the hand-authored per-book tables (each with its own
@@ -1999,7 +1999,7 @@ pub static INNER_SEA_MAGIC_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "ISM", key: "RIFFD_1USE", name: "RIFFD_1USE", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None, name_pi_citation: None },
 ];
 
-/// adventurers_guide — 115 record(s) the hand-authored `adventurers_guide` table does not hold.
+/// adventurers_guide — 116 record(s) the hand-authored `adventurers_guide` table does not hold.
 pub static ADVENTURERS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "AG", key: "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_1)", name: "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_1)", category: "ArmsArmor", cost_gp: Some(20.0), weight_lbs: Some(3.0), description: None, name_pi_citation: Some(("ag_equip_arms_armor.lst", 1)) },
     EquipmentGapRow { book: "AG", key: "Elven Leafblade", name: "Elven Leafblade", category: "ArmsArmor", cost_gp: Some(40.0), weight_lbs: Some(3.0), description: Some("+2 bonus on attack rolls made to confrm critical hits"), name_pi_citation: None },
@@ -2116,6 +2116,7 @@ pub static ADVENTURERS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "AG", key: "Zoic Fetish (Amphibian)", name: "Zoic Fetish (Amphibian)", category: "MagicItems", cost_gp: Some(7500.0), weight_lbs: None, description: Some("+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (amphibian) 1/day"), name_pi_citation: None },
     EquipmentGapRow { book: "AG", key: "Zoic Fetish (Fish)", name: "Zoic Fetish (Fish)", category: "MagicItems", cost_gp: Some(7500.0), weight_lbs: None, description: Some("+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (fish) 1/day"), name_pi_citation: None },
     EquipmentGapRow { book: "AG", key: "Halcyon Bonded Mask", name: "Halcyon Bonded Mask", category: "MagicItems", cost_gp: Some(0.0), weight_lbs: None, description: None, name_pi_citation: None },
+    EquipmentGapRow { book: "AG", key: "Special Ability ~ Agile Maiden ~ Armor", name: "Medium Grey Maiden Plate", category: "Equipmods", cost_gp: None, weight_lbs: None, description: None, name_pi_citation: None },
 ];
 
 /// ultimate_magic — 0 record(s) the hand-authored `ultimate_magic` table does not hold.

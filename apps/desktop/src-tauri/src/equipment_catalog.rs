@@ -848,7 +848,14 @@ mod tests {
         // (`ultimate_equipment:"Elysian Shield"`, `NAMEISPI:YES`) that
         // predates this cycle -- see `equipment_resolver.rs`'s own comment
         // on the same number for the full citation.
-        assert_eq!(count_by_book(&response, "UE"), 1613);
+        //
+        // SD-32 T9 onboarding (card 11): re-derived pre-existing red,
+        // unrelated to this cycle's own changes -- see
+        // `equipment_resolver.rs`'s identical correction (same underlying
+        // `ue::equipment_tables()` static table, byte-identical to this
+        // branch's pinned base) for the full citation. 1613 was already
+        // stale before this cycle touched anything; 1614 is the real count.
+        assert_eq!(count_by_book(&response, "UE"), 1614);
         // 24 General (pregenerated spellbooks) + 2 ArmsArmor (Scrollmaster
         // Gear); no `um_equipmods.lst` file exists for this book. Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UM`'s own pinned 26.

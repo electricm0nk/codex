@@ -59,6 +59,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::cache_gen::equipment_gap::{RenameInfo, resolve_name_or_rename};
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::rules_core::rules_tables::ultimate_equipment as ue;
 use crate::rules_core::rules_tables::ultimate_equipment::equipment_tables::EquipmentCategory;
@@ -107,6 +108,17 @@ pub struct CacheRecord<T: Serialize> {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// SD-32 T9 onboarding (card 11) group E: `decisions.md §24b`-3, ported
+    /// from `cache_gen::equipment_gap`'s identical field (this file
+    /// predates `§24`'s neutral-rename mechanism and previously dropped a
+    /// `NAMEISPI:YES` row outright -- see `resolve_name_or_rename`'s call
+    /// site in `generate_equipment` below for the worked "Otyugh Hide"
+    /// example). Defaults to `false` via `#[serde(default)]` on read, so
+    /// this is additive to every already-shipped record's shape.
+    #[serde(default)]
+    pub codex_generated_name: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rename: Option<RenameInfo>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -260,15 +272,23 @@ pub struct GenerationReport {
     /// Record keys whose real LST citation could not be resolved (should
     /// be empty for a clean generation run against the real corpus).
     pub unresolved_citations: Vec<String>,
-    /// Records refused outright because the real corpus row declares
-    /// `NAMEISPI:YES` (`file:line record_key`). A NAME cannot be
-    /// redacted -- it is the record's identity on every screen and half
-    /// of its key -- so these rows are DROPPED, never screened, matching
-    /// `SD-29-corpus-wide-catch-up-lanes/decisions.md §50.3` and
-    /// `ingest_race_traits.rs`'s `pi_dropped` precedent. Reported, never
-    /// silent: a row that vanishes without a line here is
-    /// indistinguishable from a citation bug.
+    /// Records whose real corpus row declares `NAMEISPI:YES`
+    /// (`file:line record_key`). `decisions.md §24`: these are no longer
+    /// dropped -- they are WRITTEN under a Codex-generated neutral name
+    /// (`codex_neutral_name::neutral_name`/`neutral_key`, via
+    /// `cache_gen::equipment_gap::resolve_name_or_rename`), coordinate-only.
+    /// Field name kept for compatibility with existing callers; it now
+    /// counts RENAMES, not silent drops -- every one of these units is
+    /// still counted in `equipment_written`/`equipment_modifier_written`
+    /// above. Reported, never silent: a row that vanishes without a line
+    /// here is indistinguishable from a citation bug.
     pub name_pi_dropped: Vec<String>,
+    /// `(kind, book, source_file, source_line, codex_name, reason)`
+    /// divergence entries for every unit renamed this run --
+    /// `decisions.md §24b`-4: coordinate + reason, never the original
+    /// string. Mirrors `cache_gen::equipment_gap::GenerationReport`'s field
+    /// of the same name.
+    pub name_pi_renamed_records: Vec<serde_json::Value>,
 }
 
 #[derive(Debug)]
@@ -460,12 +480,6 @@ fn generate_equipment(
         if line == 0 {
             report.unresolved_citations.push(format!("equipment:{}", entry.key));
         }
-        let source = Source::LstToken {
-            path: format!("{UE_DIR}/{category_file}"),
-            sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
-            line,
-            record_key: entry.key.to_string(),
-        };
         let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
             &mut wiring_lines,
             category_file,
@@ -480,33 +494,47 @@ fn generate_equipment(
         };
         let declared = declared_pi_at(&book_dir(corpus_root).join(category_file), line)
             .unwrap_or_default();
-        // A NAME cannot be redacted (`pi_screening.rs`'s own doc comment on
-        // `DeclaredProductIdentity::name`; `SD-29-corpus-wide-catch-up-lanes/
-        // decisions.md §50.3`): `[redacted PI]` as an equipment key is a
-        // record nobody can look up. So a `NAMEISPI:YES` row is DROPPED
-        // outright, before the description screen runs, never partially
-        // published under a redacted display name -- the same ruling
-        // `ingest_race_traits.rs` already applies to race traits. Found by
-        // adversarial review (OPEN-ISSUES row 38): this branch previously
-        // computed `declared.name` and never read it, so `Otyugh Hide`
-        // (`ue_equip_arms_armor.lst:66`) shipped its real name unredacted.
-        if declared.name {
-            report.name_pi_dropped.push(format!("{category_file}:{line} {}", entry.key));
-            continue;
+        // SD-32 T9 onboarding (card 11) group E, `decisions.md §24`: a
+        // `NAMEISPI:YES` row is no longer dropped outright -- it ingests
+        // under a Codex-generated neutral name derived ONLY from
+        // `(kind, book, source_file, source_line)`, the same mechanism
+        // `cache_gen::equipment_gap::resolve_name_or_rename` already ships
+        // for the compiled-book gap lanes, reused here rather than
+        // re-implemented (`decisions.md §24b`-1: no argument path from the
+        // PI string to the output). Found by adversarial review
+        // (OPEN-ISSUES row 38): this branch previously computed
+        // `declared.name` and never read it at all, so `Otyugh Hide`
+        // (`ue_equip_arms_armor.lst:66`, `NAMEISPI:YES`) shipped its real
+        // name unredacted before that fix made it drop the row outright --
+        // this cycle replaces the drop with the real §24 rename this
+        // generator predates.
+        let is_modifier = entry.category == EquipmentCategory::Equipmods;
+        let kind = if is_modifier { "equipment_modifier" } else { "equipment" };
+        let (record_name, record_key, codex_generated_name, rename_info, divergence) =
+            resolve_name_or_rename(declared.name, kind, "ultimate_equipment", category_file, line, entry.name, entry.key);
+        if let Some(entry) = divergence {
+            report.name_pi_dropped.push(format!("{category_file}:{line} {}", record_key));
+            report.name_pi_renamed_records.push(entry);
         }
         let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
             "description",
             entry.description,
             declared.description,
         );
+        let source = Source::LstToken {
+            path: format!("{UE_DIR}/{category_file}"),
+            sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
+            line,
+            record_key: record_key.clone(),
+        };
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
             ingested_at: ingested_at.to_string(),
             data: EquipmentData {
-                key: entry.key.to_string(),
+                key: record_key.clone(),
                 category: format!("{:?}", entry.category),
-                name: entry.name.to_string(),
+                name: record_name,
                 cost_gp: entry.cost_gp,
                 weight_lbs: entry.weight_lbs,
                 description: stored_desc,
@@ -517,9 +545,11 @@ fn generate_equipment(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name,
+            rename: rename_info,
         };
-        current_keys.insert(entry.key.to_string());
-        let slug = slugify(entry.key, &mut used);
+        current_keys.insert(record_key.clone());
+        let slug = slugify(&record_key, &mut used);
         if entry.category == EquipmentCategory::Equipmods {
             write_json(&equipmods_dir, &slug, &record)?;
             report.equipment_modifier_written += 1;
@@ -565,6 +595,7 @@ pub fn generate(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::rules_core::codex_neutral_name::neutral_key;
 
     #[test]
     fn slugify_handles_parens_and_collisions() {
@@ -668,26 +699,42 @@ mod tests {
         }
     }
 
+    /// SD-32 T9 onboarding (card 11) group E: `decisions.md §24` replaced
+    /// this generator's original "drop the row outright" disposition with a
+    /// Codex-generated neutral rename, the same mechanism
+    /// `cache_gen::equipment_gap` already ships (`resolve_name_or_rename`,
+    /// reused here rather than re-implemented). The record now SHIPS --
+    /// under a coordinate-derived neutral name -- rather than vanishing;
+    /// only the real "Otyugh Hide" string must never appear anywhere in the
+    /// output, which this test still asserts.
     #[test]
-    fn nameispi_yes_drops_the_record_instead_of_publishing_the_real_name() {
-        let corpus = ScratchCorpus::new("drops");
+    fn nameispi_yes_renames_the_record_instead_of_dropping_it() {
+        let corpus = ScratchCorpus::new("renames");
         corpus.write_arms_armor(&[&otyugh_hide_row(true)]);
         let out_dir = corpus.root.join("out");
 
         let report = generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
 
+        let neutral_key = neutral_key("equipment", "ultimate_equipment", "ue_equip_arms_armor.lst", 1);
         assert_eq!(
             report.name_pi_dropped,
-            vec!["ue_equip_arms_armor.lst:1 Otyugh Hide".to_string()],
-            "a NAMEISPI:YES row must be reported as dropped, never silently skipped"
+            vec![format!("ue_equip_arms_armor.lst:1 {neutral_key}")],
+            "a NAMEISPI:YES row must be reported as renamed, by coordinate, never the original string"
         );
+        assert_eq!(report.name_pi_renamed_records.len(), 1);
+        let mut found_renamed_record = false;
         for path in out_dir_json_files(&out_dir) {
             let text = std::fs::read_to_string(&path).unwrap();
             assert!(
                 !text.contains("Otyugh Hide"),
                 "{path:?} must not carry the real name of a NAMEISPI:YES record: {text}"
             );
+            if text.contains(&neutral_key) {
+                found_renamed_record = true;
+                assert!(text.contains("\"codex_generated_name\": true"));
+            }
         }
+        assert!(found_renamed_record, "the renamed record must still be written to disk");
     }
 
     #[test]

@@ -491,6 +491,14 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUT` entry at
     // all -- see `EQUIPMENT_BOOK_AG`'s doc comment above.
+    //
+    // Cause C (`t9-onboarding-equipment-modifier-ability-rootcause` receipt,
+    // group C): `ag_equipmods.lst` was simply absent from this `files` list,
+    // so the book's one `equipment_modifier` object ("Medium Grey Maiden
+    // Plate ~ Agile Maiden ~ Armor" et al) was never read at all -- a
+    // genuine ingest gap, not a citation defect. Added back in; the
+    // `_equipmods` basename check at `equipment_book_slug_for`/the category
+    // classifier below routes it to `equipment_modifier` automatically.
     BookInput {
         code: EQUIPMENT_BOOK_AG,
         slug: "adventurers_guide",
@@ -498,6 +506,7 @@ const BOOK_INPUTS: &[BookInput] = &[
             "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
             "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_general.lst",
             "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equipmods.lst",
         ],
     },
     // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already

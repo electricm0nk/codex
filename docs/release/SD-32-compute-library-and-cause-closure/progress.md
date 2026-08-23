@@ -7511,4 +7511,71 @@ architectural gap shape; CHECK C guards it too, going forward.
 
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-onboarding-class-feature-pi-and-rescreen_cycle-1_cycle_receipt.md`.
+
+## Cycle `t9-onboarding-equipment-modifier-ability-fix` (2026-08-23)
+
+Implemented the five fixes the prior root-cause cycle (above) specified, in its own recommended
+order (C -> D -> B -> A -> E). Re-derived the target population first (`§17a`): still 28 units
+(19 `equipment_modifier` + 8 `equipment` + 1 `ability`), unchanged since the root-cause cycle.
+
+- **Fix C** — one line added to `gen_equipment_gap_tables.rs`'s `adventurers_guide` `BOOK_INPUTS`
+  (the book's `_equipmods.lst` was simply never read). Regenerated `equipment_gap_tables.rs`
+  (diff: 3 insertions/2 deletions, one new row) and the corpus JSON (`gen_cache_equipment_gap`).
+  1 unit closed.
+- **Fix D** — two mechanisms in `v06_work_inventory.rs`: (1) a new `pfs_legality_only_row` trap
+  drops a plain `_pfs/`-file row whose only payload is a legality marker/gate, corpus-wide-verified
+  safe (98 matching rows found, disjoint from every `_pfs/` row that carries real content); (2)
+  `mod_only_rescue`'s base-declared check now also checks `Kind::Trait` for an `Ability`-kind `.MOD`
+  target, closing the one case where a base row's own `TYPE:Trait...` redirect made the check miss
+  it. 8 units closed (6 `ultimate_magic` + 1 `bestiary_3` equipment, 1 `ultimate_campaign` ability).
+- **Fix B** — `git mv`'d 4 `pathfinder_unchained` equipmod JSON files from `equipment/` into
+  `equipment/equipmods/` (no content change; `shape_ledger.py`'s kind-from-directory join was
+  reading them as `equipment`, not `equipment_modifier`). 4 units closed.
+- **Fix A** — new per-book `copy_template_row` walker trap: an `equipment_modifier` row whose own
+  `KEY:` is the base some `.COPY=` row in the same book's `equipmods` files targets is a PCGen
+  "template" row, never a second real object. **Deliberately scoped to `advanced_class_guide`
+  only** — a first, corpus-wide attempt tripped the regen's own stamp-loss guard, naming 24 units in
+  *other* books (e.g. `advanced_race_guide`) whose template-row unit is the one the real ingest
+  pipeline resolves to and already carried a `literal-verified` stamp, disproving the
+  "template row is always an orphan" assumption outside ACG. 14 units closed.
+- **Fix E** — the one genuine ingest gap. Ported `cache_gen::equipment_gap::resolve_name_or_rename`
+  (imported, not re-implemented) into `cache_gen::ultimate_equipment::generate_equipment`, replacing
+  the old outright-drop of a `NAMEISPI:YES` row with `decisions.md §24`'s neutral rename. Added
+  `codex_generated_name`/`rename` fields to that module's own `CacheRecord`/`GenerationReport`,
+  mirroring `equipment_gap.rs`'s shape. 1 unit closed.
+
+**Result: `no_record` 106 -> 78** (`equipment_modifier`/`equipment`/`ability` all reach zero;
+`monster_ability`'s 78, a sibling lane's territory, is untouched). Regenerated
+`docs/work-inventory.json` guarded-path (`corpus_literal_sweep --json-out` CLEAN 0 findings,
+`derived_evaluator_fixture_check --json-out` 1836 cleared/0 failed, `v06_work_inventory --json-out`
+with both report env vars set, no `--allow-stamp-loss`) — full status distribution diffed
+before/after, 0 verification stamps lost, 73 units left the population entirely (all confirmed
+duplicates or non-content legality-restatement rows, spot-checked by class before landing, per
+`§16`: a unit that stops being counted is not a unit closed).
+
+**One destructive near-miss caught before commit** (`git status --porcelain`): the first
+`gen_cache_ultimate_equipment` run staged 65 file deletions under
+`data/corpus/ultimate_equipment/equipment/` — that generator's own stale-file sweep, unaware
+`gen_cache_equipment_gap`'s separate `"UE"` arm also writes into the same shared directory, deleted
+every file the other generator had ever written there. Reverted with
+`git checkout HEAD -- data/corpus/ultimate_equipment/`, keeping only the one genuinely new file
+this cycle's fix produces.
+
+**Two pre-existing stale pinned-count reds fixed** (unrelated to this cycle's own changes, caught by
+the mandatory sweep after a record-count change): `equipment_resolver.rs`'s and
+`equipment_catalog.rs`'s (`apps/desktop`) `EQUIPMENT_BOOK_UE` count, both pinned at 1613 against a
+static table (`ue::equipment_tables()`, byte-identical to this branch's pinned base) whose real
+length is 1614; `equipment_resolver.rs`'s `rows.len()` total, pinned at 8025 assuming 1879 gap
+rows when the generated table's own header already read 1953 at this cycle's pinned base (an
+untraced prior drift). Both `scripts/retro.py correction`-logged and retargeted to proven values.
+
+**One larger pre-existing drift deferred, not fixed**: `apps/desktop/src-tauri/src/
+equipment_catalog.rs`'s equipment-catalog test module carries several further stale pinned counts
+(per-book description coverage, category-filter total, overall catalog length) unrelated to
+anything this cycle touched — discovered only because this cycle ran that separate cargo
+workspace's own test suite. Logged as a `scripts/retro.py deferral`; out of scope for this cycle.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-onboarding-equipment-modifier-ability-fix_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).
 Commit: (this cycle's commit -- see push output).

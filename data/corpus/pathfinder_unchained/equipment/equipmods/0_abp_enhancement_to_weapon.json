@@ -1,0 +1,93 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": null,
+    "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system.",
+    "equip_type": "Weapon",
+    "key": "Special Ability ~ ABP +0 ~ Weapon",
+    "name": "+0 ABP (Enhancement to Weapon)",
+    "plus": null,
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "(2000*HEADPLUSTOTAL*HEADPLUSTOTAL)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "300",
+          "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ ABP +0 ~ Weapon"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Masterwork.WeaponEnhancement.Magic"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Ability ~ +1 ~ Weapon,Special Ability ~ +2 ~ Weapon,Special Ability ~ +3 ~ Weapon,Special Ability ~ +4 ~ Weapon,Special Ability ~ +5 ~ Weapon,Special Quality ~ Masterwork ~ Weapon,Special Ability ~ ABP +2 ~ Weapon,Special Ability ~ ABP +3 ~ Weapon,Special Ability ~ ABP +4 ~ Weapon,Special Ability ~ ABP +5 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Ammunition"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "DESC",
+        "value": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "record_key": "Special Ability ~ ABP +0 ~ Weapon",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

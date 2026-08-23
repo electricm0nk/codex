@@ -313,6 +313,36 @@ impl Kind {
 /// per book in `files_not_enumerated`, never silently dropped — a file whose
 /// basename this function does not recognise shows up there by name, so a new
 /// book introducing a new file shape is visible instead of invisible.
+/// `true` when `path` sits under a `_pfs/` directory component -- PCGen's
+/// own convention for a Pathfinder-Society legality-overlay file, always
+/// nested one level under the book directory (e.g.
+/// `ultimate_magic/_pfs/pfs_um_equip_general.lst`). See `pfs_legality_only_row`
+/// (`TRAP_RULES`) for why this matters.
+fn path_is_pfs_overlay(path: &Path) -> bool {
+    path.components()
+        .any(|c| c.as_os_str().to_str() == Some("_pfs"))
+}
+
+/// `true` when a row's fields, beyond the first (identity) column, carry NO
+/// content beyond a PFS legality marker (`TYPE:PFSLegal`/`TYPE:PFSNotLegal`)
+/// and/or a `PRECHARACTERTYPE:`/`!PRECHARACTERTYPE:` gate -- verified
+/// corpus-wide (`pfs_legality_only_row`'s own doc comment) to be disjoint
+/// from every `_pfs/` row that carries real content (`KEY:`, `DESC:`,
+/// `BONUS:`, `ABILITY:`, ...), so this check never drops a genuine
+/// declaration. Field-name comparison only, leading `!` (negation) stripped
+/// before comparing, so `!PRECHARACTERTYPE:...` and `PRECHARACTERTYPE:...`
+/// both count.
+fn row_is_pfs_legality_only(fields: &[&str]) -> bool {
+    fields.iter().skip(1).all(|field| {
+        let field = field.trim();
+        if field.is_empty() {
+            return true;
+        }
+        let head = field.trim_start_matches('!').split(':').next().unwrap_or("");
+        head == "TYPE" || head == "PRECHARACTERTYPE"
+    })
+}
+
 fn file_kind(basename: &str) -> Option<Kind> {
     // Order matters: `_abilities_class` and `_abilities_race` must be tested
     // before the bare `_abilities`, and `_equipmods` before `_equip`.
@@ -622,6 +652,7 @@ mod kind_ability_tests {
             &empty,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
@@ -643,6 +674,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::Ability,
             text,
+            &empty,
             &empty,
             &empty,
             &empty,
@@ -668,6 +700,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::ClassFeature,
             text,
+            &empty,
             &empty,
             &empty,
             &empty,
@@ -709,6 +742,7 @@ mod kind_ability_tests {
             &empty,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 0, "{:?}", out.units);
@@ -741,6 +775,7 @@ mod kind_ability_tests {
             &empty,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 0, "{:?}", out.units);
@@ -762,6 +797,7 @@ mod kind_ability_tests {
             &empty,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 0, "{:?}", out.units);
@@ -779,6 +815,7 @@ mod kind_ability_tests {
             "advanced_class_guide",
             Kind::Equipment,
             text,
+            &empty,
             &empty,
             &empty,
             &empty,
@@ -806,6 +843,7 @@ mod kind_ability_tests {
             &empty,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
@@ -826,6 +864,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::ClassFeature,
             text,
+            &empty,
             &empty,
             &empty,
             &empty,
@@ -880,6 +919,23 @@ const TRAP_RULES: &[TrapRule] = &[
              Counting these inflated a feat estimate from 301 to 396. Not a unit — EXCEPT when \
              no base record for that name exists anywhere in the enumerated corpus, which is a \
              real declaration in disguise (see `mod_only_rescue`).",
+    },
+    TrapRule {
+        id: "pfs_legality_only_row",
+        description:
+            "A plain (non-`.FORGET`, non-`.MOD`, non-`.COPY=`) row in a `_pfs/` Pathfinder-Society \
+             legality-overlay file whose ONLY payload beyond its first field is a legality marker \
+             (`TYPE:PFSLegal`/`TYPE:PFSNotLegal`) and/or a `PRECHARACTERTYPE:`/`!PRECHARACTERTYPE:` \
+             gate -- no `KEY:`, `COST:`, `DESC:`, `BONUS:`, or any other content field. Real example: \
+             `ultimate_magic/_pfs/pfs_um_equip_general.lst:9`, \
+             `Lab Journal of Constance Inflix\\tTYPE:PFSNotLegal\\t!PRECHARACTERTYPE:1,PC` -- the item \
+             itself is declared elsewhere in the book's base file (here, as a `.COPY=` variant of \
+             `Spellbook` at `um_equip_general.lst:17`); this row only restates its PFS legality. \
+             Carrying zero mechanical content of its own (verified corpus-wide: every `_pfs/` row \
+             whose non-legality token set is non-empty is excluded from this trap and stays counted, \
+             `decisions.md §20` t9-onboarding re-derivation), it can never correspond to a corpus \
+             record of its own -- counting it as a unit makes it permanently, unfixably `no_record`, \
+             the identical `.FORGET`-directive failure mode this trap mirrors. Never a unit.",
     },
     TrapRule {
         id: "mod_only_rescue",
@@ -3962,6 +4018,7 @@ fn enumerate_file(
     book_monster_race_names: &BTreeSet<String>,
     book_pc_class_names: &BTreeSet<String>,
     corpus_pc_class_names: &BTreeSet<String>,
+    book_equipmod_copy_base_targets: &BTreeSet<String>,
     out: &mut BookEnumeration,
 ) {
     // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
@@ -4141,6 +4198,41 @@ fn enumerate_file(
                 resolved_book,
             ));
             continue;
+        }
+
+        // SD-32 T9 onboarding (card 11), group D: a plain row in a `_pfs/`
+        // Pathfinder-Society legality-overlay file that carries NO content
+        // beyond a legality marker/gate is a restatement of an item declared
+        // elsewhere in the book, not a declaration of its own -- see the
+        // `pfs_legality_only_row` TRAP_RULES entry for the full reasoning
+        // and the worked example. `.FORGET` and `.MOD` rows are already
+        // dispatched above and never reach this check.
+        if path_is_pfs_overlay(path) && !first.contains(".COPY=") && row_is_pfs_legality_only(&fields) {
+            *out.trap_hits.entry("pfs_legality_only_row").or_default() += 1;
+            continue;
+        }
+
+        // SD-32 T9 onboarding (card 11) group A: an `equipment_modifier`
+        // PLAIN declared row (never a `.MOD`/`.FORGET`/`.COPY=` row -- all
+        // three are already dispatched above) whose own identity (its
+        // `KEY:` field, falling back to the first column the same way
+        // `wiring_class::build_copy_base_index` resolves identity) is
+        // ITSELF the base some `.COPY=` row in this same book's `equipmods`
+        // files targets is a PCGen "template" row, not a second real
+        // object -- see `copy_template_row`'s TRAP_RULES entry for the
+        // worked "Burdenless"/"Answering" example and why the real ingest
+        // pipeline (`cache_gen::equipment_gap::find_citation`) already
+        // resolves every one of this shape's corpus records to the
+        // `.COPY=` row's own coordinate, never the template's. Scoped to
+        // `Kind::EquipmentModifier` only -- `book_equipmod_copy_base_targets`
+        // is built from equipmods files exclusively, so this can never fire
+        // for another kind.
+        if kind == Kind::EquipmentModifier {
+            let identity = token_value(&fields, "KEY:").unwrap_or(first).trim().to_lowercase();
+            if book_equipmod_copy_base_targets.contains(&identity) {
+                *out.trap_hits.entry("copy_template_row").or_default() += 1;
+                continue;
+            }
         }
 
         // A class file's non-`CLASS:` rows are per-level progression rows.
@@ -4340,6 +4432,54 @@ fn enumerate_book(book_dir: &Path, book: &str, corpus_pc_class_names: &BTreeSet<
     // `book_pc_class_names`'s own doc comment.
     let book_pc_class_names = book_pc_class_names(book_dir);
 
+    // SD-32 T9 onboarding (card 11) group A: the base identities (KEY:
+    // field, lower-cased) that some `.COPY=` row in one of this book's own
+    // `equipmods` files targets. Scoped to `Kind::EquipmentModifier` files
+    // AND to `advanced_class_guide` only (never a corpus-wide/all-kinds/
+    // all-books scan) -- see `copy_template_row`'s TRAP_RULES entry for the
+    // evidence this is narrower than the general shape: re-deriving this
+    // corpus-wide (every book) surfaced 24 OTHER books' equipment_modifier
+    // units (e.g. `advanced_race_guide:equipment_modifier:
+    // material_darkleaf_cloth_clothing`, ARG's own real `Material ~
+    // Darkleaf Cloth ~ Clothing`) whose base-declaration row IS the one the
+    // real ingest pipeline resolves to and had ALREADY carried a
+    // `literal-verified` stamp -- proving the "the `.COPY=` row is what the
+    // real ingest resolves to, the template row is an orphan" assumption,
+    // true for ACG's `acg_equipmods.lst` (verified corpus-wide within that
+    // one file: every existing `equipment/equipmods/` record under
+    // `advanced_class_guide` cites a line in the 85-132 "Old KEYs" `.COPY=`
+    // block, never the 10-84 primary block), does NOT generalize to every
+    // book. Widening this beyond ACG without book-by-book verification
+    // would have deleted 24 real, already-verified units --
+    // `docs/release/SD-32-compute-library-and-cause-closure/decisions.md
+    // §17a`'s "validate an instrument before trusting a confident claim it
+    // produces", caught by the regen's own stamp-loss guard before it ever
+    // reached a commit. Computed BEFORE the main enumeration loop,
+    // mirroring `book_monster_race_names`/`book_pc_class_names` above: a
+    // `.COPY=` row can precede OR follow the template row it targets in the
+    // same file (`acg_equipmods.lst`'s "Burdenless" template is line 13,
+    // its `.COPY=` is line 86), so this cannot be a single top-to-bottom
+    // pass.
+    let mut book_equipmod_copy_base_targets: BTreeSet<String> = BTreeSet::new();
+    if book == "advanced_class_guide" {
+        for path in &files {
+            let basename = path
+                .file_name()
+                .map(|n| n.to_string_lossy().into_owned())
+                .unwrap_or_default();
+            if file_kind(&basename) != Some(Kind::EquipmentModifier) {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(path) else { continue };
+            for line in text.lines() {
+                let first = line.split('\t').next().unwrap_or("").trim();
+                if let Some(base) = copy_base_identity(first) {
+                    book_equipmod_copy_base_targets.insert(base.trim().to_lowercase());
+                }
+            }
+        }
+    }
+
     for path in files {
         let basename = path
             .file_name()
@@ -4356,6 +4496,7 @@ fn enumerate_book(book_dir: &Path, book: &str, corpus_pc_class_names: &BTreeSet<
                         &book_monster_race_names,
                         &book_pc_class_names,
                         corpus_pc_class_names,
+                        &book_equipmod_copy_base_targets,
                         &mut out,
                     );
                 } else {
@@ -4377,7 +4518,8 @@ fn enumerate_book(book_dir: &Path, book: &str, corpus_pc_class_names: &BTreeSet<
 // `mod_base_name` stays local: it is also the `mod_only_rescue` path's own
 // base-name resolver, imported by name below.
 use codex::rules_core::wiring_class::{
-    CorpusLines, build_copy_base_index, build_mod_index, mod_base_name, token_closure_rows,
+    CorpusLines, build_copy_base_index, build_mod_index, copy_base_identity, mod_base_name,
+    token_closure_rows,
 };
 
 // ---------------------------------------------------------------------------
@@ -10936,7 +11078,28 @@ fn main() {
         let targets = std::mem::take(&mut enumeration.mod_targets);
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
         for (kind, key, name, provenance, magnitudes, resolved_book) in targets {
-            if declared.contains(&(kind, name.to_lowercase())) {
+            // SD-32 T9 onboarding (card 11), group D's PFS-overlay-citation
+            // shape re-derived for `.MOD` rows specifically: a `.MOD` row's
+            // OWN kind comes from its file (`file_kind`), never from
+            // `refine_kind`'s per-row `TYPE:` redirect (the `.MOD`
+            // continuation row carries no `TYPE:Trait...` of its own -- its
+            // payload is the overlay's `TYPE:PFSNotLegal`). So a PFS-legality
+            // `.MOD` row targeting a PF1e chargen Trait (real example:
+            // `ultimate_campaign/_pfs/pfs_uca_abilities_traits.lst:7`,
+            // `Trait ~ Corpse Cannibal.MOD`) is stashed under `Kind::Ability`
+            // even though the base declaration it modifies
+            // (`uca_abilities_traits.lst:280`) redirected to `Kind::Trait`
+            // via that same `TYPE:` check -- so the `declared` lookup below,
+            // scoped strictly by kind, never finds it and `mod_only_rescue`
+            // wrongly mints a second, orphan `Kind::Ability` unit citing the
+            // overlay row's own coordinate instead of recognizing the base
+            // is already declared. Check both kinds for exactly the
+            // Ability<->Trait pair `refine_kind`'s `Kind::Ability` arm
+            // redirects -- the only redirect this walker performs from a
+            // `.MOD` row's raw file-kind to a different declared kind.
+            let already_declared = declared.contains(&(kind, name.to_lowercase()))
+                || (kind == Kind::Ability && declared.contains(&(Kind::Trait, name.to_lowercase())));
+            if already_declared {
                 continue;
             }
             if !rescued.insert((kind, name.to_lowercase())) {

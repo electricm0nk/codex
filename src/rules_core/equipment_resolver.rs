@@ -770,7 +770,20 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // never through `data/corpus/`'s own, separately-screened JSON) --
         // `gen_cache_equipment_gap`'s JSON-write path already excluded it
         // correctly; this generator's OWN output did not, until now.
-        assert_eq!(count(EQUIPMENT_BOOK_UE), 1613);
+        //
+        // SD-32 T9 onboarding (card 11): re-derived pre-existing red,
+        // unrelated to this cycle's own group-E rename fix -- this
+        // catalog (`hand_authored_equipment_rows`) chains
+        // `ue::equipment_tables::{equipment_tables,equipmod_tables}()`
+        // verbatim with NO `declared_pi_at`/NAMEISPI screening of its own
+        // (confirmed: no such call anywhere in this function), so its row
+        // count is exactly that static table's length and does not move
+        // with `cache_gen::ultimate_equipment`'s corpus-JSON generator.
+        // `src/rules_core/rules_tables/ultimate_equipment/equipment_tables.rs`
+        // is byte-identical to this branch's own pinned base (`git diff`
+        // against `origin/tranche/12` is empty), so 1614 was already the
+        // real count before this cycle touched anything -- 1613 was stale.
+        assert_eq!(count(EQUIPMENT_BOOK_UE), 1614);
         // SD28-E15: UM's 26-record equipment table (24 General + 2
         // ArmsArmor). Re-derived from the catalog itself, not by hand-adding
         // 26 to the old 5,477 total -- also independently confirmed the 26
@@ -834,7 +847,20 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // book adds +97; the new `ultimate_magic` book adds +0, see
         // `tests/equipment_gap_tables.rs`), so the total grows by the same
         // 159 (7,866 -> 8,025). Hand-authored count is unchanged.
-        assert_eq!(rows.len(), 8_025);
+        //
+        // SD-32 T9 onboarding (card 11): re-derived pre-existing red. At
+        // this cycle's PIN, `equipment_gap_tables.rs`'s own header already
+        // stated "Total: 1953 rows" -- 74 more than the 1,879 this pinned
+        // lineage's arithmetic assumes (6,146 + 1,879 = 8,025) -- an
+        // untraced drift from an earlier cycle's regen that updated the
+        // generated table without updating this pinned total. This cycle's
+        // own group-C fix (`decisions.md §20` residual: `ag_equipmods.lst`
+        // was absent from `adventurers_guide`'s `BOOK_INPUTS`) adds the
+        // real, evidenced +1 (1,953 -> 1,954, one `equipment_modifier` row,
+        // `cargo run --locked --bin gen_equipment_gap_tables`'s own diff:
+        // 3 insertions, 2 deletions, all in the `adventurers_guide` block).
+        // Retargeted to the proven total: 6,146 + 1,954 = 8,100.
+        assert_eq!(rows.len(), 8_100);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.

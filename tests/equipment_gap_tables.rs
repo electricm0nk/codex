@@ -125,7 +125,12 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // SD-32 `decisions.md §24`: 97 -> 115 (+18). The PI exclusions above
     // are no longer excluded whole -- they are INCLUDED under a
     // Codex-generated neutral name.
-    ("AG", 115),
+    // SD-32 T9 onboarding (card 11) group C, `decisions.md §20` residual:
+    // `ag_equipmods.lst` was simply absent from `adventurers_guide`'s
+    // `BOOK_INPUTS` `files` list -- the book's one real `equipment_modifier`
+    // object ("Medium Grey Maiden Plate" ~ "Special Ability ~ Agile Maiden
+    // ~ Armor") was never read at all. Added back in: 115 -> 116 (+1).
+    ("AG", 116),
     // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
     // routed in the compiled catalog) had no `BOOK_INPUT` entry either, but
     // its real residual (19 `not-ingested` equipment units) turns out to be
@@ -148,8 +153,11 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1953,
-        "1953 = 1879 + 74 (SD-32 `decisions.md §24`: a declared-PI or blacklisted-name row is \
+        total, 1954,
+        "1954 = 1953 + 1 (SD-32 T9 onboarding card 11 group C, `decisions.md §20` residual: \
+         `ag_equipmods.lst` was absent from adventurers_guide's BOOK_INPUTS, so its one real \
+         equipment_modifier object was never read; AG 115 -> 116, see EXPECTED_PER_BOOK above). \
+         1953 = 1879 + 74 (SD-32 `decisions.md §24`: a declared-PI or blacklisted-name row is \
          no longer excluded from this table whole -- it is INCLUDED under a Codex-generated \
          neutral name/key, `name_pi_citation` carrying its real citation forward so `cache_gen::\
          equipment_gap` can still resolve it; 65 declared + 9 blacklist across 10 books: UE +1, \
