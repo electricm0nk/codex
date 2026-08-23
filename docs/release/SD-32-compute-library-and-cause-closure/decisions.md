@@ -624,3 +624,82 @@ methods, with committed commands — not because it is convenient.
 content**, and its result goes through adversarial verification before any unit is credited as
 "not work". A unit moved out of T2b is not a unit closed: it is a unit that belonged to a different
 kind all along, and the receipt must say which kind and prove it.
+
+## Decision 17 — Stop treating every object as a snowflake: the generic ingest already exists (operator correction 2026-08-23)
+
+**Status:** Operator correction of the orchestrating session. Supersedes the per-book dispatch shape
+used in T2b wave 1 and the 98-cycle estimate derived from it. `decisions.md §13` (do the work) and
+`§16` (fix the classifier) both stand.
+
+### What the operator said
+
+> *"havent we had a generic ingest since we first started? ingest everything. analyze the shapes.
+> quit trying to treat every object as a snowflake. you seem to have forgotten all the lessons from
+> sd-31"*
+
+Correct on every count.
+
+### The measurement that settles it
+
+| Layer | Size | Generic? |
+|---|---:|---|
+| `scripts/census_independent.py` | 564 lines | yes — walks 186 book dirs, finds 55,884 objects |
+| `scripts/shape_ledger.py` | 510 lines | yes — classifies all 24,914 not-done units, 0 unclassified |
+| `src/bin/v06_work_inventory.rs` | 15,821 lines | partly — **174** hardcoded book references |
+| `src/rules_core/rules_tables/**` | **137,002 lines**, 204 files | no — hand-authored per book/race/class |
+
+**A generic ingest has existed the whole time.** "Ingest everything and analyse the shapes" is
+~1,000 lines of already-working tooling. The 137,002-line hand-authored table layer is the snowflake
+treatment, and it is where every per-book estimate came from.
+
+The same shape repeats in `src/bin/`: **seven** spell-ingest binaries, 3,367 lines, one per book,
+sharing the same thirteen functions around a common parser (`src/pcgen_import/lst_parser/`, 4,161
+lines, 8 modules). Only two lines per binary are genuinely book-specific. The copies have **drifted**
+— `pi_screen` has three distinct implementations across the seven, and `ultimate_combat`'s is six
+lines shorter than the others. That is a live licensing-correctness defect, not just duplication,
+and it undermines the T9 PI audit's own `clear` bucket.
+
+### The SD-31 lessons this violated
+
+`docs/retro/sd31-retrospective.md` had already written both failures down:
+
+1. **"Lane scoping that guaranteed zero yield.** Six consecutive `race_trait` lanes were scoped to
+   'tables and matchers only, no chassis work' and every one shipped nothing. Units finally moved
+   when an integration cycle lifted the restriction. **The bottleneck was my brief, not the lanes.**"
+
+   T2b wave 1's brief said *"ingest-tool extension only, ~3 files each"* and scoped chassis work out.
+   Four lanes, nine books, **30 units**. The identical failure, one bundle later, from the same cause.
+
+2. **"The wall was never the rules.** PCGen has solved Pathfinder for twenty years; the logic exists,
+   tested, in Java. Wave 31's taxonomy put the split at roughly **3.3:1 to 4.4:1 in favour of our own
+   plumbing** over genuine rules complexity — a dispatch that did not exist, a matcher requiring an
+   exact string, a class name read from the wrong field."
+
+   Every one of card 11's five shapes is that plumbing. T2b's named cause was a matcher that turned
+   out not to run at all; T2a's was a class name read from the wrong field; §16 found T2b's
+   population is largely a classifier typing monsters as races. Estimating them per-book accepted
+   the snowflake premise instead of attacking the plumbing.
+
+### The ruling
+
+**Enumeration and shape analysis are generic passes, not per-object work.** No further per-book,
+per-race, or per-class onboarding lanes are dispatched for card 11 or card 15. The work is:
+
+1. **Make `v06_work_inventory.rs` enumerate every kind the census already finds**, driven by the
+   walker's own object-definition rules rather than 174 hardcoded book references and one
+   hand-added `Kind::` variant per cycle. Adding a kind must not cost a cycle — a full cycle to add
+   `Kind::Skill` alone is the symptom.
+2. **Collapse the seven per-book spell-ingest binaries into one config-driven pass**, and fix the
+   three-way `pi_screen` drift to a single screen in a single place while doing it.
+3. **Then re-run the shape ledger over everything** and report what is genuinely left.
+
+The residual after those three is real per-object work, and it will be a fraction of the 98 cycles
+estimated from the snowflake premise. **That estimate is withdrawn** — it measured the cost of the
+wrong approach.
+
+### The standing control
+
+**Before any lane is scoped to "extension only" or "no <X> work", check whether that restriction is
+the bottleneck.** SD-31's six zero-yield lanes and SD-32's T2b wave 1 are the same error, and the
+common signature is a brief that forbids the change the units actually need. A lane that returns
+"blocked, needs chassis work" three times over is reporting a scoping defect, not a content problem.
