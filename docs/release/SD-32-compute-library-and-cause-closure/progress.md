@@ -6698,3 +6698,58 @@ gaps, and PI-declared exclusions, grouped by refusal reason per `decisions.md §
 - **Kanban:** row 11, `t9-monster-ability-owner-less-ingest-round5` appended.
 - Receipt: `artifacts/gate-3-closure-invariant/t9-monster-ability-owner-less-ingest-round5_cycle-1_cycle_receipt.md`.
 - Commit: `7fa02e5433`.
+
+## Cycle t9-onboarding/corpus-literal-sweep-pi-exemption-gap — repo-wide `corpus_literal_sweep` blocker cleared (2026-08-23)
+
+**Answers the previous cycle's item (1) above.** `corpus_literal_sweep`'s one `clean:false` finding,
+`data/corpus/inner_sea_magic/ability/hidden_wand.json`, was reproduced first, not guessed at.
+`record.codex_generated_name` is `false` on this record — it is not a `decisions.md §24`-renamed
+record, so the dispatch brief's candidate (a) (the `§24` exemption too narrow) does not describe it.
+The real defect: `scripts/pi_scrub.py::blacklist_term_hit_including_concatenated` (the "concatenated
+PascalCase identifier" blacklist check) false-positived on ORDINARY PROSE — the DESC text "...activate
+a wand (or any similar spell trigger item..." has its real spaces between "wand"/"or"/"any" DELETED by
+`_normalize`'s strip-everything normalization, manufacturing a run-on string that matches one of
+`PI_BLACKLIST_TERMS`'s place-name entries (see `pi_scrub.py` for the value — not repeated here per
+PI discipline) though no genuine no-separator concatenation exists in the source. Confirmed
+against the pinned oracle: the real PCGen row (`ism_abilities_other.lst:120`) carries no
+`DESCISPI:YES`, and its structurally-identical sibling row (`Lingering Illusions`, line 119, same
+`PREABILITY` reference, ingested 22 minutes earlier) shipped correctly un-redacted.
+
+**Fix:** new `pi_scrub._normalize_haystack` preserves real whitespace as a match boundary (VALUE side
+of checks 3/4); `_normalize` (strips everything) stays needle/term-side only, unchanged, so a
+multi-word deity name's own no-separator form is still found embedded in a genuinely-concatenated
+identifier. Costs the checks' real designed purpose (catching a `TYPE`/`BONUS`/`DEFINE` identifier
+that concatenates a term with no separator at all) nothing, since such identifiers never contain
+whitespace to begin with. RED->GREEN + mutation-proved: `scripts/tests/test_pi_scrub.py::
+ConcatenatedCheckDoesNotSpanRealWhitespaceTests`, synthetic term "Testcase"/"test case" (never a real
+blacklist term). `python3 -m unittest scripts.tests.test_pi_scrub` 10/10 green; wider regression sweep
+across every PI-adjacent test module touching `pi_scrub`/`blacklist_term_hit_including_concatenated`,
+60/60 + 82/82 (1 pre-existing skip) green, no regressions.
+
+**Guarded regen, not a hand edit:** `python3 scripts/ingest_ability.py` re-run over the full 4,824-unit
+`ability` population: `changed 3, unchanged 4821`. All 3 un-redacted false positives, confirmed clean
+against the pinned oracle. (The other 2 — `favored_son_daughter_belor_hemlock_town_sheriff.json`,
+`codex_named_unit_ability_inner_sea_gods_isg_abilities_faith_lst_98.json` — were ingested BEFORE
+`decisions.md §26`'s rn->m OCR-fold exemption landed and had simply never been re-run since; this is
+the first `ingest_ability.py` re-run since that fix, so it also closes that already-approved gap as a
+side effect over the same generator/kind, not new scope.)
+
+`cargo run --locked --bin corpus_literal_sweep --json-out ...`: `46334 records examined ... 0
+findings ... CLEAN`. `cargo run --locked --bin derived_evaluator_fixture_check --json-out ...`: `1836
+cleared over 2577 fixture rows, 0 failed, 0 not ingested`. `docs/work-inventory.json` regenerated
+through the guarded path (`CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set, no
+`--allow-stamp-loss`): status distribution `not-ingested 28060->27058, literal-verified 6506->6506,
+text-complete 4435->5021, unknown 4347->4286, grounded 2724->3224, fixture-verified 1741->1741,
+ingested-magnitude 1612->1612, deferred-with-reason 46->46, not-started 19->19` (total 49490->49513).
+**The 8,247 `literal-verified`+`fixture-verified` stamps are the EXACT SAME id set before and after**
+(0 lost, 0 gained, diffed by id, not just by count) — the near-miss `--allow-stamp-loss` hazard named
+in this cycle's own dispatch brief did not recur.
+
+- **Status:** complete.
+- **Kanban:** no card change — this is a repo-wide precondition fix, not itself an Epic card. Rows 11
+  and 15 untouched, `in-progress`, per this cycle's dispatch brief.
+- Receipt: `artifacts/gate-3-closure-invariant/corpus-literal-sweep-pi-exemption-gap_cycle-1_cycle_receipt.md`.
+- **What remains:** `epic-6-kind-trait` row 16's own remaining scope (unblocked by this cycle, not
+  worked here): `ingest_races.rs` BookSource additions, `ingest_generic_kind.py --kind trait` run,
+  `trait_pool`/`race_trait_picker.rs`/`reach_gate.rs` build.
+- Commit: (this cycle's commit — see push output).

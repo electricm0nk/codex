@@ -207,7 +207,35 @@ _MIN_NORMALIZED_NEEDLE_LEN = 6
 
 
 def _normalize(s: str) -> str:
+    """Needle-side normalization: strip EVERY non-alphanumeric character,
+    including whitespace. Used to build the short, known needle/term forms
+    (`_NORM_BLACKLIST_TERMS`, `scrub_name_pi_tokens`'s own `norm_needles`) —
+    a multi-word deity/place name (`"Cayden Cailean"`) must normalize to its
+    no-separator form (`"caydencailean"`) so it can still be found embedded
+    in a genuinely no-separator concatenated identifier. Never use this on
+    haystack VALUES being scanned for a hit — see `_normalize_haystack`."""
     return re.sub(r"[^a-z0-9]", "", s.lower())
+
+
+def _normalize_haystack(s: str) -> str:
+    """Value-side normalization for the concatenated-form checks (3/4):
+    strips punctuation the way `_normalize` does, but PRESERVES real
+    whitespace as a hard separator.
+
+    `decisions.md §26`-adjacent incident (t9-onboarding cycle, 2026-08-23,
+    `data/corpus/inner_sea_magic/ability/hidden_wand.json`): the blacklist
+    term "Andoran" false-positived on ordinary prose "...activate a wand
+    (or any similar..." because the OLD haystack normalization deleted the
+    real spaces between "wand", "or", and "any", manufacturing the substring
+    "andorany" out of three separate, real English words. Checks 3/4 exist
+    to catch a term truly joined with NO separator at all — a PCGen
+    `BONUS`/`DEFINE` variable identifier or a `TYPE:` value never contains
+    whitespace to begin with, so preserving whitespace here costs that
+    genuine catch nothing (there is none to preserve away) while it stops
+    natural-language prose whose words merely happen to concatenate into a
+    term once whitespace is deleted from being treated as a no-separator
+    join it never was."""
+    return re.sub(r"[^a-z0-9\s]", "", s.lower())
 
 
 _NORM_BLACKLIST_TERMS: list[tuple[str, str]] = [
@@ -221,7 +249,8 @@ def blacklist_term_hit_including_concatenated(value: str) -> str | None:
     """`normalized_term_hit(value)` (word-bounded, OCR-normalized), OR — if
     that finds nothing — an alphanumeric-normalized (no-separator) substring
     match against `PI_BLACKLIST_TERMS`, bounded to `_MIN_NORMALIZED_NEEDLE_LEN`
-    normalized characters.
+    normalized characters, with real whitespace in `value` still acting as a
+    boundary (`_normalize_haystack`) — see that function's docstring for why.
 
     This is the SAME check-4 the module docstring above describes, exposed as
     its own function so every caller that scans a token value against the
@@ -241,7 +270,7 @@ def blacklist_term_hit_including_concatenated(value: str) -> str | None:
     hit = normalized_term_hit(value)
     if hit:
         return hit
-    norm_value = _normalize(value)
+    norm_value = _normalize_haystack(value)
     if not norm_value:
         return None
     for term, canon_term in _NORM_BLACKLIST_TERMS:
@@ -317,7 +346,7 @@ def scrub_name_pi_tokens(
             scrubbed.append(dict(t))
             continue
 
-        norm_value = _normalize(value)
+        norm_value = _normalize_haystack(value)  # check 3, see that function's docstring
         value_lower = value.lower()
 
         blacklist_hit = blacklist_term_hit_including_concatenated(value)  # checks 1+4

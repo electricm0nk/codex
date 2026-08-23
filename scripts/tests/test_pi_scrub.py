@@ -100,6 +100,70 @@ class BlacklistTermConcatenationTests(unittest.TestCase):
         self.assertEqual(scrubbed[0]["value"], "CoordinatedeityAspectChoice.SpecialQuality")
 
 
+class ConcatenatedCheckDoesNotSpanRealWhitespaceTests(unittest.TestCase):
+    """`data/corpus/inner_sea_magic/ability/hidden_wand.json` (SD-32
+    `corpus_literal_sweep` `clean:false` blocker, t9-onboarding cycle,
+    2026-08-23): the real blacklist term "Andoran" false-positived on the
+    ordinary prose "...activate a wand (or any similar spell trigger
+    item..." because check 4's alphanumeric-normalized haystack strips ALL
+    non-alphanumeric characters, including real word-separating whitespace
+    -- "a wand or any" collapses to "...awandoranysimilar..." and swallows
+    "andoran" as a false substring, even though no genuine no-separator
+    concatenation exists in the source text (there ARE spaces; the check
+    just deletes them). Reproduced here with a synthetic term/text pair,
+    never a real blacklist term, matching this file's own stated convention.
+
+    Check 4 exists to catch a term truly joined with NO separator at all
+    (`CoordinatedeityAspectChoice`, tested above) -- ordinary natural-
+    language prose whose words merely happen to concatenate into the term
+    once whitespace is deleted is a different, unintended shape. Real
+    whitespace in the ORIGINAL value must keep acting as a boundary the way
+    every other separator (`.`, `,`, `|`, `~`) already does not need to,
+    because PascalCase/BONUS-variable identifiers never contain whitespace
+    to begin with -- so preserving it costs the genuine-concatenation catch
+    nothing."""
+
+    def setUp(self):
+        self._orig_norm_terms = pi_scrub._NORM_BLACKLIST_TERMS
+        # 8 normalized chars, >= _MIN_NORMALIZED_NEEDLE_LEN, built the same
+        # way "Andoran" is: two ordinary short English words that happen to
+        # concatenate into the synthetic term once whitespace is deleted.
+        fake_term = "Testcase"
+        pi_scrub._NORM_BLACKLIST_TERMS = [(fake_term, pi_scrub._normalize(fake_term))]
+
+    def tearDown(self):
+        pi_scrub._NORM_BLACKLIST_TERMS = self._orig_norm_terms
+
+    def test_ordinary_prose_whose_words_concatenate_across_real_whitespace_is_not_a_hit(self):
+        # "test" and "case" are separate, real, whitespace-separated words --
+        # the exact "wand" / "or" / "any" shape from the live incident.
+        text = "Please run a test case scenario before you continue."
+        self.assertIsNone(pi_scrub.blacklist_term_hit_including_concatenated(text))
+
+    def test_genuine_no_separator_concatenation_of_the_same_term_is_still_caught(self):
+        # No whitespace at all in the source value -- the shape check 4 was
+        # actually built for (`CoordinatedeityAspectChoice`-style).
+        value = "TestcaseAspectChoice.SpecialQuality"
+        self.assertEqual(
+            pi_scrub.blacklist_term_hit_including_concatenated(value), "Testcase"
+        )
+
+    def test_mutation_proof_a_naive_strip_all_normalize_reopens_the_false_positive(self):
+        """Mutation-proves the fix is load-bearing: the OLD strip-everything
+        normalization (what `_normalize` used to do to the haystack) DOES
+        false-positive on the same prose, confirming the RED case above
+        fails for the intended reason and is not vacuous."""
+        naive_normalize = lambda s: __import__("re").sub(r"[^a-z0-9]", "", s.lower())  # noqa: E731
+        text = "Please run a test case scenario before you continue."
+        norm_value = naive_normalize(text)
+        self.assertIn(
+            "testcase",
+            norm_value,
+            "the naive strip-everything normalization must still reproduce the collision "
+            "for this mutation proof to mean anything",
+        )
+
+
 class ShortTermsAreNotOverRedactedTests(unittest.TestCase):
     def test_a_short_generic_needle_below_the_normalized_length_bound_is_left_alone(self):
         tokens = [{"key": "FACT", "value": "Abb|RMA"}]
