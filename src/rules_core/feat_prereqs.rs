@@ -575,7 +575,25 @@ mod prerequisite_tests {
         // `Read the Room`) each carry a modelled, AND-chained `PREDEITY`/
         // `PRESKILL`/`PREABILITY` clause this level-1 build does not meet,
         // and are correctly DENIED.
-        assert_eq!(eligible, 701, "a starting Fighter's real eligible-feat count");
+        // +54 with commit fb4f28dad's 109 new corpus gap rows joined
+        // (inner_sea_combat 23 + inner_sea_gods 86, `decisions.md §17`/T9
+        // card 11). Verified by class, not by trust: isolating exactly the
+        // 109 keys that commit added and re-partitioning `reports` by that
+        // set reproduces the pre-commit population untouched
+        // (old_total_reports=2118, old_eligible=701, matching the values
+        // this assertion carried before that commit) plus a clean 109-row
+        // addition split 54 eligible / 55 denied -- every one of the 55
+        // newly-denied rows still carries a stated reason via the
+        // denial-reason loop below, run over the FULL joined `reports`,
+        // covering old and new rows alike. That commit's own sweep updated
+        // `reports.len()` (2118->2227, asserted above) but missed this
+        // eligible-count sibling assertion -- the same class of stale
+        // pinned-count-after-legitimate-growth defect `decisions.md §17a`
+        // and this bundle's four prior corrections already fixed elsewhere,
+        // not a real regression: most of the 109 new rows carry genuine
+        // Combat-style/Aldori/Rage-class-feature `PRE`-family prerequisites
+        // a fresh level-1 13-STR Fighter with no feats does not meet.
+        assert_eq!(eligible, 755, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();
