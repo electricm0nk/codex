@@ -3587,3 +3587,100 @@ this sign-off is read more broadly than T9's own four amendments + two ruled que
   known — this cycle's mechanism already covers 6 of Magus's own-named units (one of the 11-large
   tier), a real, small, proven data point, not the whole tier.
 - Receipt: `artifacts/gate-3-closure-invariant/epic-2-t12-roster-mechanism_cycle-1_cycle_receipt.md`.
+
+## Cycle epic-2-t9-onboarding (2026-08-23) — Card 11, T9 — `horror_adventures` spell family landed, 70 units reach
+
+- **Card ID:** 11 (`epic-2-cause-closure`, T9 sub-lane).
+- **First cycle authorised to transcribe T9 content**, per the `decisions.md §19` sign-off.
+  Re-derived T9's PI disposition fresh (`§17a` — never trust a handed figure) before transcribing
+  anything: `scripts/sd32_t9_pi_final_disposition.py` at this cycle's own tip gives
+  **332 blocked / 3,144 clear / 209 still-undecidable of 3,685** — the population grew **112 units**
+  (3,573 → 3,685) since the signoff receipt's own run, mostly in `feat` (487 → 599). This is
+  concurrent sibling-lane drift on the shared branch, not an error in either run — **the set of 20
+  fully-resolved books is unchanged**, so the dispatch list itself still holds; only the per-book/
+  per-kind unit counts inside it shifted.
+- **Scope check before writing anything:** confirmed T9's "not yet ingested" population is genuinely
+  disjoint from what `data/corpus/**` already ships (e.g. `bestiary_2/monster_ability/` already has
+  493 `.json` records — a different, already-`done` SD-30/31 population, not T9's). Confirmed the
+  codebase has exactly ONE generic raw-`.lst`-to-engine ingest path today (`ingest_spells.rs`,
+  writing a compiled `rules_tables` module) and no generic path from raw `.lst` directly to
+  `data/corpus/**/*.json` for any of T9's other five kinds — `gen_book_cache.rs` only serializes an
+  *already-compiled* module, and `enrich_<kind>_raw_tokens.rs` only backfills `raw_tokens` on an
+  *already-shipped* record. Neither creates new corpus-JSON records from scratch.
+- **Landed:** extended `ingest_spells.rs`'s existing config (`decisions.md §17`) with one 8-line
+  `BookInput` entry for `horror_adventures` — its SECOND compiled family (`RuleSetId::Ha` already
+  existed for companion/monster/monster_ability). All 72 base spell declarations in `ha_spells.lst`
+  are `clear` per the re-derived disposition; `pi_screen` (the one canonical screen, unchanged)
+  independently confirmed 0 PI-dropped. Wired end-to-end through the full consumer chain
+  (`spell_resolver::spell_catalog_rows()` → `v06_work_inventory::spell_book_slug_for` →
+  `apps/desktop`'s `spell_catalog::build_spell_catalog()` → `reach_gate`'s
+  `("horror_adventures", "spells")` claim), proven to reach against the LIVE `list_spell_catalog` IPC
+  response, not asserted.
+- **Real defect found and correctly handled, not force-fitted:** 2 of the 72 rows ("Green Caress",
+  "Verminous Transformation") are verbatim reprints of spells Ultimate Wilderness already ships
+  (earlier in the resolver's chain) — the resolver's own general, book-agnostic "first-chained-wins"
+  dedup (SD-31 wave-24) keeps only UW's copy, so 70 of 72 reach the SERVED catalog. Confirmed by
+  direct key-set intersection against every earlier-chained book, not assumed. Every pinned count
+  this touches was swept in the same commit: `spell_catalog.rs`'s
+  `the_catalog_serves_every_ingested_book_not_only_crb` (2113 → 2183) and
+  `mapping_helpers_agree_with_the_registry` (HA chained with the 2 known keys excluded, mirroring
+  `actual`'s own dedup so ordering stays aligned), `ingest_spells.rs`'s own
+  `books_table_names_exactly_the_nine_...` → renamed `..._ten_...` and updated, `reach_gate.rs`'s
+  `spells_reach("HA", ...)` claim scoped to the 70 keys that genuinely reach (not all 72 — this
+  keeps the claim TRUE against live IPC rather than needing an `OPEN_FINDINGS` gap entry the way
+  100%-duplicated `bestiary_6` needed one).
+- **RED → GREEN, concretely, three separate places:** (1) `ingest_spells.rs`'s book-list test failed
+  immediately on adding the config entry (`left`/`right` list mismatch), fixed, GREEN. (2)
+  `spell_catalog.rs`'s two count-pinned tests failed for the intended reason (`left: 2183, right:
+  2185` — a real served-vs-naive-count mismatch), diagnosed to the dedup rather than force-edited
+  blind, fixed, GREEN. (3) `reach_gate.rs`'s three reach-invariant tests failed for the intended
+  reason (`horror_adventures/spells: 2 ingested record(s) now reach no surface at all, with no
+  recorded finding`) when the claim first named all 72 keys; fixed by scoping the claim rather than
+  adding a suppression, GREEN.
+- **Suites:** `cargo test --locked --lib` 2409/2409 (13 ignored, unchanged); `--bin
+  v06_work_inventory` 329/329; `--bin ingest_spells` 19/19; `apps/desktop/src-tauri` (separate cargo
+  workspace) `cargo test --locked --bins` 518/518. Targeted integration tests directly touching
+  `horror_adventures` (`duergar_invisibility_sla_reaches_a_player_via_monster_codex`,
+  `sd31_e2_ground_truth_agreement`) and cross-book identity (`spell_cross_book_identity`) all pass.
+  All suites re-run AFTER the `origin/tranche/12` rebase (this cycle landed behind `9838c344d`, the
+  T12 roster-mechanism cycle), confirming no post-rebase regression.
+- **One pre-existing, unrelated failure found and NOT touched:** `tests/feat_gap_tables.rs::
+  the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one` (left 540, right 531).
+  Confirmed unrelated to this cycle's diff (`feat_gap_tables.rs`/`gen_feat_gap_tables.rs`/
+  `feats_all.rs` all untouched by `git status --porcelain` at cycle end) — concurrent sibling-lane
+  drift on `class_feature` tables, named per `AGENTS.md` Blocker Discipline rather than silently
+  left for the next cycle to rediscover.
+- **Gate 3's `no_record` figure re-derived, NOT repinned** (dispatch brief item 6):
+  `scripts/verify.sh --only shape-coverage-standing-gate` → `population=36015 unclassified=0
+  piles_reconcile=True no_record=21497 budget_exceeded=True`. This reads the COMMITTED
+  `docs/work-inventory.json`, which this cycle did not regenerate (same fail-closed guard card 4's
+  own precedent hit — `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` not set, and
+  `--allow-stamp-loss` is exactly the shortcut this program's own near-miss incident forbids). So
+  this figure is the pre-existing state, not moved by this cycle's 70-unit addition until a future
+  regen cycle runs. Budget constants in `shape_coverage_standing_gate.py` left untouched — that
+  repin belongs to a sibling lane per the dispatch brief.
+- **§15 — no Product Identity record encountered outside the signed-off disposition.** All 72
+  `horror_adventures` spell rows classified `clear`; `pi_screen` agreed independently (0 dropped).
+  Nothing was stopped on.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`. **Wired-integration audit result:**
+  `OK_NO_TOKENS`.
+- **Status:** complete (partial — one of T9's six kinds, for one of the 20 resolved books' full
+  slice; the rest is real, separate scope, named below). Kanban row 11 stays `in-progress`.
+- **Kanban:** row 11 prepended with this cycle's summary.
+- **What remains, precisely (per "land the kinds that fit and say precisely which remain"):** the
+  other five T9 kinds — `companion`, `feat`, `monster_ability`, `equipment`, `monster` — spanning all
+  20 resolved books except this one `horror_adventures` spell slice, are NOT landed. No generic
+  ingest path exists yet for any of them; building one to this program's fixture-check/PI-screen/
+  reach-gate bar is separate, real per-kind engineering, not a config extension the way `spell` was.
+  Approximate `clear` populations scoped to the 20 resolved books: `monster_ability` ~1,342 (the
+  dominant kind — `bestiary`/`bestiary_2`/`bestiary_3`/`bestiary_4`/`ultimate_psionics`), `feat` ~397
+  (`horror_adventures`'s own 17 among them — unrelated to the `spell` path used here), `equipment`
+  ~48, `companion` ~4, `monster` ~7. Also still open within `spell` itself but explicitly OUT of this
+  mechanism's scope by design: `bestiary`'s 109 and `bestiary_4`'s 55 remaining `spell`-labeled units
+  are monster-intrinsic spell-like-ability data with no dedicated `.lst` (`spell_resolver.rs`'s own
+  documented exclusion), not a gap this cycle left behind.
+- **Next-cycle plan:** following `gen_book_cache.rs`'s Shape-B-v1 serializer as the write-side
+  precedent, build one config-driven `ingest_monster_ability_corpus_json.rs`-shaped pass (largest
+  population first) scoped to the already-`clear` 20-book set, prove it fixture-checks against the
+  pinned oracle and passes `corpus_literal_sweep`, then repeat per remaining kind.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t9-onboarding_cycle-1_cycle_receipt.md`.
