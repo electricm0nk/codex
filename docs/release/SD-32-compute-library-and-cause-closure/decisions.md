@@ -514,3 +514,50 @@ statement of Gate 1 coverage must from now on carry its join-status split.
    `TEMPBONUS:` 70, `AUTO:` 38). Two lanes reached opposite conclusions on the same rows and neither
    cross-checked. `remaining_undisposed: 0` is arithmetic, not substance. Settle it by evidence
    before any of it is enumerated or excluded.
+
+## Decision 15 — T9's Product-Identity exposure is audited before the blacklist is signed off (operator ruling 2026-08-22)
+
+**Status:** Operator-pinned. Answers the escalation raised by T9's census lane and relayed by the
+orchestrating session. **T9's onboarding work is paused pending this audit; T2b, T12 and
+T2a-residual are unaffected and proceed.**
+
+### The blocker
+
+`docs/governance/ogl-pi-blacklist.md` carries `status: DRAFT — operator-reviewable, not
+unilaterally binding` and `review_state: pending_operator_sign_off`, `last_reviewed_at: 2026-07-27`.
+Transcribing a record that carries Product Identity is not a judgment a cycle may make on its own
+authority, and the blacklist that would settle it is not in force.
+
+T9's census sampled the monster kind and found **21 of 28 units** PI-blocked. Critically, only
+**114 of 2,712 units (4.2%)** of T9 have had any PI pass at all — so the exposure across `spell`,
+`feat`, `equipment`, `monster_ability` and `companion` is **unknown**, and the 96% rate observed in
+the monster kind is a sample, not a measurement.
+
+### The ruling
+
+> **Operator: option 2 — audit first.**
+
+**A dedicated audit lane sweeps all 2,712 T9 units against `ogl-pi-blacklist.md` and reports the
+real blocked count, per kind and per book, naming the records.** The operator signs off (or amends)
+the blacklist knowing the actual exposure, rather than approving a July draft blind.
+
+**The audit is read-only.** It transcribes nothing, ingests nothing, and changes no corpus data. It
+does not amend `ogl-pi-blacklist.md` — its status stays `DRAFT` until the operator acts on the
+audit's findings. Its deliverable is evidence, not a decision.
+
+### Standing rule this establishes
+
+**A cycle that reaches a record it believes carries Product Identity stops on that record.** It
+does not transcribe it, and it does not silently skip it: it lands everything else in scope, then
+reports the record by name and count so the orchestrator can escalate. This is `AGENTS.md`
+Blocker Discipline disposition 2 — raise your hand — and it applies to every shape in this bundle,
+not only T9. A silent skip is the worst outcome available: it looks like completed work and leaves
+no trace that a licensing decision was made by an agent.
+
+### Why an audit and not a sign-off
+
+Both options cleared T9's blocker. The audit was chosen because nobody currently knows whether the
+PI-blocked share of T9 is 5% or 90%, and the two cases call for different rulings — a small blocked
+set is a named exclusion, while a large one changes what T9's closure can mean at all. Signing off
+a draft to unblock a lane, without knowing what the draft is being applied to, is the shape of
+decision this bundle has already had to reverse twice.
