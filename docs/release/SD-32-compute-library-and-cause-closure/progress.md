@@ -1790,11 +1790,80 @@ and after this sweep (not "none found" without having run the commands).
   (2,712), T12 (2,453), and T2a's residual (~2,775 — sized to 2,640 by the T2a-residual-census
   lane above) before a consolidation cycle can move the row to `complete`.
 
+### Cycle epic-2-t2b-w1-c/1 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T2b (`core_rulebook`,
+`advanced_players_guide`, `advanced_race_guide`) — measurement, 0 units banked, 97 disputed
+
+- **Card ID:** `epic-2-cause-closure` (T2b lane, book scope: `core_rulebook`,
+  `advanced_players_guide`, `advanced_race_guide` — 104 nominal units per
+  `card11-t2b-census-census.md §4`). Card row status not touched by this cycle.
+- **Actor:** `t2b-w1-c`
+- **Base:** `45fef71f0` (`PIN`), rebased to `origin/tranche/12` (`59b044723`) before this append.
+- **Files touched:**
+  `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md`
+  (new), `docs/retro/events/t2b-w1-c.jsonl` (new — 3 corrections), this entry. **No production
+  code touched** — `ingest_races.rs`, `ingest_race_traits.rs`, `race_catalog.rs` unchanged.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (no production diff exists this cycle)
+- **Wired-integration audit result:** `OK_NO_TOKENS` (no production diff exists this cycle)
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by
+  class. This cycle re-derives, and substantially corrects, the size of the real T2b work in these
+  three books; it does not close any of it.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** measurement cycle — 0 units banked, per `decisions.md §13` standing lesson 6.
+- **Summary:** Re-deriving each book's 97 "other"-bucket units against the pinned oracle (not
+  trusting the prior memo's classification) found the "ingest-tool extension, ~3 files each"
+  characterization does not hold for any of the three books. `core_rulebook` (14 nominal): **0
+  real T2b work** — 4 are PCGen sentinel/placeholder rows, 4 duplicate content already ingested as
+  `class_feature/favored_enemy/*`, 6 are unattributed CHOOSE-primitives already functionally
+  covered by `race_creation.rs`'s existing floating-ability-bonus mechanism.
+  `advanced_players_guide` (37 nominal): **0 real T2b work** — every row is PCGen's own
+  Favored-Class-Bonus engine plumbing (`###Block: Favored Classes`/`Favored Class helper
+  abilities`), none names or applies to a race. `advanced_race_guide` (53 nominal): **at most 7
+  real, and those 7 are a new selector mechanism, not a row extension** — 35 blocked on
+  Changeling/Dhampir/Samsaran chassis absent from `IN_SCOPE_RACES` (29 of those additionally need
+  the formula interpreter `decisions.md §24` forbids here), 8 are duplicate selector-shims for
+  Human traits already ingested, 1 is a zero-magnitude `.MOD` overlay, 2 are sentinel/unattributed
+  primitives, and 7 (`Drow`/`Dwarf`/`Elf`/`Gnome`/`Halfling`/`Orc`/`Grippli` under `CATEGORY:
+  Adoptive Parentage`) are the same "Adopted Race" selector-mechanism gap the census memo's own §3
+  already named for `bestiary_2`/`bestiary_5`/`bestiary_6`'s 9 units, just under ARG's
+  pre-KEY-prefix naming. Logged as three `scripts/retro.py correction` events against
+  `card11-t2b-census-census.md`. Full per-row evidence and commands:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** two, filed in `## DISCOVERED` below — (1) `docs/work-inventory.json`'s
+  T2b classifier tags non-race PCGen plumbing as `kind: race_trait`, affecting at least 51 units
+  across these two books alone; (2) the "Adopted Race" selector mechanism spans 4 books (ARG +
+  bestiary_2/5/6, 16 units total), not 3, and should be built once, not per-lane.
+- **Next-cycle plan:** none on these three books under this lane's granted scope — 0 bankable
+  units remain after the corrections above. The 7 ARG Adoptive Parentage units belong to the
+  cross-book selector-mechanism follow-up, not a same-shaped re-run of this lane. Escalating per
+  `AGENTS.md` Blocker Discipline disposition 2 (raise-hand, not deferral) — see the receipt's §2
+  for the exact rulings needed.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
      One line each: date, discovering cycle, what, proposed card or forward-scope-register id.
      Queue > 10 entries is non-self-healable (§8). Empty at launch. -->
+
+- 2026-08-23, Cycle `epic-2-t2b-w1-c/1` (`epic-2-cause-closure`, T2b lane): `docs/work-inventory.json`'s
+  T2b classifier (`evidence: "race_trait_race_not_modelled"`) tags any unmatched row in a book's
+  `*_abilities_race.lst` as `kind: race_trait`, including rows that never named a race at all —
+  PCGen's shared Favored-Class-Bonus plumbing, Ranger favored-enemy CHOOSE options, ability-bonus
+  CHOOSE primitives, `.MOD` overlays, sentinel placeholders. Confirmed for `core_rulebook` (14/14
+  affected) and `advanced_players_guide` (37/37 affected) — 51 units, 2.1% of the nominal 2,472 T2b
+  population. Proposed target: a consolidation cycle or operator ruling on the classifier itself
+  (the fix site is `docs/work-inventory.json`'s producer, not the ingest tools that consume it —
+  out of this lane's granted scope). Full evidence:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md §0`.
+- 2026-08-23, Cycle `epic-2-t2b-w1-c/1` (`epic-2-cause-closure`, T2b lane): the "Adopted Race"
+  selector-plus-grant-link mechanism spans **4** books, not the 3 the census memo counted
+  separately — `bestiary_2`/`bestiary_5`/`bestiary_6`'s 9 `Adopted Race ~ <X>` units
+  (`card11-t2b-census-census.md §3`) and `advanced_race_guide`'s 7 `CATEGORY:Adoptive Parentage`
+  units (`Drow`/`Dwarf`/`Elf`/`Gnome`/`Halfling`/`Orc`/`Grippli`) are the same PCGen mechanism,
+  named differently only because ARG predates the `Adopted Race ~ ` KEY-prefix convention later
+  books use. Proposed target: one follow-up cycle builds the selector once, scoped across all four
+  books together, rather than two T2b lanes race-conditioning the same shared
+  `ingest_races.rs`/`race_catalog.rs` surface independently. Full evidence:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md §2` item 3.
 
 - 2026-08-22, Cycle 2 (`gate-0-census-closure`): AT-32-G0-002's ten-kind list (`feat`, `class`,
   `spell`, `monster`, `monster_ability`, `equipment`, `equipment_modifier`, `companion`, `race`,
