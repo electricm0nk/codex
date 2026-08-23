@@ -38,10 +38,16 @@ This bundle's work touches five distinct surfaces, organised by the four gates t
   restated as Gate 2's normative requirement.
 - **`src/rules_core/pilot_compute/bonus_stack_reader.rs`** (generalised) — wave 26's 329-line
   binding-layer precedent. The pattern *"read the producers of a named variable and sum them"*
-  generalises to the tenth family and reaches **77.2%** of the corpus's distinct custom
-  identifiers (measured SD-31 wave 31, adversarially reviewed). One lane framed the binding layer
-  at 46.8% using a narrower mechanism; the broader already-proven one reaches 77.2%. The
-  correction ran in both directions, which is why both were re-derived.
+  targets the **canonical F4 family** ("named-counter/pool variable", `scripts/shape_ledger.py`)
+  — not the unrelated F10 (a 3-unit level-threshold step-count heuristic); this was a labelling
+  defect card `family-vocabulary-reconciliation` fixed (`decisions.md §12a`,
+  `artifacts/gate-1-shape-closure/family-vocabulary.md`). SD-31 wave 31 measured this pattern
+  reaching **77.2% (893/1,156)** of the corpus's distinct custom identifiers by an identifier-wide
+  walk; `family-vocabulary.md`'s own independent, F4-predicate-scoped re-derivation (a narrower,
+  differently-defined population — see that document §3) found 92.4% (390/422) of F4-shaped
+  bare-identifier strings specifically resolvable the same way. One lane framed the binding layer
+  at 46.8% using a narrower mechanism; the broader already-proven one reaches the figures above.
+  The correction ran in both directions, which is why both were re-derived.
 
 ### Gate 3 — Closure invariant
 

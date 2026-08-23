@@ -55,8 +55,12 @@ use std::path::{Path, PathBuf};
 use super::formula_interpreter::{extract_formula_field, recognises_shape};
 
 /// The nine families this run is scoped to — `formula_interpreter.rs` / card
-/// 6's own scope (F10 is `bonus_stack_reader.rs`'s binding-layer family, card
-/// 7's own corpus-wide run, not this one).
+/// 6's own scope. `bonus_stack_reader.rs`'s binding layer (card 7's own
+/// corpus-wide run, not this one) resolves the producer-bound subset of F4's
+/// bare-identifier values; F10 (a 3-unit level-threshold step-count family,
+/// canonical vocabulary in `scripts/shape_ledger.py`) is unrelated to the
+/// binding layer and is one of this run's own nine directly-evaluated
+/// families below.
 pub const IN_SCOPE_FAMILIES: [&str; 9] =
     ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"];
 

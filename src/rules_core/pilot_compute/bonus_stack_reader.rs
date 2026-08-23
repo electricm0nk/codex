@@ -317,7 +317,7 @@ pub enum CorpusWideOutcome {
     Refused(String),
 }
 
-/// The result of resolving every distinct F10 target variable found across a corpus-wide record
+/// The result of resolving every distinct F4-shaped (bare-identifier) target variable found across a corpus-wide record
 /// population — AT-32-G2-004's "run corpus-wide once" for this engine. `outcomes` is keyed by
 /// variable name so the CLI wrapper (`src/bin/bonus_stack_reader.rs`) can serialise it
 /// deterministically; `population` is `outcomes.len()`, restated explicitly so a caller checking
@@ -329,14 +329,14 @@ pub struct CorpusWideReport {
     pub outcomes: BTreeMap<String, CorpusWideOutcome>,
 }
 
-/// Scans every record in `records` for the full F10 binding-layer population — every distinct
+/// Scans every record in `records` for the full F4 binding-layer population -- the bare-identifier subset of the canonical vocabulary (`scripts/shape_ledger.py`) that `bonus_stack_reader.rs` targets, not the unrelated F10 step-count family — every distinct
 /// variable name targeted by at least one `BONUS:VAR|<var>|...` token anywhere in the scanned
 /// set, the same "does this key/value pair look like a `BONUS:VAR` token" test
 /// [`extract_addends`] uses — and resolves EACH one's full producer chain via
 /// [`resolve_producer_chain_corpus_wide`] against the SAME full record population, not a
 /// per-variable subset. This is the corpus-wide entry point AT-32-G2-004 requires: the caller
 /// supplies the whole population once (e.g. every `data/corpus/**/*.json` record's
-/// `data.raw_tokens`), and every distinct F10 target variable found in it is resolved — none
+/// `data.raw_tokens`), and every distinct F4-shaped target variable found in it is resolved — none
 /// picked by the caller, none silently skipped.
 ///
 /// A variable whose resolution refuses (an unrecognised PRE-tag gate on any addend anywhere in

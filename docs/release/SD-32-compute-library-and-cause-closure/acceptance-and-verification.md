@@ -96,26 +96,37 @@ test "$(jq -r '.unclassified_count' artifacts/gate-1-shape-closure/ledger.json)"
 python3 scripts/shape_ledger.py --inventory /dev/null 2>&1 | grep -q "no coverage" \
   && echo "GATE_G1_FAILS_CLOSED_ON_EMPTY_OK"
 
-# Per-family unit counts match epic-breakdown.md (hand cross-check, not JSON diff --
-# epic-breakdown.md is prose/markdown, not a machine-readable file)
+# Per-family unit counts match the canonical vocabulary artifact (hand cross-check, not
+# JSON diff -- family-vocabulary.md is prose/markdown, not a machine-readable file).
+# `epic-breakdown.md` Epic 1's F1/F2/F3 rows are three *work items*, not a semantic-family
+# count table -- do not diff against them (card `family-vocabulary-reconciliation` correction,
+# `decisions.md §12a`, retro id `1787437987996-gate-1-shape-0ae65f`).
 python3 -c "
 import json
 l=json.load(open('artifacts/gate-1-shape-closure/ledger.json'))
 print(l['families'])
 "
-# then diff the printed per-family counts against the F1..F10 table in
-# epic-breakdown.md Epic 1 by eye; a cycle that finds a mismatch stops and reports it,
-# it does not silently update whichever side is more convenient
+# then diff the printed per-family counts against the canonical family table in
+# artifacts/gate-1-shape-closure/family-vocabulary.md §1 (regenerate via
+# `python3 scripts/family_vocabulary_reconcile.py --output-json artifacts/gate-1-shape-closure/family-vocabulary.json
+#  --output-md artifacts/gate-1-shape-closure/family-vocabulary.md`) by eye; a cycle that finds a
+# mismatch stops and reports it, it does not silently update whichever side is more convenient
 ```
 
 ## Gate 2 — Engines
 
-**AT-32-G2-001.** For each of the ten semantic families, an engine exists in
+**AT-32-G2-001.** For each of the eleven canonical families (`scripts/shape_ledger.py` F0-F10;
+`artifacts/gate-1-shape-closure/family-vocabulary.md`), an engine exists in
 `src/rules_core/pilot_compute/` and emits values for the family's unit population. The engine
-**may** be `formula_interpreter.rs` for the nine families it already evaluates directly (F1..F9
-need no binding layer — `epic-breakdown.md` Epic 1), **or** the generalised `bonus_stack_reader.rs`
-as the binding layer the tenth family (F10) needs, or a new engine. Whatever the implementation, it
-is named in the cycle receipt.
+**may** be `formula_interpreter.rs`, whose grammar directly evaluates all nine formula-bearing
+families F1..F9 (F0 carries no formula to evaluate), **or** the generalised
+`bonus_stack_reader.rs` as the binding layer that resolves the producer-bound subset of **F4**'s
+bare-identifier values (a value formula_interpreter's grammar can evaluate once bound, but cannot
+resolve on its own), or a new engine. **F10 is not the binding-layer family** — it is a 3-unit
+level-threshold step-count heuristic formula_interpreter's grammar already evaluates directly like
+any other F1..F9 member; the "tenth family needs a binding layer" framing was the labelling defect
+card `family-vocabulary-reconciliation` fixed (`decisions.md §12a`). Whatever the implementation,
+it is named in the cycle receipt.
 
 **AT-32-G2-002.** Every value emitted by every engine clears `derived_evaluator_fixture_check`,
 whose expected value is transcribed from bytes the engine never reads. **An interpreted value
@@ -171,10 +182,14 @@ Per AT-32-G2-003's own text ("each engine's `acceptance-and-verification.md` ent
 appended here rather than in a separate file, since `formula_interpreter.rs` is a library module,
 not a `src/bin/` target (`technical-design.md` Gate 2).
 
-* **Family it handles:** F1..F9 — `scripts/shape_ledger.py`'s nine sequentially-numbered shape
-  families the interpreter's grammar reaches directly, with no binding layer. F10 (the
-  binding-layer family `bonus_stack_reader.rs` generalises) is kanban card 7's own scope, not
-  this card's.
+* **Family it handles:** F1..F9 — `scripts/shape_ledger.py`'s nine formula-bearing shape families,
+  which the interpreter's grammar evaluates directly once a formula's identifiers are bound.
+  **F4**'s producer-bound bare-identifier subset additionally needs `bonus_stack_reader.rs`'s
+  binding layer (kanban card 7's own scope) to resolve *what value* the identifier holds before
+  this engine's grammar can evaluate it; F4's grammar reach itself is still this card's own claim.
+  F10 is not the binding-layer family (a labelling defect fixed by card
+  `family-vocabulary-reconciliation`, `decisions.md §12a`) — it is a 3-unit level-threshold
+  step-count family this engine already evaluates directly like any other F1..F9 member.
 * **Proof's unit population (measured):** per Gate 1's `artifacts/gate-1-shape-closure/ledger.json`
   family rollup (re-derivable: `python3 -c "import json; d=json.load(open('artifacts/gate-1-shape-closure/ledger.json')); print({k:v['count'] for k,v in d['families'].items()})"`
   from `docs/release/SD-32-compute-library-and-cause-closure/`, or re-run the ledger fresh via

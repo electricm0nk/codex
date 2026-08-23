@@ -37,8 +37,10 @@ date: 2026-08-22
   `PCGEN_ORACLE_SHA`) in its re-derive receipt, and reads the oracle from the repo-local slot
   (`artifacts/corpus/operator-supplied/pcgen`). A figure re-derived against an unstated oracle
   commit is not re-derived.
-- **Every Gate 2 cycle quotes the corpus arithmetic family** the engine handles (F1..F10 from
-  `epic-breakdown.md Epic 1`) and the corpus units it claims to reach. A cycle that emits
+- **Every Gate 2 cycle quotes the corpus arithmetic family** the engine handles (F1..F10, the
+  canonical vocabulary in `scripts/shape_ledger.py` / `artifacts/gate-1-shape-closure/
+  family-vocabulary.md` — not `epic-breakdown.md Epic 1`, whose F1/F2/F3 rows are work items,
+  not a family-count table) and the corpus units it claims to reach. A cycle that emits
   values for a family without quoting the family and unit count is out of protocol.
 - **No shape is "handled" without proof width stated explicitly.** Every Gate 2 engine's
   `acceptance-and-verification.md` entry must name which corpus shapes its proof does **not**

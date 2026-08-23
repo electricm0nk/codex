@@ -39,23 +39,30 @@ sums to the 24,914-unit not-done population, `unclassified_count` = 0):
 | F1 | 1,790 | F7 | 5 |
 | F2 | 1,490 | F8 (residual) | 41 |
 | F3 | 303 | F9 | 27 |
-| F4 | 570 | F10 (per-unit ledger count) | 3 |
+| F4 | 570 | F10 | 3 |
 | F5 | 361 | | |
 
-F10's per-unit ledger count (3) is a different, narrower denominator than the two figures the
-engine cycles cite for the same family: 1,156 distinct `BONUS:VAR` custom-identifier targets
-(card 7, 77.2%/893 resolved) and 4,736 distinct target variables found by the corpus-wide binding
-run (card 8, 3,519 resolved/1,217 refused) — the ledger counts *units carrying* an F10 formula,
-the engine cycles count *distinct target-variable identifiers* the binding layer resolves; neither
-supersedes the other, both are named here rather than picking one.
+**Correction (card `family-vocabulary-reconciliation`, `decisions.md §12a`):** `bonus_stack_reader.
+rs`'s binding layer targets **F4** ("named-counter/pool variable"), not F10 (a 3-unit
+level-threshold step-count family unrelated to the binding layer) — the engine cycles' own "F10"
+labelling of the binding-layer figures was a defect, fixed by the canonical vocabulary at
+`artifacts/gate-1-shape-closure/family-vocabulary.md`. F4's per-unit ledger count (570) is a
+different, narrower denominator than the two figures the engine cycles cite for the same binding
+layer: 1,156 distinct `BONUS:VAR` custom-identifier targets (SD-31 wave 31, 77.2%/893 resolved)
+and 4,736 distinct target variables found by the corpus-wide binding run (card 8, 3,519
+resolved/1,217 refused) — the ledger counts *units carrying* an F4 formula, the engine cycles
+count *distinct target-variable identifiers* the binding layer resolves; a fourth, independently
+re-derived count (422 distinct F4-shaped bare-identifier strings, 390 resolved, 92.4%) is at
+`family-vocabulary.md` §3. None supersedes the others; all four are named here rather than picking
+one (`decisions.md §12c`).
 
 **Engines built vs. required — 2 of 2, both run corpus-wide (AT-32-G2-004 met for both):**
 `formula_interpreter.rs` (F1-F9, `cargo test --locked --test formula_interpreter_family_fixture_check`
 for the 9-family fixture proof; `cargo run --locked --bin formula_interpreter -- --corpus-wide`
 for the corpus-wide run — 4,696 of 4,798 F1-F9 units recognised, 97.9%, 102 refused within the
-engine's own disclosed proof-width gaps) and the generalised `bonus_stack_reader.rs` (F10,
-`cargo run --locked --bin bonus_stack_reader -- --corpus-wide` — 3,519 of 4,736 distinct target
-variables resolved, 1,217 refused).
+engine's own disclosed proof-width gaps) and the generalised `bonus_stack_reader.rs` (F4's
+producer-bound subset, `cargo run --locked --bin bonus_stack_reader -- --corpus-wide` — 3,519 of
+4,736 distinct target variables resolved, 1,217 refused).
 
 **Classes reached — mechanism built, population corrected, one half deferred (card 12,
 AT-32-E3-001).** New `prestige_class_entry_gate.rs` wires entry-requirement gating at the
