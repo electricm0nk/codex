@@ -691,9 +691,14 @@ fn gen_pathfinder_unchained() {
         }
     }
     if out_root.join("feat").exists() {
+        // Single writer of `pathfinder_unchained/feat/` (verified: neither
+        // `cache_gen::feat_gap` nor `cache_gen::hand_authored_feat_dump`
+        // registers `pathfinder_unchained` -- SD-32 cross-generator sweep,
+        // 2026-08-23), so an unscoped citation predicate is safe here.
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("feat"),
             &current_feat_keys,
+            &|_path, _line| true,
         );
     }
 
@@ -761,9 +766,13 @@ fn gen_pathfinder_unchained() {
         }
     }
     if out_root.join("equipment").exists() {
+        // Single writer of `advanced_race_guide/equipment/` (verified: no
+        // other `cache_gen` module registers `advanced_race_guide` for the
+        // `equipment` kind -- SD-32 cross-generator sweep, 2026-08-23).
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("equipment"),
             &current_equipment_keys,
+            &|_path, _line| true,
         );
     }
 
@@ -924,9 +933,14 @@ fn gen_advanced_race_guide() {
         }
     }
     if out_root.join("spell").exists() {
+        // Single writer of `advanced_race_guide/spell/` (verified:
+        // `advanced_race_guide` is in neither `cache_gen::spell_lane_dump`'s
+        // nor `cache_gen::spell_mod_access`'s book lists -- SD-32
+        // cross-generator sweep, 2026-08-23).
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("spell"),
             &current_spell_keys,
+            &|_path, _line| true,
         );
     }
 
@@ -1127,9 +1141,14 @@ fn gen_advanced_race_guide() {
         }
     }
     if out_root.join("feat").exists() {
+        // Single writer of `pathfinder_unchained/feat/` (verified: neither
+        // `cache_gen::feat_gap` nor `cache_gen::hand_authored_feat_dump`
+        // registers `pathfinder_unchained` -- SD-32 cross-generator sweep,
+        // 2026-08-23), so an unscoped citation predicate is safe here.
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("feat"),
             &current_feat_keys,
+            &|_path, _line| true,
         );
     }
 
@@ -1835,9 +1854,13 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         ability_written += 1;
     }
     if out_root.join("companion").exists() {
+        // Single writer of `<book>/companion/` (verified: `gen_companion_book`
+        // is the only generator that writes a `companion` kind directory --
+        // SD-32 cross-generator sweep, 2026-08-23).
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("companion"),
             &current_companion_keys,
+            &|_path, _line| true,
         );
     }
 

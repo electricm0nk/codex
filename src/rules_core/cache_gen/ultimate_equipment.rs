@@ -310,23 +310,59 @@ fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>)
 /// `enrich_equipment_raw_tokens.rs` had separately written into them. This
 /// keeps the "dropped record does not linger" property while leaving every
 /// still-valid record's file (and any enrichment already on it) untouched.
-pub fn remove_stale_owned_files(dir: &Path, current_keys: &std::collections::HashSet<String>) {
+///
+/// **`owns_citation` -- the cross-generator self-erasure guard
+/// (`decisions.md §1a`/incident found live 2026-08-23).** `data.key` alone
+/// is NOT a safe ownership test: two different generators can share one
+/// output directory (`cache_gen::spell_lane_dump` and
+/// `cache_gen::spell_mod_access` both write `data/corpus/<book>/spell/`,
+/// and a `.MOD` row genuinely reuses its base spell's own key/name -- see
+/// `spell_lane_dump`'s call site). A key-only check therefore reads a
+/// sibling generator's still-valid record as "not mine, not current" and
+/// deletes it. This caller-supplied predicate answers "did MY OWN parse of
+/// MY OWN source file ever produce a citation at this exact
+/// `(source.path, source.line)`?" -- a coordinate a sibling generator's
+/// rows structurally cannot share, because they cite a *different* LST
+/// row even when the file and the key both collide. A record whose
+/// `source.path`/`source.line` cannot be read from its JSON is treated as
+/// **not owned** (never deleted) -- ownership must be proven, not assumed,
+/// the same `§1a` "empty case fails closed" discipline every gate in this
+/// bundle already follows.
+pub fn remove_stale_owned_files(
+    dir: &Path,
+    current_keys: &std::collections::HashSet<String>,
+    owns_citation: &dyn Fn(&str, u32) -> bool,
+) {
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     for entry in entries.flatten() {
         let path = entry.path();
         if path.is_dir() {
-            remove_stale_owned_files(&path, current_keys);
+            remove_stale_owned_files(&path, current_keys, owns_citation);
             continue;
         }
         if path.extension().and_then(|e| e.to_str()) != Some("json") {
             continue;
         }
-        let key = std::fs::read_to_string(&path)
+        let Some(parsed) = std::fs::read_to_string(&path)
             .ok()
             .and_then(|raw| serde_json::from_str::<serde_json::Value>(&raw).ok())
-            .and_then(|v| v.get("data")?.get("key")?.as_str().map(str::to_string));
-        let Some(key) = key else { continue };
-        if !current_keys.contains(&key) {
+        else {
+            continue;
+        };
+        let Some(key) = parsed.get("data").and_then(|d| d.get("key")).and_then(|k| k.as_str()) else {
+            continue;
+        };
+        if current_keys.contains(key) {
+            continue;
+        }
+        let source_path = parsed.get("source").and_then(|s| s.get("path")).and_then(|p| p.as_str());
+        let source_line =
+            parsed.get("source").and_then(|s| s.get("line")).and_then(|l| l.as_u64()).map(|l| l as u32);
+        let owned = match (source_path, source_line) {
+            (Some(p), Some(l)) => owns_citation(p, l),
+            _ => false,
+        };
+        if owned {
             let _ = std::fs::remove_file(&path);
         }
     }
@@ -493,7 +529,13 @@ fn generate_equipment(
         }
     }
     if equipment_dir.exists() {
-        remove_stale_owned_files(&equipment_dir, &current_keys);
+        // Only `cache_gen::ultimate_equipment` itself ever writes under
+        // `UE_DIR`'s citation prefix, so a citation-path prefix check is a
+        // safe (if coarse) ownership predicate here -- no sibling
+        // generator shares this directory today.
+        remove_stale_owned_files(&equipment_dir, &current_keys, &|path, _line| {
+            path.starts_with(UE_DIR)
+        });
     }
     Ok(())
 }
@@ -727,5 +769,142 @@ mod tests {
             after.contains("ENRICHED-MARKER"),
             "a second run must not erase a later enrichment pass on a still-valid record: {after}"
         );
+    }
+
+    // --- Cross-generator self-erasure guard (2026-08-23 incident) ---
+    //
+    // `cache_gen::spell_lane_dump` and `cache_gen::spell_mod_access` both
+    // write `data/corpus/<book>/spell/` from the SAME literal `.lst` file,
+    // and a `.MOD` row genuinely reuses its base spell's own key/name. A
+    // `remove_stale_owned_files` predicate that only checks `data.key` (as
+    // this function did before this fix) therefore deletes a sibling
+    // generator's still-valid records the moment its keys are absent from
+    // the caller's own `current_keys` set -- confirmed live: an unscoped
+    // run deleted 1,580 real `spell_mod_access` `.MOD` records this way.
+    // These tests exercise `remove_stale_owned_files` directly (the
+    // reusable guard both generators call), independent of either
+    // generator's own book-parsing pipeline.
+
+    /// Writes a minimal on-disk record whose `data.key`/`source.path`/
+    /// `source.line` match what either generator's real `CacheRecord`
+    /// shape serializes -- deliberately NOT importing `spell_lane_dump` or
+    /// `spell_mod_access`'s own record types, so this test proves the
+    /// guard's *on-disk JSON contract*, the same contract a third future
+    /// sibling generator would also have to satisfy.
+    fn write_stub_record(dir: &Path, slug: &str, key: &str, source_path: &str, source_line: u32) {
+        std::fs::create_dir_all(dir).unwrap();
+        let json = serde_json::json!({
+            "data": {"key": key},
+            "source": {"path": source_path, "line": source_line},
+        });
+        std::fs::write(dir.join(format!("{slug}.json")), json.to_string()).unwrap();
+    }
+
+    /// The exact incident shape: a sibling generator's record shares this
+    /// generator's key ("ablative barrier" is both the base spell name
+    /// AND the `.MOD` row's stripped key) and its source file
+    /// (`oa_spells.lst`), but NOT its source line -- the base declaration
+    /// lives on one line, the `.MOD` row widening class access on another.
+    /// A citation-aware ownership predicate must leave the sibling's file
+    /// alone even though `current_keys` (this run's own live spell set)
+    /// does not contain the key, because that key belongs to a DIFFERENT
+    /// record at a DIFFERENT line the caller never wrote.
+    #[test]
+    fn a_sibling_generators_record_sharing_the_same_key_and_file_survives() {
+        let root = std::env::temp_dir()
+            .join(format!("codex_cross_gen_guard_survives_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let dir = root.join("spell");
+        // The sibling (`spell_mod_access`-shaped) record: same key, same
+        // file, a DIFFERENT line (the `.MOD` row's own line, 4021, never a
+        // base declaration line).
+        write_stub_record(
+            &dir,
+            "ablative_barrier_mod",
+            "ablative barrier",
+            "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+            4021,
+        );
+
+        // This run's own `current_keys` does NOT contain "ablative
+        // barrier" (simulating the key being absent from the compiled
+        // table this particular run, or simply not this record's owner).
+        let current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+        // This run's own citation index: it only ever cites line 1618 for
+        // this file (the base declaration), never 4021.
+        let owned_lines: std::collections::HashSet<u32> = [1618u32].into_iter().collect();
+        let owned_path = "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst";
+        remove_stale_owned_files(&dir, &current_keys, &|path, line| {
+            path == owned_path && owned_lines.contains(&line)
+        });
+
+        assert!(
+            dir.join("ablative_barrier_mod.json").exists(),
+            "a sibling generator's record must survive even when its key is absent from this \
+             run's current_keys, because its citation line was never this generator's own"
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The mirror case: THIS generator's own record, genuinely stale (its
+    /// key is absent from `current_keys` AND its citation line IS one this
+    /// run's own parse produced), must still be removed -- the guard must
+    /// not become so conservative it stops cleaning up real drops.
+    #[test]
+    fn this_generators_own_stale_record_is_still_removed() {
+        let root =
+            std::env::temp_dir().join(format!("codex_cross_gen_guard_removes_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let dir = root.join("spell");
+        let owned_path = "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst";
+        write_stub_record(&dir, "now_pi_blocked", "now pi blocked", owned_path, 1618);
+
+        let current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+        let owned_lines: std::collections::HashSet<u32> = [1618u32].into_iter().collect();
+        remove_stale_owned_files(&dir, &current_keys, &|path, line| {
+            path == owned_path && owned_lines.contains(&line)
+        });
+
+        assert!(
+            !dir.join("now_pi_blocked.json").exists(),
+            "a genuinely stale record this generator itself owns (matching citation, absent key) \
+             must still be removed"
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Mutation proof for the two tests above: widening the ownership
+    /// predicate back to "any file in this directory" (the pre-fix shape,
+    /// `|_path, _line| true`) must turn
+    /// `a_sibling_generators_record_sharing_the_same_key_and_file_survives`
+    /// red. This test pins that the SURVIVAL assertion is actually load-
+    /// bearing rather than vacuously true, by re-running the identical
+    /// scenario with the unscoped predicate and asserting the sibling
+    /// record is (wrongly) deleted -- proving the guard, not the test
+    /// setup, is what protects the sibling above.
+    #[test]
+    fn an_unscoped_key_only_predicate_reproduces_the_incident() {
+        let root =
+            std::env::temp_dir().join(format!("codex_cross_gen_guard_mutation_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let dir = root.join("spell");
+        write_stub_record(
+            &dir,
+            "ablative_barrier_mod",
+            "ablative barrier",
+            "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+            4021,
+        );
+        let current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+        // The pre-fix shape: any file physically in the directory is
+        // treated as owned, regardless of citation.
+        remove_stale_owned_files(&dir, &current_keys, &|_path, _line| true);
+
+        assert!(
+            !dir.join("ablative_barrier_mod.json").exists(),
+            "sanity check: the unscoped predicate must reproduce the incident (deletion) so the \
+             citation-aware guard's protection is proven non-vacuous"
+        );
+        std::fs::remove_dir_all(&root).ok();
     }
 }

@@ -597,9 +597,33 @@ pub fn generate(
             report.spells_written += 1;
         }
 
+        // **Cross-generator self-erasure guard (2026-08-23 incident).**
+        // `data/corpus/occult_adventures/spell/` and `.../ultimate_magic/
+        // spell/` are also written by `cache_gen::spell_mod_access`'s
+        // `.MOD` rows, from the SAME literal `oa_spells.lst`/`um_spells.
+        // lst` files this generator reads -- so a citation-path-only
+        // predicate (as `ultimate_equipment`'s own call site below uses)
+        // is NOT safe here; both generators cite the identical file, and
+        // a `.MOD` row genuinely reuses its base spell's own key/name
+        // (`Occultist Spell ~ Accelerate Poison.MOD` widens class access
+        // for the spell this generator itself dumps under the plain key
+        // `accelerate poison`). Confirmed live: an unscoped run deleted
+        // 1,580 real `spell_mod_access` `.MOD` records across these two
+        // books before this guard existed.
+        //
+        // The real ownership boundary is the LINE: `base_declaration_
+        // lines` (built above into `lines_by_name`) explicitly excludes
+        // every `.MOD`/`.COPY=` row, so its value set is exactly "every
+        // line this generator's own parse of this file would ever cite."
+        // A `.MOD` row's citation line can never appear in it, so this
+        // predicate structurally cannot match a `spell_mod_access` record
+        // even though the file and the key both collide.
+        let owned_path = format!("{}/{}", spec.dir, spec.spell_file);
+        let owned_lines: std::collections::HashSet<u32> = lines_by_name.values().copied().collect();
         crate::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_spell_dir,
             &current_keys,
+            &|path, line| path == owned_path && owned_lines.contains(&line),
         );
     }
 

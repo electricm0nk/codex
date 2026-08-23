@@ -544,9 +544,14 @@ fn main() {
         }
     }
     if out_root.join("spell").exists() {
+        // Single writer of `core_rulebook/spell/` (verified: `core_rulebook`
+        // is in neither `cache_gen::spell_lane_dump`'s nor
+        // `cache_gen::spell_mod_access`'s book lists -- SD-32 cross-generator
+        // sweep, 2026-08-23).
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("spell"),
             &current_spell_keys,
+            &|_path, _line| true,
         );
     }
 
