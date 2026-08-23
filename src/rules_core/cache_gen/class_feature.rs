@@ -38,41 +38,74 @@
 //! re-derives the same closure from the same citation to confirm the copy
 //! byte for byte.
 //!
-//! ## Scope THIS cycle: primary files only (`BOOK_PRIMARY_FILES`)
+//! ## Scope: every `*abilities_class*.lst` file per book (`BOOK_PRIMARY_FILES`)
 //!
 //! `v06_work_inventory::enumerate_book` walks a book's ENTIRE directory
 //! tree recursively, so some books' `class_feature` population spans not
 //! only their own primary `<abbrev>_abilities_class.lst` but also nested
 //! `support/*_abilities_class_*.lst` and `_pfs/*.lst` cross-book variant
-//! files (e.g. `ultimate_combat/support/uc_abilities_class_um.lst`).
-//! `corpus_literal_sweep`'s own `--json-out` book-attribution helper has a
-//! CONFIRMED, out-of-this-card's-territory bug (`OPEN-ISSUES.md` row 22,
-//! `src/bin/corpus_literal_sweep.rs`, a file this card may not edit) that
-//! derives a shipped record's book from `source.path`'s PARENT directory
-//! name rather than the real book -- so a record whose real citation lives
-//! under a nested nested subdirectory would misattribute if `source.path`
-//! encoded that nesting. Every record this generator writes therefore
-//! cites a FLAT `<book-dir>/<primary-file>` path (matching every other
-//! working generator's shape), and units sourced from a nested support/PFS
-//! file are simply not in this cycle's population -- a real, named
-//! shortfall (`OPEN-ISSUES.md`, this cycle's own row), not a silent gap.
-//! `pathfinder_unchained` is excluded entirely: it already carries 64
-//! hand-curated `class_feature` records from earlier mechanism-wiring
-//! cycles (`barbarian_unchained_class/`, `monk_unchained_class/`, ...) that
-//! this generator must not overwrite.
+//! files (e.g. `ultimate_combat/support/uc_abilities_class_um.lst`). An
+//! earlier version of this generator scoped ONLY the primary file per
+//! book and left every nested variant `no_record` -- 3,333 of the 5,604
+//! `no_record` `class_feature` units (decisions.md §20) lived exactly
+//! there, all matching the same `*abilities_class*.lst` naming convention
+//! the primary files use. This cycle widens scope: [`units_from_inventory_json`]
+//! now accepts any `class_feature` unit of a [`BOOK_PRIMARY_FILES`] book
+//! whose `source_file` matches that convention (case-sensitive substring
+//! `"abilities_class"`), not only the book's own listed primary file, and
+//! [`generate`] resolves each unit's real file path with
+//! [`resolve_book_file`] (a recursive basename search under the book's
+//! directory, the same shape `wiring_class::resolve_corpus_file` already
+//! uses for `.lst` line reads) instead of assuming the primary file's flat
+//! `<book-dir>/<file>` join. Every record this generator writes cites the
+//! REAL relative path it read from (`<book-dir>/<file>` for a primary file,
+//! `<book-dir>/support/<file>` for a nested one) -- see the module's
+//! `ultimate_psionics` section above for the one confirmed downstream
+//! consequence of a nested citation (a stale `--json-out` book-attribution
+//! bug, `OPEN-ISSUES.md` row 22, that blocks `literal-verified` stamping
+//! but not `shape_ledger.py`'s join).
+//! `pathfinder_unchained` WAS excluded entirely because it already carries
+//! 64 hand-curated `class_feature` records from earlier mechanism-wiring
+//! cycles (`barbarian_unchained_class/`, `monk_unchained_class/`, ...), a
+//! different schema (`data.class_key`/`base_class_key`, not this
+//! generator's `data.class`) written through a different code path. That
+//! exclusion left 536 OTHER `pathfinder_unchained` `class_feature` units
+//! `no_record` -- units the hand-curation never touched at all, not units
+//! it disagrees with. This cycle brings the book back into scope and
+//! protects those 64 records with [`foreign_citations`] (checked per unit,
+//! module doc comment above it) instead of excluding the whole book: a
+//! citation a foreign record already covers is skipped, never
+//! double-written or overwritten; every other citation is ingested exactly
+//! like any other book's.
 //!
-//! `ultimate_psionics` is ALSO excluded this cycle (found live, not
-//! anticipated): `corpus_literal_sweep::book_dir_of` hard-requires a
-//! 5-segment `source.path` (`<system>/<publisher>/<line>/<book>/<file>`),
-//! but Dreamscarred Press's own corpus layout has no "line" tier --
-//! `pathfinder/dreamscarred_press/ultimate_psionics/<file>` is only 4
-//! segments -- so every `ultimate_psionics` record this generator wrote
-//! failed the sweep with `source.path ... is not
-//! <system>/<publisher>/<line>/<book>/<file>-shaped`
-//! (`cargo run --locked --bin corpus_literal_sweep`, reproduced this
-//! cycle). `book_dir_of` lives in `src/bin/corpus_literal_sweep.rs`, a
-//! file this card may not edit -- logged as a named shortfall
-//! (`OPEN-ISSUES.md`) rather than shipped with a dirty sweep.
+//! `ultimate_psionics` WAS excluded (decisions.md §20 wave): the module
+//! doc comment used to say `corpus_literal_sweep::book_dir_of`
+//! hard-required a 5-segment `source.path`, breaking Dreamscarred Press's
+//! 4-segment `pathfinder/dreamscarred_press/<book>/<file>` layout. That was
+//! true when written; it no longer is. `book_dir_of` (`src/bin/
+//! corpus_literal_sweep.rs`) already special-cases a 4-segment
+//! `dreamscarred_press` path (`014f210b9`, landed before this exclusion's
+//! own commit), so the finding this exclusion cited is stale. Re-verified
+//! this cycle: `up_abilities_class.lst` lives at
+//! `pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst`
+//! (4 segments, the branch `book_dir_of` now handles), and adding it to
+//! [`BOOK_PRIMARY_FILES`] below closes 1,573 of the 5,604 `no_record`
+//! `class_feature` units decisions.md §20 named. **Nested support-file
+//! scope note (this cycle):** unlike `corpus_literal_sweep::book_dir_of`
+//! (whose `>= 5 segments -> first 4` rule tolerates arbitrary extra
+//! nesting), `corpus_literal_sweep`'s SEPARATE `--json-out` writer derives
+//! a verified triple's `"book"` field from `source_path.parent().file_name()`
+//! (`OPEN-ISSUES.md` SD-31 row 22, `src/bin/corpus_literal_sweep.rs:267-276`,
+//! a file this cycle does not edit) -- so a nested-support-file record's
+//! `--json-out` "book" comes out as `"support"`, not the real book, and
+//! `v06_work_inventory`'s `apply_done_rung_stamps` join on
+//! `(book, file, line)` will not match it for `literal-verified` stamping.
+//! This does NOT block `shape_ledger.py`'s join (it keys off the OUTPUT
+//! JSON's own directory + `source.path`'s basename + `source.line`, never
+//! off `--json-out`'s book field) -- so a nested-support-file record's
+//! shape is genuinely measured, closing its `no_record` gap, even though
+//! its `literal-verified` rung is blocked on the same pre-existing row-22
+//! defect every other nested-file kind already carries. Named, not hidden.
 //!
 //! ## PI screening -- both SD-30 invocation contracts, on NAME and
 //! DESCRIPTION (`decisions.md §52.3` / `§53.5`)
@@ -120,14 +153,20 @@ use crate::rules_core::corpus_literal_sweep::tab_tokens;
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 
 /// `(book id, corpus-relative directory, primary `_abilities_class.lst`
-/// basename)` for every one of the 23 in-scope `class_feature` books
-/// EXCEPT `pathfinder_unchained` (already hand-ingested) and
-/// `ultimate_psionics` (its non-Paizo path shape breaks
-/// `corpus_literal_sweep::book_dir_of`, both excluded on purpose -- see
-/// module doc comment). Re-derived this cycle directly against the pinned
-/// oracle checkout, one book at a time:
-/// `find "$PCGEN_CORPUS_ROOT/pathfinder" -iname '<book>' -type d` then
-/// `ls` that directory for its own `*_abilities_class*.lst`.
+/// basename)` for every one of the 23 in-scope `class_feature` books.
+/// `ultimate_psionics` and `pathfinder_unchained` were both excluded
+/// through the prior cycle -- the first on a `book_dir_of` finding that has
+/// since gone stale, the second on a hand-curation conflict now handled per
+/// unit by [`foreign_citations`] instead of by leaving the whole book out
+/// (module doc comment's `ultimate_psionics` and `pathfinder_unchained`
+/// sections). Both are back in scope as of this cycle. The third column names
+/// each book's own PRIMARY file only -- [`units_from_inventory_json`] and
+/// [`generate`] also pick up that book's nested `support/*abilities_class*.lst`
+/// variants (module doc comment's "Scope" section), so this column is a
+/// directory anchor and a primary-file fallback, not the full file list.
+/// Re-derived this cycle directly against the pinned oracle checkout, one
+/// book at a time: `find "$PCGEN_CORPUS_ROOT/pathfinder" -iname '<book>'
+/// -type d` then `ls` that directory for its own `*_abilities_class*.lst`.
 pub const BOOK_PRIMARY_FILES: &[(&str, &str, &str)] = &[
     ("advanced_class_guide", "pathfinder/paizo/roleplaying_game/advanced_class_guide", "acg_abilities_class.lst"),
     ("advanced_players_guide", "pathfinder/paizo/roleplaying_game/advanced_players_guide", "apg_abilities_class.lst"),
@@ -150,7 +189,21 @@ pub const BOOK_PRIMARY_FILES: &[(&str, &str, &str)] = &[
     ("inner_sea_taverns", "pathfinder/paizo/campaign_setting/inner_sea_taverns", "istav_abilities_class.lst"),
     ("book_of_the_damned_volume_1", "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1", "botd1_abilities_class.lst"),
     ("bestiary_4", "pathfinder/paizo/roleplaying_game/bestiary_4", "b4_abilities_class.lst"),
+    ("ultimate_psionics", "pathfinder/dreamscarred_press/ultimate_psionics", "up_abilities_class.lst"),
+    ("pathfinder_unchained", "pathfinder/paizo/roleplaying_game/pathfinder_unchained", "pu_abilities_class.lst"),
 ];
+
+/// Substring every `class_feature` book's own `*abilities_class*.lst`
+/// primary and support files share, per this module's corpus sampling
+/// (module doc comment "Scope" section) -- 56 distinct filenames, 100% of
+/// them containing this substring, re-derived this cycle from every
+/// `no_record` `class_feature` unit's `source_file`
+/// (`python3 -c "..."` over `docs/work-inventory.json`, see the cycle
+/// receipt for the exact command). Used by [`units_from_inventory_json`] to
+/// widen scope from "the book's one listed primary file" to "every file of
+/// this shape the book has", without guessing at a filename this module has
+/// never seen.
+const ABILITIES_CLASS_FILE_SUBSTRING: &str = "abilities_class";
 
 /// One `class_feature` unit as `v06_work_inventory`'s own enumeration
 /// already established it -- this generator never re-derives `key`/`name`/
@@ -179,8 +232,7 @@ pub struct ClassFeatureSourceUnit {
 /// parsing of already-computed fields.
 pub fn units_from_inventory_json(json_text: &str) -> Result<Vec<ClassFeatureSourceUnit>, String> {
     let doc: Value = serde_json::from_str(json_text).map_err(|e| format!("invalid inventory JSON: {e}"))?;
-    let primary_file_by_book: BTreeMap<&str, &str> =
-        BOOK_PRIMARY_FILES.iter().map(|(book, _, file)| (*book, *file)).collect();
+    let known_books: BTreeSet<&str> = BOOK_PRIMARY_FILES.iter().map(|(book, _, _)| *book).collect();
     let units = doc
         .get("units")
         .and_then(Value::as_array)
@@ -191,9 +243,15 @@ pub fn units_from_inventory_json(json_text: &str) -> Result<Vec<ClassFeatureSour
             continue;
         }
         let Some(book) = unit.get("book").and_then(Value::as_str) else { continue };
-        let Some(&primary_file) = primary_file_by_book.get(book) else { continue };
+        if !known_books.contains(book) {
+            continue;
+        }
         let Some(source_file) = unit.get("source_file").and_then(Value::as_str) else { continue };
-        if source_file != primary_file {
+        // Widened scope (this cycle): any `*abilities_class*.lst` file of
+        // this book, not only its own listed primary file -- module doc
+        // comment's "Scope" section. `generate` resolves the real path
+        // (primary or nested `support/`) via [`resolve_book_file`].
+        if !source_file.contains(ABILITIES_CLASS_FILE_SUBSTRING) {
             continue;
         }
         let Some(source_line) = unit.get("source_line").and_then(Value::as_u64) else { continue };
@@ -312,6 +370,11 @@ pub struct GenerationReport {
     /// `v06_work_inventory`'s own enumeration.
     pub unresolved_citations: Vec<String>,
     pub books_written: BTreeSet<String>,
+    /// Units skipped because [`foreign_citations`] found a hand-authored
+    /// (non-generic) record already citing that exact line -- protects
+    /// `pathfinder_unchained`'s 64 hand-curated records now that the book
+    /// is back in scope (this cycle).
+    pub foreign_citation_skipped: usize,
 }
 
 #[derive(Debug)]
@@ -323,6 +386,47 @@ pub enum GenerationError {
 impl From<std::io::Error> for GenerationError {
     fn from(e: std::io::Error) -> Self {
         GenerationError::Io(e)
+    }
+}
+
+/// Maximum directory depth [`resolve_book_file`] descends below a book's
+/// own directory -- mirrors `wiring_class::MAX_NESTED_LST_DEPTH`; this
+/// module's real corpus never nests an `abilities_class` file more than
+/// one level deep (`support/`), but the extra headroom costs nothing.
+const MAX_BOOK_FILE_DEPTH: usize = 3;
+
+/// Finds `file`'s real path under `book_dir`: first the flat
+/// `book_dir/file` join every primary file uses, then (this cycle's
+/// widened scope) a recursive basename search for a nested variant like
+/// `book_dir/support/file`. Returns `None` if `file` is not present under
+/// `book_dir` at all, or if more than one file shares that basename (never
+/// guesses between two real matches -- the same refusal
+/// `wiring_class::resolve_corpus_file` makes for the identical shape,
+/// which [`generate`]'s own `lines.line(...)` call already goes through).
+fn resolve_book_file(book_dir: &Path, file: &str) -> Option<PathBuf> {
+    let direct = book_dir.join(file);
+    if direct.is_file() {
+        return Some(direct);
+    }
+    let mut matches: Vec<PathBuf> = Vec::new();
+    let mut stack: Vec<(PathBuf, usize)> = vec![(book_dir.to_path_buf(), 0)];
+    while let Some((dir, depth)) = stack.pop() {
+        if depth > MAX_BOOK_FILE_DEPTH {
+            continue;
+        }
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push((path, depth + 1));
+            } else if path.file_name().and_then(|n| n.to_str()) == Some(file) {
+                matches.push(path);
+            }
+        }
+    }
+    match matches.len() {
+        1 => matches.pop(),
+        _ => None,
     }
 }
 
@@ -776,6 +880,58 @@ fn redact_desc_token_if_pi(tokens: &mut [RawToken], license: crate::rules_core::
     }
 }
 
+/// Every `(source file basename, source line)` a FOREIGN (not this
+/// generator's own) `class_feature` record already cites under
+/// `class_feature_dir`, found by walking the directory and checking each
+/// JSON's `data.class_key` field -- present ONLY on the hand-authored
+/// `pathfinder_unchained` dump this module's doc comment describes (64
+/// records, `barbarian_unchained_class/` and its three siblings, landed by
+/// an earlier mechanism-wiring cycle through a different code path); this
+/// generator's own output always uses `data.class`, never `data.class_key`.
+/// [`generate`] skips any incoming unit whose citation appears here, so
+/// widening scope to `pathfinder_unchained` (this cycle) cannot duplicate
+/// or shadow those 64 records at a different computed path -- the
+/// module doc comment's "must not overwrite" constraint, now enforced by
+/// citation rather than by leaving the whole book out of scope. A citation
+/// this generator wrote itself is never in this set (no `class_key` field),
+/// so idempotent re-runs still refresh every record they already own --
+/// unchanged from every prior cycle's regen behaviour.
+fn foreign_citations(class_feature_dir: &Path) -> BTreeSet<(String, u32)> {
+    let mut found = BTreeSet::new();
+    if !class_feature_dir.is_dir() {
+        return found;
+    }
+    let mut stack = vec![class_feature_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            let Ok(v) = serde_json::from_str::<Value>(&text) else { continue };
+            let is_foreign = v.get("data").and_then(|d| d.get("class_key")).is_some();
+            if !is_foreign {
+                continue;
+            }
+            let Some(src_path) = v.get("source").and_then(|s| s.get("path")).and_then(Value::as_str) else {
+                continue;
+            };
+            let Some(line) = v.get("source").and_then(|s| s.get("line")).and_then(Value::as_u64) else {
+                continue;
+            };
+            let basename = Path::new(src_path).file_name().and_then(|n| n.to_str()).unwrap_or("").to_string();
+            found.insert((basename, line as u32));
+        }
+    }
+    found
+}
+
 /// Generates the `class_feature` cache for exactly the units passed in
 /// (already scoped to [`BOOK_PRIMARY_FILES`] by
 /// [`units_from_inventory_json`], or an equivalent caller-built list).
@@ -812,13 +968,21 @@ pub fn generate(
         let mut used: BTreeSet<String> = BTreeSet::new();
         let class_feature_dir = out_dir.join(book).join("class_feature");
         let true_class = true_class_by_key(grants_root, book);
+        let foreign = foreign_citations(&class_feature_dir);
 
         for unit in book_units {
+            if foreign.contains(&(unit.source_file.clone(), unit.source_line)) {
+                report.foreign_citation_skipped += 1;
+                continue;
+            }
             let Some(raw_row) = lines.line(book, &unit.source_file, unit.source_line as usize) else {
                 report.unresolved_citations.push(format!("{book}:{}:{}", unit.source_file, unit.source_line));
                 continue;
             };
-            let file_path = book_dir.join(&unit.source_file);
+            let Some(file_path) = resolve_book_file(&book_dir, &unit.source_file) else {
+                report.unresolved_citations.push(format!("{book}:{}:{}", unit.source_file, unit.source_line));
+                continue;
+            };
             let sha256 = match sha_by_file.get(&unit.source_file) {
                 Some(s) => s.clone(),
                 None => {
@@ -904,7 +1068,18 @@ pub fn generate(
                     raw_tokens: tokens,
                 },
                 source: Source::LstToken {
-                    path: format!("{rel_dir}/{}", unit.source_file),
+                    // Real relative path to the file this record was read
+                    // from -- `{rel_dir}/{file}` for a primary file,
+                    // `{rel_dir}/support/{file}` (etc.) for a nested
+                    // variant [`resolve_book_file`] found. Falls back to
+                    // the flat join only if `strip_prefix` somehow fails
+                    // (never observed against `corpus_root`, since
+                    // `file_path` was resolved from `book_dir` which is
+                    // itself `corpus_root.join(rel_dir)`).
+                    path: file_path
+                        .strip_prefix(corpus_root)
+                        .map(|p| p.to_string_lossy().replace('\\', "/"))
+                        .unwrap_or_else(|_| format!("{rel_dir}/{}", unit.source_file)),
                     sha256,
                     line: unit.source_line,
                     record_key: unit.key.clone(),
@@ -951,26 +1126,89 @@ mod tests {
     use super::*;
 
     #[test]
-    fn book_primary_files_covers_the_21_in_scope_books() {
-        assert_eq!(BOOK_PRIMARY_FILES.len(), 21);
-        assert!(!BOOK_PRIMARY_FILES.iter().any(|(book, _, _)| *book == "pathfinder_unchained"));
-        // `ultimate_psionics` is excluded this cycle -- see module doc
-        // comment's `book_dir_of` 5-segment-path finding.
-        assert!(!BOOK_PRIMARY_FILES.iter().any(|(book, _, _)| *book == "ultimate_psionics"));
+    fn book_primary_files_covers_the_23_in_scope_books() {
+        assert_eq!(BOOK_PRIMARY_FILES.len(), 23);
+        // `ultimate_psionics` is back in scope this cycle -- the
+        // `book_dir_of` 5-segment-path finding that excluded it went stale
+        // once `book_dir_of` gained a 4-segment `dreamscarred_press`
+        // branch (`014f210b9`). See module doc comment's `ultimate_psionics`
+        // section.
+        assert!(BOOK_PRIMARY_FILES.iter().any(|(book, _, _)| *book == "ultimate_psionics"));
+        // `pathfinder_unchained` is back in scope this cycle too --
+        // [`foreign_citations`] protects its 64 hand-curated records per
+        // unit now, so the whole book no longer needs excluding. See
+        // module doc comment's `pathfinder_unchained` section.
+        assert!(BOOK_PRIMARY_FILES.iter().any(|(book, _, _)| *book == "pathfinder_unchained"));
     }
 
     #[test]
-    fn units_from_inventory_json_filters_to_class_feature_primary_file_rows() {
+    fn foreign_citations_finds_only_records_carrying_class_key_never_this_generators_own() {
+        let dir = std::env::temp_dir().join(format!(
+            "codex_class_feature_foreign_citations_test_{}",
+            std::process::id()
+        ));
+        let sub = dir.join("some_class");
+        std::fs::create_dir_all(&sub).unwrap();
+        std::fs::write(
+            sub.join("foreign.json"),
+            r#"{"data":{"class_key":"Summoner ~ Unchained Class","raw_tokens":[]},
+                "source":{"path":"pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst","line":736}}"#,
+        )
+        .unwrap();
+        std::fs::write(
+            sub.join("own.json"),
+            r#"{"data":{"class":"Rogue","raw_tokens":[]},
+                "source":{"path":"pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst","line":1615}}"#,
+        )
+        .unwrap();
+
+        let found = foreign_citations(&dir);
+        assert_eq!(found.len(), 1);
+        assert!(found.contains(&("pu_abilities_class.lst".to_string(), 736)));
+        assert!(!found.contains(&("cr_abilities_class.lst".to_string(), 1615)));
+
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn units_from_inventory_json_accepts_any_abilities_class_file_of_a_known_book() {
         let json = r#"{"units":[
             {"kind":"class_feature","book":"core_rulebook","source_file":"cr_abilities_class.lst","source_line":1615,"corpus_key":"Rogue ~ Sneak Attack","name":"Sneak Attack"},
+            {"kind":"class_feature","book":"ultimate_combat","source_file":"uc_abilities_class_um.lst","source_line":12,"corpus_key":"A ~ B","name":"B"},
             {"kind":"class_feature","book":"core_rulebook","source_file":"some_other_file.lst","source_line":4,"corpus_key":"X ~ Y","name":"Y"},
             {"kind":"feat","book":"core_rulebook","source_file":"cr_abilities_class.lst","source_line":5,"corpus_key":"Z","name":"Z"},
             {"kind":"class_feature","book":"not_a_book","source_file":"nope.lst","source_line":5,"corpus_key":"Z","name":"Z"}
         ]}"#;
         let units = units_from_inventory_json(json).unwrap();
-        assert_eq!(units.len(), 1);
+        assert_eq!(units.len(), 2);
         assert_eq!(units[0].key, "Rogue ~ Sneak Attack");
         assert_eq!(units[0].source_line, 1615);
+        // The nested-support-file row (`uc_abilities_class_um.lst`) is
+        // accepted too -- widened scope, this cycle.
+        assert!(units.iter().any(|u| u.source_file == "uc_abilities_class_um.lst"));
+    }
+
+    #[test]
+    fn resolve_book_file_finds_a_nested_support_file_by_basename() {
+        let dir = std::env::temp_dir().join(format!(
+            "codex_class_feature_resolve_test_{}",
+            std::process::id()
+        ));
+        let support = dir.join("support");
+        std::fs::create_dir_all(&support).unwrap();
+        std::fs::write(dir.join("primary_abilities_class.lst"), "primary").unwrap();
+        std::fs::write(support.join("nested_abilities_class.lst"), "nested").unwrap();
+
+        let primary = resolve_book_file(&dir, "primary_abilities_class.lst");
+        assert_eq!(primary, Some(dir.join("primary_abilities_class.lst")));
+
+        let nested = resolve_book_file(&dir, "nested_abilities_class.lst");
+        assert_eq!(nested, Some(support.join("nested_abilities_class.lst")));
+
+        let missing = resolve_book_file(&dir, "does_not_exist.lst");
+        assert_eq!(missing, None);
+
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 
     #[test]

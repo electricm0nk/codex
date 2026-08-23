@@ -4663,3 +4663,67 @@ against it simultaneously, corrupting cargo's fingerprint cache and producing a 
   receipt's inference or an earlier brief's figures; 16 other `decisions.md §20` kinds remain at
   their own `no_record` figures, untouched by this cycle.
 - Commit: 1410424cf.
+
+## 2026-08-23 — `class_feature` `no_record` closure (decisions.md §20 wave, gate-1-shape-closure)
+
+`decisions.md §20`: Gate 3's closure condition is `no_record == 0`, not "budget not exceeded" —
+20,889 objects across 18 kinds were un-ingested at wave start. This cycle closes `class_feature`,
+the largest kind (5,604 units).
+
+**Lever found, not built** (`§17`): the existing `src/rules_core/cache_gen/class_feature.rs` +
+`src/bin/gen_cache_class_feature.rs` generic transcription pipeline, already discovered by an
+earlier T2a/T12 cycle. Its `BOOK_PRIMARY_FILES` scope excluded `ultimate_psionics` on a `book_dir_of`
+finding that had gone stale (the underlying bug was independently fixed in `014f210b9`, landed
+before this exclusion's own commit but never noticed), excluded `pathfinder_unchained` wholesale to
+protect 64 hand-curated records (at the cost of 536 other units in the same book that hand-curation
+never touched), and never covered any book's nested `support/*abilities_class*.lst` files — 100% of
+the 5,604-unit `no_record` population matched that naming convention, primary or nested.
+
+**What changed** (`src/rules_core/cache_gen/class_feature.rs` only):
+- `units_from_inventory_json` widened from "book's own listed primary file" to "any file of a known
+  book matching `*abilities_class*.lst`".
+- `generate()` gained `resolve_book_file` (recursive basename search, mirrors
+  `wiring_class::resolve_corpus_file`) so a nested file's real path is found, and now writes each
+  record's `source.path` as the real relative path read from (was assumed flat before).
+- `BOOK_PRIMARY_FILES` gained `ultimate_psionics` and `pathfinder_unchained` (21 → 23 books).
+- `generate()` gained `foreign_citations` — a per-unit guard keyed on `data.class_key` presence —
+  so `pathfinder_unchained`'s 64 hand-curated records (different schema, different code path) are
+  never duplicated or overwritten. Verified: `git status --porcelain` on all four hand-curated class
+  directories is empty after the regen.
+- 5 new unit tests; RED→GREEN proven by temporarily reverting the `ultimate_psionics` entry
+  (`book_primary_files_covers_the_23_in_scope_books` failed `left: 21, right: 22` for the intended
+  reason) and restoring.
+
+**Re-derived, not assumed** (`§17a`): `python3 scripts/shape_ledger.py --inventory
+docs/work-inventory.json`, group `no_record` rows by `kind`.
+
+| Population | Before | After |
+|---|---:|---:|
+| `class_feature` `no_record` | 5,604 | **140** |
+| Bundle-wide `no_record` (18 kinds) | 20,889 | 15,425 |
+
+Gate 3's evidence-gated budget (untouched this cycle, per the brief) reads `15425/36028 vs.
+baseline 21521/36028 — exceeded: False` (`python3 scripts/shape_coverage_standing_gate.py`).
+
+**The 140-unit residual is a correct PI disposition, not a defect** (`§16`): every one carries
+`NAMEISPI:YES` on its PCGen row; verified exact per-book match (e.g. `grep -c "NAMEISPI:Yes"
+.../iswg_abilities_class.lst` → 29, matching the 29 `inner_sea_world_guide` residual rows). The
+generator's own pre-existing PI screen (unchanged this cycle) correctly refuses to transcribe a
+redacted name (`§15`).
+
+**Fixture discipline** (`§3`): whole-repo `corpus_literal_sweep` → `CLEAN` after the regen, against
+the pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`.
+
+**Named shortfalls, not hidden:** (1) nested/newly-in-scope records' real (non-flat) `source.path`
+exposes `corpus_literal_sweep`'s pre-existing `--json-out` book-attribution bug (`OPEN-ISSUES.md`
+SD-31 row 22, not edited this cycle) — blocks `literal-verified` stamping for that subset only, not
+`shape_ledger.py`'s join or the sweep's CLEAN verdict. (2) `data/class_feature_grants` not
+regenerated for the 2 newly-added books — `class`-field resolution falls back to its existing next
+tier, same as every other ungranted book. (3) Player-reachability proof for the ~5,464 newly-
+ingested records is out of this cycle's scope (ingestion only, per `decisions.md §20`'s own
+framing) — not claimed.
+
+Receipt: `artifacts/gate-1-shape-closure/003_class_feature_no_record_closure_cycle_receipt.md`.
+Remaining bundle-wide `no_record` (15,425, 17 other kinds) is sibling-cycle scope per `decisions.md
+§20`'s per-kind table.
+- Commit: (recorded after push).

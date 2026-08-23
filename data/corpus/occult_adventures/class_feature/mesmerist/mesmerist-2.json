@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:48:23Z",
+  "data": {
+    "key": "Mesmerist ~ CLASS",
+    "name": "Mesmerist",
+    "class": "Mesmerist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Mesmerist_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mesmerist Archetype|AUTOMATIC|Archetype Mesmerist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mesmerist_CFP_Level|MesmeristLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 20,
+    "record_key": "Mesmerist ~ CLASS"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

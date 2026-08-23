@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:48:23Z",
+  "data": {
+    "key": "Aldori Swordlord ~ Quick Draw ~ Aldori Dueling Mastery",
+    "name": "Aldori Dueling Mastery",
+    "class": "Aldori Swordlord",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aldori Swordlord ~ Quick Draw ~ Aldori Dueling Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "AldoriSwordlordFeatChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Quick Draw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Aldori Dueling Mastery"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 17,
+    "record_key": "Aldori Swordlord ~ Quick Draw ~ Aldori Dueling Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

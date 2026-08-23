@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:48:23Z",
+  "data": {
+    "key": "Shifter ~ CLASS",
+    "name": "Shifter",
+    "class": "Shifter",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shifter_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shifter Archetype|AUTOMATIC|Archetype Shifter"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shifter_CFP_Level|ShifterLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1309,
+    "record_key": "Shifter ~ CLASS"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

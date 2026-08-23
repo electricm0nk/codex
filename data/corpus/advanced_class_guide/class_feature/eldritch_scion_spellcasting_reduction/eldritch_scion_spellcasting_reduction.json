@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T11:48:23Z",
+  "data": {
+    "key": "Eldritch Scion SpellCasting Reduction",
+    "name": "Eldritch Scion SpellCasting Reduction",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusSpellCastingProgressionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusSpellCastingProgressionLVL|MagusLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusSpellCastingProgressionLVL|(DragonDiscipleLVL>=2)+(DragonDiscipleLVL>=3)+(DragonDiscipleLVL>=4)+(DragonDiscipleLVL>=6)+(DragonDiscipleLVL>=7)+(DragonDiscipleLVL>=8)+(DragonDiscipleLVL>=10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 3382,
+    "record_key": "Eldritch Scion SpellCasting Reduction"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:48:23Z",
+  "data": {
+    "key": "Summoner ~ Unchained Class",
+    "name": "Unchained Summoner",
+    "class": "Summoner",
+    "description": "IMPORTANT!!! After selecting the UNCHAINED SUMMONER. You Need to SAVE the character. Close the Character, and then Re-Open to get the correct Unchained Summoner Spell List.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Summoner ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Summoner Class Selection.SummonerAlternative"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnchainedEidolonDefault|0"
+      },
+      {
+        "key": "DESC",
+        "value": "IMPORTANT!!! After selecting the UNCHAINED SUMMONER. You Need to SAVE the character. Close the Character, and then Re-Open to get the correct Unchained Summoner Spell List."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoSummonerSelection|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnchainedEidolonDefault|1"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "SummonerSelectionMade|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonBaseForm|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonType|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 117,
+    "record_key": "Summoner ~ Unchained Class"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
