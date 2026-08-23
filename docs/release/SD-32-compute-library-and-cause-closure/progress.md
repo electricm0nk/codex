@@ -703,6 +703,61 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   arms for `PREALIGN`/`PRESPELLTYPE`/`PRESPELLSCHOOL` (19/14/6 occurrences in the 62-class census)
   to shrink the `Unmodelled` surface further.
 
+### Cycle 004 — Epic 3 / Card 12 `epic-3-class-reachability` (18-untabled-base-class half closed — reopened per `decisions.md §10`)
+
+- **Card ID:** `epic-3-class-reachability`
+- **Commit SHA:** `3362acb00`
+- **Files touched:** `src/rules_core/pilot_compute/untabled_base_class_chassis.rs` (new),
+  `src/rules_core/pilot_compute/mod.rs` (new dispatch arm + wiring tests),
+  `src/rules_core/rules_tables/crb/class_tables.rs` (`BabProgression`/`base_attack_bonus`/
+  `save_bonus` widened `pub(crate)`, no behavior change), `scripts/census_untabled_base_classes.py`
+  (new), `tests/fixtures/rules_core/untabled-base-class-chassis.json` (new, generated),
+  `docs/retro/events/epic-3-untabled-base-classes.jsonl` (new — 1 verification-fail event
+  self-healed by fetching the oracle, 1 correction re: 18-vs-20 population), this file, `kanban.md`
+  (card 12 row updated).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E3-001 — the second half
+  ("the 18 real base classes without tables"), reopened by `decisions.md §10` after cycle 003's
+  own explicit deferral.
+- **Status:** complete — **AT-32-E3-001 now met in full**, both named populations closed.
+- **Notes:** Re-derived the population mechanically (`scripts/census_untabled_base_classes.py`)
+  instead of trusting the quoted 18: real answer is **20** (Aegis, Antipaladin, Cryptic, Dread,
+  Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior,
+  Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, Wilder — spanning
+  `advanced_players_guide`, `occult_adventures`, `ultimate_magic`, `ultimate_wilderness`,
+  `ultimate_intrigue`, `ultimate_psionics`, all six already carrying a `RuleSetId` variant, so none
+  of these 20 belongs to Epic 4's "28 books-without-ruleset" bucket). Two extraction bugs in the
+  census script itself were caught and fixed before trusting its output (population read 8, then
+  16, before landing on 20): a multi-column `BONUS:SAVE|BASE.X,BASE.Y|...` field lost its `BASE.`
+  prefix strip on the second-and-later column; and four psionics classes (Psion, Psychic Warrior,
+  Soulknife, Wilder) also exist under the identical name in an un-ingested Dreamscarred Press book
+  (`psionics_unleashed`), and `os.walk`'s non-deterministic visit order sometimes shadowed the
+  real, ingested `ultimate_psionics` occurrence — fixed by preferring an ingested-book match over
+  the first match found. Built one new dispatch arm reusing
+  `rules_tables::crb::class_tables`'s own proven BAB/save formulas (widened visibility, not
+  re-derived) rather than hand-modelling 20 special cases. Unlike cycle 003's prestige arm, this
+  one produces a REAL chassis magnitude (base attack bonus + 3 base saves) — `class_chassis.
+  unsupported` no longer fires for any of these 20 class ids. RED→GREEN captured live for the
+  wiring tests (temporarily stubbed the new arm to
+  `None::<untabled_base_class_chassis::UntabledBaseClassRow>`, 2/3 wiring tests failed for the
+  intended reason — values reverted to the pre-wiring `0` — reverted, re-ran GREEN). 8 unit tests +
+  3 wiring tests, all green; full `cargo test --lib` 2375/2375 passed (0 failed, 13 ignored,
+  unchanged) after wiring — no pre-existing test asserted `unsupported` for any of these 20 class
+  ids, so nothing regressed by making them reachable. Full detail:
+  `artifacts/gate-0-census-closure/004_cycle_receipt.md`.
+- **Gate-wrap-up retro note (workflow-instruction.md §12 step 1):** `scripts/retro.py summary
+  --since 2026-08-22 --json`, read. This actor's own window: 1 verification-fail (`preflight-oracle`
+  on the fresh worktree before the oracle was fetched, self-healed per §8's documented
+  remediation), 1 correction (18-vs-62 — corrected to 20-vs-18 — population). No recurrence key
+  fired more than once within this actor's own window.
+- **Discovery forwards:** none — this closes cycle 003's own logged deferral
+  (id `1787441736902-epic-3-class-reachability-5a53e0`); the 28-books-without-ruleset population
+  AT-32-E3-001 also names remains Epic 4's own unchanged scope.
+- **Next-cycle plan:** none open for this criterion. A natural follow-on (widening `pre_tokens.rs`
+  for the currently-`Unmodelled` PRE-token kinds cycle 003 surfaced) is prestige-gate scope, card
+  11's territory, not this card's.
+
 ### Cycle 1 — Epic 1 / Card 10 `epic-1-compute-library` (F3: library wired behind a real consumer)
 
 - **Card ID:** `epic-1-compute-library`

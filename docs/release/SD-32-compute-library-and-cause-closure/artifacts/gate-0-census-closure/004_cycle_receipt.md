@@ -1,8 +1,8 @@
 # Cycle 004 — Epic 3 (class reachability), second half / Criterion AT-32-E3-001
 
 - **Card ID:** `epic-3-class-reachability`
-- **Commit SHA:** filled in by the push step below (rebased onto `origin/tranche/12` at push
-  time; implementation + receipt land in one commit).
+- **Commit SHA:** `3362acb00` (rebased onto `origin/tranche/12` at push time; implementation +
+  receipt landed in one commit).
 - **Predecessor cycle:** `003_cycle_receipt.md` closed the mechanism-and-proof (prestige-entry-gate)
   half of this same criterion and explicitly deferred this half — cited, not re-closed, per
   `decisions.md §10`.
