@@ -104,12 +104,25 @@ python3 scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.
 ```
 
 → `FAIL` (unchanged verdict, `decisions.md §14`'s already-reopened tension). `population`
-36,015 → 36,039 (+24). `no_record` share 21,521/36,039 (59.7%) vs. the committed budget baseline
-13,968/28,490 — same already-reopened condition, one more instance of real enumeration growth
-outrunning ingestion, not a new blocker. **Budget constants NOT modified.**
+36,015 → 36,028 (this cycle's own regen measured 36,039 before the post-rebase re-derive below
+moved 11 more units off not-done via a concurrent sibling lane's unrelated work — re-confirmed
+against the final pushed tree). `no_record` share 21,521/36,028 (59.7%) vs. the committed budget
+baseline 13,968/28,490 — same already-reopened condition, one more instance of real enumeration
+growth outrunning ingestion, not a new blocker. **Budget constants NOT modified.**
 `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-1-shape-closure/ledger.json`
-regenerated for consistency (population 36,015 → 36,039, `unclassified_count: 0`, piles
+regenerated for consistency (population 36,015 → 36,028, `unclassified_count: 0`, piles
 reconcile).
+
+**Post-rebase regeneration note:** `origin/tranche/12` advanced during this cycle (T9/T12 sibling
+lanes, `895cc4e55`/`d0c36e27b`/`9838c344d`, touching `src/bin/v06_work_inventory.rs` and real
+engine wiring). After rebasing, `docs/work-inventory.json` was regenerated FRESH from the real
+producer rather than trusted from git's text-level merge of the JSON — confirmed necessary: the
+merged JSON's `ingested-magnitude`/`not-ingested`/`text-complete` buckets were stale relative to
+the sibling lanes' own source changes (`totals.units` identical at 49,540, but those three
+buckets shifted 1,474/29,106/3,869 vs. the merged snapshot's 1,404/29,187/3,858 once regenerated)
+— exactly the hazard the dispatch brief's regeneration warning names. `class_feature` (18,056),
+every `literal-verified`/`fixture-verified` stamp, and this cycle's own reconciliation all
+re-confirmed unchanged against the fresh regen.
 
 ## §15 — Product Identity
 

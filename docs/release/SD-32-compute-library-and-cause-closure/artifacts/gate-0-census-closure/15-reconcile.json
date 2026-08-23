@@ -33,11 +33,11 @@
       }
     },
     "ledger_not_done_population": {
-      "value": 36039,
+      "value": 36028,
       "command": "scripts/shape_ledger.py (coverage_ledger.not_done_population -> shape_ledger.build_ledger)",
       "unclassified_count": 0,
       "families": {
-        "F0": 31237,
+        "F0": 31226,
         "F2": 1490,
         "F1": 1791,
         "F10": 3,

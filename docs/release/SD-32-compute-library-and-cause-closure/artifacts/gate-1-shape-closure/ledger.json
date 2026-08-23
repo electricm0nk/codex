@@ -1,5 +1,5 @@
 {
-  "population": 36039,
+  "population": 36028,
   "rows": [
     {
       "id": "advanced_class_guide:class:ex_warpriest",
@@ -22150,35 +22150,7 @@
       "join_status": "matched"
     },
     {
-      "id": "advanced_players_guide:class_feature:antipaladin_aura_of_cowardice",
-      "kind": "class_feature",
-      "book": "advanced_players_guide",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "advanced_players_guide:class_feature:antipaladin_aura_of_depravity",
-      "kind": "class_feature",
-      "book": "advanced_players_guide",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "advanced_players_guide:class_feature:antipaladin_aura_of_despair",
-      "kind": "class_feature",
-      "book": "advanced_players_guide",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "advanced_players_guide:class_feature:antipaladin_aura_of_sin",
-      "kind": "class_feature",
-      "book": "advanced_players_guide",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "advanced_players_guide:class_feature:antipaladin_aura_of_vengeance",
       "kind": "class_feature",
       "book": "advanced_players_guide",
       "family": "F0",
@@ -22211,13 +22183,6 @@
       "book": "advanced_players_guide",
       "family": "F5",
       "join_status": "matched"
-    },
-    {
-      "id": "advanced_players_guide:class_feature:antipaladin_plague_bringer",
-      "kind": "class_feature",
-      "book": "advanced_players_guide",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
     },
     {
       "id": "advanced_players_guide:class_feature:antipaladin_touch_of_corruption",
@@ -211577,13 +211542,6 @@
       "join_status": "matched"
     },
     {
-      "id": "ultimate_magic:class_feature:magus_cantrips",
-      "kind": "class_feature",
-      "book": "ultimate_magic",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "ultimate_magic:class_feature:magus_class_skills",
       "kind": "class_feature",
       "book": "ultimate_magic",
@@ -211591,25 +211549,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_magic:class_feature:magus_counterstrike",
-      "kind": "class_feature",
-      "book": "ultimate_magic",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "ultimate_magic:class_feature:magus_fighter_training",
       "kind": "class_feature",
       "book": "ultimate_magic",
       "family": "F2",
       "join_status": "matched"
-    },
-    {
-      "id": "ultimate_magic:class_feature:magus_greater_spell_access",
-      "kind": "class_feature",
-      "book": "ultimate_magic",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_magic:class_feature:magus_greater_spell_combat",
@@ -211640,13 +211584,6 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "ultimate_magic:class_feature:magus_knowledge_pool",
-      "kind": "class_feature",
-      "book": "ultimate_magic",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "ultimate_magic:class_feature:magus_magus_arcana",
       "kind": "class_feature",
       "book": "ultimate_magic",
@@ -211669,20 +211606,6 @@
     },
     {
       "id": "ultimate_magic:class_feature:magus_spell_recall",
-      "kind": "class_feature",
-      "book": "ultimate_magic",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "ultimate_magic:class_feature:magus_spellstrike",
-      "kind": "class_feature",
-      "book": "ultimate_magic",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "ultimate_magic:class_feature:magus_true_magus",
       "kind": "class_feature",
       "book": "ultimate_magic",
       "family": "F0",
@@ -252279,7 +252202,7 @@
     "F0": {
       "label": "No formula content (no DEFINE/BONUS token found for this unit)",
       "proof_width": "Covers a unit whose (book, source_file, source_line) join finds either no corpus record, or a corpus record whose data.raw_tokens carries no DEFINE/BONUS-prefixed key. Does not distinguish 'this unit genuinely has no computable magnitude' (a race description, a pure-text feat) from 'the join failed to find the record it should have' -- the `join_status` field on each ledger row (`no_record` vs `no_formula_tokens`) is what a reviewer checks to tell those apart; F0's own count does not.",
-      "count": 31237
+      "count": 31226
     },
     "F2": {
       "label": "Per-level scaling (<Class>LVL bare or arithmetic)",
@@ -252337,6 +252260,6 @@
   "join_status_counts": {
     "no_record": 21521,
     "matched": 4802,
-    "no_formula_tokens": 9716
+    "no_formula_tokens": 9705
   }
 }
