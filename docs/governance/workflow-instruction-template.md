@@ -157,6 +157,39 @@ const epic2Results = await parallel(
 )
 ```
 
+## 2.5 A dispatched agent is never resumed — never end a turn waiting
+
+**A dispatched `agent()` call gets exactly one turn.** Nothing wakes it up: there is no monitor, no
+completion notification, and no re-invocation. An agent that backgrounds a long command and ends its
+turn to "resume when it reports" loses its entire cycle, and the orchestrator gets a status line
+instead of work.
+
+This has real cost. In SD-32 two consecutive lanes returned exactly this and landed **zero**
+commits between them:
+
+> *"I'll end this turn now and wait for the monitor's completion notification before continuing."*
+> *"Waiting for the reach-gate verification background process to finish before completing the
+> cycle. I'll resume once it reports."*
+
+Both were caught only because the orchestrator checked the repo rather than reading the summary —
+`git log` showed no commits and the target files were untouched.
+
+**Put this in every dispatch prompt**, alongside the environment block:
+
+- Wait for slow work **inside** the turn — run it in the foreground, or poll a background job in a
+  loop with sleeps between checks. Do not end the turn expecting to be re-invoked.
+- **Scope test runs.** On a contended machine a full unscoped `cargo test --locked --no-fail-fast`
+  over hundreds of binaries may never finish. Name the targeted binaries/modules the change touches,
+  plus the workspace-level suites, and say explicitly which sweeps *not* to run.
+- If something genuinely will not finish, **report what was observed and why**, and commit the work
+  anyway. A cycle that lands its change and reports one unfinished suite is a success; a cycle that
+  lands nothing while waiting is a total loss.
+- **Commit and push before ending the turn**, always — even for a partial result.
+
+**Orchestrator's side of the control:** never accept a lane's final message as evidence that work
+landed. Check `git log` and the target files. A return value that describes an intention rather than
+an outcome is a stall, not a result.
+
 ## 3. Per-epic parallel/sequential map
 
 Fill in one row per epic, only after completing §4's path verification. A `parallel: yes` row is only valid if the epic's criteria touch genuinely disjoint files (verified, not assumed).
