@@ -1670,6 +1670,44 @@ own cycle entry above (and `kanban.md` row 11) for the current, real state.
   filing's time; this lane's own 12-unit close is the first real progress against that count, not
   a new independent blocker on top of it).
 
+### Card 11 `epic-2-cause-closure`, T2b — `bestiary_5` fully out of ingest-tool-extension scope (lane `epic-2-t2b-w1b`, 2026-08-23)
+
+- **Cycle:** `epic-2-t2b-w1b/3` (`artifacts/gate-3-closure-invariant/
+  epic-2-t2b-w1b-bestiary_5_cycle_receipt.md`). Dispatch brief scoped `bestiary_5` identically to
+  `inner_sea_races`/`horror_adventures`: "ingest-tool extension only... no chassis-load wiring
+  needed, ~3 files."
+- **What failed / what remains:** 0 of 136 real open units close within that scope. By class:
+  **61** need 8 new race/entity chassis (Shabti 12, Reptoid 10, Deep One Hybrid 9, Orang-Pendak 9,
+  Astomoi 8, Caligni 7, Clockwork Familiar 5, Esipil 1) — `ingest_races.rs`'s `bestiary_5`
+  `IN_SCOPE_RACES` names only `skinwalker`; none of these 8 have a `RaceSpec` entry, and no
+  stale-regen shortcut exists (re-ran `ingest_races.rs`, confirmed timestamp-only diff, reverted).
+  **72** need Skinwalker's own heritage-selector mechanism — already named, by
+  `ingest_races.rs`'s own `skinwalker` doc comment, as "a genuinely new mechanism, deferred (not
+  stubbed) to a follow-on batch." **1** (`Adopted Race ~ Skinwalker`) needs the cross-book
+  `Adopted Race` selector a sibling lane (`epic-2-t2b-w1-c`) already found spans 4 books and
+  recommended building once. **2 further units checked, correctly not counted**: `Favored Enemy ~
+  Humanoid (Skinwalker)` (a Ranger class-feature-shaped grant, wrong TYPE shape for this tool) and
+  `Psychic Magic` (sourced from a conditionally-loaded `_oa.lst` support file, the same hazard
+  `ingest_race_traits.rs`'s `horror_adventures` doc comment already names for a sibling book).
+- **Command that shows it:** `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+  u=[x for x in d['units'] if x['book']=='bestiary_5' and x['kind']=='race_trait' and
+  x['evidence']=='race_trait_race_not_modelled']; from collections import Counter; print(Counter(
+  k.split(' ~ ')[0] for k in (x['corpus_key'] for x in u)))"` → the per-race/entity breakdown in
+  the receipt above.
+- **Named owner:** the operator. Exact ruling needed: sequence and assign Class A (8-race chassis
+  batch, 61 units, largest single win at zero shared-mechanism cost), Class B (Skinwalker
+  heritage-selector mechanism, 72 units — the single largest block, and benefits every other book
+  with the same heritage shape once built, e.g. Dhampir/Changeling in `inner_sea_races` above),
+  and Class C (cross-book `Adopted Race` selector, 9 units total across 4 books — build once, not
+  per-book) as follow-on cycles. None fits inside "ingest-tool extension" as scoped.
+- **Retro event:** `scripts/retro.py correction --subject t2b-census --claimed "bestiary_5: 136
+  real work units, ingest-tool extension, ~3 files" --actual "0 bankable within scope -- 61 need
+  new chassis, 72 need a deferred heritage mechanism, 1 needs a cross-book selector mechanism"
+  --verified-by "python3 -c ... Counter(...) over docs/work-inventory.json"`.
+- **Does this block bundle closure?** Yes, transitively — part of card 11's T2b population,
+  already covered by the standing blocker above; no new units closed against that count from this
+  book this cycle (0 of 136).
+
 ## Closure epilogue — full worktree/branch sweep (card 13, `workflow-instruction.md §13` step 3)
 
 Run 2026-08-22, after all four gates and cards 1-10,12 landed on origin and card 11 was filed
@@ -2106,6 +2144,38 @@ and after this sweep (not "none found" without having run the commands).
   classifier-noise findings rather than duplicating them.
 - **Next-cycle plan:** `bestiary_5` (this lane). Receipt:
   `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-horror_adventures_cycle_receipt.md`.
+
+## Cycle epic-2-t2b-w1b/3 — Card 11, shape T2b, book `bestiary_5` — 0 bankable, fully escalated by class
+
+- **Card ID:** `epic-2-cause-closure` (row 11; T2b, `bestiary_5` only)
+- **Commit SHA:** (this docs-only commit — see push log)
+- **Files touched:** receipt + this entry only. **No production code touched.**
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (no production diff exists)
+- **Wired-integration audit result:** `OK_NO_TOKENS` (no production diff exists)
+- **Acceptance criterion:** AT-32-E2-001 / AT-32-E4-001.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** measurement cycle — 0 units banked, per `decisions.md §13` standing lesson 6.
+- **Summary:** Correction to the dispatch brief's "ingest-tool extension only... no chassis-load
+  wiring needed, ~3 files" characterization of `bestiary_5`. Re-derived by class: of 136 real
+  open units, **61** need 8 new race/entity chassis this project has never built (Shabti,
+  Reptoid, Deep One Hybrid, Orang-Pendak, Astomoi, Caligni, Clockwork Familiar, Esipil) — no
+  stale-regen shortcut exists (confirmed: re-ran `ingest_races.rs`, only `ingested_at`-timestamp
+  drift, reverted); **72** need Skinwalker's own heritage-selector mechanism, which
+  `ingest_races.rs`'s own `skinwalker` `RaceSpec` doc comment already names as "genuinely new...
+  deferred (not stubbed) to a follow-on batch" — building it here would repeat, not resolve, that
+  deferral; **1** needs the cross-book `Adopted Race` selector mechanism a sibling T2b lane
+  (`epic-2-t2b-w1-c`) already found spans 4 books and recommended building once, not
+  book-by-book. 2 further units (`Favored Enemy ~ Humanoid (Skinwalker)`, a Ranger
+  class-feature-shaped grant; `Psychic Magic`, sourced from a conditionally-loaded `_oa.lst`
+  support file) were checked and correctly not counted as this lane's shape. **All three classes
+  are chassis-load wiring or new-mechanism work, explicitly out of this lane's granted scope**;
+  none was fabricated to close the count.
+- **Dual-audit:** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS` (no production diff exists).
+- **Discovery forwards:** none new — corroborates `epic-2-t2b-w1-c`'s Class B/C findings
+  independently from `bestiary_5`'s own side.
+- **Next-cycle plan:** none on `bestiary_5` under this lane's granted scope. Escalated in `##
+  Open blockers` below. Receipt:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-bestiary_5_cycle_receipt.md`.
 
 ## DISCOVERED
 
