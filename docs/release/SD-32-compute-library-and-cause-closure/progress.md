@@ -5848,6 +5848,7 @@ Next-cycle plan: `equipment` (170, root cause untraced) and `equipment_modifier`
 are the natural next targets in this scope; `spell` (285) needs either the
 `gen_cache_spell_lane_dump` self-erasure fix confirmed landed, or a different ingestion path per
 `§17`'s "search for the existing path" discipline.
+
 ### Cycle pi-key-rawtokens-followup — Epic 2 / Card 11 `epic-2-cause-closure`, lane T9 — the two named unowned PI defects closed (3 of 4 leaks + all 28 `NAME-PI-SHIPPED`), one false positive corrected, 9 new leaks found and named
 
 **Defect 1** (4 confirmed cross-kind leaks under the signed-off 60-term blacklist):
@@ -5952,3 +5953,93 @@ clean.
   ruling on the `normalized_term_hit` `rn`→`m` OCR-fold's proven
   false-positive/false-redaction risk (`§17a`-shaped finding against a
   shared, already-approved instrument).
+
+## T9-onboarding wave 4 — `spell`/`equipment`/`equipment_modifier` `no_record`, 2026-08-23 (`decisions.md §20`, card 11)
+
+Re-derived per §17a against a freshly-bootstrapped repo-local oracle (this worktree's slot was
+empty; bootstrapped via `scripts/fetch-pcgen-oracle.sh`, landed at
+`7f818006e371188e5717fd18d74d18a420747fc6`): `spell` 285, `equipment` 170, `equipment_modifier` 43
+— matches the dispatch brief exactly.
+
+**Verified the cross-generator self-erasure fix (`3113458009`) before touching `spell_lane_dump`**,
+per the brief's explicit instruction: `remove_stale_owned_files`'s mutation-proof test
+(`an_unscoped_key_only_predicate_reproduces_the_incident`) is in place, and a live
+`gen_cache_spell_lane_dump` run against all 20 now-covered books produced **zero deletions**
+(`git status --porcelain -- data/corpus` showed only new untracked files) — the same run
+previously staged 1,580 deletions before that fix.
+
+**`spell` (285 → 167, -118):** widened the two existing generic paths (`decisions.md §17`) —
+`ingest_spells.rs`'s config-driven `BOOKS` table and `spell_lane_dump.rs`'s `book_specs()` — with
+eight new entries each, no new logic: `inner_sea_races`, `inner_sea_intrigue`, `monster_codex`,
+`inner_sea_world_guide`, `book_of_the_damned_volume_1`, `book_of_the_damned_volume_2`,
+`mythic_adventures`, `ultimate_equipment`. Two books (`inner_sea_races`, `mythic_adventures`) got
+their first compiled rule set of any kind. 123 new corpus records, additive-only. Gate-1
+measurability only — none of the eight books' compiled tables were wired into
+`spell_resolver::spell_catalog_rows()` or the desktop catalog this cycle (honest reachability
+claim: 0), matching the precedent the prior `bestiary`/`bestiary_4` cycle set.
+`advanced_players_guide`'s 24 units deliberately left untouched — its `apg::spell_list` table
+predates this pipeline and other books' `already_ingested_*` sets already reference it; overwriting
+its `out_path` without tracing every consumer first was judged unsafe within this cycle's budget.
+
+**`equipment` (170, unchanged): traced two concrete ids to a real cause.**
+`advanced_class_guide:equipment:dust_knuckles_forget` and `..._false_face_forget` — the base items
+are real content rows; a **separate** `_pfs/` file carries a `.FORGET` PFS-legality retraction
+directive for each, which `gen_equipment_gap_tables.rs`/`gen_cache_equipment_gap` correctly exclude
+as non-content. The real defect is one layer up, in whatever mints `docs/work-inventory.json`'s
+units (`v06_work_inventory.rs`) — it appears to enumerate the `.FORGET` directive as its own
+distinct unit rather than an annotation on the already-real base item. Out of this cycle's granted
+file scope (the equipment-gap generators, not the census enumerator); named for the next cycle.
+**Only 2 of 170 carry this shape** — confirmed real but small, not the dominant cause; **168/170
+still unexplained**, needs a fresh per-book trace (`ultimate_equipment` alone is 58/170, the
+largest single book, and the natural next target).
+
+**`equipment_modifier` (43, unchanged):** re-ran `gen_cache_equipment_gap` fresh against the pinned
+oracle to confirm nothing drifted since the closing cycle — same "0/0 new records, all already
+shipped" result. No new lead traced this cycle.
+
+**RED → GREEN:** `books_table_names_exactly_the_twelve..._twenty_spell_bearing_books_...`
+assertion updated (twelve → twenty ids) and re-passes.
+```
+cargo test --locked --bin ingest_spells                           # 19/19 pass
+cargo test --locked --lib rules_core::cache_gen::spell_lane_dump  # 9/9 pass
+cargo test --locked --lib rules_core::rules_tables::              # 504/504 pass, 3 pre-existing ignored
+cargo build --locked --lib                                        # clean, 1 pre-existing warning
+```
+
+**Gate 3 standing check, re-verified green, budget untouched:**
+```
+python3 scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.json
+```
+`no_record budget: 864/35328 vs. baseline 21521/36028 -- exceeded: False`.
+
+**Closure/reclassification/reachability, reported separately (`§16`):** 118 `spell` units closed
+(real ingest, `no_record` → `matched`/`no_formula_tokens`). Zero reclassified. Reachability: 0
+(honest claim — Gate-1 measurability only, no engine wiring this cycle).
+
+**Bundle `no_record`, before → after this cycle:**
+
+| Kind | Before | After |
+|---|---:|---:|
+| `spell` | 285 | **167** |
+| `monster_ability` | 267 | 267 (out of scope) |
+| `companion` | 217 | 217 (out of scope) |
+| `equipment` | 170 | 170 (2/170 root-caused, not fixed; 168 still open) |
+| `equipment_modifier` | 43 | 43 (re-verified, no new lead) |
+| **Bundle total** | **982** | **864** |
+
+**A PI-leak-in-progress caught and fixed before committing:** an earlier receipt draft named nine
+`NAMEISPI:YES`-dropped spell titles directly. Per `decisions.md §15`/`§24` ("a committed artifact
+naming PI is itself a leak"), replaced with `(file, line)` coordinates before the commit that
+introduced the receipt — no leaked PI term ever reached a pushed commit.
+
+Receipt: `artifacts/gate-3-closure-invariant/spell-equipment-no-record-wave2_cycle-1_cycle_receipt.md`.
+Commit: `3f8ddca7fd` on `tranche/12`.
+
+Kanban row 11 note prepended in the same cycle. Rows 11 and 15 left `in-progress`, untouched, per
+the dispatch brief.
+
+Next-cycle plan: `equipment`'s 168 unresolved (start with `ultimate_equipment`, 58/170, the
+largest book) and `equipment_modifier`'s 43 (still no lead) are the natural next targets;
+`spell`'s residual 167 needs `advanced_players_guide`'s consumer trace, the prior cycle's own named
+`bestiary`/`bestiary_4`/`bestiary_6` remainder, and `raw_tokens` enrichment + reachability wiring
+for all ten now-config-driven-but-unwired books.
