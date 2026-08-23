@@ -1953,6 +1953,54 @@ and after this sweep (not "none found" without having run the commands).
   candidates (3,551), then updates `scripts/card15_reconcile.py`'s stale assumptions and re-runs the
   "sum the piles" reconciliation for card 15's real acceptance bar.
 
+## Cycle t2b-w1-d/1 — Card 11, shape T2b, book `bestiary_3` — measurement, 0 units banked, census claim corrected
+
+- **Card ID:** `epic-2-cause-closure` (row 11; T2b, `bestiary_3` only)
+- **Commit SHA:** `f377a49d9` (receipt + script + retro log)
+- **Files touched:** `scripts/t2b_bestiary_3_row_classify.py` (new — re-derive script),
+  `docs/retro/events/t2b-w1-d.jsonl` (new — 1 correction, 1 deferral),
+  `artifacts/gate-3-closure-invariant/t2b-bestiary_3-measurement-receipt.md` (new), this entry.
+  **No production code touched** — `ingest_races.rs`, `ingest_race_traits.rs`, `race_catalog.rs`,
+  `v06_work_inventory.rs` unchanged.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (no production diff exists this cycle)
+- **Wired-integration audit result:** `OK_NO_TOKENS` (no production diff exists this cycle)
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by
+  class. This cycle re-derives, and substantially corrects, the size of the real T2b work in
+  `bestiary_3`; it does not close any of it.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** measurement cycle — 0 units banked, per `decisions.md §13` standing lesson 6.
+- **Summary:** The dispatch brief and `card11-t2b-census-census.md §4` characterized `bestiary_3`
+  as "819 units, needs full `RACE_CORPUS_BOOKS` onboarding (~7 files)," the same shape as
+  `bestiary_2`/`bestiary_5`/`bestiary_6`'s prior new-playable-race onboardings. Row-content
+  classification (`scripts/t2b_bestiary_3_row_classify.py`, cross-referencing every unit's KEY
+  prefix against the book's own `b3_races.lst` `CR:`-bearing race names and `b3_templates.lst`
+  template names) shows `bestiary_3` declares **zero new playable races** — all ~261
+  `b3_races.lst` entries carry `CR:` tokens. Of 819: **9** are by-design category-header
+  exclusions (same rule the census memo §3 already established), **≥683 (likely ~805)** are
+  monster/creature-template special-ability rows misclassified as `race_trait` by
+  `v06_work_inventory.rs::refine_kind`'s TYPE-first-segment-only match (compound race-specific
+  first segments like `AghashRacialAbility`/`RaceAbility`/`BearLordRacialTrait` slip past the
+  fixed literal `MONSTER_ABILITY_TYPE_FACETS` list), and **at most 5** (`Adopted Race ~
+  Catfolk/Ratfolk/Suli/Vanara/Vishkanya`) are genuinely closable — but that mechanism is net-new
+  picker infrastructure with zero existing ingest-tool precedent, and is the same shared gap
+  sibling lane `epic-2-t2b-w1-c`'s cycle above independently found spans `bestiary_2`/`bestiary_5`/
+  `bestiary_6`/`advanced_race_guide`. **Independent corroboration**: this cycle's classifier-noise
+  finding is the same defect class `epic-2-t2b-w1-c`'s cycle above found in `core_rulebook`/
+  `advanced_players_guide` (PCGen plumbing rows misclassified as `race_trait`), confirmed
+  separately, in a different book, by a different mechanism (KEY-prefix-vs-CR:-token cross-check
+  here; direct row-content read there) — two lanes, same day, same underlying producer defect.
+  Full per-row evidence, commands, and the exact classifier-fix spec:
+  `artifacts/gate-3-closure-invariant/t2b-bestiary_3-measurement-receipt.md`.
+- **Discovery forwards:** filed in `## DISCOVERED` below, cross-linking `epic-2-t2b-w1-c`'s two
+  entries above rather than duplicating them — both name the same two underlying fixes
+  (classifier extension in `v06_work_inventory.rs`; a shared `AdoptiveRace`/`Adoptive Parentage`
+  selector mechanism, now confirmed to span at least 5 books).
+- **Next-cycle plan:** none on `bestiary_3` under this lane's granted scope — 0 bankable units
+  remain after the correction above; building the assumed 7-file onboarding pattern would
+  fabricate race chassis for monster stat blocks to satisfy a counter, forbidden by
+  `decisions.md §1a`. Escalating per `AGENTS.md` Blocker Discipline disposition 2 — see the
+  receipt's §6 for the exact next steps.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
@@ -1979,6 +2027,22 @@ and after this sweep (not "none found" without having run the commands).
   books together, rather than two T2b lanes race-conditioning the same shared
   `ingest_races.rs`/`race_catalog.rs` surface independently. Full evidence:
   `artifacts/gate-3-closure-invariant/epic-2-t2b-w1-c_cycle-1_cycle_receipt.md §2` item 3.
+- 2026-08-23, Cycle `t2b-w1-d/1` (`epic-2-cause-closure`, T2b lane, `bestiary_3`): independent
+  confirmation of the SAME classifier defect `epic-2-t2b-w1-c`'s cycle above found, in a different
+  book and via a different check (KEY-prefix-vs-`CR:`-token cross-reference, not direct
+  row-content read). `bestiary_3`'s 819 nominal T2b units are ~805 monster/creature-template
+  special-ability rows misclassified `race_trait` (the book declares zero playable races; every
+  `b3_races.lst` entry carries `CR:`), 9 by-design category-header exclusions, and at most 5
+  closable `Adopted Race ~ <X>` selector rows — the same shared, still-unbuilt selector mechanism
+  `epic-2-t2b-w1-c` found spans 4 books; `bestiary_3` makes it 5. Two independent findings, same
+  day, same underlying `v06_work_inventory.rs::refine_kind` producer defect, strengthens the case
+  this is a systemic classifier gap, not a per-book anomaly — likely recurs across the other
+  unregistered bestiary/monster-shaped books (`bestiary`, `bestiary_4`, `mythic_adventures`, etc.,
+  not verified). Proposed target: same as `epic-2-t2b-w1-c`'s entry above — one dedicated
+  classifier-fix cycle with a full-corpus regression sweep (verified unsafe as a naive
+  any-dot-segment match: every real race's own `Favored Enemy ~ Humanoid (<Race>)` row shares an
+  inner `SpecialAttack` segment with the monster-only facet vocabulary). Full evidence:
+  `artifacts/gate-3-closure-invariant/t2b-bestiary_3-measurement-receipt.md §6`.
 
 - 2026-08-22, Cycle 2 (`gate-0-census-closure`): AT-32-G0-002's ten-kind list (`feat`, `class`,
   `spell`, `monster`, `monster_ability`, `equipment`, `equipment_modifier`, `companion`, `race`,
