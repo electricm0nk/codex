@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:39:57Z",
+  "ingested_at": "2026-08-23T13:09:22Z",
   "data": {
     "key": "Trait ~ Effortless Aid",
     "name": "Effortless Aid",
@@ -50,5 +50,7 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
 }

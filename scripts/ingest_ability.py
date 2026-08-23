@@ -51,15 +51,30 @@ an early draft that copied the substitution produced exactly one
 A `NAMEISPI:YES` declaration OR a name-blacklist hit (checked against BOTH
 the unit's bare `name` and its full `key`, since a key can carry a term the
 bare name does not -- `isg_abilities_faith.lst`'s own
-`"Exalted Boon ~ Asmodeus ~ Hellfire Blast"` is exactly this shape) **skips
-the whole record** (a name cannot be redacted). A `DESCISPI:YES` declaration OR a
-description-blacklist hit redacts only the `DESC` field (both in
-`data.description` and inside `data.raw_tokens`) to
-`shape_b_v1::REDACTED_PI_MARKER`, matching every other generator's
-`redact_desc_token_if_pi` precedent. Per `decisions.md §15`, a record this
-screen cannot confidently clear is never transcribed and never silently
-skipped -- it is reported in the run's own JSON report under
-`skipped_uncertain` so the cycle receipt can name it.
+`"Exalted Boon ~ Asmodeus ~ Hellfire Blast"` is exactly this shape) used to
+skip the whole record (a name cannot be redacted). **SD-32 `decisions.md
+§24` changes that**: such a record is now INGESTED, under a Codex-generated
+neutral name derived only from `(kind, book, source_file, source_line)`
+(`scripts/codex_neutral_name.py`; see that module's own docstring and
+`scripts/tests/test_codex_neutral_name.py` for the `§24b`-1 proof that its
+output cannot be influenced by the PI name). `data.name` and `data.key`
+become the neutral name; `data.raw_tokens` has every token whose VALUE hits
+the blacklist scan OR restates the record's own original name/key redacted
+(not just `DESC` -- a `KEY:` field can carry the row's own PI name a second
+time, and `§24b`-2 requires the PI original appear nowhere that ships, not
+only in the fields the pre-`§24` screen checked -- see
+`scrub_name_pi_tokens`'s own docstring for the live example that found this,
+described there by shape rather than by naming the deity). `data.codex_generated_name` is `True` and
+`data.rename` records the coordinate and reason (`§24b`-3/4) -- never the
+original string. A `DESCISPI:YES` declaration OR a description-blacklist hit
+still redacts only the `DESC` field to `shape_b_v1::REDACTED_PI_MARKER`,
+matching every other generator's `redact_desc_token_if_pi` precedent.
+
+A record whose PI-ness this screen cannot confidently resolve (declared
+neither way, blacklist scan inconclusive) is still never transcribed and
+never silently skipped -- `§24c` only licenses renaming a record whose name
+IS the PI content; it does not touch `decisions.md §15`'s standing rule for
+anything the screen cannot itself decide.
 
 Run: `python3 scripts/ingest_ability.py [--dry-run] [--out <report.json>]`
 `PCGEN_CORPUS_ROOT` must point at a pinned PCGen `data/` checkout.
@@ -79,6 +94,11 @@ from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
     PI_BLACKLIST_TERMS,
     extract_free_text,
     normalized_term_hit,
+)
+from codex_neutral_name import (  # noqa: E402
+    divergence_entry,
+    neutral_key,
+    neutral_name,
 )
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -169,6 +189,57 @@ def row_tokens(line: str) -> list[dict[str, str]]:
     return tokens
 
 
+def scrub_name_pi_tokens(
+    tokens: list[dict[str, str]], name: str, key: str
+) -> tuple[list[dict[str, str]], bool]:
+    """`decisions.md §24b`-2: "The PI original appears nowhere that ships."
+
+    A record whose NAME is PI can carry that same name again inside another
+    token's VALUE -- most concretely a `KEY:` field that restates the row's
+    own full original key verbatim (found live this cycle: a
+    `NAMEISPI:YES` row whose OWN `KEY:` token repeats the identity string
+    the NAME column already carried). The 60-term blacklist scan alone is
+    not enough here -- it only catches the ~60 terms the T9 review
+    compiled, not every deity/proper-noun this kind's `NAMEISPI:YES`
+    declarations cover. This function additionally scrubs any token VALUE
+    that contains the record's OWN original `name` or `key` (or a
+    `~`-delimited segment of `key`, since a `'<Concept> ~ <Deity>'`-shaped
+    key embeds the PI term as one segment, not the whole string) as a
+    case-insensitive substring.
+
+    `name`/`key` are used ONLY to build the redaction needle set here --
+    they are never written into the returned record; the CALLER (this
+    module's `main`) never stores the original `name`/`key` on a renamed
+    record's `data.name`/`data.key`, which is the field `§24b`-1 forbids
+    deriving the new identity from. This function does something
+    different: it removes the original from OTHER fields, which `§24b`-2
+    separately requires.
+
+    Returns `(scrubbed_tokens, any_redacted)`. Never mutates the input."""
+    needles: set[str] = set()
+    for s in (name, key):
+        if s and s.strip():
+            needles.add(s.strip().lower())
+    if key:
+        for segment in re.split(r"\s*~\s*", key):
+            segment = segment.strip()
+            if segment:
+                needles.add(segment.lower())
+
+    scrubbed = []
+    any_redacted = False
+    for t in tokens:
+        value = t["value"]
+        blacklist_hit = normalized_term_hit(value) if value else None
+        identity_hit = bool(value) and any(needle in value.lower() for needle in needles)
+        if blacklist_hit or identity_hit:
+            scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
+            any_redacted = True
+        else:
+            scrubbed.append(dict(t))
+    return scrubbed, any_redacted
+
+
 def desc_value(tokens: list[dict[str, str]]) -> str | None:
     for t in tokens:
         if t["key"] == "DESC":
@@ -236,10 +307,13 @@ def main() -> int:
     report = {
         "population": len(units),
         "written": 0,
-        "name_pi_skipped": 0,
+        "name_pi_renamed": 0,
         "unresolved": [],
         "written_by_book": defaultdict(int),
-        "pi_skipped_records": [],
+        # `decisions.md §24b`-4: divergence entries carry coordinates and
+        # the reason, never the original PI string -- see
+        # `scripts/codex_neutral_name.py::divergence_entry`.
+        "renamed_records": [],
     }
 
     file_cache: dict[tuple[str, str], list[str]] = {}
@@ -273,13 +347,7 @@ def main() -> int:
         # Hellfire Blast" has name "Hellfire Blast", clean, but its key
         # names a blacklisted deity).
         name_hit = normalized_term_hit(name) or normalized_term_hit(key)
-        if name_declared or name_hit:
-            report["name_pi_skipped"] += 1
-            report["pi_skipped_records"].append(
-                f"{book}:{source_file}:{line} '{name}' (key: '{key}')"
-                + (" (NAMEISPI:YES)" if name_declared else f" (term: {name_hit})")
-            )
-            continue
+        name_is_pi = name_declared or bool(name_hit)
 
         description = desc_value(tokens)
         free_text = extract_free_text(raw_line)
@@ -301,30 +369,74 @@ def main() -> int:
         rel_path = os.path.relpath(path, root)
         sha256 = sha256_file(path)
         used = used_by_book[book]
-        slug = slugify(name, used)
+
+        fields_redacted: list[str] = []
+        if pi_redacted:
+            fields_redacted.append("description")
+
+        if name_is_pi:
+            # `decisions.md §24` -- ingest under a Codex-generated neutral
+            # name derived ONLY from (kind, book, source_file, source_line).
+            # See `scripts/codex_neutral_name.py`'s module docstring and
+            # `scripts/tests/test_codex_neutral_name.py` for the `§24b`-1
+            # proof this cannot be influenced by the original PI name.
+            codex_name = neutral_name("ability", book, source_file, line)
+            codex_key = neutral_key("ability", book, source_file, line)
+            scrubbed_tokens, extra_redacted = scrub_name_pi_tokens(tokens, name, key)
+            record_name = codex_name
+            record_key = codex_key
+            record_tokens = scrubbed_tokens
+            slug = slugify(codex_name, used)
+            report["name_pi_renamed"] += 1
+            report["renamed_records"].append(
+                divergence_entry("ability", book, source_file, line, reason="name_pi_blocked")
+            )
+            codex_generated_name = True
+            rename_info = {
+                "reason": "name_pi_blocked",
+                "coordinate": f"{book}:{os.path.basename(source_file)}:{line}",
+            }
+            fields_redacted.append("name")
+            if extra_redacted:
+                fields_redacted.append("raw_tokens")
+        else:
+            record_name = name
+            record_key = key
+            record_tokens = tokens
+            slug = slugify(name, used)
+            codex_generated_name = False
+            rename_info = None
+
+        license_value = "PI-REDACTED" if fields_redacted else "OGL"
 
         record = {
             "population": "in_scope",
             "completeness": "full" if stored_description else "chassis_only",
             "ingested_at": ingested_at,
             "data": {
-                "key": key,
-                "name": name,
+                "key": record_key,
+                "name": record_name,
                 "description": stored_description,
-                "raw_tokens": tokens,
+                "raw_tokens": record_tokens,
             },
             "source": {
                 "kind": "lst_token",
                 "path": rel_path,
                 "sha256": sha256,
                 "line": line,
-                "record_key": key,
+                "record_key": record_key,
             },
             "wiring_class": wiring_class,
             "wiring_class_signals": wiring_signals,
-            "license": "PI-REDACTED" if pi_redacted else "OGL",
-            "pi_field": "description" if pi_redacted else None,
-            "pi_marker": PI_MARKER_REDACTED if pi_redacted else None,
+            "license": license_value,
+            "pi_field": ",".join(fields_redacted) if fields_redacted else None,
+            "pi_marker": PI_MARKER_REDACTED if fields_redacted else None,
+            # `decisions.md §24b`-3: "A field marks it as carrying a
+            # Codex-generated name, so no reader or player mistakes it for
+            # the printed name." `§24b`-4: the divergence record stops at
+            # the coordinate -- never the original string.
+            "codex_generated_name": codex_generated_name,
+            "rename": rename_info,
         }
 
         write_dir_book = CORPUS_WRITE_DIR_ALIASES.get(book, book)

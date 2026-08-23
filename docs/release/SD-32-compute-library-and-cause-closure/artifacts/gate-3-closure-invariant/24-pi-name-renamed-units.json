@@ -1,0 +1,4626 @@
+{
+  "decision": "decisions.md \u00a724 (operator ruling 2026-08-23)",
+  "binding_condition": "\u00a724b-4: record THAT a rename happened, its coordinates, and why -- never the original string.",
+  "generator": "scripts/codex_neutral_name.py (identity), scripts/ingest_ability.py (ability kind)",
+  "kinds_covered_this_cycle": [
+    "ability"
+  ],
+  "kinds_not_yet_covered": [
+    "deity",
+    "class_feature"
+  ],
+  "total_renamed": 576,
+  "renamed_by_kind": {
+    "ability": 576
+  },
+  "entries": [
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 222,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_222)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 223,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_223)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 224,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_224)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 225,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_225)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 226,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_226)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 227,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_227)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 228,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_228)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 229,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_229)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 230,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_230)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 231,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_231)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 232,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_232)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 233,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_233)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 234,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_234)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 235,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_235)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 237,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_237)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 236,
+      "codex_name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_236)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 25,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_25)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 26,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_26)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 27,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_27)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 31,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_31)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 32,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_32)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 33,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_33)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 35,
+      "codex_name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_35)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 13,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_13)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_36)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 59,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_59)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 82,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_82)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 105,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_105)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 128,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_128)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 152,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_152)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 175,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_175)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 198,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_198)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 221,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_221)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 244,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_244)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 267,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_267)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 290,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_290)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 313,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_313)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 336,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_336)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 270,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_270)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 68,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_68)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 347,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_347)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 75,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_75)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 143,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_143)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 19,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_19)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 42,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_42)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 88,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_88)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 111,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_111)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 181,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_181)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 204,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_204)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 250,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_250)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 273,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_273)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 296,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_296)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 319,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_319)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 25,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_25)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 48,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_48)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 94,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_94)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 117,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_117)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 187,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_187)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 210,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_210)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 256,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_256)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 279,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_279)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 302,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_302)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 325,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_325)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 348,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_348)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 31,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_31)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 54,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_54)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 77,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_77)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 100,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_100)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 123,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_123)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 170,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_170)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 193,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_193)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 216,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_216)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 262,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_262)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 285,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_285)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 308,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_308)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 331,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_331)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 543,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_543)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 19,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_19)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 42,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_42)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 65,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_65)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 88,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_88)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 111,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_111)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 134,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_134)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 157,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_157)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 180,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_180)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 203,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_203)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 226,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_226)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 249,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_249)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 273,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_273)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 296,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_296)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 319,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_319)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 342,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_342)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 366,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_366)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 389,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_389)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 413,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_413)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 436,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_436)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 459,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_459)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 23,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_23)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 22,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_22)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 24,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_24)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 45,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_45)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 47,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_47)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 46,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_46)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 69,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_69)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 70,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_70)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 68,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_68)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 92,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_92)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 93,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_93)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 91,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_91)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 115,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_115)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 116,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_116)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 114,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_114)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 139,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_139)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 137,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_137)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 138,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_138)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 162,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_162)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 161,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_161)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 160,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_160)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 185,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_185)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 184,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_184)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 183,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_183)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 206,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_206)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 207,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_207)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 208,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_208)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 229,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_229)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 230,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_230)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 231,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_231)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 252,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_252)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 254,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_254)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 253,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_253)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 276,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_276)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 277,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_277)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 278,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_278)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 300,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_300)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 301,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_301)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 299,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_299)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 323,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_323)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 322,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_322)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 324,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_324)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 345,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_345)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 346,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_346)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 347,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_347)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 370,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_370)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 369,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_369)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 371,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_371)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 392,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_392)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 394,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_394)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 393,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_393)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 418,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_418)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 417,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_417)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 416,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_416)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 441,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_441)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 440,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_440)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 439,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_439)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 464,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_464)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 463,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_463)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 462,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_462)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 29,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_29)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 28,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_28)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 30,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_30)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 51,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_51)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 52,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_52)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 53,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_53)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 74,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_74)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 76,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_76)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 75,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_75)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 98,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_98)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 97,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_97)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 99,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_99)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 122,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_122)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 120,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_120)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 121,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_121)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 143,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_143)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 145,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_145)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 144,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_144)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 166,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_166)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 168,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_168)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 167,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_167)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 189,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_189)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 190,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_190)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 191,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_191)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 212,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_212)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 214,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_214)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 213,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_213)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 235,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_235)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 236,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_236)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 237,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_237)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 258,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_258)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 259,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_259)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 260,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_260)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 282,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_282)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 284,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_284)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 283,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_283)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 306,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_306)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 305,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_305)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 307,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_307)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 330,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_330)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 328,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_328)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 329,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_329)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 353,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_353)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 352,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_352)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 351,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_351)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 377,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_377)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 375,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_375)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 376,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_376)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 398,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_398)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 399,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_399)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 400,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_400)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 422,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_422)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 424,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_424)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 423,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_423)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 447,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_447)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 446,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_446)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 445,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_445)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 470,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_470)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 468,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_468)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 469,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_469)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 544,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_544)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 545,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_545)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 547,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_547)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 541,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_541)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 546,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_546)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_36)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 34,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_34)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 35,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_35)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 58,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_58)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 59,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_59)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 57,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_57)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 80,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_80)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 82,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_82)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 81,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_81)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 105,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_105)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 103,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_103)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 104,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_104)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 126,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_126)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 127,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_127)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 128,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_128)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 151,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_151)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 149,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_149)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 150,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_150)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 174,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_174)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 172,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_172)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 173,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_173)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 196,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_196)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 197,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_197)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 195,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_195)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 220,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_220)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 218,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_218)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 219,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_219)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 241,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_241)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 243,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_243)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 242,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_242)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 265,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_265)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 264,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_264)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 266,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_266)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 289,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_289)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 288,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_288)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 290,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_290)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 313,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_313)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 312,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_312)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 311,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_311)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 335,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_335)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 336,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_336)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 334,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_334)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 359,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_359)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 357,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_357)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 358,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_358)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 382,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_382)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 381,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_381)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 383,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_383)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 406,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_406)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 405,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_405)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 404,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_404)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 428,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_428)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 430,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_430)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 429,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_429)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 453,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_453)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 451,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_451)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 452,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_452)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 474,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_474)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 475,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_475)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 476,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_476)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 25,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_25)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 48,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_48)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 94,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_94)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 117,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_117)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 140,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_140)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 163,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_163)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 186,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_186)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 209,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_209)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 232,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_232)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 255,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_255)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 279,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_279)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 302,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_302)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 325,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_325)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 348,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_348)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 372,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_372)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 395,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_395)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 419,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_419)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 465,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_465)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 31,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_31)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 54,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_54)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 77,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_77)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 100,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_100)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 123,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_123)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 146,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_146)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 169,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_169)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 192,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_192)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 215,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_215)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 238,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_238)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 261,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_261)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 285,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_285)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 308,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_308)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 331,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_331)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 354,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_354)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 378,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_378)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 401,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_401)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 425,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_425)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 471,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_471)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 37,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_37)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 60,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_60)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 106,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_106)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 129,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_129)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 152,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_152)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 175,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_175)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 198,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_198)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 221,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_221)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 244,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_244)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 267,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_267)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 291,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_291)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 314,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_314)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 337,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_337)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 360,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_360)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 384,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_384)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 407,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_407)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 431,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_431)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 454,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_454)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 477,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_477)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 408,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_408)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 229,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_229)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 140,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_140)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 141,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_141)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 143,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_143)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 144,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_144)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 145,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_145)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 146,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_146)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 147,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_147)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 148,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_148)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 149,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_149)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 150,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_150)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 151,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_151)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 152,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_152)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 153,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_153)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 154,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_154)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 155,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_155)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 157,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_157)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 158,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_158)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 159,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_159)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 160,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_160)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 161,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_161)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 162,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_162)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 164,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_164)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 165,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_165)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 166,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_166)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 167,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_167)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 168,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_168)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 169,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_169)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 172,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_172)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 174,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_174)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 175,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_175)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 176,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_176)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 177,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_177)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 178,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_178)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 179,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_179)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 180,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_180)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 181,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_181)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 182,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_182)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 183,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_183)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 184,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_184)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 187,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_187)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 188,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_188)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 189,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_189)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 190,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_190)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 191,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_191)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 192,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_192)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 193,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_193)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 194,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_194)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 195,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_195)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 196,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_196)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 197,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_197)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 198,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_198)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 199,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_199)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 200,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_200)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 201,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_201)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 202,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_202)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 203,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_203)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 205,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_205)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 204,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_204)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 206,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_206)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 207,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_207)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 208,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_208)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 209,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_209)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 210,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_210)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 211,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_211)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 212,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_212)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 213,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_213)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 214,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_214)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 215,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_215)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 216,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_216)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 218,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_218)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 219,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_219)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 220,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_220)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 221,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_221)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 222,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_222)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 223,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_223)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 224,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_224)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 225,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_225)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 226,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_226)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 228,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_228)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 230,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_230)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 231,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_231)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 232,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_232)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 233,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_233)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 234,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_234)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 235,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_235)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 236,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_236)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 237,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_237)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 238,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_238)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 239,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_239)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 240,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_240)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 241,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_241)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 242,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_242)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 186,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_186)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 243,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_243)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 244,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_244)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 245,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_245)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 246,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_246)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 247,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_247)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 248,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_248)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 249,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_249)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 250,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_250)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 251,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_251)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 252,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_252)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 253,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_253)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 254,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_254)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 26,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_26)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 97,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_97)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 27,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_27)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 161,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_161)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 34,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_34)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_36)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 131,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_131)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 132,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_132)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 135,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_135)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 134,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_134)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 133,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_133)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 136,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_136)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 137,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_137)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 138,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_138)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 139,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_139)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 140,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_140)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 141,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_141)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 142,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_142)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 144,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_144)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 143,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_143)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 145,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_145)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 146,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_146)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 147,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_147)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 148,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_148)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 149,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_149)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 150,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_150)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 151,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_151)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 152,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_152)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 153,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_153)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 154,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_154)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 29,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_29)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 28,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_28)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 33,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_33)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 30,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_30)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 160,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_160)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 31,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_31)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 175,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_175)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 159,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_159)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 35,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_35)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 167,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_167)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 168,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_168)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 169,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_169)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 170,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_170)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 171,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_171)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 172,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_172)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 32,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_32)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 13,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_13)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 14,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_14)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 15,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_15)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 16,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_16)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 17,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_17)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 18,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_18)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 12,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_12)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 37,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_37)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 38,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_38)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 45,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_45)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 80,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_80)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 19,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_races_isr_abilities_lst_19)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 29,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_29)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 30,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_30)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 10,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_10)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 11,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_11)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 16,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_16)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 31,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_31)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 17,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_17)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 32,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_32)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 12,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_12)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 33,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_33)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 34,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_34)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 35,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_35)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_36)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 37,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_37)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 13,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_13)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 38,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_38)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 39,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_39)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 40,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_40)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 41,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_41)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 42,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_42)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 14,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_14)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 15,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_15)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 43,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_43)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 44,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_44)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 45,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_45)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 73,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_73)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 46,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_46)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 47,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_47)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 18,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_18)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 48,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_48)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 49,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_49)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 50,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_50)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 51,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_51)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 52,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_52)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 53,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_53)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 54,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_54)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 55,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_55)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 56,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_56)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 57,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_57)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 58,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_58)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 59,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_59)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 60,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_60)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 61,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_61)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 62,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_62)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 74,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_74)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 20,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_20)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 75,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_75)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 76,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_76)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 77,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_77)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 78,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_78)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 63,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_63)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 64,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_64)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 21,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_21)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 65,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_65)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 79,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_79)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 66,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_66)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 22,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_22)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 23,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_23)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 67,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_67)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 68,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_68)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 24,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_24)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 25,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_25)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 69,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_69)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 19,
+      "codex_name": "Codex-Named Unit (ability_inner_sea_world_guide_iswg_abilities_lst_19)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 280,
+      "codex_name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_280)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 281,
+      "codex_name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_281)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 282,
+      "codex_name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_282)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 283,
+      "codex_name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_283)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 284,
+      "codex_name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_284)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_magic",
+      "source_file": "um_abilities.lst",
+      "source_line": 37,
+      "codex_name": "Codex-Named Unit (ability_ultimate_magic_um_abilities_lst_37)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_magic",
+      "source_file": "um_abilities.lst",
+      "source_line": 44,
+      "codex_name": "Codex-Named Unit (ability_ultimate_magic_um_abilities_lst_44)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_psionics",
+      "source_file": "up_abilities.lst",
+      "source_line": 178,
+      "codex_name": "Codex-Named Unit (ability_ultimate_psionics_up_abilities_lst_178)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "ability",
+      "book": "ultimate_psionics",
+      "source_file": "up_abilities.lst",
+      "source_line": 202,
+      "codex_name": "Codex-Named Unit (ability_ultimate_psionics_up_abilities_lst_202)",
+      "reason": "name_pi_blocked"
+    }
+  ]
+}

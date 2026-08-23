@@ -104,7 +104,21 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
         let declared = declared_at(corpus_root, rel_path, line);
         let file_str = path.display().to_string();
 
-        if declared.name {
+        // SD-32 `decisions.md §24`: a record whose cited row declares
+        // `NAMEISPI:YES` may now ship under a Codex-generated neutral name
+        // derived ONLY from `(kind, book, source_file, source_line)`
+        // (`scripts/codex_neutral_name.py`) -- the record's own
+        // `codex_generated_name: true` field is the visible marker
+        // `§24b`-3 requires, and it is what this check trusts to
+        // distinguish that shippable case from the pre-`§24` violation
+        // (the original PI name shipped verbatim). This does not weaken
+        // the check for any record NOT carrying that field: an ordinary
+        // record whose cited row declares `NAMEISPI:YES` is still a
+        // violation exactly as before.
+        let codex_generated_name =
+            doc.get("codex_generated_name").and_then(Value::as_bool).unwrap_or(false);
+
+        if declared.name && !codex_generated_name {
             // A key/name cannot be redacted (it is the record's identity
             // on every screen and half of its key) -- its mere presence
             // on disk IS the violation, per `SD-29-corpus-wide-catch-up-
@@ -120,7 +134,15 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
         let pi_field = doc.get("pi_field").and_then(Value::as_str);
         let redacted_desc = desc == Some(REDACTED_PI_MARKER);
         let redacted_license = license == Some("PI-REDACTED");
-        let redacted_field = pi_field == Some("description");
+        // SD-32 `decisions.md §24`'s renamed records stamp `pi_field` as a
+        // comma-joined list (e.g. `"description,name,raw_tokens"`) when
+        // more than one field was redacted -- `pi_field` naming
+        // "description" among possibly others still means the description
+        // itself is accounted for, so this checks list membership rather
+        // than exact equality. A record with only ever one redacted field
+        // (every pre-`§24` generator) keeps matching exactly as before.
+        let redacted_field =
+            pi_field.map(|f| f.split(',').any(|part| part == "description")).unwrap_or(false);
 
         if declared.description && !(redacted_desc && redacted_license && redacted_field) {
             violations.push(Violation {
@@ -313,6 +335,72 @@ mod tests {
         let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
         assert_eq!(violations.len(), 1, "the mutation must be caught: {violations:?}");
         assert!(violations[0].reason.contains("NAME-PI-SHIPPED"));
+    }
+
+    // --- SD-32 decisions.md §24: codex_generated_name exception ---------
+
+    fn renamed_record_json(codex_name: &str, source_path: &str, line: u32) -> String {
+        format!(
+            r#"{{"data":{{"key":"{codex_name}","name":"{codex_name}","description":null}},
+                "source":{{"kind":"lst_token","path":"{source_path}","line":{line},"record_key":"{codex_name}"}},
+                "license":"OGL","pi_field":null,"codex_generated_name":true}}"#
+        )
+    }
+
+    #[test]
+    fn a_record_marked_codex_generated_name_is_not_a_name_pi_violation() {
+        // decisions.md §24: a record whose cited row declares NAMEISPI:YES
+        // may ship under a Codex-generated neutral name -- the
+        // `codex_generated_name: true` field is what distinguishes this
+        // from the pre-§24 violation this check otherwise still catches.
+        let s = Scratch::new("codex_generated_name_exempt");
+        s.write("pcgen/some_book/rows.lst", "Otyugh Hide\tNAMEISPI:YES\tCOST:1415\n");
+        s.write(
+            "corpus/some_book/ability/codex_named_unit.json",
+            &renamed_record_json("Codex-Named Unit (ability_some_book_rows_lst_1)", "some_book/rows.lst", 1),
+        );
+        let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
+        assert!(violations.is_empty(), "a properly-marked renamed record must not be flagged: {violations:?}");
+    }
+
+    #[test]
+    fn a_record_shipping_the_original_name_without_the_marker_is_still_a_violation() {
+        // The exception must be narrow: a record citing a NAMEISPI:YES row
+        // that does NOT carry `codex_generated_name: true` is still caught
+        // exactly as before -- this is the guard against the exception
+        // silently swallowing the pre-§24 defect shape.
+        let s = Scratch::new("codex_generated_name_not_exempt_without_marker");
+        s.write("pcgen/some_book/rows.lst", "Otyugh Hide\tNAMEISPI:YES\tCOST:1415\n");
+        s.write(
+            "corpus/some_book/equipment/otyugh_hide.json",
+            &record_json("Otyugh Hide", "null", "OGL", "null", "some_book/rows.lst", 1),
+        );
+        let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "must still be caught without the marker: {violations:?}");
+        assert!(violations[0].reason.contains("NAME-PI-SHIPPED"));
+    }
+
+    #[test]
+    fn a_multi_field_pi_field_list_including_description_still_clears_the_desc_check() {
+        // decisions.md §24's renamed records stamp a comma-joined
+        // `pi_field` (e.g. "description,name,raw_tokens") when more than
+        // one field was redacted. The description check must still
+        // recognise "description" as a member of that list.
+        let s = Scratch::new("multi_field_pi_field");
+        s.write("pcgen/some_book/rows.lst", "Kodar Trait\tDESCISPI:YES\tDESC:Named after the Kodar Mountains.\n");
+        s.write(
+            "corpus/some_book/ability/codex_named_unit.json",
+            &record_json(
+                "Codex-Named Unit (x)",
+                "[redacted PI]",
+                "PI-REDACTED",
+                "description,name,raw_tokens",
+                "some_book/rows.lst",
+                1,
+            ),
+        );
+        let violations = audit_shipped_records(&s.root.join("pcgen"), &s.root.join("corpus"));
+        assert!(violations.is_empty(), "{violations:?}");
     }
 
     #[test]

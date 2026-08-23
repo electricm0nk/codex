@@ -1,583 +1,2887 @@
 {
+  "note": "SD-32 decisions.md \u00a724b-2: this list is reduced to coordinates only. It previously named 576 ability records by their Product-Identity name/key (the population decisions.md \u00a715 stopped on); decisions.md \u00a724 ingests them under a Codex-generated neutral name derived from these same coordinates (scripts/codex_neutral_name.py; scripts/ingest_ability.py). The original name/key strings are removed -- they never ship.",
   "population": 4824,
-  "written": 4248,
-  "name_pi_skipped": 576,
-  "pi_skipped_records": [
-    "advanced_players_guide:apg_abilities.lst:222 'Asmodean Demon Hunter (Asmodeus)' (key: 'Trait ~ Asmodean Demon Hunter') (term: Asmodeus)",
-    "advanced_players_guide:apg_abilities.lst:223 'Calistrian Prostitute (Calistria)' (key: 'Trait ~ Calistrian Prostitute') (term: Calistria)",
-    "advanced_players_guide:apg_abilities.lst:224 'Child of Nature (Gozreh)' (key: 'Trait ~ Child of Nature') (term: Gozreh)",
-    "advanced_players_guide:apg_abilities.lst:225 'Divine Warrior (Iomedae)' (key: 'Trait ~ Divine Warrior') (term: Iomedae)",
-    "advanced_players_guide:apg_abilities.lst:226 'Ear for Music (Shelyn)' (key: 'Trait ~ Ear for Music') (term: Shelyn)",
-    "advanced_players_guide:apg_abilities.lst:227 'Eyes and Ears of the City (Abadar)' (key: 'Trait ~ Eyes and Ears of the City') (term: Abadar)",
-    "advanced_players_guide:apg_abilities.lst:228 'Flame of the Dawnflower (Sarenrae)' (key: 'Trait ~ Flame of the Dawnflower') (term: Sarenrae)",
-    "advanced_players_guide:apg_abilities.lst:229 'Fortified Drinker (Cayden Cailean)' (key: 'Trait ~ Fortified Drinker') (term: Cayden Cailean)",
-    "advanced_players_guide:apg_abilities.lst:230 'Guardian of the Forge (Torag)' (key: 'Trait ~ Guardian of the Forge') (term: Torag)",
-    "advanced_players_guide:apg_abilities.lst:231 'Magic is Life (Nethys)' (key: 'Trait ~ Magic is Life') (term: Nethys)",
-    "advanced_players_guide:apg_abilities.lst:232 'Patient Optimist (Erastil)' (key: 'Trait ~ Patient Optimist') (term: Erastil)",
-    "advanced_players_guide:apg_abilities.lst:233 'Starchild (Desna)' (key: 'Trait ~ Starchild') (term: Desna)",
-    "advanced_players_guide:apg_abilities.lst:234 'Undead Slayer (Pharasma)' (key: 'Trait ~ Undead Slayer') (term: Pharasma)",
-    "advanced_players_guide:apg_abilities.lst:235 'Veteran of Battle (Gorum)' (key: 'Trait ~ Veteran of Battle') (term: Gorum)",
-    "advanced_players_guide:apg_abilities.lst:237 'Wisdom in the Flesh (Irori) - Dexterity' (key: 'Trait ~ Wisdom in the Flesh ~ Dex') (term: Irori)",
-    "advanced_players_guide:apg_abilities.lst:236 'Wisdom in the Flesh (Irori) - Strength' (key: 'Trait ~ Wisdom in the Flesh ~ Str') (term: Irori)",
-    "adventurers_guide:ag_abilities.lst:25 'Gray Maiden Adept' (key: 'Gray Maiden Initiate ~ Gray Maiden Adept') (NAMEISPI:YES)",
-    "adventurers_guide:ag_abilities.lst:26 'Gray Maiden Endurance' (key: 'Gray Maiden Initiate ~ Gray Maiden Endurance') (NAMEISPI:YES)",
-    "adventurers_guide:ag_abilities.lst:27 'Korvosan Acceptance' (key: 'Gray Maiden Initiate ~ Korvosan Acceptance') (NAMEISPI:YES)",
-    "adventurers_guide:ag_abilities.lst:31 'Monastery of Unblinking Flame' (key: 'House of Perfection ~ Unblinking Flame') (NAMEISPI:YES)",
-    "adventurers_guide:ag_abilities.lst:32 'Monastery of Unfolding Wind' (key: 'House of Perfection ~ Unfolding Wind') (NAMEISPI:YES)",
-    "adventurers_guide:ag_abilities.lst:33 'Monastery of Untwisting Iron' (key: 'House of Perfection ~ Untwisting Iron') (NAMEISPI:YES)",
-    "adventurers_guide:ag_abilities.lst:35 'House of Perfection Bonus Feat' (key: 'Student of Perfection ~ House Bonus Feat') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:13 'Achaekek's Obedience' (key: 'Deific Obedience ~ Achaekek') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:36 'Alseta's Obedience' (key: 'Deific Obedience ~ Alseta') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:59 'Apsu's Obedience' (key: 'Deific Obedience ~ Apsu') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:82 'Besmara's Obedience' (key: 'Deific Obedience ~ Besmara') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:105 'Brigh's Obedience' (key: 'Deific Obedience ~ Brigh') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:128 'Dahak's Obedience' (key: 'Deific Obedience ~ Dahak') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:152 'Ghlaunder's Obedience' (key: 'Deific Obedience ~ Ghlaunder') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:175 'Groetus's Obedience' (key: 'Deific Obedience ~ Groetus') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:198 'Gyronna's Obedience' (key: 'Deific Obedience ~ Gyronna') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:221 'Hanspur's Obedience' (key: 'Deific Obedience ~ Hanspur') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:244 'Kurgess's Obedience' (key: 'Deific Obedience ~ Kurgess') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:267 'Milani's Obedience' (key: 'Deific Obedience ~ Milani') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:290 'Naderi's Obedience' (key: 'Deific Obedience ~ Naderi') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:313 'Sivanah's Obedience' (key: 'Deific Obedience ~ Sivanah') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:336 'Zyphus's Obedience' (key: 'Deific Obedience ~ Zyphus') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:270 'Voice of the Everbloom' (key: 'Evangelist Boon ~ Milani ~ Voice of the Everbloom') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:68 'Waybringer's Ingenuity' (key: 'Exalted Boon ~ Apsu ~ Waybringer's Ingenuity') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:347 'Visitors from Abaddon' (key: 'Exalted Boon ~ Zyphus ~ Visitors from Abaddon') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:75 'Apsu's Shroud' (key: 'Sentinel Boon ~ Apsu ~ Apsu's Shroud') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:143 'Power of the Endless Destruction' (key: 'Sentinel Boon ~ Dahak ~ Power of the Endless Destruction') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:19 'Evangelist of Achaekek' (key: 'Temp Bonus ~ Evangelist of Achaekek') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:42 'Evangelist of Alseta' (key: 'Temp Bonus ~ Evangelist of Alseta') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:88 'Evangelist of Besmara' (key: 'Temp Bonus ~ Evangelist of Besmara') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:111 'Evangelist of Brigh' (key: 'Temp Bonus ~ Evangelist of Brigh') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:181 'Evangelist of Groetus' (key: 'Temp Bonus ~ Evangelist of Groetus') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:204 'Evangelist of Gyronna' (key: 'Temp Bonus ~ Evangelist of Gyronna') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:250 'Evangelist of Kurgess' (key: 'Temp Bonus ~ Evangelist of Kurgess') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:273 'Evangelist of Milani' (key: 'Temp Bonus ~ Evangelist of Milani') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:296 'Evangelist of Naderi' (key: 'Temp Bonus ~ Evangelist of Naderi') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:319 'Evangelist of Sivanah' (key: 'Temp Bonus ~ Evangelist of Sivanah') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:25 'Exalted of Achaekek' (key: 'Temp Bonus ~ Exalted of Achaekek') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:48 'Exalted of Alseta' (key: 'Temp Bonus ~ Exalted of Alseta') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:94 'Exalted of Besmara' (key: 'Temp Bonus ~ Exalted of Besmara') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:117 'Exalted of Brigh' (key: 'Temp Bonus ~ Exalted of Brigh') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:187 'Exalted of Groetus' (key: 'Temp Bonus ~ Exalted of Groetus') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:210 'Exalted of Gyronna' (key: 'Temp Bonus ~ Exalted of Gyronna') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:256 'Exalted of Kurgess' (key: 'Temp Bonus ~ Exalted of Kurgess') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:279 'Exalted of Milani' (key: 'Temp Bonus ~ Exalted of Milani') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:302 'Exalted of Naderi' (key: 'Temp Bonus ~ Exalted of Naderi') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:325 'Exalted of Sivanah' (key: 'Temp Bonus ~ Exalted of Sivanah') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:348 'Exalted of Zyphus' (key: 'Temp Bonus ~ Exalted of Zyphus') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:31 'Sentinel of Achaekek' (key: 'Temp Bonus ~ Sentinel of Achaekek') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:54 'Sentinel of Alseta' (key: 'Temp Bonus ~ Sentinel of Alseta') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:77 'Sentinel of Apsu' (key: 'Temp Bonus ~ Sentinel of Apsu') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:100 'Sentinel of Besmara' (key: 'Temp Bonus ~ Sentinel of Besmara') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:123 'Sentinel of Brigh' (key: 'Temp Bonus ~ Sentinel of Brigh') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:170 'Sentinel of Ghlaunder' (key: 'Temp Bonus ~ Sentinel of Ghlaunder') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:193 'Sentinel of Groetus' (key: 'Temp Bonus ~ Sentinel of Groetus') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:216 'Sentinel of Gyronna' (key: 'Temp Bonus ~ Sentinel of Gyronna') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:262 'Sentinel of Kurgess' (key: 'Temp Bonus ~ Sentinel of Kurgess') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:285 'Sentinel of Milani' (key: 'Temp Bonus ~ Sentinel of Milani') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:308 'Sentinel of Naderi' (key: 'Temp Bonus ~ Sentinel of Naderi') (NAMEISPI:YES)",
-    "inner_sea_faiths:isf_abilities_faith.lst:331 'Sentinel of Sivanah' (key: 'Temp Bonus ~ Sentinel of Sivanah') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:543 'Blackfingers' (key: 'Blackfingers') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:19 'Abadar's Obedience' (key: 'Deific Obedience ~ Abadar') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:42 'Asmodeus's Obedience' (key: 'Deific Obedience ~ Asmodeus') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:65 'Calistria's Obedience' (key: 'Deific Obedience ~ Calistria') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:88 'Cayden Cailean's Obedience' (key: 'Deific Obedience ~ Cayden Cailean') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:111 'Desna's Obedience' (key: 'Deific Obedience ~ Desna') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:134 'Erastil's Obedience' (key: 'Deific Obedience ~ Erastil') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:157 'Gorum's Obedience' (key: 'Deific Obedience ~ Gorum') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:180 'Gozreh's Obedience' (key: 'Deific Obedience ~ Gozreh') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:203 'Iomedae's Obedience' (key: 'Deific Obedience ~ Iomedae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:226 'Irori's Obedience' (key: 'Deific Obedience ~ Irori') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:249 'Lamashtu's Obedience' (key: 'Deific Obedience ~ Lamashtu') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:273 'Nethys's Obedience' (key: 'Deific Obedience ~ Nethys') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:296 'Norgorber's Obedience' (key: 'Deific Obedience ~ Norgorber') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:319 'Pharasma's Obedience' (key: 'Deific Obedience ~ Pharasma') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:342 'Rovagug's Obedience' (key: 'Deific Obedience ~ Rovagug') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:366 'Sarenrae's Obedience' (key: 'Deific Obedience ~ Sarenrae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:389 'Shelyn's Obedience' (key: 'Deific Obedience ~ Shelyn') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:413 'Torag's Obedience' (key: 'Deific Obedience ~ Torag') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:436 'Urgathoa's Obedience' (key: 'Deific Obedience ~ Urgathoa') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:459 'Zon-Kuthon's Obedience' (key: 'Deific Obedience ~ Zon-Kuthon') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:23 'City Dweller' (key: 'Evangelist Boon ~ Abadar ~ City Dweller') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:22 'Diplomat' (key: 'Evangelist Boon ~ Abadar ~ Diplomat') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:24 'Sneaky Bolt' (key: 'Evangelist Boon ~ Abadar ~ Sneaky Bolt') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:45 'Pitiless Judgment' (key: 'Evangelist Boon ~ Asmodeus ~ Pitiless Judgment') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:47 'Resounding Judgment' (key: 'Evangelist Boon ~ Asmodeus ~ Resounding Judgment') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:46 'Tireless Judgment' (key: 'Evangelist Boon ~ Asmodeus ~ Tireless Judgment') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:69 'Shimmering Sting' (key: 'Evangelist Boon ~ Calistria ~ Shimmering Sting') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:70 'Vengeful Song' (key: 'Evangelist Boon ~ Calistria ~ Vengeful Song') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:68 'Waspsong' (key: 'Evangelist Boon ~ Calistria ~ Waspsong') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:92 'Drinking Buddy' (key: 'Evangelist Boon ~ Cayden Cailean ~ Drinking Buddy') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:93 'Intoxicating Strike' (key: 'Evangelist Boon ~ Cayden Cailean ~ Intoxicating Strike') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:91 'Liberation' (key: 'Evangelist Boon ~ Cayden Cailean ~ Liberation') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:115 'Starlit Caster' (key: 'Evangelist Boon ~ Desna ~ Starlit Caster') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:116 'Starry Eyes' (key: 'Evangelist Boon ~ Desna ~ Starry Eyes') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:114 'Traveler's Tricks' (key: 'Evangelist Boon ~ Desna ~ Traveler's Tricks') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:139 'Faithful Archer' (key: 'Evangelist Boon ~ Erastil ~ Faithful Archer') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:137 'Family's Bond' (key: 'Evangelist Boon ~ Erastil ~ Family's Bond') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:138 'Twin Fang' (key: 'Evangelist Boon ~ Erastil ~ Twin Fang') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:162 'Chaotic Charge' (key: 'Evangelist Boon ~ Gorum ~ Chaotic Charge') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:161 'War Mount' (key: 'Evangelist Boon ~ Gorum ~ War Mount') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:160 'Weaponsmith' (key: 'Evangelist Boon ~ Gorum ~ Weaponsmith') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:185 'Elemental Ally' (key: 'Evangelist Boon ~ Gozreh ~ Elemental Ally') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:184 'Experienced Traveler' (key: 'Evangelist Boon ~ Gozreh ~ Experienced Traveler') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:183 'Weather Watcher' (key: 'Evangelist Boon ~ Gozreh ~ Weather Watcher') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:206 'Courageous' (key: 'Evangelist Boon ~ Iomedae ~ Courageous') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:207 'Demon-Feared Caster' (key: 'Evangelist Boon ~ Iomedae ~ Demon-Feared Caster') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:208 'Wrath of the Inheritor' (key: 'Evangelist Boon ~ Iomedae ~ Wrath of the Inheritor') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:229 'Expansive Knowledge' (key: 'Evangelist Boon ~ Irori ~ Expansive Knowledge') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:230 'Inevitable Fist' (key: 'Evangelist Boon ~ Irori ~ Inevitable Fist') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:231 'Runic Form' (key: 'Evangelist Boon ~ Irori ~ Runic Form') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:252 'Savage Summoner' (key: 'Evangelist Boon ~ Lamashtu ~ Savage Summoner') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:254 'Tainted Ally' (key: 'Evangelist Boon ~ Lamashtu ~ Tainted Ally') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:253 'Terrifying Eidolon' (key: 'Evangelist Boon ~ Lamashtu ~ Terrifying Eidolon') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:276 'Arcane Essence' (key: 'Evangelist Boon ~ Nethys ~ Arcane Essence') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:277 'Arcane Eye' (key: 'Evangelist Boon ~ Nethys ~ Arcane Eye') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:278 'Robes of Nethys' (key: 'Evangelist Boon ~ Nethys ~ Robes of Nethys') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:300 'Noxious Bomb' (key: 'Evangelist Boon ~ Norgorber ~ Noxious Bomb') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:301 'Secret Self' (key: 'Evangelist Boon ~ Norgorber ~ Secret Self') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:299 'Secrets and Lies' (key: 'Evangelist Boon ~ Norgorber ~ Secrets and Lies') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:323 'Decomposition' (key: 'Evangelist Boon ~ Pharasma ~ Decomposition') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:322 'Preserver' (key: 'Evangelist Boon ~ Pharasma ~ Preserver') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:324 'The Veil Is Drawn Aside' (key: 'Evangelist Boon ~ Pharasma ~ The Veil Is Drawn Aside') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:345 'Agent of the Beast' (key: 'Evangelist Boon ~ Rovagug ~ Agent of the Beast') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:346 'Destructive Spell' (key: 'Evangelist Boon ~ Rovagug ~ Destructive Spell') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:347 'The Destroyer's Gifts' (key: 'Evangelist Boon ~ Rovagug ~ The Destroyer's Gifts') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:370 'Fiery Spirit' (key: 'Evangelist Boon ~ Sarenrae ~ Fiery Spirit') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:369 'Healing Spirit' (key: 'Evangelist Boon ~ Sarenrae ~ Healing Spirit') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:371 'Holy Brand of the Sun' (key: 'Evangelist Boon ~ Sarenrae ~ Holy Brand of the Sun') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:392 'Fiction Weaver' (key: 'Evangelist Boon ~ Shelyn ~ Fiction Weaver') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:394 'Persuasive Aesthetic' (key: 'Evangelist Boon ~ Shelyn ~ Persuasive Aesthetic') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:393 'Versatile Artist' (key: 'Evangelist Boon ~ Shelyn ~ Versatile Artist') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:418 'Sacred Crafting' (key: 'Evangelist Boon ~ Torag ~ Sacred Crafting') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:417 'Sensibility of Crafting' (key: 'Evangelist Boon ~ Torag ~ Sensibility of Crafting') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:416 'Strategic Warrior' (key: 'Evangelist Boon ~ Torag ~ Strategic Warrior') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:441 'Blight of Ruin' (key: 'Evangelist Boon ~ Urgathoa ~ Blight of Ruin') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:440 'Death Knowledge' (key: 'Evangelist Boon ~ Urgathoa ~ Death Knowledge') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:439 'Pestilent Penitent' (key: 'Evangelist Boon ~ Urgathoa ~ Pestilent Penitent') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:464 'Agonizing Blow' (key: 'Evangelist Boon ~ Zon-Kuthon ~ Agonizing Blow') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:463 'Strike of the Endless' (key: 'Evangelist Boon ~ Zon-Kuthon ~ Strike of the Endless') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:462 'Unbending Faith' (key: 'Evangelist Boon ~ Zon-Kuthon ~ Unbending Faith') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:29 'Diplomatic Immunity' (key: 'Exalted Boon ~ Abadar ~ Diplomatic Immunity') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:28 'Ordered Mien' (key: 'Exalted Boon ~ Abadar ~ Ordered Mien') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:30 'Scales of Balance' (key: 'Exalted Boon ~ Abadar ~ Scales of Balance') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:51 'Darkfire' (key: 'Exalted Boon ~ Asmodeus ~ Darkfire') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:52 'Embersight' (key: 'Exalted Boon ~ Asmodeus ~ Embersight') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:53 'Hellfire Blast' (key: 'Exalted Boon ~ Asmodeus ~ Hellfire Blast') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:74 'Calistria's Tongue' (key: 'Exalted Boon ~ Calistria ~ Calistria's Tongue') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:76 'Protective Grace' (key: 'Exalted Boon ~ Calistria ~ Protective Grace') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:75 'Stunning Touch' (key: 'Exalted Boon ~ Calistria ~ Stunning Touch') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:98 'Freedom's Ally' (key: 'Exalted Boon ~ Cayden Cailean ~ Freedom's Ally') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:97 'Libations' (key: 'Exalted Boon ~ Cayden Cailean ~ Libations') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:99 'Wine to Water' (key: 'Exalted Boon ~ Cayden Cailean ~ Wine to Water') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:122 'Blast of Motes' (key: 'Exalted Boon ~ Desna ~ Blast of Motes') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:120 'Slumberer' (key: 'Exalted Boon ~ Desna ~ Slumberer') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:121 'Splendorous Ally' (key: 'Exalted Boon ~ Desna ~ Splendorous Ally') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:143 'Animal Friend' (key: 'Exalted Boon ~ Erastil ~ Animal Friend') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:145 'Communal Table' (key: 'Exalted Boon ~ Erastil ~ Communal Table') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:144 'Hunter's Ally' (key: 'Exalted Boon ~ Erastil ~ Hunter's Ally') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:166 'Battler' (key: 'Exalted Boon ~ Gorum ~ Battler') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:168 'Gorum's Shout' (key: 'Exalted Boon ~ Gorum ~ Gorum's Shout') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:167 'Mass Strength Surge' (key: 'Exalted Boon ~ Gorum ~ Mass Strength Surge') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:189 'Green Worker' (key: 'Exalted Boon ~ Gozreh ~ Green Worker') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:190 'Lightning Child' (key: 'Exalted Boon ~ Gozreh ~ Lightning Child') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:191 'Nature's Companion' (key: 'Exalted Boon ~ Gozreh ~ Nature's Companion') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:212 'Glorious Servant' (key: 'Exalted Boon ~ Iomedae ~ Glorious Servant') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:214 'Just Ally' (key: 'Exalted Boon ~ Iomedae ~ Just Ally') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:213 'Righteous Strike' (key: 'Exalted Boon ~ Iomedae ~ Righteous Strike') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:235 'Cloud the Mind of the Unwary' (key: 'Exalted Boon ~ Irori ~ Cloud the Mind of the Unwary') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:236 'Repair the Damaged Body' (key: 'Exalted Boon ~ Irori ~ Repair the Damaged Body') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:237 'Walk Above the Earth' (key: 'Exalted Boon ~ Irori ~ Walk Above the Earth') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:258 'Howling Terror' (key: 'Exalted Boon ~ Lamashtu ~ Howling Terror') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:259 'Maddening Thoughts' (key: 'Exalted Boon ~ Lamashtu ~ Maddening Thoughts') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:260 'Monstrous Transformation' (key: 'Exalted Boon ~ Lamashtu ~ Monstrous Transformation') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:282 'Magical Essences' (key: 'Exalted Boon ~ Nethys ~ Magical Essences') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:284 'Pure Magic Aura' (key: 'Exalted Boon ~ Nethys ~ Pure Magic Aura') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:283 'Staff Channel' (key: 'Exalted Boon ~ Nethys ~ Staff Channel') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:306 'Masterful Poisoner' (key: 'Exalted Boon ~ Norgorber ~ Masterful Poisoner') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:305 'Poison Tongue' (key: 'Exalted Boon ~ Norgorber ~ Poison Tongue') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:307 'Virulent Ally' (key: 'Exalted Boon ~ Norgorber ~ Virulent Ally') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:330 'Ally from the Tomb' (key: 'Exalted Boon ~ Pharasma ~ Ally from the Tomb') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:328 'Quietude' (key: 'Exalted Boon ~ Pharasma ~ Quietude') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:329 'Strike the Unrestful' (key: 'Exalted Boon ~ Pharasma ~ Strike the Unrestful') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:353 'Apocalyptic Ally' (key: 'Exalted Boon ~ Rovagug ~ Apocalyptic Ally') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:352 'Bestow Destructive Smite' (key: 'Exalted Boon ~ Rovagug ~ Bestow Destructive Smite') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:351 'Destructive Force' (key: 'Exalted Boon ~ Rovagug ~ Destructive Force') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:377 'Angelic Ally' (key: 'Exalted Boon ~ Sarenrae ~ Angelic Ally') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:375 'Brightness' (key: 'Exalted Boon ~ Sarenrae ~ Brightness') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:376 'Healing Sunburst' (key: 'Exalted Boon ~ Sarenrae ~ Healing Sunburst') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:398 'Devotionals' (key: 'Exalted Boon ~ Shelyn ~ Devotionals') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:399 'Joyous Ally' (key: 'Exalted Boon ~ Shelyn ~ Joyous Ally') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:400 'Plumed Blade' (key: 'Exalted Boon ~ Shelyn ~ Plumed Blade') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:422 'Forgecrafter' (key: 'Exalted Boon ~ Torag ~ Forgecrafter') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:424 'Hammerfist Ally' (key: 'Exalted Boon ~ Torag ~ Hammerfist Ally') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:423 'lronskin' (key: 'Exalted Boon ~ Torag ~ lronskin') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:447 'Ally from the Grave' (key: 'Exalted Boon ~ Urgathoa ~ Ally from the Grave') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:446 'Bolstering Channel' (key: 'Exalted Boon ~ Urgathoa ~ Bolstering Channel') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:445 'Mistress of Undeath' (key: 'Exalted Boon ~ Urgathoa ~ Mistress of Undeath') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:470 'Fleshrending Ally' (key: 'Exalted Boon ~ Zon-Kuthon ~ Fleshrending Ally') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:468 'Obscurement' (key: 'Exalted Boon ~ Zon-Kuthon ~ Obscurement') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:469 'Path of Darkness' (key: 'Exalted Boon ~ Zon-Kuthon ~ Path of Darkness') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:544 'Father Skinsaw' (key: 'Father Skinsaw') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:545 'Gray Master' (key: 'Gray Master') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:547 'No Norgorber Aspect' (key: 'No Norgorber Aspect') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:541 'Norgorber Aspect' (key: 'Norgorber Aspect') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:546 'Reaper of Reputation' (key: 'Reaper of Reputation') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:36 'Dictum Blow' (key: 'Sentinel Boon ~ Abadar ~ Dictum Blow') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:34 'Lawful Bulwark' (key: 'Sentinel Boon ~ Abadar ~ Lawful Bulwark') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:35 'Unflagging Ally' (key: 'Sentinel Boon ~ Abadar ~ Unflagging Ally') (term: Abadar)",
-    "inner_sea_gods:isg_abilities_faith.lst:58 'Deceitful Duelist' (key: 'Sentinel Boon ~ Asmodeus ~ Deceitful Duelist') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:59 'Diabolical Resistances' (key: 'Sentinel Boon ~ Asmodeus ~ Diabolical Resistances') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:57 'Unholy Warrior' (key: 'Sentinel Boon ~ Asmodeus ~ Unholy Warrior') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities_faith.lst:80 'Lucky Strike' (key: 'Sentinel Boon ~ Calistria ~ Lucky Strike') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:82 'Sting Like a Wasp' (key: 'Sentinel Boon ~ Calistria ~ Sting Like a Wasp') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:81 'Winsome Lash' (key: 'Sentinel Boon ~ Calistria ~ Winsome Lash') (term: Calistria)",
-    "inner_sea_gods:isg_abilities_faith.lst:105 'Critical Luck' (key: 'Sentinel Boon ~ Cayden Cailean ~ Critical Luck') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:103 'Devastating Duelist' (key: 'Sentinel Boon ~ Cayden Cailean ~ Devastating Duelist') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:104 'Light Weapon Master' (key: 'Sentinel Boon ~ Cayden Cailean ~ Light Weapon Master') (term: Cayden Cailean)",
-    "inner_sea_gods:isg_abilities_faith.lst:126 'Fighting Chance' (key: 'Sentinel Boon ~ Desna ~ Fighting Chance') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:127 'See through Dreams' (key: 'Sentinel Boon ~ Desna ~ See through Dreams') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:128 'Shooting Star' (key: 'Sentinel Boon ~ Desna ~ Shooting Star') (term: Desna)",
-    "inner_sea_gods:isg_abilities_faith.lst:151 'Farmer's Bond' (key: 'Sentinel Boon ~ Erastil ~ Farmer's Bond') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:149 'Sureshot' (key: 'Sentinel Boon ~ Erastil ~ Sureshot') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:150 'Tough Hide' (key: 'Sentinel Boon ~ Erastil ~ Tough Hide') (term: Erastil)",
-    "inner_sea_gods:isg_abilities_faith.lst:174 'Devout Rage' (key: 'Sentinel Boon ~ Gorum ~ Devout Rage') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:172 'Mighty Warrior' (key: 'Sentinel Boon ~ Gorum ~ Mighty Warrior') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:173 'Two-Handed Smash' (key: 'Sentinel Boon ~ Gorum ~ Two-Handed Smash') (term: Gorum)",
-    "inner_sea_gods:isg_abilities_faith.lst:196 'Elemental Aura' (key: 'Sentinel Boon ~ Gozreh ~ Elemental Aura') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:197 'Lightning Surge' (key: 'Sentinel Boon ~ Gozreh ~ Lightning Surge') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:195 'Sky Warrior' (key: 'Sentinel Boon ~ Gozreh ~ Sky Warrior') (term: Gozreh)",
-    "inner_sea_gods:isg_abilities_faith.lst:220 'Banishing Strike' (key: 'Sentinel Boon ~ Iomedae ~ Banishing Strike') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:218 'Knight of Valor' (key: 'Sentinel Boon ~ Iomedae ~ Knight of Valor') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:219 'Valorous Smite' (key: 'Sentinel Boon ~ Iomedae ~ Valorous Smite') (term: Iomedae)",
-    "inner_sea_gods:isg_abilities_faith.lst:241 'Masterful Warrior' (key: 'Sentinel Boon ~ Irori ~ Masterful Warrior') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:243 'Perfection of Form' (key: 'Sentinel Boon ~ Irori ~ Perfection of Form') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:242 'Secrets of the Enemy' (key: 'Sentinel Boon ~ Irori ~ Secrets of the Enemy') (term: Irori)",
-    "inner_sea_gods:isg_abilities_faith.lst:265 'Bestial Jaws' (key: 'Sentinel Boon ~ Lamashtu ~ Bestial Jaws') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:264 'Ferocious Battler' (key: 'Sentinel Boon ~ Lamashtu ~ Ferocious Battler') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:266 'Scarred Form' (key: 'Sentinel Boon ~ Lamashtu ~ Scarred Form') (term: Lamashtu)",
-    "inner_sea_gods:isg_abilities_faith.lst:289 'Disrupt Defenses' (key: 'Sentinel Boon ~ Nethys ~ Disrupt Defenses') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:288 'Magical Enhancer' (key: 'Sentinel Boon ~ Nethys ~ Magical Enhancer') (term: Nethys)",
-    "inner_sea_gods:isg_abilities_faith.lst:290 'Nethys's Protection' (key: 'Sentinel Boon ~ Nethys ~ Nethys's Protection') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:313 'Death Strike' (key: 'Sentinel Boon ~ Norgorber ~ Death Strike') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:312 'Poison Expertise' (key: 'Sentinel Boon ~ Norgorber ~ Poison Expertise') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:311 'Virulence' (key: 'Sentinel Boon ~ Norgorber ~ Virulence') (term: Norgorber)",
-    "inner_sea_gods:isg_abilities_faith.lst:335 'Disrupting Strike' (key: 'Sentinel Boon ~ Pharasma ~ Disrupting Strike') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:336 'Tethered to the Material' (key: 'Sentinel Boon ~ Pharasma ~ Tethered to the Material') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:334 'Undead Slayer' (key: 'Sentinel Boon ~ Pharasma ~ Undead Slayer') (term: Pharasma)",
-    "inner_sea_gods:isg_abilities_faith.lst:359 'Disintegrating Blow' (key: 'Sentinel Boon ~ Rovagug ~ Disintegrating Blow') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:357 'Inexorable Death' (key: 'Sentinel Boon ~ Rovagug ~ Inexorable Death') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:358 'Wicked Claws' (key: 'Sentinel Boon ~ Rovagug ~ Wicked Claws') (term: Rovagug)",
-    "inner_sea_gods:isg_abilities_faith.lst:382 'Channel Efficiency' (key: 'Sentinel Boon ~ Sarenrae ~ Channel Efficiency') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:381 'Firebrand' (key: 'Sentinel Boon ~ Sarenrae ~ Firebrand') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:383 'Sunburst Strike' (key: 'Sentinel Boon ~ Sarenrae ~ Sunburst Strike') (term: Sarenrae)",
-    "inner_sea_gods:isg_abilities_faith.lst:406 'Cloak of Feathers' (key: 'Sentinel Boon ~ Shelyn ~ Cloak of Feathers') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:405 'Glorious Might' (key: 'Sentinel Boon ~ Shelyn ~ Glorious Might') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:404 'Graceful Warrior' (key: 'Sentinel Boon ~ Shelyn ~ Graceful Warrior') (term: Shelyn)",
-    "inner_sea_gods:isg_abilities_faith.lst:428 'Battlefield Protector' (key: 'Sentinel Boon ~ Torag ~ Battlefield Protector') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:430 'Earthen Smite' (key: 'Sentinel Boon ~ Torag ~ Earthen Smite') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:429 'Holy Artificer' (key: 'Sentinel Boon ~ Torag ~ Holy Artificer') (term: Torag)",
-    "inner_sea_gods:isg_abilities_faith.lst:453 'Fearless in the Face of Undeath' (key: 'Sentinel Boon ~ Urgathoa ~ Fearless in the Face of Undeath') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:451 'Glutton for Slaughter' (key: 'Sentinel Boon ~ Urgathoa ~ Glutton for Slaughter') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:452 'Scythe Wielder' (key: 'Sentinel Boon ~ Urgathoa ~ Scythe Wielder') (term: Urgathoa)",
-    "inner_sea_gods:isg_abilities_faith.lst:474 'Envious Death' (key: 'Sentinel Boon ~ Zon-Kuthon ~ Envious Death') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:475 'Rending Trip' (key: 'Sentinel Boon ~ Zon-Kuthon ~ Rending Trip') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:476 'Sight of Perfect Night' (key: 'Sentinel Boon ~ Zon-Kuthon ~ Sight of Perfect Night') (term: Zon-Kuthon)",
-    "inner_sea_gods:isg_abilities_faith.lst:25 'Evangelist of Abadar' (key: 'Temp Bonus ~ Evangelist of Abadar') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:48 'Evangelist of Asmodeus' (key: 'Temp Bonus ~ Evangelist of Asmodeus') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:94 'Evangelist of Cayden Cailean' (key: 'Temp Bonus ~ Evangelist of Cayden Cailean') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:117 'Evangelist of Desna' (key: 'Temp Bonus ~ Evangelist of Desna') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:140 'Evangelist of Erastil' (key: 'Temp Bonus ~ Evangelist of Erastil') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:163 'Evangelist of Gorum' (key: 'Temp Bonus ~ Evangelist of Gorum') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:186 'Evangelist of Gozreh' (key: 'Temp Bonus ~ Evangelist of Gozreh') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:209 'Evangelist of Iomedae' (key: 'Temp Bonus ~ Evangelist of Iomedae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:232 'Evangelist of Irori' (key: 'Temp Bonus ~ Evangelist of Irori') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:255 'Evangelist of Lamashtu' (key: 'Temp Bonus ~ Evangelist of Lamashtu') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:279 'Evangelist of Nethys' (key: 'Temp Bonus ~ Evangelist of Nethys') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:302 'Evangelist of Norgorber' (key: 'Temp Bonus ~ Evangelist of Norgorber') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:325 'Evangelist of Pharasma' (key: 'Temp Bonus ~ Evangelist of Pharasma') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:348 'Evangelist of Rovagug' (key: 'Temp Bonus ~ Evangelist of Rovagug') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:372 'Evangelist of Sarenrae' (key: 'Temp Bonus ~ Evangelist of Sarenrae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:395 'Evangelist of Shelyn' (key: 'Temp Bonus ~ Evangelist of Shelyn') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:419 'Evangelist of Torag' (key: 'Temp Bonus ~ Evangelist of Torag') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:465 'Evangelist of Zon-Kuthon' (key: 'Temp Bonus ~ Evangelist of Zon-Kuthon') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:31 'Exalted of Abadar' (key: 'Temp Bonus ~ Exalted of Abadar') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:54 'Exalted of Asmodeus' (key: 'Temp Bonus ~ Exalted of Asmodeus') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:77 'Exalted of Calistria' (key: 'Temp Bonus ~ Exalted of Calistria') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:100 'Exalted of Cayden Cailean' (key: 'Temp Bonus ~ Exalted of Cayden Cailean') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:123 'Exalted of Desna' (key: 'Temp Bonus ~ Exalted of Desna') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:146 'Exalted of Erastil' (key: 'Temp Bonus ~ Exalted of Erastil') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:169 'Exalted of Gorum' (key: 'Temp Bonus ~ Exalted of Gorum') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:192 'Exalted of Gozreh' (key: 'Temp Bonus ~ Exalted of Gozreh') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:215 'Exalted of Iomedae' (key: 'Temp Bonus ~ Exalted of Iomedae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:238 'Exalted of Irori' (key: 'Temp Bonus ~ Exalted of Irori') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:261 'Exalted of Lamashtu' (key: 'Temp Bonus ~ Exalted of Lamashtu') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:285 'Exalted of Nethys' (key: 'Temp Bonus ~ Exalted of Nethys') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:308 'Exalted of Norgorber' (key: 'Temp Bonus ~ Exalted of Norgorber') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:331 'Exalted of Pharasma' (key: 'Temp Bonus ~ Exalted of Pharasma') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:354 'Exalted of Rovagug' (key: 'Temp Bonus ~ Exalted of Rovagug') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:378 'Exalted of Sarenrae' (key: 'Temp Bonus ~ Exalted of Sarenrae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:401 'Exalted of Shelyn' (key: 'Temp Bonus ~ Exalted of Shelyn') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:425 'Exalted of Torag' (key: 'Temp Bonus ~ Exalted of Torag') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:471 'Exalted of Zon-Kuthon' (key: 'Temp Bonus ~ Exalted of Zon-Kuthon') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:37 'Sentinel of Abadar' (key: 'Temp Bonus ~ Sentinel of Abadar') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:60 'Sentinel of Asmodeus' (key: 'Temp Bonus ~ Sentinel of Asmodeus') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:106 'Sentinel of Cayden Cailean' (key: 'Temp Bonus ~ Sentinel of Cayden Cailean') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:129 'Sentinel of Desna' (key: 'Temp Bonus ~ Sentinel of Desna') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:152 'Sentinel of Erastil' (key: 'Temp Bonus ~ Sentinel of Erastil') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:175 'Sentinel of Gorum' (key: 'Temp Bonus ~ Sentinel of Gorum') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:198 'Sentinel of Gozreh' (key: 'Temp Bonus ~ Sentinel of Gozreh') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:221 'Sentinel of Iomedae' (key: 'Temp Bonus ~ Sentinel of Iomedae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:244 'Sentinel of Irori' (key: 'Temp Bonus ~ Sentinel of Irori') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:267 'Sentinel of Lamashtu' (key: 'Temp Bonus ~ Sentinel of Lamashtu') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:291 'Sentinel of Nethys' (key: 'Temp Bonus ~ Sentinel of Nethys') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:314 'Sentinel of Norgorber' (key: 'Temp Bonus ~ Sentinel of Norgorber') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:337 'Sentinel of Pharasma' (key: 'Temp Bonus ~ Sentinel of Pharasma') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:360 'Sentinel of Rovagug' (key: 'Temp Bonus ~ Sentinel of Rovagug') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:384 'Sentinel of Sarenrae' (key: 'Temp Bonus ~ Sentinel of Sarenrae') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:407 'Sentinel of Shelyn' (key: 'Temp Bonus ~ Sentinel of Shelyn') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:431 'Sentinel of Torag' (key: 'Temp Bonus ~ Sentinel of Torag') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:454 'Sentinel of Urgathoa' (key: 'Temp Bonus ~ Sentinel of Urgathoa') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:477 'Sentinel of Zon-Kuthon' (key: 'Temp Bonus ~ Sentinel of Zon-Kuthon') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities_faith.lst:408 'Shelyn's Smite Evil' (key: 'Temp Bonus ~ Shelyn's Smite Evil') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:229 'A Shining Beacon (Iomedae)' (key: 'Trait ~ A Shining Beacon') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:140 'Accident Resistant (Zyphus)' (key: 'Trait ~ Accident Resistant') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:141 'Adventurous Imbiber (Cayden Cailean)' (key: 'Trait ~ Adventurous Imbiber') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:143 'Agent of Chance (Nivi Rhombodazzle)' (key: 'Trait ~ Agent of Chance') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:144 'Always Threatening (Thamir Gixx)' (key: 'Trait ~ Always Threatening') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:145 'Arcane Depth (Nethys)' (key: 'Trait ~ Arcane Depth') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:146 'Battlefield Surgeon (Zon-Kuthon)' (key: 'Trait ~ Battlefield Surgeon') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:147 'Besmara's Name (Besmara)' (key: 'Trait ~ Besmara's Name') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:148 'Bestial Wrath (Rovagug)' (key: 'Trait ~ Bestial Wrath') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:149 'Blessed Orphan (Folgrit)' (key: 'Trait ~ Blessed Orphan') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:150 'Broken Mind (Groetus)' (key: 'Trait ~ Broken Mind') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:151 'Centered (Irori)' (key: 'Trait ~ Centered') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:152 'Child of Nature (Gozreh)' (key: 'Trait ~ Child of Nature') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:153 'Cleansing Light (Sarenrae)' (key: 'Trait ~ Cleansing Light') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:154 'Contract Master (Asmodeus)' (key: 'Trait ~ Contract Master') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities.lst:155 'Corpse Hunter (Pharasma)' (key: 'Trait ~ Corpse Hunter') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:157 'Deadeye Bowman (Erastil)' (key: 'Trait ~ Deadeye Bowman') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:158 'Deathspeaker (Urgathoa)' (key: 'Trait ~ Deathspeaker') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:159 'Deck Fighter (Besmara)' (key: 'Trait ~ Deck Fighter') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:160 'Deep Wounding (Achaekek)' (key: 'Trait ~ Deep Wounding') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:161 'Defensive Strategist (Torag)' (key: 'Trait ~ Defensive Strategist') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:162 'Deformed (Lamashtu)' (key: 'Trait ~ Deformed') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:164 'Demoralizing Presence (Zon-Kuthon)' (key: 'Trait ~ Demoralizing Presence') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:165 'Denial of Fate (Urgathoa)' (key: 'Trait ~ Denial of Fate') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:166 'Destructive Blows (Rovagug)' (key: 'Trait ~ Destructive Blows') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:167 'Diseased Heart (Ghlaunder)' (key: 'Trait ~ Diseased Heart') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:168 'Dragon Tracker (Dahak)' (key: 'Trait ~ Dragon Tracker') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:169 'Dragonslayer (Dahak)' (key: 'Trait ~ Dragonslayer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:172 'Empty Heart, Full Heart (Naderi)' (key: 'Trait ~ Empty Heart Full Heart') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:174 'Enchanting Conniver (Calistria)' (key: 'Trait ~ Enchanting Conniver') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:175 'Erastil's Speaker (Erastil)' (key: 'Trait ~ Erastil's Speaker') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:176 'Eternal Understanding (Irori)' (key: 'Trait ~ Eternal Understanding') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:177 'Extended Toil (Droskar)' (key: 'Trait ~ Extended Toil') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:178 'Eye for Quality (Abadar)' (key: 'Trait ~ Eye for Quality') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:179 'Eye of the Father (Torag)' (key: 'Trait ~ Eye of the Father') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:180 'Eyes of the Wild (Green Faith)' (key: 'Trait ~ Eyes of the Wild') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:181 'Faithful Artist (Desna)' (key: 'Trait ~ Faithful Artist') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:182 'Fatal Trapper (Zyphus)' (key: 'Trait ~ Fatal Trapper') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:183 'Favored Prey (Ketephys)' (key: 'Trait ~ Favored Prey') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:184 'Fiendish Confidence (Asmodeus)' (key: 'Trait ~ Fiendish Confidence') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities.lst:187 'Frightening Speed (Achaekek)' (key: 'Trait ~ Frightening Speed') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:188 'Furious Vengeance (Dranngvit)' (key: 'Trait ~ Furious Vengeance') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:189 'Gifted Medium (Magrim)' (key: 'Trait ~ Gifted Medium') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:190 'Good-Natured (Cayden Cailean)' (key: 'Trait ~ Good-Natured') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:191 'Hatred of the Gods (Rovagug)' (key: 'Trait ~ Hatred of the Gods') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:192 'Holy Schemer (Calistria)' (key: 'Trait ~ Holy Schemer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:193 'Honey-Tongued (Abadar)' (key: 'Trait ~ Honey-Tongued') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:194 'Illuminator (Sarenrae)' (key: 'Trait ~ Illuminator') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:195 'Inner Beauty (Shelyn)' (key: 'Trait ~ Inner Beauty') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:196 'Inoculated (Urgathoa)' (key: 'Trait ~ Inoculated') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:197 'Inspiring Leader (Apsu)' (key: 'Trait ~ Inspiring Leader') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:198 'Intense Artist (Shelyn)' (key: 'Trait ~ Intense Artist') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:199 'Iron Grip (Gorum)' (key: 'Trait ~ Iron Grip') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:200 'Know the Land (Green Faith)' (key: 'Trait ~ Know the Land') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:201 'Kuthite Caster (Zon-Kuthon)' (key: 'Trait ~ Kuthite Caster') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:202 'Lessons of Chaldira (Chaldira Zuzaristan)' (key: 'Trait ~ Lessons of Chaldira') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:203 'Liar's Tongue (Asmodeus)' (key: 'Trait ~ Liar's Tongue') (term: Asmodeus)",
-    "inner_sea_gods:isg_abilities.lst:205 'Light Sleeper (Hanspur)' (key: 'Trait ~ Light Sleeper') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:204 'Light-Bringer (Sarenrae)' (key: 'Trait ~ Light-Bringer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:206 'Lover of the Law (Abadar)' (key: 'Trait ~ Lover of the Law') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:207 'Loyal Bond (Grudinnar)' (key: 'Trait ~ Loyal Bond') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:208 'Magic's Might (Yuelral)' (key: 'Trait ~ Magic's Might') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:209 'Natural Philosopher (Gozreh)' (key: 'Trait ~ Natural Philosopher') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:210 'Nimble Fingers, Keen Mind (Brigh)' (key: 'Trait ~ Nimble Fingers Keen Mind') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:211 'Opener of Doors (Alseta)' (key: 'Trait ~ Opener of Doors') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:212 'Opportune Slayer (Lamashtu)' (key: 'Trait ~ Opportune Slayer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:213 'Opportunistic (Calistria)' (key: 'Trait ~ Opportunistic') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:214 'Poisonous Slayer (Norgorber)' (key: 'Trait ~ Poisonous Slayer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:215 'Potent Concoctions (Ghlaunder)' (key: 'Trait ~ Potent Concoctions') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:216 'Practiced Deception (Norgorber)' (key: 'Trait ~ Practiced Deception') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:218 'Protective Faith (Torag)' (key: 'Trait ~ Protective Faith') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:219 'Purity of Faith (Iomedae)' (key: 'Trait ~ Purity of Faith') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:220 'Reckless Luck (Chaldira Zuzaristan)' (key: 'Trait ~ Reckless Luck') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:221 'Regal Presence (Iomedae)' (key: 'Trait ~ Regal Presence') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:222 'River Freedom (Hanspur)' (key: 'Trait ~ River Freedom') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:223 'Scaly Ally (Apsu)' (key: 'Trait ~ Scaly Ally') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:224 'Secret Knowledge (Norgorber)' (key: 'Trait ~ Secret Knowledge') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:225 'Seer of Reality (Irori)' (key: 'Trait ~ Seer of Reality') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:226 'Serpentine Squeeze (Ydersius)' (key: 'Trait ~ Serpentine Squeeze') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:228 'Shield-Trained (Gorum)' (key: 'Trait ~ Shield-Trained') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:230 'Spirit Guide (Pharasma)' (key: 'Trait ~ Spirit Guide') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:231 'Split-Second Defense (Milani)' (key: 'Trait ~ Split-Second Defense') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:232 'Stabilizing Touch (Pharasma)' (key: 'Trait ~ Stabilizing Touch') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:233 'Steady Strength (Trudd)' (key: 'Trait ~ Steady Strength') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:234 'Stoic Optimism (Desna)' (key: 'Trait ~ Stoic Optimism') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:235 'Strength's Fanfare (Kurgess)' (key: 'Trait ~ Strength's Fanfare') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:236 'Strict Judgment (Kols)' (key: 'Trait ~ Strict Judgment') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:237 'Strip the Veils (Sivanah)' (key: 'Trait ~ Strip the Veils') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:238 'Strong Heart (Gorum)' (key: 'Trait ~ Strong Heart') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:239 'Strong Swimmer (Gozreh)' (key: 'Trait ~ Strong Swimmer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:240 'Strong-Willed (Cayden Cailean)' (key: 'Trait ~ Strong-Willed') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:241 'Structural Knowledge (Findeladlara)' (key: 'Trait ~ Structural Knowledge') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:242 'Talented Organizer (Milani)' (key: 'Trait ~ Talented Organizer') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:186 'The Flexing Arm (Kurgess)' (key: 'Trait ~ The Flexing Arm') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:243 'Thirst for Knowledge (Nethys)' (key: 'Trait ~ Thirst for Knowledge') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:244 'Thrill-Seeker (Desna)' (key: 'Trait ~ Thrill-Seeker') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:245 'Underlying Principles (Nethys)' (key: 'Trait ~ Underlying Principles') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:246 'Unhinged Mentality (Lamashtu)' (key: 'Trait ~ Unhinged Mentality') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:247 'Unspeakable Bond (any Elder God)' (key: 'Trait ~ Unspeakable Bond') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:248 'Unswaying Love (Shelyn)' (key: 'Trait ~ Unswaying Love') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:249 'Veils upon Veils (Sivanah)' (key: 'Trait ~ Veils upon Veils') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:250 'Wedded Bliss (Bolka)' (key: 'Trait ~ Wedded Bliss') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:251 'Well-Prepared (Angradd)' (key: 'Trait ~ Well-Prepared') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:252 'Wise Teacher (Erastil)' (key: 'Trait ~ Wise Teacher') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:253 'Worthless Pawn (any Great Old One)' (key: 'Trait ~ Worthless Pawn') (NAMEISPI:YES)",
-    "inner_sea_gods:isg_abilities.lst:254 'Wronged (Gyronna)' (key: 'Trait ~ Wronged') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:26 'Acadamae' (key: 'Acadamae ~ Academy') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:97 'Ancient Mwangi Magic' (key: 'Ancient Mwangi Magic ~ Academy') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:27 'Arcanamirium' (key: 'Arcanamirium ~ Academy') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:161 'Blessing of Enferac' (key: 'Blessing of Enferac ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:34 'Citadel Enferac' (key: 'Citadel Enferac ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:36 'Crimson Citadel' (key: 'Crimson Citadel ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:131 'Divine Boon ~ Abadar' (key: 'Divine Boon ~ Abadar') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:132 'Divine Boon ~ Asmodeus' (key: 'Divine Boon ~ Asmodeus') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:135 'Divine Boon ~ Calistria (Resist Poison)' (key: 'Divine Boon ~ Calistria Poison') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:134 'Divine Boon ~ Calistria (Disguise Self)' (key: 'Divine Boon ~ Calistria SLA') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:133 'Divine Boon ~ Calistria (Class Skills)' (key: 'Divine Boon ~ Calistria Skills') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:136 'Divine Boon ~ Cayden Cailean' (key: 'Divine Boon ~ Cayden Cailean') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:137 'Divine Boon ~ Desna' (key: 'Divine Boon ~ Desna') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:138 'Divine Boon ~ Erastil (Far Shot)' (key: 'Divine Boon ~ Erastil Far Shot') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:139 'Divine Boon ~ Erastil (+2 at Range)' (key: 'Divine Boon ~ Erastil Range') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:140 'Divine Boon ~ Gorum' (key: 'Divine Boon ~ Gorum') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:141 'Divine Boon ~ Gozreh' (key: 'Divine Boon ~ Gozreh') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:142 'Divine Boon ~ Iomedae' (key: 'Divine Boon ~ Iomedae') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:144 'Divine Boon ~ Irori (Ki)' (key: 'Divine Boon ~ Irori Ki') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:143 'Divine Boon ~ Irori (No ki)' (key: 'Divine Boon ~ Irori No Ki') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:145 'Divine Boon ~ Lamashtu' (key: 'Divine Boon ~ Lamashtu') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:146 'Divine Boon ~ Nethys' (key: 'Divine Boon ~ Nethys') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:147 'Divine Boon ~ Norgorber' (key: 'Divine Boon ~ Norgorber') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:148 'Divine Boon ~ Pharasma' (key: 'Divine Boon ~ Pharasma') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:149 'Divine Boon ~ Rovagug' (key: 'Divine Boon ~ Rovagug') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:150 'Divine Boon ~ Sarenrae' (key: 'Divine Boon ~ Sarenrae') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:151 'Divine Boon ~ Shelyn' (key: 'Divine Boon ~ Shelyn') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:152 'Divine Boon ~ Torag' (key: 'Divine Boon ~ Torag') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:153 'Divine Boon ~ Urgathoa' (key: 'Divine Boon ~ Urgathoa') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:154 'Divine Boon ~ Zon-Kuthon' (key: 'Divine Boon ~ Zon-Kuthon') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:29 'Kintargo Opera House' (key: 'Kintargo Opera House ~ Guild') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:28 'Magaambya' (key: 'Magaambya ~ Academy') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:33 'Monastery' (key: 'Monastery ~ Monastic Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:30 'Oenopion Fleshforges' (key: 'Oenopion Fleshforges ~ Guild') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:160 'Paravicar' (key: 'Paravicar ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:31 'Poisioner's Guild' (key: 'Poisioners Guild ~ Guild') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:175 'Sarzari Library Research' (key: 'Sarzari Library Research ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:159 'Signifer' (key: 'Signifer ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:35 'The Harrowed Society' (key: 'The Harrowed Society ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:167 'Trump of Books' (key: 'Trump of Books ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:168 'Trump of Crowns' (key: 'Trump of Crowns ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:169 'Trump of Hammers' (key: 'Trump of Hammers ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:170 'Trump of Keys' (key: 'Trump of Keys ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:171 'Trump of Shields' (key: 'Trump of Shields ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:172 'Trump of Stars' (key: 'Trump of Stars ~ Secret Society') (NAMEISPI:YES)",
-    "inner_sea_magic:ism_abilities_other.lst:32 'White Grotto' (key: 'White Grotto ~ Guild') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:13 'Arcadian' (key: 'Arcadian') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:14 'Caldaru' (key: 'Caldaru') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:15 'Erutaki' (key: 'Erutaki') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:16 'Iobarian' (key: 'Iobarian') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:17 'Jadwiga' (key: 'Jadwiga') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:18 'Lirgeni' (key: 'Lirgeni') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:12 'Mwangi' (key: 'Mwangi') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:37 'Azlanti Engineering' (key: 'Trait ~ Azlanti Engineering') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:38 'Bellflower Contact' (key: 'Trait ~ Bellflower Contact') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:45 'Castrovel Gatekeeper' (key: 'Trait ~ Castrovel Gatekeeper') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:80 'Magaambyan Arcana' (key: 'Trait ~ Magaambyan Arcana') (NAMEISPI:YES)",
-    "inner_sea_races:isr_abilities.lst:19 'Varki' (key: 'Varki') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:29 'Absalom' (key: 'Absalom') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:30 'Andoran' (key: 'Andoran') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:10 'Azlanti' (key: 'Azlanti') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:11 'Azlanti Pureblood' (key: 'Azlanti Pureblood') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:16 'Bekyar' (key: 'Bekyar') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:31 'Belkzen' (key: 'Belkzen') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:17 'Bonuwat' (key: 'Bonuwat') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:32 'Brevoy' (key: 'Brevoy') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:12 'Chelaxian' (key: 'Chelaxian') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:33 'Cheliax' (key: 'Cheliax') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:34 'Darklands' (key: 'Darklands') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:35 'Druma' (key: 'Druma') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:36 'Five Kings Mountains' (key: 'Five Kings Mountains') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:37 'Galt' (key: 'Galt') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:13 'Garundi' (key: 'Garundi') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:38 'Geb' (key: 'Geb') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:39 'Irrisen' (key: 'Irrisen') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:40 'Isger' (key: 'Isger') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:41 'Jalmeray' (key: 'Jalmeray') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:42 'Katapesh' (key: 'Katapesh') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:14 'Keleshite' (key: 'Keleshite') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:15 'Kellid' (key: 'Kellid') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:43 'Kyonin' (key: 'Kyonin') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:44 'Lastwall' (key: 'Lastwall') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:45 'Linnorm Kings' (key: 'Linnorm Kings') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:73 'Lyrune-Quah (Moon Clan)' (key: 'Lyrune-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:46 'Mammoth Lords' (key: 'Mammoth Lords') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:47 'Mana Wastes' (key: 'Mana Wastes') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:18 'Mauxi' (key: 'Mauxi') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:48 'Mediogalti Island' (key: 'Mediogalti Island') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:49 'Mendev' (key: 'Mendev') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:50 'Molthune' (key: 'Molthune') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:51 'Mwangi Expanse' (key: 'Mwangi Expanse') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:52 'Nex' (key: 'Nex') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:53 'Nidal' (key: 'Nidal') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:54 'Nirmathas' (key: 'Nirmathas') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:55 'Numeria' (key: 'Numeria') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:56 'Osirion' (key: 'Osirion') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:57 'Qadira' (key: 'Qadira') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:58 'Rahadoum' (key: 'Rahadoum') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:59 'Razmiran' (key: 'Razmiran') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:60 'River Kingdoms' (key: 'River Kingdoms') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:61 'Sargava' (key: 'Sargava') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:62 'Shackles' (key: 'Shackles') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:74 'Shadde-Quah (Axe Clan)' (key: 'Shadde-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:20 'Shoanti' (key: 'Shoanti') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:75 'Shriikirri-Quah (Hawk Clan)' (key: 'Shriikirri-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:76 'Shundar-Quah (Spire Clan)' (key: 'Shundar-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:77 'Sklar-Quah (Sun Clan)' (key: 'Sklar-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:78 'Skoan-Quah (Skull Clan)' (key: 'Skoan-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:63 'Sodden Lands' (key: 'Sodden Lands') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:64 'Steaming Sea' (key: 'Steaming Sea') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:21 'Taldan' (key: 'Taldan') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:65 'Taldor' (key: 'Taldor') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:79 'Tamiir-Quah (Wind Clan)' (key: 'Tamiir-Quah') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:66 'Thuvia' (key: 'Thuvia') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:22 'Tian' (key: 'Tian') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:23 'Ulfen' (key: 'Ulfen') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:67 'Ustalav' (key: 'Ustalav') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:68 'Varisia' (key: 'Varisia') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:24 'Varisian' (key: 'Varisian') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:25 'Vudrani' (key: 'Vudrani') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:69 'Worldwound' (key: 'Worldwound') (NAMEISPI:YES)",
-    "inner_sea_world_guide:iswg_abilities.lst:19 'Zenj' (key: 'Zenj') (NAMEISPI:YES)",
-    "ultimate_campaign:uca_abilities_traits.lst:280 'Corpse Cannibal (Urgathoa)' (key: 'Trait ~ Corpse Cannibal') (NAMEISPI:YES)",
-    "ultimate_campaign:uca_abilities_traits.lst:281 'Pain Is Pleasure (Zon-Kuthon)' (key: 'Trait ~ Pain Is Pleasure') (NAMEISPI:YES)",
-    "ultimate_campaign:uca_abilities_traits.lst:282 'Shadow Whispers (Norgorber)' (key: 'Trait ~ Shadow Whispers') (NAMEISPI:YES)",
-    "ultimate_campaign:uca_abilities_traits.lst:283 'Voice of Monsters (Lamashtu)' (key: 'Trait ~ Voice of Monsters') (NAMEISPI:YES)",
-    "ultimate_campaign:uca_abilities_traits.lst:284 'Wrecking Wrath (Rovagug)' (key: 'Trait ~ Wrecking Wrath') (NAMEISPI:YES)",
-    "ultimate_magic:um_abilities.lst:37 'Eyes of Rul Thaven' (key: 'Preparation Ritual ~ Eyes of Rul Thaven') (NAMEISPI:YES)",
-    "ultimate_magic:um_abilities.lst:44 'Improved Eyes of Rul Thaven' (key: 'Preparation Ritual ~ Improved Eyes of Rul Thaven') (NAMEISPI:YES)",
-    "ultimate_psionics:up_abilities.lst:178 'Dancing Robes of Sharatwan Attunement' (key: 'Dancing Robes of Sharatwan Attunement') (NAMEISPI:YES)",
-    "ultimate_psionics:up_abilities.lst:202 'Groundscorn Boots Attunement' (key: 'Groundscorn Boots Attunement') (NAMEISPI:YES)"
+  "name_pi_renamed": 576,
+  "renamed_records": [
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 222
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 223
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 224
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 225
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 226
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 227
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 228
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 229
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 230
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 231
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 232
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 233
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 234
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 235
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 237
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 236
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 25
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 26
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 27
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 31
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 32
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 33
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 13
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 59
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 82
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 105
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 128
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 198
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 221
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 244
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 267
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 290
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 313
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 336
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 270
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 68
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 347
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 75
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 19
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 42
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 88
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 111
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 181
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 204
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 250
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 273
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 296
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 319
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 25
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 48
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 94
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 117
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 187
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 210
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 256
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 279
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 302
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 325
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 348
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 54
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 77
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 100
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 123
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 170
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 193
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 216
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 262
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 285
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 308
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 331
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 543
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 19
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 42
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 65
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 88
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 111
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 134
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 157
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 180
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 203
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 226
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 249
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 273
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 296
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 319
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 342
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 366
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 389
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 413
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 436
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 459
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 23
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 22
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 24
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 45
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 47
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 46
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 69
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 70
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 68
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 92
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 93
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 91
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 115
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 116
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 114
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 139
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 137
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 138
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 162
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 161
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 160
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 185
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 184
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 183
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 206
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 207
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 208
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 229
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 230
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 231
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 252
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 254
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 253
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 276
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 277
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 278
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 300
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 301
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 299
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 323
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 322
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 324
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 345
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 346
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 347
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 370
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 369
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 371
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 392
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 394
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 393
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 418
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 417
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 416
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 441
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 440
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 439
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 464
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 463
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 462
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 29
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 28
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 30
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 51
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 52
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 53
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 74
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 76
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 75
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 98
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 97
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 99
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 122
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 120
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 121
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 145
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 144
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 166
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 168
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 167
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 189
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 190
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 191
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 212
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 214
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 213
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 235
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 236
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 237
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 258
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 259
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 260
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 282
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 284
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 283
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 306
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 305
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 307
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 330
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 328
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 329
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 353
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 352
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 351
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 377
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 375
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 376
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 398
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 399
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 400
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 422
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 424
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 423
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 447
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 446
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 445
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 470
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 468
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 469
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 544
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 545
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 547
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 541
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 546
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 34
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 58
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 59
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 57
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 80
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 82
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 81
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 105
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 103
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 104
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 126
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 127
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 128
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 151
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 149
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 150
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 174
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 172
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 173
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 196
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 197
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 195
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 220
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 218
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 219
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 241
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 243
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 242
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 265
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 264
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 266
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 289
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 288
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 290
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 313
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 312
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 311
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 335
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 336
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 334
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 359
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 357
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 358
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 382
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 381
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 383
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 406
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 405
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 404
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 428
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 430
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 429
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 453
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 451
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 452
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 474
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 475
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 476
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 25
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 48
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 94
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 117
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 140
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 163
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 186
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 209
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 232
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 255
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 279
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 302
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 325
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 348
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 372
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 395
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 419
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 465
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 54
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 77
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 100
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 123
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 146
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 169
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 192
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 215
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 238
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 261
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 285
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 308
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 331
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 354
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 378
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 401
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 425
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 471
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 37
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 60
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 106
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 129
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 198
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 221
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 244
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 267
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 291
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 314
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 337
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 360
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 384
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 407
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 431
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 454
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 477
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 408
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 229
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 140
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 141
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 144
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 145
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 146
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 147
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 148
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 149
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 150
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 151
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 153
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 154
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 155
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 157
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 158
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 159
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 160
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 161
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 162
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 164
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 165
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 166
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 167
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 168
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 169
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 172
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 174
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 176
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 177
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 178
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 179
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 180
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 181
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 182
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 183
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 184
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 187
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 188
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 189
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 190
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 191
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 192
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 193
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 194
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 195
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 196
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 197
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 198
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 199
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 200
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 201
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 202
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 203
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 205
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 204
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 206
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 207
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 208
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 209
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 210
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 211
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 212
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 213
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 214
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 215
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 216
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 218
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 219
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 220
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 221
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 222
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 223
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 224
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 225
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 226
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 228
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 230
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 231
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 232
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 233
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 234
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 235
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 236
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 237
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 238
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 239
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 240
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 241
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 242
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 186
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 243
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 244
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 245
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 246
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 247
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 248
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 249
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 250
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 251
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 252
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 253
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 254
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 26
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 97
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 27
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 161
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 34
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 131
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 132
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 135
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 134
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 133
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 136
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 137
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 138
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 139
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 140
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 141
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 142
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 144
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 145
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 146
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 147
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 148
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 149
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 150
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 151
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 153
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 154
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 29
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 28
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 33
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 30
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 160
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 159
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 167
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 168
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 169
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 170
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 171
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 172
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 32
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 13
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 14
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 15
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 16
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 17
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 18
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 12
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 37
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 38
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 45
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 80
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 19
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 29
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 30
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 10
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 11
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 16
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 17
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 32
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 12
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 33
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 34
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 37
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 13
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 38
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 39
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 40
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 41
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 42
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 14
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 15
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 43
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 44
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 45
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 73
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 46
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 47
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 18
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 48
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 49
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 50
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 51
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 52
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 53
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 54
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 55
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 56
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 57
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 58
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 59
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 60
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 61
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 62
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 74
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 20
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 75
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 76
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 77
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 78
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 63
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 64
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 21
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 65
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 79
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 66
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 22
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 23
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 67
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 68
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 24
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 25
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 69
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 19
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 280
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 281
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 282
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 283
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 284
+    },
+    {
+      "book": "ultimate_magic",
+      "source_file": "um_abilities.lst",
+      "source_line": 37
+    },
+    {
+      "book": "ultimate_magic",
+      "source_file": "um_abilities.lst",
+      "source_line": 44
+    },
+    {
+      "book": "ultimate_psionics",
+      "source_file": "up_abilities.lst",
+      "source_line": 178
+    },
+    {
+      "book": "ultimate_psionics",
+      "source_file": "up_abilities.lst",
+      "source_line": 202
+    }
   ]
 }
