@@ -110,3 +110,19 @@
   (this book's ~235 plus `monster_codex`'s 1); a small follow-on closes Dhampir's own ~5-unit
   residual using the same `ingest_races.rs` chassis, extended to also read the Favored Enemy /
   UMR-`.MOD` block shapes.
+
+- **Cross-lane finding, surfaced by the §5 rebase protocol (logged via `scripts/retro.py
+  correction`, `docs/retro/events/t2b-w1-a.jsonl`):** rebasing onto `origin/tranche/12` picked up
+  a sibling T2b lane's `inner_sea_races` stale-regen fix (`f7e709f50`), which re-ran
+  `ingest_race_traits.rs` and landed 9 new alternate-trait rows plus a third `Unclassified`
+  record (`Suli ~ Trusted Mediator`) — but never widened `race_resolver.rs`'s
+  `ALTERNATE_TRAIT_REPLACE_FLAGS` for them, leaving `cargo test --locked --lib` red on
+  `origin/tranche/12` itself (`race.alternate_trait.unknown` claim-blocking all 9, plus 6
+  further pinned-count assertions stale). Per `workflow-instruction.md §5`'s own instruction
+  ("re-run the tests before pushing... a clean merge that compiles is not proof a sibling's book
+  still ingests"), this was fixed as part of this cycle's post-rebase verification: the 9
+  alternates' replace flags (transcribed from their own already-fixture-checked corpus records'
+  `sets_replace_flags`, not re-derived from raw `.lst` text) plus the matching pinned-count
+  sweep across `race_resolver.rs` and `tests/sd27_*.rs`. `inner_sea_races` content itself was
+  not touched — only the shared engine table and shared pinned counts, which is what the sibling
+  commit's own book actually needed to reach a player.

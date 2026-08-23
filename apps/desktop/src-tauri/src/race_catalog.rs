@@ -714,11 +714,12 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 361,
+            alternates, 370,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 8 (SD-29 decisions.md §43's original 4 + SD-32 card-11 T2b lane's 4 Ratfolk \
              alternates, 2026-08-23) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
-             Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
+             Races' 77 (68, §45, + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, \
+             2026-08-22) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
              (§49) + SD-31 Epic 1-F2's 6 Bestiary 2 races' 48 (ARG's 42 + Inner Sea Races' 6 \
              actually-Alternate rows; re-derived by role, not by the raw per-book row counts \
              `ingest_race_traits` prints, which also include that batch's 8 `Unclassified` rows \

@@ -996,10 +996,13 @@ mod tests {
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 361,
-            "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
+            total, 370,
+            "ARG's 153 Alternate-classified records + Monster Codex's 8 (4 original, SD-29 \
+             decisions.md §43, + SD-32 card-11 T2b lane's 4 new Ratfolk alternates, \
+             2026-08-23) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
-             race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
+             race-trait extend lane) + Inner Sea Races' 76 (67, §45, the same lane's round 2, \
+             + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) \
              + Horror Adventures' 41 (§47, round 3) \
              + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
              are the replacement rows those heritages grant and are never menu rows) \
@@ -1034,7 +1037,9 @@ mod tests {
         // one race at a time instead of only in the total.
         let expected: &[(&str, usize)] = &[
             ("Aasimar", 17),    // ARG 9 + ISR 2 + CE 6 (heritages)
-            ("Catfolk", 6),     // ARG 6 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 6 (SD-31-E6-F4-003, 2026-08-16) + ISR 1 (`Jungle Stalker`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Catfolk", 7),
             ("Drow", 7),        // ARG 6 + ISR 1
             ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
             ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
@@ -1046,7 +1051,9 @@ mod tests {
             // (`TraitRole::FlagGranted`), so all 3 alternates ARE selectable
             // menu rows -- unlike Strix/Suli, Throwback's own grants are not
             // themselves alternates, so nothing is subtracted here.
-            ("Gillman", 3),     // ARG 3 (SD31-E6-F4-006, 2026-08-17)
+            // ARG 3 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Deep Gillman`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Gillman", 4),
             ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
             ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
             ("Grippli", 5),     // ARG 4 + ISR 1 (SD-31 Epic 1-F2)
@@ -1056,22 +1063,31 @@ mod tests {
             ("Hobgoblin", 10),  // ARG 9 + ISR 1
             ("Human", 33),      // ARG 15 + ISR 12 + HA 6
             ("Ifrit", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
-            ("Kitsune", 2),     // ARG 2 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 2 (SD-31-E6-F4-003, 2026-08-16) + ISR 1 (`Duplicitous`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Kitsune", 3),
             ("Kobold", 5),      // ARG 4 + ISR 1
             ("Merfolk", 4),     // ARG 3 + ISR 1
-            ("Nagaji", 1),      // ARG 1 (SD31-E6-F4-006, 2026-08-17)
+            // ARG 1 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Serpent Affinity`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Nagaji", 2),
             ("Oread", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Orc", 5),         // ARG 4 + ISR 1
             // ARG 4 (SD-31-E6-F4-003, 2026-08-16) + Monster Codex 4
             // (Cheek Pouches/Cleanliness/Lab Rat/Surface Sprinter, SD-32
             // card-11 T2b lane, 2026-08-23; Surface Sprinter's own 2
-            // replacement rows are `FlagGranted`, not counted here).
-            ("Ratfolk", 8),
+            // replacement rows are `FlagGranted`, not counted here) + ISR 1
+            // (`Market Dweller`, a sibling SD-32 card-11 T2b lane's
+            // stale-regen fix, 2026-08-22).
+            ("Ratfolk", 9),
             // Strix's real ARG total is 6, but `Wing-Clipped` grants
             // `Wing-Clipped ~ Strix ~ Flight` (`TraitRole::FlagGranted`), so
             // only 5 are menu rows -- the same shape `Dwarf ~ Saltbeard`
             // already sets for `Saltbeard ~ Dwarf ~ Greed`.
-            ("Strix", 5),       // ARG 5 selectable + 1 FlagGranted (SD-31-E6-F4-003)
+            // ARG 5 selectable + 1 FlagGranted (SD-31-E6-F4-003) + ISR 1
+            // (`Cautious Brawler`, a sibling SD-32 card-11 T2b lane's
+            // stale-regen fix, 2026-08-22)
+            ("Strix", 6),
             // Suli's real ARG total is 5, but `Energy Strike` grants all 4 of
             // `Earthfoot`/`Firehand`/`Icewalk`/`Shockshield`
             // (`TraitRole::FlagGranted`), so only 1 is a menu row.
@@ -1085,14 +1101,22 @@ mod tests {
             // `Tree Stranger ~ Vanara ~ Speed` (`TraitRole::FlagGranted`),
             // but that grant is not itself an alternate so nothing is
             // subtracted -- both 2 alternates ARE selectable menu rows.
-            ("Vanara", 2),      // ARG 2 (SD31-E6-F4-006, 2026-08-17)
-            ("Vishkanya", 2),   // ARG 2 (SD31-E6-F4-006, 2026-08-17)
-            ("Wayang", 1),      // ARG 1 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 2 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Risky
+            // Troublemaker`, a sibling SD-32 card-11 T2b lane's stale-regen
+            // fix, 2026-08-22)
+            ("Vanara", 3),
+            // ARG 2 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Deceptive`, same
+            // sibling fix -- its own dependent row `Deceptive ~ Vishkanya ~
+            // Limber` is `FlagGranted`, not counted here)
+            ("Vishkanya", 3),
+            // ARG 1 (SD-31-E6-F4-003, 2026-08-16) + ISR 1 (`In the
+            // Shadows`, same sibling fix)
+            ("Wayang", 2),
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 361);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 370);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1319,10 +1343,11 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 361,
+            checked, 370,
             "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
-             alternates, 2026-08-23) + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
+             alternates, 2026-08-23) + 1 APG (SD-29 decisions.md §43) + 76 Inner Sea Races \
+             (67, §45, + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, \
+             2026-08-22) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch) + 8 \
              SD31-E6-F4-006 (2026-08-17, ARG's own follow-on 4-race chassis batch)"
@@ -1899,9 +1924,12 @@ mod tests {
         // plus Monster Codex's 4 new Ratfolk alternates (357 -> 361) --
         // its `Adopted Race ~ Dhampir` row stays deferred, same browse-only
         // stub disposition as Rougarou's `Adopted Race ~ Rougarou` above.
-        assert_eq!((standard, alternates), (373, 361));
+        // A sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen
+        // fix (2026-08-22) adds 9 more alternates (361 -> 370); `standard`
+        // is unmoved, that fix wrote no chassis/standard-tier content.
+        assert_eq!((standard, alternates), (373, 370));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 734);
+        assert_eq!(checked, 743);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

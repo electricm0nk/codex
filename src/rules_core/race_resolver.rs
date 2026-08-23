@@ -1449,6 +1449,25 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Oread ~ Isolated", &["Oread_ReplaceEnergyResistance", "Oread_ReplaceLanguages"]),
     ("Sylph ~ Secretive", &["Sylph_ReplaceSpellLikeAbility", "Sylph_ReplaceEnergyResistance"]),
     ("Undine ~ Triton Magic", &["Undine_ReplaceSpellLikeAbility"]),
+    // ---- Catfolk, Gillman, Kitsune, Nagaji, Ratfolk, Strix, Vanara,
+    // Vishkanya, Wayang (a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+    // stale-regen fix, 2026-08-22, closed the SAME "IN_SCOPE_RACES grew,
+    // book never re-run" defect this lane found for `monster_codex`; this
+    // batch adds the resulting 9 real alternate-trait rows' replace flags,
+    // transcribed off `data/corpus/inner_sea_races/race_trait/`, SD-32
+    // card-11 T2b lane, 2026-08-23). `Vishkanya ~ Deceptive` grants
+    // `Deceptive ~ Vishkanya ~ Limber` (`TraitRole::FlagGranted` via its own
+    // `ABILITY:...AUTOMATIC...` token), same convention as Strix's
+    // Wing-Clipped above, so that dependent row is not entered here.
+    ("Catfolk ~ Jungle Stalker", &["Catfolk_ReplaceCatsLuck", "Catfolk_ReplaceSprinter"]),
+    ("Gillman ~ Deep Gillman", &["Gillman_ReplaceAmphibious", "Gillman_ReplaceEnchantmentResistance"]),
+    ("Kitsune ~ Duplicitous", &["Kitsune_ReplaceKitsuneMagic"]),
+    ("Nagaji ~ Serpent Affinity", &["Nagaji_ReplaceResistant"]),
+    ("Ratfolk ~ Market Dweller", &["Ratfolk_ReplaceTinker"]),
+    ("Strix ~ Cautious Brawler", &["Strix_ReplaceHatred", "Strix_ReplaceSuspicious"]),
+    ("Vanara ~ Risky Troublemaker", &["Vanara_ReplacePrehensileTail"]),
+    ("Vishkanya ~ Deceptive", &["Vishkanya_ReplaceLimber"]),
+    ("Wayang ~ In the Shadows", &["Wayang_ReplaceLurker"]),
 
     // ================= Horror Adventures =================
     // SD-29 race-trait lane, round 3. 41 of the book's 43 in-scope rows in
@@ -2088,9 +2107,20 @@ mod tests {
         // the corpus, and never applies -- an upstream data gap this engine
         // reports rather than papers over. `reach_gate`'s `OPEN_FINDINGS` names
         // the remedy.
+        // `Suli ~ Trusted Mediator` (Inner Sea Races, `isr_abilities_race.lst`,
+        // landed by a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+        // stale-regen fix, 2026-08-22) is the third, same *kind* of residue as
+        // `Human ~ Tribalistic Languages`: its own `!PREFACT` is wrapped inside
+        // a `PREMULT` self-exclusion guard (see this module's doc comment on
+        // why that is preserved verbatim rather than read as a standalone
+        // suppressor), so it carries no standalone gate this engine reads.
         assert_eq!(
             unclassified,
-            vec![("Human", "Human ~ Tribalistic Languages"), ("Goblin", "Oversized Goblin")]
+            vec![
+                ("Human", "Human ~ Tribalistic Languages"),
+                ("Goblin", "Oversized Goblin"),
+                ("Suli", "Suli ~ Trusted Mediator"),
+            ]
         );
 
         // And the two that used to live here still do not auto-apply: they
@@ -2151,8 +2181,15 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 31,
-            "Inner Sea Races' 22 PI-redacted records + Core Essentials' 9, counted on disk. \
+            redacted, 34,
+            "Inner Sea Races' 25 PI-redacted records + Core Essentials' 9, counted on disk. \
+             ISR's 22 -> 25 by a sibling SD-32 card-11 T2b lane's stale-regen fix \
+             (2026-08-22): `Catfolk ~ Jungle Stalker`, `Ratfolk ~ Market Dweller` and \
+             `Suli ~ Trusted Mediator` (the row this module's own \
+             `no_corpus_trait_is_left_without_a_readable_gate` test separately tracks as \
+             `Unclassified`, not `Alternate` -- redaction is independent of trait role) each \
+             name Golarion Product Identity in their prose; the other 6 of that batch's 9 new \
+             alternates do not. \
              Horror Adventures added 0: it is a rules supplement, not a campaign setting. \
              ISR's 18 -> 22 by SD-31 Epic 1-F2 (2026-08-15): `Fetchling ~ Shadow Agent`, \
              `Grippli ~ Defensive Training`, `Ifrit ~ Brazen Flame` and `Undine ~ Triton \
@@ -2227,7 +2264,14 @@ mod tests {
         // Codex's 4 new Ratfolk alternates (Cheek Pouches, Cleanliness,
         // Lab Rat, Surface Sprinter) -- Surface Sprinter's own two
         // replacement rows are `FlagGranted`, counted below instead.
-        assert_eq!(count(TraitRole::Alternate), 361);
+        // 361 -> 370 by a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+        // stale-regen fix (2026-08-22): 9 new alternates (Catfolk ~ Jungle
+        // Stalker, Gillman ~ Deep Gillman, Kitsune ~ Duplicitous, Nagaji ~
+        // Serpent Affinity, Ratfolk ~ Market Dweller, Strix ~ Cautious
+        // Brawler, Vanara ~ Risky Troublemaker, Vishkanya ~ Deceptive,
+        // Wayang ~ In the Shadows) -- Vishkanya ~ Deceptive's own dependent
+        // row is `FlagGranted`, counted below instead.
+        assert_eq!(count(TraitRole::Alternate), 370);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2281,16 +2325,25 @@ mod tests {
         // ~ Speed` and `Ratfolk ~ Surface Sprinter ~ Vision` (one
         // `ABILITY:...|AUTOMATIC|` token naming two keys) -- the identical
         // Gillman `Throwback` shape immediately above.
-        assert_eq!(count(TraitRole::FlagGranted), 76);
-        // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
-        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
-        // key and names each one's remedy. Unchanged by SD-31 Epic 1-F2: every
-        // one of this batch's gate-free rows has a real granter (see above),
-        // so none of them lands here.
-        assert_eq!(count(TraitRole::Unclassified), 2);
+        // 76 -> 78 by a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+        // stale-regen fix (2026-08-22): `Vishkanya ~ Deceptive` grants
+        // `Deceptive ~ Vishkanya ~ Limber` plus one more dependent row from
+        // the same 9-alternate batch (re-derive:
+        // `unclassified_traits()`/`alternate_traits()` diffed against the
+        // 9 new ISR alternates' own `ABILITY:...AUTOMATIC...` tokens names
+        // the second).
+        assert_eq!(count(TraitRole::FlagGranted), 78);
+        // `Oversized Goblin`, `Human ~ Tribalistic Languages` and (added by a
+        // sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix,
+        // 2026-08-22) `Suli ~ Trusted Mediator` -- see
+        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins all
+        // three by key and names each one's remedy. Unchanged by SD-31 Epic
+        // 1-F2: every one of that batch's gate-free rows has a real granter
+        // (see above), so none of them lands here.
+        assert_eq!(count(TraitRole::Unclassified), 3);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            812,
+            824,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2310,7 +2363,10 @@ mod tests {
              alternate content + SD-31 wave-24's Rougarou (Bestiary 6, 2026-08-20): 8 new \
              standard-tier rows, no heritage/alternate content (786 -> 794) + SD-32 card-11 \
              T2b lane's 18 (2026-08-23: Dhampir's 12 standard-tier rows + Monster Codex's 4 \
-             new Ratfolk alternates + the 2 dependent rows Surface Sprinter grants; 794 -> 812)"
+             new Ratfolk alternates + the 2 dependent rows Surface Sprinter grants; 794 -> 812) \
+             + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix \
+             (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted \
+             Mediator (Unclassified) = 12 (812 -> 824)"
         );
     }
 
@@ -2507,7 +2563,18 @@ mod tests {
         // wrote its `!PREFACT` gates from Ratfolk's globalvar file, as
         // every other race's do), so the orphan-flag assertion above still
         // does not move.
-        assert_eq!(all_flags.len(), 139);
+        //
+        // A sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen
+        // fix (2026-08-22) moved this 139 -> 144: its 9 new alternates'
+        // flags are mostly reuses of already-claimed names (two different
+        // books' alternates legitimately sharing one base trait's
+        // replace-flag), with 5 genuinely new (re-derive: diff this file's
+        // `ALTERNATE_TRAIT_REPLACE_FLAGS` additions for
+        // Catfolk/Gillman/Kitsune/Nagaji/Ratfolk/Strix/Vanara/Vishkanya/
+        // Wayang against the flag set already present before them). Every
+        // flag is claimed by its own race's standard row, so the
+        // orphan-flag assertion above still does not move.
+        assert_eq!(all_flags.len(), 144);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2530,13 +2597,16 @@ mod tests {
         }
         assert_eq!(
             checked,
-            361,
+            370,
             "153 ARG + 8 Monster Codex (the original 4 -- Duergar's Ironskinned/Twilight-\
              Touched, Goblin's the two Oversized replacement rows -- plus SD-32 card-11 T2b's \
              4 Ratfolk alternates, 2026-08-23: Cheek Pouches/Cleanliness/Lab Rat/Surface \
              Sprinter. Surface Sprinter's own two replacement rows, `~ Speed`/`~ Vision`, are \
              `FlagGranted` via its own `ABILITY:...AUTOMATIC...` token, same as Strix's \
-             Wing-Clipped below, so they are not counted here) + 1 APG + 67 Inner Sea Races + \
+             Wing-Clipped below, so they are not counted here) + 1 APG + 76 Inner Sea Races \
+             (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, \
+             2026-08-22 -- Vishkanya ~ Deceptive's own dependent row is `FlagGranted`, not \
+             counted here) + \
              41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's alternates, \
@@ -2770,9 +2840,11 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            361,
+            370,
             "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
-             alternates, 2026-08-23) + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+             alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from \
+             a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + \
+             41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
              SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch) \
@@ -2817,7 +2889,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 361);
+        assert_eq!(selectable_alternate_trait_keys().len(), 370);
     }
 
     #[test]

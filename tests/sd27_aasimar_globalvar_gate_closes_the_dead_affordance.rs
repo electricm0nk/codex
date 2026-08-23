@@ -314,9 +314,11 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 361,
+        checked, 370,
         "ARG's 153 + Monster Codex's 8 (4 original + SD-32 card-11 T2b's 4 Ratfolk \
-         alternates, 2026-08-23) + APG's 1 + Inner Sea Races' 67 + Horror Adventures' 41 \
+         alternates, 2026-08-23) + APG's 1 + Inner Sea Races' 76 (67 pre-existing + 9 from \
+         a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + Horror \
+         Adventures' 41 \
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
          §47, §49) + SD-31 Epic 1-F2's 48 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, \
          2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
