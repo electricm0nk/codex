@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "data": {
+    "key": "Material ~ Wyroot / 2 Life Points",
+    "category": "Equipmods",
+    "name": "Wyroot (2 Life Points)",
+    "cost_gp": 2000.0,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4",
+    "line": 59,
+    "record_key": "Material ~ Wyroot / 2 Life Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

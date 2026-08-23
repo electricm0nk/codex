@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "data": {
+    "key": "Belt of Stoneskin",
+    "category": "MagicItems",
+    "name": "Belt of Stoneskin",
+    "cost_gp": 60000.0,
+    "weight_lbs": 10.0,
+    "description": "Every 24 hours, this belt's wearer gains DR 10/adamantine until the belt absorbs 100 points of damage, at which point the belt becomes useless for the remainder of the 24-hour period. When first worn, or after each time this belt is taken off, it must worn for 24 consecutive hours in order for its magic to take effect again."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+    "line": 463,
+    "record_key": "Belt of Stoneskin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

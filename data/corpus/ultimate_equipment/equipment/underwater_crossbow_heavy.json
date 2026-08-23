@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "data": {
+    "key": "Underwater Crossbow (Heavy)",
+    "category": "ArmsArmor",
+    "name": "Underwater Crossbow (Heavy)",
+    "cost_gp": 100.0,
+    "weight_lbs": 8.0,
+    "description": "20 ft range when used underwater"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322",
+    "line": 570,
+    "record_key": "Underwater Crossbow (Heavy)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

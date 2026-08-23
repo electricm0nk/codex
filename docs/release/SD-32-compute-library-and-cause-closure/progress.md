@@ -6312,3 +6312,64 @@ territory per this cycle's own dispatch brief and are named for that lane, not f
   under the full corpus-regen protocol; (2) the Rust `class_feature` generators' own PI scrub path;
   (3) handoff to the sibling `spell`/`equipment`/`equipment_modifier` lane for its 2 hits.
 - Commit: (this cycle's commit — see push output).
+
+## `equipment`/`equipment_modifier` `no_record` — UE gap-routing fix (2026-08-23, `decisions.md §20`)
+
+Re-derived §17a starting point against the freshly-bootstrapped repo-local oracle:
+`monster_ability 191, equipment 170, spell 167, equipment_modifier 43, companion 2` — total 573,
+matching the dispatch brief exactly (`python3 scripts/shape_ledger.py --inventory
+docs/work-inventory.json`).
+
+**Root cause found and fixed** (`§17` — search for the existing path before building one):
+`cache_gen::equipment_gap.rs`'s `book_routing()` had no arm for `"UE"` (Ultimate Equipment),
+silently dropping all 64 rows `gen_equipment_gap_tables.rs` already computed for that book's own
+hand-authored-table coverage gap (real `.lst` content — "Aklys", "Belt of Foraging" — absent from
+`rules_tables::ultimate_equipment::equipment_tables`, never entered there). The identical drift
+shape this same file's own `ISTEM`/`ISM` fix (a prior cycle) already named once: a config table
+computed real rows a routing match silently dropped before they reached `data/corpus/`.
+
+**Fix:** one `"UE" => Some(("ultimate_equipment", ...))` arm. RED→GREEN proved
+(`book_routing_includes_ue_gap_residue`, renamed from `book_routing_excludes_ue`, assertion
+flipped). `held`-equivalent protection (`write_json`'s no-clobber semantics over
+`equipment_gap_tables::equipment_gap_rows()`'s already-subtracted-at-codegen-time `"UE"` slice)
+makes the write additive-only by construction — verified: 64 new files, zero deletions/
+modifications (`git status --porcelain -- data/corpus`).
+
+**Results:** `equipment` 170→116 (**-54**), `equipment_modifier` 43→33 (**-10**), bundle
+`no_record` 573→**509**.
+
+**Traced further, not fixed this cycle:**
+- `advanced_class_guide`'s 22-unit `equipment_modifier` residual (largest remaining single-book
+  slice): a real corpus record already exists for e.g. `advanced_class_guide:equipment_modifier:
+  answering`, but cites the wrong LST line — `find_citation`'s strategy order lets a base
+  declaration's coincidentally-matching first column win before its `.COPY=<key>` alias variant
+  (the census's own intended citation) is ever tried. Needs a dedicated cycle: reorder/condition
+  the matcher, then re-verify the ~390-citation population this matcher already resolves correctly
+  has no regression, before touching the corpus.
+- `ultimate_magic`'s 19-unit `equipment` residual: the gap-table lever now computes **zero** UM
+  rows (already `held` or PI-screened) — a different, untraced cause.
+- `inner_sea_gods` (25) / `adventurers_guide` (18) `equipment` residuals — not traced this cycle.
+- `spell`'s 167 — not attempted; prior cycle's own next-steps (`apg::spell_list` consumer trace,
+  `bestiary`/`bestiary_4`/`bestiary_6` remainder) stand unchanged.
+
+**`companion`'s 2 — verified, not touched.** Read the immediately-prior cycle's own receipt in
+full before assuming the residual needed new work: it already closed 217→2 and named the 2 as a
+deliberately-parked `decisions.md §19c` PI judgment call ("Shaitan Binder Eidolon"), not a defect.
+Confirmed unchanged this cycle.
+
+- **Closure/reclassification/reachability** (`§16`): closure = 64 units (54 `equipment`, 10
+  `equipment_modifier`, all `ultimate_equipment`); reclassification = 0; reachability = 0 (honest,
+  matching the `spell` wave 2 precedent — not wired into `equipment_resolver::
+  equipment_catalog_rows()` this cycle).
+- **PI screening:** 0 drops. All 64 new records screen clean (`pi_marker: null`), verified via
+  `python3 -c "..." | sort | uniq -c` over the 64 new file paths.
+- **Tests:** `cargo test --locked --lib rules_core::cache_gen::equipment_gap` (15/15),
+  `cargo test --locked --test equipment_gap_tables` (7/7),
+  `cargo test --locked --test sd24_equipment_coverage_audit` (9/9, unaffected),
+  `cargo test --locked --lib rules_core::cache_gen::` (140/140, 10 pre-existing ignored).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-onboarding-equipment-ue-gap-routing_cycle-1_cycle_receipt.md`.
+- **What remains:** `advanced_class_guide`'s `.COPY=`-alias citation-matcher fix (highest-confidence
+  next win, needs a full-population regression check); `ultimate_magic`/`inner_sea_gods`/
+  `adventurers_guide` `equipment` residuals (per-book trace needed); `spell`'s 167.
+- Commit: (this cycle's commit — see push output).

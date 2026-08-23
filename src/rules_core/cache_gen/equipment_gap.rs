@@ -20,10 +20,13 @@
 //! see it. Same shape as `OPEN-ISSUES.md` row 11/row 12's finding for
 //! Ultimate Equipment, applied to 704 records across 8 OTHER books.
 //!
-//! **Explicitly EXCLUDES the `"UE"` (Ultimate Equipment) row slice.**
-//! `cache_gen::ultimate_equipment` (a sibling lane's file this wave) already
-//! owns that book's `equipment/` directory; this module's own file
-//! territory is every OTHER book's gap residue.
+//! **Now includes the `"UE"` (Ultimate Equipment) row slice's own gap
+//! residue** (`decisions.md §20`; previously excluded on the assumption
+//! `cache_gen::ultimate_equipment` fully owned that book -- true only for
+//! the keys its own hand-authored tables list, not for `.lst` content
+//! absent from them). `held` (from `hand_authored_equipment_rows()`) makes
+//! this additive-only: no record `cache_gen::ultimate_equipment` already
+//! wrote is touched or duplicated.
 //!
 //! ## Citation resolution
 //!
@@ -201,6 +204,21 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
         // alongside this routing arm; see `gen_equipment_gap_tables.rs`'s
         // `EQUIPMENT_BOOK_AG` `BookInput`.
         "AG" => Some(("adventurers_guide", "pathfinder/paizo/roleplaying_game/adventurers_guide")),
+        // SD-32 T9 residual (`decisions.md §20`): `"UE"` was deliberately
+        // absent here on the assumption `cache_gen::ultimate_equipment`
+        // "owns" the book -- true for the 1,613 keys its own hand-authored
+        // `equipment_tables`/`equipmod_tables` modules hold, but that
+        // generator only ever dumps what THOSE tables list. It never reads
+        // `equipment_gap_tables::equipment_gap_rows()`'s 64 `"UE"` rows at
+        // all, so the drift here matches this file's own `ISTEM`/`ISM`
+        // fix's shape exactly: a config table (`gen_equipment_gap_tables.rs`
+        // already declares an `EQUIPMENT_BOOK_UE` `BookInput`) computed real
+        // rows this match silently dropped before they ever reached
+        // `data/corpus/`. `held` (from `hand_authored_equipment_rows()`,
+        // which already indexes every one of the 1,613 keys) makes routing
+        // UE additive-only: no already-shipped UE record is touched or
+        // duplicated, only the residue nobody wrote gets a corpus record.
+        "UE" => Some(("ultimate_equipment", "pathfinder/paizo/roleplaying_game/ultimate_equipment")),
         _ => None,
     }
 }
@@ -496,8 +514,8 @@ pub enum GenerationError {
 }
 
 /// Generates the gap JSON cache for every book `equipment_gap_tables`
-/// covers except `"UE"`, under `out_root` (`data/corpus/`), reading real
-/// LST citations from `corpus_root` (a PCGen `data/` checkout).
+/// covers, under `out_root` (`data/corpus/`), reading real LST citations
+/// from `corpus_root` (a PCGen `data/` checkout).
 /// `ingested_at` is stamped at call time by the caller (real wall-clock
 /// ISO-8601, never derived).
 pub fn generate(
@@ -529,7 +547,7 @@ pub fn generate(
         }
         let book = entry.book;
         let Some((book_id, book_rel_dir)) = book_routing(book) else {
-            // "UE" or any future unmapped code: not this module's territory.
+            // Any future unmapped code: not this module's territory.
             continue;
         };
         let book_dir = corpus_root.join(book_rel_dir);
@@ -645,8 +663,28 @@ mod tests {
     use super::*;
 
     #[test]
-    fn book_routing_excludes_ue() {
-        assert_eq!(book_routing("UE"), None);
+    fn book_routing_includes_ue_gap_residue() {
+        // `decisions.md §20`: `equipment_gap_tables::equipment_gap_rows()`
+        // already computes 64 `"UE"` rows (the hand-authored
+        // `rules_tables::ultimate_equipment::equipment_tables` module's own
+        // real coverage gap, e.g. "Aklys"/"Belt of Foraging" -- present in
+        // the real `.lst` content, absent from the hand-authored table) but
+        // `generate()`'s `let Some(..) = book_routing(book) else { continue
+        // }` silently dropped every one before it ever reached
+        // `data/corpus/`, because this match had no arm for `"UE"` at all
+        // (same drift shape this file's own `ISTEM`/`ISM` fix already
+        // named). `held` (built from `hand_authored_equipment_rows()`,
+        // which already indexes UE's 1,613 hand-authored keys) protects
+        // every already-shipped UE record from being touched or
+        // duplicated -- routing UE only surfaces the residue nobody else
+        // ever wrote.
+        assert_eq!(
+            book_routing("UE"),
+            Some((
+                "ultimate_equipment",
+                "pathfinder/paizo/roleplaying_game/ultimate_equipment"
+            ))
+        );
     }
 
     /// Regression test for the real defect this cycle caught: a `.FORGET`

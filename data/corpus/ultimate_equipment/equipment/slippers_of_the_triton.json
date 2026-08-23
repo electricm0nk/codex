@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "data": {
+    "key": "Slippers of the Triton",
+    "category": "MagicItems",
+    "name": "Slippers of the Triton",
+    "cost_gp": 56000.0,
+    "weight_lbs": 1.0,
+    "description": "Water Breathing"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+    "line": 635,
+    "record_key": "Slippers of the Triton"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

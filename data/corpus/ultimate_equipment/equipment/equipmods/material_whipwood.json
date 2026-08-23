@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "data": {
+    "key": "Material ~ Whipwood",
+    "category": "Equipmods",
+    "name": "Whipwood",
+    "cost_gp": 500.0,
+    "weight_lbs": null,
+    "description": "+5 Weapon's HP"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4",
+    "line": 57,
+    "record_key": "Material ~ Whipwood"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
