@@ -955,7 +955,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3537,
+            3613,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -967,10 +967,16 @@ mod tests {
              (`bestiary_2` +85, `bestiary_3` +266, `bestiary_4` +187, `horror_adventures` +56, \
              `inner_sea_bestiary` +28, `inner_sea_gods` +2, `inner_sea_world_guide` +13, \
              `ultimate_psionics` +64) — each book's own module pins its exact owner-less set, \
-             see `every_owner_less_ability_is_a_named_and_pinned_non_reach` in each"
+             see `every_owner_less_ability_is_a_named_and_pinned_non_reach` in each. \
+             3537 -> 3613 (`decisions.md §20` round 3, +76): 5 PREVIOUSLY-UNREGISTERED \
+             zero-monster books added to `MONSTER_BOOKS` for the first time \
+             (`ultimate_wilderness` +2, `ultimate_intrigue` +6, `ultimate_magic` +13, \
+             `bestiary_6` +16, `bestiary_5` +39) — structurally cannot reclassify an existing \
+             record's facet, since no pre-existing `MonsterBook` entry was modified, only new \
+             ones added"
         );
         assert_eq!(
-            digest, 0x020f_6b24_5185_886e,
+            digest, 0x5c2e_e608_7da2_63c9,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -982,7 +988,12 @@ mod tests {
              (`0 new monsters ... 529 already on disk, left untouched, 180 new monster \
              abilities`) and a `git diff` of `bestiary/monster_data.rs` showing every \
              pre-existing record's fields byte-identical (only file-position reordering, from \
-             orphans keeping their real `source_line` instead of being dropped)"
+             orphans keeping their real `source_line` instead of being dropped). \
+             0xada455b5de6bafc7 -> 0x5c2ee6087da263c9 (`decisions.md §20` round 3): the digest \
+             moves because the sorted triple set gains 76 new members from 5 newly-registered \
+             books — zero reclassification, since every pre-existing `MonsterBook` entry (and \
+             every triple it contributes) is byte-unchanged; only new `MonsterBook` rows were \
+             appended to `MONSTER_BOOKS`"
         );
     }
 }
