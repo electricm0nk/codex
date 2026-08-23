@@ -432,6 +432,37 @@ session never performs steps 1–9 itself with its own tool calls.
 9. Report: criterion, files touched, commit SHA(s), dual-audit results, RED→GREEN evidence, receipt
    path, kanban card ID, discoveries, next-cycle plan.
 
+### 6a. The §27 provisional-shape-default contract (row 17, `epic-7-shape-categorization-100`)
+
+Any cycle that applies `decisions.md §27`'s provisional `SpecialQuality` default — or any other
+placeholder/defaulted/provisional shape assignment `§27a` widens the scope to cover — **must** call
+`scripts/shape_provisional_marker.py::stamp_provisional_default(record, reason)` on the corpus record
+at the moment it applies the default, never write the marker fields (`data.shape_provisional_default`,
+`data.shape_provisional_reason`) by hand. That is the only sanctioned way to set it, and it is what
+makes the marker impossible to set silently: the marker and the value it accompanies land in the same
+call, so a record carrying the default without going through this function is a detectable contract
+violation (`scripts/row17_census.py --check` fails on a marker present with no reason; a marker
+entirely absent from a record that should carry it is what `scripts/row17_census.py`'s `fallthrough`
+count and `scripts/shape_ledger.py`'s `f0_reached_by=="fallthrough"` field exist to surface — see
+below).
+
+**Where cycles read this before dispatching row 17's own work:**
+
+- `scripts/shape_ledger.py`'s per-row `f0_reached_by` field (`"not_ingested"` / `"measured_empty"` /
+  `"fallthrough"`) distinguishes a genuinely-measured F0 (a real corpus record with zero DEFINE/BONUS
+  tokens) from F0 reached by "nothing else matched" — `build_ledger`'s `f0_breakdown` aggregates this,
+  and `pi_redacted_formula`/`f0_fallthrough_pi_redacted` flag the specific case where a token's VALUE
+  is itself the PI-redaction marker (`decisions.md §24b`) rather than real formula content.
+- `scripts/row17_census.py` is the single command that answers row 17's own question ("which units
+  have a real shape, and which have a placeholder?"), per kind and per book:
+  `python3 scripts/row17_census.py --output artifacts/gate-1-shape-closure/row17-census.json`. Its
+  `totals.row17_honest_size` field is `fallthrough` + `provisional_default` (within the not-done
+  population) — the actionable count row 17 must re-categorize once `no_record` reaches zero. Run
+  `--check` in any cycle that touches the provisional-default marker, to fail closed on a malformed
+  (reason-less) marker before it ships.
+- Re-derive `row17_honest_size` fresh at dispatch time — do not carry forward a prior cycle's printed
+  number (`decisions.md §17a`: validate an instrument before trusting a confident claim it produces).
+
 ## 7. Per-cycle receipt schema
 
 ```markdown

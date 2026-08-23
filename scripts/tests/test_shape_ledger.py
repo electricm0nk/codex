@@ -27,6 +27,7 @@ import unittest
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 import shape_ledger as SL  # noqa: E402
+import pi_scrub as PS  # noqa: E402
 
 
 def _unit(id_, kind, book, status, wiring_class, source_file, source_line, **extra):
@@ -389,6 +390,55 @@ class ClassifyUnitTest(unittest.TestCase):
         self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
         self.assertEqual(row["join_status"], "no_formula_tokens")
 
+    # decisions.md §27a / kanban.md row 17: `f0_reached_by` must tell a
+    # genuinely-derived F0 apart from a placeholder wearing F0's label.
+    def test_no_record_f0_reached_by_is_not_ingested(self):
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "missing.lst", 1)
+        row = SL.classify_unit(unit, corpus_index={})
+        self.assertEqual(row["f0_reached_by"], "not_ingested")
+        self.assertFalse(row["pi_redacted_formula"])
+
+    def test_no_formula_tokens_f0_reached_by_is_measured_empty(self):
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
+        index = {("b", "spell", "f.lst", 1): []}
+        row = SL.classify_unit(unit, index)
+        self.assertEqual(row["f0_reached_by"], "measured_empty")
+        self.assertFalse(row["pi_redacted_formula"])
+
+    def test_matched_real_family_has_no_f0_reached_by(self):
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
+        index = {("b", "spell", "f.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|2"}]}  # F1
+        row = SL.classify_unit(unit, index)
+        self.assertEqual(row["family"], "F1")
+        self.assertIsNone(row["f0_reached_by"])
+
+    def test_matched_with_unparseable_token_is_fallthrough_not_measured_empty(self):
+        """A record CAN be found (join succeeds) and still carry a
+        DEFINE/BONUS token this classifier cannot extract a segment from
+        (too few `|`-fields). That is a placeholder F0 -- `nothing else
+        matched` -- never `measured_empty`, which is reserved for a record
+        that genuinely carries zero formula tokens at all."""
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
+        index = {("b", "spell", "f.lst", 1): [{"key": "DEFINE", "value": "OnlyOneField"}]}
+        row = SL.classify_unit(unit, index)
+        self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
+        self.assertEqual(row["join_status"], "matched")
+        self.assertEqual(row["f0_reached_by"], "fallthrough")
+        self.assertFalse(row["pi_redacted_formula"])
+
+    def test_pi_redacted_formula_value_is_fallthrough_and_flagged(self):
+        """A record whose BONUS/DEFINE VALUE is the redaction marker itself
+        (`decisions.md §24b`: the record was renamed, its mechanical value
+        blanket-redacted alongside NAME/DESC) is not a genuine 'no formula'
+        measurement -- it is a placeholder, and `pi_redacted_formula` must
+        say so distinctly from an ordinary parse failure."""
+        unit = _unit("b:trait:x", "trait", "b", "not-started", "static", "f.lst", 1)
+        index = {("b", "trait", "f.lst", 1): [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]}
+        row = SL.classify_unit(unit, index)
+        self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
+        self.assertEqual(row["f0_reached_by"], "fallthrough")
+        self.assertTrue(row["pi_redacted_formula"])
+
     def test_join_match_picks_highest_priority_family(self):
         unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
         index = {
@@ -706,6 +756,47 @@ class BuildLedgerTest(unittest.TestCase):
         self.assertEqual(jsc.get("no_formula_tokens"), 1)
         self.assertEqual(jsc.get("matched"), 1)
         self.assertEqual(sum(jsc.values()), ledger["population"])
+
+    def test_f0_breakdown_separates_measured_from_fallthrough_and_moves_on_mutation(self):
+        """decisions.md §27a / kanban.md row 17: the census this feeds must
+        be able to go RED when a genuinely-derived unit is mutated to look
+        defaulted, and back to GREEN on revert -- proving the count is
+        live, not a static label. Also proves `f0_fallthrough_pi_redacted`
+        is a strict subset of `fallthrough`."""
+        units = [
+            _unit("b:spell:no-record", "spell", "b", "not-started", "static", "missing.lst", 1),
+            _unit("b:spell:empty", "spell", "b", "not-started", "static", "empty.lst", 1),
+            _unit("b:spell:real", "spell", "b", "not-started", "static", "real.lst", 1),
+            _unit("b:trait:redacted", "trait", "b", "not-started", "static", "red.lst", 1),
+        ]
+        base_index = {
+            ("b", "spell", "empty.lst", 1): [],
+            ("b", "spell", "real.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|2"}],  # F1, genuinely derived
+            ("b", "trait", "red.lst", 1): [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}],
+        }
+        ledger = SL.build_ledger(units, base_index)
+        f0b = ledger["f0_breakdown"]
+        self.assertEqual(f0b.get("not_ingested"), 1)
+        self.assertEqual(f0b.get("measured_empty"), 1)
+        self.assertEqual(f0b.get("fallthrough"), 1)
+        self.assertEqual(ledger["f0_fallthrough_pi_redacted"], 1)
+        self.assertEqual(ledger["families"]["F1"]["count"], 1)
+
+        # RED: mutate the genuinely-derived unit's own record so it now
+        # looks defaulted (its BONUS value becomes the PI-redaction
+        # marker, same shape as the real 84-unit finding this cycle
+        # re-derived) -- the fallthrough count MUST move.
+        mutated_index = dict(base_index)
+        mutated_index[("b", "spell", "real.lst", 1)] = [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]
+        mutated_ledger = SL.build_ledger(units, mutated_index)
+        self.assertEqual(mutated_ledger["f0_breakdown"].get("fallthrough"), 2)
+        self.assertEqual(mutated_ledger["f0_fallthrough_pi_redacted"], 2)
+        self.assertNotIn("F1", mutated_ledger["families"])
+
+        # GREEN: revert -- back to the original, un-mutated counts.
+        reverted_ledger = SL.build_ledger(units, base_index)
+        self.assertEqual(reverted_ledger["f0_breakdown"].get("fallthrough"), 1)
+        self.assertEqual(reverted_ledger["families"]["F1"]["count"], 1)
 
 
 class FailClosedOnEmptyTest(unittest.TestCase):

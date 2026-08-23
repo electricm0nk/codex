@@ -111,6 +111,13 @@ import pf1e_dashboard_producer as P  # noqa: E402  (path set above)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 import coverage_ledger as CL  # noqa: E402
 
+# `decisions.md §27a`: "F0 reached by measurement is a real answer; F0
+# reached by 'nothing else matched' is a placeholder wearing a family
+# label." The redaction marker is the ONE shared literal every PI-redaction
+# path in this program writes (`scripts/pi_scrub.py::REDACTED_PI_MARKER`) --
+# imported, never re-typed, per `AGENTS.md`/this bundle's dispatch brief.
+import pi_scrub as PS  # noqa: E402
+
 _ABILITY_ABBREVS = ("STR", "DEX", "CON", "INT", "WIS", "CHA")
 
 # Stat/skill token names PCGen formulas use that are NOT per-level-scaling
@@ -766,6 +773,7 @@ def classify_unit(
             if hit is not None:
                 _matched_book, formula_tokens = hit
 
+    pi_redacted_formula = False
     if formula_tokens is None:
         join_status = "no_record"
         family = FAMILY_F0_NO_FORMULA
@@ -774,6 +782,13 @@ def classify_unit(
         family = FAMILY_F0_NO_FORMULA
     else:
         join_status = "matched"
+        # A token's VALUE can itself be the PI-redaction marker (the
+        # record's mechanical BONUS/DEFINE value was blanket-redacted
+        # alongside its NAME/DESC, not because the formula has no shape --
+        # `decisions.md §24b` names the record as renamed, never as
+        # formula-empty). Detected here, on the SAME formula_tokens the
+        # classifier below reads, so the two can never disagree.
+        pi_redacted_formula = any(PS.REDACTED_PI_MARKER in (tok.get("value") or "") for tok in formula_tokens)
         # Primary family: classify every DEFINE/BONUS formula segment on
         # this unit's record, then take the highest-priority (lowest
         # FAMILIES-index) family any segment produced -- mirroring
@@ -793,12 +808,47 @@ def classify_unit(
                 best_family = fam
         family = best_family if best_family is not None else FAMILY_F0_NO_FORMULA
 
+    # `decisions.md §27a`/row-17 instrument: WITHIN family F0, distinguish
+    # a genuinely-derived answer from a placeholder wearing F0's label.
+    # `join_status` alone does not do this -- `matched` already collapses
+    # "real family found" and "every present token still fell through to
+    # F0" into one bucket, which is exactly the conflation §27a calls out.
+    #   - "not_ingested"   : join found no corpus record at all (join_status
+    #                        "no_record"). Not row-17's population yet --
+    #                        `decisions.md §27`/`kanban.md` row 17 sequences
+    #                        AFTER `no_record` reaches zero.
+    #   - "measured_empty" : a real corpus record was found and it
+    #                        genuinely carries zero DEFINE/BONUS tokens
+    #                        (join_status "no_formula_tokens"). This is F0
+    #                        "reached by measurement" -- a real answer.
+    #   - "fallthrough"    : the join succeeded AND the record carries
+    #                        DEFINE/BONUS tokens, but every one of them
+    #                        failed to classify into a real family (a
+    #                        malformed/short token, OR -- see
+    #                        `pi_redacted_formula` above -- the token's
+    #                        value IS the PI-redaction marker rather than
+    #                        real formula content). This is F0 "reached by
+    #                        nothing else matched" -- exactly the
+    #                        placeholder §27a names, and row 17's real
+    #                        population.
+    if family == FAMILY_F0_NO_FORMULA:
+        if join_status == "no_record":
+            f0_reached_by = "not_ingested"
+        elif join_status == "no_formula_tokens":
+            f0_reached_by = "measured_empty"
+        else:
+            f0_reached_by = "fallthrough"
+    else:
+        f0_reached_by = None
+
     return {
         "id": unit.get("id"),
         "kind": unit.get("kind"),
         "book": book,
         "family": family,
         "join_status": join_status,
+        "f0_reached_by": f0_reached_by,
+        "pi_redacted_formula": pi_redacted_formula,
     }
 
 
@@ -841,10 +891,20 @@ def build_ledger(
     meta = _family_metadata()
     counts: dict[str, int] = {}
     join_status_counts: dict[str, int] = {}
+    # decisions.md §27a / row 17: F0's own three-way split (not_ingested /
+    # measured_empty / fallthrough), plus the PI-redaction sub-count within
+    # fallthrough -- see classify_unit's docstring for what each means.
+    f0_breakdown: dict[str, int] = {}
+    f0_fallthrough_pi_redacted = 0
     for row in rows:
         counts[row["family"]] = counts.get(row["family"], 0) + 1
         status = row.get("join_status") or "unknown"
         join_status_counts[status] = join_status_counts.get(status, 0) + 1
+        reached_by = row.get("f0_reached_by")
+        if reached_by:
+            f0_breakdown[reached_by] = f0_breakdown.get(reached_by, 0) + 1
+            if reached_by == "fallthrough" and row.get("pi_redacted_formula"):
+                f0_fallthrough_pi_redacted += 1
     families = {
         fid: {
             "label": meta.get(fid, {}).get("label", ""),
@@ -861,6 +921,8 @@ def build_ledger(
         "unclassified_count": len(unclassified),
         "unclassified": [r["id"] for r in unclassified],
         "join_status_counts": join_status_counts,
+        "f0_breakdown": f0_breakdown,
+        "f0_fallthrough_pi_redacted": f0_fallthrough_pi_redacted,
     }
 
 
@@ -914,6 +976,17 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  matched            {matched:>7}  ({100.0 * matched / pop:.1f}%)  -- rests on a real corpus record")
     print(f"  no_formula_tokens  {no_formula_tokens:>7}  ({100.0 * no_formula_tokens / pop:.1f}%)  -- record found, carries no DEFINE/BONUS")
     print(f"  no_record          {no_record:>7}  ({100.0 * no_record / pop:.1f}%)  -- join found no corpus record at all")
+    print()
+    # decisions.md §27a / kanban.md row 17: F0's own breakdown -- how much
+    # of F0 is a real measurement vs. a placeholder wearing F0's label.
+    f0b = ledger.get("f0_breakdown", {})
+    f0_total = ledger["families"].get(FAMILY_F0_NO_FORMULA, {}).get("count", 0)
+    fallthrough = f0b.get("fallthrough", 0)
+    print(f"F0 breakdown ({f0_total} total, decisions.md §27a -- row 17's real population lives here):")
+    print(f"  not_ingested       {f0b.get('not_ingested', 0):>7}  -- no corpus record yet; not row 17's population (sequenced after no_record==0)")
+    print(f"  measured_empty     {f0b.get('measured_empty', 0):>7}  -- real corpus record, genuinely zero DEFINE/BONUS tokens (F0 by measurement)")
+    print(f"  fallthrough        {fallthrough:>7}  -- corpus record matched with formula tokens present, but every one failed to classify (F0 by 'nothing else matched' -- row 17's population)")
+    print(f"    of which PI-redacted formula value: {ledger.get('f0_fallthrough_pi_redacted', 0)}")
     print()
     print("family rollup:")
     for fid, info in sorted(ledger["families"].items()):
