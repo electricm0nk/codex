@@ -374,6 +374,41 @@ Logged via `scripts/verify.sh`'s own auto-append (`preflight-oracle` checks,
 findings are captured in full in this receipt and the kanban entry; no additional `retro.py` event
 required.
 
+## Post-rebase re-derivation (`§17a`)
+
+Rebasing onto `origin/tranche/12` landed several concurrent sibling commits, including
+`8eaabfbabc` ("shape_ledger.py equipmods-nested kind derivation -- equipment_modifier no_record
+1003->19") and `4ed1024309` ("t9 straggler wave -- spell/ability/equipment_modifier no_record
+38->28, cross-book instrument fallback") — both INSTRUMENT/content work on `spell`/
+`equipment_modifier`, overlapping this cycle's own kinds but not its files (`git diff --stat` of
+this cycle's `$PIN` against `origin/tranche/12` before rebasing showed only `equipment_gap.rs`
+touched among this cycle's files, non-overlapping: an unrelated `find_citation` disabled-line fix
+that auto-merged cleanly). Rebase produced exactly one conflict, `kanban.md` row 11 (expected —
+every concurrent T9 cycle appends to the same cell); resolved by hand, preserving BOTH sides'
+cycle-id lists and Notes paragraphs (mine prepended after the upstream's own newest entry, not
+overwriting it).
+
+Re-ran this cycle's full test scope post-rebase (`rules_core::cache_gen::{equipment_gap,
+hand_authored_equipment, spell_lane_dump}`, `rules_core::spell_resolver`, `--bin ingest_spells`,
+`--bin gen_equipment_gap_tables`, `--test equipment_gap_tables`) — every suite still green,
+identical pass counts to the pre-rebase run above. `git status --porcelain -- data/corpus`
+post-rebase: no new deletions or modifications beyond this cycle's own 106 additions.
+
+Re-derived the ledger fresh post-rebase (sibling cycles moved `spell`/`equipment_modifier` further
+via their own overlapping work, composing on top of this cycle's own closures):
+
+```bash
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/ledger.json
+```
+→ `monster_ability 98, class_feature 25, equipment_modifier 19, equipment 10, companion 2, spell 2,
+ability 1` — bundle `no_record` total **157**. `equipment_modifier`'s new 19 and `class_feature`'s
+new 25 are populations two SIBLING commits newly exposed (a shape_ledger.py kind-derivation fix
+and unrelated `class_feature` work) — not this cycle's territory, not investigated here.
+`equipment`'s 10 (down from this cycle's own post-fix 11) and `spell`'s 2 (down from this cycle's
+own post-fix 5) reflect further composition with `4ed1024309`'s own straggler-closure work landing
+on top of this cycle's — a real, independently-verified additional improvement this cycle did not
+itself perform, named honestly rather than claimed.
+
 ## Disk
 
 `df -h /` reported at the end of this cycle (see final message): 968G total, 368G used, 601G
