@@ -4298,3 +4298,68 @@ T2b's total; every hit is prose in `docs/release/` receipts.
   Skinwalker heritage-selector, 133 units) — real content builds, not attempted this cycle,
   mechanism-sized per `decisions.md §17` item 3; the ledger regen named above.
 - Commit: (recorded after push).
+
+## Cycle card15-simple-filename-kinds-ingest — 2026-08-23
+
+**Card 15 (census-scope-closure), `decisions.md §20` (no_record must reach zero).** Scope: the six
+`SIMPLE_FILENAME_KINDS` (`decisions.md §17` item 1) — `template` 2,248, `deity` 459, `power` 421,
+`domain` 183, `language` 136, `skill` 149 — 3,596 units, 100% `no_record` at baseline (re-derived,
+matches brief exactly).
+
+**One generic mechanism serves five of the six kinds** (`scripts/ingest_simple_filename_kinds.py`):
+citation-verified re-read of each unit's `(source_file, source_line)` against the pinned oracle,
+tab-token parse into `raw_tokens`, PI screen (declared `NAMEISPI`/`DESCISPI` + the shared
+`PI_BLACKLIST_TERMS` term-list scan imported, not duplicated, from
+`scripts/sd32_t9_pi_review_feat_equipment.py`), Shape B v1 corpus JSON write
+(`src/rules_core/shape_b_v1.rs::CorpusRecordV1`, verified byte-compatible against a live shipped
+record before writing).
+
+**Result:** bundle-wide `no_record` **20,889 → 17,765 (−3,124)**. `template` 2,248→12, `domain`
+183→0, `power` 421→0, `language` 136→1, `skill` 149→0. 13 units skipped as named citation mismatches
+(inventory `corpus_key` vs LST row-identity drift beyond the `<group> ~ <leaf>` composition rule —
+a `v06_work_inventory.rs` naming question, listed by exact name/book/line in the cycle receipt, not
+silently dropped). 61 records PI-redacted for real (39 template, 19 language, 2 domain, 1 skill),
+sample hand-verified.
+
+**`deity` (459 units) deliberately NOT ingested — escalated per `decisions.md §15` disposition 2.**
+A `deity` record's own row identity IS a deity's proper name in every unit. `ogl-pi-blacklist.md`
+has no §2.3 per-field judgment entry for `deity` at all — the identical gap `decisions.md §19a`
+amendment 3a closed for `companion`/`monster_ability` (802 units, "no rule exists" was the finding)
+by operator ruling, not by an ingesting cycle's own authority. Measured, not assumed: running this
+cycle's own term-list scan against all 459 deity identities finds only 24 hit the 60-term blacklist
+(the core-20 Golarion deities + 4 recurrences) — **435 (94.8%) would ship un-redacted under the
+mechanized screen alone**, the exact exposure shape a per-record or per-book review
+(`decisions.md §18`/`§19`'s own precedent) exists to resolve. Retro-logged as a deferral event
+(`docs/retro/events/t9-onboarding.jsonl`, id `1787484957833-t9-onboarding-7c3605`), naming the
+population, the blocking condition, and the revisit trigger.
+
+**Verification:** `python3 -m unittest scripts.tests.test_ingest_simple_filename_kinds` 10/10 OK.
+RED proved live (mutated `parse_row`'s tab-split to space-split — 4/10 tests failed for the intended
+reason), reverted, re-ran GREEN. Dual audit on this cycle's own diff (`scripts/
+ingest_simple_filename_kinds.py`, `scripts/tests/test_ingest_simple_filename_kinds.py`):
+`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. No existing `data/corpus` file touched — only new files added,
+all through the regeneration script, none hand-edited. This cycle adds no Rust code; the existing
+`cargo test --locked --bin v06_work_inventory` suite is unaffected (not re-run — no `.rs` file in
+this cycle's diff).
+
+**Not attempted this cycle, named honestly:** the reach-gate/reachability proof
+(`apps/desktop/src-tauri/src/reach_gate.rs`) — all five ingested kinds are `wiring_class: "display"`
+reference data with zero existing engine/UI consumer; there is no player-facing path to prove
+reachable yet for this content. Gate-2 engine work for these kinds is a distinct, unscoped follow-on.
+
+Suites: no Rust suite affected by this cycle's diff (Python/JSON only); full unscoped `cargo test`
+not run per dispatch instruction ("may never finish on this box").
+
+Bundle-wide `no_record`: **17,765** (was 20,889 at this cycle's start; `decisions.md §20`'s
+remaining-work table is now out of date for these five kinds and should be re-derived, not quoted,
+by the next cycle that touches it).
+
+- **Status:** complete (5 of 6 kinds; `deity` escalated per `decisions.md §15`, not closed)
+- **Kanban:** row 15 appended (this entry); rows 11, 15 left `in-progress` per dispatch instruction.
+- Receipt: `artifacts/gate-3-closure-invariant/card15-simple-filename-kinds-ingest_cycle-1_cycle_receipt.md`.
+- **What remains:** `deity` (459 units) pending an operator PI ruling; 13 named citation mismatches
+  need a `v06_work_inventory.rs` corpus_key-derivation fix; the other twelve `no_record` kinds
+  (`class_feature`/`ability`/`race_trait`/`monster_ability`/`feat`/`spell`/`companion`/`equipment`/
+  `equipment_modifier`/`class`/`monster`/`race`, 17,306 units combined) are out of this cycle's
+  assigned scope.
+- Commit: (recorded after push).
