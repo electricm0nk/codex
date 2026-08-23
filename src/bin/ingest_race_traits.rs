@@ -372,6 +372,25 @@ const SUBRACE_TYPE_SUFFIX: &str = " Subrace";
 /// PCGen's suffix marking a row an *update* to a record declared elsewhere.
 const MOD_MARKER: &str = ".MOD";
 
+/// SD-32 `decisions.md §25` -- the "Adopted Race" / "Adoptive Parentage"
+/// **selector** row's exact `TYPE:` value (no dot-components, unlike every
+/// other shape this file parses): `oread_abilities_race.lst:30`,
+/// `dhampir_abilities_race.lst:37`, ... . Distinct from
+/// [`ADOPTIVE_PARENTAGE_CATEGORY`] (a DIFFERENT PCGen shape, ARG's flat
+/// `ABILITY:...AUTOMATIC|<key>|<key>` grant rows, already ingested) -- this
+/// row instead carries a `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X>
+/// Race Trait` pool reference, resolved against the new `Kind::Trait`
+/// population by [`codex::rules_core::trait_pool`], not against this
+/// corpus's own already-loaded standard traits.
+const ADOPTED_RACE_SELECTOR_TYPE: &str = "AdoptiveRace";
+
+/// The literal `CHOOSE:` prefix an Adopted-Race selector row's pool token
+/// carries; the pool's `<X> Race Trait` suffix follows verbatim (`X` is the
+/// adopted race's own display name, matching `race_key`/`name` on this same
+/// row -- PCGen names the option after the race it adopts, the same
+/// convention [`ADOPTIVE_PARENTAGE_CATEGORY`]'s shape uses).
+const ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX: &str = "ABILITYSELECTION|Special Ability|TYPE=";
+
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);
@@ -514,6 +533,17 @@ struct TraitRow {
     /// component rather than `TYPE:<Race> Racial Trait` -- PCGen's *heritage
     /// selector*. See [`subrace_grants`] for the whole shape.
     is_subrace_selector: bool,
+    /// SD-32 `decisions.md §25` -- true for the "Adopted Race" selector shape
+    /// (see [`ADOPTED_RACE_SELECTOR_TYPE`]'s doc comment). Not persisted to
+    /// `RaceTraitCacheData` (no schema change needed: the `CHOOSE:` pool
+    /// token already ships in `raw_tokens`, and `race_resolver`/
+    /// `trait_pool` re-derive this same test from those bytes at read time)
+    /// -- used only in-process, to admit the row past [`IN_SCOPE_RACES`]'s
+    /// filter even when the adopted race (Dhampir, Skinwalker, Rougarou)
+    /// has no chassis record of its own in this project: the selector's
+    /// pool is resolved against the separate `Kind::Trait` population, never
+    /// against `RaceCorpus::traits_for`, so no chassis is required.
+    is_adopted_race_choose_selector: bool,
     suppressed_by_flag: Option<String>,
     sets_replace_flags: Vec<String>,
     description: Option<String>,
@@ -1040,11 +1070,33 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
         && subrace_race.is_none()
         && parsed.iter().any(|f| f.key == "CATEGORY" && f.value.trim() == ADOPTIVE_PARENTAGE_CATEGORY);
 
+    // SD-32 `decisions.md §25` -- a fourth row shape: the "Adopted Race"
+    // selector (`decisions.md §25`'s escalation, `t2b_adoptive_parentage_census.py`'s
+    // `adopted_race_choose_selector`). No `TYPE:<Race> Racial Trait`/`Subrace`
+    // component (so `racial_trait_race`/`subrace_race` are both `None`) and
+    // its own `CATEGORY:` is plain `Special Ability`, not
+    // `ADOPTIVE_PARENTAGE_CATEGORY` -- distinguished instead by the exact,
+    // dot-free `TYPE:AdoptiveRace` plus a `CHOOSE:ABILITYSELECTION|Special
+    // Ability|TYPE=...` pool token. Checked after the Adoptive Parentage test
+    // so the two (both `TYPE:`-suffix-less) never contend on the same row --
+    // verified corpus-wide that no row carries both `CATEGORY:Adoptive
+    // Parentage` and `TYPE:AdoptiveRace`.
+    let is_adopted_race_choose_selector = racial_trait_race.is_none()
+        && subrace_race.is_none()
+        && !is_adoptive_parentage_option
+        && type_tokens.iter().any(|t| t == ADOPTED_RACE_SELECTOR_TYPE)
+        && parsed
+            .iter()
+            .any(|f| f.key == "CHOOSE" && f.value.trim_start().starts_with(ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX));
+
     let race_key = match racial_trait_race.or(subrace_race) {
         Some(race) => race,
         None if is_adoptive_parentage_option => name
             .clone()
             .unwrap_or_else(|| panic!("line {line_number}: Adoptive Parentage row has no display-name field")),
+        None if is_adopted_race_choose_selector => name.clone().unwrap_or_else(|| {
+            panic!("line {line_number}: Adopted Race selector row has no display-name field")
+        }),
         None => return None,
     };
 
@@ -1134,6 +1186,7 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
         type_tokens,
         is_racial_default,
         is_subrace_selector,
+        is_adopted_race_choose_selector,
         suppressed_by_flag,
         sets_replace_flags,
         description: rendered.text,
@@ -1254,7 +1307,15 @@ fn ingest_book(book: &BookSource) {
                 pi_dropped.push(format!("{lst_relative}:{} {}", row.line_number, row.key));
                 continue;
             }
-            if in_scope.contains(row.race_key.as_str()) {
+            // SD-32 `decisions.md §25`: an Adopted-Race selector's pool is
+            // resolved against the separate `Kind::Trait` population
+            // (`codex::rules_core::trait_pool`), never against this
+            // project's own `RaceCorpus::traits_for` -- so it needs no
+            // chassis record for the race it names, unlike every other row
+            // shape `IN_SCOPE_RACES` gates. Admitted here even for the three
+            // in-scope target races this project has not modelled a chassis
+            // for (Dhampir, Skinwalker, Rougarou).
+            if in_scope.contains(row.race_key.as_str()) || row.is_adopted_race_choose_selector {
                 rows.push(SourcedRow { row, lst_relative, sha256: sha256.clone() });
             } else {
                 *skipped.entry(row.race_key.clone()).or_default() += 1;
@@ -1734,6 +1795,71 @@ mod tests {
             "CATEGORY:Special Ability\t",
             "DESC:Not an Adoptive Parentage row.\t",
         );
+        assert!(parse_row(1, row).is_none());
+    }
+
+    // SD-32 `decisions.md §25` -- the exact real oracle row (verbatim, tab-split)
+    // that named this epic:
+    // `core_essentials/races/oread/oread_abilities_race.lst:30`.
+    const ADOPTED_RACE_SELECTOR_OREAD: &str = concat!(
+        "Oread\t",
+        "KEY:Adopted Race ~ Oread\t",
+        "CATEGORY:Special Ability\t",
+        "TYPE:AdoptiveRace\t\t",
+        "MULT:YES\t",
+        "CHOOSE:ABILITYSELECTION|Special Ability|TYPE=Oread Race Trait\t",
+        "ABILITY:Traits|VIRTUAL|%LIST",
+    );
+
+    #[test]
+    fn adopted_race_choose_selector_row_resolves_to_the_race_it_names() {
+        let row =
+            parse_row(30, ADOPTED_RACE_SELECTOR_OREAD).expect("Adopted Race selector row is not dropped");
+        assert_eq!(row.key, "Adopted Race ~ Oread", "explicit KEY: token wins over the display name");
+        assert_eq!(row.name, "Oread");
+        assert_eq!(row.race_key, "Oread", "resolves to the race it names -- same convention Adoptive Parentage uses");
+        assert!(row.is_adopted_race_choose_selector);
+        assert!(!row.is_racial_default);
+        assert!(!row.is_subrace_selector, "must never enter the heritage-selector/subrace reconciliation loop");
+        assert!(row.sets_replace_flags.is_empty());
+        assert_eq!(row.suppressed_by_flag, None);
+        assert_eq!(row.description, None, "the real oracle row carries no DESC: token at all");
+        let choose = row.raw_tokens.iter().find(|t| t.key == "CHOOSE").expect("CHOOSE token preserved verbatim");
+        assert_eq!(choose.value, "ABILITYSELECTION|Special Ability|TYPE=Oread Race Trait");
+    }
+
+    #[test]
+    fn adopted_race_choose_selector_admits_a_race_this_project_models_no_chassis_for() {
+        // Dhampir, Skinwalker and Rougarou carry this exact row shape
+        // (`decisions.md §25`'s 14-unit population) but have no `IN_SCOPE_RACES`
+        // chassis entry -- the selector's pool resolves against the separate
+        // `Kind::Trait` population, never `RaceCorpus::traits_for`, so it needs
+        // none. `ingest_book`'s scope filter (`in_scope.contains(...) ||
+        // row.is_adopted_race_choose_selector`) is what admits it; this proves
+        // the row itself parses for a name `IN_SCOPE_RACES` does not contain.
+        let row = concat!(
+            "Dhampir\t",
+            "KEY:Adopted Race ~ Dhampir\t",
+            "CATEGORY:Special Ability\t",
+            "TYPE:AdoptiveRace\t\t",
+            "MULT:YES\t",
+            "CHOOSE:ABILITYSELECTION|Special Ability|TYPE=Dhampir Race Trait\t",
+            "ABILITY:Traits|VIRTUAL|%LIST",
+        );
+        assert!(!IN_SCOPE_RACES.contains(&"Dhampir"));
+        let parsed = parse_row(37, row).expect("Adopted Race selector row is not dropped");
+        assert_eq!(parsed.race_key, "Dhampir");
+        assert!(parsed.is_adopted_race_choose_selector);
+    }
+
+    #[test]
+    fn a_type_adoptiverace_row_with_no_choose_token_is_not_the_selector_shape() {
+        // Guard against a false positive: `TYPE:AdoptiveRace` alone, without
+        // the `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=` pool token, must
+        // not be mistaken for the selector shape (and, carrying no `TYPE:<Race>
+        // Racial Trait`/`Subrace`/Adoptive-Parentage-category signal either,
+        // is correctly dropped).
+        let row = concat!("Oread\t", "CATEGORY:Special Ability\t", "TYPE:AdoptiveRace\t\t", "MULT:YES",);
         assert!(parse_row(1, row).is_none());
     }
 

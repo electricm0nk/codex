@@ -231,6 +231,24 @@ enum Kind {
     /// not re-derived. See `scripts/census_independent.py`'s
     /// `_ABILITY_CONTENT_RE` for the exact, shared field list.
     Ability,
+    /// SD-32 `decisions.md §25` (operator: *"In. We do not defer - we
+    /// complete."*) -- PF1e's chargen **Trait** mechanic, never modelled in
+    /// this corpus before this cycle (`find data/corpus -type d -name
+    /// trait` returned zero directories). A bare (non-`_race`,
+    /// non-`_class`, non-`_companion`/`_familiar`) `*abilities*.lst` row
+    /// whose `TYPE:` value is exactly `Trait` or starts with `Trait.`
+    /// (`TYPE:Trait.RaceTrait.Oread Race Trait`, `TYPE:Trait.Combat`, ...).
+    /// Checked in [`refine_kind`]'s `Kind::Ability` arm BEFORE the
+    /// `CATEGORY:FEAT` redirect -- a real Trait row's own `CATEGORY:` is
+    /// always `Special Ability`, never `FEAT`, so the two checks never
+    /// actually contend, but ordering it first is the safe direction.
+    /// 566 units across 6 already-registered books at the pinned oracle SHA
+    /// (`advanced_players_guide` 90, `core_rulebook` 1, `ultimate_campaign`
+    /// 231, `ultimate_psionics` 32, `inner_sea_gods` 116, `inner_sea_races`
+    /// 96) -- see `scripts/census_independent.py::_row_is_pf1_trait`'s doc
+    /// comment for the corpus proof, kept byte-identical between the two
+    /// walkers per `decisions.md §12b`.
+    Trait,
 }
 
 impl Kind {
@@ -254,6 +272,7 @@ impl Kind {
             Kind::Domain => "domain",
             Kind::Language => "language",
             Kind::Ability => "ability",
+            Kind::Trait => "trait",
         }
     }
 
@@ -278,6 +297,7 @@ impl Kind {
         Kind::Domain,
         Kind::Language,
         Kind::Ability,
+        Kind::Trait,
     ];
 }
 
@@ -507,6 +527,48 @@ mod kind_ability_tests {
     #[test]
     fn non_feat_ability_row_stays_ability_under_refine_kind() {
         let fields = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Ability);
+    }
+
+    /// SD-32 `decisions.md §25`: the exact real-corpus row
+    /// (`inner_sea_races/isr_abilities.lst:78`) the epic's escalation named
+    /// as the worked example -- a `TYPE:Trait.RaceTrait.Oread Race Trait`
+    /// row must redirect to `Kind::Trait`, not stay `Kind::Ability`.
+    #[test]
+    fn type_trait_dotted_row_redirects_to_trait() {
+        let fields = [
+            "Loner of the Rocks",
+            "KEY:Trait ~ Loner of the Rocks",
+            "CATEGORY:Special Ability",
+            "TYPE:Trait.RaceTrait.Oread Race Trait",
+            "DESC:You gain a +1 trait bonus on Heal and Survival checks.",
+            "BONUS:SKILL|Heal,Survival|1|TYPE=Trait",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Trait);
+    }
+
+    /// A bare `TYPE:Trait` (no dot-suffix, real `ultimate_campaign`
+    /// `uca_abilities_traits.lst` shape) also redirects.
+    #[test]
+    fn type_trait_bare_row_redirects_to_trait() {
+        let fields = ["Reactionary", "CATEGORY:Special Ability", "TYPE:Trait", "DESC:+2 on initiative checks."];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Trait);
+    }
+
+    /// Guard against a false-positive substring match: a row whose `TYPE:`
+    /// merely CONTAINS "Trait" as a later dot-segment (not the first) must
+    /// NOT redirect -- only a `TYPE:` value equal to `Trait` or starting
+    /// with `Trait.` qualifies.
+    #[test]
+    fn type_value_naming_trait_in_a_later_segment_does_not_redirect() {
+        let fields = [
+            "Heart of the Fields",
+            "TYPE:RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
+            "DESC:Humans born in rural areas are used to hard labor.",
+        ];
         let empty = BTreeSet::new();
         assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Ability);
     }
@@ -2054,7 +2116,13 @@ fn refine_kind(
         // `CATEGORY:Special Ability` "Trait ~ Magical Lineage" row in the
         // same file that grants it). Ported here so the two walkers agree.
         Kind::Ability => {
-            if token_value(fields, "CATEGORY:").is_some_and(|c| c.eq_ignore_ascii_case("FEAT")) {
+            // SD-32 `decisions.md §25`: PF1e chargen Trait, checked before
+            // the `CATEGORY:FEAT` redirect below -- see `Kind::Trait`'s doc
+            // comment for why the two never actually contend.
+            let type_value = token_value(fields, "TYPE:").unwrap_or("");
+            if type_value == "Trait" || type_value.starts_with("Trait.") {
+                Kind::Trait
+            } else if token_value(fields, "CATEGORY:").is_some_and(|c| c.eq_ignore_ascii_case("FEAT")) {
                 Kind::Feat
             } else {
                 Kind::Ability
@@ -9211,6 +9279,7 @@ fn classify(
         Kind::Domain => not_ingested("domain_content_has_no_engine_table"),
         Kind::Language => not_ingested("language_content_has_no_engine_table"),
         Kind::Ability => not_ingested("ability_content_has_no_engine_table"),
+        Kind::Trait => not_ingested("trait_content_has_no_engine_table"),
     }
 }
 

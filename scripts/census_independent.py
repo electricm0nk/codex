@@ -201,6 +201,13 @@ ADDED_KINDS = (
     # / `sum(v for k,v in kind_unenumerable.items() if
     # k.startswith('ability_category:'))`.
     "ability",
+    # SD-32 `decisions.md §25` (operator: "In. We do not defer - we
+    # complete."): the PF1e chargen Trait mechanic -- a bare `*abilities*.lst`
+    # row whose `TYPE:` is `Trait` or starts with `Trait.`, checked BEFORE
+    # the `ability`/`feat` per-row disposition above (`_row_is_pf1_trait`).
+    # 566 units across 6 already-registered books at the pinned oracle SHA;
+    # see that function's own doc comment for the corpus proof.
+    "trait",
 )
 
 ALL_KINDS = TEN_KINDS + ADDED_KINDS
@@ -523,6 +530,35 @@ def _key_field(line: str) -> Optional[str]:
     return None
 
 
+def _row_type_tag(line: str) -> Optional[str]:
+    for field_ in line.split("\t"):
+        f = field_.strip()
+        if f.upper().startswith("TYPE:"):
+            return f.split(":", 1)[1].strip()
+    return None
+
+
+def _row_is_pf1_trait(line: str) -> bool:
+    """SD-32 `decisions.md §25` (`kind: trait` epic): a bare `*abilities*.lst`
+    row whose `TYPE:` value is exactly `Trait` or starts with `Trait.` is a
+    PF1e chargen Trait record (`TYPE:Trait.RaceTrait.Oread Race Trait`,
+    `TYPE:Trait.Combat`, ...) -- structurally identical to the `Kind::Ability`
+    bare-row population but a genuinely distinct game mechanic (a
+    character-creation Trait, picked at level 1, is not a racial special
+    ability). Ported byte-identical to `src/bin/v06_work_inventory.rs`'s
+    `refine_kind`'s `Kind::Ability` arm so the two walkers agree
+    (`decisions.md §12b`). Tested corpus-wide against the pinned oracle: 566
+    hits across 6 already-registered books (`advanced_players_guide`,
+    `core_rulebook`, `ultimate_campaign`, `ultimate_psionics`,
+    `inner_sea_gods`, `inner_sea_races`), 0 false positives against any
+    other already-tracked kind's own TYPE: vocabulary (none of which use a
+    bare or dot-led `Trait` first segment)."""
+    t = _row_type_tag(line)
+    if t is None:
+        return False
+    return t == "Trait" or t.startswith("Trait.")
+
+
 # SD-32 card 15-ability (`decisions.md §12b`): ported unchanged from
 # `artifacts/gate-0-census-closure/15-card-15-ability-category-classify.py`
 # (the memo lane's own adjudicated per-row classifier for the bare
@@ -653,7 +689,16 @@ def count_objects(pathfinder_root: str, in_scope: List[BookDir]) -> dict:
                 for identity, raw_line in _parse_lst_rows(full):
                     if bucket == "row_dependent":
                         cat = _row_category_tag(raw_line)
-                        if cat and cat.upper() == "FEAT":
+                        if _row_is_pf1_trait(raw_line):
+                            # SD-32 `decisions.md §25`: PF1e chargen Trait,
+                            # checked before the FEAT redirect below -- a
+                            # Trait row's own `CATEGORY:` is always `Special
+                            # Ability`, never `FEAT`, so this ordering never
+                            # actually contends with it; stated explicitly
+                            # so a future CATEGORY vocabulary change cannot
+                            # silently invert the priority.
+                            row_bucket, row_key = "kind", "trait"
+                        elif cat and cat.upper() == "FEAT":
                             row_bucket, row_key = "kind", "feat"
                         else:
                             # SD-32 card 15-ability (`decisions.md §12b`):

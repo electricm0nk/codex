@@ -320,6 +320,43 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
             self.assertEqual(counts["counts_by_kind"].get("skill"), 1)
             self.assertNotIn("unclassified:cr_skills.lst", counts["kind_unenumerable"])
 
+    def test_type_trait_row_in_a_bare_abilities_file_counts_as_kind_trait(self):
+        # SD-32 `decisions.md §25` (the `kind: trait` epic) -- the exact real
+        # oracle row (verbatim, tab-split) that named this epic:
+        # `inner_sea_races/isr_abilities.lst:78`.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/campaign_setting/inner_sea_races"
+            _touch(os.path.join(root, book, "inner_sea_races.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "isr_abilities.lst"),
+                "Loner of the Rocks\tKEY:Trait ~ Loner of the Rocks\tCATEGORY:Special Ability\t"
+                "TYPE:Trait.RaceTrait.Oread Race Trait\tDESC:Gain a +1 trait bonus.\t"
+                "BONUS:SKILL|Heal,Survival|1|TYPE=Trait\n",
+            )
+            bd = CI.BookDir(book, "inner_sea_races", "paizo/campaign_setting")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["counts_by_kind"].get("trait"), 1)
+            self.assertNotIn("ability", counts["counts_by_kind"])
+
+    def test_type_trait_row_is_checked_before_the_feat_redirect(self):
+        # A row whose `TYPE:` names a bare `Trait` (no dot-suffix, real
+        # `ultimate_campaign/uca_abilities_traits.lst` shape) also counts as
+        # `trait`, never `feat`, even carrying `CATEGORY:FEAT` -- proves the
+        # ordering `_row_is_pf1_trait` is checked BEFORE the FEAT redirect.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/ultimate_campaign"
+            _touch(os.path.join(root, book, "ultimate_campaign.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "uca_abilities_traits.lst"),
+                "Reactionary\tCATEGORY:FEAT\tTYPE:Trait\tDESC:+2 on initiative.\n",
+            )
+            bd = CI.BookDir(book, "ultimate_campaign", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["counts_by_kind"].get("trait"), 1)
+            self.assertNotIn("feat", counts["counts_by_kind"])
+
     def test_simple_added_kinds_count_as_kinds_not_kind_unenumerable(self):
         # SD-32 `decisions.md §17`: `template`/`deity`/`power`/`domain`/
         # `language` moved from `kind_unenumerable` to tracked kinds

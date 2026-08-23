@@ -6425,4 +6425,70 @@ territory, honoured throughout.
 - **What remains:** none opened by this cycle — `bestiary_4`'s own remediation, if the sibling lane
   ever needs it, and an operator ruling on how a rename-less script should handle a future
   `name_pi_newly_detected` hit (not observed this cycle), both named in the receipt.
+
+## Cycle epic-6-kind-trait/1 — `decisions.md §25`, the `kind: trait` epic (row 16, 2026-08-23)
+
+**Operator ruling this epic answers, verbatim:** *"In. We do not defer - we complete."* Card 16 added
+(`epic-6-kind-trait`, `in-progress`); rows 11/15 untouched per this run's dispatch brief.
+
+Re-derived the population before touching anything (`decisions.md §17a`): `find data/corpus -type d
+-name trait` still zero directories; `python3 scripts/t2b_adoptive_parentage_census.py` still 14
+`adopted_race_choose_selector` units, unchanged from the prior cycle's own figure.
+
+**Landed, tested, real:**
+1. `Kind::Trait` in `src/bin/v06_work_inventory.rs` + `scripts/census_independent.py`'s
+   `_row_is_pf1_trait` (byte-identical rule, `decisions.md §12b`) — a bare `*abilities*.lst` row whose
+   `TYPE:` is `Trait`/`Trait.*`. Re-derived corpus-wide: **566 units** across 6 already-registered
+   books (`advanced_players_guide` 90, `core_rulebook` 1, `ultimate_campaign` 231, `ultimate_psionics`
+   32, `inner_sea_gods` 116, `inner_sea_races` 96). `inner_sea_races` alone carries real content for
+   **13 of the 14** target selector races (Rougarou stays proven-empty, unchanged from the prior
+   cycle). 6 new fixture tests total (4 Rust + 2 Python), both RED→GREEN proved. `cargo test --locked
+   --bin v06_work_inventory` 353→357 passed; `python3 -m unittest scripts.tests.test_census_independent`
+   26→28 passed.
+2. `src/bin/ingest_race_traits.rs::parse_row` gains the 4th row shape the prior cycle's own receipt
+   named as un-ingestable: the "Adopted Race" selector itself (`TYPE:AdoptiveRace`,
+   `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X> Race Trait`), admitted past `IN_SCOPE_RACES` even
+   for the 3 target races this project models no chassis for (Dhampir, Skinwalker, Rougarou) — the
+   selector's pool resolves against `Kind::Trait`, never `RaceCorpus::traits_for`, so no chassis is
+   needed. 3 new fixture tests, RED→GREEN proved live. `cargo test --locked --bin ingest_race_traits`
+   16→19 passed.
+3. Ingest-tool choice per `decisions.md §17` ("extend an existing generic path"): read all three
+   candidates (`ingest_simple_filename_kinds.py`'s table is filename-only and cannot express a
+   per-row-mixed shape; `ingest_ability.py` is hard-coded to `kind: ability`; `ingest_generic_kind.py`
+   is already `--kind`-parameterized and already produces the exact generic record shape this epic's
+   schema ask names — **the fit**). `python3 scripts/ingest_generic_kind.py --kind trait --ledger ...`
+   is the next command, not yet run.
+
+**Blocked, escalated by coordinate, not worked around:**
+- `docs/work-inventory.json` regen: `cargo run --bin corpus_literal_sweep` reports `clean:false` — one
+  pre-existing, unrelated finding at `data/corpus/inner_sea_magic/ability/hidden_wand.json` (DESC
+  redacted in `raw_tokens` but `pi_field` only lists `raw_tokens`; the top-level `data.description`
+  field is itself un-redacted — suspected PI-consistency defect, content not judged or transcribed
+  here per `decisions.md §15`). An empty sweep-report `verified` set means the regen would genuinely
+  strip `literal-verified`/`fixture-verified` status from all 8,247 currently-stamped units (confirmed:
+  6,506 + 1,741 = 8,247, matching the refusal message exactly) — real loss, not a false positive, so
+  `--allow-stamp-loss` was correctly not used. `docs/work-inventory.json` itself is untouched. Logged:
+  `scripts/retro.py incident 1787503285569-t9-onboarding-1d4c46`
+  (`recurrence-key: corpus-literal-sweep-pi-exemption-gap`).
+- `bestiary_2`/`bestiary_3`/`bestiary_5`/`bestiary_6` are not in `ingest_race_traits.rs`'s
+  `BOOK_SOURCES`, and their `_abilities_race.lst` files physically live under
+  `core_essentials/races/<race>/` — directories `ingest_races.rs` already writes each race's own
+  chassis into. Adding a `BookSource` blind risks a cross-tool write collision (the same incident class
+  card 1's own correction found for a different generator pair). Deferred to a follow-on cycle that
+  reads that tool's file-ownership boundary first, named as the next-cycle's first item.
+
+**Closure/reclassification/reachability (`decisions.md §16`), stated separately:** 0 of 14 closed by
+real ingest; 0 reclassified; reachability **0**. No stub written — no picker/reach-gate claims coverage
+that does not exist, and the kanban card stays `in-progress`.
+
+- **Status:** in-progress, real progress banked, 2 blockers named by coordinate (not deferred as
+  scope — both are pre-existing conditions this cycle discovered, escalated per `§15`/`AGENTS.md`
+  Blocker Discipline, not scope this cycle chose not to do).
+- **Kanban:** row 16 added, `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-6-kind-trait_cycle-1_cycle_receipt.md`.
+- **What remains:** (1) resolve the `hidden_wand.json` finding so the regen is safe; (2) read
+  `ingest_races.rs`'s ownership boundary, then add the 4 `BookSource` rows; (3) run
+  `ingest_generic_kind.py --kind trait`; (4) build `trait_pool` resolver + `race_trait_picker.rs` DTO
+  + `reach_gate.rs` family (all three have a working precedent already in this codebase —
+  `adoptive_parentage_options`/`AdoptiveParentageOptionDto`/`race_traits_reach`'s own loop).
 - Commit: (this cycle's commit — see push output).
