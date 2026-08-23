@@ -3749,3 +3749,47 @@ this sign-off is read more broadly than T9's own four amendments + two ruled que
   into the collision fix on assumption.
 - Receipt: `artifacts/gate-0-census-closure/15-duplicate-identity_cycle_receipt.md`. Fix +
   correction memo: `artifacts/gate-0-census-closure/15-card-15-duplicate-identity-memo.md`.
+
+## Gate 3 `no_record` repin 4 (2026-08-23, cards 5 + 9)
+
+`scripts/verify.sh`'s `shape-coverage-standing-gate` went RED a third time on top of repin 3's
+committed baseline (population 28,490 / no_record 13,968). **Re-derived per `decisions.md` §17a
+rather than trusted from the dispatch brief's own mid-wave table** (which quoted 36,015/21,497 —
+close, not exact, honestly labeled "mid-wave"): fresh `python3 scripts/shape_ledger.py` run against
+the settled branch tip returns **population 36,028, no_record 21,521** (matched 4,802, no_formula
+9,705), byte-identical to the `ledger.json` already regenerated at branch tip by the sibling
+`004bbe8c2` commit (independently confirmed, not assumed).
+
+**Growth is proven real enumeration, per kind:** `Kind::Ability` (`5b2c93270`) arrives 100%
+no_record (4,824/4,824, same structural shape every prior new-kind landing has shown) plus 112
+no_record `feat` units from the same classifier pass; the `is_internal_category` narrowing for
+`Kind::ClassFeature` (`45012f6a9`) surfaces 2,617 more no_record rows, reconciling exactly against
+the raw `by_kind.class_feature` delta (18,056−15,439); every other kind is byte-identical to repin 3.
+Zero common-id regressions among the 7,558 arriving/20 departing ids.
+
+**`departed_covered_count: 15`** — the T12 roster mechanism (`9838c344d`) wired 15 `class_feature`
+units from `no_formula_tokens` to `text-complete`, leaving the not-done population; re-derived
+id-by-id against the repin-3-committed ledger (not assumed), matches T12's own stated count exactly.
+The remaining 5 departed ids are id-churn from the CATEGORY:-based identity fix (`391993eee`),
+netting to zero by construction. `test_departed_covered_count_does_not_excuse_a_real_drain` (repin
+3's anti-abuse guard) re-verified GREEN under this repin.
+
+**Repinned** `NO_RECORD_BUDGET_COUNT`/`NO_RECORD_BUDGET_POPULATION` 13968/28490 → 21521/36028, new
+`no_record_budget_provenance.jsonl` repin-4 entry naming evidence commit `004bbe8c2` and
+`departed_covered_count: 15`. Tamper-proof re-verified (hand-editing the constant away from the
+provenance log's latest entry fails `test_constants_match_latest_provenance_entry` and
+`test_unprovenanced_run_still_measured_against_committed_baseline`; reverted, green again).
+Regenerated `family-vocabulary.{md,json}`; corrected `acceptance-and-verification.md`'s AT-32-G1-004
+expected-counts comment; kanban.md rows 5/9 got a new prepended addendum each.
+
+**Real full-population gate now PASSES:** `scripts/verify.sh --only shape-coverage-standing-gate` →
+PASS (population=36028 unclassified=0 no_record=21521). The orchestrator's own 80-fabricated-object
+reproduction still fails (`no_record_budget_exceeded: True`) after the repin — the gate still
+catches a real uncovered object. 8/8 `BudgetProvenanceTest`, 49/49
+`test_shape_coverage_standing_gate`+`test_shape_ledger` overall. `cargo test --locked --lib`:
+2409 passed, 0 failed, 13 ignored.
+
+- **Status:** complete (cards 5, 9).
+- **Kanban:** rows 5, 9 set to `complete`; rows 11, 15 left `in-progress` (per dispatch instruction).
+- Receipt: `artifacts/gate-3-closure-invariant/005_budget_repair_cycle-3_cycle_receipt.md`.
+- Commit: `64badfecf`.
