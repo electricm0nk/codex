@@ -2928,3 +2928,61 @@ the dispatch brief).
   PCGen oracle slot (bootstrapped fresh this cycle, confirmed on-pin before trusting any figure).
 - **Memo:** `artifacts/gate-3-closure-invariant/t9-pi-review-companion-monsterability.md`.
 - **`df -h /` at end of cycle:** 664G available, 32% used.
+
+## T9 PI review — operator sign-off package (2026-08-23, `decisions.md §18` consolidation)
+
+**Actor:** `t9-pi-signoff`. **Scope:** read-only consolidation of the three per-record review
+lanes above (spell; feat+equipment; companion+monster_ability) into a single operator-actionable
+document. Transcribes nothing, ingests nothing, changes no corpus data, does not amend
+`docs/governance/ogl-pi-blacklist.md` (stays `DRAFT`), does not touch kanban row 11 (stays
+`in-progress`).
+
+**What I did, not just what I trusted:** re-fetched the oracle fresh to this worktree's
+repo-local slot (empty on a fresh checkout, `PCGEN_ORACLE_SHA
+7f818006e371188e5717fd18d74d18a420747fc6` confirmed), rebuilt `v06_work_inventory`, and re-ran all
+four of the lanes' own committed scripts myself (`sd32_t9_census.py`, `sd32_t9_pi_exposure_audit.py`,
+`sd32_t9_pi_review_spell.py`, `sd32_t9_pi_review_feat_equipment.py`,
+`sd32_t9_pi_review_companion_monsterability.py`) rather than taking any lane's summary at face
+value. Every lane's headline figures reproduced exactly. **One arithmetic correction filed**
+against `t9-pi-review-feat-equipment.md §6`'s own summary table: its stated equipment `clear`
+figure (`141 − 5 + 4 = 140`) omits subtracting `Mantis Blade`'s move to `still_undecidable`; the
+correct figure is 139 (`docs/retro/events/t9-pi-signoff.jsonl`, verified by
+`222 total − 82 blocked − 1 still_undecidable = 139`). Does not change any PI verdict.
+
+**Deliverable:** `artifacts/gate-3-closure-invariant/t9-pi-signoff-package.md` — the single
+document per the dispatch brief. Contains: (1) the clear-bucket re-check result up top — the
+normalized case-fold/OCR scan found **zero** new hits across all six kinds and 1,140 rechecked
+clear units, but a *different* mechanism (`.COPY=`/`.MOD` base-item inheritance tracing) found
+**5 real misses** (all equipment, `adventurers_guide`, all `.COPY=` of already-`NAMEISPI:YES`
+`Hellknight`/`Gray Maiden` bases) — named record by record; (2) the final disposition table per
+kind and per book, stated against the audit's original 261/1,107/1,344 at the old 2,712
+population and this review's 266/1,988/1,319 at the re-derived 3,573 population, every figure
+carrying its re-derive command; (3) all four proposed `ogl-pi-blacklist.md` amendments (new §2.3
+entries for `companion`/`monster_ability`, the normalization rule, the `.COPY=`/`.MOD`
+inheritance rule, and two undecided term-list-addition candidates) marked **PROPOSED — NOT
+APPLIED**; (4) the 1,319-unit still-undecidable set broken into four named reasons, each with the
+specific question the operator must answer — largest is `monster_ability`'s embedded-creature-name
+problem (954 units), which also surfaced a genuine data-quality inconsistency in the pinned oracle
+itself (three `bestiary_4` `Star-Spawn of Cthulhu` `monster_ability` rows carry no PI declaration
+while this corpus's own `spell` kind already declares "Summon Monster IX (Cthulhu)"
+`NAMEISPI:YES`); (5) what unblocks on sign-off — 1,988 units, 11 of 29 books fully resolved
+(816 units, including `mythic_adventures`'s 362 and `occult_adventures`'s 330); (6) one
+recommendation at the top: sign off with the four amendments, treat `blocked` as excluded and
+`clear` as immediately transcribable, and rule on the `monster_ability` creature-name question
+next since it is the single largest remaining gate.
+
+**Lane cross-check performed, no unresolved disagreements found:** all three lanes' population
+re-derivations agree; both lanes that addressed `.COPY=`/`.MOD` inheritance independently proposed
+the same rule; all three lanes' normalization scanners independently hit and fixed the same
+`Nex`/`next` word-boundary false positive. No record was reviewed by two lanes under conflicting
+verdicts (each lane owned a disjoint kind set).
+
+**Files touched:** `t9-pi-signoff-package.md` (new), this progress.md entry,
+`docs/retro/events/t9-pi-signoff.jsonl` (1 correction). `ogl-pi-blacklist.md` untouched (stays
+`DRAFT`). No corpus data touched. Kanban row 11 untouched.
+
+- **Environment:** `RETRO_ACTOR=t9-pi-signoff`,
+  `CARGO_TARGET_DIR=/home/ubuntu/.cache/codex-targets/sd32-t9-pi-signoff`, repo-local PCGen oracle
+  slot (bootstrapped fresh this cycle from empty, confirmed on-pin
+  `7f818006e371188e5717fd18d74d18a420747fc6` before trusting any figure).
+- **Deliverable:** `artifacts/gate-3-closure-invariant/t9-pi-signoff-package.md`.
