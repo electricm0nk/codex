@@ -106,8 +106,13 @@ python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
 test "$(jq -r '.unclassified_count' artifacts/gate-1-shape-closure/ledger.json)" = "0"
 
 # AT-32-G1-004: the join-status split, not unclassified_count alone
-# (decisions.md §14b) -- expect matched=4801 no_formula_tokens=9694
-# no_record=10419 at the pinned corpus SHA.
+# (decisions.md §14b) -- expect matched=4802 no_formula_tokens=9723
+# no_record=10530 over population 25055 at the pinned corpus SHA (moved
+# from 4801/9694/10419 over 24914 when card 15 landed Kind::Skill, 149
+# real units, all no_record -- decisions.md §12b's predicted shape, see
+# no_record_budget_provenance.jsonl repin 2; re-derive with the command
+# below, which always reflects the live population rather than a frozen
+# figure).
 jq -r '.join_status_counts' artifacts/gate-1-shape-closure/ledger.json
 
 # Closed-on-empty proof
@@ -261,12 +266,26 @@ patching `shape_ledger.build_ledger` or any other code under test to fabricate i
 (`decisions.md` §1a/§14a, finding of record: the prior version of this criterion was accepted on a
 `mock.patch`-based proof that could not occur for any real object — 80 fabricated units returned
 `exit 0, PASS`). The real, organically-reachable invariant is `join_status == "no_record"`: a unit
-whose join finds no corpus record is precisely "an object no shape covers." Because 10,419 of the
-current 24,914-unit population are already `no_record` and cannot be closed to zero within this
-cycle, the gate enforces a **committed, explicitly-shrinking budget** on `no_record`'s share of the
+whose join finds no corpus record is precisely "an object no shape covers." Because 10,530 of the
+current 25,055-unit population are already `no_record` and cannot be closed to zero within this
+cycle, the gate enforces a **committed, evidence-gated budget** on `no_record`'s share of the
 population (`NO_RECORD_BUDGET_COUNT`/`NO_RECORD_BUDGET_POPULATION` in
-`scripts/shape_coverage_standing_gate.py`) rather than demanding zero outright; the budget only
-ever tightens as future work closes real `no_record` units, never loosens to admit a regression.
+`scripts/shape_coverage_standing_gate.py`) rather than demanding zero outright.
+
+The budget is not a pure shrink-only ratchet: card 15 (`decisions.md` §12b) must enumerate ~9,000
+real objects into 8 brand-new kinds the corpus ingest pipeline does not reach yet, and every one of
+them is organically `no_record` on landing through no defect of its own — a budget that could only
+shrink would go redder with every unit of that mandated work, "a gate pointed at the wrong thing"
+rather than a working one. Instead the two constants move only together with a matching, append-only
+entry in `no_record_budget_provenance.jsonl`, each naming the real git commit that landed the
+population growth and the reason it is legitimate enumeration rather than drift.
+`test_shape_coverage_standing_gate.py`'s `BudgetProvenanceTest` mechanically enforces: the constants
+match the log's latest entry; population strictly increases entry-to-entry (no repin without real
+growth); a repin's `no_record` delta never exceeds its population delta (the budget cannot widen
+faster than content was added); and every `evidence_commit` is a real, reachable commit. A run with
+no matching provenance entry — including the orchestrator's 80-fabricated-object reproduction, which
+lands no commit and adds no log entry — is still measured against the last **committed** baseline
+and fails it.
 
 **AT-32-G3-002.** The gate fails closed on an empty predicate. A placeholder shape with zero units
 behind it cannot manufacture false coverage; a placeholder predicate with zero matches cannot

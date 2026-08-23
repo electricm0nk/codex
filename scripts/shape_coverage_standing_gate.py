@@ -56,20 +56,26 @@ join finds no corpus record at all is precisely "an object no shape
 covers" (AT-32-G3-001's own text), reachable through the real
 `classify_unit`/`build_corpus_index` path with no patching: point a real
 unit at a real-shaped but non-existent corpus location and the join
-organically fails. Because 10,419 of the current 24,914-unit population
+organically fails. Because 10,530 of the current 25,055-unit population
 are already `no_record` (a book-onboarding backlog this cycle does not
-close -- `decisions.md` §14c item 3), the gate cannot demand `no_record ==
-0` yet without being permanently red for a reason unrelated to a
-regression. Instead it enforces a **committed, explicitly-shrinking
-budget**: `no_record`'s *share* of the population may not exceed the
-pinned baseline share (`NO_RECORD_BUDGET_COUNT` /
-`NO_RECORD_BUDGET_POPULATION` below, re-derived from `decisions.md` §14b
-at the time this invariant was written). A run whose `no_record` share
-rises above that baseline -- whether from a regression in the join, a
-newly-added population with no corpus coverage, or the reproduction case
-below -- now fails the gate. A future cycle that closes real `no_record`
-units (card 11's T2b/T9 book-onboarding work) tightens the budget
-constants downward; nothing in this gate lets the budget rise.
+close -- `decisions.md` §14c item 3 -- plus, as of card 15's `Kind::Skill`
+landing, an entire new-kind population the corpus ingest pipeline does not
+reach yet, `decisions.md` §12b), the gate cannot demand `no_record == 0`
+yet without being permanently red for a reason unrelated to a regression.
+Instead it enforces a **committed, evidence-gated budget**: `no_record`'s
+*share* of the population may not exceed the pinned baseline share
+(`NO_RECORD_BUDGET_COUNT` / `NO_RECORD_BUDGET_POPULATION` below). This is
+not a pure shrink-only ratchet -- card 15 must enumerate ~9,000 more real
+objects into kinds with no corpus coverage yet, and a shrink-only budget
+would go redder with every unit of that mandated work. The two constants
+may move, but only together with a matching, git-verifiable entry in
+`no_record_budget_provenance.jsonl` naming the real commit that landed the
+growth and proving it is legitimate enumeration, not drift -- see that
+constant's own comment block below and `BudgetProvenanceTest` in
+`scripts/tests/test_shape_coverage_standing_gate.py` for the full
+mechanism. A run with no matching provenance entry -- including the
+reproduction case below -- is still measured against the last committed
+baseline and fails it.
 `scripts/tests/test_shape_coverage_standing_gate.py` proves this
 organically, by feeding real (if synthetic) units through the real
 `run_gate`/`build_ledger`/`classify_unit` path with an unreachable corpus
@@ -106,21 +112,96 @@ DEFAULT_INVENTORY = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
 DEFAULT_CORPUS_ROOT = os.path.join(REPO_ROOT, "data", "corpus")
 PIN_FILE = os.path.join(REPO_ROOT, "scripts", "pcgen-oracle-pin.env")
 
-# decisions.md §14a/§14b -- the committed, explicitly-shrinking no_record
-# budget. Re-derive: `python3 scripts/shape_ledger.py --inventory
-# docs/work-inventory.json --output /tmp/l.json && python3 -c "import
-# json,collections; r=json.load(open('/tmp/l.json'))['rows'];
-# print(collections.Counter(x['join_status'] for x in r))"` -> no_record
-# 10419, matched 4801, no_formula_tokens 9694, population 24914 (2026-08-22,
-# corpus SHA 7f818006e371188e5717fd18d74d18a420747fc6). A run's no_record
-# SHARE of its population may never exceed this baseline share -- compared
-# by integer cross-multiplication (no_record_count * BUDGET_POPULATION >
-# BUDGET_COUNT * population) to avoid float rounding at the boundary. This
-# number only ever moves DOWN, when a future cycle actually closes
-# no_record units (card 11's T2b/T9 book-onboarding backlog) -- never up to
-# accommodate a regression.
-NO_RECORD_BUDGET_COUNT = 10419
-NO_RECORD_BUDGET_POPULATION = 24914
+# decisions.md §14a/§14b/§12b -- the committed no_record budget. Re-derive:
+# `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+# --output /tmp/l.json && python3 -c "import json,collections;
+# r=json.load(open('/tmp/l.json'))['rows']; print(collections.Counter(x
+# ['join_status'] for x in r))"`.
+#
+# A run's no_record SHARE of its population may never exceed this baseline
+# share -- compared by integer cross-multiplication (no_record_count *
+# BUDGET_POPULATION > BUDGET_COUNT * population) to avoid float rounding at
+# the boundary. This is Gate 3's real, organically-reachable closure
+# invariant (decisions.md §14a): it catches a regression in the join, and
+# it catches a fabricated object pointing at a corpus location that was
+# never given a committed reason to exist there.
+#
+# It is NOT a "no_record must shrink every cycle" ratchet outright, because
+# card 15 (decisions.md §12b) must enumerate ~9,000 real, previously
+# name-only objects into 8 brand-new kinds the corpus ingest pipeline does
+# not reach yet -- every one of them lands as no_record on its first
+# cycle, through no defect of its own. A budget that could only shrink would
+# go redder with every unit of that mandated work and would be "a gate
+# pointed at the wrong thing" (SD-32 launch-readiness brief, 2026-08-22),
+# exactly what decisions.md §1a forbids from the other direction: not a
+# gate that cannot fail, but a gate that cannot ever be satisfied by real
+# progress.
+#
+# Instead, the two constants below are a **committed, evidence-gated
+# ratchet**: they may only move together with a matching, append-only
+# entry in `no_record_budget_provenance.jsonl` (loaded by
+# `read_budget_provenance()` below), each entry naming the real git commit
+# that landed the population growth and the reason it is legitimate
+# enumeration rather than drift. `test_shape_coverage_standing_gate.py`'s
+# `BudgetProvenanceTest` mechanically enforces: (1) the constants here
+# exactly match the LATEST provenance entry -- nobody can hand-edit these
+# two integers without a matching logged entry: the numbers here and the
+# log's tail must agree; (2) population strictly increases entry-to-entry
+# -- a repin without population growth is exactly "raising the budget to
+# whatever the current number is" and is refused; (3) each entry's
+# no_record delta never exceeds its population delta -- the budget cannot
+# widen faster than real content was added, only as fast; (4) each entry's
+# `evidence_commit` is a real, reachable commit in this repo's history.
+# This is what keeps card 15's mandated growth from being penalised while
+# refusing to let the budget become a rubber stamp: a run with no matching
+# provenance entry -- including the 80-fabricated-object reproduction,
+# which lands no commit and logs no entry -- is still measured against
+# the last COMMITTED baseline, and fails it.
+#
+# Current baseline (repin 2, 2026-08-23): no_record 10530, population
+# 25055, evidence commit `d904eceb6bda813f5a6d48a815a2b4df80d604bd` (card
+# 15's real-producer landing of `Kind::Skill`, 149 units, all no_record
+# because skill content has never been ingested into `data/corpus` under
+# any kind -- decisions.md §12b's own predicted shape, not a regression).
+# Repin 1 (2026-08-22, `965278926`) established the invariant itself at
+# no_record 10419 / population 24914. Future cycles landing the remaining
+# 7 new kinds (ability, template, deity, power, domain, language, kit)
+# must each add their own provenance entry and repin these constants in
+# the SAME commit that lands the kind -- see `no_record_budget_provenance
+# .jsonl` and `read_budget_provenance()` below.
+NO_RECORD_BUDGET_COUNT = 10530
+NO_RECORD_BUDGET_POPULATION = 25055
+
+BUDGET_PROVENANCE_PATH = os.path.join(
+    REPO_ROOT,
+    "docs",
+    "release",
+    "SD-32-compute-library-and-cause-closure",
+    "artifacts",
+    "gate-3-closure-invariant",
+    "no_record_budget_provenance.jsonl",
+)
+
+
+def read_budget_provenance(path: str = BUDGET_PROVENANCE_PATH) -> list[dict]:
+    """Loads the append-only no_record budget repin log. Each line is one
+    JSON object: {date, no_record_count, population, reason,
+    evidence_commit, corpus_sha}. Returns [] if the file is missing --
+    callers (the provenance test) must treat an empty log as a failure,
+    never as an implicit pass, since an un-provenanced budget is exactly
+    the "raise it to whatever the current number is" shape this mechanism
+    exists to refuse."""
+    entries: list[dict] = []
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                entries.append(json.loads(line))
+    except OSError:
+        return []
+    return entries
 
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 import shape_ledger as SL  # noqa: E402

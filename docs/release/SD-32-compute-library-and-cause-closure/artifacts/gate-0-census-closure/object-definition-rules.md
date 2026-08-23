@@ -55,14 +55,22 @@ matching `Kind::*` variant in `src/bin/v06_work_inventory.rs` so the walker and 
 |---|---|---:|---:|---|
 | `skill` | filename contains `skill` | 170 | 149 (21 `core_essentials/ce_skills.lst` rows correctly deleted by the pre-existing `decisions.md §16` core_essentials-residual guard — real population growth, not a predicate widening; see `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment, raised 117→138) | `card-15-enumerate` |
 
-**Known consequence, not remediated this cycle:** landing `skill`'s 149 real units raises Gate 3's
-(`scripts/shape_coverage_standing_gate.py`) `no_record` population share (10,419/24,914 → 10,560/
-25,055), because none of these rows have ever been ingested into `data/corpus` under any kind —
-`scripts/verify.sh --only shape-coverage-standing-gate` now FAILs
-(`no_record_budget_exceeded=True`). This is the gate correctly reporting real, previously-invisible
-uncovered content, not a defect in the enumeration — see the `card-15-enumerate` cycle receipt for
-the full analysis and the escalation this raises (card 15's enumerate mandate vs. Gate 3's
-"shrink-only" budget doctrine, `scripts/shape_coverage_standing_gate.py` lines ~68-72).
+**Consequence, remediated by the `gate3-budget-repair` cycle:** landing `skill`'s 149 real units
+raised Gate 3's (`scripts/shape_coverage_standing_gate.py`) `no_record` population share from
+10,419/24,914 to **10,530/25,055** (re-derive: `python3 scripts/shape_ledger.py --inventory
+docs/work-inventory.json --corpus-root data/corpus --output /tmp/l.json && python3 -c "import
+json,collections; r=json.load(open('/tmp/l.json'))['rows']; print(collections.Counter(x
+['join_status'] for x in r))"`) — the `card-15-enumerate` cycle receipt's own quoted figure of
+10,560 does not reproduce and is corrected by `scripts/retro.py correction`
+(`docs/retro/events/gate3-budget-repair.jsonl`). None of `skill`'s rows have ever been ingested
+into `data/corpus` under any kind, so this growth is the predicted, structural shape of every
+remaining new-kind landing (`decisions.md §12b`), not a regression. The budget mechanism was
+widened from a pure shrink-only ratchet to an **evidence-gated repin**: the constants moved to
+10530/25055 together with a matching, committed, git-verifiable entry in
+`no_record_budget_provenance.jsonl` (evidence commit `d904eceb6bda813f5a6d48a815a2b4df80d604bd`,
+this exact cycle) — see `scripts/shape_coverage_standing_gate.py`'s module docstring and
+`BudgetProvenanceTest` for the full mechanism and its anti-gaming tests.
+`scripts/verify.sh --only shape-coverage-standing-gate` now PASSes again on the real population.
 
 ## Kind-unenumerable — named and counted, not pretended to be zero (AT-32-G0-002)
 

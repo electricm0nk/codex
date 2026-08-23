@@ -1,5 +1,5 @@
 {
-  "population": 24914,
+  "population": 25055,
   "rows": [
     {
       "id": "advanced_class_guide:class:ex_warpriest",
@@ -55138,84 +55138,84 @@
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_languages",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_negative_energy_affinity",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_resist_level_drain",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_size",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_skilled",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_speed",
       "kind": "race_trait",
       "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
+      "family": "F1",
+      "join_status": "matched"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_spell_like_ability",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_type",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_undead_resistance",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_vision",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:dhampir_weakness",
       "kind": "race_trait",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:race_trait:displacement_constant",
@@ -58618,6 +58618,13 @@
       "book": "bestiary_2",
       "family": "F1",
       "join_status": "matched"
+    },
+    {
+      "id": "bestiary_2:skill:craft_rope",
+      "kind": "skill",
+      "book": "bestiary_2",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "bestiary_3:race_trait:adlet",
@@ -68761,6 +68768,13 @@
       "book": "bestiary_4",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "bestiary_4:skill:craft_wood",
+      "kind": "skill",
+      "book": "bestiary_4",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "bestiary_5:race:astomoi",
@@ -86550,6 +86564,776 @@
       "join_status": "no_formula_tokens"
     },
     {
+      "id": "core_rulebook:skill:acrobatics",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:appraise",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:bluff",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:climb",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_alchemy",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_armor",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_baskets",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_blacksmithing",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_books",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_bows",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_calligraphy",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_carpentry",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_cloth",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_clothing",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_gemcutting",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_glass",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_jewelry",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_leather",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_locks",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_paintings",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_pottery",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_sculptures",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_ships",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_shoes",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_stonemasonry",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_traps",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_untrained",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:craft_weapons",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:diplomacy",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:disable_device",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:disguise",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:escape_artist",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:fly",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:handle_animal",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:heal",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:intimidate",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_arcana",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_dungeoneering",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_engineering",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_geography",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_history",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_local",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_nature",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_nobility",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_planes",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_religion",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:knowledge_untrained",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:linguistics",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perception",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_act",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_comedy",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_dance",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_keyboard_instruments",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_oratory",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_percussion_instruments",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_sing",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_string_instruments",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_untrained",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:perform_wind_instruments",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_architect",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_baker",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_barrister",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_brewer",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_butcher",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_clerk",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_cook",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_courtesan",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_driver",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_engineer",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_farmer",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_fisherman",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_gambler",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_gardener",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_herbalist",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_innkeeper",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_librarian",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_merchant",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_midwife",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_miller",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_miner",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_porter",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_sailor",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_scribe",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_shepherd",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_soldier",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_soothsayer",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_stable_master",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_tanner",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_trapper",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_untrained",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:profession_woodcutter",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:ride",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:sense_motive",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:sleight_of_hand",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:spellcraft",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:stealth",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:survival",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:swim",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_charisma",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_dexterity",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_intelligence",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_strength",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_wisdom",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_disable_device",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_handle_animal",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_linguistics",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_sleight_of_hand",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_spellcraft",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:untrained_use_magic_device",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:skill:use_magic_device",
+      "kind": "skill",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "horror_adventures:class:undead_phantom",
       "kind": "class",
       "book": "horror_adventures",
@@ -91424,6 +92208,34 @@
     {
       "id": "inner_sea_bestiary:monster_ability:volnagur_shatter_silence",
       "kind": "monster_ability",
+      "book": "inner_sea_bestiary",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "inner_sea_bestiary:skill:perception_dim_light",
+      "kind": "skill",
+      "book": "inner_sea_bestiary",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "inner_sea_bestiary:skill:stealth_cane_fields",
+      "kind": "skill",
+      "book": "inner_sea_bestiary",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "inner_sea_bestiary:skill:stealth_dim_light",
+      "kind": "skill",
+      "book": "inner_sea_bestiary",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "inner_sea_bestiary:skill:stealth_jungle",
+      "kind": "skill",
       "book": "inner_sea_bestiary",
       "family": "F0",
       "join_status": "no_record"
@@ -99073,6 +99885,13 @@
       "join_status": "no_record"
     },
     {
+      "id": "inner_sea_magic:skill:craft_tattoos",
+      "kind": "skill",
+      "book": "inner_sea_magic",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "inner_sea_races:race_trait:aasimar_crusading_magic",
       "kind": "race_trait",
       "book": "inner_sea_races",
@@ -99112,7 +99931,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:changeling_blood_hag_crawling_skin",
@@ -99161,7 +99980,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:dhampir_default",
@@ -99266,7 +100085,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:human_tribalistic_languages",
@@ -99322,7 +100141,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:lashunta_insidious_telepathy",
@@ -99371,14 +100190,14 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:nagaji_serpent_affinity",
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:nosferatu_born_ability_scores",
@@ -99427,7 +100246,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:samsaran_mountaineer",
@@ -99455,14 +100274,14 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:suli_trusted_mediator",
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:svirfneblin_stalwart_watcher_output",
@@ -99539,7 +100358,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:vetala_born_ability_scores",
@@ -99574,7 +100393,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:vishkanya_toxic_vishkanya_venom",
@@ -99588,7 +100407,7 @@
       "kind": "race_trait",
       "book": "inner_sea_races",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_races:race_trait:witchborn_changeling_ability_scores",
@@ -100095,63 +100914,7 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "inner_sea_taverns:feat:drinking_buddy",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_taverns:feat:drunken_god_s_blessings",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:drunken_sing_along",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:extreme_mood_swings",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:hardy_liver",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:implacable",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:muddled_morals",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:read_the_room",
-      "kind": "feat",
-      "book": "inner_sea_taverns",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_taverns:feat:tavern_regular",
       "kind": "feat",
       "book": "inner_sea_taverns",
       "family": "F0",
@@ -103270,42 +104033,42 @@
       "kind": "race_trait",
       "book": "monster_codex",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "monster_codex:race_trait:ratfolk_cleanliness",
       "kind": "race_trait",
       "book": "monster_codex",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "monster_codex:race_trait:ratfolk_lab_rat",
       "kind": "race_trait",
       "book": "monster_codex",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "monster_codex:race_trait:ratfolk_surface_sprinter",
       "kind": "race_trait",
       "book": "monster_codex",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "monster_codex:race_trait:ratfolk_surface_sprinter_speed",
       "kind": "race_trait",
       "book": "monster_codex",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "monster_codex:race_trait:ratfolk_surface_sprinter_vision",
       "kind": "race_trait",
       "book": "monster_codex",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "monster_codex:race_trait:standard_goblin",
@@ -124210,6 +124973,174 @@
       "join_status": "no_record"
     },
     {
+      "id": "pathfinder_unchained:skill:artistry",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_athletics",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_finesse",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_influence",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_nature",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_performance",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_religion",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:consolidated_skill_society",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_a_particular_monastery",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_a_particular_small_city",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_bandits_in_a_region",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_cats",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_dagon",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_drow_matriarchs",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_dwarven_history",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_famous_battles_in_a_region",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_frost_giants",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_military_commanders",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_one_district_of_a_large_city_or_metropolis",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_phlegethon",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_sarenrae",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_taverns_in_a_region",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore_the_spice_trade",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "pathfinder_unchained:skill:lore",
+      "kind": "skill",
+      "book": "pathfinder_unchained",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "ultimate_campaign:feat:accursed",
       "kind": "feat",
       "book": "ultimate_campaign",
@@ -134584,6 +135515,20 @@
       "join_status": "no_record"
     },
     {
+      "id": "ultimate_combat:skill:craft_siege_engine",
+      "kind": "skill",
+      "book": "ultimate_combat",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "ultimate_combat:skill:profession_siege_engineer",
+      "kind": "skill",
+      "book": "ultimate_combat",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "ultimate_equipment:spell:medusa_mask_gaze",
       "kind": "spell",
       "book": "ultimate_equipment",
@@ -136423,6 +137368,13 @@
       "book": "ultimate_equipment",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "ultimate_equipment:skill:craft_tattoos",
+      "kind": "skill",
+      "book": "ultimate_equipment",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "ultimate_intrigue:class:vcabalist",
@@ -165489,6 +166441,41 @@
       "join_status": "matched"
     },
     {
+      "id": "ultimate_psionics:skill:autohypnosis",
+      "kind": "skill",
+      "book": "ultimate_psionics",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "ultimate_psionics:skill:craft_guns",
+      "kind": "skill",
+      "book": "ultimate_psionics",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "ultimate_psionics:skill:knowledge_psionics",
+      "kind": "skill",
+      "book": "ultimate_psionics",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "ultimate_psionics:skill:lost_skill_point",
+      "kind": "skill",
+      "book": "ultimate_psionics",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "ultimate_psionics:skill:perform_thoughtsong",
+      "kind": "skill",
+      "book": "ultimate_psionics",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "ultimate_wilderness:class:shifter",
       "kind": "class",
       "book": "ultimate_wilderness",
@@ -174404,7 +175391,7 @@
     "F0": {
       "label": "No formula content (no DEFINE/BONUS token found for this unit)",
       "proof_width": "Covers a unit whose (book, source_file, source_line) join finds either no corpus record, or a corpus record whose data.raw_tokens carries no DEFINE/BONUS-prefixed key. Does not distinguish 'this unit genuinely has no computable magnitude' (a race description, a pure-text feat) from 'the join failed to find the record it should have' -- the `join_status` field on each ledger row (`no_record` vs `no_formula_tokens`) is what a reviewer checks to tell those apart; F0's own count does not.",
-      "count": 20113
+      "count": 20253
     },
     "F2": {
       "label": "Per-level scaling (<Class>LVL bare or arithmetic)",
@@ -174414,7 +175401,7 @@
     "F1": {
       "label": "Flat-constant magnitude (bare literal)",
       "proof_width": "Covers a formula segment that is exactly a signed/unsigned integer or decimal literal, optionally with a trailing `%`. Does not cover a literal embedded in a larger arithmetic expression (e.g. `2+CON` is F3, not F1, by design -- the point of this family per `epic-breakdown.md` is that it 'gets zero benefit from any shared function', which only holds for bare literals).",
-      "count": 1790
+      "count": 1791
     },
     "F10": {
       "label": "Level-threshold step-count (summed >= indicators)",
@@ -174458,5 +175445,10 @@
     }
   },
   "unclassified_count": 0,
-  "unclassified": []
+  "unclassified": [],
+  "join_status_counts": {
+    "no_record": 10530,
+    "matched": 4802,
+    "no_formula_tokens": 9723
+  }
 }

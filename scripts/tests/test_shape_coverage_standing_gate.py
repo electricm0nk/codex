@@ -250,6 +250,127 @@ class RealCaseGreenTest(unittest.TestCase):
             self.assertEqual(report["population"], 1)
 
 
+class BudgetProvenanceTest(unittest.TestCase):
+    """The no_record budget repin mechanism (this cycle's fix to the design
+    tension the SD-32 launch-readiness brief named: card 15, decisions.md
+    §12b, must enumerate ~9,000 objects into kinds the corpus ingest
+    pipeline does not reach yet, and every one of them is organically
+    no_record on landing -- a budget that can only shrink goes redder with
+    every unit of that mandated work, which is "a gate pointed at the
+    wrong thing", not a working gate.
+
+    The fix: `NO_RECORD_BUDGET_COUNT`/`NO_RECORD_BUDGET_POPULATION` may
+    move, but only together with a matching, append-only entry in
+    `no_record_budget_provenance.jsonl` naming a real evidence commit and
+    a reason. This class is the mechanical enforcement of that contract --
+    it is what stops a future cycle (or this one) from silently bumping
+    the two constants to whatever today's number is (`decisions.md §1a`'s
+    "a gate that cannot fail is worse than no gate", read in the other
+    direction: a budget with no teeth is not a budget)."""
+
+    def test_provenance_log_is_not_empty(self):
+        entries = G.read_budget_provenance()
+        self.assertTrue(entries, "no_record budget has no committed provenance at all")
+
+    def test_constants_match_latest_provenance_entry(self):
+        entries = G.read_budget_provenance()
+        self.assertTrue(entries)
+        latest = entries[-1]
+        self.assertEqual(
+            G.NO_RECORD_BUDGET_COUNT,
+            latest["no_record_count"],
+            "NO_RECORD_BUDGET_COUNT was hand-edited without a matching provenance entry",
+        )
+        self.assertEqual(
+            G.NO_RECORD_BUDGET_POPULATION,
+            latest["population"],
+            "NO_RECORD_BUDGET_POPULATION was hand-edited without a matching provenance entry",
+        )
+
+    def test_every_entry_carries_a_nonempty_reason(self):
+        for entry in G.read_budget_provenance():
+            self.assertTrue(
+                (entry.get("reason") or "").strip(),
+                f"provenance entry {entry.get('repin')} has no stated reason",
+            )
+
+    def test_population_strictly_increases_between_entries(self):
+        """A repin without population growth would be exactly 'raise the
+        budget to whatever the current number is' -- refused mechanically:
+        every entry after the first must show real population growth over
+        the one before it."""
+        entries = G.read_budget_provenance()
+        for prev, cur in zip(entries, entries[1:]):
+            self.assertGreater(
+                cur["population"],
+                prev["population"],
+                f"repin {cur.get('repin')} did not grow the population over repin {prev.get('repin')}",
+            )
+
+    def test_no_record_delta_never_exceeds_population_delta(self):
+        """The budget cannot widen faster than real content was added --
+        only as fast. A repin where no_record grew MORE than the total
+        population grew would mean units vanished from matched/
+        no_formula_tokens into no_record, which is a regression signal,
+        not legitimate enumeration, and must not be absorbed by a repin."""
+        entries = G.read_budget_provenance()
+        for prev, cur in zip(entries, entries[1:]):
+            pop_delta = cur["population"] - prev["population"]
+            nr_delta = cur["no_record_count"] - prev["no_record_count"]
+            self.assertLessEqual(
+                nr_delta,
+                pop_delta,
+                f"repin {cur.get('repin')}: no_record grew ({nr_delta}) more than population ({pop_delta})",
+            )
+
+    def test_every_evidence_commit_is_real_and_reachable(self):
+        entries = G.read_budget_provenance()
+        self.assertTrue(entries)
+        for entry in entries:
+            sha = entry["evidence_commit"]
+            exists = subprocess.run(
+                ["git", "cat-file", "-e", sha],
+                cwd=REPO_ROOT,
+                capture_output=True,
+            )
+            self.assertEqual(
+                exists.returncode,
+                0,
+                f"repin {entry.get('repin')}'s evidence_commit {sha!r} is not a real commit in this repo",
+            )
+            reachable = subprocess.run(
+                ["git", "merge-base", "--is-ancestor", sha, "HEAD"],
+                cwd=REPO_ROOT,
+                capture_output=True,
+            )
+            self.assertEqual(
+                reachable.returncode,
+                0,
+                f"repin {entry.get('repin')}'s evidence_commit {sha!r} is not an ancestor of HEAD",
+            )
+
+    def test_unprovenanced_run_still_measured_against_committed_baseline(self):
+        """The orchestrator's 80-fabricated-object reproduction lands no
+        commit and adds no provenance entry -- it must still be measured
+        against the last COMMITTED baseline (the module-level defaults),
+        not against itself. This is the other half of what keeps this
+        mechanism from being a rubber stamp: legitimate growth needs a
+        provenance entry to be exempted from redness; a bare synthetic
+        run gets no such exemption merely by running."""
+        units = [
+            _unit(f"b:{k}:{i}", k, "b", "not-started", "static", "totally_fake_file.lst", i)
+            for k in ("ability", "skill", "template", "deity", "power", "domain", "language", "kit")
+            for i in range(1, 11)
+        ]
+        # Deliberately NOT passing overridden budget kwargs -- this must
+        # fall through to the committed module-level constants, exactly as
+        # a real invocation from scripts/verify.sh would.
+        status, report = G.run_gate({"units": units}, corpus_root="/nonexistent")
+        self.assertNotEqual(status, 0)
+        self.assertEqual(report["no_record_budget_count"], G.NO_RECORD_BUDGET_COUNT)
+        self.assertEqual(report["no_record_budget_population"], G.NO_RECORD_BUDGET_POPULATION)
+
+
 class CorpusShaCitationTest(unittest.TestCase):
     """AT-32-G3-003: the report names the corpus SHA the count was
     re-derived against, read from scripts/pcgen-oracle-pin.env."""
