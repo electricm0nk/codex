@@ -174,6 +174,87 @@ class ShortTermsAreNotOverRedactedTests(unittest.TestCase):
         self.assertEqual(scrubbed, tokens)
 
 
+class GenericCategoryWordIsNotAStandaloneNeedleTests(unittest.TestCase):
+    """T9-onboarding-cause-closure over-redaction fix (2026-08-23,
+    `decisions.md §24b`-2). PCGen's own `KEY` schema is frequently
+    `<Category-or-Group> ~ <Specific>` (real corpus shape: `"Trait ~
+    <a PI-bearing trait name>"`). Before this fix, the old per-WORD split
+    treated every individual word of that key -- including the generic
+    group word "Trait" itself -- as an independent redaction needle, so
+    ANY unrelated token merely containing the ordinary word "Trait"
+    (e.g. `BONUS:...TYPE=Trait`, present on every trait-kind record,
+    genuinely no PI) got wiped to `[redacted PI]` for a reason that had
+    nothing to do with the record's actual PI content (a deity name
+    embedded in the trait's own name). Reproduced here with synthetic
+    placeholders, never a real Product Identity term."""
+
+    def test_generic_group_word_from_the_key_does_not_redact_an_unrelated_token(self):
+        # Real-shaped reproduction: key = "Trait ~ <PI name>", and a
+        # completely generic, PI-free BONUS value that merely happens to
+        # also say "Trait" (as every trait-kind record's BONUS/TYPE token
+        # legitimately does, via PCGen's own `TYPE=Trait` convention).
+        tokens = [
+            {"key": "BONUS", "value": "SKILL|Diplomacy|Sense Motive|1|TYPE=Trait"},
+        ]
+        scrubbed, any_redacted = pi_scrub.scrub_name_pi_tokens(
+            tokens, "Placeholder Deity Name", "Trait ~ Placeholder Deity Name"
+        )
+        self.assertFalse(any_redacted)
+        self.assertEqual(scrubbed[0]["value"], "SKILL|Diplomacy|Sense Motive|1|TYPE=Trait")
+
+    def test_genuine_self_reference_of_the_full_segment_is_still_redacted(self):
+        # The record's own FULL `~`-segment (not a single generic word cut
+        # out of it) appearing verbatim in a token value is still exactly
+        # the shape check 2 exists to catch -- unaffected by removing the
+        # per-word loop.
+        tokens = [{"key": "BONUS", "value": "ABILITYPOOL|Placeholder Group Name|1"}]
+        scrubbed, any_redacted = pi_scrub.scrub_name_pi_tokens(
+            tokens, "Placeholder Group Name", "Concept ~ Placeholder Group Name"
+        )
+        self.assertTrue(any_redacted)
+        self.assertEqual(scrubbed[0]["value"], pi_scrub.REDACTED_PI_MARKER)
+
+    def test_mutation_proof_reintroducing_the_per_word_split_reopens_the_over_redaction(self):
+        """Mutation-proves the fix is load-bearing: re-adding the OLD
+        per-word needle split (the mutation) reproduces the over-redaction
+        on the exact case the first test above proves fixed."""
+        tokens = [
+            {"key": "BONUS", "value": "SKILL|Diplomacy|Sense Motive|1|TYPE=Trait"},
+        ]
+        name = "Placeholder Deity Name"
+        key = "Trait ~ Placeholder Deity Name"
+
+        import re as _re
+
+        needles: set[str] = set()
+        norm_needles: set[str] = set()
+
+        def add_needle(s: str) -> None:
+            s = s.strip()
+            if not s:
+                return
+            needles.add(s.lower())
+            normalized = pi_scrub._normalize(s)
+            if len(normalized) >= pi_scrub._MIN_NORMALIZED_NEEDLE_LEN:
+                norm_needles.add(normalized)
+
+        for s in (name, key):
+            add_needle(s)
+        for segment in _re.split(r"\s*~\s*", key):
+            add_needle(segment)
+            for word in _re.split(r"[\s()]+", segment):
+                add_needle(word)  # the mutation: pre-fix per-word split
+
+        value = tokens[0]["value"]
+        value_lower = value.lower()
+        old_behavior_hit = any(n in value_lower for n in needles)
+        self.assertTrue(
+            old_behavior_hit,
+            "the pre-fix per-word split must reproduce the over-redaction for this "
+            "mutation proof to mean anything",
+        )
+
+
 class NeverMutatesInputTests(unittest.TestCase):
     def test_input_list_and_dicts_are_not_mutated(self):
         tokens = [{"key": "KEY", "value": "Placeholder Deity Name"}]

@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "You have studied the great masters of spellcraft, and your knowledge is exceptional. You gain a bonus of either +1 on Spellcraft checks or +2 on Knowledge (arcana) checks. You must choose which bonus you receive when you take the trait; once chosen, it cannot be changed."
       },
       {
         "key": "BONUS",

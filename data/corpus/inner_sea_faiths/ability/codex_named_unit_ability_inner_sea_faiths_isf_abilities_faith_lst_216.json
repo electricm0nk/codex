@@ -21,19 +21,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Ray of Sickening|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Blindness/Deafness|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Excruciating Deformation|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Intimidate|4|TYPE=Profane"
       }
     ]
   },

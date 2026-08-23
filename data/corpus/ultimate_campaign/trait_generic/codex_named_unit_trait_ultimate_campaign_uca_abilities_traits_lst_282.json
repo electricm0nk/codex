@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.BasicTrait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,11 +29,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "You have a penchant for just knowing others' secrets. You gain a +1 trait bonus on Knowledge (local) checks and a +2 trait bonus on Intimidate checks made to demoralize opponents."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Knowledge (local)|1|TYPE=Trait"
       },
       {
         "key": "SOURCEPAGE",
@@ -41,7 +41,7 @@
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "SkillBonus|+2 trait bonus on Intimidate checks made to demoralize opponents."
       }
     ]
   },

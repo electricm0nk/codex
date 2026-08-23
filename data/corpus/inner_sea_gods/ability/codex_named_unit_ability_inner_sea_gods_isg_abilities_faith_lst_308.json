@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Command|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Distressing Tone|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Suggestion|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SITUATION|Diplomacy=to gather information|3|TYPE=Profane"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Bluff|3|TYPE=Profane"
       }
     ]
   },

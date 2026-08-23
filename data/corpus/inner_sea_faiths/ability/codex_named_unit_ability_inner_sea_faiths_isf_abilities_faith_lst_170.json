@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Nauseating Dart|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Pernicious Poison|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Poison|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon (spell variant)|CASTERLEVEL=TL|Horrid Wilting|PREVARGTEQ:SentinelBoonLVL,9"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "WEAPONPROF=Spear|DAMAGE,TOHIT|1|PREVARGTEQ:SentinelBoonLVL,6"
       }
     ]
   },

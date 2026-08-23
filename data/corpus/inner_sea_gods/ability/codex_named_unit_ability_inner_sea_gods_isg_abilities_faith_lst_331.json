@@ -21,19 +21,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Forced Quiet|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Silence|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Hold Person|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "WEAPONPROF=Dagger|TOHIT|2"
       }
     ]
   },

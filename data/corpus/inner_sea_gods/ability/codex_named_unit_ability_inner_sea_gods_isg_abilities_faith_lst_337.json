@@ -21,19 +21,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Hide from Undead|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Defending Bone|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Halt Undead|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "WEAPONPROF=Dagger|TOHIT|2"
       }
     ]
   },

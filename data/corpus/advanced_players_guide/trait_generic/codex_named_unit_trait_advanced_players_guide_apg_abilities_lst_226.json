@@ -17,7 +17,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -37,15 +37,15 @@
       },
       {
         "key": "CHOOSE",
-        "value": "[redacted PI]"
+        "value": "NUMCHOICES=1|SKILL|Perform%"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SITUATION|Knowledge (Local)=local art or music scene|2|TYPE=Trait"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|LIST|1|TYPE=Trait"
       },
       {
         "key": "SOURCEPAGE",

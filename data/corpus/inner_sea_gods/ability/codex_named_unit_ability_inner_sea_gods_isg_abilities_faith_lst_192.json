@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Entangle|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Warp Wood|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Speak with Plants|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6]"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|ElectricityResistanceBonus|5+TL|TYPE=Resistance|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6]"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "SaveBonus|+4 sacred or profane bonus on saves vs. electricity and water spells and effects."
       }
     ]
   },

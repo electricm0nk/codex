@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Sanctuary|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Shield of Faith|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Prayer|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Artificer's Touch|PREMULT:2,[PREVARGTEQ:SentinelBoonLVL,6],[PREDOMAIN:1,Artifice]"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DomainArtificeLVL|TL|TYPE=Domain|PREVARGTEQ:SentinelBoonLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "WEAPONPROF=Warhammer|TOHIT|1"
       }
     ]
   },

@@ -17,7 +17,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -25,11 +25,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "Your religious training involved serving in the city watch of a large city, the primary duty of which was standing sentinel on a city wall. You gain a +1 trait bonus on Perception checks, and Perception is always a class skill for you."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Perception|1|TYPE=Trait"
       },
       {
         "key": "CSKILL",

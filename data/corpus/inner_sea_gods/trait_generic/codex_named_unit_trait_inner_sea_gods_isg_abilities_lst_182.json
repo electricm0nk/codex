@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,11 +29,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "Your patron grants you expertise at creating or disabling traps. You gain a +1 trait bonus on Craft (traps) checks, as well as a +1 trait bonus on Disable Device checks to disable traps."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Craft (traps)|1|TYPE=Trait"
       },
       {
         "key": "SOURCEPAGE",
@@ -41,7 +41,7 @@
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "SkillBonus|+1 trait bonus on Disable Device checks to disable traps."
       }
     ]
   },

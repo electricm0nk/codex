@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,11 +29,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "You understand the importance ofkeeping the peace in your community, and you have learned how to speak to the faithful in ways that they understand. You gain a +1 trait bonus on Diplomacy checks, and Diplomacy is a class skill for you."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Diplomacy|1|TYPE=Trait"
       },
       {
         "key": "CSKILL",

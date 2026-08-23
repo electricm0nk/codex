@@ -1,15 +1,15 @@
 {
   "totals": {
     "population": 34631,
-    "derived": 11342,
-    "measured_empty": 23073,
-    "fallthrough": 84,
-    "fallthrough_pi_redacted": 83,
-    "not_ingested": 132,
+    "derived": 11404,
+    "measured_empty": 23083,
+    "fallthrough": 21,
+    "fallthrough_pi_redacted": 20,
+    "not_ingested": 123,
     "provisional_default_total": 0,
     "provisional_default_in_not_done_population": 0,
     "provisional_default_missing_reason": 0,
-    "row17_honest_size": 84
+    "row17_honest_size": 21
   },
   "per_kind_book": [
     {
@@ -46,15 +46,15 @@
       "row17_actionable": 0
     },
     {
-      "derived": 92,
+      "derived": 94,
       "measured_empty": 43,
-      "fallthrough": 2,
-      "fallthrough_pi_redacted": 2,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "ability",
       "book": "adventurers_guide",
       "provisional_default": 0,
-      "row17_actionable": 2
+      "row17_actionable": 0
     },
     {
       "derived": 11,
@@ -167,37 +167,37 @@
       "row17_actionable": 0
     },
     {
-      "derived": 20,
+      "derived": 27,
       "measured_empty": 160,
-      "fallthrough": 7,
-      "fallthrough_pi_redacted": 7,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "ability",
       "book": "inner_sea_faiths",
       "provisional_default": 0,
-      "row17_actionable": 7
+      "row17_actionable": 0
     },
     {
-      "derived": 88,
+      "derived": 105,
       "measured_empty": 281,
-      "fallthrough": 18,
-      "fallthrough_pi_redacted": 18,
-      "not_ingested": 0,
-      "kind": "ability",
-      "book": "inner_sea_gods",
-      "provisional_default": 0,
-      "row17_actionable": 18
-    },
-    {
-      "derived": 59,
-      "measured_empty": 87,
       "fallthrough": 1,
       "fallthrough_pi_redacted": 1,
       "not_ingested": 0,
       "kind": "ability",
-      "book": "inner_sea_magic",
+      "book": "inner_sea_gods",
       "provisional_default": 0,
       "row17_actionable": 1
+    },
+    {
+      "derived": 60,
+      "measured_empty": 87,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
+      "not_ingested": 0,
+      "kind": "ability",
+      "book": "inner_sea_magic",
+      "provisional_default": 0,
+      "row17_actionable": 0
     },
     {
       "derived": 0,
@@ -806,10 +806,10 @@
     },
     {
       "derived": 12,
-      "measured_empty": 5,
+      "measured_empty": 7,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 2,
+      "not_ingested": 0,
       "kind": "companion",
       "book": "advanced_race_guide",
       "provisional_default": 0,
@@ -2169,8 +2169,8 @@
       "row17_actionable": 0
     },
     {
-      "derived": 1,
-      "measured_empty": 0,
+      "derived": 0,
+      "measured_empty": 1,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2335,10 +2335,10 @@
     },
     {
       "derived": 0,
-      "measured_empty": 0,
+      "measured_empty": 5,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 5,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "occult_adventures",
       "provisional_default": 0,
@@ -2962,10 +2962,10 @@
     },
     {
       "derived": 0,
-      "measured_empty": 108,
+      "measured_empty": 109,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "spell",
       "book": "bestiary",
       "provisional_default": 0,
@@ -2995,10 +2995,10 @@
     },
     {
       "derived": 0,
-      "measured_empty": 5,
+      "measured_empty": 6,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "spell",
       "book": "book_of_the_damned_volume_1",
       "provisional_default": 0,
@@ -3522,48 +3522,48 @@
       "row17_actionable": 0
     },
     {
-      "derived": 48,
+      "derived": 58,
       "measured_empty": 32,
-      "fallthrough": 10,
-      "fallthrough_pi_redacted": 10,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "trait",
       "book": "advanced_players_guide",
       "provisional_default": 0,
-      "row17_actionable": 10
+      "row17_actionable": 0
     },
     {
-      "derived": 2,
+      "derived": 26,
       "measured_empty": 88,
-      "fallthrough": 25,
-      "fallthrough_pi_redacted": 25,
-      "not_ingested": 0,
-      "kind": "trait",
-      "book": "inner_sea_gods",
-      "provisional_default": 0,
-      "row17_actionable": 25
-    },
-    {
-      "derived": 29,
-      "measured_empty": 66,
       "fallthrough": 1,
       "fallthrough_pi_redacted": 1,
       "not_ingested": 0,
       "kind": "trait",
-      "book": "inner_sea_races",
+      "book": "inner_sea_gods",
       "provisional_default": 0,
       "row17_actionable": 1
     },
     {
-      "derived": 57,
+      "derived": 30,
+      "measured_empty": 66,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
+      "not_ingested": 0,
+      "kind": "trait",
+      "book": "inner_sea_races",
+      "provisional_default": 0,
+      "row17_actionable": 0
+    },
+    {
+      "derived": 58,
       "measured_empty": 95,
-      "fallthrough": 2,
-      "fallthrough_pi_redacted": 1,
+      "fallthrough": 1,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "trait",
       "book": "ultimate_campaign",
       "provisional_default": 0,
-      "row17_actionable": 2
+      "row17_actionable": 1
     },
     {
       "derived": 6,

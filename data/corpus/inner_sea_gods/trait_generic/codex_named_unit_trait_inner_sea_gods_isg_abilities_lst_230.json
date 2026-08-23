@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,11 +29,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "As someone who has performed or observed funeral rites for a wide variety of people, you have a basic understanding of many different religions. You gain a +2 trait bonus on Knowledge (religion) checks, and Knowledge (religion) is a class skill for you."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Knowledge (religion)|2|TYPE=Trait"
       },
       {
         "key": "CSKILL",

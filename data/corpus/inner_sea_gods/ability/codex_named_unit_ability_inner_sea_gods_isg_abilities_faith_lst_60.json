@@ -21,31 +21,31 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Protection from Good|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Death Knell|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Defile Armor|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire|PREVARGTEQ:SentinelBoonLVL,9"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance|PREVARGTEQ:SentinelBoonLVL,9"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "SaveBonus|+4 profane bonus on saves vs. fire effects."
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "SaveBonus|+4 profane bonus on saves vs. poison.|PREVARGTEQ:SentinelBoonLVL,9"
       }
     ]
   },

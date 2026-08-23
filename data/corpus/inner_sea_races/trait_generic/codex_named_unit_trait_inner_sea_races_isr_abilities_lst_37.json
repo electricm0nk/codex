@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.RaceTrait.AzlantiRaceTrait"
       },
       {
         "key": "PREABILITY",
-        "value": "[redacted PI]"
+        "value": "1,CATEGORY=Background,Azlanti"
       },
       {
         "key": "PREMULT",
@@ -33,11 +33,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "You gain a +1 trait bonus on Knowledge (engineering) checks. In addition, any masterwork item you craft has its hardness and break DC increased by 1. This increase is an enhancement bonus."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Knowledge (Engineering)|1|TYPE=Trait"
       },
       {
         "key": "SOURCEPAGE",

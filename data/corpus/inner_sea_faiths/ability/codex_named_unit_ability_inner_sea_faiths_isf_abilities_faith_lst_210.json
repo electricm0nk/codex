@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Youthful Appearance|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Undetectable Alignment|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Nondetection|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Intimidate|4|TYPE=Profane"
       },
       {
         "key": "VISION",
-        "value": "[redacted PI]"
+        "value": "Darkvision (30')|PREMULT:2,[PREMULT:1,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6]],[!PREVISION:1,Darkvision=30]"
       }
     ]
   },

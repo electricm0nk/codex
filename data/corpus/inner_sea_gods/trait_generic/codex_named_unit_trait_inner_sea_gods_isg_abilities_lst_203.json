@@ -17,7 +17,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -25,11 +25,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "Thanks to your friendly mien and sly tongue, your lies are often believed. You gain a +1 trait bonus on Bluff checks, and Bluff is a class skill for you."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Bluff|2|TYPE=Trait"
       },
       {
         "key": "CSKILL",

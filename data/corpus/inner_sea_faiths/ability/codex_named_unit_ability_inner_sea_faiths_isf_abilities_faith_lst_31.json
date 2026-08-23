@@ -21,31 +21,31 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Lead Blades|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Spiritual Weapon|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Keen Edge|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon (quickened)|TIMES=3|CASTERLEVEL=TL|Bleed|PREVARGTEQ:SentinelBoonLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "WEAPONPROF=Sawtooth Sabre|DAMAGE|2|PREVARGTEQ:SentinelBoonLVL,9"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "CombatBonus|+2 profane bonus to confirm critical hits while wielding a sawtooth sabre."
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "CombatBonus|Wounds you inflict with a sawtooth sabre deal 1d4 points of bleed damage.|PREVARGTEQ:SentinelBoonLVL,6"
       }
     ]
   },

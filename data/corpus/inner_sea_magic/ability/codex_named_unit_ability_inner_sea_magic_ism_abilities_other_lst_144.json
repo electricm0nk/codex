@@ -29,15 +29,15 @@
       },
       {
         "key": "PREVARGTEQ",
-        "value": "[redacted PI]"
+        "value": "KiPool,1"
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "You gain the ability to achieve inner focus. You gain 1 bonus ki point and can activate your inner focus multiple times per day by spending 1 ki point as a swift action."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|KiPool|1"
       },
       {
         "key": "COST",

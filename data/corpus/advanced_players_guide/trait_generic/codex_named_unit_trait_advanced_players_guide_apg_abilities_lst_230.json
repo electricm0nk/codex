@@ -17,7 +17,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -41,7 +41,7 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Knowledge (Engineering),Knowledge (History)|1|TYPE=Trait"
       },
       {
         "key": "CSKILL",

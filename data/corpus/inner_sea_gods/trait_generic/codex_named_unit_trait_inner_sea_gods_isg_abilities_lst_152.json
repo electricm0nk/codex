@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,11 +29,11 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "The wild places are your home, and provide everything you need to be happy. You gain a +2 trait bonus on Survival checks, and Survival is a class skill for you."
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Survival|2|TYPE=Trait"
       },
       {
         "key": "CSKILL",

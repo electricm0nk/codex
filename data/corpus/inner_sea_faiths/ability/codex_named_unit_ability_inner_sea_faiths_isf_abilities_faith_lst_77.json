@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Color Spray|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Scorching Ray|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Draconic Reservoir|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "COMBAT|AC|1|TYPE=Sacred|PREVARGTEQ:SentinelBoonLVL,6"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "CombatBonus|Additional +1 sacred bonus to AC vs. evil creatures, or +2 vs. evil dragons.|PREVARGTEQ:SentinelBoonLVL,6"
       }
     ]
   },

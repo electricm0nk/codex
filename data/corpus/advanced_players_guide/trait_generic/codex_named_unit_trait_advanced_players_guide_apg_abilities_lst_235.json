@@ -17,7 +17,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,7 +29,7 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "COMBAT|INITIATIVE|1|TYPE=Trait"
       },
       {
         "key": "SOURCEPAGE",

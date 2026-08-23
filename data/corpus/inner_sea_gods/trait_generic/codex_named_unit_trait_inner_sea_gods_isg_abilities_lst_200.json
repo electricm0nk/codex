@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "Your familiarity with the plants and animals of a variety of environments gives you a +1 trait bonus on Knowledge (nature) and Survival checks, and one of these skills is a class skill for you."
       },
       {
         "key": "STACK",
@@ -41,11 +41,11 @@
       },
       {
         "key": "CHOOSE",
-        "value": "[redacted PI]"
+        "value": "SKILL|Knowledge (nature)|Survival"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Knowledge (nature),Survival|1|TYPE=Trait"
       },
       {
         "key": "CSKILL",

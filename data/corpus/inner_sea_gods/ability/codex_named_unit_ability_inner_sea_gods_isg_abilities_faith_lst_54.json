@@ -21,31 +21,31 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Burning Hands|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Darkness|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Deeper Darkness|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon|CASTERLEVEL=TL|Delayed Blast Fireball|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,20],[PREVARGTEQ:ExaltedBoonLVL,9]"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VISION|Darkvision|10|PREMULT:2,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6],[PREVISION:1,Darkvision=60]"
       },
       {
         "key": "VISION",
-        "value": "[redacted PI]"
+        "value": "Darkvision (60')|PREMULT:2,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6],[!PREVISION:1,Darkvision=60]"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "SaveBonus|+4 profane bonus on saves vs. fire effects."
       }
     ]
   },

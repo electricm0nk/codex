@@ -394,18 +394,54 @@ def scrub_name_pi_tokens(
         s = s.strip()
         if not s:
             return
-        needles.add(s.lower())
+        # `decisions.md` T9-onboarding-cause-closure fix (2026-08-23): both
+        # needle sets are gated on the SAME `_MIN_NORMALIZED_NEEDLE_LEN`
+        # floor `norm_needles` already used alone. Before this fix, `needles`
+        # (the space-preserving check) had NO length floor, so a short,
+        # generic word survived as a standalone needle. Gating on the
+        # NORMALIZED length (not the raw string length) keeps the decision
+        # independent of spacing/punctuation, matching how `norm_needles`
+        # already decides.
         normalized = _normalize(s)
-        if len(normalized) >= _MIN_NORMALIZED_NEEDLE_LEN:
-            norm_needles.add(normalized)
+        if len(normalized) < _MIN_NORMALIZED_NEEDLE_LEN:
+            return
+        needles.add(s.lower())
+        norm_needles.add(normalized)
 
     for s in (name, key):
         add_needle(s)
     if key:
+        # `decisions.md` T9-onboarding-cause-closure fix (2026-08-23): the
+        # per-WORD split below this comment used to also add every
+        # individual word of a `~`-delimited segment as its OWN needle
+        # (`for word in re.split(r"[\s()]+", segment): add_needle(word)`).
+        # That over-generalises: PCGen's `KEY` schema is frequently
+        # `<Category-or-Group> ~ <Specific>` (real shape: `"Trait ~ <a
+        # PI-bearing trait name>"`, `"Temp Bonus ~ <a PI-bearing role/deity
+        # name>"` -- never a real name repeated here, per `decisions.md
+        # §24b`-2), and the individual words making up the group/descriptor
+        # half --
+        # "Trait", "Temp", "Bonus", "Evangelist", "Sentinel", "Exalted" --
+        # are ordinary PCGen/Pathfinder rules vocabulary, not this record's
+        # PI. Splitting to word granularity turned those into standalone
+        # needles that matched an unrelated, non-PI, already-blacklist-clear
+        # BONUS/DEFINE value merely because it happened to contain the same
+        # common word (worst example found live: EVERY `Trait ~ <Name>`
+        # record's own `TYPE:Trait...`/`BONUS:...TYPE=Trait` token matched
+        # the single word "Trait", redacting the record's real mechanical
+        # formula for a reason that had nothing to do with its PI content --
+        # `decisions.md §24b`-2 requires removing the PI original, never
+        # authorises redacting an unrelated generic term that happens to
+        # share a word with it). Genuine self-reference (the record's own
+        # FULL name/key, or a full `~`-segment, appearing verbatim in a
+        # token value -- e.g. an `ABILITYPOOL` value restating the record's
+        # own pool name) is still caught by the two `add_needle` calls
+        # below, unaffected by removing the word-level loop; so is every
+        # blacklisted term, via the independent `blacklist_term_hit_
+        # including_concatenated` check (checks 1+4), which does not derive
+        # its needles from `name`/`key` at all.
         for segment in re.split(r"\s*~\s*", key):
             add_needle(segment)
-            for word in re.split(r"[\s()]+", segment):
-                add_needle(word)
 
     scrubbed = []
     any_redacted = False

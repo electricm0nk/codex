@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Trait.ReligionTrait"
       },
       {
         "key": "PREMULT",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "At any point after taking this trait, you may choose one Knowledge skill. You gain a permanent +2 trait bonus on checks with that skill, and it is a class skill for you. Once this skill is chosen, it cannot be changed."
       },
       {
         "key": "STACK",
@@ -41,11 +41,11 @@
       },
       {
         "key": "CHOOSE",
-        "value": "[redacted PI]"
+        "value": "SKILL|TYPE=Knowledge"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|%LIST|2|TYPE=Trait"
       },
       {
         "key": "CSKILL",

@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Magic Weapon|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Arrow Eruption|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Keen Edge|PREVARGTEQ:SentinelBoonLVL,3"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "COMBAT|AC|1+min(5,TL/4)|TYPE=Deflection|PREVARGTEQ:SentinelBoonLVL,9"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "CombatBonus|+4 sacred or profane bonus on concentration checks."
       }
     ]
   },

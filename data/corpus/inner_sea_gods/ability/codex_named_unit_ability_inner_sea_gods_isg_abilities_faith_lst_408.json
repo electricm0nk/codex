@@ -21,19 +21,19 @@
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "SentinelSmiteEvilBonus|0"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|SentinelSmiteEvilBonus|CHA"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|SmiteEvilAttackBonus|SentinelSmiteEvilBonus"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|SmiteEvilDamageBonus|SentinelSmiteEvilBonus"
       }
     ]
   },

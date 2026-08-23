@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Comprehend Languages|PREVARGTEQ:EvangelistBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Detect Thoughts|PREVARGTEQ:EvangelistBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Clairaudience/Clairvoyance|PREVARGTEQ:EvangelistBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon (spell variant)|CASTERLEVEL=TL|Invisibility (Greater)|PREVARGTEQ:EvangelistBoonLVL,9"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SITUATION|Diplomacy=to gather information|3|TYPE=Profane"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Bluff|3|TYPE=Profane"
       }
     ]
   },

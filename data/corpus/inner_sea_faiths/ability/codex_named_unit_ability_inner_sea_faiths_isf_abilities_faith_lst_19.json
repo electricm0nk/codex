@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Disguise Self|PREVARGTEQ:EvangelistBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Invisibility|PREVARGTEQ:EvangelistBoonLVL,3"
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Gaseous Form|PREVARGTEQ:EvangelistBoonLVL,3"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "SKILL|Stealth|2|TYPE=Profane|PREVARGTEQ:EvangelistBoonLVL,6"
       },
       {
         "key": "ASPECT",
-        "value": "[redacted PI]"
+        "value": "CombatBonus|+2 profane bonus to confirm critical hits while wielding a sawtooth sabre."
       }
     ]
   },
