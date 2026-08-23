@@ -4789,4 +4789,22 @@ cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
   census using `is_internal_category`'s own narrowed test (the Social Grace discovery suggests the
   true population is larger than 16 groups); reallocate the 22 fully-explained rows from
   `pending_a` to `disposed_b` in `scripts/card15_reconcile.py`'s bucket structure.
+- **Blocker found while rebasing onto the concurrently-landed
+  `card15-simple-filename-kinds-ingest`/`epic-2-t9-monster-companion-race-no-record` cycles,
+  reported not silently worked around:** `cargo run --locked --bin corpus_literal_sweep` now exits
+  2 (`data/corpus/advanced_class_guide/domain/battle_spirit.json: source.path
+  paizo/roleplaying_game/advanced_class_guide/acg_domains.lst is not
+  <system>/<publisher>/<line>/<book>/<file>-shaped`) — **2,585** `data/corpus/**/*.json` files
+  written by `scripts/ingest_simple_filename_kinds.py` (commit `71a6f3746`) carry a `source.path`
+  missing the leading `pathfinder/` system segment every other corpus record has (confirmed by
+  `git log --oneline -1 -- <file>` on a sample: all trace to that one commit). This blocks any
+  future guarded regen of `docs/work-inventory.json` (`CORPUS_LITERAL_SWEEP_REPORT` cannot be
+  produced clean) until fixed — out of this cycle's own scope (a different lane's ingest script,
+  not `duplicate_identity`), so **not fixed here**. Consequence: this cycle's own committed
+  `docs/work-inventory.json` is `8970327b0`'s committed inventory (49,540 units, confirmed
+  byte-for-byte via id-diff) **plus exactly this cycle's own 4 rescued units** (0 removed, 0
+  duplicated) — it does **not** yet reflect the `simple-filename-kinds-ingest` cycle's `no_record`
+  improvement, because regenerating to pick that up right now would require routing around the
+  broken sweep. Safe and accurate for what it claims; a future cycle fixing the `source.path`
+  defect should regenerate once more to pick up both improvements together.
 - Commit: (recorded after push).

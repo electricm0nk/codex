@@ -198,6 +198,21 @@ the original 33 did?
    already produced.
 4. Card 15 reaches `complete` only when `total_kind_unenumerable_units` reaches 0 (unaffected by
    this cycle) and the `duplicate_identity` residual is closed by class — pending items 1-3 above.
+5. **Fix `scripts/ingest_simple_filename_kinds.py`'s `source.path` defect** (2,585 `data/corpus`
+   files missing the leading `pathfinder/` segment, `commit 71a6f3746`), which now makes
+   `corpus_literal_sweep` exit 2 — found while rebasing this cycle onto that concurrently-landed
+   work; out of this cycle's own scope, not fixed here, blocks the next full guarded regen.
+
+## Note on `docs/work-inventory.json` at push time
+
+This cycle's own regen (before the final rebase) proved 0 lost / 4 gained against a clean
+`corpus_literal_sweep`. Rebasing onto two concurrently-landed sibling cycles
+(`71a6f3746`/`8970327b0`) surfaced the `source.path` blocker above, which prevents a further guarded
+regen right now. The committed `docs/work-inventory.json` is therefore `8970327b0`'s own committed
+inventory (49,540 units) plus exactly this cycle's 4 rescued units — verified by id-diff against
+that commit's own tree: 0 removed, 4 added, 0 duplicates. It does not yet reflect the
+`simple-filename-kinds-ingest` cycle's `no_record` improvement (that cycle's own `data/corpus`
+additions are unaffected and still land once a future regen runs after item 5 above is fixed).
 
 ## Disk
 
