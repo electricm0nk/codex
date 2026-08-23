@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Calming Touch",
     "name": "Calming Touch",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can touch a creature as a standard action to heal it of 1d6+%1 points of nonlethal damage. This touch also removes the fatigued, shaken, and sickened conditions (but has no effect on more severe conditions). You can use this ability %2 times per day.|DomainCommunityLVL|CalmingTouchTimes",
     "raw_tokens": [
       {

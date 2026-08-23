@@ -339,6 +339,20 @@ pub struct ClassFeatureData {
     /// same split `class_feature_owner`/`Kind::ClassFeature`'s classify arm
     /// already perform; never a new value.
     pub class: Option<String>,
+    /// SD-32 card 11, decision 23a's genuinely-multi-owner shape (`"Domain
+    /// Power"`, 172 records): the set of classes whose own domain-access
+    /// mechanism the oracle proves grants this specific power, resolved by
+    /// [`domain_power_owning_classes`] reading the corpus itself -- never
+    /// hand-authored. `None` when this record's `key` is not a `"Domain
+    /// Power ~ <X>"` key at all, or when no upstream grant chain was found
+    /// for it (an honest gap, not a guess). Deliberately a SEPARATE field
+    /// from `class` (not a collapse into it): `class` keeps its existing
+    /// single-owner meaning for every other resolution tier, and this field
+    /// is the only place a record legitimately says "more than one class
+    /// grants me" -- `CATEGORY_LABEL_ALIASES`' single-label-to-single-class
+    /// shape does not fit here and must not be forced (`decisions.md §1a`).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub classes: Option<Vec<String>>,
     pub description: Option<String>,
     pub raw_tokens: Vec<RawToken>,
 }
@@ -863,6 +877,159 @@ fn category_label_alias_owner(group: &str, corpus_class_names: &BTreeMap<String,
     corpus_class_names.get(&target.to_lowercase()).cloned()
 }
 
+// ---------------------------------------------------------------------
+// SD-32 card 11, decision 23a: `"Domain Power"` is the one label
+// `CATEGORY_LABEL_ALIASES` cannot close, because it is genuinely
+// multi-owner -- the operator ruled option (a), extend the generator's
+// INPUTS (`decisions.md §23a`), rather than declaring "shared across
+// domain-access classes" an acceptable disposition (rejected: it closes
+// the counter without learning which class grants what).
+//
+// The link the prior cycle's `TYPE:`/`PRE*:`-token search could not find
+// lives one hop upstream. Every `"Domain Power ~ <X>"` ability is granted
+// to a character by a class-namespaced chooser record shaped `"<Prefix>
+// Domain ~ <domain>"` (`CATEGORY:Internal`) via an
+// `ABILITY:...|AUTOMATIC|Domain Power ~ <X>|...` token on that chooser
+// record -- the prefix names which class's domain-access mechanism the
+// grant runs through:
+//
+//   - `Core Domain ~ <domain>` -- the base PCGen `DOMAIN` facet. Verified
+//     directly against the class `.lst` files: `CLASS:Cleric` sets
+//     `BONUS:DOMAIN|NUMBER|ClericDomainCount` and
+//     `BONUS:VAR|ClericDomainCount|2` (`cr_classes.lst`); `CLASS:Paladin`
+//     also carries `BONUS:DOMAIN|NUMBER|PaladinDomainCount`, but
+//     `PaladinDomainCount` DEFINEs to 0 and is raised only by the Sacred
+//     Servant archetype ability (`apg_abilities_class.lst`,
+//     `KEY:Sacred Servant ~ Spells`, `BONUS:VAR|PaladinDomainCount|1
+//     |TYPE=Base`) -- so `"Core Domain ~"` owns both classes, the second
+//     conditioned on that archetype.
+//   - `Druid Domain ~ <domain>` / `Inquisitor Domain ~ <domain>` -- each
+//     class's own separate domain-access mechanism (Inquisitor's
+//     Inquisition-adjacent grant is the one that shows up across the
+//     seven SD-32 in-scope books; verified 98 of 172 in-scope records
+//     also carry an `"Inquisitor Domain ~"` grant alongside `"Core Domain
+//     ~"`, via [`domain_power_owning_classes`]'s own re-derive).
+//
+// Some (mostly newer, subdomain) books skip the class-namespaced wrapper
+// entirely and grant a power straight from the bare domain/subdomain-
+// named record (e.g. `bestiary_6/b6_domains.lst`'s `"Dragon Subdomain"`
+// grants `"Domain Power ~ Venomous Stare"` directly, no `"Core Domain ~
+// Dragon Subdomain"` intermediate). That bare record is reachable through
+// the SAME base `DOMAIN` facet every `"Core Domain ~"` grant runs
+// through, so it resolves the same owners as an explicit `"Core Domain
+// ~"` grant -- not a guess, the identical mechanism minus one redundant
+// hop. The one exclusion: a `.MOD` line whose own key names a foreign
+// category (`CATEGORY=FEAT|...`) is a cross-reference into an unrelated
+// feat record, not a domain grant point, and is skipped.
+//
+// This is a corpus-wide read, not a hand-authored table (`decisions.md
+// §17`): [`scan_domain_power_owners`] walks every `.lst` file under
+// `corpus_root` once per [`generate`] call and returns the full set of
+// classes each `"Domain Power ~ <X>"` target resolves to, built fresh
+// from the oracle every regen. `scripts/derive_domain_power_classes.py`
+// carries the identical logic as an independently re-runnable oracle;
+// this cycle's receipt records the cross-check between the two.
+// ---------------------------------------------------------------------
+
+/// The prefix->owning-classes table for an explicit `"<Prefix> Domain ~
+/// <domain>"` chooser record (see the section comment above). This is
+/// NOT a per-record table -- three entries total, one per class-access
+/// mechanism the oracle itself distinguishes -- unlike
+/// [`CATEGORY_LABEL_ALIASES`], which is keyed per LABEL because no
+/// generic rule connects a label's text to its class at all.
+const DOMAIN_POWER_PREFIX_CLASSES: &[(&str, &[&str])] =
+    &[("Core", &["Cleric", "Paladin"]), ("Druid", &["Druid"]), ("Inquisitor", &["Inquisitor"])];
+
+/// The same owners a `"Core Domain ~"` grant resolves to, applied when a
+/// domain/subdomain record grants a `"Domain Power ~ <X>"` power directly
+/// with no class-namespaced wrapper at all (see section comment above).
+const DOMAIN_POWER_BARE_GRANT_CLASSES: &[&str] = &["Cleric", "Paladin"];
+
+/// A record's effective key for this scan: PCGen lets the first
+/// tab-delimited field be a display name distinct from the record's real
+/// `KEY:` token (`"Chaos<TAB>...<TAB>KEY:Inquisitor Domain ~
+/// Chaos<TAB>..."`) -- the explicit `KEY:` token wins when present, since
+/// [`DOMAIN_POWER_PREFIX_CLASSES`]' prefixes are matched against the KEY
+/// namespace, not the display name.
+fn effective_lst_key(line: &str) -> &str {
+    for field in line.split('\t') {
+        if let Some(key) = field.strip_prefix("KEY:") {
+            return key.trim();
+        }
+    }
+    line.split('\t').next().unwrap_or(line).trim()
+}
+
+/// Walks every `.lst` file under `corpus_root` once, and for every line
+/// that grants one or more `"Domain Power ~ <X>"` targets via an
+/// `AUTOMATIC` `ABILITY:` token, resolves the owning class(es) per the
+/// section comment above. Returns `{domain power key suffix (the text
+/// after "Domain Power ~ ") -> owning classes}`. Cheap enough to run once
+/// per [`generate`] call (~2,900 `.lst` files, single pass, no
+/// allocation-heavy parsing) -- this is a generic corpus-wide scan, not
+/// per-record work (`decisions.md §17`).
+fn scan_domain_power_owners(corpus_root: &Path) -> BTreeMap<String, BTreeSet<String>> {
+    let mut owners: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    if !corpus_root.is_dir() {
+        return owners;
+    }
+    let mut stack = vec![corpus_root.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            let is_lst = path.extension().and_then(|e| e.to_str()).map(|e| e.eq_ignore_ascii_case("lst"));
+            if is_lst != Some(true) {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for line in text.lines() {
+                if line.is_empty() || line.starts_with('#') || !line.contains("Domain Power ~ ") {
+                    continue;
+                }
+                let effective_key = effective_lst_key(line);
+                let classes: &[&str] = if let Some((_, classes)) =
+                    DOMAIN_POWER_PREFIX_CLASSES.iter().find(|(prefix, _)| {
+                        effective_key.starts_with(*prefix) && effective_key[prefix.len()..].starts_with(" Domain ~ ")
+                    }) {
+                    classes
+                } else if !effective_key.contains("CATEGORY=") {
+                    DOMAIN_POWER_BARE_GRANT_CLASSES
+                } else {
+                    continue;
+                };
+                for segment in line.split("Domain Power ~ ").skip(1) {
+                    let end = segment.find(['|', '\t']).unwrap_or(segment.len());
+                    let target = segment[..end].trim();
+                    if target.is_empty() {
+                        continue;
+                    }
+                    let entry = owners.entry(target.to_string()).or_default();
+                    entry.extend(classes.iter().map(|c| c.to_string()));
+                }
+            }
+        }
+    }
+    owners
+}
+
+/// Resolves `key` (a full `"Domain Power ~ <X>"` record key) against
+/// `owners` (from [`scan_domain_power_owners`]) -- `None` when `key` is
+/// not in the `"Domain Power ~ "` namespace at all, or when the scan
+/// found no upstream grant chain for it (an honest gap, never guessed).
+fn domain_power_owning_classes(key: &str, owners: &BTreeMap<String, BTreeSet<String>>) -> Option<Vec<String>> {
+    let suffix = key.strip_prefix("Domain Power ~ ")?;
+    let set = owners.get(suffix)?;
+    if set.is_empty() {
+        return None;
+    }
+    Some(set.iter().cloned().collect())
+}
+
 /// Redacts the `DESC` token in `raw_tokens` in place whenever `description`
 /// classified as PI-redacted (declared `DESCISPI:Yes` OR blacklist-detected
 /// via [`pi_screening::classify_field`]) -- otherwise `data.raw_tokens`
@@ -955,6 +1122,17 @@ pub fn generate(
     for unit in units {
         units_by_book.entry(unit.book.as_str()).or_default().push(unit);
     }
+
+    // SD-32 card 11 decision 23a: only scan the oracle for the domain-power
+    // grant chain (`scan_domain_power_owners`'s single ~2,900-file walk)
+    // when this run actually includes `"Domain Power ~ "`-keyed units --
+    // every other `generate()` call (including every other test in this
+    // module) pays nothing for it.
+    let domain_power_owners = if units.iter().any(|u| u.key.starts_with("Domain Power ~ ")) {
+        scan_domain_power_owners(corpus_root)
+    } else {
+        BTreeMap::new()
+    };
 
     for (book, book_units) in units_by_book {
         let Some(&rel_dir) = dir_by_book.get(book) else { continue };
@@ -1056,6 +1234,14 @@ pub fn generate(
                 .or_else(|| type_facet_corpus_owner(unit.type_facet.as_deref(), corpus_class_names))
                 .or_else(|| key_owner.clone());
 
+            // SD-32 card 11 decision 23a: `"Domain Power"` is genuinely
+            // multi-owner and none of the six tiers above force it to one
+            // class -- this is the seventh, separate resolution that
+            // records the FULL owning-class set (never collapsed into
+            // `class`) by reading the oracle's own domain-grant chain. See
+            // the section comment above [`scan_domain_power_owners`].
+            let classes = domain_power_owning_classes(&unit.key, &domain_power_owners);
+
             let record = CacheRecord {
                 population: Population::InScope,
                 completeness,
@@ -1064,6 +1250,7 @@ pub fn generate(
                     key: unit.key.clone(),
                     name: unit.name.clone(),
                     class: class.clone(),
+                    classes,
                     description: stored_desc,
                     raw_tokens: tokens,
                 },
@@ -1775,6 +1962,182 @@ mod tests {
             json["data"]["class"].as_str(),
             Some("Monk"),
             "generate() must ship the verified alias owner, not the category label \"Ki Power\": {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    // -------------------------------------------------------------
+    // SD-32 card 11, decision 23a: `"Domain Power"`'s multi-owner
+    // resolution (`scan_domain_power_owners` / `domain_power_owning_classes`).
+    // -------------------------------------------------------------
+
+    #[test]
+    fn effective_lst_key_prefers_the_explicit_key_token_over_the_display_name() {
+        assert_eq!(
+            effective_lst_key("Chaos\t\tKEY:Inquisitor Domain ~ Chaos\t\tCATEGORY:Special Ability"),
+            "Inquisitor Domain ~ Chaos"
+        );
+        // No explicit KEY: token -- falls back to the first field, the
+        // same shape [`foreign_citations`]/[`key_owner`] already rely on.
+        assert_eq!(
+            effective_lst_key("Core Domain ~ Azata Subdomain (Chaos)\tCATEGORY:Internal\tABILITY:..."),
+            "Core Domain ~ Azata Subdomain (Chaos)"
+        );
+    }
+
+    #[test]
+    fn scan_domain_power_owners_resolves_core_druid_inquisitor_and_bare_grants() {
+        let dir = std::env::temp_dir().join(format!("cf-scan-domain-power-{}", std::process::id()));
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::create_dir_all(&dir).unwrap();
+
+        // A "Core Domain ~" wrapper (Cleric + Paladin, per the section
+        // comment's verified evidence).
+        std::fs::write(
+            dir.join("core.lst"),
+            "Core Domain ~ Azata Subdomain (Chaos)\tCATEGORY:Internal\t\tABILITY:Special Ability|AUTOMATIC|Domain Power ~ Chaos Blade|PREVARGTEQ:X,8\n",
+        )
+        .unwrap();
+        // An "Inquisitor Domain ~" wrapper for the SAME power -- proves
+        // the multi-owner union, not a single winner.
+        std::fs::write(
+            dir.join("inquisitor.lst"),
+            "Chaos\t\tKEY:Inquisitor Domain ~ Chaos\t\tCATEGORY:Special Ability\tABILITY:Special Ability|AUTOMATIC|Domain Power ~ Chaos Blade|PREVARGTEQ:Y,1\n",
+        )
+        .unwrap();
+        // A "Druid Domain ~" wrapper for a DIFFERENT power -- proves the
+        // scan does not cross-contaminate targets.
+        std::fs::write(
+            dir.join("druid.lst"),
+            "Alchemy\t\tKEY:Druid Domain ~ Alchemy\t\tCATEGORY:Special Ability\tABILITY:Special Ability|AUTOMATIC|Domain Power ~ Alchemical Simulacrum|PREVARGTEQ:Z,1\n",
+        )
+        .unwrap();
+        // A bare (no class-prefixed wrapper) subdomain grant -- resolves
+        // the same Cleric+Paladin owners as an explicit "Core Domain ~".
+        std::fs::write(
+            dir.join("bare.lst"),
+            "Dragon Subdomain\t\tPREMULT:1\tABILITY:Special Ability|AUTOMATIC|Domain Power ~ Venomous Stare|PREVARGTEQ:W,1\n",
+        )
+        .unwrap();
+        // A `.MOD` line naming a foreign feat category -- the real oracle
+        // shape (`acg_feats.lst:177`): the FIRST FIELD is the
+        // `CATEGORY=...MOD` token itself, no name column at all. Must NOT
+        // be read as a domain grant point.
+        std::fs::write(
+            dir.join("mod.lst"),
+            "CATEGORY=FEAT|Believer's Boon.MOD\tDEFINE:DomainAirLVL|0\t\tABILITY:Special Ability|AUTOMATIC|Domain Power ~ Agile Feet|PREVARGTEQ:V,1\n",
+        )
+        .unwrap();
+
+        let owners = scan_domain_power_owners(&dir);
+
+        assert_eq!(
+            owners.get("Chaos Blade").cloned(),
+            Some(BTreeSet::from(["Cleric".to_string(), "Inquisitor".to_string(), "Paladin".to_string()])),
+            "a power granted by BOTH a Core and an Inquisitor wrapper must union both classes: {owners:?}"
+        );
+        assert_eq!(
+            owners.get("Alchemical Simulacrum").cloned(),
+            Some(BTreeSet::from(["Druid".to_string()])),
+            "the Druid-only grant must not leak Cleric/Paladin/Inquisitor: {owners:?}"
+        );
+        assert_eq!(
+            owners.get("Venomous Stare").cloned(),
+            Some(BTreeSet::from(["Cleric".to_string(), "Paladin".to_string()])),
+            "a bare subdomain grant must resolve the same owners as Core Domain ~: {owners:?}"
+        );
+        assert!(
+            owners.get("Agile Feet").is_none(),
+            "a .MOD line naming a foreign feat category must not be read as a domain grant point: {owners:?}"
+        );
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn domain_power_owning_classes_returns_none_outside_the_namespace_and_when_unmapped() {
+        let mut owners = BTreeMap::new();
+        owners.insert("Chaos Blade".to_string(), BTreeSet::from(["Cleric".to_string(), "Paladin".to_string()]));
+
+        assert_eq!(
+            domain_power_owning_classes("Domain Power ~ Chaos Blade", &owners),
+            Some(vec!["Cleric".to_string(), "Paladin".to_string()])
+        );
+        // Not a "Domain Power ~ " key at all.
+        assert_eq!(domain_power_owning_classes("Ki Power ~ Wholeness of Body", &owners), None);
+        // In the namespace, but the scan found no grant chain for it.
+        assert_eq!(domain_power_owning_classes("Domain Power ~ Nonexistent Power", &owners), None);
+    }
+
+    #[test]
+    fn generate_writes_the_multi_owner_classes_for_a_domain_power_record_never_collapsing_class() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-domain-power-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        // The record itself, cited exactly the way `v06_work_inventory`
+        // enumerates it (own KEY: token line, no class name in its own
+        // text or TYPE/PRE tokens -- matches the real corpus shape).
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("cr_abilities_class.lst"),
+            "Chaos Blade\t\tKEY:Domain Power ~ Chaos Blade\t\tCATEGORY:Special Ability\tDESC:Anarchic weapon.\n",
+        )
+        .unwrap();
+        // The upstream grant chain, in a SEPARATE file (as the real
+        // oracle has it: cr_domains.lst grants the "Core Domain ~"
+        // wrapper; apg_abilities_class.lst is where the wrapper itself
+        // grants the power) -- proves the scan is corpus-wide, not
+        // scoped to the unit's own citation file.
+        let elsewhere_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/advanced_players_guide");
+        std::fs::create_dir_all(&elsewhere_dir).unwrap();
+        std::fs::write(
+            elsewhere_dir.join("apg_abilities_class.lst"),
+            "Core Domain ~ Azata Subdomain (Chaos)\tCATEGORY:Internal\t\tABILITY:Special Ability|AUTOMATIC|Domain Power ~ Chaos Blade|PREVARGTEQ:X,8\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "core_rulebook".to_string(),
+            source_file: "cr_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Domain Power ~ Chaos Blade".to_string(),
+            name: "Chaos Blade".to_string(),
+            type_facet: None,
+        }];
+        let corpus_class_names = BTreeMap::new();
+
+        generate(
+            &corpus_root,
+            &grants_root,
+            &out_dir,
+            "2026-08-23T00:00:00Z",
+            &units,
+            &corpus_class_names,
+        )
+        .expect("generate must succeed against a well-formed fixture");
+
+        let written = std::fs::read_to_string(out_dir.join("core_rulebook/class_feature/domain_power/chaos_blade.json"))
+            .expect("generate must write the record");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        assert_eq!(
+            json["data"]["classes"].as_array().map(|a| a.iter().map(|v| v.as_str().unwrap()).collect::<Vec<_>>()),
+            Some(vec!["Cleric", "Paladin"]),
+            "must record BOTH owning classes, never collapsed to one: {written}"
+        );
+        // `class` (the existing single-owner field) stays exactly what
+        // it was before this cycle -- the key-owner fallback "Domain
+        // Power" -- because none of the six single-class tiers resolve
+        // it, and this cycle deliberately does not force one.
+        assert_eq!(
+            json["data"]["class"].as_str(),
+            Some("Domain Power"),
+            "single-owner `class` must not be forced/collapsed by the new multi-owner field: {written}"
         );
 
         std::fs::remove_dir_all(&tmp).ok();

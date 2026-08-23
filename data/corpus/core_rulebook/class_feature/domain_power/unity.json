@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Unity",
     "name": "Unity",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "Whenever a spell targets you and one or more allies within 30 feet, you can use this ability to allow your allies to use your saving throw against the effect instead of their own. Each ally must decide individually before the rolls are made. Using this ability is an immediate action. You can use this ability %1 times per day.|UnityTimes",
     "raw_tokens": [
       {

@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Night Hunter",
     "name": "Night Hunter",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a standard action, you can blend into the shadows of the night, becoming nearly invisible. As long as you are in an area of dim light or darkness, you are invisible (as per invisibility) to creatures without darkvision. This ability lasts for %1 rounds. You can use this ability %2 times per day.|max(DomainLVL/2,1)|DomainDarknessTimes",
     "raw_tokens": [
       {

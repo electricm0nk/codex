@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Wind Blast",
     "name": "Wind Blast",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a standard action, you can unleash a blast of air in a 30-foot line. Make a combat maneuver check against each creature in the line, using %1 as your CMB. Treat the results as a bull rush attempt. You can use this ability %2 times per day.|DomainAirLVL+WIS|DomainAirTimes",
     "raw_tokens": [
       {

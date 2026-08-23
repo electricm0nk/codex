@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Rage",
     "name": "Rage",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, you can enter a fearsome rage, like a barbarian, %1 rounds per day. At 12th and 16th level, you can select one rage power. You cannot select any rage power that possesses a level requirement, but otherwise your barbarian level is %2. These rounds of rage stack with any rounds of rage you might have from levels of barbarian.|DomainDestructionLVL|DomainDestructionLVL/2",
     "raw_tokens": [
       {

@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Good Fortune",
     "name": "Good Fortune",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1 times per day.|GoodFortuneTimes",
     "raw_tokens": [
       {

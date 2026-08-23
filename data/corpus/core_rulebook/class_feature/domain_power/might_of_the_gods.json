@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Might of the Gods",
     "name": "Might of the Gods",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can add a +%1 enhancement bonus to your Strength score for %1 rounds per day. That bonus only applies on Strength checks and Strength-based skill checks. These rounds do not need to be consecutive.|MightOfTheGodsRounds",
     "raw_tokens": [
       {

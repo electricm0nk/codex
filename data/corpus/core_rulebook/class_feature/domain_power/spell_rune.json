@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Spell Rune",
     "name": "Spell Rune",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can attach another spell that you cast to one of your Blast Runes, causing that spell to affect the creature that triggers the rune, in addition to the damage. This spell must be of at least one level lower than the highest-level cleric spell you can cast, and it must target one or more creatures. Regardless of the number of targets the spell can normally affect, it only affects the creature that triggers the rune.",
     "raw_tokens": [
       {

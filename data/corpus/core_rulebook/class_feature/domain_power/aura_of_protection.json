@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Aura of Protection",
     "name": "Aura of Protection",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can emit a 30-foot aura of protection for %1 rounds per day. You and your allies within this aura gain a +%2 deflection to AC resistance 5 against all elements (acid, cold, electricity, fire, and sonic). These rounds do not need to be consecutive.|AuraOfProtectionRounds|(DomainProtectionLVL-4)/4",
     "raw_tokens": [
       {

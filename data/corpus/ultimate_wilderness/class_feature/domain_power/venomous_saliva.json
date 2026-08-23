@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Venomous Saliva",
     "name": "Venomous Saliva",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "As a swift action, you can spit a gout of life-stealing venom onto a weapon you are wielding. The poison lasts for 1 minute or until you make an attack that injures a foe with that weapon. Life-Stealing Venom: Injury; save Fort DC %1;frequency 1/round for 3 rounds; effect 1 Con damage; cure 1 save. You can use the venomous saliva ability %2 times per day.|DomainScalykindDC|DomainScalykindTimes",
     "raw_tokens": [
       {

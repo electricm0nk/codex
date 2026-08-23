@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Battle Rage",
     "name": "Battle Rage",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can touch a creature as a standard action to give it a +%1 bonus on melee damage rolls for 1 round. You can do so %2 times per day.|max(DomainWarLVL/2,1)|BattleRageTimes",
     "raw_tokens": [
       {

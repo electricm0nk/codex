@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Sun's Blessing",
     "name": "Sun's Blessing",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "Whenever you channel positive energy to harm undead creatures, add a +%1 bonus to the damage dealt. Undead do not add their channel resistance to their saves when you channel positive energy.|DomainSunLVL",
     "raw_tokens": [
       {

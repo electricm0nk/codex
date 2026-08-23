@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Remote Viewing",
     "name": "Remote Viewing",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can use Clairaudience/Clairvoyance as a spell-like ability (CL %1). You can use this ability for %1 rounds per day. These rounds do not need to be consecutive.|RemoteViewingRounds",
     "raw_tokens": [
       {

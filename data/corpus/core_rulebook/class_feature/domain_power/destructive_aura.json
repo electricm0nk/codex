@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Destructive Aura",
     "name": "Destructive Aura",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can emit a 30-foot aura of destruction for %1 rounds per day. All attacks made against targets in this aura (including you) gain a +%2 morale bonus on damage and all critical threats are automatically confirmed. These rounds do not need to be consecutive.|DestructiveAuraRounds|DomainDestructionLVL/2",
     "raw_tokens": [
       {

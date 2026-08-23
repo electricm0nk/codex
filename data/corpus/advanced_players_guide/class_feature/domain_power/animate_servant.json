@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Animate Servant",
     "name": "Animate Servant",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, as a standard action, you can give life to inanimate objects. This ability functions as animate objects using your cleric level as the caster level. You can use this ability %1 times per day.|DomainArtificeLVL/4-1",
     "raw_tokens": [
       {

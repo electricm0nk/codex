@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Storm Burst",
     "name": "Storm Burst",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "As a standard action, you can create a storm burst targeting any foe within 30 feet as a ranged touch attack. The storm burst deals 1d6 points of nonlethal damage. In addition, the target is buffeted by winds and rain, causing it to take a -2 penalty on attack rolls for 1 round. You can use this ability %2 times per day|StormBurstTimes|PREVARLT:DomainWeatherLVL,2",
     "raw_tokens": [
       {

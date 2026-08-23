@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Silver-Tongued Haggler",
     "name": "Silver-Tongued Haggler",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "Whenever you make a Bluff, Diplomacy or Sense Motive check, you can, as a free action, grant yourself a +%1 bonus on the roll. You can use this ability %2 times per day.|max(floor(DomainTravelLVL/2),1)|DomainTravelTimes",
     "raw_tokens": [
       {

@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Inspiring Command",
     "name": "Inspiring Command",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a standard action, you can issue an inspiring command to an ally. The inspiring command affects one ally who must be within 30 feet of you. The affected ally gains a +2 insight bonus on attack rolls, AC, combat maneuver defense, and skill checks for 1 round. This is a language-dependant mind-affecting effect.|PREVAREQ:InspiringCommandAllies,1",
     "raw_tokens": [
       {

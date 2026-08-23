@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Whispering Evil",
     "name": "Whispering Evil",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, as a standard action, you can whisper a hypnotizing litany of empty promises. Each enemy within a 30-foot emanation that can hear you must succeed on a Will saving throw or become fascinated for as long as you continue the litany. You can use this power %1 rounds per day, but these rounds do not need to be consecutive. This is a mind-affecting effect.|DomainEvilLVL",
     "raw_tokens": [
       {

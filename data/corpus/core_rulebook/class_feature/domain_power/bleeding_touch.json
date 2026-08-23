@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Bleeding Touch",
     "name": "Bleeding Touch",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "As a melee touch attack, you can cause a living creature to take 1d6 points of damage per round. This effect persists for %1 rounds or until stopped with a DC 15 Heal check or any spell or effect that heals damage. You can use this ability %2 times per day.|max(DomainDeathLVL/2,1)|BleedingTouchTimes",
     "raw_tokens": [
       {

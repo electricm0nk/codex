@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Sudden Sting",
     "name": "Sudden Sting",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can inflict a lingering, painful sting as a swift action that requires a successful melee touch attack. This sting deals 1d4+%1 points of piercing damage, and the target must succeed at a Fortitude save (DC %2) or become staggered for 1 round. This is a pain effect. You can use this ability %3 times per day.|DomainVerminLVL/2|10+DomainVerminLVL/2+CON|DomainVerminTimes",
     "raw_tokens": [
       {

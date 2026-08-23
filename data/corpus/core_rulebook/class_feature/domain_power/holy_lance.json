@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Holy Lance",
     "name": "Holy Lance",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can give a weapon you touch the Holy special weapon quality for %1 rounds. You can use this ability %2 times per day.|DomainGoodLVL|HolyLanceTimes",
     "raw_tokens": [
       {

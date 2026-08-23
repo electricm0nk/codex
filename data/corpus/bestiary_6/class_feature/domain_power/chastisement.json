@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Chastisement",
     "name": "Chastisement",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a standard action, you can cast a strengthened spell against a creature that damaged you since your last turn. This spell must target the creature that damaged you, and is cast at +1 caster level. Area of effect spells cannot be used in conjunction with this ability, but other spells that target multiple creatures may be. You can use this ability %1 times per day.|DomainLawLVL",
     "raw_tokens": [
       {

@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Fury of the Abyss",
     "name": "Fury of the Abyss",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a swift action, you can give yourself an enhancement bonus equal to %1 on melee attacks, melee damage rolls, and combat maneuver checks. This bonus lasts for 1 round. During this round, you take a -2 penalty to AC. You can use this ability %2 times per day.|max(DomainLVL/2,1)|DomainChaosTimes",
     "raw_tokens": [
       {

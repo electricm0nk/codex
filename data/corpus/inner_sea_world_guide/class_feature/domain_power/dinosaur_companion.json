@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Dinosaur Companion",
     "name": "Dinosaur Companion",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "At 4th level, you gain the service of an animal companion. Your effective druid level for this animal companion is equal to your cleric level -2. You may choose any dinosaur as your companion. This ability replaces the serpent companion ability of the Scalykind domain.",
     "raw_tokens": [
       {

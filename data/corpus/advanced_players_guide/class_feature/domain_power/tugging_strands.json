@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Tugging Strands",
     "name": "Tugging Strands",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, you can force a creature within line of sight to reroll any one roll that it has just made before the result of the roll is revealed. The result of the reroll must be taken, even if it is worse than the original roll. You can use this ability %1 times per day.|(DomainLuckLVL-2)/6",
     "raw_tokens": [
       {

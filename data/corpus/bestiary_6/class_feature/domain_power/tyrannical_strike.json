@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Tyrannical Strike",
     "name": "Tyrannical Strike",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you can choose to forgo the damage (but not any other effects of the attack) to instead affect the creature you hit as a greater command spell, with a caster level equal of %1. You can use this ability %2 times per day.|DomainLawLVL|DomainLawLVL/4-1",
     "raw_tokens": [
       {

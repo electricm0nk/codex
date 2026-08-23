@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:48:23Z",
+  "ingested_at": "2026-08-23T12:59:13Z",
   "data": {
     "key": "Domain Power ~ Read Minds",
     "name": "Read Minds",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, you can broaden your mental spectrum to encompass those around you. Doing so allows you to read the mind of every creature within 30 feet as if you had cast detect thoughts. This ability allows you to read the surface thoughts of any creature that you are aware of after only 1 round of concentration. Creatures in this area are allowed a Will save to negate the effect. The DC of this Will save is %1. You can use this ability %2 rounds per day. These rounds do not need to be consecutive.|DomainKnowledgeLVL/2+10+WIS|DomainKnowledgeLVL",
     "raw_tokens": [
       {
