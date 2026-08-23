@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extend Resonant Power",
+    "category": "General",
+    "name": "Extend Resonant Power",
+    "description": "You can share the benefits of your resonant focus powers with nearby allies. Select an implement school. When you place mental focus points into an implement of that school, you can choose to gain benefits from the resonant power as if you had placed only half as many points of mental focus into the implement. If you do, you can extend the same benefits to one additional ally within 30 feet at the time you invest mental focus. If the ally moves outside of the extended power's range, the power is suppressed, but it resumes functioning once the ally moves within range again. You can spend 1 point of mental focus from your implement to pass the effect to a new target, so long as both the original target and the new one are within 30 feet. This feat can affect only one implement from a given school at a time, even if you have selected the same implement school more than once. Special: You can take this feat multiple times. Each time you take the feat, select a different implement school.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Occultist ~ Mental Focus",
+      "PREMULT:1,[PRECLASS:1,SPELLCASTER=7],[PREVARGTEQ:CasterLevel_Highest,7]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 23,
+    "record_key": "Extend Resonant Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

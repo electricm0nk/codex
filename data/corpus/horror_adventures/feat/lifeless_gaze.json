@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Lifeless Gaze",
+    "category": "General",
+    "name": "Lifeless Gaze",
+    "description": "Your cold visage and eyes devoid of sentiment cause fear in those making contact with your gaze. Your haunting gaze grants horrifying insights to the darker places of your inner psyche. You gain a +2 insight bonus on Will saving throws against emotion effects and a +2 insight bonus on Bluff checks. Additionally, if a humanoid creature attempts to read your mind using an ability like detect thoughts, it is shaken for 2d4 rounds regardless of whether the mind-reading attempt succeeds. If a humanoid fails a Diplomacy check against you by 5 or more, it becomes shaken for 2d4 rounds by your emotionless gaze.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Iron Will",
+      "PRESKILL:1,Bluff=5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 37,
+    "record_key": "Lifeless Gaze"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Stone Strider",
+    "category": "General",
+    "name": "Stone Strider",
+    "description": "You discern the best path through rocky terrain. You can move through any sort of nonmagical rocky terrain without taking damage, becoming slowed due to difficult terrain, or suffering any other impairments the terrain would otherwise cause.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Stonecunning",
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 87,
+    "record_key": "Stone Strider"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

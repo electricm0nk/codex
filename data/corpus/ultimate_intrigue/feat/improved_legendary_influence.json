@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Improved Legendary Influence",
+    "category": "General",
+    "name": "Improved Legendary Influence",
+    "description": "Each legend grants you more of its power in return for greater influence. For each spirit you can channel, choose a second feat other than an item creation feat. Whenever you allow a spirit to gain 1 point of influence over you to gain that spirit's associated feat via Legendary Influence, you can allow that spirit to gain 1 additional point of influence over you to gain the second feat.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Legendary Influence",
+      "PREABILITY:2,CATEGORY=Special Ability,Medium ~ Propitiation,Medium ~ Spirit",
+      "PRETEXT:Legendary Influence, lesser spirit power and propitiation class features."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_feats_oa.lst",
+    "sha256": "f9daebc222dafb1ea8fdf7a5a0e466e4078f4f0f66ada93e2a674c46c104183b",
+    "line": 13,
+    "record_key": "Improved Legendary Influence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Staggering Blow",
+    "category": "Combat",
+    "name": "Staggering Blow",
+    "description": "You know just where to strike to temporarily stagger a foe. When you attack a foe using Vital Strike, you can choose to take a-2 penalty on your attack roll to also make the attack a staggering strike. You must make this choice before making the attack roll. If your attack roll is successful, your target must succeed at a Fortitude saving throw (DC ) or be staggered until the start of your next turn. Once a creature that failed its save recovers from the effects of your staggering blow, it is immune to the effects of this feat for 24 hours. Constructs, oozes, plants, undead, incorporeal creatures, and creatures that are immune to critical hits are immune to this effect.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Power Attack,Vital Strike",
+      "PRETOTALAB:8",
+      "PREVARGTEQ:PreStatScore_STR,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 33,
+    "record_key": "Staggering Blow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

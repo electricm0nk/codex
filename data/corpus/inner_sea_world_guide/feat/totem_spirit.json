@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Totem Spirit",
+    "category": "General",
+    "name": "Totem Spirit",
+    "description": "You are mystically tied to your tribe's sacred totem. Gain a boon related to your tribe's theme. You are mystically tied to your tribe's sacred totem. You gain a boon related to your tribe.",
+    "prerequisites": [
+      "PRETEXT:Member of a Shoanti tribe"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 42,
+    "record_key": "Totem Spirit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

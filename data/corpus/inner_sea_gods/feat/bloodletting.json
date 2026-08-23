@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Bloodletting",
+    "category": "Combat",
+    "name": "Bloodletting",
+    "description": "When you attack with a piercing or slashing weapon, the wounds you cause bleed profusely. Whenever you threaten a critical hit with a piercing or slashing weapon (regardless of whether you confirm the critical hit or not), you deal 1 point ofbleed damage to the targeted creature.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 15,
+    "record_key": "Bloodletting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

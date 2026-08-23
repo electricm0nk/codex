@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spring Attack",
+    "category": "Mythic",
+    "name": "Spring Attack (Mythic)",
+    "description": "You move across the battlefield in a blur of whirling blades. When you use Spring Attack, you don't need to move at least 10 feet before making the first attack. If you expend one use of mythic power when you start a Spring Attack, the movement you make during the Spring Attack doesn't provoke attacks of opportunity.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Spring Attack",
+      "PRETOTALAB:6",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 166,
+    "record_key": "Spring Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Deadhand Master",
+    "category": "Combat",
+    "name": "Deadhand Master",
+    "description": "Your death-infused punch drains life force from your foes. While using Deadhand Style, when you damage a living creature with an unarmed strike, you can spend 2 points from your ki pool as a swift action to inflict 2 temporary negative levels on your enemy with no saving throw. Effects that reduce the ki cost also reduce the number of negative levels you inflict on your foe, but effects that increase the ki cost do not increase the number of negative levels you inflict. As long as the foe is affected by the temporary negative levels, you can't recover the ki points you spent, effectively reducing the size of your ki pool. The Fortitude save DC to remove the negative levels and prevent them from becoming permanent is . Once the negative levels become permanent or the foe removes them, you can recover your spent ki points. If the foe dies before either happens, you can recover the spent ki after 24 hours.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Deadhand Initiate",
+      "PRESKILL:1,Knowledge (religion)=14",
+      "PREVARGTEQ:PreStatScore_WIS,23"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 17,
+    "record_key": "Deadhand Master"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

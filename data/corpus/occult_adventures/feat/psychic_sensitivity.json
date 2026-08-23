@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Psychic Sensitivity",
+    "category": "General",
+    "name": "Psychic Sensitivity",
+    "description": "You unlock the secrets of the occult world. You gain access to occult skill unlocks (see page 194) for any skills in which you have ranks. If you have no ranks in the appropriate skill, you can't use the occult skill unlock, even if that skill can be used untrained. Normal: You must have the ability to cast psychic spells in order to use occult skill unlocks.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 58,
+    "record_key": "Psychic Sensitivity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

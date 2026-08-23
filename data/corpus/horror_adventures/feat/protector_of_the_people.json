@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Protector of the People",
+    "category": "Story",
+    "name": "Protector of the People",
+    "description": "You have vowed to construct a defender for your community. You temporarily gain the Craft Construct feat for the purposes of building one golem to satisfy the goal of this story feat. You do not need to meet Craft Construct's prerequisites, and it can't be used as a prerequisite for any other crafting endeavor. [Goal] Craft a golem of CR 5 or greater and donate it to your community for its defense against persecution. You and your allies must fund the construction, not the community. You must be significantly involved in the golem's construction. After completion, this golem cannot be used as a personal adventuring companion; it is the property of the community to which it was dedicated. The donated creature must be a golem and not another type of construct, such as an animated object. [Completion Benefits] You gain Craft Construct as a bonus feat without meeting its prerequisites and can use it for any purpose. The cost to build any construct that normally costs less than the cost of your donated golem is permanently reduced by 10%; the cost of the base materials is not reduced, however.",
+    "prerequisites": [
+      "PRETEXT:Your community has come under persecution and requires considerable defense, or you have the Raiders, the Righting a Wrong, The War, or The Way Things Work background (all of which are found in Ultimate Campaign)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 64,
+    "record_key": "Protector of the People"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

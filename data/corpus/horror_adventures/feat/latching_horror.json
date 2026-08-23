@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Latching Horror",
+    "category": "Combat",
+    "name": "Latching Horror",
+    "description": "You induce fear and loathing when you latch onto another living creature. When you use your attach ability, your opponent must succeed at a Will save (DC ) to avoid becoming shaken while you remain attached. This is a mind-affecting fear effect.",
+    "prerequisites": [
+      "PRETEXT:Attach universal monster ability."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 36,
+    "record_key": "Latching Horror"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

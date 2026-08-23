@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Consume Essence",
+    "category": "Combat",
+    "name": "Consume Essence",
+    "description": "Creatures that you swallow are quickly absorbed and soon utterly annihilated. When you start your turn having swallowed at least one creature, each swallowed creature must succeed at a Fortitude save (DC ) or gain a temporary negative level. Swallowed creatures that die from these negative levels are consumed as per disintegrate. This is a death effect. [Special] If you are of the undead type, each time a swallowed creature gains a temporary negative level from this ability, you add 5 temporary hit points to the number of hit points that swallowed creatures must deal to escape, up to a maximum of 15 temporary hit points. These temporary hit points last for 10 minutes.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Swallow Whole",
+      "PRETOTALAB:6",
+      "PREALIGN:LE,NE,CE",
+      "PRERACE:2,RACETYPE=Magical Beast,RACESUBTYPE=Outsider,RACESUBTYPE=Undead"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 14,
+    "record_key": "Consume Essence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

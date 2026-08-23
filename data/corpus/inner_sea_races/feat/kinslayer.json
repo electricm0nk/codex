@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Kinslayer",
+    "category": "General",
+    "name": "Kinslayer",
+    "description": "Your intimate knowledge of anatomy, deep hatred of your own kind, and delight in spilling your people's blood make you a lethal combatant against your own race. Your attacks deal an additional 1d6 points of precision damage against creatures that have the same creature type (and subtype, if applicable) as you. This bonus damage stacks with other sources of precision damage, such as sneak attack. If you have more than one subtype, you must choose one of them-this feat applies only to targets of that subtype. Once made, this choice can't be changed. Special: The Knowledge skill used to qualify for this feat must be appropriate for identifying creatures of your type.",
+    "prerequisites": [
+      "PREALIGN:LE,NE,CE",
+      "PRESKILL:1,TYPE.Knowledge=3",
+      "PRETEXT:Knowledge 3 ranks (see special), evil alignment."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 42,
+    "record_key": "Kinslayer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

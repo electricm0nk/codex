@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Incorporeal Intuition",
+    "category": "General",
+    "name": "Incorporeal Intuition",
+    "description": "You notice incorporeal creatures, even those lurking in walls. You can sense the presence and movement of incorporeal creatures though solid walls, as long as that incorporeal creature is adjacent to you. When you sense a creature in this way, you can attempt a Knowledge (religion) check to identify the creature and its special powers or vulnerabilities, with a -5 penalty. When you sense an incorporeal creature with this ability and use a readied action to attack it when it attacks from inside the wall, it doesn't gain cover against your attack. [Normal] Incorporeal creatures are silent unless they choose to make a sound and are thus almost impossible to detect when inside a solid wall. When readying to attack an incorporeal creature in a solid wall, it gains cover against your attack.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity],[PRESPELLCAST:TYPE=Psychic]",
+      "PREABILITY:1,CATEGORY=FEAT,Spirit Sense"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 31,
+    "record_key": "Incorporeal Intuition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

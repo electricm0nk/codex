@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Monstrous Mount",
+    "category": "Monstrous Mount",
+    "name": "Monstrous Mount",
+    "description": "You have learned how to tame and ride exotic beasts. You can select an exotic beast from the list of monstrous mounts to serve as your animal companion or special mount. You acquire and advance this creature in the same way as the mount or animal companion detailed in the class feature used as a prerequisite for this feat. You can also dismiss the creature as dictated by your class feature. You must meet additional prerequisites to choose a creature with an Intelligence score of 3 or higher, as described in each creature's entry.",
+    "prerequisites": [
+      "PREMULT:1,[PREVARGTEQ:Hunters_Bond_Animal_Companion,1,AnimalCompanionLVL,4],[PREVARGTEQ:Divine_Bond_Mount,1,SpecialMountLVL,4],[PREMULT:2,[PREABILITY:1,CATEGORY=Special Ability,TYPE.Mount],[PREVARGTEQ:CavalierMountLVL,4]],[PREMULT:2,[PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion],[PREVARGTEQ:SamuraiMountLVL,4]]",
+      "PRESKILL:2,Handle Animal=4,Ride=4",
+      "PRETEXT:Prerequisites: Handle Animal 4 ranks; Ride 4 ranks; divine bond (mount), hunter's bond (animal companion), or mount class feature with an effective druid level of 4."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 33,
+    "record_key": "Monstrous Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

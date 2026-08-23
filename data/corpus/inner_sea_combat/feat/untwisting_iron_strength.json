@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Untwisting Iron Strength",
+    "category": "Combat",
+    "name": "Untwisting Iron Strength",
+    "description": "You are a master at breaking through even the toughest of objects, as though your fists were adamantine hammers. When using Perfect Style, you can ignore an amount of hardness equal to your character level. Additionally, you gain a +4 bonus on Strength checks to break objects. If you spend 1 ki point as a swift action, you also gain the benefits of Improved Sunder for 1 round.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Perfect Style",
+      "PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:MonkLVL,9]",
+      "PRESTAT:2,STR=15,WIS=13",
+      "PRETEXT:Prerequisites: Str 15, Wis 13, Perfect Style, base attack bonus +9 or monk level 9th."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 29,
+    "record_key": "Untwisting Iron Strength"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

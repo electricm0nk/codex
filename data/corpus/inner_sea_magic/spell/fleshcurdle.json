@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Fleshcurdle",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You warp the target creature's flesh, discoloring it and causing it to become misshapen and impairing its function. When you cast this spell, you must choose one of three types of effects to inflict on the target-movement, attacks, or defense. Attacks: One of the creature's natural attacks takes a -2 penalty on attack and damage rolls, only scores a critical hit on a natural 20, and only deals x2 damage on a confirmed critical hit. &nl;Defense: The creature's natural armor bonus decreases by -4, to a minimum bonus of +0. &nl;Movement: One of the creature's movement speeds (chosen by you) is halved. &nl;Most undead are susceptible to fleshcurdle, but amorphous creatures and creatures without flesh are immune (such as elementals, oozes, plants, gaseous or incorporeal creatures, and skeletons)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 18,
+    "record_key": "Fleshcurdle"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

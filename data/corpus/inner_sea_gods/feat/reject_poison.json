@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Reject Poison",
+    "category": "General",
+    "name": "Reject Poison",
+    "description": "You are a careful poisoner, and know how to protect yourself against exposure to the ill effects of most substances. Whenever you fail the initial saving throw against poison, you have a 20% chance of naturally rejecting the toxin, negating its effects and wasting its use.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,TYPE.Poison Use",
+      "PREDEITY:[redacted PI]",
+      "PRESTAT:1,CON=13",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 74,
+    "record_key": "Reject Poison"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

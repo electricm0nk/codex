@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Angelic Flesh ~ Steel",
+    "category": "AngelicFleshOption",
+    "name": "Steel",
+    "description": "You take a -2 penalty on Disguise and Stealth checks but gain a +1 natural armor bonus to AC, and your unarmed strikes or natural weapons count as cold iron for the purpose of overcoming damage reduction.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Angelic Blood",
+      "PREFACT:1,TEMPLATES,IsAasimar=true"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 219,
+    "record_key": "Angelic Flesh ~ Steel"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

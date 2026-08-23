@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Exsanguinate",
+    "category": "Combat",
+    "name": "Exsanguinate",
+    "description": "You drink blood from the living at a furious rate, often draining creatures dry in a matter of seconds. Once per round, when you successfully pin an opponent, that opponent takes double the normal damage from your blood drain.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,TYPE.Grab,Blood Drain"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 25,
+    "record_key": "Exsanguinate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

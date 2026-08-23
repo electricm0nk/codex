@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spiritual Balance",
+    "category": "General",
+    "name": "Spiritual Balance",
+    "description": "You focus your ki in order to quell the influence of outside spirits on you. The saving throw bonus from your still mind class feature applies against possession effects, and as an immediate action you can spend 1 point from your ki pool to double the saving throw bonus provided by still mind. Normal: Your still mind class feature applies only against enchantment spells and effects.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,TYPE.Ki Pool,TYPE.Still Mind"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 68,
+    "record_key": "Spiritual Balance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

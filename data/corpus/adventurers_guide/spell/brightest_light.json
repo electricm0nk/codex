@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Brightest Light",
+    "school": "Evocation",
+    "level": 4,
+    "description": "[redacted PI]"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 10,
+    "record_key": "Brightest Light"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

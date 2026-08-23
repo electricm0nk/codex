@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Chakra Master",
+    "category": "General",
+    "name": "Chakra Master",
+    "description": "You have mastered all seven chakras, and use your ki to pull more power from the kundalini flow. Your pool of serpent-fire ki increases to 5 points. You can spend 3 ki points instead of 1 when you open or maintain a chakra to gain the benefits of two chakras instead of one in that round. If you are opening or maintaining your crown chakra, this stacks with the crown chakra's special power, allowing you to gain the benefits of three chakras in a round.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Chakra Adept,Chakra Initiate",
+      "PREPCLEVEL:MIN=14",
+      "PRETEXT:Ability to awaken the crown chakra."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 11,
+    "record_key": "Chakra Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

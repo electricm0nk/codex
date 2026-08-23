@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Heavenly Radiance ~ Flare  Burst",
+    "category": "HeavenlyRadianceOption",
+    "name": "Flare Burst",
+    "description": "By expending a use of daylight, you may use this spell as a spell-like ability.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Heavenly Radiance",
+      "PRELEVEL:MIN=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 223,
+    "record_key": "Heavenly Radiance ~ Flare  Burst"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

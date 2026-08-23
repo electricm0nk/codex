@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Multiattack",
+    "category": "General",
+    "name": "Multiattack",
+    "description": "This creature is particularly skilled at making attacks with its natural weapons. The creature's secondary attacks with natural weapons take only a -2 penalty. Normal: Without this feat, the creature's secondary attacks with natural weapons take a -5 penalty.",
+    "prerequisites": [
+      "PREWEAPONPROF:3,TYPE.Natural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst",
+    "sha256": "a7ea4d8929b217e3b634f1113b881c9e0d3bea75eeae23ece83e02e08a3bf9b8",
+    "line": 19,
+    "record_key": "Multiattack"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

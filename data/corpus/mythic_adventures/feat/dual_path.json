@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Dual Path",
+    "category": "Mythic",
+    "name": "Dual Path",
+    "description": "You follow two mythic paths. Select a mythic path other than the path you selected at your moment of ascension. You gain that path's 1st-tier ability (either archmage arcana, champion's strike, divine surge, guardian's call, marshal's order, or trickster attack). Each time you gain a path ability, you can select that path ability from either path's list or the list of universal path abilities.",
+    "prerequisites": [
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 24,
+    "record_key": "Dual Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

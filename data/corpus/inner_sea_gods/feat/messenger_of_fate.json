@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Messenger Of Fate",
+    "category": "General",
+    "name": "Messenger Of Fate",
+    "description": "The Lady of Graves has blessed you with the power of true prophecy. When casting divination spells, you do so at +1 caster level. If your divination spell has a base percentage chance of providing correct or useful information, your maximum chance of gleaning correct or useful information is 100%, instead of the standard 90%.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 63,
+    "record_key": "Messenger Of Fate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

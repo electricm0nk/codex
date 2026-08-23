@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Efficient Focus Shift",
+    "category": "General",
+    "name": "Efficient Focus Shift",
+    "description": "You are more adept than most at shifting mental focus between your implements. Twice per day when you shift mental focus from one implement to another, you can add the same number of points to the latter implement that you removed from the former. Normal: By removing points of mental focus from one implement, you can add the same amount - 1 to another. Special: You can take this feat multiple times. Its effects stack.",
+    "prerequisites": [
+      "PRECLASS:1,Occultist=7"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 17,
+    "record_key": "Efficient Focus Shift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

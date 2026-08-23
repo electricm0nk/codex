@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Zealous Mind",
+    "category": "General",
+    "name": "Zealous Mind",
+    "description": "You are so steadfast in the principles of your alignment, even magic has difficulty swaying you. Whenever you are under the effect of a charm or compulsion effect cast by or coming from a source with a chaotic alignment or an alignment on the good and evil axis opposite of your alignment (evil if you are good, and good if you are evil) you gain a +2 on any saving throw or opposed Charisma check to break free from the effect. This bonus stacks with itself and with the bonus granted by Unimpeachable Honor.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Iron Will,Unimpeachable Honor",
+      "PREALIGN:LG,LN,LE"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 59,
+    "record_key": "Zealous Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

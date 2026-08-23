@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fabulous Figments",
+    "category": "Mythic",
+    "name": "Fabulous Figments",
+    "description": "Your illusions are astonishingly realistic. Non-mythic creatures can't identify your illusion spells with Spellcraft, including checks attempted as part of arcane sight, detect magic, or similar effects. When mythic creatures attempt to identify your illusions, add your tier to the DC of those Spellcraft checks. Mythic creatures informed by their allies that one of your illusions isn't real gain only a +2 bonus on their Will saves to disbelieve. Non-mythic creatures gain no bonus to disbelieve.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Spell Focus (Illusion)",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 27,
+    "record_key": "Fabulous Figments"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

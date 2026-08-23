@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Blood Spurt",
+    "category": "Combat",
+    "name": "Blood Spurt",
+    "description": "When cut in combat, you spray your blood into the faces of your foes. Whenever a creature adjacent to you hits you with a melee attack that deals bleed damage, that creature must succeed at a Fortitude save (DC ) or become blinded for 1d4 rounds as your blood sprays it in the face. Additionally, if you have a special ability that deals bleed damage (such as a rogue's bleeding strike rogue talent), as a standard action, you can deal 1 point of bleed damage to yourself to spray blood in the face of an adjacent creature of your choice, causing the same effect. The creature only needs to attempt the saving throw for the first of its attacks that deals bleed damage.",
+    "prerequisites": [
+      "PRETOTALAB:2",
+      "PRETEXT:Susceptibility to bleed damage."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 6,
+    "record_key": "Blood Spurt"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

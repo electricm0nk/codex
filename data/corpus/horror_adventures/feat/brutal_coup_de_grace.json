@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Brutal Coup de Grace",
+    "category": "Combat",
+    "name": "Brutal Coup de Grace",
+    "description": "Your killing blows are so brutal that they scare other foes. When you deliver a coup de grace with the selected weapon and kill the target, enemies within 30 feet of you who can see or hear you must succeed at a Will saving throw (DC ) or become shaken. This is a mind-affecting fear effect.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Dazzling Display,Weapon Focus",
+      "PRETOTALAB:5",
+      "PRETEXT:Proficiency with the selected weapon."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 8,
+    "record_key": "Brutal Coup de Grace"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

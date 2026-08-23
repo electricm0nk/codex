@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Gnawer",
+    "category": "General",
+    "name": "Gnawer",
+    "description": "Thanks to your teeth's strength and quick growth, you are able to chew through nearly any obstacle given sufficient time. Damage dealt by your bite attack ignores points of hardness. You can spend a full-round action to deal double your bite damage to an unattended, inanimate object.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Sharptooth",
+      "PREFACT:1,TEMPLATES,IsRatfolk=true"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 15,
+    "record_key": "Gnawer"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

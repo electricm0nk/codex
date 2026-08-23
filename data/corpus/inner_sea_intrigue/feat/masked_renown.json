@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Masked Renown",
+    "category": "General",
+    "name": "Masked Renown",
+    "description": "Your masked persona is especially well known. You gain the vigilante's renown social talent (Ultimate Intrigue 12), allowing you to gather and maintain a reputation in a community. [Special] Beginning at 9th level, you can select this feat a second time to gain the great renown vigilante social talent.",
+    "prerequisites": [
+      "PRESKILL:1,Disguise=2",
+      "PRETEXT:Cha 13, Disguise 2 ranks.",
+      "PREVARGTEQ:PreStatScore_CHA,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_feats.lst",
+    "sha256": "bf848df0e5343241cdaea1562d1bef5d7f09362af28cf315e22c5eff69eb9418",
+    "line": 14,
+    "record_key": "Masked Renown"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

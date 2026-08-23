@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Curse Of Vengeance",
+    "category": "General",
+    "name": "Curse Of Vengeance",
+    "description": "Your deity lays curses upon those who wrong you. Whenever you are rendered helpless or a creature kills you, you can cast a single spell or spell-like ability with the curse descriptor as an immediate action before you become helpless or are killed. The curse must have a casting time of 1 standard action or less and must target the creature who rendered you helpless or who killed you. Ifthe curse has a range oftouch and the attacker is not within your reach, you can deliver it as a ranged touch attack with a range of 30 feet.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 31,
+    "record_key": "Curse Of Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

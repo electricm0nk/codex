@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Multiweapon Fighting",
+    "category": "General",
+    "name": "Multiweapon Fighting",
+    "description": "This multi-armed creature is skilled at making attacks with multiple weapons. Penalties for fighting with multiple weapons are reduced by -2 with the primary hand and by -6 with off hands. Normal: A creature without this feat takes a -6 penalty on attacks made with its primary hand and a -10 penalty on attacks made with all of its off hands. (It has one primary hand, and all the others are off hands.) See Two-Weapon Fighting in the Pathfinder RPG Core Rulebook. Special: This feat replaces the Two-Weapon Fighting feat for creatures with more than two arms.",
+    "prerequisites": [
+      "PREHANDSGTEQ:3",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst",
+    "sha256": "a7ea4d8929b217e3b634f1113b881c9e0d3bea75eeae23ece83e02e08a3bf9b8",
+    "line": 20,
+    "record_key": "Multiweapon Fighting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

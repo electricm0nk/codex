@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Grand Duchy Familiarity",
+    "category": "General",
+    "name": "Grand Duchy Familiarity",
+    "description": "You have spent significant time in the Grand Duchy of Alkenstar, and your proximity to so many firearms has given you a familiarity with their delicate handling. Once per day as an immediate action, you can reroll an attack roll with a firearm that would have resulted in a misfire. You must take the results of the new roll, even if it results in a misfire as well.",
+    "prerequisites": [
+      "PRETEXT:Prerequisites: Base attack bonus +3, proficiency with at least one firearm.",
+      "PRETOTALAB:3"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 47,
+    "record_key": "Grand Duchy Familiarity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

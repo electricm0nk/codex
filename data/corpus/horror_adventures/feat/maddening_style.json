@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Maddening Style",
+    "category": "Combat",
+    "name": "Maddening Style",
+    "description": "When you clobber an opponent with your fists, you inundate its mind with visions of madness and horror. You gain one additional use of Stunning Fist per day. When using this style, if you have at least 1 point in your ki pool, you increase the DCs of your confusion, madness, and insanity effects (including Maddening Strike) by 1. Additionally, when you successfully stun an opponent with your Stunning Fist attack, your target takes",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Stunning Fist",
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Ki Pool",
+      "PREALIGN:LE,NE,CE,LN,TN,CN",
+      "PRESKILL:1,Knowledge (arcana)=4",
+      "PREVARGTEQ:PreStatScore_WIS,15,PreStatScore_CHA,11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 41,
+    "record_key": "Maddening Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

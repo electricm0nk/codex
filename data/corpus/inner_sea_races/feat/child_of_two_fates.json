@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Child of Two Fates",
+    "category": "General",
+    "name": "Child of Two Fates",
+    "description": "You have learned to make the most of your torn existence. Once per day, you can select a teamwork feat that a human or elf ally within 30 feet possesses. You can ignore any race, ethnicity, or racial trait prerequisites, but you must still meet any other prerequisites for that feat to gain this benefit. You're treated as if you possess that feat for up to 1 minute, as long as you stay within 30 feet of the ally whose teamwork feat you have chosen to emulate.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsHalfElf=true",
+      "PRESKILL:1,Knowledge (Local)=5",
+      "PRETEXT:Knowledge (local) 5 ranks, half-elf."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 20,
+    "record_key": "Child of Two Fates"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

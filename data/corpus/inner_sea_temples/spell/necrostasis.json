@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Necrostasis",
+    "school": "Necromancy",
+    "level": 2,
+    "description": "You drain necromantic energy from an undead creature, inducing a sluggish stupor. The target becomes staggered. For the duration of the spell, dark wisps of energy seep out of the target creature. If the target already has the staggered condition (as a zombie does), it becomes dazed for 1 round instead. [Material Components] a finger bone"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 11,
+    "record_key": "Necrostasis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

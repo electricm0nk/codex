@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Bloody Vengeance",
+    "category": "Combat",
+    "name": "Bloody Vengeance",
+    "description": "Your retaliatory strikes have long-lasting effects. If an opponent within line of sight has damaged you within the last minute, you may study that opponent as a standard action. Thereafter, if you hit that opponent with a melee attack, you deal 1 point of bleed damage to that creature in addition to the normal damage dealt by your attack.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]",
+      "PRETOTALAB:1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 17,
+    "record_key": "Bloody Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

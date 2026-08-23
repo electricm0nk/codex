@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Ferment",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "This spell temporarily imbues a potable liquid (including elixirs, extracts, potions, and poisons) with an intoxicant. The caster must succeed at a caster level check in order to affect magic liquids and poisons (DC = 10 + item level for magic liquids, DC equal to the poison's save DC for a poison); otherwise, the spell fails. If the caster succeeds, the liquid also assumes a flavor according to what the caster desires, but the effect on the imbiber is the same. An imbiber of a liquid affected by ferment must succeed at a Fortitude saving throw at the spell's save DC or take a -2 penalty on attack rolls, saves, ability checks, and skill checks for the remaining duration of the spell. Additionally, the DC of any skill check to identify a magic liquid or poison under the effects of this spell increases by 5. [Material Components] a drop of ale, mead, or wine"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 5,
+    "record_key": "Ferment"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

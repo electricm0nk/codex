@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Crowd of Bullies",
+    "category": "Combat",
+    "name": "Crowd of Bullies",
+    "description": "Your failed attempt to humiliate a foe reveals its weaknesses to your allies. Whenever you fail a combat maneuver check, your allies within 30 feet who also have this feat gain a +2 circumstance bonus on combat maneuver checks of the same type against the same foe for 1 round.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsHalfOrc=true",
+      "PRETEXT:Half-orc."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 25,
+    "record_key": "Crowd of Bullies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

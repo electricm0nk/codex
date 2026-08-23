@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Blades Above and Below",
+    "category": "Combat",
+    "name": "Blades Above and Below",
+    "description": "You attack high and your ally attacks low, denying your foe the chance to dodge your attacks. When you and your ally who also has this feat threaten the same enemy, you're both considered to be flanking that enemy, regardless of your actual positioning. To gain this benefit, you and your ally must be of different size categories, and your target must be the same size category as either you or your ally.",
+    "prerequisites": [
+      "PRETEXT:Base attack bonus +6.",
+      "PRETOTALAB:6"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 18,
+    "record_key": "Blades Above and Below"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

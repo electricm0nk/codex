@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Untwisting Iron Skin",
+    "category": "Combat",
+    "name": "Untwisting Iron Skin",
+    "description": "Your training has tempered your flesh to resist blows as though it were forged iron. When using Perfect Style, you gain an amount of DR/adamantine equal to 1/3 your character level (maximum 6). Additionally, whenever you break an item with at least hardness 10, you gain DR 1/- for a number of rounds equal to half the item's hit points (maximum 10 rounds); the value of this damage reduction increases by 1 for every 5 points of hardness above 10 the broken item possessed. You can spend 1 ki point as a swift action to double either of the damage reduction values granted by this feat for 1 round.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Perfect Style,Untwisting Iron Strength,Toughness",
+      "PREMULT:1,[PRETOTALAB:13],[PREVARGTEQ:MonkLVL,13]",
+      "PRESTAT:2,STR=15,WIS=13",
+      "PRETEXT:Prerequisites: Str 15, Wis 13, Perfect Style, Toughness, Untwisting Iron Strength, base attack bonus +13 or monk level 13th."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 28,
+    "record_key": "Untwisting Iron Skin"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

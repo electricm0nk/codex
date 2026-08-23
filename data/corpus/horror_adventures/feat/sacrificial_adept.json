@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Sacrificial Adept",
+    "category": "General",
+    "name": "Sacrificial Adept",
+    "description": "The deaths of living, sentient creatures fuel your spells and heighten their potency. By partaking in a heinous ritual that takes at least 10 minutes to complete and which requires you to perform a successful coup de grace upon a sacrifice, you can enhance the power of a single spell you know or have prepared for the next 24 hours, regardless of how many times you cast it within that period. Your sacrifice must be a sentient creature with a total number of Hit Dice greater than or equal to your caster level, and it must die from your coup de grace; if it doesn't die or comes back to life, you lose all benefits related to that sacrifice. After successfully performing the ritual, you choose the spell that the ritual enhances and gain your choice of a +2 bonus to any attack rolls and combat maneuvers made with that spell or a +2 bonus on caster level checks to overcome spell resistance with that spell for 24 hours. You can perform this ritual times per day, but you cannot affect the same spell more than once at a time.",
+    "prerequisites": [
+      "PRESPELLTYPE:1,Arcane=3,Divine=3,Psionic=3",
+      "PREALIGN:LE,NE,CE",
+      "PRESKILL:4,Knowledge (arcana)=4,Knowledge (planes)=4,Knowledge (religion)=4,Spellcraft=4"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 47,
+    "record_key": "Sacrificial Adept"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

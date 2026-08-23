@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Preserve",
+    "school": "Necromancy",
+    "level": 1,
+    "description": "You imbue one or more objects with magic that dramatically slows down natural processes that lead to decay and spoilage. For the duration of the spell, food, water, plants, and other perishable objects affected by the spell remain as fresh as they were when the spell was cast. The spell also protects these objects against spells of the same level or lower that cause spoilage, such as putrefy food and drink. When the duration of preserve expires, the objects resume aging at their normal rate. The spell also works on severed body parts and the bodies of small creatures as per gentle repose, provided that the weight of the creature or part does not exceed the spell's limit. The preserve spell does not prevent magic items that expire after a specific amount of time from expiring. Preserve can be made permanent with a permanency spell by a caster of 9th level or higher for 500 gp. [Material Components] a pinch of salt"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 15,
+    "record_key": "Preserve"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Demonic Obedience",
+    "category": "General",
+    "name": "Demonic Obedience",
+    "description": "You physically defile yourself, others, or holy objects in order to prove your blasphemous devotion to a demon lord and gain special boons. Once you spend an hour performing the required obedience of your demon lord, you gain the associated benefits. If you ever fail to perform a daily obedience, you lose all benefits granted by this feat until you next perform the obedience.",
+    "prerequisites": [
+      "PREDEITY:1,PANTHEON.Demon Lords",
+      "PRESKILL:1,Knowledge (Planes)=3"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_feats.lst",
+    "sha256": "2c1d84f691b9910e2ba44719c21ec46ca0941d9aa7f9e617b0194fadd99f5a11",
+    "line": 7,
+    "record_key": "Demonic Obedience"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

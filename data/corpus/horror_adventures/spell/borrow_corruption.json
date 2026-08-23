@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Borrow Corruption",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "Temporarily gain the effects of a corrupted creature's manifestations."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_spells.lst",
+    "sha256": "29f138223c7315e28ef034306a2f02621b7e16b2c397a98ed2a8f924805f0f0c",
+    "line": 13,
+    "record_key": "Borrow Corruption"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

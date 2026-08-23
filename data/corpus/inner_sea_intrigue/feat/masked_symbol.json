@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Masked Symbol",
+    "category": "General",
+    "name": "Masked Symbol",
+    "description": "Your alternate identity exists as a nearly inhuman avatar of a mood or cause. Your masked persona represents a particular concept, granting you a benefit while in your masked persona or vigilante identity. Each time you gain a new character level, you can choose to embody a different symbol, forgoing your previous bonus and gaining a new one. [Faith] +2 circumstance bonus on Diplomacy checks against creatures of your faith; +2 circumstance bonus on Intimidate checks against enemies of your faith. [Fear] +3 circumstance bonus on Intimidate checks. [Hope] +3 circumstance bonus on Diplomacy checks. [Leadership] +2 bonus to your Leadership score. [Mystery] +2 circumstance bonus on Disguise checks to conceal your true identity; +2 circumstance bonus on Stealth checks to enter or escape unseen. [The People] +2 circumstance bonus on checks to influence crowds. [Trust] +2 circumstance bonus on Bluff checks to lie and Diplomacy checks to make requests.",
+    "prerequisites": [
+      "PREMULT:1,[PRESKILL:1,Disguise=1],[PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Dual Identity]",
+      "PRETEXT:Disguise 1 rank or dual identity class feature."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_feats.lst",
+    "sha256": "bf848df0e5343241cdaea1562d1bef5d7f09362af28cf315e22c5eff69eb9418",
+    "line": 15,
+    "record_key": "Masked Symbol"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

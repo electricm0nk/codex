@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Marked for Glory",
+    "category": "General",
+    "name": "Marked for Glory",
+    "description": "You're destined for glory beyond the ken of ordinary adventurers and mere mortals. You can use the surge ability once per day (adding 1d6). If you are or become mythic, you can use your surge one additional time per day.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Great Fortitude,Iron Will,Lightning Reflexes"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 16,
+    "record_key": "Marked for Glory"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

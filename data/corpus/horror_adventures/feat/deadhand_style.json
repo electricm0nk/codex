@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Deadhand Style",
+    "category": "Combat",
+    "name": "Deadhand Style",
+    "description": "Your study of death allow you to exploit your foes' fears. While using this style, if you have at least 1 point in your ki pool, you gain a +2 bonus on saves against fear effects, and the DC of Intimidate checks against you increases by 4. As a swift action, you can spend 1 point from your ki pool to empower your unarmed strikes. Creatures hit with your unarmed strikes must succeed at a Will save (DC ) or become shaken for a number of rounds equal to your Wisdom modifier. This is a mind-affecting fear effect.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Ki Pool",
+      "PREALIGN:LE,NE,CE,LN,TN,CN",
+      "PRESKILL:1,Knowledge (religion)=4",
+      "PREVARGTEQ:PreStatScore_WIS,15"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 18,
+    "record_key": "Deadhand Style"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Barrage of Styles",
+    "category": "Combat",
+    "name": "Barrage of Styles",
+    "description": "The diverse martial traditions of you and your allies' backgrounds blend into a unique combination. You gain a cumulative +1 morale bonus (maximum +4) on combat maneuver checks for each human ally who also has this feat, is threatening the same foe, and does not share an ethnicity with you or any other ally threatening that foe.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsHuman=true",
+      "PRETEXT:Base attack bonus +1, human.",
+      "PRETOTALAB:1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 17,
+    "record_key": "Barrage of Styles"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

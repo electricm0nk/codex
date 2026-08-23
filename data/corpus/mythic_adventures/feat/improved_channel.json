@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Improved Channel",
+    "category": "Mythic",
+    "name": "Improved Channel (Mythic)",
+    "description": "As a divine conduit for energy, you're unmatched. Non-mythic creatures that take damage from your channel energy must roll their saving throws twice and take the lower result.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Channel",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 101,
+    "record_key": "Improved Channel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

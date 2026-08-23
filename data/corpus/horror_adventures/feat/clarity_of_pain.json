@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Clarity of Pain",
+    "category": "General",
+    "name": "Clarity of Pain",
+    "description": "You can inflict pain upon yourself to sharpen your focus. Three times per day, as an immediate action when you fail a saving throw against a charm or compulsion effect, you can inflict 1d6 points of slashing, piercing, or bludgeoning damage to yourself in order to reroll that saving throw. You can't reroll the saving throw if you negate the damage, such as by having damage reduction greater than or equal to the damage you dealt to yourself; instead, you spend the immediate action and daily use of this feat but gain no benefit. You must take the result of the second roll, even if it is worse.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Iron Will,Iron Will",
+      "PREVARGTEQ:PreStatScore_CON,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 13,
+    "record_key": "Clarity of Pain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Manipulative Presence",
+    "category": "General",
+    "name": "Manipulative Presence",
+    "description": "When you discard your host, you alter or obliterate its memory of your handiwork. Upon completion of your possession, you can alter up to 5 minutes of your host's memories as you see fit. This functions as the modify memory spell. Your host's awareness of the possession doesn't impact this ability, and if your control of the host lasted less than 5 minutes, you can cause it to forget the possession entirely. The host can attempt a Will save with a DC equal to that of the original possession effect to resist this alteration.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Hidden Presence",
+      "PRESPELL:1,Possession,Possession (Greater)",
+      "PRESTAT:1,INT=19,CHA=19"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 47,
+    "record_key": "Manipulative Presence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

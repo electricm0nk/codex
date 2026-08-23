@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Vigilant Phantom",
+    "category": "General",
+    "name": "Vigilant Phantom",
+    "description": "Your phantom is highly observant, and its link with you increases your own watchfulness. While your phantom is within your reach, you gain a +4 bonus on Perception checks. If you have 10 or more ranks in Perception, this bonus increases to +8. This doesn't apply if your phantom is helpless or unconscious.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Spiritualist ~ Phantom"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 73,
+    "record_key": "Vigilant Phantom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

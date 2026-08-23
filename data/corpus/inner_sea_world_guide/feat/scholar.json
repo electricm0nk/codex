@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Scholar",
+    "category": "General",
+    "name": "Scholar",
+    "description": "You have graduated from one of the many colleges, universities, and specialty schools of higher learning scattered throughout the Inner Sea region. +2 bonus on two Knowledge skills. You have graduated from one of the many colleges, universities, and specialty schools of higher learning scattered throughout the Inner Sea region. You gain a bonus on two selected Knowledge skills.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 34,
+    "record_key": "Scholar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

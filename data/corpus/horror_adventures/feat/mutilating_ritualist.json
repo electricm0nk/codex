@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Mutilating Ritualist",
+    "category": "General",
+    "name": "Mutilating Ritualist",
+    "description": "You add a personal sacrifice to heighten the power of your ritual magic. Once during the casting of an occult ritual (Occult Adventures 208), you can inflict 1d6 hit points of damage per 2 Hit Dice and 1d4 Constitution damage (or Charisma damage if you're undead) to yourself as an immediate action with a piercing or slashing weapon. You can't reduce or ignore this damage in any way. This damage doesn't disrupt the ritual, and you can roll twice for the next skill check made as part of a ritual casting and take the better result. If the resulting ritual effect has the fear descriptor or is in the phantasm subschool, increase its saving throw DC by 1. Multiple characters with this feat can each use it once per ritual on their skill checks, but the DC increases don't stack.",
+    "prerequisites": [
+      "PRESKILL:3,Knowledge (arcana)=4,Knowledge (religion)=4,Spellcraft=4"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 42,
+    "record_key": "Mutilating Ritualist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

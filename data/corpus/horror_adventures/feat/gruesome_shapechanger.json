@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Gruesome Shapechanger",
+    "category": "Monster",
+    "name": "Gruesome Shapechanger",
+    "description": "When you change shape, it is a violent and bloody affair. When you change shape, your previous form sloughs off your body in a spray of blood and viscera that congeals into a thick, disgusting slime that dissolves within 24 hours. Until the slime dissolves or is cleaned in some way, the space where you stood when you changed (or the space below if you changed in mid-air) becomes slippery, counting as difficult terrain and increasing the DC of Acrobatics checks made in that area by 5. Any foe witnessing this gruesome shape change must succeed at a Fortitude save (DC ) or be sickened for 1 minute. [Special] The gruesome way you change shape is tiring. Once you've used your change shape ability, you must wait 1d4 rounds before you can use it again. If you take this feat, it changes the way your shapechanging ability works; you cannot choose to avoid this feat's effects.",
+    "prerequisites": [
+      "PRERACE:1,RACESUBTYPE=Shapechanger"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 29,
+    "record_key": "Gruesome Shapechanger"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

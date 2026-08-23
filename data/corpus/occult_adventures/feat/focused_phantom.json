@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Focused Phantom",
+    "category": "General",
+    "name": "Focused Phantom",
+    "description": "Your close bond with your phantom helps you to focus your concentration. While you are adjacent to your phantom or your phantom is within your consciousness, you receive a +4 bonus on concentration checks.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Spiritualist ~ Spiritual Interference"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 33,
+    "record_key": "Focused Phantom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

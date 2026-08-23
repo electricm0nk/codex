@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Incessant Buzzing",
+    "school": "Illusion",
+    "level": 1,
+    "description": "You summon an illusory swarm of angry wasps that fills a 10-foot-diameter sphere. You can summon it so that it shares an area with other creatures, and you can move it up to 40 feet each round as a move action. Creatures caught inside the swarm's area of effect cannot use skills that require patience or concentration. Additionally, spellcasters within the area must succeed at a concentration  check (DC = 20 + level of spell to be cast) in order to cast spells. On a failed concentration  check, the spell is lost. While the buzzing is unpleasant, it is not so loud as to drown out other noises or make communication difficult. [Material Components] insect wing"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 9,
+    "record_key": "Incessant Buzzing"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Duelist of the Shrouded Lake",
+    "category": "Combat",
+    "name": "Duelist of the Shrouded Lake",
+    "description": "You have embraced the Shrouded Lake style of Aldori swordplay, known for its circuitous and canny footwork. When attempting a combat maneuver to bull rush or reposition a foe, you gain a +1 insight bonus on combat maneuver checks and a +4 dodge bonus to AC against any attack of opportunity you provoke. You also gain a +1 insight bonus to CMD against bull rush and repositionAPG attempts. When you attempt a dueling dodge during a duel, your bonus to AC increases to +6. To gain these benefits, you must be wielding only an Aldori dueling sword (not using a shield, an off-hand weapon, armor spikes, unarmed strikes, or natural weapons).",
+    "prerequisites": [
+      "PREABILITY:4,CATEGORY=FEAT,Aldori Dueling Disciple,Exotic Weapon Proficiency (Aldori dueling sword),Weapon Finesse,Weapon Focus (Aldori dueling sword)",
+      "PRETEXT:Prerequisites: Aldori Dueling Disciple, Exotic Weapon Proficiency (Aldori dueling sword), Weapon Finesse, Weapon Focus (Aldori dueling sword), base attack bonus +5.",
+      "PRETOTALAB:5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 8,
+    "record_key": "Duelist of the Shrouded Lake"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

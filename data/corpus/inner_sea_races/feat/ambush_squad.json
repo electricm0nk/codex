@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Ambush Squad",
+    "category": "Combat",
+    "name": "Ambush Squad",
+    "description": "You know that the keys to victory are sudden attacks and even more sudden retreats. When you're adjacent to an ally who also has this feat at the beginning of a surprise round, and both you and that ally can act during that surprise round, you can take both a standard action and a move action during that surprise round.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsKobold=true",
+      "PRETEXT:Base attack bonus +1, kobold.",
+      "PRETOTALAB:1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 13,
+    "record_key": "Ambush Squad"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

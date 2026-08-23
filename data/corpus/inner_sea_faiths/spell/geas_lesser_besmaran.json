@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Geas (Lesser/Besmaran)",
+    "school": "Enchantment",
+    "level": null,
+    "description": "A lesser geas places a magical command on a creature to carry out some service or to refrain from some action or course of activity, as desired by you."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_spells.lst",
+    "sha256": "e60f5e8033d0f4709d70949073b43dae83d3bd77b4ebf58324f1a831e42c9528",
+    "line": 7,
+    "record_key": "Geas (Lesser/Besmaran)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

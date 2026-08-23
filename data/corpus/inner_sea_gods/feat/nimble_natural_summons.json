@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Nimble Natural Summons",
+    "category": "General",
+    "name": "Nimble Natural Summons",
+    "description": "Your summoned natural allies may walk the wild parts of the world unimpeded. Creatures you summon with summon nature's ally can move through any sort of undergrowth (such as natural thorns, briars, and similar terrain) at their normal speeds without taking damage or suffering other impairment. Thorns, briars, and undergrowth areas that have been magically manipulated to impede motion, however, still affect summoned creatures.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Augmented Summoning,Spell Focus (conjuration)",
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]",
+      "PREVARGTEQ:Caster_Level_Highest,6"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 65,
+    "record_key": "Nimble Natural Summons"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

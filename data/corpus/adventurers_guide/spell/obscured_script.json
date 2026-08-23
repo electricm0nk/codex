@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Obscured Script",
+    "school": "Illusion",
+    "level": 2,
+    "description": "You create a latent illusion that clouds the judgment and reading ability of any creature that examines a targeted text. While casting the spell, you can designate up to (CASTERLEVEL) creatures other than yourself to be immune to the effects. All other creatures that read the text must succeed at a Will save or find it difficult to properly parse and decipher the contents. This increases the DC of Linguistics checks to decipher the text by (min(10,CASTERLEVEL)), and it increases the DC of the Wisdom check to avoid drawing a false conclusion by an equal amount. Unaffected creatures gain a +(min(10,CASTERLEVEL)) circumstance bonus on Bluff checks to deceive affected creatures about the text's contents. The spell obscures any magical glyphs, runes, or symbols within the text, increasing the Perception DC to find such traps by (min(5,CASTERLEVEL/2)). Obscured script can be made permanent with a permanency spell by a caster of 10th level or higher for the cost of 5,000 gp."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 29,
+    "record_key": "Obscured Script"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

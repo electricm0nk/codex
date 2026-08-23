@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Ghost Guide",
+    "category": "Story",
+    "name": "Ghost Guide",
+    "description": "You have made it your life's work to put the dead to rest. Whenever you communicate with a ghost or haunt, whether while adventuring or through use of spells such as call spirit, speak with haunt, and speak with dead, or seances and talking boards, you gain a +2 bonus on Diplomacy and Sense Motive checks. The GM can also extend this benefit to any intelligent undead creature that has an interest in being laid to rest. If you have more than 10 ranks in either these skills, you instead gain a +4 bonus on the appropriate skill. [Goal] Lay an appropriate number of ghosts, haunts, and other undead creatures to rest. Laying to rest means fulfilling the actions described on a haunt's destruction line or doing what is required to prevent a ghost's rejuvenation. If the GM includes other types of undead, the GM decides what constitutes their final business. [Completion Benefits] You retain the normal benefit. Additionally, you increase your effective caster level by 2 when determining the effects of call spirit, speak with haunt, speak with dead. Finally, when a spirit lies to you, you can confront the spirit about the lie and force it to roll another saving throw against the spell's DC. If the spirit fails the saving throw, you receive an additional question to replace the one where the spirit gave a false answer.",
+    "prerequisites": [
+      "PRETEXT:You have encountered a ghost or haunt, or have the Bones, the Died, the Raised Among the Dead, or The Dead One background (all of which are found in Ultimate Campaign)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 63,
+    "record_key": "Ghost Guide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

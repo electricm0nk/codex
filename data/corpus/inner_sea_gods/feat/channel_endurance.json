@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Channel Endurance",
+    "category": "General",
+    "name": "Channel Endurance",
+    "description": "Calling upon the winds and the waves, you prepare your allies for the dangers of the natural world. Once per day when you channel positive energy to heal living creatures, you can choose to grant each healed creature the benefit of endure elements (caster level equal to your effective cleric level). This effect lasts 24 hours.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,3],[PREVARGTEQ:ClericChannelNegativeEnergyDice,3],[PREVARGTEQ:OracleChannelDice,3]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 23,
+    "record_key": "Channel Endurance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

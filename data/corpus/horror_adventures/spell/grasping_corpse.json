@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Grasping Corpse",
+    "school": "Necromancy",
+    "level": 1,
+    "description": "Cause a corpse to grab or trip a foe."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_spells.lst",
+    "sha256": "29f138223c7315e28ef034306a2f02621b7e16b2c397a98ed2a8f924805f0f0c",
+    "line": 36,
+    "record_key": "Grasping Corpse"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

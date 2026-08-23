@@ -62,7 +62,8 @@ use crate::rules_core::pi_screening::{
 };
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 use crate::rules_core::rules_tables::{
-    inner_sea_gods, occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic,
+    adventurers_guide, horror_adventures, inner_sea_faiths, inner_sea_gods, inner_sea_magic,
+    inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic,
     ultimate_wilderness,
 };
 
@@ -230,6 +231,86 @@ fn book_specs() -> Vec<BookSpec> {
             dir: "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
             spell_file: "uw_spells.lst",
             entries: ultimate_wilderness::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        // SD-32 `decisions.md §20`: five more already-compiled books whose
+        // `spell_list::SPELL_LIST` table existed (via `ingest_spells.rs`'s
+        // config-driven `BOOKS`) but never had a `data/corpus/<book>/
+        // spell/*.json` cache generated for them at all -- the exact same
+        // "compiled table but no corpus dump" gap this module already
+        // closed for `occult_adventures`/`ultimate_magic`/`ultimate_combat`/
+        // `ultimate_intrigue`/`inner_sea_gods`/`ultimate_wilderness` above.
+        // Re-derived directly: `ls data/corpus/<book>/spell/` was empty (or
+        // absent) for all five before this cycle despite each book's own
+        // compiled table already carrying real, screened entries.
+        BookSpec {
+            book_id: "adventurers_guide",
+            dir: "pathfinder/paizo/roleplaying_game/adventurers_guide",
+            spell_file: "ag_spells.lst",
+            entries: adventurers_guide::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "inner_sea_faiths",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_faiths",
+            spell_file: "isf_spells.lst",
+            entries: inner_sea_faiths::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "inner_sea_magic",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_magic",
+            spell_file: "ism_spells.lst",
+            entries: inner_sea_magic::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "inner_sea_temples",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_temples",
+            spell_file: "istem_spells.lst",
+            entries: inner_sea_temples::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "horror_adventures",
+            dir: "pathfinder/paizo/roleplaying_game/horror_adventures",
+            spell_file: "ha_spells.lst",
+            entries: horror_adventures::spell_list::SPELL_LIST
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,

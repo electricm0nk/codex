@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Draconic Magic",
+    "category": "General",
+    "name": "Draconic Magic",
+    "description": "Your draconic aspect manifests as magical might. You gain a group of spell-like abilities based on the color of your dragon aspect.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Draconic Aspect",
+      "PREFACT:1,TEMPLATES,IsKobold=true"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 14,
+    "record_key": "Draconic Magic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

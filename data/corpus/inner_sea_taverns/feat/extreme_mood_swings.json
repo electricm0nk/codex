@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extreme Mood Swings",
+    "category": "General",
+    "name": "Extreme Mood Swings",
+    "description": "Your emotions sometimes get the better of you. Increase each morale bonus you receive by 1. You take a −1 penalty on saves against emotion and fear effects. When you are drunk (or worse), this penalty doubles, but you increase each morale bonus you receive by 2 instead.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 6,
+    "record_key": "Extreme Mood Swings"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Triangulate",
+    "category": "Teamwork",
+    "name": "Triangulate",
+    "description": "Your distrust of magic has forced you to develop tactics to fight witches, fey, and other supernatural foes. No matter how clever they think they are, they can't hide. Whenever both you and an ally who also has this feat are within 30 feet of an invisible foe of whose presence you're aware, you automatically pinpoint the foe's location. Whenever both you and an ally who has this feat are within 30 feet of a creature and you miss that creature because of its concealment, you can reroll your miss chance percentile roll.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Blind-Fight,Greater Blind-Fight,Improved Blind-Fight",
+      "PREABILITY:1,CATEGORY=Background,Kellid",
+      "PRESKILL:1,Perception=15",
+      "PRETEXT:Blind-Fight, Greater Blind-Fight, Improved Blind-Fight, Perception 15 ranks, human (Kellid)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 59,
+    "record_key": "Triangulate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

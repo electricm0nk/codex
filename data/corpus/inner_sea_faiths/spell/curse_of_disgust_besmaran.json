@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Curse of Disgust (Besmaran)",
+    "school": "Enchantment",
+    "level": null,
+    "description": "Target is sickened when viewing a trigger."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_spells.lst",
+    "sha256": "e60f5e8033d0f4709d70949073b43dae83d3bd77b4ebf58324f1a831e42c9528",
+    "line": 6,
+    "record_key": "Curse of Disgust (Besmaran)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

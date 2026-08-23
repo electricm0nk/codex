@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Shroud of Darkness",
+    "school": "Evocation",
+    "level": 4,
+    "description": "With a dark incantation and a gesture of your hand over your eyes, you cause a shroud of darkness to descend upon the targets of this spell. The subjects treat the light level as two steps lower than normal for the duration of this spell. Bright light becomes dim light, normal light becomes darkness, and areas of dim light and darkness become supernaturally dark (as darkness, but even creatures with darkvision cannot see). [Material Components] a pinch of black sand"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
+    "sha256": "3011dc07f51b9c160a6c8e9b38c1467a23d4fe4b8528653e554e203b43fe2a50",
+    "line": 18,
+    "record_key": "Shroud of Darkness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

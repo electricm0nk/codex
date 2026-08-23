@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Scarring Spell-Like Ability",
+    "category": "Monster",
+    "name": "Scarring Spell-Like Ability",
+    "description": "Your spell-like ability leaves mental scars. Choose one of your spell-like abilities, subject to the restrictions described in this feat. You can use the chosen spell-like ability as a scarring spell-like ability three times per day (or less, if the ability is normally usable only once or twice per day). When you use a scarring spell-like ability, a target that fails its saving throw against the spell-like ability takes a -2 penalty on saving throws against emotion and fear effects you create, and a -1 penalty on saving throws against other emotion and fear effects, for the next 24 hours. If the spell-like ability doesn't allow a saving throw, you can't choose to enhance it with this feat. Penalties from multiple scarring spell-like abilities don't stack. This feat can be applied only to spell-like abilities with the emotion or fear descriptor. You can only select a spell-like ability duplicating a spell with a level less than or equal to 1/2 your caster level (round down) - 1. For a summary, see Table 3-1 on p79. [Special] This feat can be taken multiple times. Each time it is taken, you can apply it to a different spell-like ability.",
+    "prerequisites": [
+      "PRETEXT:Spell-like ability at caster level 4th or higher."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 49,
+    "record_key": "Scarring Spell-Like Ability"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

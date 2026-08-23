@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Amplified Radiance",
+    "category": "Teamwork",
+    "name": "Amplified Radiance",
+    "description": "The vicinity of another of your kind ignites your inner light into a shining aurora. Whenever you are within 15 feet of an aasimar ally who has both the daylight racial spell-like ability and this feat, you gain an aura of radiance. You and your ally must both have at least one use of your daylight racial spell-like ability available to gain this benefit. This aura functions as per the daylight spell, except that it's a 10-foot-radius emanation centered on you without additional areas of weaker illumination. Creatures within this aura who take penalties in bright light double those penalties. The effects of overlapping auras of radiance don't stack. You can activate or suppress this aura as a swift action.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Spell-Like Ability",
+      "PREFACT:1,TEMPLATES,IsAasimar=true",
+      "PRETEXT:Aasimar, daylight racial spell-like ability."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 14,
+    "record_key": "Amplified Radiance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

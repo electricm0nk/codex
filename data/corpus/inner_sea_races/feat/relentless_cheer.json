@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Relentless Cheer",
+    "category": "Teamwork",
+    "name": "Relentless Cheer",
+    "description": "Your undying optimism keeps you and your companions going even when things get rough. Adjacent allies who also have this feat gain a +1 morale bonus on all saving throws. This bonus increases to +3 on saving throws against fear.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Halfling ~ Fearless,Halfling ~ Halfling Luck",
+      "PREFACT:1,TEMPLATES,IsHalfling=true",
+      "PRETEXT:Halfling, fearless and halfling luck racial traits."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 50,
+    "record_key": "Relentless Cheer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

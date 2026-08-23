@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Pack Rat",
+    "category": "General",
+    "name": "Pack Rat",
+    "description": "You collect all sorts of things, and frequently lose and refind things you acquired. Once per day, when confronted with a situation that calls for a particular mundane item, you happen to have such an item on your person. The item must cost no more than gp, and you must pay its cost when you \"find\" it (in other words, the money you thought you had on your person was actually the item). The item must be something you can easily carry-for example, if you are on foot and have only a backpack, you could not have a large iron cauldron. You can't find magical items using this feat, nor can you have specific items, such as the key to a particular door. If you are stripped of your equipment or possessions, you lose the benefits of this feat until you have at least a day to resupply and acquire new items.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsRatfolk=true"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 22,
+    "record_key": "Pack Rat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

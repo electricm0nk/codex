@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Rapid Focus Shift",
+    "category": "General",
+    "name": "Rapid Focus Shift",
+    "description": "You can move mental focus from one implement to another more quickly than usual. Once per day, you can take a full-round action to shift mental focus from one implement to another. You must be undisturbed and able to concentrate. If you take any damage during the transfer, you must succeed at a concentration check (DC = 10 + the number of points of damage taken) to complete the transfer. If you fail this check, you lose the points of mental focus instead of moving them from one implement to the other. Normal: Shifting focus between two implements takes 1 minute of quiet contemplation. Special: You can take this feat multiple times. Each time you do, you gain an additional daily use of Rapid Focus Shift.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Occultist ~ Mental Focus",
+      "PREMULT:1,[PRECLASS:1,SPELLCASTER=5],[PREVARGTEQ:CasterLevel_Highest,5]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 60,
+    "record_key": "Rapid Focus Shift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

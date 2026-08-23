@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fateful Channel",
+    "category": "General",
+    "name": "Fateful Channel",
+    "description": "Your faith not only heals the body, it tugs the strands offate. When you channel positive energy to heal living creatures, you grant each creature you heal the ability to roll twice and take the better result on a single attack roll, skill check, or saving throw of their choice within a number of rounds equal to your Charisma bonus (minimum 1). Multiple uses of this ability do not stack, but they do reset the effect's duration. A creature can only benefit from one instance of this channel effect at a time.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,3],[PREVARGTEQ:ClericChannelNegativeEnergyDice,3],[PREVARGTEQ:OracleChannelDice,3]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 45,
+    "record_key": "Fateful Channel"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

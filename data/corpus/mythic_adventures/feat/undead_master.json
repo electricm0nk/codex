@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Undead Master",
+    "category": "Mythic",
+    "name": "Undead Master (Mythic)",
+    "description": "Through your fearsome mythic nature, you have matchless power over the undead. When you cast animate dead or use the Command Undead feat, add to your caster level when determining the number of Hit Dice of undead you animate. This stacks with the increased caster level of Undead Master. When you cast command undead, your duration is tripled rather than doubled.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Undead Master",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 179,
+    "record_key": "Undead Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

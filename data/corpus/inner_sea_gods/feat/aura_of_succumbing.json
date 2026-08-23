@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Aura Of Succumbing",
+    "category": "General",
+    "name": "Aura Of Succumbing",
+    "description": "Your foul patron's influence hastens death's approach. As a swift action, you can expend one of your uses of channel energy to emanate a 30-foot-radius aura of succumbing for a number of rounds equal to your effective cleric level. Dying creatures in the area take 1 point of damage per die of your normal channel negative energy damage at the start of your turn each round. A successful Will save (DC equal to the DC of your channel energy ability) halves this damage. Whenever a living creature dies while within your aura of succumbing, you gain a number of temporary hit points equal to that creature's Hit Dice. These temporary hit points last for 1 hour.",
+    "prerequisites": [
+      "PREDEITY:1,PANTHEON.Four Horsemen",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,1],[PREVARGTEQ:ClericChannelNegativeEnergyDice,1],[PREVARGTEQ:OracleChannelDice,1]",
+      "PRETEXT:Prerequisites: Channel energy class feature, worshiper of one of the Four Horsemen."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 10,
+    "record_key": "Aura Of Succumbing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Careful Speaker",
+    "category": "General",
+    "name": "Careful Speaker",
+    "description": "The paranoid terror that comes from living in a region with a dangerous government has made you unusually aware of what you say. +2 bonus on some Bluff checks and some Will saves. The paranoid terror that comes from living in a region with a dangerous government has made you unusually aware of what you say. You gain a +2 bonus on all Bluff checks made to fool someone or pass secret messages (but not to feint in combat), and a +2 bonus on all Will saves against attempts to scry upon you or read your mind.",
+    "prerequisites": [
+      "PRESTAT:1,WIS=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 12,
+    "record_key": "Careful Speaker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

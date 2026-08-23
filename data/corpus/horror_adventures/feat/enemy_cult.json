@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Enemy Cult",
+    "category": "Story",
+    "name": "Enemy Cult",
+    "description": "You have crossed paths with a cult opposed to everything in which you believe. Choose an appropriate detect chaos/evil/good/law spell that would aid you in opposing your chosen enemy cult. You can cast this spell twice per day as a spell-like ability with a caster level equal to your character level. [Goal] Thwart the enemy cult, whose leader must be a challenging foe. You must deal that cult leader a decisive defeat, and additionally eradicate the cult or drive the cult from the area. [Completion Benefit] You gain a +2 resistance bonus on saving throws against evil creatures and a +2 deflection bonus to AC against evil creatures' attacks. These bonuses double against evil summoned creatures.",
+    "prerequisites": [
+      "PRETEXT:You must have encountered a cult whose general alignment is opposite to yours on at least one axis or who threatened your beliefs or way of life, or you must have the Angelic Encounter, the False Witness, The Omen, or the Terrible Secret background (all of which are found in Ultimate Campaign)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 62,
+    "record_key": "Enemy Cult"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

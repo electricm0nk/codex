@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Divination Guide",
+    "category": "General",
+    "name": "Divination Guide",
+    "description": "You deity grants you greater guidance and divine insight. Whenever you cast augury or divination, you receive further guidance from your deity's agents. You gain a +l sacred bonus if your worship a good deity or a +1 profane bonus if you worship an evil deity (if you worship a neutral deity the type ofbonus is either determined by the type of energy you channel with the channel energy class feature or, if you don't have that class ability, your choice upon taking this feat) on all saving throws for 1 minute per caster level of the augury or divination spell you cast.",
+    "prerequisites": [
+      "PREDEITY:1,Y",
+      "PRETEXT:Prerequisites: Caster level 3rd, ability to cast augury or divination, must worship a deity.",
+      "PREVARGTEQ:Caster_Level_Highest,3"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 37,
+    "record_key": "Divination Guide"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

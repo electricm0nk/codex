@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Horn Rider",
+    "category": "Combat",
+    "name": "Horn Rider",
+    "description": "You can defend yourself using the horn or tusk of a creature you're lashed to. You gain a +1 shield bonus to AC when lashed into a horn harness. [Special] A creature with this feat can take the Mounted Archery feat without possessing 1 rank in the Ride skill or the Mounted Combat feat.",
+    "prerequisites": [
+      "PRETOTALAB:1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 16,
+    "record_key": "Horn Rider"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

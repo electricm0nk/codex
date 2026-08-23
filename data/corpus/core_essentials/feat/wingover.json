@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Wingover",
+    "category": "General",
+    "name": "Wingover",
+    "description": "This creature can make turns with ease while flying. Once each round, a creature with this feat can turn up to 180 degrees as a free action without making a Fly skill check. This free turn does not consume any additional movement from the creature. Normal: A flying creature can turn up to 90 degrees by making a DC 15 Fly skill check and expending 5 feet of movement. A flying creature can turn up to 180 degrees by making a DC 20 Fly skill check and expending 10 feet of movement.",
+    "prerequisites": [
+      "PREMOVE:1,Fly=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst",
+    "sha256": "a7ea4d8929b217e3b634f1113b881c9e0d3bea75eeae23ece83e02e08a3bf9b8",
+    "line": 24,
+    "record_key": "Wingover"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fatiguing Stare",
+    "category": "General",
+    "name": "Fatiguing Stare",
+    "description": "Your painful stare fatigues your opponent. When a target takes damage from your painful stare, it must succeed at a Fortitude saving throw (DC = 10 + 1/2 your mesmerist level + your Charisma modifier) or become fatigued for 1 round. This can't cause the target to become exhausted, even if the target is already fatigued.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mesmerist ~ Painful Stare",
+      "PRECLASS:1,Mesmerist=7"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 31,
+    "record_key": "Fatiguing Stare"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

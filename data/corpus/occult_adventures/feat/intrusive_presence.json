@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Intrusive Presence",
+    "category": "General",
+    "name": "Intrusive Presence",
+    "description": "You can rif le through the thoughts and memories of your host. You can use detect thoughts at will as a spelllike ability against a host creature you possess. The host receives no saving throw, and the effect functions as if you had concentrated for 3 rounds. You can also use seek thoughts on your host as a spell-like ability once during the possession. The host can attempt a Will save with a DC equal to the DC of the original possession effect. If the host succeeds, the effect fails and the host become aware of the possession if it wasn't already.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Hidden Presence,Manipulative Presence",
+      "PRESPELL:1,Possession,Possession (Greater)",
+      "PRESTAT:1,INT=21,CHA=21"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 41,
+    "record_key": "Intrusive Presence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
