@@ -5078,3 +5078,52 @@ the pinned oracle included). `scripts/card15_reconcile.py` re-run clean both bef
   `artifacts/gate-0-census-closure/`); `scripts/card15_reconcile.py` (bucket reallocation + stale-
   figure correction).
 - Commit: `74701098a` (pushed clean, first attempt, `98ef52bea..74701098a`).
+
+## 2026-08-23 — `equipment`/`equipment_modifier`/`class` `no_record` closure (T9-onboarding wave 2, `decisions.md §20`)
+
+**Scope:** `equipment` (316), `equipment_modifier` (237), `class` (157), `race` (59) — 769 units.
+**Closed:** `equipment` 316→170 (146), `equipment_modifier` 237→175 (62), `class` 157→21 (136).
+**Not started:** `race` (59) — named next-cycle scope, see receipt.
+
+Found existing generic mechanisms rather than building new ones (`§17`). `equipment`/`equipment_
+modifier`: `cache_gen::equipment_gap::book_routing()` had no arm for `"ISTEM"`/`"ISM"` — the config
+table already generated those rows but the cache writer silently dropped them; fixed, plus a stale
+exclusion on `inner_sea_magic`'s `ism_equipmods.lst` recovered (+62), plus new config for
+`adventurers_guide` (the single largest residual, 115 units, no config at all before — 97 land) and
+`ultimate_magic` (0 rows: real residual is a status-predicate gap, named not widened untested).
+`class`: wrote `scripts/ingest_class.py` (new, generic across all books) — no corpus writer existed
+for this kind beyond the 11 base + APG/ACG/PU hybrid classes. **Self-caught the wave-1 `bestiary`→
+`beastiary` corpus-dir-alias footgun on its own first pass** (28 records written to the unaliased
+dir, invisible to a `--books`-restricted `shape_ledger.py` join) — caught by re-deriving the ledger
+rather than trusting the write count, fixed in the writer, regression-tested. 21 `class` units name-
+blacklisted (Product Identity, `§15`), named in `20-class-pi-skipped.json`, never transcribed.
+
+5 pinned-count regressions found and fixed (`tests/equipment_gap_tables.rs`,
+`equipment_resolver.rs`, `apps/desktop/.../equipment_catalog.rs`) — all re-derived from the
+regenerated table, all green after fix.
+
+`corpus_literal_sweep` could not run to completion when this lane's own regen was first done —
+hit the pre-existing `domain`-kind `source.path` defect this file's own prior entry (2026-08-2x,
+`duplicate_identity` cycle) documented as out-of-scope and unfixed at the time
+(`ingest_simple_filename_kinds.py`, commit `71a6f3746`, 2,585 files). The concurrent
+`card15-source-path-repair` cycle (see entry immediately above, rebased in) fixed that defect
+before this lane's own push; this lane's new records were verified correct by direct inspection of
+their `source.path` shape independent of the sweep either way (all three writers — `equipment_gap`,
+`ingest_class.py` — compute the path relative to `PCGEN_CORPUS_ROOT` itself, the correct
+convention the repair cycle also converged on).
+
+Suites: `cargo test --locked --lib rules_core::cache_gen::equipment_gap::tests` 15/15,
+`cargo test --locked --test equipment_gap_tables` 7/7, `cargo test --locked --lib
+rules_core::equipment_resolver::tests` 14/14, `cd apps/desktop/src-tauri && cargo test --locked
+equipment_catalog::` 17/17, `python3 -m unittest scripts.tests.test_ingest_class` 8/8. Dual audit
+on this cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. `data/corpus/**/*.json` count
+41,403→41,748, exactly +345, additive-only verified.
+
+- **Status:** complete for `equipment`/`equipment_modifier`/`class` (this cycle's ingestible
+  population); `race` not started, named next-cycle scope.
+- **Kanban:** row 5 entry prepended, stays `complete` (this row's own criterion — build the
+  ledger/close units into families — remains met; `no_record` closure is tracked per-kind here per
+  `decisions.md §20`'s standing instruction, same convention the `class_feature` entry above set).
+- Receipt: `artifacts/gate-1-shape-closure/004_equipment_class_no_record_closure_cycle_receipt.md`.
+- PI-skipped artifact: `artifacts/gate-3-closure-invariant/20-class-pi-skipped.json`.
+- Commit: (recorded after push).

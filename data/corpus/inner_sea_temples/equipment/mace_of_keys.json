@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Mace of Keys",
+    "category": "ArmsArmor",
+    "name": "Mace of Keys",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Three times per day, upon a successful melee attack, the wielder can attempt a combat maneuver check to cause an item on the target in the belt, shoulder, or neck slot to come loose and fall to the ground in the target's space. When attempting to destroy a lock, the mace ignores up to 20 points of the lock's hardness."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+    "sha256": "4a217ae48fc457d728a35c5934a9eea02f94fa67ca7285c7638ce33dc42752ce",
+    "line": 10,
+    "record_key": "Mace of Keys"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

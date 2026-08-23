@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Unlocked Talent",
+    "name": "Unlocked Talent",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Psionic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+    "sha256": "367f64d62290038088c021f5d1b9a259a1eb3bf4002f8886e6fb73132011a1d4",
+    "line": 1303,
+    "record_key": "Unlocked Talent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

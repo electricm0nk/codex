@@ -1,0 +1,113 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Phantom",
+    "name": "Phantom",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "10"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monster"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhantomLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0|PREVAREQ:PhantomGoodSave_Fortitude,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0|PREVAREQ:PhantomGoodSave_Fortitude,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0|PREVAREQ:PhantomGoodSave_Reflex,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0|PREVAREQ:PhantomGoodSave_Reflex,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0|PREVAREQ:PhantomGoodSave_Will,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0|PREVAREQ:PhantomGoodSave_Will,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhantomLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABFull|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel()|PREVAREQ:UseFractionalSave,1|PREVAREQ:PhantomGoodSave_Fortitude,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel()|PREVAREQ:UseFractionalSave,1|PREVAREQ:PhantomGoodSave_Fortitude,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel()|PREVAREQ:UseFractionalSave,1|PREVAREQ:PhantomGoodSave_Reflex,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel()|PREVAREQ:UseFractionalSave,1|PREVAREQ:PhantomGoodSave_Reflex,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel()|PREVAREQ:UseFractionalSave,1|PREVAREQ:PhantomGoodSave_Will,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|classlevel()|PREVAREQ:UseFractionalSave,1|PREVAREQ:PhantomGoodSave_Will,0"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Phtm"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|Monster"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+    "sha256": "7e8c9929ae0f1c7b8591e0dc8a10795355164297b7b0c7343b9ac37978df6c63",
+    "line": 176,
+    "record_key": "Phantom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

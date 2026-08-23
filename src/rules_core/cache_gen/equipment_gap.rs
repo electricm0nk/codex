@@ -185,6 +185,22 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
         "B3" => Some(("bestiary_3", "pathfinder/paizo/roleplaying_game/bestiary_3")),
         "B4" => Some(("bestiary_4", "pathfinder/paizo/roleplaying_game/bestiary_4")),
         "BOTD2" => Some(("book_of_the_damned_volume_2", "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2")),
+        // SD-32 T9 residual (`decisions.md §20`): `gen_equipment_gap_tables.rs`'s
+        // `BOOK_INPUTS` already declared `EQUIPMENT_BOOK_ISTEM`/`EQUIPMENT_BOOK_ISM`
+        // and generated rows for both books (43 + 6, re-derived against the
+        // pinned oracle), but this match had no arm for either code, so
+        // `generate()`'s `let Some(..) = book_routing(book) else { continue }`
+        // silently dropped every one of those rows before they ever reached
+        // `data/corpus/` -- the config table and the cache writer had drifted
+        // out of sync. Fixed at the root: both codes now route to their real
+        // corpus directories.
+        "ISTEM" => Some(("inner_sea_temples", "pathfinder/paizo/campaign_setting/inner_sea_temples")),
+        "ISM" => Some(("inner_sea_magic", "pathfinder/paizo/campaign_setting/inner_sea_magic")),
+        // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUTS` entry at
+        // all (115 `not-ingested` equipment units, none captured). Added
+        // alongside this routing arm; see `gen_equipment_gap_tables.rs`'s
+        // `EQUIPMENT_BOOK_AG` `BookInput`.
+        "AG" => Some(("adventurers_guide", "pathfinder/paizo/roleplaying_game/adventurers_guide")),
         _ => None,
     }
 }
@@ -680,7 +696,11 @@ mod tests {
 
     #[test]
     fn book_routing_covers_every_non_ue_gap_book() {
-        for code in ["CRB", "APG", "ACG", "ARG", "UC", "UI", "UPSI", "UW", "B1"] {
+        for code in [
+            "CRB", "APG", "ACG", "ARG", "UC", "UI", "UM", "UPSI", "UW", "B1", "ISG", "OA", "HA",
+            "MYTHIC", "ISC", "ISR", "ISWG", "MC", "ISI", "B2", "B3", "B4", "BOTD2", "ISTEM",
+            "ISM", "AG",
+        ] {
             assert!(book_routing(code).is_some(), "missing routing for {code}");
         }
     }

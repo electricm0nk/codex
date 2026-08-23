@@ -775,11 +775,23 @@ mod tests {
         // re-derived directly against the generated `equipment_gap_tables.rs`
         // (counting non-`None` `description` fields, not hand-adjusted).
         assert_eq!(with_description("ISTEM"), 33);
-        assert_eq!(with_description("ISM"), 4);
-        // 4618 + 37 (33 + 4) = 4655.
+        // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
+        // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
+        // at all (fixed) and `ism_equipmods.lst` regained its citations on
+        // a stale exclusion (fixed) -- ISM's row count itself grew 6 -> 68,
+        // and 54 of those 68 carry a real `DESC:`/`SPROP:` token,
+        // re-derived directly against the regenerated
+        // `equipment_gap_tables.rs`.
+        assert_eq!(with_description("ISM"), 54);
+        // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
+        // corpus gap config at all before this cycle) -- 14 of its 97 rows
+        // carry a real description, re-derived directly against the
+        // generated table.
+        assert_eq!(with_description("AG"), 14);
+        // 4618 + 33 (ISTEM) + 54 (ISM) + 14 (AG) = 4719.
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4655
+            4719
         );
     }
 
@@ -893,7 +905,20 @@ mod tests {
         // two more already-compiled books; see `tests/equipment_gap_tables.rs`
         // `EXPECTED_PER_BOOK` for the full citation.
         assert_eq!(count_by_book(&response, "ISTEM"), 43);
-        assert_eq!(count_by_book(&response, "ISM"), 6);
+        // SD-32 T9 residual (`decisions.md §20`): 6 -> 68.
+        // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
+        // (nor `"ISTEM"` above) at all -- the corpus gap lane's own config
+        // table already generated these rows, but the cache writer silently
+        // dropped every one before it reached `data/corpus/`. Fixed; see
+        // `tests/equipment_gap_tables.rs`'s own `EXPECTED_PER_BOOK` for the
+        // full citation, including the separately-recovered
+        // `ism_equipmods.lst` (+62) that raises this to 68.
+        assert_eq!(count_by_book(&response, "ISM"), 68);
+        // SD-32 T9 residual: `adventurers_guide` (`AG`) had no corpus gap
+        // config at all before this cycle -- the single largest un-covered
+        // `equipment` population. 97 of its 115 `not-ingested` units
+        // resolve to a real citation and clear PI screening.
+        assert_eq!(count_by_book(&response, "AG"), 97);
 
         // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1613 + 26 + 552 + 224 + 127
         // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5 + 125 + 252 + 65 + 34 + 5.
@@ -910,8 +935,14 @@ mod tests {
         // extension, net of 35 declared-PI name exclusions and 9 new
         // per-record blacklist name/key exclusions corpus-wide. The
         // further +49 (7817 -> 7866) is SD-32 T9 onboarding's (card 11)
-        // 2-book extension: inner_sea_temples 43 + inner_sea_magic 6.
-        assert_eq!(response.entries.len(), 7866);
+        // 2-book extension: inner_sea_temples 43 + inner_sea_magic 6. The
+        // further +159 (7866 -> 8025) is SD-32 T9 residual
+        // (`decisions.md §20`): the `ISTEM`/`ISM` routing fix (+0, rows
+        // already existed, just unblocked) + `ISM`'s recovered
+        // `ism_equipmods.lst` citations (+62) + the new `AG` book (+97) +
+        // the new `UM` book (+0, a real residual named as a next-cycle item
+        // in `tests/equipment_gap_tables.rs`, not fabricated to close it).
+        assert_eq!(response.entries.len(), 8025);
     }
 
     #[test]
@@ -1222,7 +1253,11 @@ mod tests {
         // `book_of_the_damned_volume_2`), verified below (the loop over
         // `cross_book.difference(&expected_cross_book)`) to involve a gap
         // row, same discipline as every prior growth of this count.
-        assert_eq!(cross_book.len(), 213);
+        // SD-32 T9 residual (`decisions.md §20`): 213 -> 225, +12 new
+        // cross-book collisions from the `ISM` routing/citation fix and the
+        // new `AG`/`UM` books, every one verified below (the loop
+        // immediately following) to involve a gap row -- not hand-counted.
+        assert_eq!(cross_book.len(), 225);
         for key in cross_book.difference(&expected_cross_book) {
             assert!(
                 gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
@@ -1306,7 +1341,12 @@ mod tests {
         // inner_sea_temples (ism contributes 0 -- its 6 rows are all
         // `General`), re-derived directly against the generated
         // `equipment_gap_tables.rs` (1050 -> 1058).
-        assert_eq!(response.entries.len(), 1058);
+        // SD-32 T9 residual (`decisions.md §20`): +19 ArmsArmor rows, all
+        // from the new `AG` book (`ism`'s routing fix and recovered
+        // `ism_equipmods.lst` rows are all `Equipmods` category, 0
+        // ArmsArmor; `um` contributes 0 rows at all), re-derived directly
+        // against the regenerated table (1058 -> 1077).
+        assert_eq!(response.entries.len(), 1077);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }

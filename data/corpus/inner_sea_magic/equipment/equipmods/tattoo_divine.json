@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "TATTOO_DIVINE",
+    "category": "Equipmods",
+    "name": "Divine",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equipmods.lst",
+    "sha256": "322463212d2e47a1e673d0da873d50423e12d9c3a7275e0267613c50529cc832",
+    "line": 102,
+    "record_key": "TATTOO_DIVINE"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

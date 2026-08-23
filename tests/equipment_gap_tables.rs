@@ -90,7 +90,35 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // declared-PI/blacklist screens (0 hits for either book -- confirmed
     // via this generator's own stdout at the pinned oracle).
     ("ISTEM", 43),
-    ("ISM", 6),
+    // SD-32 T9 residual (`decisions.md §20`): 6 -> 68. `cache_gen::equipment_
+    // gap`'s `book_routing` had no arm for `"ISM"` (nor `"ISTEM"`/`"AG"`
+    // above/below) at all -- the config table generated these rows but the
+    // cache writer's `let Some(..) = book_routing(book) else { continue }`
+    // silently dropped every one before it ever reached `data/corpus/`.
+    // Fixed in `cache_gen::equipment_gap::book_routing`. Separately,
+    // `ism_equipmods.lst` was deliberately left out of this book's citation
+    // files on a stale "zero not-ingested equipment units for that file"
+    // claim; re-derived against the pinned oracle, 62 `not-ingested`
+    // `equipment_modifier` units cite it. Both fixed together: 6 + 62 = 68.
+    ("ISM", 68),
+    // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUT` entry at
+    // all before this cycle -- the single largest un-covered `equipment`
+    // population (115 `not-ingested` units, re-derived against the pinned
+    // oracle). 97 of the 115 resolve to a real citation and clear PI
+    // screening; the remainder are unresolved citations or PI exclusions,
+    // both reported by the generator's own stdout, not fabricated to close
+    // the gap.
+    ("AG", 97),
+    // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
+    // routed in the compiled catalog) had no `BOOK_INPUT` entry either, but
+    // its real residual (19 `not-ingested` equipment units) turns out to be
+    // status `unknown`/`ingested-magnitude` in `docs/work-inventory.json`,
+    // not `status == "not-ingested"` -- this generator's own selection
+    // predicate (see its module doc comment) only covers the latter, so 0
+    // rows land here. The config entry is added (harmless, additive) and
+    // the real residual is named as a next-cycle item rather than widening
+    // this generator's predicate untested in the same cycle.
+    ("UM", 0),
 ];
 
 #[test]
@@ -103,11 +131,13 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1720,
-        "1720 = 1671 + 49 new (2 books, SD-32 T9 onboarding card 11: inner_sea_temples 43 + \
-         inner_sea_magic 6) = 1190 + 481 new (5 books, `SD31-E6-F10-004`) - 35 declared-PI \
-         exclusions - 9 blacklist name/key exclusions (both net of redactions, which keep \
-         the record)"
+        total, 1879,
+        "1879 = 1720 + 159 new (SD-32 T9 residual, `decisions.md §20`: ISM's routing fix + \
+         its recovered ism_equipmods.lst citations raise ISM 6 -> 68 (+62), the new AG book \
+         adds 97, the new UM book adds 0). 1720 = 1671 + 49 (2 books, SD-32 T9 onboarding \
+         card 11: inner_sea_temples 43 + inner_sea_magic 6) = 1190 + 481 new (5 books, \
+         `SD31-E6-F10-004`) - 35 declared-PI exclusions - 9 blacklist name/key exclusions \
+         (both net of redactions, which keep the record)"
     );
 }
 

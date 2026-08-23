@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Watchful Tankard",
+    "category": "MagicItems",
+    "name": "Watchful Tankard",
+    "cost_gp": 30000.0,
+    "weight_lbs": 10.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_magic_items.lst",
+    "sha256": "646caf115c299b952e378432875627570c86323037e56383cf629bb26a27924b",
+    "line": 35,
+    "record_key": "Watchful Tankard"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Vigilante",
+    "name": "Vigilante",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VigilanteLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|VigilanteLVL*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0,VigilanteFullBAB,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|VigilanteLVL|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0,VigilanteFullBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|VigilanteLVL/3|PREVAREQ:Vigilante_CF_FortSaves,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|VigilanteLVL/2+2|PREVAREQ:Vigilante_CF_ReflexSaves,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|VigilanteLVL/2+2|PREVAREQ:Vigilante_CF_WillSaves,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VigilanteLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|VigilanteLVL|PREVAREQ:UseFractionalBAB,1,VigilanteFullBAB,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABFull|VigilanteLVL|PREVAREQ:UseFractionalBAB,1,VigilanteFullBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|VigilanteLVL|PREVAREQ:UseFractionalSave,1|PREVAREQ:Vigilante_CF_FortSaves,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|VigilanteLVL|PREVAREQ:UseFractionalSave,1|PREVAREQ:Vigilante_CF_ReflexSaves,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|VigilanteLVL|PREVAREQ:UseFractionalSave,1|PREVAREQ:Vigilante_CF_WillSaves,0"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Vig"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_classes.lst",
+    "sha256": "759458efe96df40f9984ca0370397d6f7f760a64912e4d84b4a400c43e761a47",
+    "line": 8,
+    "record_key": "Vigilante"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "VCabalist",
+    "name": "VCabalist",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Support"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_classes.lst",
+    "sha256": "759458efe96df40f9984ca0370397d6f7f760a64912e4d84b4a400c43e761a47",
+    "line": 43,
+    "record_key": "VCabalist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

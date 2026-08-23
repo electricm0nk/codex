@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Vaultbow",
+    "category": "ArmsArmor",
+    "name": "Vaultbow",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Holds an extra 20 bolts. 3/day, can fire entangling chain."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+    "sha256": "4a217ae48fc457d728a35c5934a9eea02f94fa67ca7285c7638ce33dc42752ce",
+    "line": 12,
+    "record_key": "Vaultbow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

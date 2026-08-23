@@ -825,7 +825,16 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // already-compiled books, inner_sea_temples 43 + inner_sea_magic 6),
         // so the total grows by the same 49 (7,817 -> 7,866). Hand-authored
         // count is unchanged.
-        assert_eq!(rows.len(), 7_866);
+        // SD-32 T9 residual (`decisions.md §20`): the gap lane's own row
+        // count grew by another 159 (1,720 -> 1,879; `cache_gen::equipment_
+        // gap::book_routing` had no arm for `ISTEM`/`ISM` at all, silently
+        // dropping rows the table already generated -- fixed, +0 new rows,
+        // just unblocked; `ISM` also regained its `ism_equipmods.lst`
+        // citations on a stale exclusion, +62; the new `adventurers_guide`
+        // book adds +97; the new `ultimate_magic` book adds +0, see
+        // `tests/equipment_gap_tables.rs`), so the total grows by the same
+        // 159 (7,866 -> 8,025). Hand-authored count is unchanged.
+        assert_eq!(rows.len(), 8_025);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
@@ -1010,6 +1019,15 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // exact list from a fresh, isolated `cargo test --lib
         // equipment_resolver::tests::the_two_lookups_agree` run against
         // this cycle's own final state.
+        //
+        // GREW 19 -> 20, SD-32 T9 residual (`decisions.md §20`): the new
+        // `adventurers_guide` gap book (see the `rows.len()` assertion
+        // above) adds `"Rod (Storm Kindler's)"` (`ag_equip_magic_items.lst`,
+        // `AG`) -- same shape as every entry above, a corpus gap row's
+        // `KEY:` coincidentally matching a string
+        // `equipment_cost_gp_headless_resolve`'s free-form, CRB-precedence
+        // matching resolves to a different real `Rod` row. Both records are
+        // real; not this cycle's file grant to fix.
         assert_eq!(
             disagreements,
             vec![
@@ -1031,6 +1049,7 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
                 "OBSIDIAN",
                 "REACH",
                 "ROPE",
+                "Rod (Storm Kindler's)",
                 "Wooden",
             ],
             "a cross-book identity collision outside this pinned set means a newly ambiguous id \

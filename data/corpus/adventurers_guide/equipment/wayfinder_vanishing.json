@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Wayfinder (Vanishing)",
+    "category": "MagicItems",
+    "name": "Wayfinder (Vanishing)",
+    "cost_gp": 8000.0,
+    "weight_lbs": 1.0,
+    "description": "light at will, +2 competence to Survival (avoid becoming lost), invisibility up to 5 minutes per day, each activation counts as 1 minute minimum"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+    "sha256": "792741b27d5309e252c6f35e597f507e4eb2c0756fae9b087406d5c34cc51611",
+    "line": 53,
+    "record_key": "Wayfinder (Vanishing)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

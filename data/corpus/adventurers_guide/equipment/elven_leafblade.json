@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Elven Leafblade",
+    "category": "ArmsArmor",
+    "name": "Elven Leafblade",
+    "cost_gp": 40.0,
+    "weight_lbs": 3.0,
+    "description": "+2 bonus on attack rolls made to confrm critical hits"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
+    "sha256": "003c6e783a46f7a8a12246c003a9f020b2aae51eebd26ab9b23751a5e320b955",
+    "line": 2,
+    "record_key": "Elven Leafblade"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

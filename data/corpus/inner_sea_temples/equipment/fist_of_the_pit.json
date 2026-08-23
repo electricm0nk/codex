@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Fist of the Pit",
+    "category": "ArmsArmor",
+    "name": "Fist of the Pit",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Once per day as a standard action, the wearer can strike the ground with the gauntlet, causing a 10-foot-square, 30-foot-deep extradimensional pit filled with spikes to open within 30 feet, as per spiked pit (APG). Any enhancement bonus or weapon special abilities that deal extra damage is added to the damage caused by the pit's spikes."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+    "sha256": "4a217ae48fc457d728a35c5934a9eea02f94fa67ca7285c7638ce33dc42752ce",
+    "line": 6,
+    "record_key": "Fist of the Pit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

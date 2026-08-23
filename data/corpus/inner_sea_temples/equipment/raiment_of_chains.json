@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Raiment of Chains",
+    "category": "ArmsArmor",
+    "name": "Raiment of Chains",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "The wearer can don or remove the armor as a move action. Three times per day as a standard action, the wearer can command chains to shoot out from the raiment of chains and attempt a reposition or trip combat maneuver check against a single target within 20 feet. The wearer is considered proficient with the chains and uses her own CMB with a +1 enhancement bonus on the check. The combat maneuver provokes attacks of opportunity as normal. The chains immediately retract back into the armor once the combat maneuver check has been attempted."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+    "sha256": "4a217ae48fc457d728a35c5934a9eea02f94fa67ca7285c7638ce33dc42752ce",
+    "line": 23,
+    "record_key": "Raiment of Chains"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

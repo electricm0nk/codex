@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Expert",
+    "name": "Expert",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.NPC"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.450"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExpertLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExpertLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|NPC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Exp"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
+    "line": 542,
+    "record_key": "Expert"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

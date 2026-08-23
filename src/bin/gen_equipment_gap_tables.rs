@@ -40,7 +40,7 @@ use std::collections::{BTreeSet, HashMap};
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
+use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UM, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
 use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
@@ -169,6 +169,13 @@ const EQUIPMENT_BOOK_BOTD2: &str = "BOTD2";
 // own edit note in `v06_work_inventory.rs`.
 const EQUIPMENT_BOOK_ISTEM: &str = "ISTEM";
 const EQUIPMENT_BOOK_ISM: &str = "ISM";
+// SD-32 T9 residual (`decisions.md §20`): `adventurers_guide` had no
+// `BOOK_INPUT` entry at all -- 115 `not-ingested` equipment units, the
+// single largest un-covered `equipment`-kind population, re-derived
+// against the pinned oracle. Same shape as the arms immediately above:
+// a genuine new-content book, routed in `cache_gen::equipment_gap`'s
+// `book_routing` alongside this constant.
+const EQUIPMENT_BOOK_AG: &str = "AG";
 
 /// Refuses to ship a description whose rendering the player would see as
 /// broken PCGen syntax -- an unsubstituted `%N`/`%<KEYWORD>` reference or a
@@ -462,14 +469,44 @@ const BOOK_INPUTS: &[BookInput] = &[
             "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_general.lst",
         ],
     },
-    // Same shape immediately above. `ism_equipmods.lst` is deliberately NOT
-    // named here: `docs/work-inventory.json` carries zero `not-ingested`
-    // equipment units for that file (re-derived directly), so citing it
-    // would assert a citation surface this book's gap table never uses.
+    // SD-32 T9 residual: the doc comment this replaced ("`ism_equipmods.lst`
+    // is deliberately NOT named here ... zero not-ingested equipment units
+    // for that file") went stale -- re-derived against the pinned oracle,
+    // `docs/work-inventory.json` now carries 62 `not-ingested`
+    // `equipment_modifier` units citing `ism_equipmods.lst` (kind, not the
+    // `equipment` kind the retired comment checked). Added back in.
     BookInput {
         code: EQUIPMENT_BOOK_ISM,
         slug: "inner_sea_magic",
-        files: &["pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equip.lst"],
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equip.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equipmods.lst",
+        ],
+    },
+    // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUT` entry at
+    // all -- see `EQUIPMENT_BOOK_AG`'s doc comment above.
+    BookInput {
+        code: EQUIPMENT_BOOK_AG,
+        slug: "adventurers_guide",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+        ],
+    },
+    // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
+    // routed in `equipment_resolver.rs`'s compiled catalog) had no
+    // `BOOK_INPUT` entry -- 19 `not-ingested` equipment units, re-derived
+    // against the pinned oracle. `pfs_um_equip_general.lst` is a real
+    // Pathfinder Society legality-overlay file cited by some of those
+    // units, same shape as `_pfs/pfs_acg_equip.lst` elsewhere in this list.
+    BookInput {
+        code: EQUIPMENT_BOOK_UM,
+        slug: "ultimate_magic",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/ultimate_magic/_pfs/pfs_um_equip_general.lst",
+        ],
     },
 ];
 

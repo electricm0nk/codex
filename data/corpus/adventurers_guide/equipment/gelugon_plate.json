@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Gelugon Plate",
+    "category": "ArmsArmor",
+    "name": "Gelugon Plate",
+    "cost_gp": 2000.0,
+    "weight_lbs": 50.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
+    "sha256": "003c6e783a46f7a8a12246c003a9f020b2aae51eebd26ab9b23751a5e320b955",
+    "line": 30,
+    "record_key": "Gelugon Plate"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

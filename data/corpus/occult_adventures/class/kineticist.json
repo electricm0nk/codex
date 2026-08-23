@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Kineticist",
+    "name": "Kineticist",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.Psychic"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KineticistLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Kineticist|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CasterLevelBLKineticist|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KineticistLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_BL_Stripped_Kineticist|Caster_Level_Kineticist-CasterLevelBLKineticist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Kineticist|CL+Caster_Level_Bonus+CasterLevelBLKineticist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CasterLevelBL_Kineticist|charbonusto(\"PCLEVEL\",\"Kineticist\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Highest__Psychic|Caster_Level_Kineticist|TYPE=Base"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Kin"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|Caster"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Pyshic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+    "sha256": "7e8c9929ae0f1c7b8591e0dc8a10795355164297b7b0c7343b9ac37978df6c63",
+    "line": 7,
+    "record_key": "Kineticist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

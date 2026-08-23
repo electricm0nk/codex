@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Caster's Tattoo (Greater)",
+    "category": "General",
+    "name": "Caster's Tattoo (Greater)",
+    "cost_gp": 48000.0,
+    "weight_lbs": 0.0,
+    "description": "A greater caster's tattoo is infused with potential magical energy that aids in casting spells of up to ninth level that normally utilize verbal and somatic components. Once per day, a spellcaster may activate her caster's tattoo as a swift action to automatically enhance the next spell of ninth level or lower that she casts in that round with both the Still Spell and Silent Spell feats. When she casts the spell, the caster's tattoo flares with light for a moment, then grows faint and faded-it replenishes its energy in 24 hours, after which it becomes bold and colorful and can be used again. Required material components or foci must be in the creature's possession to cast the spell (and are consumed as normal), but need not be held when the spell is cast."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equip.lst",
+    "sha256": "47344c89a9f9e99bc68a74867f64d94d46112fa86e31c34acbc18de7c0f364d2",
+    "line": 11,
+    "record_key": "Caster's Tattoo (Greater)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

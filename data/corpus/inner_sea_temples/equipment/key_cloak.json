@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Key Cloak",
+    "category": "MagicItems",
+    "name": "Key Cloak",
+    "cost_gp": 20000.0,
+    "weight_lbs": 2.0,
+    "description": "As a move action, the wearer can activate a dome-shaped shield, protecting the wearer as if he were carrying a tower shield with which he is proficient. While using this ability, the wearer can take no other actions and is immobile."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_magic_items.lst",
+    "sha256": "646caf115c299b952e378432875627570c86323037e56383cf629bb26a27924b",
+    "line": 24,
+    "record_key": "Key Cloak"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
