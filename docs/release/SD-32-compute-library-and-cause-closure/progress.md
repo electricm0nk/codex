@@ -2080,3 +2080,66 @@ and after this sweep (not "none found" without having run the commands).
   `DEFINE:`/`SPELLS:` field, needs a fresh ID — current `D9` is taken by a different, already-landed
   finding) never landed under any wording. Doc-only, low risk — proposed target: next cycle touching
   `docs/release/SD-31-corpus-closure-grind/todo/`.
+
+## Cycle `t9-pi-audit/1` — Card 11, shape T9 — Product-Identity exposure audit, `decisions.md §15`
+
+- **Card ID:** `epic-2-cause-closure`. **Scope:** read-only audit lane, per `decisions.md §15`'s
+  ruling ("audit first"). Transcribes nothing, ingests nothing, changes no corpus data. Does
+  **not** amend `docs/governance/ogl-pi-blacklist.md` (status stays `DRAFT`) and does **not**
+  change card 11's status (stays `in-progress`) or T9's paused-onboarding state.
+- **Files touched:** `scripts/sd32_t9_pi_exposure_audit.py` (new, committed re-derive script),
+  `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/t9-pi-exposure-audit.md`
+  (new memo), `docs/retro/events/t9-pi-audit.jsonl` (1 correction), `kanban.md` (row 11 note
+  prepended, status unchanged), this entry.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (`BASE_BRANCH=$(git merge-base HEAD
+  origin/develop); git diff --unified=0 "${BASE_BRANCH}...HEAD" -- scripts docs/release
+  ':!**/__tests__/**' ':!**/*.test.*' | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'`
+  → no matches).
+- **Wired-integration audit result:** `OK_NO_TOKENS` (same diff, no
+  `STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack` tokens).
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`
+  (`scripts/pcgen-oracle-pin.env`), re-fetched fresh this cycle to the repo-local slot
+  (`scripts/fetch-pcgen-oracle.sh --dest <repo-local pcgen slot>`, empty on this fresh worktree).
+- **Status:** measurement/evidence-only cycle, zero units transcribed or closed (correctly — this
+  is the whole point of the lane). Card 11 row stays `in-progress`.
+
+- **Notes:**
+
+  **Step 1 — re-derived the T9 population.** `cargo build --locked --release --bin
+  v06_work_inventory`; fresh run against the pinned oracle produced 38,391 total units (matches
+  `decisions.md §12c`'s inventory denominator); `python3 scripts/sd32_t9_census.py
+  fresh_inventory.json` → **2,712**, unchanged from `decisions.md §13`/`card11-t9-census-census.md`.
+  No correction filed for the population.
+
+  **Step 2 — classified all 2,712 units, not a sample**, with a new committed script
+  (`scripts/sd32_t9_pi_exposure_audit.py`). For each unit: resolved `(source_file, source_line)`
+  to a real oracle file (all 2,712 resolved unambiguously), read the whole raw tab-separated row,
+  and classified it blocked / clear / uncertain per `ogl-pi-blacklist.md` §2.1/§2.2/§2.3 and the
+  shipped `src/rules_core/pi_screening.rs` screen (57-term list + `NAMEISPI:YES`/`DESCISPI:YES`).
+  **Result: blocked 261 (9.6%), clear 1,107 (40.8%), uncertain 1,344 (49.6%).** Validated exactly
+  against the existing 114-unit `monster`-kind sample (21 blocked / 7 clear / 0 uncertain,
+  reproduced identically). Full per-kind/per-book tables, named example records, and the two
+  fully-clear books (`occult_adventures` 330/330, `bestiary_5` 2/2) are in the memo, not
+  duplicated here.
+
+  **Step 3 — filed one correction** against `decisions.md §15`'s own prose: its "96% rate observed
+  in the monster kind" does not match its own cited 21/28 = 75.0%
+  (`python3 -c "print(21/28*100)"` → 75.0). Logged via `scripts/retro.py correction`
+  (`docs/retro/events/t9-pi-audit.jsonl`); **not** corrected in `decisions.md` itself (locked
+  operator-pinned text, out of this audit's write scope).
+
+  **Step 4 — recorded blacklist gaps as proposals, applied none.** `companion` and
+  `monster_ability` have no §2.3 field-classification entry (802 of the 1,344 `uncertain` units,
+  59.7%, come from these two kinds); the term list has no OCR/typo-normalization pass (a real
+  incident already recorded in `ogl-pi-blacklist.md §4`); `.MOD` reference-row PI inheritance is
+  unaddressed by this method. All three are named as proposals in the memo's §8, not applied to
+  the blacklist file.
+
+  **Why zero units are banked, and why that is correct for this lane:** the lane's whole job was
+  evidence, not a transcription decision (`decisions.md §15`: "Its deliverable is evidence, not a
+  decision"). T9 stays paused; card 11 stays `in-progress`; the operator's ruling on the memo's §9
+  question is the next unblocking act.
+
+- **Discovery forwards:** none requiring a new card — scoped audit against the existing T9 line of
+  card 11, per the dispatch brief.
+- **Disk:** `df -h /` → 968G total, 293G used, 676G available, 31% used.
