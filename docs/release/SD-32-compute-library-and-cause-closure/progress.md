@@ -4800,11 +4800,17 @@ cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
   `git log --oneline -1 -- <file>` on a sample: all trace to that one commit). This blocks any
   future guarded regen of `docs/work-inventory.json` (`CORPUS_LITERAL_SWEEP_REPORT` cannot be
   produced clean) until fixed — out of this cycle's own scope (a different lane's ingest script,
-  not `duplicate_identity`), so **not fixed here**. Consequence: this cycle's own committed
-  `docs/work-inventory.json` is `8970327b0`'s committed inventory (49,540 units, confirmed
-  byte-for-byte via id-diff) **plus exactly this cycle's own 4 rescued units** (0 removed, 0
-  duplicated) — it does **not** yet reflect the `simple-filename-kinds-ingest` cycle's `no_record`
-  improvement, because regenerating to pick that up right now would require routing around the
-  broken sweep. Safe and accurate for what it claims; a future cycle fixing the `source.path`
-  defect should regenerate once more to pick up both improvements together.
+  not `duplicate_identity`), so **not fixed here**.
+- **Superseding correction, made before push:** four MORE sibling cycles landed after the note
+  above was written, each faster than a fresh guarded regen could complete. Hand-splicing this
+  cycle's 4 rescued units into each new base would have been the forbidden "hand-edit the committed
+  JSON" shape, so the FINAL committed `docs/work-inventory.json` at push time is
+  `origin/tranche/12`'s own latest as pushed (49,540 units, `class_feature` 18,056, `duplicate_
+  identity` residual **183**, unmodified by this cycle) — not `8970327b0`'s inventory plus 4 units
+  as the note above (accurate at the time it was written) says. This cycle's own code fix
+  (`disambiguate_class_feature_keyed_name_collisions`) is landed, tested, and proven correct by the
+  isolated regen documented above; it lands in the checked-in file automatically on the next
+  guarded regen, once the `source.path` defect is fixed. Full account:
+  `artifacts/gate-0-census-closure/15-duplicate-identity-review_cycle_receipt.md`'s own opening
+  note.
 - Commit: (recorded after push).

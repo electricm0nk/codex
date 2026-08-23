@@ -237,7 +237,7 @@ def main(argv: list[str] | None = None) -> int:
         # codepath from `is_internal_category`, `refine_kind`, or
         # `has_classifying_token`.
         "class_feature_residual_duplicate_identity": {
-            "units": 179,
+            "units": 183,
             "memo": "15-card-15-internal-duplicate-identity-memo.md (root-"
             "cause pin) + 15-card-15-duplicate-identity-memo.md (first "
             "rescue cycle, +24, the *Choice-shape correction) + "
@@ -319,7 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     # `accounted_total` below to avoid double-subtracting it.
     already_tracked_a = {
         "class_feature_already_in_inventory": {
-            "units": 18012,
+            "units": 18008,
             "memo": "15-card-15-class-feature-memo.md §0/§5 (15,437 "
             "non-internal, was 15,438 before the card-15-internal cycle's "
             "own Disable-Device-Class-Skill displacement, "
@@ -562,16 +562,16 @@ def main(argv: list[str] | None = None) -> int:
                 "accounted for by exactly one row above: "
                 f"{ability_category_b_disposed_total} (ability_category_b_disposed, "
                 "live-derived, INCLUDES the 40-unit Internal bare-marker "
-                "reroute) + 18,012 (class_feature, already tracked -- SD-32 "
+                "reroute) + 18,008 (class_feature, already tracked -- SD-32 "
                 "card 15-internal raised this from 15,438; card "
                 "15-duplicate-identity raised it again from 17,984 with the "
                 "24-unit confirmed-safe rescue; card "
                 "15-duplicate-identity-review raised it again from 18,008 "
-                "with this cycle's 4-unit rescue) + 179 "
+                "-- see the note below on why this cycle's own 4-unit rescue is not yet reflected here) + 183 "
                 "(class_feature residual, cause pinned to "
                 "`duplicate_identity` by card 15-internal, narrowed from "
                 "207 to 183 by card 15-duplicate-identity's 24-unit rescue, "
-                "then to 179 by card 15-duplicate-identity-review's 4-unit "
+                "then, by card 15-duplicate-identity-review's own 4-unit "
                 "rescue this cycle -- EVERY one of the 55 remaining "
                 "colliding groups (39 Choice-typed fallback + 16 keyed) was "
                 "reviewed case by case this cycle by reading real corpus "
@@ -586,7 +586,7 @@ def main(argv: list[str] | None = None) -> int:
                 "ABILITY:AUTOMATIC-target evidence, named as allowlist "
                 "candidates for an operator ruling rather than rescued or "
                 "auto-classified -- see pending_a's own why_not_applied) = "
-                f"{ability_category_b_disposed_total + 18012 + 179}. "
+                f"{ability_category_b_disposed_total + 18008 + 183}. "
                 "`skill` (149), `template`/`deity`/`power`/`domain`/"
                 "`language` (3,550, generic-enumeration cycle) `kit` (1, "
                 "disposed B) `ability` (4,824 real inventory units off a "
@@ -596,7 +596,7 @@ def main(argv: list[str] | None = None) -> int:
                 "disposed_b_applied's own `counts_toward_total_this_run`/"
                 "`still_counted_in_total_this_run` flags). Card 15's "
                 "remaining scope, narrowed by card 15-duplicate-identity-"
-                "review: the class_feature residual (179 units, cause "
+                "review: the class_feature residual (183 units AS COMMITTED -- this cycle's own +4 rescue is landed in code and proven correct by a standalone regen, `15-duplicate-identity-review_cycle_receipt.md`, but not yet reflected in this checked-in `docs/work-inventory.json` because a further guarded regen at the fast-moving final HEAD is currently blocked by the `source.path` defect that same receipt names -- a future regen picks up all four units automatically once that is fixed. cause "
                 "pinned to `duplicate_identity`, fully reviewed case by "
                 "case -- an evidenced, named, per-case hand-review "
                 "population awaiting an operator ruling on the Decision-17 "

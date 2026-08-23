@@ -1,14 +1,29 @@
 # Cycle card-15-duplicate-identity-review — census-scope-closure / `decisions.md §12b`, per-case hand review of the 183-unit `duplicate_identity` residual
 
-- **Card ID:** `census-scope-closure` (kanban card 15). **Status stays `in-progress`** — the
-  population is fully reviewed and named, but 174 of the 179 remaining residual units need an
-  operator ruling (74) or are correctly left alone (24) or are a pre-existing, unaffected balance
-  (26); none of those is a closed-shape (a) or (b) disposition yet in the reconcile script's own
-  bookkeeping.
+- **Card ID:** `census-scope-closure` (kanban card 15). **Status stays `in-progress`.**
 - **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only
   preflight-oracle` → PASS, oracle bootstrapped fresh into the repo-local
   `artifacts/corpus/operator-supplied/pcgen` slot — a fresh worktree's slot was empty, per the
   dispatch brief's own warning).
+
+**Read this before the numbers below.** Between this cycle's own regen and push, **four** more
+sibling cycles landed on `origin/tranche/12` (`71a6f3746`, `8970327b0`, `1410424cf`, and one
+`no_record`-closing ability fix), each regenerating `docs/work-inventory.json` at a pace this
+cycle's own rebase-and-guarded-regen loop could not keep pace with, and rebasing onto the last of
+them surfaced a real, sizeable `source.path` defect (§"What this cycle did not do" #5) that now
+blocks `corpus_literal_sweep` — and therefore blocks any further guarded regen — corpus-wide. **This
+cycle's own code fix is landed, tested, and proven correct** (the "Population, before and after"
+section below is real evidence from a regen this cycle executed and diffed against its own
+starting state, before the final rebase). **The FINAL committed `docs/work-inventory.json` at push
+time, however, is `origin/tranche/12`'s own latest committed inventory (49,540 units, `class_feature`
+18,056, residual 183) — it does NOT yet contain this cycle's 4 rescued units**, because splicing
+them into the newer base by hand would be the "never hand-edit the committed JSON" violation this
+program forbids, and re-running the guarded pipeline at the final HEAD is blocked by the
+`source.path` defect. `scripts/card15_reconcile.py`'s own live-derived figures (183 pending,
+matching the committed file) are therefore consistent with what is actually checked in — a future
+regen, once the blocker is fixed, will pick up all four units (and every sibling cycle's own
+progress) together. Every population figure below that is prefixed "this cycle's own regen" is the
+isolated proof; every figure NOT so prefixed describes the file as actually committed.
 
 ## §17a re-derivation
 
@@ -109,14 +124,16 @@ bookkeeping (see the review memo's "What this cycle did not do").
 ```bash
 python3 scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.json
 ```
-→ `no_record` budget 20,778/35,422 vs. baseline 21,521/36,028 — the script's own **evidence-gated
-ratchet check reports "not exceeded"** (a side effect of the pre-existing checked-in-JSON staleness
-resolving via this cycle's required regen, not a claim this cycle's own fix improved coverage). **Per
-`decisions.md` Decision 20 (landed concurrently on this branch this cycle, `d26996388`), the
-budget-not-exceeded reading is NOT closure: Gate 3's real closure condition is `no_record == 0`, and
-`no_record` is 20,778 — still far from zero.** Reported accurately here rather than repeating the
-"budget not exceeded = green" overclaim Decision 20 corrects. `ledger.json` regenerated for
-consistency (population 36,028 → 35,422, `unclassified_count: 0`, piles reconcile).
+→ against the FINAL committed inventory (see the note at the top of this receipt):
+`no_record` budget 13,868/35,418 vs. baseline 21,521/36,028 — the script's own **evidence-gated
+ratchet check reports "not exceeded"** (this is the several concurrently-landed sibling ingest
+cycles' own real progress, not this cycle's own effect — this cycle's own diff never touches
+`status`/`wiring_class`/`evidence` computation, proved by the 0-deletion diff below). **Per
+`decisions.md` Decision 20 (`d26996388`), the budget-not-exceeded reading is NOT closure: Gate 3's
+real closure condition is `no_record == 0`, and `no_record` is 13,868 — still far from zero.**
+Reported accurately here rather than repeating the "budget not exceeded = green" overclaim
+Decision 20 corrects. `ledger.json` regenerated for consistency against the final committed
+inventory (population 35,418, `unclassified_count: 0`, piles reconcile).
 
 ## §15 — Product Identity
 
@@ -202,17 +219,24 @@ the original 33 did?
    files missing the leading `pathfinder/` segment, `commit 71a6f3746`), which now makes
    `corpus_literal_sweep` exit 2 — found while rebasing this cycle onto that concurrently-landed
    work; out of this cycle's own scope, not fixed here, blocks the next full guarded regen.
+6. **Run the guarded regen once item 5 is fixed.** This cycle's code fix
+   (`disambiguate_class_feature_keyed_name_collisions`) needs no further work — the next clean
+   `corpus_literal_sweep` → `derived_evaluator_fixture_check` → `v06_work_inventory` regen picks up
+   its 4 units (and every sibling cycle's own already-landed progress) automatically. No code
+   change is owed here; only the regen itself.
 
 ## Note on `docs/work-inventory.json` at push time
 
-This cycle's own regen (before the final rebase) proved 0 lost / 4 gained against a clean
-`corpus_literal_sweep`. Rebasing onto two concurrently-landed sibling cycles
-(`71a6f3746`/`8970327b0`) surfaced the `source.path` blocker above, which prevents a further guarded
-regen right now. The committed `docs/work-inventory.json` is therefore `8970327b0`'s own committed
-inventory (49,540 units) plus exactly this cycle's 4 rescued units — verified by id-diff against
-that commit's own tree: 0 removed, 4 added, 0 duplicates. It does not yet reflect the
-`simple-filename-kinds-ingest` cycle's `no_record` improvement (that cycle's own `data/corpus`
-additions are unaffected and still land once a future regen runs after item 5 above is fixed).
+**Superseded from the file's own prior version, see the note at the top of this receipt for the
+full account.** In summary: this cycle's own regen (before the final rebase) proved 0 lost / 4
+gained against a clean `corpus_literal_sweep`, run before the `source.path` defect (item 5) had
+landed. Two further rebases onto four more concurrently-landed sibling cycles made hand-splicing
+those 4 units into each new base the only way to keep them in the committed file — forbidden by
+this program's own "never hand-edit the committed JSON" rule — so the FINAL committed
+`docs/work-inventory.json` is `origin/tranche/12`'s own latest committed inventory as pushed
+(49,540 units, `class_feature` 18,056), unmodified by this cycle. The 4-unit rescue is proven
+correct in code and by the isolated regen above; it lands in the checked-in file the next time a
+guarded regen runs, per item 6.
 
 ## Disk
 

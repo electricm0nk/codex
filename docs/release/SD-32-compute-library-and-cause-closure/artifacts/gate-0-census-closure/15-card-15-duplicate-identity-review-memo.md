@@ -1,7 +1,7 @@
 ---
 canonical: true
 owner: card15-duplicate-identity-review
-status: per-case review of the 183-unit `duplicate_identity` residual complete; 4 units rescued, 39 groups named for an operator ruling on the Decision-17 allowlist, 175 units left correctly unrescued
+status: per-case review of the 183-unit `duplicate_identity` residual complete; 4 units rescued in code (not yet in the committed docs/work-inventory.json, see this file's own opening note), 39 groups named for an operator ruling on the Decision-17 allowlist, the rest correctly left unrescued
 date: 2026-08-23
 ---
 
@@ -18,6 +18,20 @@ decision's own text. This cycle does that review.
 preflight-oracle` → PASS, oracle bootstrapped fresh into the repo-local
 `artifacts/corpus/operator-supplied/pcgen` slot — a fresh worktree's slot was empty, per the
 dispatch brief's own warning).
+
+**Read this before the "183 → 179" figures below.** This memo's own numbers (below) describe the
+population AS IT STOOD when this cycle's own regen ran, before the final push. Between that regen
+and push, four more sibling cycles landed on `origin/tranche/12` and rebasing onto the last of them
+surfaced a real `source.path` defect that now blocks `corpus_literal_sweep` corpus-wide (full
+account: `15-duplicate-identity-review_cycle_receipt.md`'s own opening note and "Next-cycle plan"
+item 5). **This cycle's code fix (`disambiguate_class_feature_keyed_name_collisions`) is landed,
+tested, and proven correct** — but hand-splicing its 4 rescued units into each new base as origin
+moved would have violated this program's "never hand-edit the committed JSON" rule, so the FINAL
+committed `docs/work-inventory.json` at push time is `origin/tranche/12`'s own latest (49,540
+units, `class_feature` 18,056, residual **183**, unchanged), not the 18,060/179 this memo's body
+describes. `scripts/card15_reconcile.py`'s own committed figures (183 pending) match the file as
+actually pushed. The 4-unit rescue lands in the checked-in file the next time a guarded regen runs
+(receipt's next-cycle item 6) — nothing further is owed in code.
 
 ## §17a re-derivation — the 183 reproduces exactly
 
