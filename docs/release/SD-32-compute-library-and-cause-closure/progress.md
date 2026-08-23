@@ -1639,6 +1639,47 @@ and after this sweep (not "none found" without having run the commands).
   Epic 2 blocker shapes (`forward-scope-register.md` C2.5), Epic 3's 18-untabled-base-class half
   (C1.1), and the `check-release-manifest.yml` fix.
 
+### Cycle t2b-census — Epic 2 / Card 11 `epic-2-cause-closure`, lane T2b — measurement cycle per `decisions.md §13`
+
+- **Card ID:** `epic-2-cause-closure` (T2b lane; measurement only, per the dispatch brief and
+  `decisions.md §13` — "measurement... does not substitute for the work... a precursor to it").
+  Card 11's row status is **not** touched by this cycle (remains whatever a prior cycle left it —
+  out of this cycle's scope to change).
+- **Actor:** `t2b-census`
+- **Base:** `8b8e00c0d` (pinned), rebased to `origin/tranche/12` (`3981e7091`) before starting.
+- **Files touched:** `scripts/t2b_race_trait_census.py` (new — committed re-derive script),
+  `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/card11-t2b-census-census.md`
+  (new — full book-by-book census memo), `docs/retro/events/t2b-census.jsonl` (new — 1 correction),
+  `docs/release/SD-32-compute-library-and-cause-closure/progress.md` (this entry).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (script renamed off an `sd32_`-prefixed filename
+  specifically to clear this audit — see script's own git history in this cycle).
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by class,
+  not by instance (T2b, ~2,472 units). This cycle sizes, not closes, the work per `decisions.md
+  §13`'s explicit authorization of a measurement-first step.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (as a measurement cycle — 0 units banked, standing lesson 6).
+- **Summary:** Re-derived the T2b population fresh (2,472, no change from `decisions.md §13`'s
+  table) and turned the prior T2b lane receipt's "1,754 unregistered-book / 718 registered-book"
+  split into a book-by-book work list: **17 unregistered books** (1,754 units, need
+  `RACE_CORPUS_BOOKS` registration + full onboarding, ~7 files/book) and **9 already-registered
+  books with real un-ingested content** (571 units, need only ingest-tool extension, ~3
+  files/book). Full classification of the 718-unit registered-book pile by `corpus_key` (not
+  `name`, which strips the category prefix) found it is **147 by-design-excluded category-header
+  rows + 9 `Adopted Race ~ <X>` selector rows + 562 ordinary never-transcribed records** — the
+  prior receipt's "~350+ header / ~44 Adopted Race" hand-sample undercounted the true open work
+  (571, not 718) and left the 562-unit majority uncharacterized. Logged as a `scripts/retro.py
+  correction`. `beastiary` (the legacy core-bestiary id) has zero residual T2b units — already
+  clean. Full memo, every command, sample verifications against the pinned oracle:
+  `artifacts/gate-3-closure-invariant/card11-t2b-census-census.md`.
+- **Discovery forwards:** none requiring a new card — this cycle's finding is a correction to an
+  existing receipt's characterization, not a new blocker shape.
+- **Next-cycle plan:** dispatch one TDD cycle per book/group named in the census memo §4 (26
+  total): register + onboard the 17 unregistered books; extend `ingest_races.rs`/
+  `ingest_race_traits.rs` for the 9 registered books' un-ingested content. Confirm the
+  `core_rulebook` 14-unit sentinel-row flag before assuming all of it is real content. Re-run
+  `scripts/t2b_race_trait_census.py` after each book lands as a regression guard.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
