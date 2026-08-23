@@ -1336,6 +1336,65 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   row 11 stays `in-progress` — a consolidation cycle owns marking it `complete` once every lane has
   landed.
 
+### Cycle 006 — Gate 0 / Card 15 `census-scope-closure`, lane 2 of 3 — `ability_category:*` memo
+
+- **Card ID:** `census-scope-closure` (card 15, `decisions.md §12b`) — this lane covers every
+  `ability_category:*` key in `kind_unenumerable` (26 categories, 5,886 units). Two sibling lanes
+  (`class_feature`; template_row/deity/power/domain/language/untypeable-files, already landed as
+  Cycle 005) run/ran concurrently; a single integration cycle applies all three memos afterward.
+- **Commit SHA:** `b2de2002b` (rebased onto `origin/tranche/12` at push; landed as `af4934b1c`).
+- **Files touched:** `artifacts/gate-0-census-closure/15-card-15-ability-category-classify.py`
+  (new, committed, self-checking per-row disposition classifier), `artifacts/gate-0-census-closure/
+  15-card-15-ability-category-rows.jsonl` (new, generated, 5,886 rows), `artifacts/gate-0-census-
+  closure/15-card-15-ability-category-summary.md` (new, generated), `artifacts/gate-0-census-
+  closure/15-card-15-ability-category-memo.md` (new — the deliverable), `artifacts/gate-0-census-
+  closure/15-ability-category_cycle_receipt.md` (new), `docs/retro/events/card-15-ability-
+  category.jsonl` (new, one correction). No writes to `docs/work-inventory.json`,
+  `scripts/census_independent.py`, `scripts/shape_ledger.py`, or any pinned-count file, per this
+  lane's own scope (measurement, not widening).
+- **Acceptance criterion:** `decisions.md §12b` / kanban card 15 — "Close the 27,847
+  kind-unenumerable objects: enumerate + classify, or prove not-an-object by class."
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (matched exactly).
+- **Status:** complete (this lane's own measurement-and-memo deliverable). `kanban.md` row 15
+  stays `in-progress` — three lanes share it; only the integration cycle may mark it `complete`.
+- **Summary:** every `ability_category:*` row gets one of four dispositions (`A` real/distinct,
+  `B-duplicate` exact-`KEY:` match on a tracked kind, `B-gateway` facet wrapper, `B-picklist` bare
+  chooser value) from a committed script that self-checks its own bucket totals against
+  `diff.json`'s `kind_unenumerable` counts (`self-check: MATCH`). **Result: 5,108 of 5,886 units
+  (86.8%) are real, currently-uncounted PCGen Ability objects — recommend a new tracked kind
+  `ability`. 778 units (13.2%) are not objects: 8 exact-`KEY:` duplicates already counted under
+  `race_trait`/`monster_ability`, 210 gateway/wrapper rows, 560 bare chooser pick-list entries.**
+  The operator's own flagged risk ("`Special Ability` at 3,436 units is the one most likely to be a
+  double-count") did not hold: only 7/3,436 (0.2%) are genuine duplicates by exact-`KEY:` proof; the
+  other 3,363 are real, structurally distinct from the `class_feature`-tracked grant rows that share
+  their `CATEGORY:Special Ability` tag (grant rows live in `*_abilities_class*.lst`; definitions
+  live in the bare `*abilities*.lst` files this bucket walks — verified disjoint by `KEY:` search).
+  A genuine early-pass error was caught and corrected in-cycle: identity-*string* collision rate
+  (up to 88.2% for `Spell-Like Ability`, 88.2% `Ability Focus`) was initially misread as a
+  double-count signal; per-record inspection showed the collisions were coincidental name reuse
+  across disjoint PCGen object populations (a Spell-Like-Ability "Brand" and a `spell`-kind "Brand"
+  are different records, no shared `KEY:`) — replaced with an exact-`KEY:`-field-only join (the
+  field PCGen itself uses for cross-references), which is what keeps the real duplicate count at 8,
+  not the hundreds a naive name match implied. Logged: `scripts/retro.py correction`
+  (`docs/retro/events/card-15-ability-category.jsonl`, id
+  `1787448814998-card-15-ability-category-4a1508`).
+- **Discovery forwards:** four, all in the memo's own "Discoveries / forwards for the integration
+  cycle" section — (1) new kind `ability`, 5,108 units, seed list = every `disposition=="A"` row in
+  the committed JSONL; (2) `shape_ledger.py`'s extraction rule only reads `DEFINE:`/`BONUS*:`, so
+  several sub-buckets (`Class Skill`, `Save Bonus`, `Equipment`, `Mythic Weapon Training`, `Racial
+  Size`, `Background`, `Afflictions`) will classify F0 under real, independently-verified but
+  non-`DEFINE`/`BONUS` content (`CSKILL:`/`MOVE:`/`AUTO:`/`TEMPLATE:`/etc.) — not a miscount, but a
+  proof-width note worth carrying forward; (3) the 8-unit duplicate-exclusion list (named exactly,
+  with source/target file, in the memo's `Special Ability`/`Racial Traits` sections); (4)
+  `ability_category:UNKNOWN` (15 units) is a `census_independent.py` `_row_category_tag` labeling
+  gap — true category is `Special Ability`, expressed via a nonstandard identity-embedded
+  `CATEGORY=<X>|<Base>.COPY=<New>` syntax the function doesn't parse — out of this lane's write
+  scope to fix (`scripts/census_independent.py` is not writable here).
+- **Next-cycle plan:** the integration cycle reads this memo plus the `class_feature` lane's and
+  Cycle 005's memos, adds the new kind(s) to `docs/work-inventory.json`'s vocabulary and
+  pinned-count files, and reconciles the census/inventory/ledger populations with the one committed
+  "sum the piles" command `decisions.md §12b` names as card 15's acceptance bar.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
