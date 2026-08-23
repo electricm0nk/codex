@@ -1954,11 +1954,17 @@ function ClassFeatureDescriptionReferenceSection(props: {
   explanations: readonly ExplanationDto[];
   heldClasses: readonly HeldClass[];
   descriptions: readonly ClassFeatureDescriptionDto[];
+  selectedFeats: readonly string[];
 }) {
   const heldLabels = new Map(
     props.heldClasses.map((held) => [held.classId.split(':').pop() ?? held.classId, held.classLabel])
   );
-  const unmatched = unmatchedClassFeatureDescriptions(props.explanations, props.heldClasses, props.descriptions);
+  const unmatched = unmatchedClassFeatureDescriptions(
+    props.explanations,
+    props.heldClasses,
+    props.descriptions,
+    props.selectedFeats
+  );
   if (unmatched.length === 0) {
     return null;
   }
@@ -2001,6 +2007,10 @@ function ActionsTab(props: {
   heldClasses: HeldClass[];
   racialTraits: RacialTraitsSurface;
   raceLabel: string;
+  /** T4-L9 (`decisions.md §13`): the feat-held reachability arm needs the
+   * character's own selection list to check against — see
+   * `unmatchedClassFeatureDescriptions`'s own doc comment. */
+  selectedFeats: readonly string[];
 }) {
   // SD31-D7-PROSE-003: the real corpus `DESC:` text, fetched once and joined
   // in `buildClassFeatureSurface` -- a SECOND, additive data source
@@ -2052,7 +2062,8 @@ function ActionsTab(props: {
   const unmatchedDescriptions = unmatchedClassFeatureDescriptions(
     props.explanations,
     props.heldClasses,
-    classFeatureDescriptions
+    classFeatureDescriptions,
+    props.selectedFeats
   );
 
   if (
@@ -2207,6 +2218,7 @@ function ActionsTab(props: {
         explanations={props.explanations}
         heldClasses={props.heldClasses}
         descriptions={classFeatureDescriptions}
+        selectedFeats={props.selectedFeats}
       />
       <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
     </div>
@@ -3950,6 +3962,7 @@ export function CharacterSheet(props: {
                   heldClasses={heldClasses}
                   racialTraits={racialTraits}
                   raceLabel={props.row.raceLabel}
+                  selectedFeats={props.detail?.selectedFeats ?? []}
                 />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>

@@ -280,6 +280,16 @@ fn load_class_feature_feat_bridge_descriptions(repo_root: &Path) -> Vec<ClassFea
                 key: key.to_string(),
                 name: name.to_string(),
                 description: matched_description,
+                // T4-L9 (`decisions.md §13`): this module's `class_slug` is a
+                // synthetic pool-group name, never a real class token (module
+                // doc comment), so the class-held join can never match these
+                // records. `feat_target` is the EXACT, already-verified
+                // string `feat_description_by_exact_name` matched on above --
+                // carried here so the frontend can gate reachability on the
+                // character holding this feat instead (see
+                // `ClassFeatureDescriptionDto::granted_feat`'s own doc
+                // comment).
+                granted_feat: Some(feat_target),
             });
         }
     }
@@ -438,6 +448,49 @@ mod tests {
             swift_aid.description,
             "With a quick but harmless swipe, you can aid an ally's assault."
         );
+        assert_eq!(
+            swift_aid.granted_feat.as_deref(),
+            Some("Swift Aid"),
+            "T4-L9: the bridged record must carry the exact feat name it grants, so the \
+             frontend can gate reachability on the character holding THAT feat rather than \
+             the synthetic pool-group class_slug"
+        );
+    }
+
+    /// T4-L9 (`decisions.md §13`) -- closed by class, not by instance: every
+    /// one of the 471 records this module serves must carry `granted_feat`,
+    /// not merely the sampled `Golden Legionnaire ~ Swift Aid` case above.
+    /// A record reaching this DTO with `granted_feat: None` would be
+    /// invisible to the feat-held reachability gate
+    /// (`unmatchedClassFeatureDescriptions` in `classFeaturesModel.ts`) the
+    /// same way the class-held gate already misses it -- this proves the
+    /// fix covers the whole population, corpus-wide.
+    #[test]
+    fn every_bridged_record_corpus_wide_carries_its_granted_feat() {
+        let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
+        assert_eq!(descriptions.len(), 471);
+        let missing: Vec<&str> = descriptions
+            .iter()
+            .filter(|d| d.granted_feat.is_none())
+            .map(|d| d.key.as_str())
+            .collect();
+        assert!(
+            missing.is_empty(),
+            "{} of {} bridged records carry no granted_feat (e.g. {:?}) -- these would be \
+             unreachable under the new feat-held gate exactly as they were under the old \
+             class-held one",
+            missing.len(),
+            descriptions.len(),
+            missing.iter().take(4).collect::<Vec<_>>()
+        );
+        for d in &descriptions {
+            assert!(
+                !d.granted_feat.as_deref().unwrap_or_default().trim().is_empty(),
+                "{:?}: granted_feat must never be an empty string -- that would silently \
+                 gate every character out of a record that genuinely reaches this DTO",
+                d.key
+            );
+        }
     }
 
     /// Reuse, not reinvention: the served text is IDENTICAL to what

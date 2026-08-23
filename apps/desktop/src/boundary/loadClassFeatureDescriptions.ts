@@ -27,6 +27,18 @@ export interface ClassFeatureDescriptionDto {
   key: string;
   name: string;
   description: string;
+  /**
+   * `null` for every record `list_class_feature_descriptions` itself emits.
+   * The exact feat name for a `list_class_feature_feat_bridge_descriptions`
+   * (T4-L9, `class_feature_feat_bridge.rs`) record, whose `classSlug` is a
+   * synthetic pool-group name rather than a real class token — see that
+   * Rust module's own `ClassFeatureDescriptionDto::granted_feat` doc
+   * comment. `classFeaturesModel.ts`'s `unmatchedClassFeatureDescriptions`
+   * gates reachability on this field: when present, on the character
+   * holding this feat; when `null`, on the character holding the class
+   * named by `classSlug`, as before.
+   */
+  grantedFeat: string | null;
 }
 
 export async function loadClassFeatureDescriptions(): Promise<ClassFeatureDescriptionDto[]> {
