@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Undead Traits",
+    "name": "Undead Traits",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "No Constitution Score"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Simple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Undead Traits Output|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Ability Drain|Immunity to Death Effects|Immunity to Death from Massive Damage|Immunity to Disease|Immunity to Energy Drain|Immunity to Exhaustion|Immunity to Fatigue|Immunity to Mind-Affecting Effects|Immunity to Nonlethal Damage|Immunity to Paralysis|Immunity to Poison|Immunity to Sleep|Immunity to Stunning"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|TL*CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.305"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1693,
+    "record_key": "Undead Traits"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

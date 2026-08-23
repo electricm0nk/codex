@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ratfolk ~ Size",
+    "name": "Small",
+    "description": "Ratfolk are Small and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, and a +4 size bonus on Stealth checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ratfolk ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ratfolk_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ratfolk are Small and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, and a +4 size bonus on Stealth checks."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3",
+    "line": 16,
+    "record_key": "Ratfolk ~ Size"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

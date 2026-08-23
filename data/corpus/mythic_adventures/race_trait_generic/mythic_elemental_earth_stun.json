@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Elemental (Earth) ~ Stun",
+    "name": "Stun",
+    "description": "If a mythic earth elemental strikes an opponent with two slams in 1 round, that creature must succeed at a DC 30 Fortitude save or be stunned for 1d6 rounds. The save DC is Strength-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental (Earth) ~ Stun"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Elemental (Earth) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If a mythic earth elemental strikes an opponent with two slams in 1 round, that creature must succeed at a DC 30 Fortitude save or be stunned for 1d6 rounds. The save DC is Strength-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 142,
+    "record_key": "Mythic Elemental (Earth) ~ Stun"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

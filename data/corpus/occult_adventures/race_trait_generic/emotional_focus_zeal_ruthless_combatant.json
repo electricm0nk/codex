@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Zeal ~ Ruthless Combatant",
+    "name": "Ruthless Combatant",
+    "description": "The phantom threatens a critical hit with its slam attacks on a roll of 19-20. When the spiritualist reaches 11th level, the phantom's critical modifier with slam attacks increases to x3. This doesn't stack with Improved Critical or similar effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Zeal ~ Ruthless Combatant"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2d"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Zeal.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom threatens a critical hit with its slam attacks on a roll of 19-20. When the spiritualist reaches 11th level, the phantom's critical modifier with slam attacks increases to x3. This doesn't stack with Improved Critical or similar effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 117,
+    "record_key": "Emotional Focus / Zeal ~ Ruthless Combatant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

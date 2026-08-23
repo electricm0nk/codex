@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mud Elemental ~ Earth Glide",
+    "name": "Earth Glide",
+    "description": "A burrowing mud elemental can pass through dirt, gravel, or other loose or porous solid matter as easily as a fish swims through water.  It cannot use this ability to pass through a solid barrier such as a stone or brick wall.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence.  A move earth spell cast on an area containing a burrowing mud elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mud Elemental ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ModifyMovement.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A burrowing mud elemental can pass through dirt, gravel, or other loose or porous solid matter as easily as a fish swims through water.  It cannot use this ability to pass through a solid barrier such as a stone or brick wall.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence.  A move earth spell cast on an area containing a burrowing mud elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2138,
+    "record_key": "Mud Elemental ~ Earth Glide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ghoran ~ Disgusting",
+    "name": "Disgusting",
+    "description": "Some ghorans' link to their past lives becomes corrupted, causing their taste to become particularly disgusting. Such ghorans gain a +2 racial bonus on Escape Artist and combat maneuver checks to escape a grapple against any creature that has a bite attack with the grab ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoran ~ Disgusting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ghoran ~ Disgusting],[!PREFACT:1,ABILITIES,Ghoran_ReplaceDelicious=True,Ghoran_ReplacePastLifeKnowledge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some ghorans' link to their past lives becomes corrupted, causing their taste to become particularly disgusting. Such ghorans gain a +2 racial bonus on Escape Artist and combat maneuver checks to escape a grapple against any creature that has a bite attack with the grab ability."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces delicious and past-life knowledge.|!PREABILITY:1,CATEGORY=Special Ability,Ghoran ~ Disgusting"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 racial bonus on combat maneuver checks to escape a grapple against any creature that has a bite attack with the grab ability."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on Escape Artist checks to escape a grapple against any creature that has a bite attack with the grab ability."
+      },
+      {
+        "key": "FACT",
+        "value": "Ghoran_ReplaceDelicious|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Ghoran_ReplacePastLifeKnowledge|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 687,
+    "record_key": "Ghoran ~ Disgusting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

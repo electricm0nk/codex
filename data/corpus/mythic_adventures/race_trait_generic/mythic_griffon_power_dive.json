@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Griffon ~ Power Dive",
+    "name": "Power Dive",
+    "description": "A flying mythic griffon can move up to four times its speed when it charges. If its charge begins 40 or more feet above its target, its first attack deals double damage. It must be flying downward at an angle of 45 degrees or steeper to use this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Griffon ~ Power Dive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Griffon Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A flying mythic griffon can move up to four times its speed when it charges. If its charge begins 40 or more feet above its target, its first attack deals double damage. It must be flying downward at an angle of 45 degrees or steeper to use this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 183,
+    "record_key": "Mythic Griffon ~ Power Dive"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

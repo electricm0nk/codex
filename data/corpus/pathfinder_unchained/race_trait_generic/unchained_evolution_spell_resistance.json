@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Spell Resistance",
+    "name": "Spell Resistance",
+    "description": "The eidolon is protected against magic, gaining spell resistance. The eidolon's spell resistance is equal to 11 + the summoner's level. This spell resistance does not apply to spells cast by the summoner.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Spell Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Summoner level 9th."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon is protected against magic, gaining spell resistance. The eidolon's spell resistance is equal to 11 + the summoner's level. This spell resistance does not apply to spells cast by the summoner."
+      },
+      {
+        "key": "SR",
+        "value": "11+MasterLevel"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 256,
+    "record_key": "Unchained Evolution ~ Spell Resistance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Hydra ~ Regenerate Head",
+    "name": "Regenerate Head",
+    "description": "When a mythic hydra's head is destroyed, two heads regrow in 1d4 rounds. A mythic hydra can't have more than twice its original number of heads at any one time. To prevent new heads from growing, at least 5 points of acid or fire damage must be dealt to the stump (a touch attack to hit) before they appear. Acid or fire damage from area attacks can affect stumps and the body simultaneously. A hydra doesn't die from losing heads until all its heads are cut off and the stumps are seared by acid or fire.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Hydra ~ Regenerate Head"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Hydra Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a mythic hydra's head is destroyed, two heads regrow in 1d4 rounds. A mythic hydra can't have more than twice its original number of heads at any one time. To prevent new heads from growing, at least 5 points of acid or fire damage must be dealt to the stump (a touch attack to hit) before they appear. Acid or fire damage from area attacks can affect stumps and the body simultaneously. A hydra doesn't die from losing heads until all its heads are cut off and the stumps are seared by acid or fire."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 191,
+    "record_key": "Mythic Hydra ~ Regenerate Head"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Movanic Deva ~ Protected Life Force",
+    "name": "Protected Life Force",
+    "description": "Movanic devas are never harmed by positive-dominant or negative-dominant planar traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Movanic Deva ~ Protected Life Force"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Movanic devas are never harmed by positive-dominant or negative-dominant planar traits."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 102,
+    "record_key": "Movanic Deva ~ Protected Life Force"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

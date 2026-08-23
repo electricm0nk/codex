@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Petitioner ~ Pained by Fire",
+    "name": "Pained by Fire",
+    "description": "Whenever one of the damned takes fire damage, it must make a DC 15 Fortitude save to resist being stunned by the pain for 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Petitioner ~ Pained by Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever one of the damned takes fire damage, it must make a DC 15 Fortitude save to resist being stunned by the pain for 1d4 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 941,
+    "record_key": "Petitioner ~ Pained by Fire"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

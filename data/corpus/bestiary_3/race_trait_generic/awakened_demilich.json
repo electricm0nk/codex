@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Awakened Demilich",
+    "name": "Awakened Demilich",
+    "description": "Under exceptional conditions, a lich's full consciousness survives its transformation into a demilich, or a lich's wandering intellect manages to return to its jeweled skull. Such creatures are awakened demiliches, and combine the powers and near-invulnerability of a demilich with the mind and spellcasting prowess of a lich. An awakened demilich has the full spellcasting abilities of the lich it was before, and gains Eschew Materials and Still Spell as bonus feats. Awakened liches keep their original lich Hit Dice, and any mental attributes that are higher than the demilich's minimums. They otherwise have all the special abilities and defenses of a demilich, and no abilities of the original lich beyond spellcasting and mental attributes. An awakened demilich has a CR of 16, or the CR of the original lich + 3, whichever is higher.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DemilichSelection.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Under exceptional conditions, a lich's full consciousness survives its transformation into a demilich, or a lich's wandering intellect manages to return to its jeweled skull. Such creatures are awakened demiliches, and combine the powers and near-invulnerability of a demilich with the mind and spellcasting prowess of a lich. An awakened demilich has the full spellcasting abilities of the lich it was before, and gains Eschew Materials and Still Spell as bonus feats. Awakened liches keep their original lich Hit Dice, and any mental attributes that are higher than the demilich's minimums. They otherwise have all the special abilities and defenses of a demilich, and no abilities of the original lich beyond spellcasting and mental attributes. An awakened demilich has a CR of 16, or the CR of the original lich + 3, whichever is higher."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 634,
+    "record_key": "Awakened Demilich"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

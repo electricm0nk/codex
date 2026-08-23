@@ -1,0 +1,42 @@
+{
+  "population": 1883,
+  "written": 1878,
+  "name_pi_skipped": 5,
+  "unresolved": [],
+  "written_by_book": {
+    "advanced_class_guide": 137,
+    "advanced_players_guide": 107,
+    "advanced_race_guide": 80,
+    "bestiary": 133,
+    "bestiary_2": 178,
+    "bestiary_3": 215,
+    "bestiary_4": 115,
+    "bestiary_5": 137,
+    "bestiary_6": 1,
+    "book_of_the_damned_volume_1": 1,
+    "book_of_the_damned_volume_2": 1,
+    "core_rulebook": 141,
+    "horror_adventures": 49,
+    "inner_sea_bestiary": 2,
+    "inner_sea_gods": 24,
+    "inner_sea_races": 47,
+    "inner_sea_world_guide": 31,
+    "monster_codex": 3,
+    "mythic_adventures": 118,
+    "occult_adventures": 71,
+    "pathfinder_unchained": 127,
+    "ultimate_combat": 4,
+    "ultimate_intrigue": 3,
+    "ultimate_magic": 3,
+    "ultimate_psionics": 47,
+    "ultimate_wilderness": 103
+  },
+  "pi_skipped_records": [
+    "inner_sea_gods:isg_abilities_races.lst:12 'Spawn of Rovagug Traits' (key: 'Spawn of Rovagug Traits') (term: Rovagug)",
+    "inner_sea_races:isr_abilities_race.lst:67 'Sovyrian-Born' (key: 'Elf ~ Sovyrian-Born') (NAMEISPI:YES)",
+    "inner_sea_world_guide:pfs_iswg_abilities_race.lst:34 'Daughter of Urgathoa ~ Disease' (key: 'Daughter of Urgathoa ~ Disease') (term: Urgathoa)",
+    "inner_sea_world_guide:pfs_iswg_abilities_race.lst:35 'Daughter of Urgathoa ~ Great Claw' (key: 'Daughter of Urgathoa ~ Great Claw') (term: Urgathoa)",
+    "inner_sea_world_guide:pfs_iswg_abilities_race.lst:36 'Daughter of Urgathoa ~ Spells' (key: 'Daughter of Urgathoa ~ Spells') (term: Urgathoa)"
+  ],
+  "term_list_size": 60
+}

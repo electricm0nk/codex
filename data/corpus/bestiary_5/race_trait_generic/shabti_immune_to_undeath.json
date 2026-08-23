@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Shabti ~ Immune to Undeath",
+    "name": "Immune to Undeath",
+    "description": "Shabti can't become undead. Spells and abilities that would transform a shabti into an undead creature have no effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shabti ~ Immune to Undeath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Shabti can't become undead. Spells and abilities that would transform a shabti into an undead creature have no effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 211,
+    "record_key": "Shabti ~ Immune to Undeath"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Universal Monster Rule ~ Light Sensitivity",
+    "name": "Universal Monster Rule ~ Light Sensitivity",
+    "description": "Dhampirs are dazzled in areas of bright sunlight or within the radius of a daylight spell.|PREABILITY:1,CATEGORY=Special Ability,Dhampir ~ Weakness",
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Dhampirs are dazzled in areas of bright sunlight or within the radius of a daylight spell.|PREABILITY:1,CATEGORY=Special Ability,Dhampir ~ Weakness"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+    "sha256": "faeeb2800b2a75f92e1f2c7b02ee3d2c253bc3599735699d8bca0acaf00742c5",
+    "line": 28,
+    "record_key": "Universal Monster Rule ~ Light Sensitivity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eremite Overlord",
+    "name": "Eremite Overlord",
+    "description": "Each overlord is a unique Large (or larger) eremite with several additional Hit Dice. In addition, each has a unique power linked to its chosen form of self-mutilation, as well as 4-6 additional spell-like abilities along that mutilation's theme. For example, an overlord that has perfected the act of skinning itself and wrapping its flesh in thorny black vines might have an ability to send those thorny vines out at great length to grapple and constrict distant foes, and might gain black tentacles, entangle, wall of thorns, and 1-3 similar spell-like abilities.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EremiteSelection.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Each overlord is a unique Large (or larger) eremite with several additional Hit Dice. In addition, each has a unique power linked to its chosen form of self-mutilation, as well as 4-6 additional spell-like abilities along that mutilation's theme. For example, an overlord that has perfected the act of skinning itself and wrapping its flesh in thorny black vines might have an ability to send those thorny vines out at great length to grapple and constrict distant foes, and might gain black tentacles, entangle, wall of thorns, and 1-3 similar spell-like abilities."
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1171,
+    "record_key": "Eremite Overlord"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

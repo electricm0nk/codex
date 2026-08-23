@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vine Leshy ~ Languages",
+    "name": "Languages",
+    "description": "Vine leshys begin play speaking Common and Sylvan. Vine leshys with high Intelligence scores can choose from the following: Aquan, Auran, Aklo, Elven, Gnome, Goblin, Terran, or Undercommon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Racial Language"
+      },
+      {
+        "key": "DESC",
+        "value": "Vine leshys begin play speaking Common and Sylvan. Vine leshys with high Intelligence scores can choose from the following: Aquan, Auran, Aklo, Elven, Gnome, Goblin, Terran, or Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aquan|Bonus Language ~ Auran|Bonus Language ~ Aklo|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Goblin|Bonus Language ~ Terran|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Sylvan"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 125,
+    "record_key": "Vine Leshy ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

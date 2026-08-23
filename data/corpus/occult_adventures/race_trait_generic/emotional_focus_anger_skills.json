@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Anger ~ Skills",
+    "name": "Skills",
+    "description": "The phantom gains a number of ranks in Intimidate and Survival equal to its number of Hit Dice. While confined in the spiritualist's consciousness, the phantom grants the spiritualist Skill Focus in each of these skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Anger ~ Skills"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2a"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Anger.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom gains a number of ranks in Intimidate and Survival equal to its number of Hit Dice. While confined in the spiritualist's consciousness, the phantom grants the spiritualist Skill Focus in each of these skills."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Intimidate|PhantomSkillRankBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLRANK|Survival|PhantomSkillRankBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 60,
+    "record_key": "Emotional Focus / Anger ~ Skills"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Iathavos ~ Ichor",
+    "name": "Ichor",
+    "description": "As long as the iathavos has taken any hit point damage, thick and stringy ropes of black ichor weep from the fissures and folds in its bristly hide.  This ichor extrudes from the creature's body in a writhing nimbus of filaments at a rate of 5 feet per round, to a maximum range equal to its reach (30 feet).  At the start of the iathavos's turn, all creatures in reach of these strands of ichor must make a DC %1 Reflex save or become entangled.  At the start of the iathavos's turn, all creatures entangled by the ichor take 4d6 points of acid damage.  If the qlippoth ends its turn with no hit point damage, the ichor melts away into harmless mist, releasing all entangled creatures.|IathavosIchorDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iathavos ~ Ichor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IathavosIchorDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as the iathavos has taken any hit point damage, thick and stringy ropes of black ichor weep from the fissures and folds in its bristly hide.  This ichor extrudes from the creature's body in a writhing nimbus of filaments at a rate of 5 feet per round, to a maximum range equal to its reach (30 feet).  At the start of the iathavos's turn, all creatures in reach of these strands of ichor must make a DC %1 Reflex save or become entangled.  At the start of the iathavos's turn, all creatures entangled by the ichor take 4d6 points of acid damage.  If the qlippoth ends its turn with no hit point damage, the ichor melts away into harmless mist, releasing all entangled creatures.|IathavosIchorDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Ichor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IathavosIchorDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IathavosIchorDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Ichor)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1011,
+    "record_key": "Iathavos ~ Ichor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Barghest (Greater) ~ Goblin King",
+    "name": "Goblin King",
+    "description": "A mythic barghest has the inspire courage +2 and inspire competence +2 abilities of a 6th-level bard. Goblins, goblin dogs, worgs, hell hounds, and barghests gain double the normal bonuses from this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Barghest (Greater) ~ Goblin King"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Barghest (Greater) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic barghest has the inspire courage +2 and inspire competence +2 abilities of a 6th-level bard. Goblins, goblin dogs, worgs, hell hounds, and barghests gain double the normal bonuses from this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 76,
+    "record_key": "Mythic Barghest (Greater) ~ Goblin King"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

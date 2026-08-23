@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Demon (Vrock) ~ Greater Stunning Screech",
+    "name": "Greater Stunning Screech",
+    "description": "Once per hour, a mythic vrock can emit a shrill screech. All non-demons within a 30-footradius spread must succeed at a DC 21 Fortitude save or be stunned for 1 round. If the vrock expends one use of mythic power, any creature that fails its save is staggered for 1d6 rounds after the stun ends. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Demon (Vrock) ~ Greater Stunning Screech"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Demon (Vrock) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per hour, a mythic vrock can emit a shrill screech. All non-demons within a 30-footradius spread must succeed at a DC 21 Fortitude save or be stunned for 1 round. If the vrock expends one use of mythic power, any creature that fails its save is staggered for 1d6 rounds after the stun ends. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 102,
+    "record_key": "Mythic Demon (Vrock) ~ Greater Stunning Screech"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

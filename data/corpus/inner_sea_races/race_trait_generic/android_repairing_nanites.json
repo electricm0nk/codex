@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Android ~ Repairing Nanites",
+    "name": "Repairing Nanites",
+    "description": "Some androids cannot prompt their nanites to aid them in any endeavor, but instead find that their nanites stitch their wounds together. The first time each day that such an android has taken an amount of damage greater than or equal to %1 (twice her Hit Dice), the nanites automatically activate, without an action. Her circuitry-tattoos glow with light equivalent to that of a torch for 1 round and she heals %1 hit points (a number equal to twice her Hit Dice).|TL*2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Android ~ Repairing Nanites"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Android Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Android ~ Repairing Nanites],[!PREFACT:1,ABILITIES,Android_ReplaceNaniteSurge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some androids cannot prompt their nanites to aid them in any endeavor, but instead find that their nanites stitch their wounds together. The first time each day that such an android has taken an amount of damage greater than or equal to %1 (twice her Hit Dice), the nanites automatically activate, without an action. Her circuitry-tattoos glow with light equivalent to that of a torch for 1 round and she heals %1 hit points (a number equal to twice her Hit Dice).|TL*2"
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces nanite surge.|!PREABILITY:1,CATEGORY=Special Ability,Android ~ Repairing Nanites"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "FACT",
+        "value": "Android_ReplaceNaniteSurge|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 359,
+    "record_key": "Android ~ Repairing Nanites"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

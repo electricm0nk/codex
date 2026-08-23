@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Low-Light",
+    "name": "Low-Light Vision",
+    "description": "You gain low-light vision, enabling you to see twice as far as a human in conditions of dim light.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Low-Light"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain low-light vision, enabling you to see twice as far as a human in conditions of dim light."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_race_pu.lst",
+    "sha256": "5d762d17873a619855f04941f28b762dd4414148270857b0c40769553352b652",
+    "line": 21,
+    "record_key": "Unchained Evolution ~ Low-Light"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

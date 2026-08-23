@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Kitsune ~ Kitsune Magic",
+    "name": "Kitsune Magic",
+    "description": "Kitsune add 1 to the DCs of any saving throws to resist enchantment spells that they cast. Kitsune with a Charisma score of 11 or higher gain the following spell-like ability: 3/day--dancing lights.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Kitsune Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Special Quality.Extraordinary.SpellLike"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kitsune_ReplaceKitsuneMagic=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Kitsune add 1 to the DCs of any saving throws to resist enchantment spells that they cast. Kitsune with a Charisma score of 11 or higher gain the following spell-like ability: 3/day--dancing lights."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Dancing Lights|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|SCHOOL.Enchantment|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DancingLights_Times|3|TYPE=Base|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_abilities_race.lst",
+    "sha256": "3c89f35ce0239148b8cf62e2ff79cc7060b6192f237a54f89122d40aa011d3eb",
+    "line": 21,
+    "record_key": "Kitsune ~ Kitsune Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

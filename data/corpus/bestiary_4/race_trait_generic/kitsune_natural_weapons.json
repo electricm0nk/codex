@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Kitsune ~ Natural Weapons",
+    "name": "Natural Weapons",
+    "description": "In her natural form, a kitsune has a bite attack that deals 1d4 points of damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Natural Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kitsune_ReplaceNaturalWeapons=True"
+      },
+      {
+        "key": "DESC",
+        "value": "In her natural form, a kitsune has a bite attack that deals 1d4 points of damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGESIZE|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_abilities_race.lst",
+    "sha256": "3c89f35ce0239148b8cf62e2ff79cc7060b6192f237a54f89122d40aa011d3eb",
+    "line": 22,
+    "record_key": "Kitsune ~ Natural Weapons"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

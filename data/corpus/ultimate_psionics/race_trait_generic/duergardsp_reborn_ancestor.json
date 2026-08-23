@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "DuergarDSP ~ Reborn Ancestor",
+    "name": "Reborn Ancestor",
+    "description": "Reroll a d20 roll once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Reborn Ancestor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.DuergarDSPRacialTrait.DuergarDSPHardy"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Reborn Ancestor],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPHardy]"
+      },
+      {
+        "key": "DESC",
+        "value": "Reroll a d20 roll once per day."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 108,
+    "record_key": "DuergarDSP ~ Reborn Ancestor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

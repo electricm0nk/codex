@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Bite",
+    "name": "Bite",
+    "description": "The eidolon's maw is full of razor-sharp teeth, giving it a bite attack. This attack is a primary attack. The bite deals 1d6 points of damage (1d8 if Large, 2d6 if Huge). If the eidolon already has a bite attack, this evolution allows it to deal 1-1/2 times its Strength modifier on damage rolls made with its bite.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Eidolon Subtype ~ Agathion,Eidolon Subtype ~ daemon,Eidolon Subtype ~ demon,Eidolon Subtype ~ devil,Eidolon Subtype ~ div,Eidolon Subtype ~ elemental,Eidolon Subtype ~ protean,Eidolon Subtype ~ psychopomp"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Agathion, daemon, demon, devil, div, elemental, protean, or psychopomp subtype."
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon's maw is full of razor-sharp teeth, giving it a bite attack. This attack is a primary attack. The bite deals 1d6 points of damage (1d8 if Large, 2d6 if Huge). If the eidolon already has a bite attack, this evolution allows it to deal 1-1/2 times its Strength modifier on damage rolls made with its bite."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 190,
+    "record_key": "Unchained Evolution ~ Bite"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

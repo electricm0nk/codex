@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Ironskin",
+    "name": "Ironskin",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Ironskin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Ironskin"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Ironskin_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_Ironskin_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Ironskin_LVL|Ironskin,RacialSLA_Ironskin_DC|PREVAREQ:RacialSLA_Ironskin_AtWill,0|PREVAREQ:RacialSLA_Ironskin_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Ironskin_LVL|Ironskin,RacialSLA_Ironskin_DC|PREVAREQ:RacialSLA_Ironskin_AtWill,1|PREVAREQ:RacialSLA_Ironskin_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_Ironskin_LVL|Ironskin,RacialSLA_Ironskin_DC|PREVAREQ:RacialSLA_Ironskin_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Ironskin_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Ironskin_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Ironskin_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Ironskin_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Ironskin_DC|10+RacialSLA_Ironskin_SpellLVL+RacialSLA_Ironskin_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
+    "line": 95,
+    "record_key": "Racial SLA ~ Ironskin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

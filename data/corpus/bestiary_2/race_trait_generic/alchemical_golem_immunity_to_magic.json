@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Alchemical Golem ~ Immunity to Magic",
+    "name": "Immunity to Magic",
+    "description": "An alchemical golem is immune to any spell or spell-like ability that allows spell resistance, save for spells with the sonic descriptor.  Shatter damages on alchemical golem as if it were a crystalline creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Alchemical Golem ~ Immunity to Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Immunity.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An alchemical golem is immune to any spell or spell-like ability that allows spell resistance, save for spells with the sonic descriptor.  Shatter damages on alchemical golem as if it were a crystalline creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Magic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 597,
+    "record_key": "Alchemical Golem ~ Immunity to Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

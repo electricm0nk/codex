@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dusk Kamadan",
+    "name": "Dusk Kamadan (CR +1)",
+    "description": "A dusk kamadan has midnight black fur and snakes bearing black and red ring patterns on their bodies. A dusk kamadan has the advanced creature template, and its snakes have a poisonous bite: Snakes- injury; save Fort DC 17; frequency 1/round for 6 rounds; effect 1d2 Con; cure 2 consecutive saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dusk Kamadan"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.VariantKamadan"
+      },
+      {
+        "key": "DESC",
+        "value": "A dusk kamadan has midnight black fur and snakes bearing black and red ring patterns on their bodies. A dusk kamadan has the advanced creature template, and its snakes have a poisonous bite: Snakes- injury; save Fort DC 17; frequency 1/round for 6 rounds; effect 1d2 Con; cure 2 consecutive saves."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Advanced Creature"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1106,
+    "record_key": "Dusk Kamadan"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

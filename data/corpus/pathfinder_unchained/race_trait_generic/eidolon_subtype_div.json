@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eidolon Subtype ~ Div",
+    "name": "Div",
+    "description": "Formed of hatred and spite, div eidolons seek to despoil and ruin all things beautiful and joyous. Div eidolons particularly resent having mortal masters, and seek to doom their summoners to existences full of suffering and loss. Each div eidolon has a unique compulsion it must follow-usually something similar to the doru's obsession with secrets-that leads it to bargain its loyalty for something the summoner provides. The div's summoner uses his eidolon's compulsion to entrap and control the eidolon. Still, div eidolons never fully give in, and continue to plot ways they might corrupt that which their masters hold dearest.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon Subtype ~ Div"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Subtype Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonSubtype_Div,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Formed of hatred and spite, div eidolons seek to despoil and ruin all things beautiful and joyous. Div eidolons particularly resent having mortal masters, and seek to doom their summoners to existences full of suffering and loss. Each div eidolon has a unique compulsion it must follow-usually something similar to the doru's obsession with secrets-that leads it to bargain its loyalty for something the summoner provides. The div's summoner uses his eidolon's compulsion to entrap and control the eidolon. Still, div eidolons never fully give in, and continue to plot ways they might corrupt that which their masters hold dearest."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Form|AUTOMATIC|Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div ~ Unchained Eidolon LVL01|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div ~ Unchained Eidolon LVL04|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div ~ Unchained Eidolon LVL08|PREVARGTEQ:MasterLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div ~ Unchained Eidolon LVL12|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div ~ Unchained Eidolon LVL16|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div ~ Unchained Eidolon LVL20|PREVARGTEQ:MasterLevel,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Div Base Form ~ Biped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBiped|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 33,
+    "record_key": "Eidolon Subtype ~ Div"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

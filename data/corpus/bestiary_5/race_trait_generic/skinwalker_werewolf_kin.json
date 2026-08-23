@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Skinwalker ~ Werewolf-Kin",
+    "name": "Werewolf-Kin (Witchwolf)",
+    "description": "Perhaps the most prevalent breed of skinwalker, witchwolves prefer dwelling with others of their kind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Werewolf-Kin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skinwalker Subrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Skinwalker ~ Werewolf-Kin],[!PREFACT:1,ABILITIES,Skinwalker_ReplaceAbilityScores=True,Skinwalker_ReplaceAnimalMinded=True,Skinwalker_ReplaceChangeShape=True,Skinwalker_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Perhaps the most prevalent breed of skinwalker, witchwolves prefer dwelling with others of their kind."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Skinwalker ~ Werewolf-Kin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|Werewolf-Kin ~ Ability Scores|Werewolf-Kin ~ Animal-Minded|Werewolf-Kin ~ Change Shape|Werewolf-Kin ~ Spell-Like Ability"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Werewolf"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|CE"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Constitution, -2 Intelligence (+2 Wisdom while shapechanged)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Perception, wild empathy."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Magic fang 1/day."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Bestial Features|Bite attack that deals 1d6 points of damage, 2 claw attacks that each deal 1d4 points of damage, darkvision 60 feet, +2 racial bonus on all saving throws."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 183,
+    "record_key": "Skinwalker ~ Werewolf-Kin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

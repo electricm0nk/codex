@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Swim +20",
+    "name": "Swim +20",
+    "description": "This evolution can be selected more than once. Each additional time it is selected, increase the eidolon's swim speed by 20 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Swim +20"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "This evolution can be selected more than once. Each additional time it is selected, increase the eidolon's swim speed by 20 feet."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|20"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 214,
+    "record_key": "Unchained Evolution ~ Swim +20"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

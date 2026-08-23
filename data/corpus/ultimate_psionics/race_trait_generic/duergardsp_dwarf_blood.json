@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "DuergarDSP ~ Dwarf Blood",
+    "name": "Dwarf Blood",
+    "description": "Duergar count as dwarves for any effect related to race.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Dwarf Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Extraordinary.DuergarDSPRacialTrait.DuergarDSPRacialDefault"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Dwarf Blood],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPDwarfBlood]"
+      },
+      {
+        "key": "DESC",
+        "value": "Duergar count as dwarves for any effect related to race."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 96,
+    "record_key": "DuergarDSP ~ Dwarf Blood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Chill Touch",
+    "name": "Chill Touch",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Chill Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Chill Touch"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_ChillTouch_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_ChillTouch_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_ChillTouch_LVL|Chill Touch,RacialSLA_ChillTouch_DC|PREVAREQ:RacialSLA_ChillTouch_AtWill,0|PREVAREQ:RacialSLA_ChillTouch_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_ChillTouch_LVL|Chill Touch,RacialSLA_ChillTouch_DC|PREVAREQ:RacialSLA_ChillTouch_AtWill,1|PREVAREQ:RacialSLA_ChillTouch_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_ChillTouch_LVL|Chill Touch,RacialSLA_ChillTouch_DC|PREVAREQ:RacialSLA_ChillTouch_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_ChillTouch_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_ChillTouch_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_ChillTouch_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_ChillTouch_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_ChillTouch_DC|10+RacialSLA_ChillTouch_SpellLVL+RacialSLA_ChillTouch_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 205,
+    "record_key": "Racial SLA ~ Chill Touch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

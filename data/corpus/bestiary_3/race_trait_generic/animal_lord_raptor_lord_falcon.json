@@ -1,0 +1,130 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Animal Lord ~ Raptor Lord (Falcon)",
+    "name": "Raptor Lord (Falcon)",
+    "description": "Raptor lords have feathery-looking and brightly colored hair, wide searching eyes, and aquiline noses. Raptor lords gain the following additional ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Lord ~ Raptor Lord (Falcon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality"
+      },
+      {
+        "key": "PREBASESIZEGTEQ",
+        "value": "T"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalSTRScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalDEXScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCONScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalINTScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalWISScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCHAScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Raptor lords have feathery-looking and brightly colored hair, wide searching eyes, and aquiline noses. Raptor lords gain the following additional ability."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,80"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Raptor Lord ~ Raptor's Dive"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalSTRScore|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalDEXScore|17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCONScore|11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalINTScore|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalWISScore|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCHAScore|7"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Talons|TOHIT|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*1,1d4|Talons,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*2,1d4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 350,
+    "record_key": "Animal Lord ~ Raptor Lord (Falcon)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

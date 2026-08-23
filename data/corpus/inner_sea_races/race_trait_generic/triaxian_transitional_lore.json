@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Triaxian ~ Transitional Lore",
+    "name": "Transitional Lore",
+    "description": "Transitional Triaxians are often instilled from a young age with the lore they need to prepare for the next winter or summer; they gain a +1 racial bonus on Knowledge (nature) and Survival checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Triaxian ~ Transitional Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Triaxian Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Triaxian ~ Transitional Lore],[!PREFACT:1,ABILITIES,Triaxian_ReplaceSeasoned=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Transitional Triaxians are often instilled from a young age with the lore they need to prepare for the next winter or summer; they gain a +1 racial bonus on Knowledge (nature) and Survival checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces seasoned.|!PREABILITY:1,CATEGORY=Special Ability,Triaxian ~ Transitional Lore"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature),Survival|1|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+1 Knowledge (nature), +1 Survival"
+      },
+      {
+        "key": "FACT",
+        "value": "Triaxian_ReplaceSeasoned|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1566,
+    "record_key": "Triaxian ~ Transitional Lore"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

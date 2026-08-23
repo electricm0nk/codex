@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Arbiter ~ Constant Vigilance",
+    "name": "Constant Vigilance",
+    "description": "An arbiter gains a +4 bonus to recognize and disbelieve illusions created by creatures with the chaotic subtype or possessing the chaotic descriptor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Arbiter ~ Constant Vigilance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An arbiter gains a +4 bonus to recognize and disbelieve illusions created by creatures with the chaotic subtype or possessing the chaotic descriptor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|(+4 vs. chaotic illusions)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2143,
+    "record_key": "Arbiter ~ Constant Vigilance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

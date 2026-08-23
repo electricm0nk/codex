@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Derghodaemon ~ Feeblemind Aura",
+    "name": "Feeblemind Aura",
+    "description": "By grinding and clicking its mandibles and chitinous plates together (a free action), a derghodaemon can affect all creatures within 30 feet as if by a feeblemind spell.  Daemons are immune to this effect, but all other creatures must make a DC %1 Will save to resist the effects.  A creature that makes this save is immune to the effect for 24 hours.  A creature that fails remains affected as long as the derghodaemon continues to maintain the aura and the subject remains within 30 feet of the derghodaemon.  Once either condition ends, the victim of this effect can attempt a new DC %1 Will save once per minute to recover from the effect; otherwise, it can be cured by a heal, limited wish, miracle, or wish spell.  A derghodaemon cannot use its spell-like abilities or rend attack in any round in which it uses its feeblemind aura.  This is a sonic mind-affecting effect.|DerghodaemonFeeblemindDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Derghodaemon ~ Feeblemind Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DerghodaemonFeeblemindDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "By grinding and clicking its mandibles and chitinous plates together (a free action), a derghodaemon can affect all creatures within 30 feet as if by a feeblemind spell.  Daemons are immune to this effect, but all other creatures must make a DC %1 Will save to resist the effects.  A creature that makes this save is immune to the effect for 24 hours.  A creature that fails remains affected as long as the derghodaemon continues to maintain the aura and the subject remains within 30 feet of the derghodaemon.  Once either condition ends, the victim of this effect can attempt a new DC %1 Will save once per minute to recover from the effect; otherwise, it can be cured by a heal, limited wish, miracle, or wish spell.  A derghodaemon cannot use its spell-like abilities or rend attack in any round in which it uses its feeblemind aura.  This is a sonic mind-affecting effect.|DerghodaemonFeeblemindDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Feeblemind Aura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DerghodaemonFeeblemindDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DerghodaemonFeeblemindDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Feeblemind Aura)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DerghodaemonFeeblemindDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 288,
+    "record_key": "Derghodaemon ~ Feeblemind Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

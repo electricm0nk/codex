@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vine Leshy ~ Grapevine",
+    "name": "Grapevine",
+    "description": "A vine leshy made from a grapevine can produce magically infused fruit that can heal her allies. She can cast goodberry once per day as a spell-like ability, with a caster level equal to her character level.&nl;This replaces pass without trace.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Grapevine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vine Leshy ~ Grapevine],[PREVAREQ:VineLeshy_ReplacePasswithoutTrace,0]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Goodberry"
+      },
+      {
+        "key": "DESC",
+        "value": "A vine leshy made from a grapevine can produce magically infused fruit that can heal her allies. She can cast goodberry once per day as a spell-like ability, with a caster level equal to her character level.&nl;This replaces pass without trace."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VineLeshy_ReplacePasswithoutTrace|1|TYPE=Boolean"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 133,
+    "record_key": "Vine Leshy ~ Grapevine"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

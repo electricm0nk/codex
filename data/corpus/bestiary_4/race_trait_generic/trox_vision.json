@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Trox ~ Vision",
+    "name": "Darkvision",
+    "description": "Trox can see in the dark up to 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trox ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Trox_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Trox can see in the dark up to 60 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasRacialVision|1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_abilities_race.lst",
+    "sha256": "5b478e1a25d05b92bc04c408960de69a1581897597032336432e174f62df649f",
+    "line": 18,
+    "record_key": "Trox ~ Vision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

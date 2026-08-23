@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Enemy ~ Humanoid (Orc)",
+    "name": "Humanoid (Orc)",
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Orcs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidOrc",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Enemy ~ Humanoid (Orc)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredHumanoidOrc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Orcs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidOrc"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredHumanoidOrc|FavoredBaseBonus"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "https://paizo.com/products/btpy88yj"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2009-08"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredHumanoidOrc"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against Orc.|FavoredHumanoidOrc"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against Orc.|FavoredHumanoidOrc"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_race.lst",
+    "sha256": "f6ee56352d24d49bc05955f40296ba3db009530a488c78515b64238895f44f48",
+    "line": 31,
+    "record_key": "Favored Enemy ~ Humanoid (Orc)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Hunter Critical Confirmation Choice ~ Elven Curve Blade",
+    "name": "Elven Curve Blade",
+    "description": "Gain a +%1 bonus on critical hit confirmation rolls made with an Elven Curve Blade. This bonus does not stack with those gained through Critical Focus and similar effects.|min(4,floor(ElfHunterCritConfElvenCurveBladeBonus/2))",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Hunter Critical Confirmation Choice ~ Elven Curve Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElfHunterCritialConfirmationChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElfHunterCritConfElvenCurveBladeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a +%1 bonus on critical hit confirmation rolls made with an Elven Curve Blade. This bonus does not stack with those gained through Critical Focus and similar effects.|min(4,floor(ElfHunterCritConfElvenCurveBladeBonus/2))"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElfHunterCritConfElvenCurveBladeBonus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 336,
+    "record_key": "Elf Hunter Critical Confirmation Choice ~ Elven Curve Blade"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

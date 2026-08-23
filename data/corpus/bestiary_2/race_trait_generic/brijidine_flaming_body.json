@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Brijidine ~ Flaming Body",
+    "name": "Flaming Body",
+    "description": "A brijidine's body is molten rock covered in dancing flames.  Anyone striking a brijidine with a natural weapon or unarmed strike takes 1d6 points of fire damage.  A creature that grapples a brijidine or is grappled by one takes 6d6 points of fire damage each round the grapple persists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brijidine ~ Flaming Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A brijidine's body is molten rock covered in dancing flames.  Anyone striking a brijidine with a natural weapon or unarmed strike takes 1d6 points of fire damage.  A creature that grapples a brijidine or is grappled by one takes 6d6 points of fire damage each round the grapple persists."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 148,
+    "record_key": "Brijidine ~ Flaming Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

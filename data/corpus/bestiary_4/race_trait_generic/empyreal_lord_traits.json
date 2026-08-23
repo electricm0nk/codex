@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Empyreal Lord ~ Traits",
+    "name": "Empyreal Lord Traits",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Empyreal Lord ~ Traits"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=20|Teleport (Greater)"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Empyreal Lord in Home Realm|Empyreal Lord Away from Home Realm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traits Output ~ Empyreal Lord|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Empyreal Lord ~ Powerful Weaponry|Empyreal Lord ~ Improved Resistance|Empyreal Lord ~ Grant Spells|Empyreal Lord ~ Primal Aura|Empyreal Lord ~ Seed of Life|Immunity to Ability Damage|Immunity to Ability Drain|Immunity to Charm|Immunity to Compulsion|Immunity to Death Effects|Immunity to Energy Drain|Immunity to Petrification|Regeneration ~ Epic and Evil Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|60|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 90,
+    "record_key": "Empyreal Lord ~ Traits"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

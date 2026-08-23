@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Kasatha ~ Stalker",
+    "name": "Stalker",
+    "description": "Perception and Stealth are class skills for kasathas.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kasatha ~ Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kasatha_ReplaceStalker=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Perception and Stealth are class skills for kasathas."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Perception|Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_abilities_race.lst",
+    "sha256": "53b266361b5a459401cf5e5e62de82ba990116851b84abeee70bf96e907c6971",
+    "line": 23,
+    "record_key": "Kasatha ~ Stalker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

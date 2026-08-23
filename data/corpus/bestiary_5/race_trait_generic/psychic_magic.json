@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Psychic Magic",
+    "name": "Psychic Magic",
+    "description": "A creature with this ability can use the power of its mind to cast certain spells. Each spell cast using psychic magic consumes an amount of psychic energy. The creature has a maximum amount of psychic energy (PE) per day that refreshes after a night's rest. A creature with this ability can cast any of the spells listed in this entry as long as it has enough psychic energy remaining to pay the spell's PE cost. The DC for any of these spells is equal to 10 + the amount of psychic energy used to cast the spell + the creature's Charisma or Intelligence modifier (whichever is higher). Creatures that gain access to undercast spells (Occult Adventures 144) via this ability can cast an undercast version of the spell by spending 1 PE fewer for each level lower that the spell is cast. A psychic magic spell with a PE cost of 0 can be cast any number of times, and can be cast even if the creature has 0 PE remaining. The psychic magic granted by this ability has the same thought and emotion components as psychic spells. The monster can apply metamagic feats to these spells by spending an amount of additional PE equal to the level increase of the metamagic feat and by increasing the casting time as normal for spontaneously casting a metamagic spell. Because this ability grants psychic spellcasting, it also allows the creature to use occult skill unlocks (Occult Adventures 194).",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TYPE:SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PE_MAX_Count|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with this ability can use the power of its mind to cast certain spells. Each spell cast using psychic magic consumes an amount of psychic energy. The creature has a maximum amount of psychic energy (PE) per day that refreshes after a night's rest. A creature with this ability can cast any of the spells listed in this entry as long as it has enough psychic energy remaining to pay the spell's PE cost. The DC for any of these spells is equal to 10 + the amount of psychic energy used to cast the spell + the creature's Charisma or Intelligence modifier (whichever is higher). Creatures that gain access to undercast spells (Occult Adventures 144) via this ability can cast an undercast version of the spell by spending 1 PE fewer for each level lower that the spell is cast. A psychic magic spell with a PE cost of 0 can be cast any number of times, and can be cast even if the creature has 0 PE remaining. The psychic magic granted by this ability has the same thought and emotion components as psychic spells. The monster can apply metamagic feats to these spells by spending an amount of additional PE equal to the level increase of the metamagic feat and by increasing the casting time as normal for spontaneously casting a metamagic spell. Because this ability grants psychic spellcasting, it also allows the creature to use occult skill unlocks (Occult Adventures 194)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Maximum Psychic Energy (PE)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|PE_MAX_Count"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Psychic Magic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142",
+    "line": 23,
+    "record_key": "Psychic Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

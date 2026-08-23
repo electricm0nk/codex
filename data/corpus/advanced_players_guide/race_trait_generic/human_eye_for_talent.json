@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Human ~ Eye for Talent",
+    "name": "Eye for Talent",
+    "description": "Humans have great intuition for hidden potential. They gain a +2 bonus on Sense Motive checks. In addition, when they acquire an animal companion, bonded mount, cohort, or familiar, that creature gains a +2 bonus to one ability score of the character's choice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Eye for Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Eye for Talent],[!PREFACT:1,ABILITIES,Human_ReplaceBonusFeat=true]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Companion_MasterRacialTrait_AbilityBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans have great intuition for hidden potential. They gain a +2 bonus on Sense Motive checks. In addition, when they acquire an animal companion, bonded mount, cohort, or familiar, that creature gains a +2 bonus to one ability score of the character's choice."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the bonus feat racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Eye for Talent"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Companion_MasterRacialTrait_AbilityBonus|1|TYPE=Boolean"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceBonusFeat|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 110,
+    "record_key": "Human ~ Eye for Talent"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

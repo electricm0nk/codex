@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Reptoid ~ Natural Weapons",
+    "name": "Natural Weapons",
+    "description": "When in its natural form, a reptoid has a bite attack and two claw attacks that deal 1d3 points of damage each.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reptoid ~ Natural Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When in its natural form, a reptoid has a bite attack and two claw attacks that deal 1d3 points of damage each."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 178,
+    "record_key": "Reptoid ~ Natural Weapons"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

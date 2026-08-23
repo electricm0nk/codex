@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Caligni ~ Languages",
+    "name": "Languages",
+    "description": "Caligni begin play speaking Common and Dark Flok",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Caligni ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Language"
+      },
+      {
+        "key": "DESC",
+        "value": "Caligni begin play speaking Common and Dark Flok"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Any Spoken"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Dark Folk"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 74,
+    "record_key": "Caligni ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

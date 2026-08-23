@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Adopted Race ~ Samsaran",
+    "name": "Samsaran",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adopted Race ~ Samsaran"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdoptiveRace"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Special Ability|TYPE=Samsaran Race Trait"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Traits|VIRTUAL|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_race.lst",
+    "sha256": "70da33c402699e1d2fcaa92aa5b5704d73c07e9fcaf0bf49925f5062637b7278",
+    "line": 30,
+    "record_key": "Adopted Race ~ Samsaran"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling ~ Craven",
+    "name": "Craven",
+    "description": "While most halflings are fearless, some are skittish, making them particularly alert. Halflings with this racial trait gain a +1 bonus on initiative checks and a +1 bonus on attack rolls when flanking. They suffer a -2 penalty on fear saves and gain no benefit from morale bonuses on fear saves. When affected by a fear effect, their base speed increases by 10 feet and they gain a +1 dodge bonus to Armor Class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Craven"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Craven],[!PREFACT:1,ABILITIES,Halfling_ReplaceFearless=true,Halfling_ReplaceHalflingLuck=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most halflings are fearless, some are skittish, making them particularly alert. Halflings with this racial trait gain a +1 bonus on initiative checks and a +1 bonus on attack rolls when flanking. They suffer a -2 penalty on fear saves and gain no benefit from morale bonuses on fear saves. When affected by a fear effect, their base speed increases by 10 feet and they gain a +1 dodge bonus to Armor Class."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the fearless and halfling luck racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Craven"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_Fear|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 bonus on attack rolls when flanking. When affected by a fear effect, your base speed increases by 10 feet and you gain a +1 dodge bonus to Armor Class."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|-2 penalty on fear saves and gain no benefit from morale bonuses on fear saves."
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceFearless|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceHalflingLuck|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 95,
+    "record_key": "Halfling ~ Craven"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

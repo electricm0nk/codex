@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Gills",
+    "name": "Gills",
+    "description": "The eidolon has gills and can breathe underwater indefinitely.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Gills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon has gills and can breathe underwater indefinitely."
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 198,
+    "record_key": "Unchained Evolution ~ Gills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

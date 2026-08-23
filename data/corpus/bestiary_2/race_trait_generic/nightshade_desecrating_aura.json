@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Nightshade ~ Desecrating Aura",
+    "name": "Desecrating Aura",
+    "description": "All nightshades have a 30-foot-radius emanation equivalent to a desecrate spell centered on a shrine of evil power.  Undead within this radius (including the nightshade) gain a +2 profane bonus on attack and damage rolls and saving throws, as well as +2 hit points per die, and the save DC of channeled negative energy is increased by +6 (these adjustments are included for the nightshades in their entries).  This aura can be negated by dispel evil, but a nightshade can reactivate it on its turnas a free action.  A desecrating aura suppresses and is suppressed by consecrate or hallow; both effects are negated wtihin any overlapping area of effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightshade ~ Desecrating Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "All nightshades have a 30-foot-radius emanation equivalent to a desecrate spell centered on a shrine of evil power.  Undead within this radius (including the nightshade) gain a +2 profane bonus on attack and damage rolls and saving throws, as well as +2 hit points per die, and the save DC of channeled negative energy is increased by +6 (these adjustments are included for the nightshades in their entries).  This aura can be negated by dispel evil, but a nightshade can reactivate it on its turnas a free action.  A desecrating aura suppresses and is suppressed by consecrate or hallow; both effects are negated wtihin any overlapping area of effect."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|2|TYPE=Profane"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Melee,DAMAGE.Ranged|2|TYPE=Profane"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|2*TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|2|TYPE=Profane"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDC|6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.3208"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1971,
+    "record_key": "Nightshade ~ Desecrating Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

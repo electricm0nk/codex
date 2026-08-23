@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Protean ~ Amorphous Anatomy",
+    "name": "Amorphous",
+    "description": "A protean's vital organs shift and change shape and position constantly.  This grants it a 50%% chance to ignore additional damage caused by critical hits and sneak attacks, and grants it immunity to polymorph effects (unless the protean is a willing target).  A protean automatically recovers from physical blindness or deafness after 1 round by growing new sensory organs to replace those that were compromised.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protean ~ Amorphous Anatomy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A protean's vital organs shift and change shape and position constantly.  This grants it a 50%% chance to ignore additional damage caused by critical hits and sneak attacks, and grants it immunity to polymorph effects (unless the protean is a willing target).  A protean automatically recovers from physical blindness or deafness after 1 round by growing new sensory organs to replace those that were compromised."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Polymorph Effects"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2000,
+    "record_key": "Protean ~ Amorphous Anatomy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

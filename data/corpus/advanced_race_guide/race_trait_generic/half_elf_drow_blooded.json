@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf ~ Drow Blooded",
+    "name": "Half-Elf ~ Drow Blooded",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/_pfs/pfs_arg_abilities_race.lst",
+    "sha256": "9df2fe6c454c2a26133d589205895ee3fe070e8c54d690dd8aae120dbf3c5971",
+    "line": 10,
+    "record_key": "Half-Elf ~ Drow Blooded"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

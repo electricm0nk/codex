@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fossil ~ Petrification",
+    "name": "Petrification",
+    "description": "The attacks of a fossil golem gradually turn living flesh to stone. Each time the golem hits a target with one of its natural attacks, the target must make a DC 19 Fortitude save or take 1d6 points of Dexterity drain. A creature that is reduced to 0 Dexterity by this attack turns completely to stone, as if by a flesh to stone spell. Casting stone to flesh on the creature removes all Dexterity drain caused by this attack. The save DC is Constitution-based and includes a +2 racial bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fossil ~ Petrification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FossilRacialAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The attacks of a fossil golem gradually turn living flesh to stone. Each time the golem hits a target with one of its natural attacks, the target must make a DC 19 Fortitude save or take 1d6 points of Dexterity drain. A creature that is reduced to 0 Dexterity by this attack turns completely to stone, as if by a flesh to stone spell. Casting stone to flesh on the creature removes all Dexterity drain caused by this attack. The save DC is Constitution-based and includes a +2 racial bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 954,
+    "record_key": "Fossil ~ Petrification"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

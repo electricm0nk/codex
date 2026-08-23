@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyvaran ~ Flight",
+    "name": "Flight",
+    "description": "Wyvarans have dragonlike wings that grant them a fly speed of 30 feet with clumsy maneuverability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyvaran ~ Flight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyvaran_ReplaceFlight=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyvarans have dragonlike wings that grant them a fly speed of 30 feet with clumsy maneuverability."
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
+    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed",
+    "line": 18,
+    "record_key": "Wyvaran ~ Flight"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

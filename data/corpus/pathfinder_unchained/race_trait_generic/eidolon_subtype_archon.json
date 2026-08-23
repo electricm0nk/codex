@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eidolon Subtype ~ Archon",
+    "name": "Archon",
+    "description": "Summoned from heaven, archon eidolons are the embodiments of righteousness. They often take on powerful, graceful forms, rippling with muscles but refined in their movements. Archon eidolons are totally dedicated to the cause of good, and have little patience for those who violate their oaths and ideals-including the summoner who called them. Archons will do whatever it takes to stop the advance of evil and protect the innocent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon Subtype ~ Archon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Subtype Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonSubtype_Archon,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Summoned from heaven, archon eidolons are the embodiments of righteousness. They often take on powerful, graceful forms, rippling with muscles but refined in their movements. Archon eidolons are totally dedicated to the cause of good, and have little patience for those who violate their oaths and ideals-including the summoner who called them. Archons will do whatever it takes to stop the advance of evil and protect the innocent."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Form|AUTOMATIC|Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon ~ Unchained Eidolon LVL01|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon ~ Unchained Eidolon LVL04|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon ~ Unchained Eidolon LVL08|PREVARGTEQ:MasterLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon ~ Unchained Eidolon LVL12|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon ~ Unchained Eidolon LVL16|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon ~ Unchained Eidolon LVL20|PREVARGTEQ:MasterLevel,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Archon Base Form ~ Biped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBiped|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 28,
+    "record_key": "Eidolon Subtype ~ Archon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

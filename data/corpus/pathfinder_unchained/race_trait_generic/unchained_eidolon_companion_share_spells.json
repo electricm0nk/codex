@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Eidolon Companion ~ Share Spells",
+    "name": "Share Spells",
+    "description": "The summoner can cast a spell with a target of \"you\" on his eidolon (as a spell with a range of touch) instead of on himself. A summoner can cast spells on his eidolon even if the spells normally do not affect creatures of the eidolon's type (outsider). Spells cast in this way must come from the summoner spell list. This ability does not allow the eidolon to share abilities that are not spells, even if they function like spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Companion ~ Share Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Companion.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The summoner can cast a spell with a target of \"you\" on his eidolon (as a spell with a range of touch) instead of on himself. A summoner can cast spells on his eidolon even if the spells normally do not affect creatures of the eidolon's type (outsider). Spells cast in this way must come from the summoner spell list. This ability does not allow the eidolon to share abilities that are not spells, even if they function like spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 17,
+    "record_key": "Unchained Eidolon Companion ~ Share Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Lashunta ~ Insidious Telepathy",
+    "name": "Insidious Telepathy",
+    "description": "Some lashunta have a knack for manipulating the minds of those they communicate with telepathically. They gain a +1 racial bonus on Charisma-based skill checks to influence any creature with whom they are telepathically communicating. If a lashunta telepathically issues a command to a charmed or dominated creature, she gains a +1 racial bonus on Charisma checks to compel the creature to follow that order.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lashunta ~ Insidious Telepathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Lashunta Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Lashunta ~ Insidious Telepathy],[!PREFACT:1,ABILITIES,Lashunta_ReplaceLashuntaMagic=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some lashunta have a knack for manipulating the minds of those they communicate with telepathically. They gain a +1 racial bonus on Charisma-based skill checks to influence any creature with whom they are telepathically communicating. If a lashunta telepathically issues a command to a charmed or dominated creature, she gains a +1 racial bonus on Charisma checks to compel the creature to follow that order."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces lashunta magic.|!PREABILITY:1,CATEGORY=Special Ability,Lashunta ~ Insidious Telepathy"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "FACT",
+        "value": "Lashunta_ReplaceLashuntaMagic|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 914,
+    "record_key": "Lashunta ~ Insidious Telepathy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

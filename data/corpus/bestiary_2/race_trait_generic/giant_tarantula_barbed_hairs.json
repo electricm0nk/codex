@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Giant Tarantula ~ Barbed Hairs",
+    "name": "Barbed Hairs",
+    "description": "A tarantula can throw barbed hairs from its back at a creature as a ranged touch attack (range increment 20 feet).  A creature struck by these hairs must make a DC %1 Fort save or be nauseated for 1d6 rounds.  A creature that attacks a giant tarantula with a non-reach melee weapon must make a DC %1 Reflex save to avoid being struck by these hairs.|GiantTarantulaBarbedHairsDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Tarantula ~ Barbed Hairs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantTarantulaBarbedHairsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A tarantula can throw barbed hairs from its back at a creature as a ranged touch attack (range increment 20 feet).  A creature struck by these hairs must make a DC %1 Fort save or be nauseated for 1d6 rounds.  A creature that attacks a giant tarantula with a non-reach melee weapon must make a DC %1 Reflex save to avoid being struck by these hairs.|GiantTarantulaBarbedHairsDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Barbed Hairs"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantTarantulaBarbedHairsDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantTarantulaBarbedHairsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Barbed Hairs)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.256"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1212,
+    "record_key": "Giant Tarantula ~ Barbed Hairs"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

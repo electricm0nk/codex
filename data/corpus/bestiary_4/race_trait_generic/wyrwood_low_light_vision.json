@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyrwood ~ Low-Light Vision",
+    "name": "Low-Light Vision",
+    "description": "Wyrwoods have low-light vision.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyrwood ~ Low-Light Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyrwood_ReplaceLowLightVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyrwoods have low-light vision."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasRacialVision|1|TYPE=Boolean"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
+    "line": 19,
+    "record_key": "Wyrwood ~ Low-Light Vision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

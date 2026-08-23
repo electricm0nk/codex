@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Adopted Race ~ Strix",
+    "name": "Strix",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adopted Race ~ Strix"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdoptiveRace"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Special Ability|TYPE=Strix Race Trait"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Traits|VIRTUAL|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_abilities_race.lst",
+    "sha256": "2e9ef82fa1a12beb6acdade3eb7a820b182a876ffd3d0624ffcea9216ccff54e",
+    "line": 32,
+    "record_key": "Adopted Race ~ Strix"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

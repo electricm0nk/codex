@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dwarf Racial Subtype ~ Deep Delver",
+    "name": "Deep Delver",
+    "description": "Dwarves living far below the earth have the minesight and deep warrior racial traits. Deep delver spellcasters may exchange stonecunning for the stonesinger trait.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf Racial Subtype ~ Deep Delver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dwarf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf Racial Subtype ~ Deep Delver],[!PREFACT:1,ABILITIES,Dwarf_ReplaceDefensiveTraining=true,Dwarf_ReplaceVision=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves living far below the earth have the minesight and deep warrior racial traits. Deep delver spellcasters may exchange stonecunning for the stonesinger trait."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Deep Delver"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dwarf Racial Trait|NORMAL|Dwarf ~ Minesight|Dwarf ~ Deep Warrior"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2155,
+    "record_key": "Dwarf Racial Subtype ~ Deep Delver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

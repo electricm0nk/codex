@@ -1,0 +1,134 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Animal Lord ~ Cat Lord (Leopard)",
+    "name": "Cat Lord (Leopard)",
+    "description": "Cat lords move with a fluid agility, and have slender bodies and catlike eyes. Cat lords gain the following additional ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Lord ~ Cat Lord (Leopard)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality"
+      },
+      {
+        "key": "PREBASESIZEGTEQ",
+        "value": "S"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalSTRScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalDEXScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCONScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalINTScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalWISScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCHAScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalBaseCR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Cat lords move with a fluid agility, and have slender bodies and catlike eyes. Cat lords gain the following additional ability."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cat Lord ~ Leap"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Pounce|Rake|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=Stealth (In undergrowth)|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalSTRScore|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalDEXScore|19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCONScore|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalINTScore|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalWISScore|13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCHAScore|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalBaseCR|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing.Grab,*2,1d3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 342,
+    "record_key": "Animal Lord ~ Cat Lord (Leopard)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

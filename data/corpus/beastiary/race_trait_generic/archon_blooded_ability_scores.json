@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Archon-Blooded ~ Ability Scores",
+    "name": "+2 Constitution, +2 Wisdom",
+    "description": "Lawbringers are champions of justice and of doling out punishment to the wicked, and often believe chaos is the cause of all mortal suffering.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Archon-Blooded ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aasimar ~ Archon-Blooded"
+      },
+      {
+        "key": "DESC",
+        "value": "Lawbringers are champions of justice and of doling out punishment to the wicked, and often believe chaos is the cause of all mortal suffering."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e",
+    "line": 46,
+    "record_key": "Archon-Blooded ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Human Racial Subtype ~ Imperious Human",
+    "name": "Imperious Human",
+    "description": "Hailing from either an empire, an emerging nation, or a controlling city-state, these humans are arrogant expansionists, absorbing others to their causes and culture. Replace the skilled racial trait with silver tongued and the bonus feat racial trait with eye for talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human Racial Subtype ~ Imperious Human"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Human Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human Racial Subtype ~ Imperious Human],[!PREFACT:1,ABILITIES,Human_ReplaceBonusFeat=true,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hailing from either an empire, an emerging nation, or a controlling city-state, these humans are arrogant expansionists, absorbing others to their causes and culture. Replace the skilled racial trait with silver tongued and the bonus feat racial trait with eye for talent."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Imperious Human"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Human Racial Trait|AUTOMATIC|Human ~ Eye for Talent|Human ~ Silver Tongued"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.73"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2193,
+    "record_key": "Human Racial Subtype ~ Imperious Human"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

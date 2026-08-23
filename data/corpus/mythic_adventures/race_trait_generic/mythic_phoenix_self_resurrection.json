@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Phoenix ~ Self-Resurrection",
+    "name": "Self-Resurrection",
+    "description": "Unless its body is completely destroyed by an effect such as disintegrate, a slain mythic phoenix remains dead for only 1d4 rounds, emerging fully healed from its remains as if brought back to life via resurrection. A phoenix can self-resurrect only once per year. If a phoenix dies a second time before that year passes, its death is permanent. A mythic phoenix that dies within the area of a mythic desecrate spell cannot self-resurrect until the spell ends, at which point the phoenix immediately resurrects. A phoenix brought back to life by other means never gains negative levels as a result.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Phoenix ~ Self-Resurrection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Phoenix Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Unless its body is completely destroyed by an effect such as disintegrate, a slain mythic phoenix remains dead for only 1d4 rounds, emerging fully healed from its remains as if brought back to life via resurrection. A phoenix can self-resurrect only once per year. If a phoenix dies a second time before that year passes, its death is permanent. A mythic phoenix that dies within the area of a mythic desecrate spell cannot self-resurrect until the spell ends, at which point the phoenix immediately resurrects. A phoenix brought back to life by other means never gains negative levels as a result."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 232,
+    "record_key": "Mythic Phoenix ~ Self-Resurrection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

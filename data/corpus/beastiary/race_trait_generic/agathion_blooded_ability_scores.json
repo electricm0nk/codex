@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Agathion-Blooded ~ Ability Scores",
+    "name": "+2 Constitution, +2 Charisma",
+    "description": "Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Agathion-Blooded ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aasimar ~ Agathion-Blooded"
+      },
+      {
+        "key": "DESC",
+        "value": "Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,CHA|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e",
+    "line": 24,
+    "record_key": "Agathion-Blooded ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

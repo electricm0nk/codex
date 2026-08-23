@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Devil (Ice) ~ Ice Shards",
+    "name": "Ice Shards",
+    "description": "A mythic ice devil's ice-tipped spear embeds jagged shards of supernaturally cold ice in its target. This functions as bleed (1d6), except the damage is cold damage. Dealing 5 or more points of fire damage to the target removes all ice shards. Creatures with the fire subtype are immune to this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Devil (Ice) ~ Ice Shards"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Devil (Ice) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic ice devil's ice-tipped spear embeds jagged shards of supernaturally cold ice in its target. This functions as bleed (1d6), except the damage is cold damage. Dealing 5 or more points of fire damage to the target removes all ice shards. Creatures with the fire subtype are immune to this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 114,
+    "record_key": "Mythic Devil (Ice) ~ Ice Shards"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

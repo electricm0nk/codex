@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Plant Traits Immunities",
+    "name": "Plant Traits",
+    "description": "Immunity to all mind-affecting effects (charms, compulsions, morale effects, patterns, and phantasms).&nl;Immunity to paralysis, poison, polymorph, sleep effects, and stunning.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant Traits Immunities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Immunity"
+      },
+      {
+        "key": "DESC",
+        "value": "Immunity to all mind-affecting effects (charms, compulsions, morale effects, patterns, and phantasms).&nl;Immunity to paralysis, poison, polymorph, sleep effects, and stunning."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Plant Traits"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1758,
+    "record_key": "Plant Traits Immunities"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

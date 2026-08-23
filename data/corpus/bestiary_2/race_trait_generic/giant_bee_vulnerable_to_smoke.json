@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Giant Bee ~ Vulnerable to Smoke",
+    "name": "Vulnerable to Smoke",
+    "description": "Smoke from particularly smoky fires or effects (such as that created by a pyrotechnics spell) causes a giant bee to become nauseated if it fails a DC 14 Fortitude save.  This condition persists as long as the giant bee remains in the smoke, plus 1d4 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Bee ~ Vulnerable to Smoke"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Smoke from particularly smoky fires or effects (such as that created by a pyrotechnics spell) causes a giant bee to become nauseated if it fails a DC 14 Fortitude save.  This condition persists as long as the giant bee remains in the smoke, plus 1d4 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 178,
+    "record_key": "Giant Bee ~ Vulnerable to Smoke"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

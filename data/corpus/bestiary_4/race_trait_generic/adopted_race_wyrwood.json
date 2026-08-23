@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Adopted Race ~ Wyrwood",
+    "name": "Wyrwood",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adopted Race ~ Wyrwood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdoptiveRace"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Special Ability|TYPE=Wyrwood Race Trait"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Traits|VIRTUAL|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
+    "line": 28,
+    "record_key": "Adopted Race ~ Wyrwood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

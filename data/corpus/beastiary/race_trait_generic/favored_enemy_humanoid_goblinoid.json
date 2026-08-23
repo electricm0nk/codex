@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Enemy ~ Humanoid (Goblinoid)",
+    "name": "Humanoid (Goblinoid)",
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Goblinoids. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidGoblinoid",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Enemy ~ Humanoid (Goblinoid)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredHumanoidGoblinoid|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Goblinoids. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidGoblinoid"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredHumanoidGoblinoid|FavoredBaseBonus"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "https://paizo.com/products/btpy88yj"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2009-08"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredHumanoidGoblinoid"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against Goblinoid.|FavoredHumanoidGoblinoid"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against Goblinoid.|FavoredHumanoidGoblinoid"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_abilities_race.lst",
+    "sha256": "d06f0378d15b44dbd07d7b6cd1e566dc98a7acaeb4997f0fe1218bda7d4c7402",
+    "line": 24,
+    "record_key": "Favored Enemy ~ Humanoid (Goblinoid)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

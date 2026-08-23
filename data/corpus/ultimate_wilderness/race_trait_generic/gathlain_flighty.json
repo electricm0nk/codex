@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gathlain ~ Flighty",
+    "name": "Flighty",
+    "description": "Some gathlains are too easily distracted to miss anything going on around them. They gain Perception as a class skill and gain a +2 racial bonus on saving throws against patterns and effects that cause the fascinated condition.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gathlain ~ Flighty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Flighty],[!PREFACT:1,ABILITIES,Gathlain_ReplaceNaturalArmor=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gathlains are too easily distracted to miss anything going on around them. They gain Perception as a class skill and gain a +2 racial bonus on saving throws against patterns and effects that cause the fascinated condition."
+      },
+      {
+        "key": "DESC",
+        "value": "This replaces natural armor.|!PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Flighty"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Perception"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_Patterns,SaveBonus_vs_FascinatedCondition|2|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against patterns and effects that cause the fascinated condition."
+      },
+      {
+        "key": "FACT",
+        "value": "Gathlain_ReplaceNaturalArmor|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 50,
+    "record_key": "Gathlain ~ Flighty"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

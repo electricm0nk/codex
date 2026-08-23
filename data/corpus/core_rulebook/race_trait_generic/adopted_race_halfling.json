@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Adopted Race ~ Halfling",
+    "name": "Halfling",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adopted Race ~ Halfling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdoptiveRace"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Special Ability|TYPE=Halfling Race Trait"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Traits|VIRTUAL|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/halfling/halfling_abilities_race.lst",
+    "sha256": "fab1dd43186aca738c418980ee9c1b7a735d5a8585b3c53ba48b76f42764a7df",
+    "line": 34,
+    "record_key": "Adopted Race ~ Halfling"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

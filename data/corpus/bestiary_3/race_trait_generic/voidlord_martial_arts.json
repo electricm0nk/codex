@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Voidlord ~ Martial Arts",
+    "name": "Martial Arts",
+    "description": "A voidlord of martial arts always attacks with unarmed strikes-it is treated as a 20th-level monk with the flurry of blows ability for the purposes of determining its damage and number of attacks per round with its unarmed strikes. This voidlord gains Stunning Fist as a bonus feat, and gains the use of the following spell-like abilities three times per day: forceful hand, grasping hand, and greater shout.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Voidlord ~ Martial Arts"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VoidlordSelection.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A voidlord of martial arts always attacks with unarmed strikes-it is treated as a 20th-level monk with the flurry of blows ability for the purposes of determining its damage and number of attacks per round with its unarmed strikes. This voidlord gains Stunning Fist as a bonus feat, and gains the use of the following spell-like abilities three times per day: forceful hand, grasping hand, and greater shout."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1365,
+    "record_key": "Voidlord ~ Martial Arts"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

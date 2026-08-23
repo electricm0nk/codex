@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eidolon Subtype ~ Devil",
+    "name": "Devil",
+    "description": "Corruptors, tempters, and despoilers, devil eidolons often serve their summoners obediently and efficiently, all in a long-term attempt to damn the summoner's soul to the deepest depths of Hell. While some types of devils have truly unusual forms, devil eidolons have found that the more traditional bipedal form allows them to build up a strong rapport with their summoners-and consequently to corrupt them-more easily than if they possessed a more monstrous appearance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon Subtype ~ Devil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Subtype Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonSubtype_Devil,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruptors, tempters, and despoilers, devil eidolons often serve their summoners obediently and efficiently, all in a long-term attempt to damn the summoner's soul to the deepest depths of Hell. While some types of devils have truly unusual forms, devil eidolons have found that the more traditional bipedal form allows them to build up a strong rapport with their summoners-and consequently to corrupt them-more easily than if they possessed a more monstrous appearance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Form|AUTOMATIC|Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil ~ Unchained Eidolon LVL01|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil ~ Unchained Eidolon LVL04|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil ~ Unchained Eidolon LVL08|PREVARGTEQ:MasterLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil ~ Unchained Eidolon LVL12|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil ~ Unchained Eidolon LVL16|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil ~ Unchained Eidolon LVL20|PREVARGTEQ:MasterLevel,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil Base Form ~ Biped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBiped|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 32,
+    "record_key": "Eidolon Subtype ~ Devil"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

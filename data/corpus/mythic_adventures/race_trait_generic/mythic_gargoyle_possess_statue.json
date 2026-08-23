@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Gargoyle ~ Possess Statue",
+    "name": "Possess Statue",
+    "description": "A mythic gargoyle can expend one use of mythic power to possess and animate a Medium stone statue within 100 feet. The possessed statue functions as a nonmythic gargoyle and lasts as long as the statue is in range and the gargoyle concentrates. When using this ability, the gargoyle's actual body is immobile (as if using its freeze ability) and helpless. It can stop using this ability as a move action. If the statue is destroyed, the gargoyle's life force returns to its own body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Gargoyle ~ Possess Statue"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Gargoyle Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic gargoyle can expend one use of mythic power to possess and animate a Medium stone statue within 100 feet. The possessed statue functions as a nonmythic gargoyle and lasts as long as the statue is in range and the gargoyle concentrates. When using this ability, the gargoyle's actual body is immobile (as if using its freeze ability) and helpless. It can stop using this ability as a move action. If the statue is destroyed, the gargoyle's life force returns to its own body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 163,
+    "record_key": "Mythic Gargoyle ~ Possess Statue"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

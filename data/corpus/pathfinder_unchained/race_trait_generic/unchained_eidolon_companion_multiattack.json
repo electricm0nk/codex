@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Eidolon Companion ~ Multiattack",
+    "name": "Multiattack",
+    "description": "An eidolon gains Multiattack as a bonus feat if it has three or more natural attacks and does not already have that feat. If it does not have the requisite three or more natural attacks (or it is reduced to fewer than three attacks), the eidolon instead gains a second attack with one of its natural weapons, albeit at a -5 penalty. If the eidolon later gains three or more natural attacks, it loses this additional attack and instead gains Multiattack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Companion ~ Multiattack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Companion.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An eidolon gains Multiattack as a bonus feat if it has three or more natural attacks and does not already have that feat. If it does not have the requisite three or more natural attacks (or it is reduced to fewer than three attacks), the eidolon instead gains a second attack with one of its natural weapons, albeit at a -5 penalty. If the eidolon later gains three or more natural attacks, it loses this additional attack and instead gains Multiattack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 21,
+    "record_key": "Unchained Eidolon Companion ~ Multiattack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

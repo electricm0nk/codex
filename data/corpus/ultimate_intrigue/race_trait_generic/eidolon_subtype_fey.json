@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eidolon Subtype ~ Fey",
+    "name": "Fey",
+    "description": "Fey eidolons are whimsical and mysterious creatures, prone to flights of fancy, odd compulsions, and alien humor. While some creatures from the faerie realms have truly unusual shapes, the ones close enough to the human mind to serve as eidolons tend to look like idealized humanoids with unusual features that set them apart, such as pointed ears or gossamer wings. Fey eidolons usually choose to bond with mortals for their own mysterious reasons that vary as much as their disparate temperaments; occasionally, their need may be immediate, such as when a dryad whose tree is dying decides to bond with a summoner instead and become something new. On the other hand, a redcap just looking for bloodshed might connect with an equally sadistic summoner. Whatever their reasons, they tend to have strong bonds of loyalty to their summoners entangled with equally strong emotional attachments, even evil fey eidolons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon Subtype ~ Fey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Subtype Selection"
+      },
+      {
+        "key": "DESC",
+        "value": "Fey eidolons are whimsical and mysterious creatures, prone to flights of fancy, odd compulsions, and alien humor. While some creatures from the faerie realms have truly unusual shapes, the ones close enough to the human mind to serve as eidolons tend to look like idealized humanoids with unusual features that set them apart, such as pointed ears or gossamer wings. Fey eidolons usually choose to bond with mortals for their own mysterious reasons that vary as much as their disparate temperaments; occasionally, their need may be immediate, such as when a dryad whose tree is dying decides to bond with a summoner instead and become something new. On the other hand, a redcap just looking for bloodshed might connect with an equally sadistic summoner. Whatever their reasons, they tend to have strong bonds of loyalty to their summoners entangled with equally strong emotional attachments, even evil fey eidolons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey ~ Unchained Eidolon LVL01|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey ~ Unchained Eidolon LVL04|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey ~ Unchained Eidolon LVL08|PREVARGTEQ:MasterLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey ~ Unchained Eidolon LVL12|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey ~ Unchained Eidolon LVL16|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey ~ Unchained Eidolon LVL20|PREVARGTEQ:MasterLevel,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Base Form ~ Biped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBiped|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Eidolon_CF_Skills|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_race_pu.lst",
+    "sha256": "5d762d17873a619855f04941f28b762dd4414148270857b0c40769553352b652",
+    "line": 9,
+    "record_key": "Eidolon Subtype ~ Fey"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

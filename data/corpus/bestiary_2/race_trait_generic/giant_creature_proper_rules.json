@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Giant Creature (Proper Rules)",
+    "name": "Giant Creature (Proper Rules)",
+    "description": "The publisher intended people to use the size adjustment rules, but the other options are to speed up play. Not necessary as PCGen will calculate the new size for you.",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Giant Creature_1a"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GiantCreatureSelection"
+      },
+      {
+        "key": "DESC",
+        "value": "The publisher intended people to use the size adjustment rules, but the other options are to speed up play. Not necessary as PCGen will calculate the new size for you."
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2261,
+    "record_key": "Giant Creature (Proper Rules)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

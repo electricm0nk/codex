@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Rakasha ~ Telepathic Dodge",
+    "name": "Telepathic Dodge",
+    "description": "A mythic rakshasa gains an insight bonus to its AC against creatures whose minds it can read. It doesn't need to use its detect thoughts ability to gain this bonus. The rakshasa doesn't gain this bonus against creatures that are mindless or whose minds can't be read (such as from a mind blank spell).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Rakasha ~ Telepathic Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Rakasha Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic rakshasa gains an insight bonus to its AC against creatures whose minds it can read. It doesn't need to use its detect thoughts ability to gain this bonus. The rakshasa doesn't gain this bonus against creatures that are mindless or whose minds can't be read (such as from a mind blank spell)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 238,
+    "record_key": "Mythic Rakasha ~ Telepathic Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

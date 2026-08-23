@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gnome ~ Eternal Hope",
+    "name": "Eternal Hope",
+    "description": "Gnomes rarely lose hope and are always confident that even hopeless situations will work out. Gnomes with this racial trait receive a +2 racial bonus on saving throws against fear and despair effects. Once per day, after rolling a 1 on a d20, the gnome may reroll and use the second result.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Eternal Hope"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Eternal Hope],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes rarely lose hope and are always confident that even hopeless situations will work out. Gnomes with this racial trait receive a +2 racial bonus on saving throws against fear and despair effects. Once per day, after rolling a 1 on a d20, the gnome may reroll and use the second result."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the defensive training and hatred racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Eternal Hope"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_Despair,SaveBonus_vs_Fear|2|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Once per day, after rolling a 1 on a d20, you may reroll and use the second result."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against fear and despair effects."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 46,
+    "record_key": "Gnome ~ Eternal Hope"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Crystal Dragon ~ Tremorsense",
+    "name": "Tremorsense",
+    "description": "A juvenile crystal dragon gains tremorsense to a range of 30 ft. (increases to 60 ft. at adult, and to 120 ft. at old).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crystal Dragon ~ Tremorsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Extraordinary.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A juvenile crystal dragon gains tremorsense to a range of 30 ft. (increases to 60 ft. at adult, and to 120 ft. at old)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30|PREVARGTEQ:DragonAgeCategory,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|60|PREVARGTEQ:DragonAgeCategory,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 490,
+    "record_key": "Crystal Dragon ~ Tremorsense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

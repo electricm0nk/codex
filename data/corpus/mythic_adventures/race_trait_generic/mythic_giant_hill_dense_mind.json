@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Giant (Hill) ~ Dense Mind",
+    "name": "Dense Mind",
+    "description": "If a mythic hill giant fails its saving throw against a hostile mind-affecting effect, at the start of its turn it automatically expends one use of mythic power (if it has any) as a free action to reroll its saving throw against the effect. It rerolls for each ongoing mind-affecting effect each turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Giant (Hill) ~ Dense Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Giant (Hill) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If a mythic hill giant fails its saving throw against a hostile mind-affecting effect, at the start of its turn it automatically expends one use of mythic power (if it has any) as a free action to reroll its saving throw against the effect. It rerolls for each ongoing mind-affecting effect each turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 172,
+    "record_key": "Mythic Giant (Hill) ~ Dense Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Bear Lord ~ Bear Hug",
+    "name": "Bear Hug",
+    "description": "A bear lord deals +1d6 extra points of damage when it makes a grapple check to damage a creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bear Lord ~ Bear Hug"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.BearLordRacialTrait.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A bear lord deals +1d6 extra points of damage when it makes a grapple check to damage a creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 356,
+    "record_key": "Bear Lord ~ Bear Hug"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

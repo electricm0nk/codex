@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Adopted Race ~ Dwarf",
+    "name": "Dwarf",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adopted Race ~ Dwarf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdoptiveRace"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Special Ability|TYPE=Dwarf Race Trait"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Traits|VIRTUAL|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_abilities_race.lst",
+    "sha256": "4fb2ab0aef727dd0a69362eb017239ce552931425b29d31938df35ffc30d7705",
+    "line": 37,
+    "record_key": "Adopted Race ~ Dwarf"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

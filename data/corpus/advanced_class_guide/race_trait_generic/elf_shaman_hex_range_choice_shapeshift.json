@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Shaman Hex Range Choice ~ Shapeshift",
+    "name": "Shapeshift",
+    "description": "Add %1 feet to the range of Shapeshift.|min(30,ElfShamanHexRangefShapeshiftBonus)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Shaman Hex Range Choice ~ Shapeshift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElfShamanHexRangeChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElfShamanHexRangefShapeshiftBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Add %1 feet to the range of Shapeshift.|min(30,ElfShamanHexRangefShapeshiftBonus)"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElfShamanHexRangefShapeshiftBonus|5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 355,
+    "record_key": "Elf Shaman Hex Range Choice ~ Shapeshift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

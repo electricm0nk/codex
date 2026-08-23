@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Reptoid ~ Ability Scores",
+    "name": "+2 Strength, +2 Charisma, -2 Dexterity",
+    "description": "Reptoids are both manipulative and strong, but they're deliberate in their movements.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reptoid ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Ability Scores"
+      },
+      {
+        "key": "DESC",
+        "value": "Reptoids are both manipulative and strong, but they're deliberate in their movements."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CHA|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 172,
+    "record_key": "Reptoid ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

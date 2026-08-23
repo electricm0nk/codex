@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Trox ~ Ability Scores",
+    "name": "+6 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma",
+    "description": "Trox are very strong, but they can be dim, unreceptive, and inhospitable.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trox ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Trox_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Trox are very strong, but they can be dim, unreceptive, and inhospitable."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS,CHA|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_abilities_race.lst",
+    "sha256": "5b478e1a25d05b92bc04c408960de69a1581897597032336432e174f62df649f",
+    "line": 14,
+    "record_key": "Trox ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

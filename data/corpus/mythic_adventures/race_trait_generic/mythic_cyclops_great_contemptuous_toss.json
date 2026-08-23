@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Cyclops (Great) ~ Contemptuous Toss",
+    "name": "Contemptuous Toss",
+    "description": "When a mythic great cyclops uses Awesome Blow and expends a use of mythic power, its target flies up to 60 additional feet and takes 1d6 points of damage for every additional 20 feet traveled. If the cyclops uses its gore attack for this ability, it can hurl the target up to 60 feet upward instead of sideways.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Cyclops (Great) ~ Contemptuous Toss"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Cyclops (Great) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When a mythic great cyclops uses Awesome Blow and expends a use of mythic power, its target flies up to 60 additional feet and takes 1d6 points of damage for every additional 20 feet traveled. If the cyclops uses its gore attack for this ability, it can hurl the target up to 60 feet upward instead of sideways."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 86,
+    "record_key": "Mythic Cyclops (Great) ~ Contemptuous Toss"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

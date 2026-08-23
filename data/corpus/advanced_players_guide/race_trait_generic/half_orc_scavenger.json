@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc ~ Scavenger",
+    "name": "Scavenger",
+    "description": "Some half-orcs eke out a leaving picking over the garbage heaps of society, and must learn to separate rare finds from the inevitable dross. Half-orcs with this racial trait receive a +2 racial bonus on Appraise checks and on Perception checks to find hidden objects (including traps and secret doors), determine if food is spoiled, or identify a potion by taste.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Scavenger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Scavenger],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceIntimidating=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-orcs eke out a leaving picking over the garbage heaps of society, and must learn to separate rare finds from the inevitable dross. Half-orcs with this racial trait receive a +2 racial bonus on Appraise checks and on Perception checks to find hidden objects (including traps and secret doors), determine if food is spoiled, or identify a potion by taste."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the intimidating racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Scavenger"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=to find hidden objects,Perception=to determine if food is spoiled,Perception=to identify a potion by taste|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Appraise|2|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceIntimidating|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 86,
+    "record_key": "Half-Orc ~ Scavenger"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Catfolk ~ Cat's Luck",
+    "name": "Cat's Luck",
+    "description": "Once per day when a catfolk attempts a Reflex saving throw, he can roll the saving throw twice and take the better result. He must decide to use this ability before the saving throw is attempted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Cat's Luck"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Catfolk_ReplaceCatsLuck=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Catfolk_CatsLuck_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day when a catfolk attempts a Reflex saving throw, he can roll the saving throw twice and take the better result. He must decide to use this ability before the saving throw is attempted."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Catfolk_CatsLuck_Times|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Catfolk_CatsLuck_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15",
+    "line": 19,
+    "record_key": "Catfolk ~ Cat's Luck"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

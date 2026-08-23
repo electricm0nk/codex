@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Shaman Hex Range Choice ~ Chant",
+    "name": "Chant",
+    "description": "Add %1 feet to the range of Chant.|min(30,ElfShamanHexRangefChantBonus)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Shaman Hex Range Choice ~ Chant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElfShamanHexRangeChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElfShamanHexRangefChantBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Add %1 feet to the range of Chant.|min(30,ElfShamanHexRangefChantBonus)"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElfShamanHexRangefChantBonus|5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 346,
+    "record_key": "Elf Shaman Hex Range Choice ~ Chant"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Rend",
+    "name": "Rend",
+    "description": "The eidolon learns to rip and tear the flesh of those it attacks with its claws, gaining the rend ability. Whenever the eidolon makes two successful claw attacks against the same target in 1 round, its claws latch on to the flesh and deal extra damage. This damage is equal to the damage dealt by one claw attack plus 1-1/2 times the eidolon's Strength modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Rend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Evolution ~ Claws"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Summoner level 6th, claws evolution."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon learns to rip and tear the flesh of those it attacks with its claws, gaining the rend ability. Whenever the eidolon makes two successful claw attacks against the same target in 1 round, its claws latch on to the flesh and deal extra damage. This damage is equal to the damage dealt by one claw attack plus 1-1/2 times the eidolon's Strength modifier."
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 234,
+    "record_key": "Unchained Evolution ~ Rend"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

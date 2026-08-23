@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Trox ~ Languages",
+    "name": "Languages",
+    "description": "Trox begin play speaking Terran. A trox with a high Intelligence score can choose from the following: Common, Dwarven, Giant, Orc, and Undercommon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trox ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Trox_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Trox begin play speaking Terran. A trox with a high Intelligence score can choose from the following: Common, Dwarven, Giant, Orc, and Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Common|Bonus Language ~ Dwarven|Bonus Language ~ Giant|Bonus Language ~ Orc|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Terran"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_abilities_race.lst",
+    "sha256": "5b478e1a25d05b92bc04c408960de69a1581897597032336432e174f62df649f",
+    "line": 22,
+    "record_key": "Trox ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

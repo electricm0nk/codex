@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf ~ Spirit of the Waters",
+    "name": "Spirit of the Waters",
+    "description": "Some elves have adapted to life in tune with the sea or along the reedy depths of wild rivers and lakes. They gain a +4 racial bonus on Swim checks, can always take 10 while swimming, and may choose Aquan as a bonus language. They are proficient with longspear, trident, and net. This racial trait replaces elven magic and weapon familiarity racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Spirit of the Waters",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Spirit of the Waters"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Spirit of the Waters],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenMagic=true,Elf_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some elves have adapted to life in tune with the sea or along the reedy depths of wild rivers and lakes. They gain a +4 racial bonus on Swim checks, can always take 10 while swimming, and may choose Aquan as a bonus language. They are proficient with longspear, trident, and net. This racial trait replaces elven magic and weapon familiarity racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Spirit of the Waters"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aquan"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Longspear|Net|Trident"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|4|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|Can always take 10 while swimming."
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceWeaponFamiliarity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 36,
+    "record_key": "Elf ~ Spirit of the Waters"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

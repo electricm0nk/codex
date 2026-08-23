@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Skaveling ~ Paralysis",
+    "name": "Paralysis",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skaveling ~ Paralysis"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalysisDC|CHA-CON"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite, 1d4+1 rounds, DC %1)|ParalysisDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 174,
+    "record_key": "Skaveling ~ Paralysis"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

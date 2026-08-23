@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Elemental (Earth) ~ Trap Weapon",
+    "name": "Trap Weapon",
+    "description": "A mythic earth elemental's body traps manufactured weapons that damage it. A manufactured weapon that deals hit point damage to the elemental (after subtracting its DR) is stuck fast unless the wielder succeeds at a DC 30 Reflex save. A creature can spend a standard action to attempt a DC 30 Strength check to remove a stuck weapon. Weapons that deal only bludgeoning damage are immune to this ability. The elemental can release any number of stuck weapons as a free action. The save DC is Strength-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental (Earth) ~ Trap Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Elemental (Earth) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic earth elemental's body traps manufactured weapons that damage it. A manufactured weapon that deals hit point damage to the elemental (after subtracting its DR) is stuck fast unless the wielder succeeds at a DC 30 Reflex save. A creature can spend a standard action to attempt a DC 30 Strength check to remove a stuck weapon. Weapons that deal only bludgeoning damage are immune to this ability. The elemental can release any number of stuck weapons as a free action. The save DC is Strength-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 143,
+    "record_key": "Mythic Elemental (Earth) ~ Trap Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

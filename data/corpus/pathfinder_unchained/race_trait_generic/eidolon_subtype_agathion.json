@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eidolon Subtype ~ Agathion",
+    "name": "Agathion",
+    "description": "Patient and enlightened liaisons of the good-aligned Outer Planes, agathion eidolons seek to vanquish evil and protect that which is good. Agathion eidolons always have aspects of a single animal or creature, rather than a hodgepodge of several. Though they have patience for summoners with unorthodox methods and even those who stray from the path of good, they will not brook their powers being used for evil ends. An agathion eidolon seeks to bring its summoner closer to its own enlightenment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon Subtype ~ Agathion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Subtype Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonSubtype_Agathion,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Patient and enlightened liaisons of the good-aligned Outer Planes, agathion eidolons seek to vanquish evil and protect that which is good. Agathion eidolons always have aspects of a single animal or creature, rather than a hodgepodge of several. Though they have patience for summoners with unorthodox methods and even those who stray from the path of good, they will not brook their powers being used for evil ends. An agathion eidolon seeks to bring its summoner closer to its own enlightenment."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion ~ Unchained Eidolon LVL01|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion ~ Unchained Eidolon LVL04|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion ~ Unchained Eidolon LVL08|PREVARGTEQ:MasterLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion ~ Unchained Eidolon LVL12|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion ~ Unchained Eidolon LVL16|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion ~ Unchained Eidolon LVL20|PREVARGTEQ:MasterLevel,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion Base Form ~ Biped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Agathion Base Form ~ Quadruped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Quadruped"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_UnchainedEidolonForm|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBiped|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonQuadruped|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 26,
+    "record_key": "Eidolon Subtype ~ Agathion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc ~ Sacred Tattoo",
+    "name": "Sacred Tattoo",
+    "description": "Tattoos, piercings, and ritual scarification are sacred markings to many half-orcs. Half-orcs with this racial trait gain a +1 luck bonus on all saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Sacred Tattoo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Sacred Tattoo],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Tattoos, piercings, and ritual scarification are sacred markings to many half-orcs. Half-orcs with this racial trait gain a +1 luck bonus on all saving throws."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the orc ferocity racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Sacred Tattoo"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|1+Global_LuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 85,
+    "record_key": "Half-Orc ~ Sacred Tattoo"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

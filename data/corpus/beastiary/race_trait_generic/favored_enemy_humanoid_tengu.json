@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Enemy ~ Humanoid (Tengu)",
+    "name": "Humanoid (Tengu)",
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Tengus. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidTengu",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Enemy ~ Humanoid (Tengu)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredHumanoidTengu|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Tengus. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidTengu"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredHumanoidTengu|FavoredBaseBonus"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "https://paizo.com/products/btpy88yj"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2009-08"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredHumanoidTengu"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against Tengu.|FavoredHumanoidTengu"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against Tengu.|FavoredHumanoidTengu"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_race.lst",
+    "sha256": "96ecac0ad8fd92fc4bc2b89e0cb1e4bee96de0f78b6ebf8ce4d7464d34f92dfd",
+    "line": 27,
+    "record_key": "Favored Enemy ~ Humanoid (Tengu)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

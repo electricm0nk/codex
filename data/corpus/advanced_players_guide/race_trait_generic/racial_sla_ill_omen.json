@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Ill Omen",
+    "name": "Ill Omen",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Ill Omen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Ill Omen"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_IllOmen_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_IllOmen_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_IllOmen_LVL|Ill Omen,RacialSLA_IllOmen_DC|PREVAREQ:RacialSLA_IllOmen_AtWill,0|PREVAREQ:RacialSLA_IllOmen_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_IllOmen_LVL|Ill Omen,RacialSLA_IllOmen_DC|PREVAREQ:RacialSLA_IllOmen_AtWill,1|PREVAREQ:RacialSLA_IllOmen_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_IllOmen_LVL|Ill Omen,RacialSLA_IllOmen_DC|PREVAREQ:RacialSLA_IllOmen_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_IllOmen_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_IllOmen_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_IllOmen_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_IllOmen_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_IllOmen_DC|10+RacialSLA_IllOmen_SpellLVL+RacialSLA_IllOmen_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 324,
+    "record_key": "Racial SLA ~ Ill Omen"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

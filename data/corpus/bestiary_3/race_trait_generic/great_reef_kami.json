@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Great Reef Kami",
+    "name": "Great Reef Kami",
+    "description": "An elder jinushigami whose domain contains a sizable coral reef of considerable age appears as a humanoid constructed of living coral draped with seaweed. Great reef kami have the water subtype instead of the earth subtype, gain the aquatic subtype (and the amphibious special quality), gain a swim speed of 60 ft., and gain the ability to use tsunami (Advanced Player's Guide 251) once per day as a spell-like ability.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.ElderJinushigami"
+      },
+      {
+        "key": "DESC",
+        "value": "An elder jinushigami whose domain contains a sizable coral reef of considerable age appears as a humanoid constructed of living coral draped with seaweed. Great reef kami have the water subtype instead of the earth subtype, gain the aquatic subtype (and the amphibious special quality), gain a swim speed of 60 ft., and gain the ability to use tsunami (Advanced Player's Guide 251) once per day as a spell-like ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1117,
+    "record_key": "Great Reef Kami"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

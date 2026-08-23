@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus ~ Hatred",
+    "name": "Hatred",
+    "description": "Few things draw a spirit toward the Negative Material Plane like the emotion of hatred. Phantoms with this focus often are blinded by-and blind others with-this powerful emotion. These phantoms are frequently darker and more foreboding than all but those phantoms with the fear emotional focus. Many of them manifest as dark and dreadful knights, their armor bristling with spikes and their hands seeming to grasp barbed and terrible weapons. Other times they appear as tall, gaunt figures staring down arrogantly at those who approach. These phantoms typically spew a string of curses at their foes, often profane, sometimes poetic. Their auras are pulsating and pitch black, and thrum violently when these horrible phantoms attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus ~ Hatred"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Few things draw a spirit toward the Negative Material Plane like the emotion of hatred. Phantoms with this focus often are blinded by-and blind others with-this powerful emotion. These phantoms are frequently darker and more foreboding than all but those phantoms with the fear emotional focus. Many of them manifest as dark and dreadful knights, their armor bristling with spikes and their hands seeming to grasp barbed and terrible weapons. Other times they appear as tall, gaunt figures staring down arrogantly at those who approach. These phantoms typically spew a string of curses at their foes, often profane, sometimes poetic. Their auras are pulsating and pitch black, and thrum violently when these horrible phantoms attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Skills|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Good Saves|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Weapon Finesse|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Hated Target|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Hateful Aura|PREVARGTEQ:PhantomMasterLevel,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Sneak Attack|PREVARGTEQ:PhantomMasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Hatred ~ Shared Hatred|PREVARGTEQ:PhantomMasterLevel,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 52,
+    "record_key": "Emotional Focus ~ Hatred"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

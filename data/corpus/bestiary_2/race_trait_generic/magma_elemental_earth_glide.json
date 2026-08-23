@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Magma Elemental ~ Earth Glide",
+    "name": "Earth Glide",
+    "description": "A burrowing magma elemental can pass through stone, dirt, lava, or almost any other sort of earth except metal as easily as a fish swims through water.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple, though the area it passes through feels warm for 1 round afterward and often retains a strangely smooth texture, as if the stone had been polished.  A move earth spell cast on an area containing a burrowing magma elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magma Elemental ~ Earth Glide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ModifyMovement.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A burrowing magma elemental can pass through stone, dirt, lava, or almost any other sort of earth except metal as easily as a fish swims through water.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple, though the area it passes through feels warm for 1 round afterward and often retains a strangely smooth texture, as if the stone had been polished.  A move earth spell cast on an area containing a burrowing magma elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2133,
+    "record_key": "Magma Elemental ~ Earth Glide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

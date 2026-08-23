@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Chernobue ~ Aura of Misfortune",
+    "name": "Aura of Misfortune",
+    "description": "A chernobue radiates an aura of evil malaise to a radius of 30 feet.  All lawful or good creatures in this area take a -1 penalty on attack rolls and weapon damage rolls.  Lawful good creatures take a -3 penalty and upon first entering the aura must make a DC %1 Fortitude save or be sickened for as long as they remain in the area.|ChernobueMisfortuneDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chernobue ~ Aura of Misfortune"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChernobueMisfortuneDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A chernobue radiates an aura of evil malaise to a radius of 30 feet.  All lawful or good creatures in this area take a -1 penalty on attack rolls and weapon damage rolls.  Lawful good creatures take a -3 penalty and upon first entering the aura must make a DC %1 Fortitude save or be sickened for as long as they remain in the area.|ChernobueMisfortuneDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Aura of Misfortune"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChernobueMisfortuneDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChernobueMisfortuneDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Aura of Misfortune)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1002,
+    "record_key": "Chernobue ~ Aura of Misfortune"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

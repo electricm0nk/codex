@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dwarf ~ Stubborn",
+    "name": "Stubborn",
+    "description": "Dwarves are renowned for being stubborn. Dwarves with this racial trait receive a +2 racial bonus on Will saves to resist spells and spell-like abilities of the enchantment (charm) and enchantment (compulsion) schools. In addition, if they fail such a save, they receive another save 1 round later to prematurely end the effect (assuming it has a duration greater than 1 round). This second save is made at the same DC as the first. If the dwarf has a similar ability from another source (such as a rogue's slippery mind), he can only use one of these abilities per round, but can try one on the second round if the first reroll ability fails.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Stubborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Stubborn],[!PREFACT:1,ABILITIES,Dwarf_ReplaceHardy=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves are renowned for being stubborn. Dwarves with this racial trait receive a +2 racial bonus on Will saves to resist spells and spell-like abilities of the enchantment (charm) and enchantment (compulsion) schools. In addition, if they fail such a save, they receive another save 1 round later to prematurely end the effect (assuming it has a duration greater than 1 round). This second save is made at the same DC as the first. If the dwarf has a similar ability from another source (such as a rogue's slippery mind), he can only use one of these abilities per round, but can try one on the second round if the first reroll ability fails."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the hardy racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Stubborn"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "WillSaveBonus|+2 vs. enchantment (charm) and enchantment (compulsion) spells and spell-like abilities"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHardy|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 23,
+    "record_key": "Dwarf ~ Stubborn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Guidance",
+    "name": "Guidance",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Guidance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Guidance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Guidance_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_Guidance_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Guidance_LVL|Guidance,RacialSLA_Guidance_DC|PREVAREQ:RacialSLA_Guidance_AtWill,0|PREVAREQ:RacialSLA_Guidance_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Guidance_LVL|Guidance,RacialSLA_Guidance_DC|PREVAREQ:RacialSLA_Guidance_AtWill,1|PREVAREQ:RacialSLA_Guidance_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_Guidance_LVL|Guidance,RacialSLA_Guidance_DC|PREVAREQ:RacialSLA_Guidance_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Guidance_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Guidance_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Guidance_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Guidance_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Guidance_DC|10+RacialSLA_Guidance_SpellLVL+RacialSLA_Guidance_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 185,
+    "record_key": "Racial SLA ~ Guidance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

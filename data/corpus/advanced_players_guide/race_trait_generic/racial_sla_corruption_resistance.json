@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Corruption Resistance",
+    "name": "Corruption Resistance",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Corruption Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Corruption Resistance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CorruptionResistance_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_CorruptionResistance_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_CorruptionResistance_LVL|Corruption Resistance,RacialSLA_CorruptionResistance_DC|PREVAREQ:RacialSLA_CorruptionResistance_AtWill,0|PREVAREQ:RacialSLA_CorruptionResistance_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_CorruptionResistance_LVL|Corruption Resistance,RacialSLA_CorruptionResistance_DC|PREVAREQ:RacialSLA_CorruptionResistance_AtWill,1|PREVAREQ:RacialSLA_CorruptionResistance_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_CorruptionResistance_LVL|Corruption Resistance,RacialSLA_CorruptionResistance_DC|PREVAREQ:RacialSLA_CorruptionResistance_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CorruptionResistance_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CorruptionResistance_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CorruptionResistance_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CorruptionResistance_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CorruptionResistance_DC|10+RacialSLA_CorruptionResistance_SpellLVL+RacialSLA_CorruptionResistance_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 331,
+    "record_key": "Racial SLA ~ Corruption Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

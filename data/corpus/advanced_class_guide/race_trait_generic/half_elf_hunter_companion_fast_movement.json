@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf ~ Hunter ~ Companion Fast Movement",
+    "name": "Companion Fast Movement",
+    "description": "Your land speed is faster than the norm for your race by %1 feet.|floor(HalfElfHunterFavClassBonus/5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Hunter ~ Companion Fast Movement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ModifyMovement"
+      },
+      {
+        "key": "DESC",
+        "value": "Your land speed is faster than the norm for your race by %1 feet.|floor(HalfElfHunterFavClassBonus/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|floor(HalfelfHunterFavClassBonus/5)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 320,
+    "record_key": "Half-Elf ~ Hunter ~ Companion Fast Movement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Blindsense",
+    "name": "Blindsense",
+    "description": "The eidolon's senses become incredibly acute, giving it blindsense with a range of 30 feet. This ability allows the eidolon to pinpoint the location of creatures that it can't see without having to attempt a Perception check, but such creatures still have total concealment from the eidolon. Visibility still affects the eidolon's movement, and it is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Blindsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Summoner level 9th."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon's senses become incredibly acute, giving it blindsense with a range of 30 feet. This ability allows the eidolon to pinpoint the location of creatures that it can't see without having to attempt a Perception check, but such creatures still have total concealment from the eidolon. Visibility still affects the eidolon's movement, and it is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|blindsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 242,
+    "record_key": "Unchained Evolution ~ Blindsense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

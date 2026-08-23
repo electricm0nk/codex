@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Demon-Spawn ~ Ability Scores",
+    "name": "+2 Strength, +2 Charisma, -2 Intelligence",
+    "description": "The influence of the demonic Abyss grants these volatile tieflings their boundless appetites for destruction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demon-Spawn ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Tiefling ~ Demon-Spawn"
+      },
+      {
+        "key": "DESC",
+        "value": "The influence of the demonic Abyss grants these volatile tieflings their boundless appetites for destruction."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CHA|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca",
+    "line": 60,
+    "record_key": "Demon-Spawn ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

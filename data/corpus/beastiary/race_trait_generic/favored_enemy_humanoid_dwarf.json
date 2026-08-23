@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Enemy ~ Humanoid (Dwarf)",
+    "name": "Humanoid (Dwarf)",
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Dwarfs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidDwarf",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Enemy ~ Humanoid (Dwarf)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredHumanoidDwarf|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Dwarfs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidDwarf"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredHumanoidDwarf|FavoredBaseBonus"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "https://paizo.com/products/btpy88yj"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2009-08"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|FavoredHumanoidDwarf"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against Dwarf.|FavoredHumanoidDwarf"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against Dwarf.|FavoredHumanoidDwarf"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_abilities_race.lst",
+    "sha256": "7a492c53ce8b6c58373d1a0f1901123598f3b1e6bc86ed60ee7d66cd052a2b41",
+    "line": 32,
+    "record_key": "Favored Enemy ~ Humanoid (Dwarf)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

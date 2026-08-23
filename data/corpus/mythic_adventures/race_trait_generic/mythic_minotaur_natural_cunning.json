@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Minotaur ~ Natural Cunning",
+    "name": "Natural Cunning",
+    "description": "Although a mythic minotaur is not especially intelligent, it possesses innate cunning and logical ability. This gives it immunity to maze spells and prevents it from ever becoming lost. Further, it is never caught flat-footed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Minotaur ~ Natural Cunning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Minotaur Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Although a mythic minotaur is not especially intelligent, it possesses innate cunning and logical ability. This gives it immunity to maze spells and prevents it from ever becoming lost. Further, it is never caught flat-footed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 213,
+    "record_key": "Mythic Minotaur ~ Natural Cunning"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

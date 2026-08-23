@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Tiefling ~ Oni-Spawn",
+    "name": "Oni-Spawn (Hungerseed)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Oni-Spawn"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Tiefling Subrace"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Tiefling ~ Oni-Spawn"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Oni"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|LE"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Str, +2 Wis, -2 Cha"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Disguise, Intimidate"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Hungerseed gain alter self as a spell-like ability."
+      },
+      {
+        "key": "INFO",
+        "value": "Ancestry|Oni"
+      },
+      {
+        "key": "INFO",
+        "value": "Typical Alignment|LE"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Str, +2 Wis, -2 Cha"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Skill Modifiers|Disguise, Intimidate"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Spell-Like Ability|Hungerseed gain alter self as a spell-like ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca",
+    "line": 19,
+    "record_key": "Tiefling ~ Oni-Spawn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

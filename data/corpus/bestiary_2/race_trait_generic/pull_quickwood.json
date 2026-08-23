@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Pull ~ Quickwood",
+    "name": "Pull ~ Quickwood",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pull"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(root, 10 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1045,
+    "record_key": "Pull ~ Quickwood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

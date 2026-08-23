@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Eidolon Base Form ~ Serpentine",
+    "name": "Serpentine",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Base Form ~ Serpentine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Base Form Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonSerpentine,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonWillGood,EidolonReflexGood|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 70,
+    "record_key": "Unchained Eidolon Base Form ~ Serpentine"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

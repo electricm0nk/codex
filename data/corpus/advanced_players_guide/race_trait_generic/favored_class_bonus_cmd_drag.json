@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Class Bonus ~ CMD Drag",
+    "name": "Bonus CMD Drag",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Class Bonus ~ CMD Drag"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterBonusCMDChoice"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "BonusCMDDragCount,BonusCMDCount"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BonusCMDDragCount|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Drag,BonusCMDDragCount|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 266,
+    "record_key": "Favored Class Bonus ~ CMD Drag"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

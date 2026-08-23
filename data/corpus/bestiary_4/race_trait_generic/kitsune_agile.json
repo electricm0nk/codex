@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Kitsune ~ Agile",
+    "name": "Agile",
+    "description": "Kitsune receive a +2 racial bonus on Acrobatics checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kitsune ~ Agile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kitsune_ReplaceAgile=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Kitsune receive a +2 racial bonus on Acrobatics checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Acrobatics"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_abilities_race.lst",
+    "sha256": "3c89f35ce0239148b8cf62e2ff79cc7060b6192f237a54f89122d40aa011d3eb",
+    "line": 20,
+    "record_key": "Kitsune ~ Agile"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

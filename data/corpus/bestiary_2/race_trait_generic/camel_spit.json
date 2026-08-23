@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Camel ~ Spit",
+    "name": "Camel ~ Spit",
+    "description": "Once per hour, a camel can regurgitate the contents of its stomach, spitting the foul material at a single target within 10 feet.  The target must make a DC %1 Fortitude save or be sickened for 1d4 rounds.|CamelSpitDC",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CamelSpitDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per hour, a camel can regurgitate the contents of its stomach, spitting the foul material at a single target within 10 feet.  The target must make a DC %1 Fortitude save or be sickened for 1d4 rounds.|CamelSpitDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Spit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CamelSpitDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CamelSpitDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Spit)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(ranged touch)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 676,
+    "record_key": "Camel ~ Spit"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

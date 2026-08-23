@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Astomoi ~ Ability Scores",
+    "name": "+2 Intelligence, +2 Wisdom, -2 Constitution",
+    "description": "Astomoi ever pursue enlightenment through self-denial and are psychically attuned to their surroundings, but their delicate bodies are more susceptible to the physical dangers of the world.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Astomoi ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Ability Scores"
+      },
+      {
+        "key": "DESC",
+        "value": "Astomoi ever pursue enlightenment through self-denial and are psychically attuned to their surroundings, but their delicate bodies are more susceptible to the physical dangers of the world."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 43,
+    "record_key": "Astomoi ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

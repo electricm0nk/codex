@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyrwood ~ Living Machine",
+    "name": "Living Machine",
+    "description": "Through generations of refining the techniques of creation, many young wyrwoods have become closer to organic beings than constructs. These wyrwoods are constructs with the living machine subtype. They gain a Constitution score and can be targeted by spells and effects that target living creatures or constructs, as well as those that require a Fortitude save. They are no longer immune to ability damage, ability drain, energy drain, exhaustion, or fatigue. Wyrwoods with this trait require sleep, but they do not need to breathe or eat. They are not destroyed when reduced to 0 hit points, instead becoming unconscious and stable. They are destroyed when reduced to a negative number of hit points equal to their Constitution score. They can be raised or resurrected when destroyed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyrwood ~ Living Machine"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyrwood Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Wyrwood ~ Living Machine],[!PREFACT:1,ABILITIES,Wyrwood_ReplaceType=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Through generations of refining the techniques of creation, many young wyrwoods have become closer to organic beings than constructs. These wyrwoods are constructs with the living machine subtype. They gain a Constitution score and can be targeted by spells and effects that target living creatures or constructs, as well as those that require a Fortitude save. They are no longer immune to ability damage, ability drain, energy drain, exhaustion, or fatigue. Wyrwoods with this trait require sleep, but they do not need to breathe or eat. They are not destroyed when reduced to 0 hit points, instead becoming unconscious and stable. They are destroyed when reduced to a negative number of hit points equal to their Constitution score. They can be raised or resurrected when destroyed."
+      },
+      {
+        "key": "DESC",
+        "value": "This alters the wyrwood's creature type.|!PREABILITY:1,CATEGORY=Special Ability,Wyrwood ~ Living Machine"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "FACT",
+        "value": "Wyrwood_ReplaceType|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
+    "line": 33,
+    "record_key": "Wyrwood ~ Living Machine"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

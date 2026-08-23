@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Ogre ~ Rising Fury",
+    "name": "Rising Fury",
+    "description": "Each time a mythic ogre takes damage, it gains a +2 morale bonus on damage rolls until the end of its next turn. This bonus increases by +2 each time the ogre takes damage, up to a maximum of +10. At the end of the ogre's turn, this damage bonus resets to +0.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Ogre ~ Rising Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Ogre Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Each time a mythic ogre takes damage, it gains a +2 morale bonus on damage rolls until the end of its next turn. This bonus increases by +2 each time the ogre takes damage, up to a maximum of +10. At the end of the ogre's turn, this damage bonus resets to +0."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 224,
+    "record_key": "Mythic Ogre ~ Rising Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

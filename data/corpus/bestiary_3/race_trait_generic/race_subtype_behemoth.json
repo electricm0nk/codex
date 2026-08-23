@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Race Subtype ~ Behemoth",
+    "name": "Behemoth Traits",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Subtype ~ Behemoth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Traits Output ~ Behemoth|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Behemoth ~ Ruinous|Behemoth ~ Unstoppable|Behemoth ~ Vulnerable to Miracles and Wishes|Immunity to Ability Damage|Immunity to aging|Immunity to bleed|Immunity to Disease|Immunity to Energy Drain|Immunity to fire|Immunity to Mind-Affecting Effects|Immunity to negative levels|Immunity to Paralysis|Immunity to permanent wounds|Immunity to petrification|Immunity to Poison|Immunity to Polymorph"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2292,
+    "record_key": "Race Subtype ~ Behemoth"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

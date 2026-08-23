@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Lhaksharut ~ Energy Bolt",
+    "name": "Energy Bolt",
+    "description": "A lhaksharut can fire bolts of elemental energy from two of its six arms - it never wields weapons in these hands.  These attacks have a range increment of 100 feet and deal 10d6 energy damage of the inevitable's choice (acid, cold, electricity, or fire, chosen for each bolt as it is thrown).  It can throw two bolts of energy as a standard action, and cannot attack with these hands when it makes weapon or slam attacks with its other limbs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lhaksharut ~ Energy Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A lhaksharut can fire bolts of elemental energy from two of its six arms - it never wields weapons in these hands.  These attacks have a range increment of 100 feet and deal 10d6 energy damage of the inevitable's choice (acid, cold, electricity, or fire, chosen for each bolt as it is thrown).  It can throw two bolts of energy as a standard action, and cannot attack with these hands when it makes weapon or slam attacks with its other limbs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.164"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Energy Bolt,Weapon.Natural.Weapon Group Natural.Ranged.Acid.Cold.Electricity.Fire,*2,10d6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 707,
+    "record_key": "Lhaksharut ~ Energy Bolt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Despair ~ Power from Despair",
+    "name": "Power from Despair",
+    "description": "The phantom gains a +2 bonus on attack and damage rolls against creatures that are shaken, frightened, panicked, cowering, or subject to effects such as aura of despair or crushing despair.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Despair ~ Power from Despair"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2c"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Despair.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The phantom gains a +2 bonus on attack and damage rolls against creatures that are shaken, frightened, panicked, cowering, or subject to effects such as aura of despair or crushing despair."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 80,
+    "record_key": "Emotional Focus / Despair ~ Power from Despair"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

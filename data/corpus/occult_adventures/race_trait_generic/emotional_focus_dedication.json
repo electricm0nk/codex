@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus ~ Dedication",
+    "name": "Dedication",
+    "description": "Either through a sense of love or the desire to finish some unf inished task, a phantom with this emotional focus has an undying devotion to something or someone in the world. It's often the case that a phantom with this emotional focus has a strong familial tie with its spiritualist master. A dedication phantom most often appears as a strong and stern protector with a watchful gaze, and its service to its spiritualist is unwavering. These spirits exude auras of blue, or sometimes rose if their love for their spiritualist masters in life was great. Many times these auras manifest as a halo, giving these phantoms a divine appearance, no matter their actual alignment or opinions on matters of religion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus ~ Dedication"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Either through a sense of love or the desire to finish some unf inished task, a phantom with this emotional focus has an undying devotion to something or someone in the world. It's often the case that a phantom with this emotional focus has a strong familial tie with its spiritualist master. A dedication phantom most often appears as a strong and stern protector with a watchful gaze, and its service to its spiritualist is unwavering. These spirits exude auras of blue, or sometimes rose if their love for their spiritualist masters in life was great. Many times these auras manifest as a halo, giving these phantoms a divine appearance, no matter their actual alignment or opinions on matters of religion."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Skill|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Good Saves|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Iron Will|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Dutiful Strike|PREVARGTEQ:PhantomMasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Defending Aura|PREVARGTEQ:PhantomMasterLevel,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Devoted Servant|PREVARGTEQ:PhantomMasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Emotional Focus / Dedication ~ Steadfast Devotion|PREVARGTEQ:PhantomMasterLevel,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 49,
+    "record_key": "Emotional Focus ~ Dedication"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

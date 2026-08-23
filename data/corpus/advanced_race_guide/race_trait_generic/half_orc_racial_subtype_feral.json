@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc Racial Subtype ~ Feral",
+    "name": "Feral",
+    "description": "Half-orc children who are abandoned as infants or small children rarely survive in the wild, but a few manage to scrape out a meager existence as \"wild children,\" tough enough to live but completely uncivilized. Feral half-orcs have the forest walker and toothy alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc Racial Subtype ~ Feral"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Half-Orc Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc Racial Subtype ~ Feral],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceVision=true,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-orc children who are abandoned as infants or small children rarely survive in the wild, but a few manage to scrape out a meager existence as \"wild children,\" tough enough to live but completely uncivilized. Feral half-orcs have the forest walker and toothy alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Feral"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Orc Racial Trait|NORMAL|Half-Orc ~ Forest Walker|Half-Orc ~ Toothy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2180,
+    "record_key": "Half-Orc Racial Subtype ~ Feral"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

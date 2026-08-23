@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf ~ Ancestral Arms",
+    "name": "Ancestral Arms",
+    "description": "Some half-elves receive training in an unusual weapon. Half-elves with this racial trait receive Exotic Weapon Proficiency or Martial Weapon Proficiency with one weapon as a bonus feat at 1st level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Ancestral Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Ancestral Arms],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-elves receive training in an unusual weapon. Half-elves with this racial trait receive Exotic Weapon Proficiency or Martial Weapon Proficiency with one weapon as a bonus feat at 1st level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the adaptability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Ancestral Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Half-Elf Ancestral Arms Proficiency|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 59,
+    "record_key": "Half-Elf ~ Ancestral Arms"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

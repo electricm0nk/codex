@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Class Bonus Output ~ Witch ~ Ghoran",
+    "name": "Dispel Check Bonus",
+    "description": "[Witch] Add %1 to the witch's caster level when attempting dispel checks using dispel magic, break enchantment, and similar effects.|GhoranWitchDispelBonus/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Class Bonus Output ~ Witch ~ Ghoran"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "[Witch] Add %1 to the witch's caster level when attempting dispel checks using dispel magic, break enchantment, and similar effects.|GhoranWitchDispelBonus/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 283,
+    "record_key": "Favored Class Bonus Output ~ Witch ~ Ghoran"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Werebat-Kin ~ Animal-Minded",
+    "name": "Animal-Minded",
+    "description": "Bloodmarked skinwalkers have a +2 racial bonus on Fly checks and Perception checks at night.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Werebat-Kin ~ Animal-Minded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Skinwalker ~ Werebat-Kin"
+      },
+      {
+        "key": "DESC",
+        "value": "Bloodmarked skinwalkers have a +2 racial bonus on Fly checks and Perception checks at night."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=at night|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Fly, +2 Perception at night"
+      },
+      {
+        "key": "FACT",
+        "value": "Skinwalker_ReplaceAnimalMinded|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 20,
+    "record_key": "Werebat-Kin ~ Animal-Minded"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

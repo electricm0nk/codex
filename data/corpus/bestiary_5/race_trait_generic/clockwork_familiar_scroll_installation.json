@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Clockwork Familiar ~ Scroll Installation",
+    "name": "Scroll Installation",
+    "description": "The clockwork familiar gains a constant detect magic effect as a spell-like ability. Draining magic from a scroll allows the familiar to cast a single identify spell on behalf of its master for each spell level of the spell inscribed on the scroll-these castings may be stored and saved, though a scroll used in this manner becomes instantly useless, even if not all spell levels have been drained.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Clockwork Familiar ~ Scroll Installation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkFamiliarInstalledItem"
+      },
+      {
+        "key": "DESC",
+        "value": "The clockwork familiar gains a constant detect magic effect as a spell-like ability. Draining magic from a scroll allows the familiar to cast a single identify spell on behalf of its master for each spell level of the spell inscribed on the scroll-these castings may be stored and saved, though a scroll used in this manner becomes instantly useless, even if not all spell levels have been drained."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c",
+    "line": 29,
+    "record_key": "Clockwork Familiar ~ Scroll Installation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

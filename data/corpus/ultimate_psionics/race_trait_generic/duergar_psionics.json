@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Duergar Psionics",
+    "name": "Duergar Psionics",
+    "description": "A duergar's expansion and cloud mind affect only the duergar and his gear.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Extraordinary.DuergarDSPRacialTrait.DuergarDSPRacialDefault"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Duergar Psionics],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPPsionics]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DuergarExpansionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DuergarCloudMindTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=DuergarExpansionTimes|CASTERLEVEL=max(3,TL/2)|Expansion,11+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=DuergarCloudMindTimes|CASTERLEVEL=max(3,TL/2)|Cloud Mind,12+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A duergar's expansion and cloud mind affect only the duergar and his gear."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DuergarExpansionTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DuergarCloudMindTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 97,
+    "record_key": "Duergar Psionics"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

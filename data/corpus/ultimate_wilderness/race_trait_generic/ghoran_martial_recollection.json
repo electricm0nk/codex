@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ghoran ~ Martial Recollection",
+    "name": "Martial Recollection",
+    "description": "The personal history of many ghorans is scarred with desperate struggles for survival, and memories of that conflict are deeply ingrained within their seeds. Whenever ghorans with this racial trait grow new bodies from their seeds, they reselect all combat feats known instead of reallocating skill ranks.&nl;This alters seed and replaces nature magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoran ~ Martial Recollection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ghoran ~ Martial Recollection],[PREFACT:1,ABILITIES,Ghoran_ReplaceNaturalMagic=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The personal history of many ghorans is scarred with desperate struggles for survival, and memories of that conflict are deeply ingrained within their seeds. Whenever ghorans with this racial trait grow new bodies from their seeds, they reselect all combat feats known instead of reallocating skill ranks.&nl;This alters seed and replaces nature magic."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ghoran_ReplaceNaturalMagic|1|TYPE=Boolean"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 86,
+    "record_key": "Ghoran ~ Martial Recollection"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Mute Hag Dead Eyes",
+    "name": "Dead Eyes (Mute Hag)",
+    "description": "One of the changeling’s eyes is a solid, dead black (with no whites even at its edges); this gives her a +2 bonus on all saves against gaze attacks and visual illusions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Mute Hag Dead Eyes"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Dead Eyes"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "One of the changeling’s eyes is a solid, dead black (with no whites even at its edges); this gives her a +2 bonus on all saves against gaze attacks and visual illusions."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_GazeAttacks,SaveBonus_vs_VisualIllusions|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 bonus on all saves against gaze attacks and visual illusions."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 412,
+    "record_key": "Changeling ~ Mute Hag Dead Eyes"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

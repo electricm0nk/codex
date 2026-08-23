@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vine Leshy ~ Vision/Darkvision",
+    "name": "Low-Light Vision",
+    "description": "Vine leshys can see twice as far as humans under conditions of dim light.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Vision/Darkvision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Racial Default.Extraordinary.Racial Vision"
+      },
+      {
+        "key": "DESC",
+        "value": "Vine leshys can see twice as far as humans under conditions of dim light."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 118,
+    "record_key": "Vine Leshy ~ Vision/Darkvision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Caligni ~ Ability Scores",
+    "name": "+2 Dexterity, +2 Constitution, -2 Intelligence",
+    "description": "Caligni are quick and resilient, but generations of isolation and oppression have made them slow to accept new ideas.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Caligni ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Ability Scores"
+      },
+      {
+        "key": "DESC",
+        "value": "Caligni are quick and resilient, but generations of isolation and oppression have made them slow to accept new ideas."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 68,
+    "record_key": "Caligni ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

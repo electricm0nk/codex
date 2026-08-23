@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc ~ Toothy",
+    "name": "Toothy",
+    "description": "Some half-orcs' vestigial tusks are massive and sharp, granting a bite attack. This is a primary natural attack that deals 1d4 points of piercing damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Toothy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialAttack.Special Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Toothy],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-orcs' vestigial tusks are massive and sharp, granting a bite attack. This is a primary natural attack that deals 1d4 points of piercing damage."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the orc ferocity racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Toothy"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.NaturalPrimary.Weapon Group Natural.Melee.Finesseable.Piercing,*1,1d4"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 87,
+    "record_key": "Half-Orc ~ Toothy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Astomoi ~ Telepathic Senses",
+    "name": "Telepathic Senses",
+    "description": "Astomoi can't speak or see, but can mentally sense the area within 60 feet, as per darkvision, and can speak telepathically. An astomoi can't see anything beyond 60 feet. An astomoi must provide thought components for spells that normally require verbal components. It can use language-dependent abilities with its telepathy, but not abilities that depend on audible components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Astomoi ~ Telepathic Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Extraordinary.Racial Senses"
+      },
+      {
+        "key": "DESC",
+        "value": "Astomoi can't speak or see, but can mentally sense the area within 60 feet, as per darkvision, and can speak telepathically. An astomoi can't see anything beyond 60 feet. An astomoi must provide thought components for spells that normally require verbal components. It can use language-dependent abilities with its telepathy, but not abilities that depend on audible components."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 49,
+    "record_key": "Astomoi ~ Telepathic Senses"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

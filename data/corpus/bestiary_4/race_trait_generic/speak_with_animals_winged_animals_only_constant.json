@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Speak with Animals (Winged Animals only) ~ Constant",
+    "name": "Speak with Animals (winged animals only)",
+    "description": "You can use speak with animals, as per the spell, as a constant ability, but only to speak with winged animals.|!PRERULE:1,DisplayFullAbility",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Speak with Animals (Winged Animals only) ~ Constant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Communicate.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=SLA_CL|Speak with Animals"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use speak with animals, as per the spell, as a constant ability, but only to speak with winged animals.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use speak with animals, as per the spell, as a constant ability, but only to speak with winged animals. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.|PRERULE:1,DisplayFullAbility"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 39,
+    "record_key": "Speak with Animals (Winged Animals only) ~ Constant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

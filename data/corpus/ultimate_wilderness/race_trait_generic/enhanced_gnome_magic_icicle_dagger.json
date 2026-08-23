@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Enhanced Gnome Magic ~ Icicle Dagger",
+    "name": "Icicle Dagger",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enhanced Gnome Magic ~ Icicle Dagger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Enhanced Gnome Magic"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Icicle Dagger,11+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 145,
+    "record_key": "Enhanced Gnome Magic ~ Icicle Dagger"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

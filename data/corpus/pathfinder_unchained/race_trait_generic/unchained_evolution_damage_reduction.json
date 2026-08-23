@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "description": "The eidolon's body becomes more resistant to harm. Increase the damage reduction granted by the eidolon's subtype by 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Summoner level 15th, damage reduction granted by the eidolon's subtype."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,15"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "GrantedDRByEidolonSubtype,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon's body becomes more resistant to harm. Increase the damage reduction granted by the eidolon's subtype by 5."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonDR|5"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 244,
+    "record_key": "Unchained Evolution ~ Damage Reduction"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

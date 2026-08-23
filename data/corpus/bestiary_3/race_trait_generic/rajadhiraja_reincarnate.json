@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Rajadhiraja ~ Reincarnate",
+    "name": "Reincarnate",
+    "description": "Once per day as a standard action, a rajadhiraja can bring a dead creature back to life as if using the reincarnate spell, except that the target must have been dead less than 1 day and can have been killed by a death effect. As with any effect that restores life to a creature, the reincarnating creature can choose not to be reincarnated if it wishes, but if it does allow the effect to happen, it returns to life at full capacity, as if restored via true resurrection in a new form. Some rajadhirajas slay their own allies in combat, then use this ability to in order to allow the allies to continue the battle in a new body. The new form granted by this effect can be any form within one size category of the dead creature's original size-the exact form of this new body is chosen by the rajadhiraja. Use the results listed in the Core Rulebook for the reincarnate spell as guidelines for determining the new body's physical ability score adjustments.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rajadhiraja ~ Reincarnate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a rajadhiraja can bring a dead creature back to life as if using the reincarnate spell, except that the target must have been dead less than 1 day and can have been killed by a death effect. As with any effect that restores life to a creature, the reincarnating creature can choose not to be reincarnated if it wishes, but if it does allow the effect to happen, it returns to life at full capacity, as if restored via true resurrection in a new form. Some rajadhirajas slay their own allies in combat, then use this ability to in order to allow the allies to continue the battle in a new body. The new form granted by this effect can be any form within one size category of the dead creature's original size-the exact form of this new body is chosen by the rajadhiraja. Use the results listed in the Core Rulebook for the reincarnate spell as guidelines for determining the new body's physical ability score adjustments."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1449,
+    "record_key": "Rajadhiraja ~ Reincarnate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

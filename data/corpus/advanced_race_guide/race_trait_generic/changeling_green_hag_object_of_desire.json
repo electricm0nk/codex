@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Green Hag Object of Desire",
+    "name": "Object of Desire (Green Hag)",
+    "description": "The changeling adds +1 to her caster level when casting charm person and charm monster.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Green Hag Object of Desire"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Object of Desire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling adds +1 to her caster level when casting charm person and charm monster."
+      },
+      {
+        "key": "DESC",
+        "value": "This replaces green widow.|!PREABILITY:1,CATEGORY=Special Ability,Changeling ~ Green Hag Object of Desire"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Charm Person|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Charm Monster|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 820,
+    "record_key": "Changeling ~ Green Hag Object of Desire"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vine Leshy ~ Poisonous",
+    "name": "Poisonous",
+    "description": "Vine leshys made from poison ivy vines carry natural poison in their bodies. As a swift action, the leshy can imbue its vines with this irritating substance. The next time the leshy hits a creature with an unarmed strike, the creature is affected by the following poison.&nl;Vine Leshy Toxin: Unarmed strike--injury; save Fort DC %1; frequency 1/round for 6 rounds; effect sickened for 1 round; cure 1 save.&nl;The leshy can use this ability %2 times per day. A vine leshy is immune to its own poison, but not to those of other vine leshys.&nl;This replaces plantspeech and change shape.|VineLeshy_ToxinDC|VineLeshy_ToxinTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Poisonous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vine Leshy ~ Poisonous],[PREVAREQ:VineLeshy_ReplacePlantspeech,0,VineLeshy_ReplaceChangeShape,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VineLeshy_ToxinDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VineLeshy_ToxinTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Vine leshys made from poison ivy vines carry natural poison in their bodies. As a swift action, the leshy can imbue its vines with this irritating substance. The next time the leshy hits a creature with an unarmed strike, the creature is affected by the following poison.&nl;Vine Leshy Toxin: Unarmed strike--injury; save Fort DC %1; frequency 1/round for 6 rounds; effect sickened for 1 round; cure 1 save.&nl;The leshy can use this ability %2 times per day. A vine leshy is immune to its own poison, but not to those of other vine leshys.&nl;This replaces plantspeech and change shape.|VineLeshy_ToxinDC|VineLeshy_ToxinTimes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vine Leshy ~ Poisonous Vine Leshy Toxin"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VineLeshy_ReplacePlantspeech,VineLeshy_ReplaceChangeShape|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VineLeshy_ToxinDC|10+(TL/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VineLeshy_ToxinTimes|CON"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Times per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|VineLeshy_ToxinTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Vine Leshy Toxin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 131,
+    "record_key": "Vine Leshy ~ Poisonous"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Shabti ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "description": "A shabti can use suggestion once per day as a spell-like ability, with a caster level equal to the shabti's class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shabti ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=(max(TL,1))|Suggestion,12+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A shabti can use suggestion once per day as a spell-like ability, with a caster level equal to the shabti's class level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 215,
+    "record_key": "Shabti ~ Spell-Like Ability"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

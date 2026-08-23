@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Innocence",
+    "name": "Innocence",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Innocence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Innocence"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Innocence_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_Innocence_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Innocence_LVL|Innocence,RacialSLA_Innocence_DC|PREVAREQ:RacialSLA_Innocence_AtWill,0|PREVAREQ:RacialSLA_Innocence_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Innocence_LVL|Innocence,RacialSLA_Innocence_DC|PREVAREQ:RacialSLA_Innocence_AtWill,1|PREVAREQ:RacialSLA_Innocence_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_Innocence_LVL|Innocence,RacialSLA_Innocence_DC|PREVAREQ:RacialSLA_Innocence_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Innocence_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Innocence_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Innocence_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Innocence_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Innocence_DC|10+RacialSLA_Innocence_SpellLVL+RacialSLA_Innocence_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 325,
+    "record_key": "Racial SLA ~ Innocence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

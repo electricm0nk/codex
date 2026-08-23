@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Syrinx ~ Oppressive",
+    "name": "Oppressive",
+    "description": "Syrinxes often have a natural talent for sensing how to unsettle and oppress other creatures. As a swift action, a syrinx can attempt a Sense Motive check against a DC of 10 + a creature's Hit Dice + its Charisma modifier or a DC of 10 + the creature's Bluff modifier, whichever is higher. On a success, syrinx gains a +4 racial bonus on Intimidate checks against that target and a +1 racial bonus to the DC of any fear effects she uses against that target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Syrinx ~ Oppressive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Syrinx Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Syrinx ~ Oppressive],[!PREFACT:1,ABILITIES,Syrinx_ReplaceNocturnal=True,Syrinx_ReplacePride=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Syrinxes often have a natural talent for sensing how to unsettle and oppress other creatures. As a swift action, a syrinx can attempt a Sense Motive check against a DC of 10 + a creature's Hit Dice + its Charisma modifier or a DC of 10 + the creature's Bluff modifier, whichever is higher. On a success, syrinx gains a +4 racial bonus on Intimidate checks against that target and a +1 racial bonus to the DC of any fear effects she uses against that target."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces nocturnal and pride.|!PREABILITY:1,CATEGORY=Special Ability,Syrinx ~ Oppressive"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "FACT",
+        "value": "Syrinx_ReplaceNocturnal|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Syrinx_ReplacePride|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1343,
+    "record_key": "Syrinx ~ Oppressive"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

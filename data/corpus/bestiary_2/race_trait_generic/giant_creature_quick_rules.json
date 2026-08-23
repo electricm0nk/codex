@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Giant Creature (Quick Rules)",
+    "name": "Giant Creature (Quick Rules)",
+    "description": "Quick Rules: +2 to all rolls based on Str or Con, +2 hp/HD, -1 penalty on all rolls based on Dex.",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Giant Creature_1c"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GiantCreatureSelection.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Quick Rules: +2 to all rolls based on Str or Con, +2 hp/HD, -1 penalty on all rolls based on Dex."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2263,
+    "record_key": "Giant Creature (Quick Rules)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

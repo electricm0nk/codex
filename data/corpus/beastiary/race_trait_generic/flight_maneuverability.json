@@ -1,0 +1,106 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Flight Maneuverability",
+    "name": "Flight Maneuverability",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "FlightManeuverabilityCategory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Clumsy)|PREVARLTEQ:Maneuverability,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Poor)|PREVAREQ:Maneuverability,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Average)|PREVAREQ:Maneuverability,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Good)|PREVAREQ:Maneuverability,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Perfect)|PREVARGTEQ:Maneuverability,5"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Fly"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Adjust Flight Maneuverability up or down by assigning a possitive or negative number"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Maneuverability|%CHOICE"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=-4|MAX=4|TITLE=Flight Maneuverability Adjustment"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Maneuverability (Perfect)|PREVAREQ:FlightManeuverabilityCategory,5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Maneuverability (Good)|PREVAREQ:FlightManeuverabilityCategory,4"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Maneuverability (Average)|PREVAREQ:FlightManeuverabilityCategory,3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Maneuverability (Poor)|PREVAREQ:FlightManeuverabilityCategory,2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Maneuverability (Clumsy)|PREVARLTEQ:FlightManeuverabilityCategory,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlightManeuverabilityCategory|min(Maneuverability,5)|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1371,
+    "record_key": "Flight Maneuverability"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

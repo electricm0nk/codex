@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Carrion Golem ~ Immunity to Magic",
+    "name": "Immunity to Magic",
+    "description": "A carrion golem is immune to any spell or spell-like ability that allows spell resistance.  In addition, certain spells and effects function differently against the creature, as noted below.  Gentle repose causes a carrion golem to become stiff and helpless for 1d4 rounds if it fails a Will save against the spell.  Animate dead causes the various parts of the golem's body to shudder and tear, dealing 1d6 points of damage per caster level to the golem (no save).  Any magical attack that deals cold or fire damage slows a carrion golem (as the slow spell) for 2d6 rounds (no save).  Any magical attack that deals electricity damage hastes a carrion golem (as the haste spell) for 2d6 rounds.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Carrion Golem ~ Immunity to Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Immunity.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A carrion golem is immune to any spell or spell-like ability that allows spell resistance.  In addition, certain spells and effects function differently against the creature, as noted below.  Gentle repose causes a carrion golem to become stiff and helpless for 1d4 rounds if it fails a Will save against the spell.  Animate dead causes the various parts of the golem's body to shudder and tear, dealing 1d6 points of damage per caster level to the golem (no save).  Any magical attack that deals cold or fire damage slows a carrion golem (as the slow spell) for 2d6 rounds (no save).  Any magical attack that deals electricity damage hastes a carrion golem (as the haste spell) for 2d6 rounds."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Magic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 603,
+    "record_key": "Carrion Golem ~ Immunity to Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unfettered Eidolon Evolution ~ Weapon Training",
+    "name": "Weapon Training",
+    "description": "Gains Simple Weapon Proficiency as a bonus feat. For 2 additional EP, it gains proficiency with all martial weapons as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unfettered Eidolon Evolution ~ Weapon Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "UnfetteredEidolonWeaponTrainingLVL,2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnfetteredEidolonWeaponTrainingLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gains Simple Weapon Proficiency as a bonus feat. For 2 additional EP, it gains proficiency with all martial weapons as well."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Simple Weapon Proficiency"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=WeaponProfMartial|PREVARGTEQ:UnfetteredEidolonWeaponTrainingLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnfetteredEidolonWeaponTrainingLVL|1"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1755,
+    "record_key": "Unfettered Eidolon Evolution ~ Weapon Training"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

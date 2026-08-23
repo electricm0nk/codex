@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Eidolon Subtype ~ Psychopomp",
+    "name": "Psychopomp",
+    "description": "Stewards, chroniclers, and guides of all things that die, psychopomps make dispassionate yet loyal eidolons. When they deal with the world of mortals, psychopomp eidolons nearly always wear masks. They do not tolerate summoners who traffic with daemons, undead, and other entities that interfere with the transmigration of souls, but otherwise they are comfortable with most actions on the summoner's part. When the summoner dies, a psychopomp eidolon personally escorts him to the afterlife and serves as an expert witness when it is time for him to be judged.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon Subtype ~ Psychopomp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Subtype Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonSubtype_Psychopomp,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Stewards, chroniclers, and guides of all things that die, psychopomps make dispassionate yet loyal eidolons. When they deal with the world of mortals, psychopomp eidolons nearly always wear masks. They do not tolerate summoners who traffic with daemons, undead, and other entities that interfere with the transmigration of souls, but otherwise they are comfortable with most actions on the summoner's part. When the summoner dies, a psychopomp eidolon personally escorts him to the afterlife and serves as an expert witness when it is time for him to be judged."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp ~ Unchained Eidolon LVL01|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp ~ Unchained Eidolon LVL04|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp ~ Unchained Eidolon LVL08|PREVARGTEQ:MasterLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp ~ Unchained Eidolon LVL12|PREVARGTEQ:MasterLevel,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp ~ Unchained Eidolon LVL16|PREVARGTEQ:MasterLevel,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp ~ Unchained Eidolon LVL20|PREVARGTEQ:MasterLevel,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp Base Form ~ Biped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Biped"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp Base Form ~ Quadruped|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Quadruped"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychopomp Base Form ~ Serpentine|PREABILITY:1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Serpentine"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_UnchainedEidolonForm|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonBiped|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonQuadruped|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSerpentine|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 37,
+    "record_key": "Eidolon Subtype ~ Psychopomp"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

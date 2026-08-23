@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dragon ~ Alien Presence",
+    "name": "Alien Presence",
+    "description": "An outer dragon's alien presence has a range equal to 30 feet x the dragon's age category [%1']. DC %2 to save.|AlienPresenceRange|AlienPresenceDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon ~ Alien Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.Extraordinary.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlienPresenceRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlienPresenceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An outer dragon's alien presence has a range equal to 30 feet x the dragon's age category [%1']. DC %2 to save.|AlienPresenceRange|AlienPresenceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlienPresenceRange|DragonAgeCategory*30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlienPresenceDC|10+(HD/2)+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 121,
+    "record_key": "Dragon ~ Alien Presence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

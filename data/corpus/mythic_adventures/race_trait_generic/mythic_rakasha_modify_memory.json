@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Rakasha ~ Modify Memory",
+    "name": "Modify Memory",
+    "description": "A mythic rakshasa can expend one use of mythic power as a swift action to modify the memory of a creature whose mind it is reading, as the modify memory spell (CL 18th). The creature can resist with a successful DC 20 Will save. The save DC is Charisma-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Rakasha ~ Modify Memory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Rakasha Trait.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic rakshasa can expend one use of mythic power as a swift action to modify the memory of a creature whose mind it is reading, as the modify memory spell (CL 18th). The creature can resist with a successful DC 20 Will save. The save DC is Charisma-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 237,
+    "record_key": "Mythic Rakasha ~ Modify Memory"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Azata-Blooded ~ Skilled",
+    "name": "Skilled",
+    "description": "Musetouched have a +2 racial bonus on Diplomacy and Perform checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Azata-Blooded ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aasimar ~ Azata-Blooded"
+      },
+      {
+        "key": "DESC",
+        "value": "Musetouched have a +2 racial bonus on Diplomacy and Perform checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,TYPE.Perform|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Diplomacy, +2 Perform"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e",
+    "line": 58,
+    "record_key": "Azata-Blooded ~ Skilled"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling ~ Wanderlust",
+    "name": "Wanderlust",
+    "description": "Halflings love travel and maps. Halflings with this racial trait receive a +2 bonus on Knowledge (geography) and Survival checks. When casting spells or using abilities that provide or enhance movement, halflings treat their caster level as +1 higher than normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Wanderlust"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Wanderlust],[!PREFACT:1,ABILITIES,Halfling_ReplaceFearless=true,Halfling_ReplaceHalflingLuck=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Halflings love travel and maps. Halflings with this racial trait receive a +2 bonus on Knowledge (geography) and Survival checks. When casting spells or using abilities that provide or enhance movement, halflings treat their caster level as +1 higher than normal."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the fearless and halfling luck racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Wanderlust"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography),Survival|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceFearless|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceHalflingLuck|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 101,
+    "record_key": "Halfling ~ Wanderlust"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

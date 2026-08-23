@@ -1,0 +1,142 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Animal Lord ~ Serpent Lord (Venomous)",
+    "name": "Serpent Lord (Venomous Snake)",
+    "description": "Serpent lords tend to have unusual skin colors, often with stripes or other patterns, snakelike eyes, and forked tongues. Serpent lords gain the following ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Lord ~ Serpent Lord (Venomous)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality"
+      },
+      {
+        "key": "PREBASESIZEGTEQ",
+        "value": "S"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalSTRScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalDEXScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCONScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalINTScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalWISScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCHAScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalBaseCR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Serpent lords tend to have unusual skin colors, often with stripes or other patterns, snakelike eyes, and forked tongues. Serpent lords gain the following ability."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Climb,20,Swim,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Lord ~ Poison Immunity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Scent|Venomous Snake ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|max((DEX-STR),0)|TYPE=Racial.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalSTRScore|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalDEXScore|13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCONScore|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalINTScore|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalWISScore|13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCHAScore|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalBaseCR|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Poison,*1,1d4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 354,
+    "record_key": "Animal Lord ~ Serpent Lord (Venomous)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

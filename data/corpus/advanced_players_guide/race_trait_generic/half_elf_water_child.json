@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf ~ Water Child",
+    "name": "Water Child",
+    "description": "Some half-elves are born of elves adapted to life on or near the water. These half-elves gain a +4 racial bonus on Swim checks, can always take 10 while swimming, and may choose Aquan as a bonus language.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Water Child"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Water Child],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true,HalfElf_ReplaceMultitalented=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-elves are born of elves adapted to life on or near the water. These half-elves gain a +4 racial bonus on Swim checks, can always take 10 while swimming, and may choose Aquan as a bonus language."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the half-elf's adaptability and multitalented racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Water Child"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Aquan Bonus Language"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|4|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You can always take 10 while swimming."
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceMultitalented|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 65,
+    "record_key": "Half-Elf ~ Water Child"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

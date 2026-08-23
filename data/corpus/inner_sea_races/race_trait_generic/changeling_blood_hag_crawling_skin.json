@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Blood Hag Crawling Skin",
+    "name": "Crawling Skin (Blood Hag)",
+    "description": "The changeling gains a +2 bonus on Disguise checks made to look like specific individuals.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Blood Hag Crawling Skin"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Crawling Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling gains a +2 bonus on Disguise checks made to look like specific individuals."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Disguise=to look like specific individuals|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Disguise to look like specific individuals"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 411,
+    "record_key": "Changeling ~ Blood Hag Crawling Skin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

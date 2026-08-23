@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Winter Hag Frostlaced Flesh",
+    "name": "Frostlaced Flesh (Winter Hag)",
+    "description": "The changeling leaves no tracks in snow, and gains a +2 racial bonus on all saves versus cold effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Winter Hag Frostlaced Flesh"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Frostlaced Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling leaves no tracks in snow, and gains a +2 racial bonus on all saves versus cold effects."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_ColdEffects|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on all saves versus cold effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 413,
+    "record_key": "Changeling ~ Winter Hag Frostlaced Flesh"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

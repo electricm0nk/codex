@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling ~ Bloodrager ~ Bloodraging Dodge Bonus",
+    "name": "Bloodraging Dodge Bonus",
+    "description": "You have a +%1 dodge bonus to AC while bloodraging against creatures at least one size category larger than you.|floor(HalflingBloodragerFavClassBonus/5)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Bloodrager ~ Bloodraging Dodge Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a +%1 dodge bonus to AC while bloodraging against creatures at least one size category larger than you.|floor(HalflingBloodragerFavClassBonus/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|TYPE=Dodge|HalflingBloodragerFavClassBonus/4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 318,
+    "record_key": "Halfling ~ Bloodrager ~ Bloodraging Dodge Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

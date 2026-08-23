@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Annis Hag Hulking Changeling",
+    "name": "Hulking Changeling (Annis Hag)",
+    "description": "The changeling gains a +1 racial bonus on melee damage rolls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Annis Hag Hulking Changeling"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Hulking Changeling"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling gains a +1 racial bonus on melee damage rolls."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Melee|1|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e",
+    "line": 36,
+    "record_key": "Changeling ~ Annis Hag Hulking Changeling"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

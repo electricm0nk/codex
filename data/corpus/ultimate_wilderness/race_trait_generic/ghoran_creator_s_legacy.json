@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ghoran ~ Creator's Legacy",
+    "name": "Creator's Legacy",
+    "description": "Infused with the druidic magic of their creator, ghorans quickly take to nature-based spells and spellcasting. Ghoran bloodragers and sorcerers with the verdant bloodline treat their Charisma score as 2 points higher for sorcerer spells and class abilities. Ghoran clerics and druids with the Plant domain use their domain powers and spells at +1 caster level. This doesn't give the ghoran early access to level-based powers; it affects only powers that could already be used without this trait.&nl;This replaces past-life knowledge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoran ~ Creator's Legacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ghoran ~ Creator's Legacy],[PREFACT:1,ABILITIES,Ghoran_ReplacePastLifeKnowledge=True]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ghoran_CreatorsLegacyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Infused with the druidic magic of their creator, ghorans quickly take to nature-based spells and spellcasting. Ghoran bloodragers and sorcerers with the verdant bloodline treat their Charisma score as 2 points higher for sorcerer spells and class abilities. Ghoran clerics and druids with the Plant domain use their domain powers and spells at +1 caster level. This doesn't give the ghoran early access to level-based powers; it affects only powers that could already be used without this trait.&nl;This replaces past-life knowledge."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|DOMAIN.Plant|1|PRECLASS:1,Cleric=1,Druid=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|CLASS.Sorcerer,CLASS.Bloodrager|1|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant,Bloodrager Bloodline ~ Verdant"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ghoran_ReplacePastLifeKnowledge|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPlantLVL|1|PRECLASS:1,Cleric=1,Druid=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlinePowerTimes|1|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Verdant,Bloodrager Bloodline ~ Verdant"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ghoran_CreatorsLegacyBonus|1|TYPE=Base"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 85,
+    "record_key": "Ghoran ~ Creator's Legacy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

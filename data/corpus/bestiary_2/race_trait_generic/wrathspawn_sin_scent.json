@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wrathspawn ~ Sin-Scent",
+    "name": "Sin-Scent",
+    "description": "Wrathspawn have scent against creatures whose nature reflects wrath.  The GM should adjudicate what creatures a particular sinspawn can scent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wrathspawn ~ Sin-Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Wrathspawn have scent against creatures whose nature reflects wrath.  The GM should adjudicate what creatures a particular sinspawn can scent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1149,
+    "record_key": "Wrathspawn ~ Sin-Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

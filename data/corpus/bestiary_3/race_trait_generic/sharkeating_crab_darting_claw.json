@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Sharkeating Crab ~ Darting Claw",
+    "name": "Darting Claw",
+    "description": "Evolved for snatching fast prey, a sharkeating crab is exceptionally quick with its claws. When making a full attack, if a shark-eating crab misses with both of its claw attacks, it can make an additional claw attack at a -2 penalty against any creature within its reach.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sharkeating Crab ~ Darting Claw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SharkeatingCrabRacialAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Evolved for snatching fast prey, a sharkeating crab is exceptionally quick with its claws. When making a full attack, if a shark-eating crab misses with both of its claw attacks, it can make an additional claw attack at a -2 penalty against any creature within its reach."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 597,
+    "record_key": "Sharkeating Crab ~ Darting Claw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
