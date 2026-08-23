@@ -1201,3 +1201,39 @@ carries PI is redacted, as before — `ogl-pi-blacklist.md` as amended by `§19`
 `§1a` is unchanged: this ruling makes previously-unshippable records shippable; it does not make an
 unmeasured shape measured. A unit ingested under a neutral name is closed **only** once its shape is
 actually classified like any other.
+
+## Decision 25 — The `kind: trait` epic is IN SD-32's Definition of Done (operator ruling 2026-08-23)
+
+**Question put to the operator.** A T2b lane escalated 14 `adopted_race_choose_selector` units
+(`bestiary_2` 7, `bestiary_3` 5, `bestiary_5` 1, `bestiary_6` 1) as `no_record`. Closing them is not a
+config-row extension: PF1e's chargen **Trait** mechanic has never been modelled in this corpus
+(`find data/corpus -type d -name trait` returns zero directories). It needs a new `kind: trait`
+schema, an ingest tool, a reach-gate family, a character-builder picker, and onboarding at least one
+currently-unregistered `player_companion` book that holds the real trait pool. The question was
+whether that belongs in SD-32's DoD or moves to a successor bundle.
+
+**Ruling, verbatim:**
+
+> *"In. We do not defer - we complete."*
+
+**Consequences.**
+
+1. **The `kind: trait` epic is in scope for SD-32.** It is sized as an **epic, not a cycle**, per
+   `docs/governance/blocker-closure-doctrine.md`'s "decompose it and run the cycles" disposition. It
+   gets a kanban card, and `§10` applies to it unchanged: the bundle does not close until that card
+   reads `complete`.
+2. **The 14 units close by real ingest**, not by reclassification, exclusion, or a
+   forward-scope-register entry. `§16` governs the reporting: closure, reclassification and
+   reachability stay three separate numbers.
+3. **The `player_companion` book(s) holding the trait pool are onboarded as part of this epic.** Book
+   onboarding cost in this repo is per-file, not per-record (~7 count-pinning files), so the marginal
+   cost of the content itself is small once the kind exists.
+4. **This is now the governing precedent for the remaining "new-kind" escalations in this bundle.** A
+   blocker is not made deferrable by being expensive, and "this needs a new kind" is a decomposition
+   statement, not an exemption. Any future lane proposing to move DoD scope to a successor bundle
+   should read this decision first and expect the same answer.
+
+**Standing note for the orchestrator.** The escalation itself was correct and well-formed — it named
+the population by coordinate, priced both answers honestly, and refused to write its own deferral. The
+error to avoid is not "escalating too much"; it is recommending a deferral where the doctrine already
+supplies the answer.
