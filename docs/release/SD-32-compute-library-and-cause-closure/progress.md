@@ -5014,3 +5014,67 @@ suite). Dual audit clean (`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`) on own diff.
   `ability` 576, `deity` 459, `spell` 339, `equipment` 316, `equipment_modifier` 237, `companion` 217,
   `class_feature` 169, `class` 157, `race` 59, `monster` 28.
 - Commit: `0b33aa20a` (pushed clean, first attempt, `b645e1631..0b33aa20a`).
+
+## `21-duplicate-chooser-picker-class-collapse` — Decision 21 implementation (2026-08-23, card 15)
+
+Implements `decisions.md` Decision 21 (operator ruling 2026-08-23): every fallback-key
+`class_feature` collision group whose members ALL carry a `TYPE:*Choice` facet AND whose granted
+targets pairwise coincide is a duplicate-chooser-picker group, not distinct objects.
+
+**§17a re-derivation:** 39 groups, 113 rows, 74 residual — book split `advanced_class_guide` 27,
+`ultimate_magic` 7, `advanced_race_guide` 2, `occult_adventures` 2, `monster_codex` 1. Matches the
+dispatch brief's expected figures exactly, zero exceptions across all 39 groups.
+
+**No `v06_work_inventory.rs` change:** the existing `(book,key)` collision collapse already drops
+these 74 rows before construction — verified by id lookup, none of the 74 physical `(book, file,
+line)` triples corresponds to a distinct id anywhere in `docs/work-inventory.json`. This cycle's
+work: (1) a new committed predicate + evidence-log generator
+(`21-duplicate-chooser-picker-class-collapse.py`) proving the predicate holds for all 39 groups,
+zero exceptions (binding condition 1/2); (2) a 5-test module with the binding-condition-3 over-reach
+proof, including a literal RED→GREEN mutation to the adjacency-only rule Decision 17 rejected,
+performed and reverted this cycle; (3) a bookkeeping reallocation in `scripts/card15_reconcile.py`
+(`pending_a` → `disposed_b`, −74/+74), re-run before/after — `arithmetic_check` total unchanged at
+18,992 both times, `equals_total_this_run: true`, `remaining_undisposed: 0` both times (binding
+condition 4, nothing lost beyond the named collapses).
+
+**Also corrected (stale-figure fix, found while re-deriving):** `card15_reconcile.py`'s own
+`class_feature_residual_duplicate_identity` (183) and `class_feature_already_in_inventory` (18008)
+were stale relative to the current committed inventory. Fresh `15-card-15-class-feature-residual-
+cause-pin.py` run: 179 residual (153 non-internal + 26 internal-collision-losers), and the prior
+review cycle's 4-unit rescue (`native_cunning_grapple_overrun`,
+`vigilante_favored_maneuver_bull_rush_favored_maneuver_sunder`,
+`social_grace_craft_armor_craft_baskets`, `green_faith_marshal_panther_domain_vulture`) is confirmed
+**already present** in the committed `docs/work-inventory.json` by direct id lookup — landed by a
+sibling cycle once `af2f07f68` fixed the `source.path` defect blocking `corpus_literal_sweep`. This
+is the expected 4-unit landing the dispatch brief named; reported here, not silently absorbed.
+Corrected 183→179 / 18008→18012 before applying Decision 21's own −74/+74.
+
+**`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` relationship — ruled COMPLEMENTS**, not
+supersedes/absorbs. All 7 `ultimate_magic` groups' surviving row IS on that 33-id list (removed
+post-construction by `apply_duplicate_chooser_removal`); the OTHER (residual) row of the same group
+never reaches construction at all — disjoint populations, same underlying shape. The constant is
+left **unchanged**, deliberately — full evidence in
+`21-duplicate-chooser-picker-class-collapse-memo.md`'s own dedicated section.
+
+**Scope (binding condition 5):** fallback-key `class_feature` collisions only. The 16 keyed-collision
+groups are untouched (12 correctly left uncollapsed, 4 already rescued by the prior review cycle) —
+no file in this diff touches keyed collisions or any other kind.
+
+**Regeneration:** none run — `docs/work-inventory.json` is byte-unchanged this cycle (the 74 rows
+were already absent), so the stamp-diffing discipline does not apply.
+
+**Tests:** `21-duplicate-chooser-picker-class-collapse_test.py` 5/5 `OK` (live re-derivation against
+the pinned oracle included). `scripts/card15_reconcile.py` re-run clean both before and after.
+
+- **Status:** complete.
+- **Kanban:** row 15 stays `in-progress` per dispatch instruction (the 12 remaining keyed groups + 22
+  fully-traced non-colliding rows are the only `class_feature` residual left in `pending_a`, 105
+  units — both fully explained, neither this cycle's scope).
+- Receipt: `artifacts/gate-0-census-closure/21-duplicate-chooser-picker-class-collapse_cycle_receipt.md`.
+- Files: `21-duplicate-chooser-picker-class-collapse.py`,
+  `21-duplicate-chooser-picker-class-collapse_test.py`,
+  `21-duplicate-chooser-picker-collapse-log.json`,
+  `21-duplicate-chooser-picker-class-collapse-memo.md`, `21-card15-reconcile-after.json` (all new,
+  `artifacts/gate-0-census-closure/`); `scripts/card15_reconcile.py` (bucket reallocation + stale-
+  figure correction).
+- Commit: `74701098a` (pushed clean, first attempt, `98ef52bea..74701098a`).
