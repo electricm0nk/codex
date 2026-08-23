@@ -2423,3 +2423,71 @@ and after this sweep (not "none found" without having run the commands).
     `monster_codex`'s `Bat (Sootwing)` (1 unit) — need T9's mechanism or a ruling, not this
     pipeline; Dhampir's own ~5-unit residual — small, well-scoped follow-on.
   - **Disk:** `df -h /` → 968G total, 332G used, 636G available, 35% used.
+
+### Cycle t2b-refine-kind-fix/1 — Epic 2 / Card 11 `epic-2-cause-closure`, `decisions.md §16` item 1 — `refine_kind` classifier fix
+
+- **Card ID:** `epic-2-cause-closure` (row 11; scope: fix `v06_work_inventory.rs::refine_kind`,
+  the classifier-noise cause four wave-1 lanes independently traced T2b's population to,
+  `decisions.md §16`). Card row stays `in-progress` — this closes item 1 of §16's 3-item plan
+  only; items 2 (`AdoptiveRace` selector) and 3 (re-measure T2b) remain.
+- **Actor:** `t2b-refine-kind-fix`
+- **Base:** `e2bbff32c` (`PIN`); footgun 1 fired (fresh worktree landed on a stray `site-publish`
+  merge with no `docs/`/`data/`/`scripts/` tree), `git reset --hard` applied, then rebased onto
+  `origin/tranche/12` HEAD `d904eceb6` — no further rebase needed since (fetch during this cycle
+  showed `origin/tranche/12` unchanged at `d904eceb6`).
+- **Files touched:** `src/bin/v06_work_inventory.rs` (`refine_kind` gains a third parameter —
+  cross-references a row's `KEY:` prefix against a new `book_cr_bearing_race_names` per-book set;
+  `enumerate_file`/`enumerate_book` thread it through; 6 new tests + `book_cr_bearing_race_names`'s
+  own 3; 1 pre-existing unrelated test, `uncompiled_books_stay_none`, retargeted off a now-stale
+  `inner_sea_temples` assumption card 15 already invalidated), `scripts/t2b_refine_kind_key_prefix_
+  stress_test.py` (new, corpus-wide discriminator stress test), `scripts/t2b_refine_kind_fix_
+  movement_report.py` (new, before/after coordinate-joined movement report), `docs/work-
+  inventory.json` (regenerated through the real producer with `CORPUS_LITERAL_SWEEP_REPORT`/
+  `DERIVED_FIXTURE_CHECK_REPORT` set — the guarded path, no `--allow-stamp-loss`), `docs/retro/
+  events/t2b-refine-kind-fix.jsonl` (new — 1 correction).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
+- **Wired-integration audit result:** `OK_NO_TOKENS`
+- **Acceptance criterion:** `decisions.md §16` item 1 — fix the classifier, prove by test it does
+  not reclassify genuine race content, report movement honestly in both directions.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete for the unambiguous population this fix targets (exact `KEY:` prefix match
+  against a same-book `CR:`-bearing `*_races.lst` name). A named, counted residual remains —
+  reported, not forced (§6 of this cycle's own receipt).
+- **Summary:** Stress-tested the discriminator corpus-wide (154 `*_abilities_race.lst`-carrying
+  directories, all publishers) BEFORE wiring it in: 0 false positives against 9 of 10 known
+  real-race-book directories and against every playable-race name in this corpus; `bestiary_2`'s
+  296 hits are all confirmed monster content (it carries both real races and monster stat blocks).
+  Deliberately excludes `*_templates.lst` — stress-testing found a real false positive there
+  (`advanced_race_guide`'s `Feral` subrace template collides with a genuine `Feral ~ Languages`
+  race-trait row), proved RED under a deliberate over-widening, reverted. The named trap (`Favored
+  Enemy ~ Humanoid (<Race>)` sharing an inner `SpecialAttack` TYPE segment with monster vocabulary)
+  cannot fire against this fix by construction — it reads KEY, not TYPE — confirmed by a dedicated
+  regression test. **864 units moved `race_trait -> monster_ability` corpus-wide, 0 moved the other
+  way** (full coordinate join, not assumed): `bestiary_3` 625, `ultimate_psionics` 112,
+  `bestiary_2` 69, `bestiary_4` 42, `bestiary` 9, `inner_sea_gods` 3, `inner_sea_bestiary` 2,
+  `occult_adventures` 2. **T2b** (`race_trait_race_not_modelled`): 2,472 -> 1,578. **T9** (shares
+  the `monster_ability` kind): 2,712 -> 3,573 (+861 — 861 of the 864 moved units land on T9's own
+  `monster_ability_absent_from_*` evidence family; 2 land on a different not-ingested bucket; 1,
+  `bestiary_2`'s `Bunyip ~ Blood Rage`, is already fully closed real content). **Named plainly, per
+  this cycle's own guard rail: this is a reclassification of which shape's ledger 861 units of real,
+  un-ingested work sit on, not a net reduction in open work.** Full per-book breakdown, commands,
+  and the RED->GREEN proof: `artifacts/gate-3-closure-invariant/epic-2-t2b-refine-kind-fix_cycle-1_
+  cycle_receipt.md`.
+- **Suites:** `cargo test --bin v06_work_inventory --locked` 308/308; `cargo test --locked --lib`
+  2388/2388; `cargo test --locked --bins` all bin suites green (grepped `test result:` across
+  every bin, 0 `FAILED`); desktop crate (separate cargo workspace) `cargo test --locked
+  --manifest-path apps/desktop/src-tauri/Cargo.toml` 517/517 — the prior cycle's noted pre-existing
+  `uncompiled_books_stay_none` failure is fixed this cycle, not carried forward.
+  `scripts/verify.sh --only reach` PASS (31 passed).
+- **Discovery forwards:** two, filed in `## DISCOVERED` below — (1) `bestiary_2`/`bestiary_4`/
+  `bestiary`/`inner_sea_gods`/`inner_sea_bestiary`/`occult_adventures`/`ultimate_psionics` each
+  carry a residual T2b population this cycle did not individually re-classify row-by-row (only
+  `bestiary_3` was, reusing the wave-1 `t2b_bestiary_3_row_classify.py` script unmodified — 819 ->
+  194, with the remaining 194 broken down: 9 by-design header exclusions, 5 `Adopted Race` selector
+  rows already escalated in wave 1, 58 template-name matches and 122 name-variant matches this
+  cycle deliberately did not force, per its own stress-test finding that widening past exact
+  `*_races.lst` match introduces real false positives); (2) T9's `monster_ability` sub-population
+  grew from 517 to 1,378 as a direct, correctly-attributed consequence of this fix — any T9-scoped
+  cycle must re-derive its own population before sizing work.
+- **Next-cycle plan:** `decisions.md §16` item 2 (`AdoptiveRace` selector mechanism, 5 books) next,
+  then re-measure T2b's true residual once both land, per §16's own 3-cycle plan.

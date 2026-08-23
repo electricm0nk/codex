@@ -1395,6 +1395,73 @@ fn is_player_favored_class_choice_row(fields: &[&str], type_second_segment: &str
         .any(|f| f.contains("Favored Class Bonus") || f.contains("FavClassBonus"))
 }
 
+/// SD-32 card 11 T2b classifier fix (`decisions.md §16`, 2026-08-22):
+/// `*_races.lst` row names that carry a `CR:` token in THIS SAME book --
+/// the corpus's own monster discriminator, already used one line below for
+/// `Kind::Race -> Kind::Monster` (`cr_races.lst` carries zero `CR:` tokens
+/// across its seven playable races; `b1_races.lst` carries 351 across its
+/// zero playable races). Bestiary-style books use compound, race-specific
+/// `TYPE:` first segments for their special-ability rows
+/// (`AghashRacialAbility`, `BearLordRacialTrait`, `RaceAbility`, ...) instead
+/// of `MONSTER_ABILITY_TYPE_FACETS`'s bare vocabulary, so the TYPE-facet
+/// check alone leaves them typed `race_trait`. A row's `KEY:` prefix (the
+/// text before the first ` ~ `) naming one of these entries is the second,
+/// independent signal `refine_kind` cross-references below.
+///
+/// **Deliberately does NOT also match `*_templates.lst` entries.** Stress-tested
+/// corpus-wide before this ruling (`scripts/t2b_refine_kind_key_prefix_stress_test.py`,
+/// `off` vs `on` mode): `advanced_race_guide/arg_templates.lst` carries a
+/// `Feral` row (the Orc subrace template `SUBRACE:Feral` grants), and
+/// `arg_abilities_race.lst` carries a genuine player-facing `Feral ~
+/// Languages` racial-trait row for it -- a templates.lst name is not always
+/// monster-owned the way a CR:-bearing races.lst name always is. Widening to
+/// templates.lst would silently reclassify that real content; races.lst-only
+/// does not (re-derived: 0 hits in `core_rulebook`/`advanced_players_guide`/
+/// `advanced_race_guide`/`advanced_class_guide`/`bestiary_5`/`bestiary_6`/
+/// `inner_sea_races`/`core_essentials`/`ultimate_wilderness`, all 10 known
+/// real-race-book directories, and 0 hits against any of this corpus's own
+/// playable-race names anywhere).
+fn book_cr_bearing_race_names(book_dir: &Path) -> BTreeSet<String> {
+    let mut names = BTreeSet::new();
+    let mut stack = vec![book_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            let basename = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+            // Same shape `file_kind` uses for `Kind::Race`: `_races` but not
+            // a companion/familiar roster.
+            if !basename.contains("_races") || basename.contains("companion") || basename.contains("familiar") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for line in text.lines() {
+                let fields = tab_fields(line);
+                let Some(first) = fields.first() else { continue };
+                let first = first.trim();
+                if first.is_empty() || first.starts_with('#') {
+                    continue;
+                }
+                let is_directive = first
+                    .split_once(':')
+                    .map(|(head, _)| !head.is_empty() && head.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit()))
+                    .unwrap_or(false);
+                if is_directive {
+                    continue;
+                }
+                if has_token(&fields, "CR:") {
+                    names.insert(first.to_string());
+                }
+            }
+        }
+    }
+    names
+}
+
 /// A record's kind, refined from the file-level guess by what the record
 /// itself says.
 ///
@@ -1410,7 +1477,18 @@ fn is_player_favored_class_choice_row(fields: &[&str], type_second_segment: &str
 ///   itself is a player race+class Favored Class Bonus row wearing a monster
 ///   facet's `TYPE:` first segment (`is_player_favored_class_choice_row`,
 ///   `OPEN-ISSUES.md` row 34).
-fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
+/// - `decisions.md §16`: a row whose `KEY:` prefix (text before the first
+///   ` ~ `) exactly names one of `book_monster_race_names`'s same-book
+///   `CR:`-bearing race entries is ALSO a monster's own sub-ability, even
+///   when its `TYPE:` first segment is a compound, race-specific facet
+///   (`AghashRacialAbility`, `BearLordRacialTrait`, ...) the bare
+///   `MONSTER_ABILITY_TYPE_FACETS` vocabulary does not match. Verified safe
+///   against the one known trap (`Favored Enemy ~ Humanoid (<Race>)`, whose
+///   KEY prefix is literally `Favored Enemy` -- never a race or monster
+///   name) by construction: this check reads the KEY, not the TYPE, so it
+///   shares no vocabulary with the trap that made a naive TYPE-segment
+///   widening unsafe (`t2b-bestiary_3-measurement-receipt.md` §6 item 1).
+fn refine_kind(file_kind: Kind, fields: &[&str], book_monster_race_names: &BTreeSet<String>) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
         Kind::RaceTrait => {
@@ -1418,13 +1496,20 @@ fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
             let mut type_segments = type_value.split('.');
             let type_first_segment = type_segments.next().unwrap_or("");
             let type_second_segment = type_segments.next().unwrap_or("");
-            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment)
-                && !is_player_favored_class_choice_row(fields, type_second_segment)
-            {
-                Kind::MonsterAbility
-            } else {
-                Kind::RaceTrait
+            let is_choice_row = is_player_favored_class_choice_row(fields, type_second_segment);
+            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment) && !is_choice_row {
+                return Kind::MonsterAbility;
             }
+            let key_prefix = token_value(fields, "KEY:")
+                .unwrap_or("")
+                .split(" ~ ")
+                .next()
+                .unwrap_or("")
+                .trim();
+            if !is_choice_row && !key_prefix.is_empty() && book_monster_race_names.contains(key_prefix) {
+                return Kind::MonsterAbility;
+            }
+            Kind::RaceTrait
         }
         other => other,
     }
@@ -1451,7 +1536,7 @@ mod refine_kind_monster_ability_tests {
             "DESC:Gain a bonus.",
             "BONUS:VAR|ElfHunterCritConfLongbowBonus|1",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `uw_abilities_race.lst:235` -- the auto-granted "Output" display row a
@@ -1470,7 +1555,7 @@ mod refine_kind_monster_ability_tests {
             "VISIBLE:EXPORT",
             "DESC:Add a bonus on wild empathy checks.|DwarfShifterEmpathyBonus/2",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// Same shape, caught via the `FavClassBonus`-suffixed variable-name
@@ -1488,7 +1573,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality",
             "DESC:Your animal companion has extra hit points.|HalfOrcHunterFavClassBonus",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `ce_abilities_race.lst:1739`, one of Core Essentials' 380 genuine
@@ -1505,7 +1590,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Aberrations breathe, eat, and sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// `uw_abilities_race.lst:25`, one of `ultimate_wilderness`'s 2 genuine
@@ -1521,7 +1606,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Plants breathe and eat, but do not sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// A bare `NaturalAttack`/`Universal Monster Rule` first segment is
@@ -1533,7 +1618,178 @@ mod refine_kind_monster_ability_tests {
     #[test]
     fn natural_attack_first_segment_is_never_gated_by_the_choice_test() {
         let fields = ["Bite 1 (Medium)", "CATEGORY:Special Ability", "TYPE:NaturalAttack"];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::MonsterAbility);
+    }
+
+    /// SD-32 card 11 T2b classifier fix (`decisions.md §16`): `bestiary_3`'s
+    /// `Bandersnatch ~ Poison` shape -- a compound, race-specific `TYPE:`
+    /// first segment (`RacialAbility`, not one of `MONSTER_ABILITY_TYPE_FACETS`)
+    /// that the pre-existing facet check does not match, but whose KEY prefix
+    /// exactly names a `CR:`-bearing `b3_races.lst` entry in the same book.
+    #[test]
+    fn compound_type_segment_row_still_becomes_monster_ability_via_key_prefix() {
+        let fields = [
+            "Poison",
+            "KEY:Bandersnatch ~ Poison",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialAbility.SpecialAttack.Extraordinary",
+            "DESC:Bite -- injury; save Fort DC 22; frequency 1/round for 6 rounds.",
+        ];
+        let mut names = BTreeSet::new();
+        names.insert("Bandersnatch".to_string());
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names), Kind::MonsterAbility);
+    }
+
+    /// The named trap (`t2b-bestiary_3-measurement-receipt.md` §6 item 1):
+    /// every real player race's own `Favored Enemy ~ Humanoid (<Race>)` row
+    /// shares the inner `SpecialAttack` dot-segment with the monster-only
+    /// facet vocabulary. A first-segment-only OR any-segment TYPE widening
+    /// would wrongly reclassify this. The KEY-prefix check must ALSO refuse
+    /// it -- its KEY prefix is the literal string `Favored Enemy`, never a
+    /// race or monster name -- even when the book's own monster-name set
+    /// coincidentally contains the race name the row is FOR.
+    #[test]
+    fn favored_enemy_humanoid_race_row_stays_race_trait_even_when_the_named_race_is_also_a_book_monster() {
+        let fields = [
+            "Favored Enemy (Humanoid (Human))",
+            "KEY:Favored Enemy ~ Humanoid (Human)",
+            "CATEGORY:Special Ability",
+            "TYPE:RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+            "DESC:+2 on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against humans.",
+        ];
+        // Deliberately includes "Human" in the book's own monster-name set --
+        // e.g. a book with a CR:-bearing "Human" NPC statblock entry -- to
+        // prove this check reads the ROW's own KEY prefix ("Favored Enemy"),
+        // never the race name embedded inside the KEY's own suffix.
+        let mut names = BTreeSet::new();
+        names.insert("Human".to_string());
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names), Kind::RaceTrait);
+    }
+
+    /// A row whose KEY prefix happens to equal a book monster/race name is
+    /// STILL left alone when it is otherwise a Favored Class Bonus choice
+    /// row (`is_player_favored_class_choice_row`) -- the existing TYPE-facet
+    /// gate and the new KEY-prefix path share the same guard, not two
+    /// independently-gated code paths that could disagree.
+    #[test]
+    fn favored_class_bonus_choice_row_stays_race_trait_even_with_a_matching_key_prefix() {
+        let fields = [
+            "Longbow",
+            "KEY:Bandersnatch ~ Elf Hunter Critical Confirmation Choice ~ Longbow",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.ElfHunterCritialConfirmationChoice",
+            "DEFINE:ElfHunterCritConfLongbowBonus|0",
+        ];
+        let mut names = BTreeSet::new();
+        names.insert("Bandersnatch".to_string());
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names), Kind::RaceTrait);
+    }
+
+    /// Regression guard for the over-widening this fix must NOT do: a row
+    /// whose KEY prefix names something present ONLY in the book's
+    /// `*_templates.lst` (not `*_races.lst`) must stay `RaceTrait`.
+    /// `advanced_race_guide/arg_templates.lst`'s `Feral` (Orc subrace
+    /// template) row real-world shape: `arg_abilities_race.lst`'s `Feral ~
+    /// Languages` is genuine player-facing content
+    /// (`t2b_refine_kind_key_prefix_stress_test.py off` corpus-wide re-derive:
+    /// 0 hits against any of the 10 known real-race-book directories with
+    /// races.lst-only matching; templates.lst matching alone produces this
+    /// exact false positive). `book_monster_race_names` intentionally never
+    /// contains a templates.lst-only name, so this test passes by
+    /// construction -- kept as an explicit regression guard against a future
+    /// edit widening `book_cr_bearing_race_names` to also read
+    /// `*_templates.lst`.
+    #[test]
+    fn template_only_name_never_causes_reclassification() {
+        let fields = [
+            "Languages",
+            "KEY:Feral ~ Languages",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Orc Racial Trait.SpecialQuality.Racial Language",
+            "DESC:Feral orcs begin play speaking no languages.",
+        ];
+        // "Feral" deliberately absent from this test's name set -- it is a
+        // `*_templates.lst`-only name in the real corpus, and
+        // `book_cr_bearing_race_names` never reads `*_templates.lst`, so no
+        // caller ever passes a set containing it. An empty set here is not a
+        // weaker test; it IS the invariant.
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
+    }
+}
+
+#[cfg(test)]
+mod book_cr_bearing_race_names_tests {
+    use super::*;
+    use std::io::Write;
+
+    /// End-to-end: a temp book directory with one `*_races.lst` carrying a
+    /// mix of `CR:`-bearing (monster) and `CR:`-less (playable) rows, plus a
+    /// nested per-race subdirectory (the `core_essentials` shape) and a
+    /// companion-roster file that must be excluded. Confirms
+    /// `book_cr_bearing_race_names` collects the right set from real file IO,
+    /// not just the in-memory `refine_kind` unit tests above.
+    #[test]
+    fn collects_only_cr_bearing_rows_recursively_and_skips_companion_files() {
+        let dir = std::env::temp_dir().join(format!(
+            "codex-t2b-refine-kind-test-{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(dir.join("races/dwarf")).unwrap();
+        std::fs::write(
+            dir.join("b3_races.lst"),
+            "Bandersnatch\tCR:8\tTYPE:Magical Beast\nDemilich\tCR:20\tTYPE:Undead\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("races/dwarf/dwarf_races.lst"),
+            "Dwarf\tFAVCLASS:Any\tTYPE:Humanoid\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("b3_races_companion.lst"),
+            "Roc\tCR:9\tTYPE:Animal\n",
+        )
+        .unwrap();
+        let mut f = std::fs::File::create(dir.join("b3_notes.txt")).unwrap();
+        writeln!(f, "not a .lst file, ignored regardless of content").unwrap();
+
+        let names = book_cr_bearing_race_names(&dir);
+        assert!(names.contains("Bandersnatch"), "{names:?}");
+        assert!(names.contains("Demilich"), "{names:?}");
+        assert!(!names.contains("Dwarf"), "playable race must not be CR:-bearing: {names:?}");
+        assert!(!names.contains("Roc"), "companion roster file must be excluded: {names:?}");
+        assert_eq!(names.len(), 2, "{names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The real-corpus false positive this fix must never reintroduce
+    /// (`advanced_race_guide/arg_templates.lst`'s `Feral` -> `arg_abilities_race.lst`'s
+    /// genuine `Feral ~ Languages` racial-trait row): a `*_templates.lst`
+    /// name must NEVER appear in `book_cr_bearing_race_names`'s output, even
+    /// when it shares a name with something elsewhere. Proved RED under a
+    /// deliberate over-widening (also reading `*_templates.lst` rows
+    /// unconditionally) during this cycle's development, per
+    /// `t2b-bestiary_3-measurement-receipt.md` §6 item 1's own warning that a
+    /// naive widening reclassifies genuine content -- reverted before commit;
+    /// this test is what caught it.
+    #[test]
+    fn templates_lst_names_never_enter_the_monster_race_name_set() {
+        let dir = std::env::temp_dir().join(format!(
+            "codex-t2b-refine-kind-templates-test-{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("arg_races.lst"), "Aasimar\tFAVCLASS:Any\tTYPE:Outsider\n").unwrap();
+        std::fs::write(dir.join("arg_templates.lst"), "Feral\t\tVISIBLE:NO\tSUBRACE:Feral\n").unwrap();
+
+        let names = book_cr_bearing_race_names(&dir);
+        assert!(!names.contains("Feral"), "{names:?}");
+        assert!(!names.contains("Aasimar"), "playable race, CR:-less: {names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
     }
 }
 
@@ -1920,7 +2176,14 @@ fn is_core_essentials_residual(book: &str) -> bool {
 const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 138;
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
-fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut BookEnumeration) {
+fn enumerate_file(
+    path: &Path,
+    book: &str,
+    kind: Kind,
+    text: &str,
+    book_monster_race_names: &BTreeSet<String>,
+    out: &mut BookEnumeration,
+) {
     // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
     // `SOURCELONG_TO_BOOK`, both `&'static str` tables, never derived from
     // `book`'s own shorter-lived reference -- so it can be stashed in
@@ -2037,7 +2300,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
                 .filter(|t| has_token(&fields, t))
                 .count();
             out.mod_targets.push((
-                refine_kind(kind, &fields),
+                refine_kind(kind, &fields, book_monster_race_names),
                 base.clone(),
                 base,
                 Provenance { file: rel.clone(), line: line_number },
@@ -2119,7 +2382,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             continue;
         }
 
-        let record_kind = refine_kind(kind, &fields);
+        let record_kind = refine_kind(kind, &fields, book_monster_race_names);
         if !has_classifying_token(record_kind, &fields) {
             *out.trap_hits.entry("missing_classifying_token").or_default() += 1;
             continue;
@@ -2191,6 +2454,14 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
     // the output is byte-identical (the idempotence contract).
     files.sort();
 
+    // `decisions.md §16`: computed once per book, from the WHOLE book
+    // directory tree (recursive, same walk as `files` above -- needed for
+    // `core_essentials`'s per-race nesting), before any `_abilities_race.lst`
+    // row is classified, so `refine_kind` can cross-reference a row's KEY
+    // prefix against every `CR:`-bearing `*_races.lst` entry in this book,
+    // not just the ones in the same directory as the abilities file.
+    let book_monster_race_names = book_cr_bearing_race_names(book_dir);
+
     for path in files {
         let basename = path
             .file_name()
@@ -2199,7 +2470,7 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
         match file_kind(&basename) {
             Some(kind) => {
                 if let Ok(text) = std::fs::read_to_string(&path) {
-                    enumerate_file(&path, book, kind, &text, &mut out);
+                    enumerate_file(&path, book, kind, &text, &book_monster_race_names, &mut out);
                 } else {
                     out.files_not_enumerated.insert(basename);
                 }
@@ -9871,26 +10142,29 @@ mod rule_set_mapping_tests {
     #[test]
     fn uncompiled_books_stay_none() {
         // This test needs a book the engine genuinely has not compiled, and it
-        // has now outlived FOUR of them: `ultimate_psionics` moved to
+        // has now outlived FIVE of them: `ultimate_psionics` moved to
         // compiled in SD28-E29 (`epic-29-upsi-complete`), `inner_sea_gods` in
         // SD-29 Epic 5 extend round 9 (`RuleSetId::Isg`), `occult_adventures`
-        // in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell family), and
+        // in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell family),
         // `adventurers_guide` in SD-31 wave-29 (`RuleSetId::AdventurersGuide`,
-        // its spell family, `lane5-book-onboard` lane). The comment this
-        // replaces also stated a reason that was wrong by the time it was
-        // read -- "`inner_sea_gods` ... (SD-30's own book set, out of this
-        // bundle)" -- and `decisions.md §38` had already re-scoped SD-29
-        // corpus-wide.
+        // its spell family, `lane5-book-onboard` lane), and `inner_sea_temples`
+        // (this book's own former subject) in SD-32 Gate 0
+        // (`gate-0-book-onboarding-precondition`, AT-32-G0-003,
+        // `RuleSetId::InnerSeaTemples`) -- caught this cycle, unrelated to
+        // this cycle's own T2b scope (`decisions.md §16`), by re-running the
+        // full test suite before push per `workflow-instruction.md §5`'s
+        // rebase discipline (`scripts/retro.py correction`,
+        // `docs/retro/events/t2b-refine-kind-fix.jsonl`).
         //
-        // `inner_sea_temples` is uncompiled by DERIVATION, not by assumption:
-        // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
-        // returning it, so no `COMPILED_RULE_SETS` member can map to it --
-        // re-checked against the current match arm one by one (33 arms, none
-        // return `"inner_sea_temples"`), and the book genuinely has a real
-        // corpus directory (`OBSERVABLE_BOOK_DIRS` names
-        // `pathfinder/paizo/campaign_setting/inner_sea_temples`), so this is
-        // a real uncompiled book, not a typo'd nonexistent one.
-        assert_eq!(rule_set_for("inner_sea_temples"), None);
+        // `guide_to_the_river_kingdoms` is uncompiled by DERIVATION, not by
+        // assumption: `corpus_dir_for` is exhaustive over `RuleSetId` and
+        // carries no arm returning it, so no `COMPILED_RULE_SETS` member can
+        // map to it (re-checked one arm at a time against the current match
+        // block), and the book genuinely has a real corpus directory in the
+        // pinned oracle (`pathfinder/paizo/campaign_setting/
+        // guide_to_the_river_kingdoms`), so this is a real uncompiled book,
+        // not a typo'd nonexistent one.
+        assert_eq!(rule_set_for("guide_to_the_river_kingdoms"), None);
     }
 }
 
