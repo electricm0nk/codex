@@ -4571,3 +4571,95 @@ the 30 files to `data/corpus/beastiary/ability/` (path only, no content change) 
 alias to `scripts/ingest_ability.py` itself. Re-derived: `ability` `no_record` back to **576**,
 exactly matching `name_pi_skipped`. See the receipt's own "A third defect found post-push" section
 for the full account. Commit: (recorded after push).
+## Cycle: `feat` + `spell` `no_record` closure via existing corpus-cache generators (`decisions.md §20`, card 11)
+
+**The lever, per `decisions.md §17`.** Both `feat` and `spell` already had config-driven mechanisms
+that write a **compiled Rust table** consumed by the engine/UI —
+`feat_gap_tables.rs`/`gen_feat_gap_tables.rs` (19 books, 649 rows, already chained into
+`feats_all::all_feat_tables()`) and per-book `spell_list::SPELL_LIST` tables via `ingest_spells.rs`'s
+config-driven `BOOKS`. Neither mechanism had ever written the `data/corpus/<book>/<kind>/*.json`
+cache `scripts/shape_ledger.py`'s join actually needs — the identical "compiled table, no corpus
+dump" gap `cache_gen::equipment_gap` (SD-31 `SD31-E6-F5-002`) already closed for
+`equipment`/`equipment_modifier`. No new engine content was authored; every closed unit was already
+served to players, just never dumped to the on-disk citation the shape ledger joins on.
+
+**`feat`**: new `cache_gen::feat_gap` module + `gen_cache_feat_gap` binary, mirroring
+`cache_gen::equipment_gap`'s citation-resolution / PI-screening / no-clobber-write discipline
+exactly. Dumps all 649 `feat_gap_tables::feat_gap_rows_for()` rows across 19 books to
+`data/corpus/<book>/feat/*.json`, resolving each row's real citation against the exact `.lst`
+file(s) `gen_feat_gap_tables.rs`'s own `BOOK_INPUTS` already names (mirrored 1:1 as `BOOK_SPECS`,
+with a drift-guard test). Caught and fixed one bug before landing: the first live run against the
+pinned oracle wrote 0 records because `find_citation` joined `book_dir` with an already-corpus-
+root-relative path, doubling the prefix — corrected to search from `corpus_root` directly.
+
+**`spell`**: widened `cache_gen::spell_lane_dump::book_specs()` 6 → 11 books — added
+`adventurers_guide`, `inner_sea_faiths`, `inner_sea_magic`, `inner_sea_temples`, `horror_adventures`,
+each of which already had a compiled `SPELL_LIST` table but zero corpus JSON cache.
+
+**Result, re-derived against pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`**:
+
+```bash
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/l.json
+python3 -c "
+import json,collections
+r=json.load(open('/tmp/l.json'))['rows']
+nr=[x for x in r if x['join_status']=='no_record']
+print(collections.Counter(x.get('kind','?') for x in nr).most_common())"
+```
+
+| Kind | Before | After | Delta |
+|---|---:|---:|---:|
+| `feat` | 1,202 | 901 | **-301** |
+| `spell` | 860 | 686 | **-174** |
+| Total `no_record` (all 18 kinds) | 20,889 | 20,414 | **-475** |
+
+`matched` unchanged (4,802 → 4,802) — neither generator writes `data.raw_tokens` (a separate,
+pre-existing enrichment pass); every closed unit moved `no_record` → `no_formula_tokens` (real
+record now exists; these rows carry description/prerequisite/school/level data, not formula
+tokens) — a legitimate terminal state per `decisions.md §20`'s own three-way split, not a
+fabricated `matched`.
+
+**Tests**: `cargo test --locked --lib rules_core::cache_gen::feat_gap` 10/10 (including a live
+generation test against the pinned oracle). `cargo test --locked --lib rules_core::cache_gen::
+spell_lane_dump` 9/9 (now covering 11 books, zero unresolved citations). `cargo test --locked --lib
+rules_core::cache_gen::` (all sibling modules, checking for collateral damage from the `mod.rs`
+edit) 117/117, 0 failed.
+
+**Dual audit** (own diff): `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+**What is NOT closed, by exact shape (`decisions.md §16`/`§17a` — not rounded into "done")**:
+- `feat` residual 901: `mythic_adventures` 448→353 — the 353 is likely `.MOD`/`race_trait`
+  continuation noise per `gen_feat_gap_tables.rs`'s own doc comment (208 `.MOD` rows target
+  `race_trait`-kind base records), **not independently re-verified this cycle**; several books
+  (`core_rulebook` 67, `adventurers_guide` 81, `ultimate_psionics` 92, `ultimate_campaign` 23)
+  barely moved because `feat_gap_tables.rs` carries few/zero rows for them — their `no_record` feat
+  population was never captured by ANY table, a new-content-ingestion shape, not this cycle's
+  compiled-but-uncached lever.
+- `spell` residual 686: **363 `mod_only`** (`occult_adventures` 328, `ultimate_magic` 19,
+  `advanced_players_guide` 15, `book_of_the_damned_volume_1` 1) — class-access-widening `.MOD` rows
+  on an existing spell, zero formula content, needing a new MOD-row cache mechanism, not attempted
+  this cycle. **~322 `declared`** — genuine new spell content never captured by any compiled table
+  (`bestiary` 108, `bestiary_4` 56, `inner_sea_races` 29, and 13 more books); `bestiary`/`bestiary_4`
+  were reported by a prior cycle as "monster-intrinsic, no dedicated `.lst`" — **not re-verified
+  this cycle**.
+
+**Corollary incident logged** (`scripts/retro.py incident`, recurrence-key `shared-target-dir`,
+`docs/retro/events/t9-onboarding.jsonl`): this wave's dispatch env block gives every sibling lane
+the identical literal `CARGO_TARGET_DIR`; at least 4 concurrent worktrees were observed building
+against it simultaneously, corrupting cargo's fingerprint cache and producing a spurious
+"unresolved import" compile error. Worked around with a worktree-suffixed `CARGO_TARGET_DIR`.
+`AGENTS.md`'s existing rule already covers this; the dispatch template's literal value violates it.
+
+- **Status:** complete (this cycle's own bounded scope — `feat`/`spell` `no_record` are not zero;
+  residuals named above by exact shape and count, not silently absorbed. Card 11 stays
+  `in-progress`: two of the 18 `decisions.md §20` kinds, not the whole bundle).
+- **Kanban:** row 11 prepended (`feat-spell-no-record-closure` entry); rows 11, 15 left
+  `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-feat-spell-no-record-closure_cycle-1_cycle_receipt.md`.
+- **What remains:** a MOD-row cache mechanism for spell class-access-widening rows (363 units);
+  widen `gen_feat_gap_tables.rs`'s own `already_held` scan / row generation for books whose feat
+  `no_record` population was never captured by any table; re-verify the `mythic_adventures` 353
+  and `bestiary`/`bestiary_4` "monster-intrinsic" claims per `§17a` rather than trust either this
+  receipt's inference or an earlier brief's figures; 16 other `decisions.md §20` kinds remain at
+  their own `no_record` figures, untouched by this cycle.
+- Commit: 1410424cf.
