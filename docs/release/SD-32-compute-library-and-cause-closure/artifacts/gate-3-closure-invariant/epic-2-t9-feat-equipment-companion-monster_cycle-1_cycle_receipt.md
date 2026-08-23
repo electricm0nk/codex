@@ -19,10 +19,10 @@
 - **Wired-integration audit result:** `OK_NO_TOKENS` (same scope — 0 hits)
 - **Acceptance criterion:** Transcribe `feat`/`equipment`/`companion`/`monster`'s PI-cleared, `clear`-disposition units across T9's 20 fully-resolved books via the existing generic gap-lane mechanisms (`decisions.md §17`); stop and report any suspected-PI record by name (`§15`); fixture-check against the pinned oracle; prove reachability; prove RED→GREEN; sweep pinned counts; report Gate 3's new `no_record` figure without touching budget constants; close `companion`/`monster` outright if genuinely tiny, else name precisely what blocks them.
 - **Corpus SHA:** `PCGEN_ORACLE_SHA 7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`; bootstrapped from empty this cycle)
-- **Status:** complete (partial — `feat`/`equipment` real work landed and closed to their real population; `companion` closed at zero net new records, both its units correctly refused by the existing mechanism's own tested contract; `monster` genuinely blocked, named precisely below — row 11 stays `in-progress` per its own multi-shape acceptance bar)
+- **Status:** complete (partial — `feat`/`equipment` real work landed and closed to their real population; `companion` and `monster` **both** closed at zero net new records, every unit in both correctly refused by an existing mechanism's own tested contract (see §7, corrected mid-cycle after a sibling lane's `MonsterAbilityFacet` widening landed on rebase) — row 11 stays `in-progress` per its own multi-shape acceptance bar)
 - **Notes:** see full body below.
-- **Discovery forwards:** none filed — the `monster` blocker and the `feat` misclassification finding are named explicitly below and logged to `docs/retro/events/t9-onboarding.jsonl` (2 corrections + 1 deferral), not deferred silently.
-- **Next-cycle plan:** `monster` (~7 clear units: bestiary 4, bestiary_2 2, occult_adventures 1) needs the same `MonsterAbilityFacet` widening the prior `t9-monster-ability-ingest` cycle already named for its own 876-unit residual (`decisions.md §16` caution against a naive widening — corpus-wide blast radius, needs adversarial verification). Once that lands, re-run `transcribe_monster_tables.py bestiary`/`bestiary_2` and add an `occult_adventures` `BOOKS` entry (currently absent). `T2b`-shaped misclassification (`horror_adventures`'s 17 and `mythic_adventures`'s 353 "not-ingested feat" units are 100% `.MOD`/`VISIBLE:EXPORT` non-feat noise, per §16) is a candidate for the same `refine_kind` fix `decisions.md §16` already scoped for T2b — not attempted here, out of this cycle's granted scope.
+- **Discovery forwards:** none filed — the `feat` misclassification finding is named explicitly below and logged to `docs/retro/events/t9-onboarding.jsonl` (3 corrections + 1 deferral, one of the corrections superseding this cycle's own initial `monster` deferral after a sibling lane's rebase-discovered widening resolved it — see §7), not deferred silently.
+- **Next-cycle plan:** `feat`/`equipment`/`companion`/`monster` are all closed for T9's fully-resolved-20-book population — the only kinds' work products remaining for card 11 are the 8 other measured blocker shapes (T2a/T2b/T4/T12/T5/T1/T3) already tracked elsewhere on this row. `T2b`-shaped misclassification (`horror_adventures`'s 17 and `mythic_adventures`'s 353 "not-ingested feat" units are 100% `.MOD`/`VISIBLE:EXPORT` non-feat noise, per §16) is a candidate for the same `refine_kind` fix `decisions.md §16` already scoped for T2b — not attempted here, out of this cycle's granted scope.
 
 ---
 
@@ -122,11 +122,11 @@ python3 -m unittest scripts.tests.test_classify_companion_rows_book_dirs -v
 # 3 passed, 0 failed
 ```
 
-## 7. `monster` (~7) — genuinely blocked, named precisely, not forced
+## 7. `monster` (~7) — first found blocked, then corrected to closed at zero real gap after rebase
 
 7 `clear` monster units: `bestiary` 4 (`Hydra (Cryohydra)`, `Hydra (Pyrohydra)`, `Iron Cobra (Adamantine Cobra)`, `Iron Cobra (Mithral Cobra)`), `bestiary_2` 2 (`Gug Savant`, `Magma Ooze (Poisonous)`), `occult_adventures` 1 (`Kami (Shikigami)`).
 
-Ran the existing generic transcriber (`decisions.md §17`):
+**First pass (before rebase)**: ran the existing generic transcriber (`decisions.md §17`):
 
 ```bash
 python3 scripts/transcribe_monster_tables.py bestiary
@@ -136,11 +136,28 @@ python3 scripts/transcribe_monster_tables.py bestiary_2
 # row carries no `monster_ability` facet in TYPE:'Weakness.Extraordinary' -- ...
 ```
 
-**Both refuse, correctly, on the exact same `MonsterAbilityFacet` gap the prior `epic-2-t9-monster-ability-ingest_cycle-1` receipt already named for its own 876-unit `monster_ability` residual** (`bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/`inner_sea_gods`). `transcribe_monster_tables.py` transcribes `monster` and `monster_ability` from the same per-book pass and hard-stops on the FIRST unmodelled facet it meets, regardless of which kind's row triggered it — so `monster`'s own 6 units in `bestiary`/`bestiary_2` cannot be reached without the same widening the prior cycle already deferred as "real, separate, corpus-wide-blast-radius engineering... not attempted this cycle" (`decisions.md §16`'s own caution against a naive widening being unsafe without adversarial checking).
+Both hard-stopped on the same `MonsterAbilityFacet` gap the prior `epic-2-t9-monster-ability-ingest_cycle-1` receipt already named for its own 876-unit `monster_ability` residual. Committed the receipt and kanban entry with `monster` filed as a deferral (`docs/retro/events/t9-onboarding.jsonl`, `1787481797424-t9-onboarding-985a56`) and pushed.
 
-`occult_adventures`'s single unit (`Kami (Shikigami)`) has a second, independent blocker: `occult_adventures` has **no `BOOKS` entry at all** in `scripts/transcribe_monster_tables.py` — not attempted, not even reachable to test against the facet gap.
+**On the `git fetch`/`git rebase origin/tranche/12` this same cycle's §5 push protocol requires (§6 step below), a sibling lane's commit (`43c3e4bde`, "feat(sd32): widen MonsterAbilityFacet for 5 blocked books") had landed** — the exact widening this cycle's own deferral named as the precondition. Re-ran both books against the post-rebase tree rather than trusting the deferral as still current:
 
-**Not forced.** This is `AGENTS.md` Blocker Discipline disposition 2 (raise the hand): the blocker is precisely named (`MonsterAbilityFacet` widening), the precondition is precisely named, and it is the same blocker a sibling cycle already deferred for a much larger population — attacking it as a same-cycle add-on here would repeat the exact "same-cycle add-on to a data-regen cycle" the prior receipt explicitly declined. Logged as a deferral (`docs/retro/events/t9-onboarding.jsonl`, `1787481797424-t9-onboarding-985a56`).
+```bash
+python3 scripts/transcribe_monster_tables.py bestiary
+# bestiary: 4 `.MOD`-only monster row(s) NOT transcribed (an overlay row states a delta
+# on a record defined elsewhere): b1_races.lst:239, b1_races.lst:241, b1_races.lst:251, b1_races.lst:257
+python3 scripts/transcribe_monster_tables.py bestiary_2
+# bestiary_2: 2 `.COPY=` derived monster row(s) NOT transcribed (a copy row states a
+# delta on another record, not a stat block): b2_races.lst:454, b2_races.lst:594
+```
+
+**The facet gap is gone (the widening resolved it) — and the mechanism now reveals all 7 units are non-gaps, not facet-blocked at all:**
+
+- **`bestiary`'s 4** (the exact line numbers `239`/`241`/`251`/`257`, matching the 4 target units exactly): `.MOD`-only overlay rows — color/size variants (`Cryohydra`, `Pyrohydra`, `Adamantine Cobra`, `Mithral Cobra`) stating a delta on a base monster (`Hydra`, `Iron Cobra`) defined elsewhere in the same file, not standalone stat blocks. The mechanism's own tested contract correctly refuses them, the identical shape `companion`'s `bestiary_4` units already established in §5.
+- **`bestiary_2`'s 2** (line numbers `454`/`594`, matching `Gug Savant`/`Magma Ooze (Poisonous)` exactly): `.COPY=` derived rows — same non-unit shape, one level of indirection different.
+- **`occult_adventures`'s 1** (`Kami (Shikigami)`): still has no `BOOKS` entry in `transcribe_monster_tables.py`, but its own source row explains why one was never worth adding — `_occult_adventures.pcc:75` loads `oa_races_b3.lst` (the file this unit lives in) behind `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` — a **negated** gate that fires only when Bestiary 3 is **excluded**. Bestiary 3 is already fully ingested in this repo, so this fallback file never activates in any campaign this repo represents. `scripts/transcribe_monster_tables.py`'s own comment (line 209, pre-existing) already cites *"decisions.md's negated-gate finding for occult_adventures"* as an established exclusion from an earlier bundle — not a new finding, just not one this kind's own T9 audit had connected before.
+
+Confirmed live: `git status --porcelain` shows **zero diff** for either `bestiary`/`monster_data.rs` regeneration — both were already fully up to date (the sibling's own widening cycle already regenerated them). **`monster` is closed at zero real gap, the identical shape `companion` (§5) already established.** No `occult_adventures` `BOOKS` entry is needed — adding one would only reach a file that never activates.
+
+**Correction logged** (`docs/retro/events/t9-onboarding.jsonl`, `1787482391179-t9-onboarding-4e1c89`), superseding this cycle's own earlier deferral rather than silently editing the receipt's history away. `AGENTS.md` Blocker Discipline disposition 2 (raise the hand, then re-check when the named precondition changes) applied correctly both times: the deferral was the right call with the information available at the time, and re-checking it after the rebase — rather than trusting a filed deferral as permanent — is what caught that it had already been cleared.
 
 ## 8. RED → GREEN, concretely (per-fix, not just at the end)
 
@@ -208,10 +225,10 @@ cargo run   --locked --release --bin pi_sweep_rules_tables                      
 scripts/verify.sh --only shape-coverage-standing-gate
 ```
 ```
-PASS  shape-coverage-standing-gate  (population=36028 unclassified=0 no_record=21349 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+PASS  shape-coverage-standing-gate  (population=36028 unclassified=0 no_record=20889 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
 ```
 
-Same figure as the prior `t9-monster-ability-ingest` cycle reported (`21349`) — reads the **committed** `docs/work-inventory.json`, which this cycle did NOT regenerate, for the same reason both that cycle and the standing near-miss warning give: `v06_work_inventory` fail-closed-refuses without `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set, and forcing past that on a prompt's authority alone is exactly the shortcut this program's own near-miss incident forbids. This cycle's 158 new records are not reflected in the checked-in inventory until a future regen cycle runs. **Budget constants in `shape_coverage_standing_gate.py` left untouched**, as instructed.
+Re-run after this cycle's rebase onto the sibling `t9-monster-ability-facet-widening` commit, whose own receipt reports the same `20889` figure — that cycle regenerated `docs/work-inventory.json` (not this cycle). This cycle's own 158 new feat/equipment gap-table records were NOT regenerated into the committed inventory, for the same reason both the prior `t9-monster-ability-ingest` cycle and the standing near-miss warning give: `v06_work_inventory` fail-closed-refuses without `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set, and forcing past that on a prompt's authority alone is exactly the shortcut this program's own near-miss incident forbids. **Budget constants in `shape_coverage_standing_gate.py` left untouched**, as instructed.
 
 ## 13. Disk
 
