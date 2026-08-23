@@ -3932,6 +3932,74 @@ reflected in the checked-in inventory until a future regen. Budget constants lef
   generic mechanism (this cycle's own central finding) is the first question to check before
   assuming one needs to be built.
 
+## T9 `feat`/`equipment`/`companion`/`monster` via existing generic gap lanes (card 11) — 2026-08-23
+
+Re-derived T9's fully-resolved-20-book population fresh by `(book, kind)` (`decisions.md §17a`):
+feat 424 clear / equipment 48 clear / companion 4 clear / monster 7 clear.
+
+**`feat` correction, real work landed**: direct read found `horror_adventures`'s 17 and
+`mythic_adventures`'s 353 "clear feat" units are NOT feat content — 145 `VISIBLE:EXPORT`
+display-plumbing twins of already-shipped feats + 208+17 `CATEGORY=Special Ability|<X>.MOD`
+continuation rows misclassified by filename, the identical `decisions.md §16` T2b defect shape
+found in a different book. **Real transcribable feat population: 54** (`inner_sea_combat` 20,
+`inner_sea_faiths` 1, `inner_sea_gods` 26, `inner_sea_magic` 7), landed via `gen_feat_gap_tables.rs`'s
+existing config — 2 new `BookInput`s (`RuleSetId::Isc`/`Isg`, already compiled), plus the missing
+`feats_all::hand_authored_feat_tables()` empty-slice join (same precedent `Ha`/`Isr`/etc. already
+establish). 540 → 649 gap rows.
+
+**`equipment`**: `gen_equipment_gap_tables.rs`'s existing config widened by 2 books
+(`inner_sea_temples` 43, `inner_sea_magic` 6). 1671 → 1720 gap rows; `v06_work_inventory.rs::
+equipment_book_slug_for` got 2 new additive match arms. `bestiary_2`/`bestiary_3`'s 1-unit-each
+"clear equipment" confirmed a pre-existing, already-fixed PFS-legality-overlay defect, not new work.
+
+**`companion`/`monster` both closed at zero net new records** — every unit in both correctly refused
+by an existing mechanism's own tested contract (`.COPY=`/`.MOD` deltas on records defined elsewhere,
+or `PRECAMPAIGN`-gated behind un-ingested/negated content). `monster` was first found blocked on the
+identical `MonsterAbilityFacet` gap the `t9-monster-ability-ingest` cycle already named, then
+corrected to closed after this cycle's own `git rebase origin/tranche/12` picked up a sibling
+lane's widening commit (`43c3e4bde`) mid-cycle — re-checked rather than trusted, and found already
+resolved. Correction logged. Found and fixed a real bug on the way: `scripts/classify_companion_rows.py
+::book_dirs` read `docs/work-inventory.json`'s `corpus_root` LITERALLY (a stale worktree-absolute
+path), crashing every fresh worktree unconditionally — fixed, RED→GREEN proved.
+
+Swept pinned counts across 18 files (feat catalog 2118→2227, equipment catalog 7817→7866), every fix
+preceded by a genuine RED test failure with the real observed number, never guessed.
+
+```
+$ cargo test --locked --lib feats_all                                    # 14 passed, 0 failed
+$ cargo test --locked --lib feat                                          # 642 passed, 0 failed, 13 ignored
+$ cargo test --locked --lib equipment                                     # 144 passed, 0 failed
+$ (cd apps/desktop/src-tauri && cargo test --locked --bins feat_catalog::)      # 18 passed
+$ (cd apps/desktop/src-tauri && cargo test --locked --bins equipment_catalog::) # 17 passed
+$ (cd apps/desktop/src-tauri && cargo test --locked --bins reach_gate)          # 31 passed
+$ python3 -m unittest scripts.tests.test_classify_companion_rows_book_dirs -v  # 3 passed
+$ cargo run --locked --release --bin corpus_literal_sweep
+corpus-literal-sweep: 26538 records examined, 0 findings — CLEAN
+$ cargo run --locked --release --bin pi_sweep_rules_tables
+pi-sweep: 10 hits, 10 baseline rows — CLEAN, 0 new
+```
+
+**§15**: `gen_feat_gap_tables`'s own PI screen dropped 7 `NAMEISPI:YES` records and redacted
+deity-name prerequisites in `inner_sea_gods` per its own existing contract, matching the T9 PI
+sign-off disposition exactly. `gen_equipment_gap_tables`'s screen reported 0 hits for both new
+books. No record reached this cycle that this cycle believed carried PI despite its `clear`
+disposition.
+
+**Gate 3's `no_record`, re-derived, NOT repinned** (committed inventory; the sibling's own
+`t9-monster-ability-facet-widening` cycle regenerated it, not this cycle):
+`scripts/verify.sh --only shape-coverage-standing-gate` → PASS (population=36028 unclassified=0
+**no_record=20889**). Budget constants left untouched.
+
+- **Status:** complete (`feat`/`equipment` real work landed to their real population; `companion`/
+  `monster` both closed at zero net new records).
+- **Kanban:** row 11 prepended (this T9 entry, merged with the sibling `MonsterAbilityFacet`
+  widening entry during rebase); rows 11, 15 left `in-progress`.
+- Receipts: `artifacts/gate-3-closure-invariant/epic-2-t9-feat-equipment-companion-monster_cycle-1_cycle_receipt.md`.
+- **What remains:** the `T2b`-shaped misclassification found in `horror_adventures`/`mythic_adventures`
+  (100% `.MOD`/`VISIBLE:EXPORT` non-feat noise) is a candidate for the same `refine_kind` fix
+  `decisions.md §16` already scoped for T2b — not attempted here, out of this cycle's granted scope.
+  Card 11's remaining measured blocker shapes (T2a/T2b/T4/T12/T5/T1/T3) are unaffected by this cycle.
+
 ## Cycle epic-2-t9-monster-ability-facet-widening (2026-08-23) — Card 11, T9 — `MonsterAbilityFacet` widened, 442 new records across the 5 previously-blocked books
 
 Picked up the prior cycle's own "next-cycle plan": widen `MonsterAbilityFacet` for the 876
