@@ -226,15 +226,19 @@ concat-only scan (§1's instrument)                        71 -> 0
 corpus_literal_sweep --json-out                           9 findings across 8 records (7 pre-existing shape + 2 new instances of the SAME named recurrence-key, both this cycle's redacted tokens diverging from source bytes by construction)
 derived_evaluator_fixture_check --json-out                1836 cleared / 2577 rows, 0 failed
 v06_work_inventory (both report env vars set, no --allow-stamp-loss)   refused (would drop 6506/8247 stamps); NOT forced; docs/work-inventory.json byte-unchanged (git status --porcelain confirms)
-python3 scripts/shape_ledger.py --inventory docs/work-inventory.json     no_record total 326 (unchanged by this cycle -- class_feature carries 0 no_record before and after; this cycle's defect is PI-redaction correctness on already-ingested records, not an ingest gap)
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json     no_record total 326 at this cycle's own commit, before this cycle's own §5 push-rebase picked up 4 concurrent sibling commits (monster_ability round 5, equipment_modifier find_citation repair, a corpus_literal_sweep fix, and a work-inventory regen) -- re-run AFTER the rebase: 301
 ```
 
-`no_record` per kind, unaffected by this cycle (re-confirmed, not assumed):
-`monster_ability 121 · equipment 113 · spell 57 · equipment_modifier 33 ·
-companion 2` = 326, matching `decisions.md §20`'s own headline figure exactly
-— this cycle's diff touches none of those five kinds' directories (`git
-status --porcelain` scoped to `data/corpus/*/{monster_ability,equipment,
-equipment_modifier,spell,companion}/**` is empty throughout).
+`class_feature` carries 0 `no_record` before and after this cycle, both
+readings — this cycle's defect is PI-redaction correctness on already-
+ingested `class_feature` records, not an ingest gap, and this cycle's diff
+touches no OTHER kind's `data/corpus` directory (`git status --porcelain`
+scoped to `data/corpus/*/{monster_ability,equipment,equipment_modifier,
+spell,companion}/**` is empty throughout, both before and after the
+rebase). The 326->301 movement is 4 sibling lanes' concurrent work absorbed
+via `git fetch && git rebase origin/tranche/12` per `workflow-instruction.md
+§5`, not this cycle's own — named here rather than silently claimed
+(`decisions.md §12c`).
 
 ## 6. What remains (explicit)
 
