@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Affinity for the Elements",
+    "name": "Affinity for the Elements (any elemental lord)",
+    "description": "[Not implemented]Add 1 to the DC of saving throws made to resist the effects of spells cast by you that have either the air, earth, fire, or water descriptor, depending on which elemental lord you worship. You must choose a single elemental lord when you take this trait; once chosen, it cannot be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Affinity for the Elements"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.ReligionTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Affinity for the Elements],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.ReligionTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not implemented]Add 1 to the DC of saving throws made to resist the effects of spells cast by you that have either the air, earth, fire, or water descriptor, depending on which elemental lord you worship. You must choose a single elemental lord when you take this trait; once chosen, it cannot be changed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 142,
+    "record_key": "Trait ~ Affinity for the Elements"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

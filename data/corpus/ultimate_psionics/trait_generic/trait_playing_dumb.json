@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Playing Dumb",
+    "name": "Playing Dumb",
+    "description": "+2 on Bluff to appear less than you are.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Playing Dumb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.BlueTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Playing Dumb],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Blue,RACESUBTYPE=Blue],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Blue]"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 on Bluff to appear less than you are."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 172,
+    "record_key": "Trait ~ Playing Dumb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

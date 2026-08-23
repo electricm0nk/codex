@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Rapscallion",
+    "name": "Rapscallion",
+    "description": "You've spent your entire life thumbing your nose at the establishment and take pride in your run ins with the law. Somehow, despite all the mischievous behavior in your life, you've never been caught. You gain a +1 trait bonus on Escape Artist checks and a +1 trait bonus on Initiative checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Rapscallion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Gnome Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Rapscallion],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREFACT:1,TEMPLATES,IsGnome=true],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Gnome]"
+      },
+      {
+        "key": "DESC",
+        "value": "You've spent your entire life thumbing your nose at the establishment and take pride in your run ins with the law. Somehow, despite all the mischievous behavior in your life, you've never been caught. You gain a +1 trait bonus on Escape Artist checks and a +1 trait bonus on Initiative checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|1|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.331"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 191,
+    "record_key": "Trait ~ Rapscallion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

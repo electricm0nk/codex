@@ -311,23 +311,73 @@ BOOK_CORPUS_DIR_ALIASES: dict[str, str] = {
     "bestiary": "beastiary",
 }
 
+_GENERIC_KIND_DIR_SUFFIX = "_generic"
+
+
+def normalize_kind_dir(raw_kind: str) -> str:
+    """Normalizes a corpus directory's own kind segment for join purposes.
+    `scripts/ingest_generic_kind.py` (`race`/`monster`/`class`, and now
+    `trait`) and `scripts/ingest_race_trait_generic.py` (`race_trait`) both
+    write `<kind>_generic/` as a deliberate SIBLING to `<kind>/` -- never
+    inside it, because existing curated consumers glob `<kind>/*.json`
+    directly and would misinterpret the flatter generic-pass shape (both
+    scripts' own docstrings state this). Their whole design leaned on the
+    OLD kind-BLIND join counting a `<kind>_generic` record as a real answer
+    for a `<kind>` census unit ("shape_ledger.py::build_corpus_index walks
+    ... with no subdirectory-name filter, so a sibling directory is exactly
+    as measurable for Gate-1 purposes" -- both scripts' own words). Making
+    the join kind-AWARE (this fix) must preserve that intentional design,
+    not silently break it -- so a trailing `_generic` suffix is stripped
+    before the kind is used as (part of) an index/lookup key. This is the
+    ONLY normalization applied: a genuinely different kind's directory
+    (`ability` for a `trait` unit, `equipment` for an `equipment_modifier`
+    unit, `race_trait_generic` for a `class_feature` unit) is never treated
+    as equivalent -- those are exactly the real collisions this fix closes
+    (see build_corpus_index's docstring for the corpus-wide re-derivation)."""
+    if raw_kind.endswith(_GENERIC_KIND_DIR_SUFFIX):
+        return raw_kind[: -len(_GENERIC_KIND_DIR_SUFFIX)]
+    return raw_kind
+
 
 def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
-    """Walks `data/corpus/<book>/**/*.json` (excluding LICENSE.json) and
-    indexes every record's raw_tokens by (book, source_basename,
+    """Walks `data/corpus/<book>/<kind>/*.json` (excluding LICENSE.json) and
+    indexes every record's raw_tokens by (book, kind, source_basename,
     source_line). `books`, if given, restricts the walk to those book
     directories (an optimisation; omit to index the whole corpus). A
     book in `BOOK_CORPUS_DIR_ALIASES` walks its aliased directory but is
     still indexed under its own (inventory-spelled) book name, so the
     join key `classify_unit` builds from a unit's own `book` field still
-    matches.
+    matches. `kind` is the directory one level under the book directory
+    the record physically lives in -- the exact same convention
+    `build_corpus_key_index` already uses for its own fallback join.
 
-    Returns {(book, basename, line): [ {"key":..., "value":...}, ... ]}.
-    A (book, basename, line) with no DEFINE/BONUS tokens is still present
-    in the index with an empty list, distinguishing "record found, no
-    formula tokens" from "record not found" for the join_status field.
-    """
-    index: dict[tuple[str, str, int], list[dict]] = {}
+    Returns {(book, kind, basename, line): [ {"key":..., "value":...}, ... ]}.
+    A (book, kind, basename, line) with no DEFINE/BONUS tokens is still
+    present in the index with an empty list, distinguishing "record found,
+    no formula tokens" from "record not found" for the join_status field.
+
+    KIND-AWARE BY CONSTRUCTION (`decisions.md §25` discovery-forward,
+    `epic-6-kind-trait_cycle-2_cycle_receipt.md` §4): before this, the key
+    omitted `kind`, so two different kinds' records that happened to cite
+    the identical `(book, source_file, source_line)` LST coordinate --
+    e.g. a pre-`Kind::Trait` generic-ingest pass writing a `kind: ability`
+    record at the same coordinate a `kind: trait` census unit cites --
+    collided in this dict (last-glob-order write silently won), and a
+    unit's join could be answered by the WRONG kind's record.
+    `normalize_kind_dir` (see its own docstring) means a `<kind>_generic`
+    sibling directory (the deliberate design `ingest_generic_kind.py`/
+    `ingest_race_trait_generic.py` already rely on) still counts as a real
+    answer for its base kind -- so `race_trait`/`race_trait_generic`,
+    `feat`/`feat_generic`, `race`/`race_generic`, `monster`/`monster_
+    generic`, `class`/`class_generic` are NOT collisions this fix reports.
+    Re-derived corpus-wide, EXCLUDING those intentional pairs (this
+    cycle's own receipt): **1,511** not-done units across 3 kind-pairs
+    currently join to a genuinely different kind's record under the old
+    key shape -- `equipment_modifier`->`equipment` 999, `trait`->`ability`
+    487, `class_feature`->`race_trait` (via its `race_trait_generic`
+    sibling) 25 -- command: `python3 <repo-scratch>/blast_radius2.py`
+    (script logic inlined in the cycle receipt this fix cites)."""
+    index: dict[tuple[str, str, str, int], list[dict]] = {}
     if books is not None:
         search_roots = []
         for b in sorted(books):
@@ -364,6 +414,15 @@ def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
             if not src_path or src_line is None:
                 continue
             basename = os.path.basename(src_path)
+            # kind = the directory one level under the book directory this
+            # record physically lives in -- same derivation
+            # build_corpus_key_index already uses, so both indexes agree on
+            # what "kind" means for the same record.
+            rel = os.path.relpath(path, root)
+            parts = rel.split(os.sep)
+            if len(parts) < 2:
+                continue
+            kind = normalize_kind_dir(parts[0])
             raw_tokens = (rec.get("data") or {}).get("raw_tokens") or []
             formula_tokens = [
                 t
@@ -372,7 +431,7 @@ def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
                 and isinstance(t.get("key"), str)
                 and (t["key"] == "DEFINE" or t["key"].startswith("BONUS"))
             ]
-            index[(book, basename, src_line)] = formula_tokens
+            index[(book, kind, basename, src_line)] = formula_tokens
     return index
 
 
@@ -441,12 +500,15 @@ def build_corpus_key_index(corpus_root: str, books: set[str] | None = None) -> d
             # book_of_harms.json` -> kind "equipment") -- never guessed from
             # the inventory unit's own `kind` field, so a book-kind
             # directory the corpus does not actually carry can never mint a
-            # phantom index entry.
+            # phantom index entry. `normalize_kind_dir` strips a `_generic`
+            # sibling suffix (see its own docstring) so this fallback index
+            # honors the same intentional `<kind>_generic` design the
+            # primary `build_corpus_index` join does.
             rel = os.path.relpath(path, root)
             parts = rel.split(os.sep)
             if len(parts) < 2:
                 continue
-            kind = parts[0]
+            kind = normalize_kind_dir(parts[0])
             raw_tokens = data.get("raw_tokens") or []
             formula_tokens = [
                 t
@@ -509,9 +571,15 @@ def classify_unit(unit: dict, corpus_index: dict, key_index: dict | None = None)
     `key_index` (or passing `None`) keeps every existing caller's behavior
     byte-for-byte unchanged."""
     book = unit.get("book")
+    kind = unit.get("kind")
     basename = unit.get("source_file")
     line = unit.get("source_line")
-    key = (book, basename, line) if (book and basename and line is not None) else None
+    # KIND-AWARE: the key includes the unit's own `kind` so a different
+    # kind's record sitting at the identical (book, source_file,
+    # source_line) LST coordinate can never answer this unit's join (see
+    # build_corpus_index's docstring for the real-world collision this
+    # closes).
+    key = (book, kind, basename, line) if (book and kind and basename and line is not None) else None
     formula_tokens = corpus_index.get(key) if key is not None else None
 
     if formula_tokens is None and key_index:

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Greater Link",
+    "name": "Greater Link",
+    "description": "The link between you and your eidolon is stronger than most. Your eidolon's current and maximum hit point totals are not reduced by 50%% until you are separated by 110 feet or more. Your eidolon's current and maximum hit point totals are not reduced by 75%% until you are separated by 1,100 feet or more. All other aspects of your life link class feature are unaffected.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Greater Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Greater Link],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "The link between you and your eidolon is stronger than most. Your eidolon's current and maximum hit point totals are not reduced by 50%% until you are separated by 110 feet or more. Your eidolon's current and maximum hit point totals are not reduced by 75%% until you are separated by 1,100 feet or more. All other aspects of your life link class feature are unaffected."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 138,
+    "record_key": "Trait ~ Greater Link"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

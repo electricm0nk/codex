@@ -155,7 +155,7 @@ class BuildCorpusIndexTest(unittest.TestCase):
                 json.dump({"data": {"raw_tokens": [{"key": "BONUS", "value": "SHOULD|NOT|APPEAR"}]}}, fh)
 
             index = SL.build_corpus_index(tmp, books={"test_book"})
-            key = ("test_book", "test_spells.lst", 42)
+            key = ("test_book", "spell", "test_spells.lst", 42)
             self.assertIn(key, index)
             toks = index[key]
             self.assertEqual(len(toks), 2)
@@ -185,7 +185,7 @@ class BuildCorpusIndexTest(unittest.TestCase):
                 json.dump(record, fh)
 
             index = SL.build_corpus_index(tmp, books={"bestiary"})
-            key = ("bestiary", "ce_abilities_race.lst", 1280)
+            key = ("bestiary", "monster_ability", "ce_abilities_race.lst", 1280)
             self.assertIn(key, index)
             self.assertEqual(len(index[key]), 1)
 
@@ -227,10 +227,79 @@ class BuildCorpusIndexTest(unittest.TestCase):
                 )
 
             index = SL.build_corpus_index(tmp, books={"bestiary"})
-            legacy_key = ("bestiary", "ce_abilities_race.lst", 1280)
-            real_key = ("bestiary", "ce_spells.lst", 62)
+            legacy_key = ("bestiary", "monster_ability", "ce_abilities_race.lst", 1280)
+            real_key = ("bestiary", "spell", "ce_spells.lst", 62)
             self.assertIn(legacy_key, index)
             self.assertIn(real_key, index)
+
+    def test_join_is_kind_aware_two_kinds_at_the_identical_coordinate_index_separately(self):
+        """The real defect this fix closes (`epic-6-kind-trait_cycle-2_cycle_
+        receipt.md` §4/`decisions.md §25` discovery-forward): a pre-`Kind::
+        Trait` generic-ingest pass wrote a `kind: ability`-shaped record at
+        the SAME `(book, source_file, source_line)` coordinate a `kind:
+        trait` census unit cites (e.g. `inner_sea_races/ability/loner_of_
+        the_rocks.json` carries `TYPE:Trait.RaceTrait.Oread Race Trait` at
+        `isr_abilities.lst`). Before this fix, `build_corpus_index` keyed
+        only on `(book, basename, line)`, so the second kind written to that
+        coordinate silently overwrote (or was silently read as) the first --
+        a `trait` unit's join would land on the `ability` record and never
+        report `no_record`, even though no `trait` record exists anywhere.
+        The index must carry BOTH kinds' tokens under their own keys."""
+        with tempfile.TemporaryDirectory() as tmp:
+            ability_dir = os.path.join(tmp, "b", "ability")
+            trait_dir = os.path.join(tmp, "b", "trait")
+            os.makedirs(ability_dir)
+            os.makedirs(trait_dir)
+            with open(os.path.join(ability_dir, "unit.json"), "w") as fh:
+                json.dump(
+                    {
+                        "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                        "source": {"path": "isr_abilities.lst", "line": 78},
+                    },
+                    fh,
+                )
+            # No record actually exists under kind "trait" at this coordinate
+            # -- that is the whole point: the bug was that the "ability"
+            # record answered for it anyway.
+
+            index = SL.build_corpus_index(tmp, books={"b"})
+            ability_key = ("b", "ability", "isr_abilities.lst", 78)
+            trait_key = ("b", "trait", "isr_abilities.lst", 78)
+            self.assertIn(ability_key, index)
+            self.assertNotIn(trait_key, index)
+
+    def test_generic_sibling_directory_normalizes_to_its_base_kind(self):
+        """`ingest_generic_kind.py`/`ingest_race_trait_generic.py` write
+        `<kind>_generic/` as a deliberate SIBLING to `<kind>/` (never inside
+        it -- their own docstrings name the reason: existing curated
+        consumers glob `<kind>/*.json` directly and would misinterpret the
+        flatter generic shape). Their whole design depended on the OLD
+        kind-BLIND join to count as a real answer for a `<kind>` census
+        unit ("`shape_ledger.py::build_corpus_index` walks ... with no
+        subdirectory-name filter, so a sibling directory is exactly as
+        measurable for Gate-1 purposes"). Making the join kind-AWARE must
+        not silently break that intentional design -- a `<kind>_generic`
+        record must still satisfy a `<kind>` unit's join. Only a
+        genuinely-different kind (not a `<X>_generic` sibling of the
+        unit's own kind) must be refused."""
+        with tempfile.TemporaryDirectory() as tmp:
+            generic_dir = os.path.join(tmp, "b", "trait_generic")
+            os.makedirs(generic_dir)
+            with open(os.path.join(generic_dir, "unit.json"), "w") as fh:
+                json.dump(
+                    {
+                        "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                        "source": {"path": "apg_abilities.lst", "line": 109},
+                    },
+                    fh,
+                )
+            index = SL.build_corpus_index(tmp, books={"b"})
+            self.assertIn(("b", "trait", "apg_abilities.lst", 109), index)
+
+            unit = _unit("b:trait:x", "trait", "b", "not-started", "static", "apg_abilities.lst", 109)
+            row = SL.classify_unit(unit, index)
+            self.assertEqual(row["join_status"], "matched")
+            self.assertEqual(row["family"], "F3")
 
 
 class ClassifyUnitTest(unittest.TestCase):
@@ -242,7 +311,7 @@ class ClassifyUnitTest(unittest.TestCase):
 
     def test_join_match_no_formula_tokens_is_f0(self):
         unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
-        index = {("b", "f.lst", 1): []}
+        index = {("b", "spell", "f.lst", 1): []}
         row = SL.classify_unit(unit, index)
         self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
         self.assertEqual(row["join_status"], "no_formula_tokens")
@@ -250,7 +319,7 @@ class ClassifyUnitTest(unittest.TestCase):
     def test_join_match_picks_highest_priority_family(self):
         unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
         index = {
-            ("b", "f.lst", 1): [
+            ("b", "spell", "f.lst", 1): [
                 {"key": "BONUS", "value": "VAR|Foo|WIS"},  # F3
                 {"key": "BONUS", "value": 'VAR|Bar|skillinfo("RANK","Bluff")'},  # F9, higher priority
             ]
@@ -258,6 +327,28 @@ class ClassifyUnitTest(unittest.TestCase):
         row = SL.classify_unit(unit, index)
         self.assertEqual(row["family"], "F9")
         self.assertEqual(row["join_status"], "matched")
+
+    def test_join_is_kind_aware_a_different_kinds_record_at_same_coordinate_is_no_record(self):
+        """The exact real-world defect (`epic-6-kind-trait_cycle-2_cycle_
+        receipt.md` §4): a `trait` unit's `(book, source_file, source_line)`
+        coordinate has a real record on disk, but that record is `kind:
+        ability`, not `kind: trait`. The join must not credit the wrong
+        kind's record -- this must report `no_record`, not `matched`."""
+        unit = _unit(
+            "inner_sea_races:trait:loner_of_the_rocks",
+            "trait",
+            "inner_sea_races",
+            "not-started",
+            "static",
+            "isr_abilities.lst",
+            78,
+        )
+        # Only an "ability"-kind record exists at this coordinate -- no
+        # "trait"-kind record was ever indexed for it.
+        index = {("inner_sea_races", "ability", "isr_abilities.lst", 78): [{"key": "BONUS", "value": "VAR|Foo|WIS"}]}
+        row = SL.classify_unit(unit, index)
+        self.assertEqual(row["join_status"], "no_record")
+        self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
 
     def test_missing_source_fields_is_no_record(self):
         unit = {"id": "b:spell:x", "kind": "spell", "book": "b"}
@@ -332,7 +423,7 @@ class ClassifyUnitTest(unittest.TestCase):
         unit = _unit(
             "b:equipment:x", "equipment", "b", "not-started", "static", "f.lst", 1, corpus_key="Widget"
         )
-        corpus_index = {("b", "f.lst", 1): [{"key": "DEFINE", "value": "Foo|0"}]}
+        corpus_index = {("b", "equipment", "f.lst", 1): [{"key": "DEFINE", "value": "Foo|0"}]}
         key_index = {("b", "equipment", "Widget"): []}
         row = SL.classify_unit(unit, corpus_index, key_index=key_index)
         self.assertEqual(row["join_status"], "matched")
@@ -386,7 +477,7 @@ class BuildLedgerTest(unittest.TestCase):
             _unit("b:spell:x", "spell", "b", "not-started", "static", "missing.lst", 1),
             _unit("b:spell:y", "spell", "b", "not-started", "static", "f.lst", 1),
         ]
-        index = {("b", "f.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|WIS"}]}
+        index = {("b", "spell", "f.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|WIS"}]}
         ledger = SL.build_ledger(units, index)
         self.assertEqual(ledger["unclassified_count"], 0)
         self.assertEqual(ledger["population"], 2)
@@ -404,8 +495,8 @@ class BuildLedgerTest(unittest.TestCase):
             _unit("b:spell:matched", "spell", "b", "not-started", "static", "f.lst", 1),
         ]
         index = {
-            ("b", "empty.lst", 1): [],
-            ("b", "f.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|WIS"}],
+            ("b", "spell", "empty.lst", 1): [],
+            ("b", "spell", "f.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|WIS"}],
         }
         ledger = SL.build_ledger(units, index)
         jsc = ledger["join_status_counts"]

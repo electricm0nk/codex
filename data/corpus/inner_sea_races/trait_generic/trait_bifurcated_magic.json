@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Bifurcated Magic",
+    "name": "Bifurcated Magic",
+    "description": "Pick two classes when you gain this trait-your caster level in each of those classes is treated as 1 higher as long as this doesn't raise your caster level above your total Hit Dice. This doesn't stack with any similar increase from traits such as Magical Knack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Bifurcated Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Half-Elf Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Bifurcated Magic]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfElf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Pick two classes when you gain this trait-your caster level in each of those classes is treated as 1 higher as long as this doesn't raise your caster level above your total Hit Dice. This doesn't stack with any similar increase from traits such as Magical Knack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 39,
+    "record_key": "Trait ~ Bifurcated Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

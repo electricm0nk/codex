@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Impressive Physique",
+    "name": "Impressive Physique",
+    "description": "+2 to Intimidate",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Impressive Physique"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.HalfGiantTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Impressive Physique],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Half-Giant,RACESUBTYPE=Half-Giant],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Half-Giant]"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 to Intimidate"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|2|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 188,
+    "record_key": "Trait ~ Impressive Physique"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

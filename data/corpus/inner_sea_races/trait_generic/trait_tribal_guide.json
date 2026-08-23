@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Tribal Guide",
+    "name": "Tribal Guide",
+    "description": "You provide food and water or a bonus against severe weather for two additional creatures whenever you succeed at the appropriate Survival check, and Survival is a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Tribal Guide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Kobold Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Tribal Guide]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsKobold=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You provide food and water or a bonus against severe weather for two additional creatures whenever you succeed at the appropriate Survival check, and Survival is a class skill for you."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Survival"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 116,
+    "record_key": "Trait ~ Tribal Guide"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Aerial Harrier",
+    "name": "Aerial Harrier",
+    "description": "While flying, you gain a +1 trait bonus to AC against melee attacks from creatures on the ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Aerial Harrier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Strix Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Aerial Harrier]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsStrix=true"
+      },
+      {
+        "key": "DESC",
+        "value": "While flying, you gain a +1 trait bonus to AC against melee attacks from creatures on the ground."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 34,
+    "record_key": "Trait ~ Aerial Harrier"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

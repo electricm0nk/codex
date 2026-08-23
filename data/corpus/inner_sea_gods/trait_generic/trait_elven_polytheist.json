@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Elven Polytheist",
+    "name": "Elven Polytheist (any elven deity)",
+    "description": "Your knowledge of the diverse elven gods has given you a broad perspective. You gain a +1 trait bonus on Knowledge (religion) skill checks, and Knowledge (religion) is a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Elven Polytheist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.ReligionTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Elven Polytheist],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.ReligionTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your knowledge of the diverse elven gods has given you a broad perspective. You gain a +1 trait bonus on Knowledge (religion) skill checks, and Knowledge (religion) is a class skill for you."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (religion)|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (religion)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 171,
+    "record_key": "Trait ~ Elven Polytheist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

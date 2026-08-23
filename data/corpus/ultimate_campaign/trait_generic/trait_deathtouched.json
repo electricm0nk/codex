@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Deathtouched",
+    "name": "Deathtouched",
+    "description": "At some point you were tainted with the corruption of the undead, and you have gained some of their defenses. You gain either a +1 trait bonus on Fortitude saving throws or a +2 trait bonus on saving throws against mind-affecting effects (your choice).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Deathtouched"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.RaceTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Deathtouched Fortitude],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "At some point you were tainted with the corruption of the undead, and you have gained some of their defenses. You gain either a +1 trait bonus on Fortitude saving throws or a +2 trait bonus on saving throws against mind-affecting effects (your choice)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Deathtouched Choice|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 237,
+    "record_key": "Trait ~ Deathtouched"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

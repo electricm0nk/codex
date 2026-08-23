@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Perfectionist's Brew",
+    "name": "Perfectionist's Brew",
+    "description": "You know that potion recipes should be followed with exact precision.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Perfectionist's Brew"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Perfectionist's Brew],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You know that potion recipes should be followed with exact precision."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Alchemy)|2|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 trait bonus to Spellcraft to brew potions"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 trait bonus on all Craft (alchemy) checks and on Spellcraft checks made to brew potions."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 148,
+    "record_key": "Trait ~ Perfectionist's Brew"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

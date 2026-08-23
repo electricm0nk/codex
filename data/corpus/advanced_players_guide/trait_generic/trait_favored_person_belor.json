@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Favored Person ~ Belor",
+    "name": "Favored Son/Daughter / Belor Hemlock (town sheriff)",
+    "description": "Belor, Sandpoint's no nonsense arm of the law, is like the uncle you never had. The benefits of being close friends with the town sheriff are extensive, and you can call in favors from him once per game session. A favor can either get you out of a legal jam, hook you up with a town guard for help, or give you a onetime +10 bonus on a Bluff, Diplomacy, or Intimidate check made against any local person.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Favored Person ~ Belor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.TraitCampaignChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Trait ~ Favored Person"
+      },
+      {
+        "key": "DESC",
+        "value": "Belor, Sandpoint's no nonsense arm of the law, is like the uncle you never had. The benefits of being close friends with the town sheriff are extensive, and you can call in favors from him once per game session. A favor can either get you out of a legal jam, hook you up with a town guard for help, or give you a onetime +10 bonus on a Bluff, Diplomacy, or Intimidate check made against any local person."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.330"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 157,
+    "record_key": "Trait ~ Favored Person ~ Belor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

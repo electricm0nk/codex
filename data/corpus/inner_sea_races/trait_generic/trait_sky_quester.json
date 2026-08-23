@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Sky Quester",
+    "name": "Sky Quester",
+    "description": "You gain a +1 trait bonus on Knowledge (geography) and Knowledge (history) checks. One of these skills (your choice) is always a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Sky Quester"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Dwarf Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Sky Quester]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsDwarf=true"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 trait bonus on Knowledge (geography) and Knowledge (history) checks. One of these skills (your choice) is always a class skill for you."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|Knowledge (Geography)|Knowledge (History)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography),Knowledge (History)|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 113,
+    "record_key": "Trait ~ Sky Quester"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}
