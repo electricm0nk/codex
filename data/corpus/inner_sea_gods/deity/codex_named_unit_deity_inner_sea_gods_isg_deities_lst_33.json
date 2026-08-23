@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_33)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_33)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Darkness,Evil,Repose,Travel|PREALIGN:TN,LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Goddess of dreams, night hags, planar travel"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Dream Eater"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Jar containing a ghost"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Black stallion"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Black|Blue"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Pathfinder Chronicles"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Dagger"
+      },
+      {
+        "key": "ALIGN",
+        "value": "NE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 33,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_33)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:33"
+  }
+}

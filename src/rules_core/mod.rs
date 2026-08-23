@@ -4,6 +4,7 @@ pub mod archetype_resolver;
 pub mod cache_gen;
 pub mod character_input;
 pub mod class_feature_pool_catalog;
+pub mod codex_neutral_name;
 pub mod composed_input;
 pub mod contract;
 pub mod corpus_literal_sweep;

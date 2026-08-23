@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_26)",
+    "name": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_26)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Destruction,Evil,War,Weather|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "God of wrath, disaster, destruction"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Pathfinder Chronicles"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Greataxe"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_deities.lst",
+    "sha256": "f0c2e2ee10529182b0c6413a42044b74c36ed8d52d669931437e28963a92fd0c",
+    "line": 26,
+    "record_key": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_26)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "core_rulebook:cr_deities.lst:26"
+  }
+}

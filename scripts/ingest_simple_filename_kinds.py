@@ -1,14 +1,33 @@
 #!/usr/bin/env python3
 """SD-32 `decisions.md §20` — generic ingest for the `SIMPLE_FILENAME_KINDS`
 population (`decisions.md §17` item 1, `src/bin/v06_work_inventory.rs`
-`file_kind`): `template`, `power`, `domain`, `language`, `skill`.
+`file_kind`): `template`, `power`, `domain`, `language`, `skill`, `deity`.
 
-**Why one script for five kinds.** All five were enumerated by a single
+**Why one script for six kinds.** All six were enumerated by a single
 filename-substring rule (`SIMPLE_FILENAME_KINDS`) because their corpus rows
 share one shape: a flat, single-line PCGen LST record with no `.MOD`/`.COPY=`
-overlay chain of its own. `deity` shares the same filename-rule shape but is
-DELIBERATELY EXCLUDED from this script's `TARGET_KINDS` — see "Why `deity`
-is not ingested here" below.
+overlay chain of its own.
+
+**`deity` — `decisions.md §24` neutral-name treatment (this cycle).** Every
+`deity` unit's own row identity (its `KEY`/name field) IS a deity's proper
+name — unlike the other five kinds, whose identity strings are game-
+mechanical labels the blacklist's own §2.2 table classifies as OGL-inlinable
+(module docstring below, "Why `deity` was excluded before this cycle",
+explains why the 57-60-term blacklist alone was never sufficient cover for
+this kind). `decisions.md §24`'s operator ruling settles this: `deity` is
+now ingested UNCONDITIONALLY under a Codex-generated neutral name derived
+ONLY from `(kind, book, source_file, source_line)` — never from the row's
+own name/key, not transformed, not truncated, not hashed
+(`scripts/codex_neutral_name.py`, reused unchanged; see that module's own
+docstring and `scripts/tests/test_codex_neutral_name.py` for the `§24b`-1
+proof). `data.name`/`data.key` become the Codex name; `data.codex_generated_name`
+is `True` (`§24b`-3); any OTHER raw token whose value restates the record's
+own original name/key is separately scrubbed
+(`scripts/ingest_ability.py::scrub_name_pi_tokens`, imported, not re-typed —
+the same worked precedent `ability` already proved out for this exact
+"a KEY: token repeats the row's PI name" shape). The description field still
+runs the ordinary declared/blacklist screen below, independent of the name
+rename.
 
 **What this does.** For every not-yet-ingested unit of the five target kinds
 in `docs/work-inventory.json`:
@@ -36,23 +55,24 @@ in `docs/work-inventory.json`:
    `gen_book_cache.rs`'s Rust generators emit, byte-compatible (a v1 JSON
    record from either path deserializes into the same Rust type).
 
-**Why `deity` is not ingested here (decisions.md §15 disposition 2).**
+**Why `deity` was excluded before this cycle (decisions.md §15 disposition
+2, now superseded by §24 for this kind only).**
 `ogl-pi-blacklist.md §2.1` names `deity`/`deity_name` as "Product Identity in
 CRB" as a FIELD CATEGORY, not as a closed list of terms — but the mechanized
-screen this script (and every other ingest tool in this repo) uses is a
-57-60 TERM list, not a field-category rule, and that term list covers only
-the ~20 core Golarion deities plus a few incident-driven additions. A
+blacklist screen this script (and every other ingest tool in this repo) uses
+is a 57-60 TERM list, not a field-category rule, and that term list covers
+only the ~20 core Golarion deities plus a few incident-driven additions. A
 `deity` record's own row identity (its `KEY`/name field) IS a deity's proper
 name in every case — unlike `template`/`power`/`domain`/`language`/`skill`,
 whose identity strings are game-mechanical labels (a template's name, a
 skill's name) the blacklist's own §2.2 table classifies as OGL-inlinable.
-`deity` has no `ogl-pi-blacklist.md §2.3` per-field judgment entry at all —
-the exact gap `decisions.md §19a` amendment 3a closed for `companion`/
-`monster_ability` by operator ruling. Transcribing the ~440 non-core-20
-deity names on this script's own authority, using a term list that was never
-built to cover them, is exactly the shape `decisions.md §15` exists to
-refuse: land everything else, stop on this kind, report it by name and
-count. See this cycle's own receipt for the exact escalation text.
+Relying on that same 57-60-term list to decide WHICH deity rows are PI would
+have been exactly the shape `decisions.md §15` exists to refuse (a term list
+never built to cover ~440 non-core-20 names). `decisions.md §24` replaces
+that whole question for `deity`: since the name IS PI in every case, no
+term-list judgment call is needed at all — every `deity` row renames
+unconditionally under the Codex-generated neutral name, `§24b`'s six binding
+conditions (not the blacklist screen) governing shippability.
 
 Usage::
 
@@ -85,12 +105,22 @@ from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
     normalized_term_hit,
 )
 from shape_ledger import BOOK_CORPUS_DIR_ALIASES  # noqa: E402
+from codex_neutral_name import (  # noqa: E402
+    divergence_entry,
+    neutral_key,
+    neutral_name,
+)
+from ingest_ability import scrub_name_pi_tokens  # noqa: E402
 
 REDACTED_PI_MARKER = "[redacted PI]"
 
-# `deity` is deliberately excluded — see module docstring "Why `deity` is
-# not ingested here".
-TARGET_KINDS = ("template", "power", "domain", "language", "skill")
+TARGET_KINDS = ("template", "power", "domain", "language", "skill", "deity")
+
+# `decisions.md §24`: the name IS Product Identity for every unit of this
+# kind (module docstring's "deity" section) -- no blacklist/declared-PI
+# judgment call decides it per-record the way it does for the other five
+# `TARGET_KINDS`; every `deity` unit renames unconditionally.
+NAME_ALWAYS_PI_KINDS = frozenset({"deity"})
 
 FREE_TEXT_TAG_PREFIXES = ("DESC:", "BENEFIT:", "SPECIALS:", "SA:")
 
@@ -264,6 +294,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out-root", default="data/corpus")
     ap.add_argument("--kind", action="append", choices=TARGET_KINDS)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--report-out", default=None, help="write the full JSON summary (incl. renamed_records) here")
     args = ap.parse_args(argv)
 
     kinds = set(args.kind) if args.kind else set(TARGET_KINDS)
@@ -279,6 +310,11 @@ def main(argv: list[str] | None = None) -> int:
     citation_mismatches = []
     written = []
     pi_hits = Counter()
+    name_pi_renamed = Counter()
+    # `decisions.md §24b`-4: divergence entries carry coordinates and the
+    # reason, never the original PI string -- see
+    # `scripts/codex_neutral_name.py::divergence_entry`.
+    renamed_records = []
 
     for unit in inv["units"]:
         kind = unit.get("kind")
@@ -323,11 +359,14 @@ def main(argv: list[str] | None = None) -> int:
         free_text = free_text_of(raw_tokens)
         term_hit_desc = normalized_term_hit(free_text) if free_text else None
 
-        redact_name = name_pi or bool(term_hit_name)
+        # `decisions.md §24`: `deity` (and any other `NAME_ALWAYS_PI_KINDS`
+        # member) renames UNCONDITIONALLY -- the name IS PI in every case
+        # for this kind, so no declared/blacklist judgment call decides it
+        # the way it still does for the other five kinds below.
+        always_pi = kind in NAME_ALWAYS_PI_KINDS
+        name_is_pi = always_pi or name_pi or bool(term_hit_name)
         redact_desc = desc_pi or bool(term_hit_desc)
 
-        out_name = REDACTED_PI_MARKER if redact_name else name
-        out_key = REDACTED_PI_MARKER if redact_name else corpus_key
         out_tokens = []
         for t in raw_tokens:
             v = t["value"]
@@ -336,9 +375,49 @@ def main(argv: list[str] | None = None) -> int:
                 v = REDACTED_PI_MARKER + (("|" + tail) if tail else "")
             out_tokens.append({"key": t["key"], "value": v})
 
-        if redact_name or redact_desc:
+        fields_redacted: list[str] = []
+        codex_generated_name = False
+        rename_info = None
+
+        if name_is_pi and always_pi:
+            # `§24b`-1: derived ONLY from (kind, book, source_file,
+            # source_line) -- never from `name`/`corpus_key`. `§24b`-2: any
+            # OTHER token restating the original name/key is separately
+            # scrubbed (`scrub_name_pi_tokens`, the same worked precedent
+            # `ability` proved).
+            codex_name = neutral_name(kind, book, basename, line_no)
+            codex_key = neutral_key(kind, book, basename, line_no)
+            scrubbed_tokens, extra_redacted = scrub_name_pi_tokens(out_tokens, name, corpus_key)
+            out_name = codex_name
+            out_key = codex_key
+            out_tokens = scrubbed_tokens
+            codex_generated_name = True
+            fields_redacted.append("name")
+            if extra_redacted:
+                fields_redacted.append("raw_tokens")
+            rename_info = {
+                "reason": "name_pi_blocked",
+                "coordinate": f"{book}:{os.path.basename(basename)}:{line_no}",
+            }
+            renamed_records.append(divergence_entry(kind, book, basename, line_no, reason="name_pi_blocked"))
+            name_pi_renamed[kind] += 1
+        elif name_is_pi:
+            # Legacy pre-§24 path for the five kinds `§24` does not cover:
+            # a name cannot be redacted in place, so the whole name/key is
+            # replaced with the standing marker (unchanged behaviour).
+            out_name = REDACTED_PI_MARKER
+            out_key = REDACTED_PI_MARKER
+            fields_redacted.append("name")
+        else:
+            out_name = name
+            out_key = corpus_key
+
+        if redact_desc:
+            fields_redacted.append("description")
+
+        if fields_redacted:
             license_val = "PI-REDACTED"
-            pi_field = "name" if redact_name else "description"
+            pi_field = ",".join(fields_redacted)
             pi_marker = "redacted"
             pi_hits[kind] += 1
         else:
@@ -360,16 +439,22 @@ def main(argv: list[str] | None = None) -> int:
                 "path": compose_source_path(file_path, args.pcgen_root),
                 "sha256": sha256_of(file_path),
                 "line": line_no,
-                "record_key": corpus_key,
+                "record_key": out_key,
             },
             "wiring_class": "display",
             "wiring_class_signals": ["display:sd32_simple_filename_kind_ingest"],
             "license": license_val,
             "pi_field": pi_field,
             "pi_marker": pi_marker,
+            # `decisions.md §24b`-3/4: visible rename marker + coordinate-
+            # only divergence record. Always present (even `False`/`None`)
+            # so every record of a kind this script touches carries the
+            # same shape.
+            "codex_generated_name": codex_generated_name,
+            "rename": rename_info,
         }
 
-        slug = slugify(corpus_key)
+        slug = slugify(codex_name if (name_is_pi and always_pi) else corpus_key)
         seen = slug_seen[(book, kind)]
         if slug in seen:
             slug = f"{slug}_{line_no}"
@@ -388,10 +473,19 @@ def main(argv: list[str] | None = None) -> int:
     summary = {
         "stats": dict(stats),
         "pi_redacted_by_kind": dict(pi_hits),
+        "name_pi_renamed_by_kind": dict(name_pi_renamed),
         "citation_mismatches": citation_mismatches,
         "written_count": len(written),
+        "renamed_count": len(renamed_records),
+        # `decisions.md §24b`-4: coordinates + reason only, never the
+        # original PI string.
+        "renamed_records": renamed_records,
     }
     print(json.dumps(summary, indent=2))
+    if args.report_out:
+        with open(args.report_out, "w", encoding="utf-8") as fh:
+            json.dump(summary, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
     return 0
 
 

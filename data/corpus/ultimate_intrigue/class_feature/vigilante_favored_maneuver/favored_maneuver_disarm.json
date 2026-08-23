@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:59:13Z",
+  "ingested_at": "2026-08-23T14:24:55Z",
   "data": {
     "key": "Vigilante Favored Maneuver ~ Disarm",
     "name": "Favored Maneuver (Disarm)",
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_177)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_177)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Animal,Chaos,Good,Plant,Weather|PREALIGN:NG,CG,CN"
+      },
+      {
+        "key": "DESC",
+        "value": "God of forestry, hunting, the moon"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Hunter"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Hawk with moon and sun"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Hawk"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Gold|Silver"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Elven"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Longbow|Shortbow"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 177,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_177)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:177"
+  }
+}

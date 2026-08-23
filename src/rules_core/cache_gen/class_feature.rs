@@ -149,8 +149,9 @@ use serde::Serialize;
 use serde_json::Value;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::corpus_literal_sweep::tab_tokens;
-use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
+use crate::rules_core::pi_screening::{self, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 
 /// `(book id, corpus-relative directory, primary `_abilities_class.lst`
 /// basename)` for every one of the 23 in-scope `class_feature` books.
@@ -357,6 +358,16 @@ pub struct ClassFeatureData {
     pub raw_tokens: Vec<RawToken>,
 }
 
+/// `decisions.md §24b`-4: divergence recorded as coordinate + reason only,
+/// never the original PI string. Mirrors `ability`'s own `data.rename`
+/// shape (`scripts/ingest_ability.py`) so a renamed record looks the same
+/// regardless of which generator produced it.
+#[derive(Debug, Clone, Serialize)]
+pub struct RenameInfo {
+    pub reason: String,
+    pub coordinate: String,
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct CacheRecord {
     pub population: Population,
@@ -369,15 +380,29 @@ pub struct CacheRecord {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// `decisions.md §24b`-3: "a field marks it as carrying a
+    /// Codex-generated name, so no reader or player mistakes it for the
+    /// printed name."
+    pub codex_generated_name: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rename: Option<RenameInfo>,
 }
 
 #[derive(Debug, Default)]
 pub struct GenerationReport {
     pub written: usize,
-    /// Records skipped because their row declares `NAMEISPI:YES` (module
-    /// doc comment's PI-screening section) -- never written, counted
-    /// instead of silently dropped.
+    /// Records whose row declares `NAMEISPI:YES` (or hits the name
+    /// blacklist) -- `decisions.md §24` renames and ships these under a
+    /// Codex-generated neutral name (`codex_neutral_name::neutral_name`)
+    /// rather than skipping them. This counter (name kept for the existing
+    /// `gen_cache_class_feature` printed message) now counts RENAMES, not
+    /// silent drops -- every one of these units is still `written` above.
     pub name_pi_skipped: usize,
+    /// `(kind, book, source_file, source_line, codex_name, reason)`
+    /// divergence entries for every unit renamed this run --
+    /// `decisions.md §24b`-4: coordinate + reason, never the original
+    /// string. Consumed by `gen_cache_class_feature`'s report writer.
+    pub name_pi_renamed_records: Vec<serde_json::Value>,
     /// `(book, source_file, source_line)` citations that did not resolve
     /// to a real corpus line -- should be empty against the real corpus,
     /// since every citation here was already validated by
@@ -1047,6 +1072,70 @@ fn redact_desc_token_if_pi(tokens: &mut [RawToken], license: crate::rules_core::
     }
 }
 
+/// `decisions.md §24b`-2: "The PI original appears nowhere that ships."
+/// A record whose NAME is PI can carry that same name again inside another
+/// token's VALUE (a `KEY:` token restating the row's own key verbatim is
+/// the concrete shape `scripts/ingest_ability.py::scrub_name_pi_tokens`
+/// found live). Scrubs any token VALUE that either hits the shared
+/// blacklist term list, or contains the record's OWN original `name`/`key`
+/// (or a `~`-delimited segment of `key`) as a case-insensitive substring.
+/// `name`/`key` are used ONLY to build the redaction needle set -- never
+/// written into the returned tokens, and the caller never stores the
+/// original `name`/`key` on a renamed record's `data.name`/`data.key`.
+/// Never mutates the input; returns `(scrubbed_tokens, any_redacted)`.
+// `decisions.md §24b`-2, this cycle's own live finding: the shared
+// `pi_screening::PI_BLACKLIST_TERMS` (57 terms) is stale against
+// `scripts/sd32_t9_pi_review_feat_equipment.py`'s actively-amended 60-term
+// SD-32 T9 list -- `ingest_ability.py`'s own module doc comment already
+// names this exact gap ("rather than forking a fourth copy of the stale
+// 57-term substring scan"). Found live: `adventurers_guide/
+// ag_abilities_class.lst:889`'s `ABILITY:...TYPE=MagaambyaSpellAccess` and
+// `:1086`'s `KEY:...Aldori...` both survived the shared list unredacted.
+// Widening the SHARED constant was tried and reverted this cycle: it makes
+// `tests/pi_table_sweep.rs`'s corpus-wide gate newly fail against
+// `feat_gap_tables.rs`'s own already-shipped, out-of-this-cycle's-scope
+// "Aldori"/"Magaambya" prose (a pre-existing, unrelated leak this cycle
+// does not own fixing). This LOCAL supplement is scoped to exactly the
+// records THIS function screens -- the renamed `class_feature` units --
+// without touching the shared list's broader blast radius.
+const RENAME_SCRUB_SUPPLEMENTAL_TERMS: &[&str] = &["Aldori", "Magaambya", "Magaambyan"];
+
+fn scrub_name_pi_tokens(tokens: &[RawToken], name: &str, key: &str) -> (Vec<RawToken>, bool) {
+    let mut needles: Vec<String> = Vec::new();
+    for s in [name, key] {
+        let s = s.trim();
+        if !s.is_empty() {
+            needles.push(s.to_lowercase());
+        }
+    }
+    for segment in key.split('~') {
+        let segment = segment.trim();
+        if !segment.is_empty() {
+            needles.push(segment.to_lowercase());
+        }
+    }
+
+    let mut any_redacted = false;
+    let scrubbed = tokens
+        .iter()
+        .map(|t| {
+            let value = &t.value;
+            let blacklist_hit = !value.is_empty()
+                && (PI_BLACKLIST_TERMS.iter().any(|term| value.contains(term))
+                    || RENAME_SCRUB_SUPPLEMENTAL_TERMS.iter().any(|term| value.contains(term)));
+            let lower_value = value.to_lowercase();
+            let identity_hit = !value.is_empty() && needles.iter().any(|n| lower_value.contains(n.as_str()));
+            if blacklist_hit || identity_hit {
+                any_redacted = true;
+                RawToken { key: t.key.clone(), value: crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string() }
+            } else {
+                t.clone()
+            }
+        })
+        .collect();
+    (scrubbed, any_redacted)
+}
+
 /// Every `(source file basename, source line)` a FOREIGN (not this
 /// generator's own) `class_feature` record already cites under
 /// `class_feature_dir`, found by walking the directory and checking each
@@ -1171,13 +1260,15 @@ pub fn generate(
             };
             let declared = declared_pi_at(&file_path, unit.source_line).unwrap_or_default();
             let (name_license, _, _, _) = pi_screening::classify_field("name", &unit.name);
-            if declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted {
-                report.name_pi_skipped += 1;
-                continue;
-            }
+            // `decisions.md §24`: a name-PI row is no longer skipped whole
+            // -- it ingests under a Codex-generated neutral name (below,
+            // after `tokens`/description are built) rather than never being
+            // written at all (module doc comment's pre-§24 "not written"
+            // text is superseded here).
+            let name_is_pi = declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted;
             let mut tokens = row_tokens(&raw_row);
             let description = desc_value(&tokens);
-            let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+            let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
                 "description",
                 description.as_deref(),
                 declared.description,
@@ -1232,7 +1323,21 @@ pub fn generate(
                 .or_else(|| corpus_class_owner(group, corpus_class_names))
                 .or_else(|| category_label_alias_owner(group, corpus_class_names))
                 .or_else(|| type_facet_corpus_owner(unit.type_facet.as_deref(), corpus_class_names))
-                .or_else(|| key_owner.clone());
+                // `decisions.md §24b`-2: this LAST fallback ships the raw
+                // key-owner TEXT verbatim -- safe for an ordinary key
+                // (`"Fighter ~ Bravery"` -> `"Fighter"`), but for a
+                // name-PI row (`declared.name`/blacklist true) the row's
+                // OWN key can carry the SAME PI content as an owner
+                // segment (a `"<Patron> ~ <Boon Name>"`-shaped
+                // Demonic-Obedience boon, `book_of_the_damned_volume_2`,
+                // whose "owner" segment is itself the patron's own PI
+                // name -- found live this cycle: 7 of 140 renamed
+                // `class_feature` units leaked their patron's name into
+                // `data.class` and the output directory this way before
+                // this guard, never named here per this repo's own PI
+                // discipline). Never guess a class from PI-tainted text --
+                // an honest `None` gap here, not a guess.
+                .or_else(|| if name_is_pi { None } else { key_owner.clone() });
 
             // SD-32 card 11 decision 23a: `"Domain Power"` is genuinely
             // multi-owner and none of the six tiers above force it to one
@@ -1242,18 +1347,76 @@ pub fn generate(
             // the section comment above [`scan_domain_power_owners`].
             let classes = domain_power_owning_classes(&unit.key, &domain_power_owners);
 
+            // `decisions.md §24` -- ingest a name-PI unit under a
+            // Codex-generated neutral name derived ONLY from
+            // (kind, book, source_file, source_line)
+            // (`codex_neutral_name::neutral_name`/`neutral_key`; see that
+            // module's own doc comment and test for the `§24b`-1 proof this
+            // cannot be influenced by the original PI name).
+            let (record_name, record_key, record_tokens, codex_generated_name, rename_info): (
+                String,
+                String,
+                Vec<RawToken>,
+                bool,
+                Option<RenameInfo>,
+            ) = if name_is_pi {
+                let codex_name = neutral_name("class_feature", book, &unit.source_file, unit.source_line);
+                let codex_key = neutral_key("class_feature", book, &unit.source_file, unit.source_line);
+                let (scrubbed_tokens, extra_redacted) = scrub_name_pi_tokens(&tokens, &unit.name, &unit.key);
+                report.name_pi_skipped += 1;
+                report.name_pi_renamed_records.push(serde_json::json!({
+                    "kind": "class_feature",
+                    "book": book,
+                    "source_file": Path::new(&unit.source_file).file_name().and_then(|n| n.to_str()).unwrap_or(&unit.source_file),
+                    "source_line": unit.source_line,
+                    "codex_name": codex_name,
+                    "reason": "name_pi_blocked",
+                }));
+                // Append to (never overwrite) whatever the description
+                // screen above already found -- a record can be BOTH
+                // name-PI and desc-PI at once (found live: 91 of the 140
+                // renamed units), and `declared_pi_shipping_audit`'s own
+                // DESC-PI-SHIPPED check requires "description" to still be
+                // list-present in `pi_field` even when "name" is also
+                // present.
+                let mut redacted_fields: Vec<&str> = Vec::new();
+                if pi_field.as_deref() == Some("description") {
+                    redacted_fields.push("description");
+                }
+                redacted_fields.push("name");
+                if extra_redacted {
+                    redacted_fields.push("raw_tokens");
+                }
+                license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                pi_field = Some(redacted_fields.join(","));
+                pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                let rename_info = Some(RenameInfo {
+                    reason: "name_pi_blocked".to_string(),
+                    coordinate: format!(
+                        "{book}:{}:{}",
+                        Path::new(&unit.source_file).file_name().and_then(|n| n.to_str()).unwrap_or(&unit.source_file),
+                        unit.source_line
+                    ),
+                });
+                (codex_name.clone(), codex_key, scrubbed_tokens, true, rename_info)
+            } else {
+                (unit.name.clone(), unit.key.clone(), tokens, false, None)
+            };
+
             let record = CacheRecord {
                 population: Population::InScope,
                 completeness,
                 ingested_at: ingested_at.to_string(),
                 data: ClassFeatureData {
-                    key: unit.key.clone(),
-                    name: unit.name.clone(),
+                    key: record_key.clone(),
+                    name: record_name.clone(),
                     class: class.clone(),
                     classes,
                     description: stored_desc,
-                    raw_tokens: tokens,
+                    raw_tokens: record_tokens,
                 },
+                codex_generated_name,
+                rename: rename_info,
                 source: Source::LstToken {
                     // Real relative path to the file this record was read
                     // from -- `{rel_dir}/{file}` for a primary file,
@@ -1269,7 +1432,7 @@ pub fn generate(
                         .unwrap_or_else(|_| format!("{rel_dir}/{}", unit.source_file)),
                     sha256,
                     line: unit.source_line,
-                    record_key: unit.key.clone(),
+                    record_key: record_key.clone(),
                 },
                 wiring_class,
                 wiring_class_signals,
@@ -1283,14 +1446,34 @@ pub fn generate(
             // exactly one field's VALUE and nothing about a record's path --
             // per the guarded-regen discipline, the only expected diff
             // against the pre-image is `data.class` (plus `ingested_at`).
-            let class_dir_slug = slugify(key_owner.as_deref().unwrap_or(&unit.name), &mut BTreeSet::new());
+            // `decisions.md §24b`-2: a renamed unit's directory/file naming
+            // must never fall back to the raw original `key_owner` OR
+            // `name` either -- `key_owner` (the key's own text BEFORE
+            // " ~ ") can itself BE the PI content (a `"<Patron> ~ <Boon
+            // Name>"`-shaped Demonic-Obedience key -- found live this
+            // cycle leaking the patron's own name into both the directory
+            // and `data.class` before this guard, not named here). For a
+            // renamed record,
+            // the directory source is the already-PI-screened `class`
+            // (`None` when nothing resolved -- honest gap, never a guess)
+            // falling back to the already-neutral `record_name`; an
+            // ordinary record keeps its unchanged `key_owner`-first
+            // behaviour so this fix produces zero diff on anything not
+            // itself renamed.
+            let dir_name_source: &str = if codex_generated_name {
+                class.as_deref().unwrap_or(&record_name)
+            } else {
+                key_owner.as_deref().unwrap_or(&unit.name)
+            };
+            let name_fallback_for_slugs: &str = if codex_generated_name { &record_name } else { &unit.name };
+            let class_dir_slug = slugify(dir_name_source, &mut BTreeSet::new());
             let feature_slug = {
                 let key_for_used = format!("{class_dir_slug}/");
                 let mut scoped: BTreeSet<String> = used
                     .iter()
                     .filter_map(|u| u.strip_prefix(&key_for_used).map(str::to_string))
                     .collect();
-                let slug = slugify(&unit.name, &mut scoped);
+                let slug = slugify(name_fallback_for_slugs, &mut scoped);
                 used.insert(format!("{key_for_used}{slug}"));
                 slug
             };
@@ -1456,6 +1639,189 @@ mod tests {
         assert!(should_skip(true, "Ordinary Feature"), "row-declared NAMEISPI:YES must skip");
         assert!(should_skip(false, "Gorum"), "blacklisted name with no declaration must still skip");
         assert!(!should_skip(false, "Sneak Attack"), "an ordinary name must not skip");
+    }
+
+    /// `decisions.md §24b`-2 unit test: a token VALUE restating the
+    /// record's own original name/key is scrubbed, a blacklisted term in an
+    /// unrelated token is also scrubbed, and an ordinary token untouched.
+    #[test]
+    fn scrub_name_pi_tokens_redacts_identity_restatement_and_blacklist_hits_only() {
+        // Fictional stand-ins, deliberately not a real Product-Identity
+        // name -- this repo's own discipline forbids putting a real PI
+        // term in code/tests/comments (`decisions.md §24`).
+        let tokens = vec![
+            RawToken { key: "KEY".to_string(), value: "Exalted Boon ~ Fictional Patron ~ Ember Lance".to_string() },
+            RawToken { key: "CATEGORY".to_string(), value: "Special Ability".to_string() },
+            RawToken { key: "SOURCEPAGE".to_string(), value: "p.12".to_string() },
+        ];
+        let (scrubbed, any_redacted) =
+            scrub_name_pi_tokens(&tokens, "Ember Lance", "Exalted Boon ~ Fictional Patron ~ Ember Lance");
+        assert!(any_redacted);
+        let by_key: BTreeMap<&str, &str> = scrubbed.iter().map(|t| (t.key.as_str(), t.value.as_str())).collect();
+        assert_eq!(by_key["KEY"], crate::rules_core::shape_b_v1::REDACTED_PI_MARKER, "own key restatement must scrub");
+        assert_eq!(by_key["CATEGORY"], "Special Ability", "an ordinary token must survive untouched");
+        assert_eq!(by_key["SOURCEPAGE"], "p.12");
+    }
+
+    #[test]
+    fn scrub_name_pi_tokens_is_a_no_op_when_nothing_restates_the_identity() {
+        let tokens =
+            vec![RawToken { key: "CATEGORY".to_string(), value: "Special Ability".to_string() }];
+        let (scrubbed, any_redacted) = scrub_name_pi_tokens(&tokens, "Bravery", "Fighter ~ Bravery");
+        assert!(!any_redacted);
+        assert_eq!(scrubbed[0].value, "Special Ability");
+    }
+
+    /// End-to-end RED->GREEN precedent for `decisions.md §24`: a
+    /// `NAMEISPI:YES` row must now be WRITTEN (not skipped) under a
+    /// Codex-generated neutral name, visibly marked, with the coordinate
+    /// (never the original name) recorded on `data.rename`, and the
+    /// original name/key must appear nowhere in the written file.
+    #[test]
+    fn generate_renames_a_name_pi_row_instead_of_skipping_it() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-name-pi-rename-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/adventurers_guide");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        // A single-segment KEY (no " ~ " owner split) whose own name IS the
+        // declared-PI content -- the exact edge this test guards against a
+        // directory/slug fallback leaking the original name.
+        std::fs::write(
+            book_dir.join("ag_abilities_class.lst"),
+            "Ordinary Feature\t\tNAMEISPI:YES\tCATEGORY:Special Ability\tDESC:Some mechanical text.\n",
+        )
+        .unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "adventurers_guide".to_string(),
+            source_file: "ag_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Ordinary Feature".to_string(),
+            name: "Ordinary Feature".to_string(),
+            type_facet: None,
+        }];
+
+        let report = generate(
+            &corpus_root,
+            &grants_root,
+            &out_dir,
+            "2026-08-23T00:00:00Z",
+            &units,
+            &BTreeMap::new(),
+        )
+        .expect("generate must succeed against a well-formed fixture");
+
+        assert_eq!(report.written, 1, "a name-PI row must be WRITTEN, not skipped (§24)");
+        assert_eq!(report.name_pi_skipped, 1, "the counter still tracks the rename (kept name for compatibility)");
+        assert_eq!(report.name_pi_renamed_records.len(), 1);
+
+        // The record must land SOMEWHERE under out_dir/adventurers_guide/class_feature
+        // (directory name is coordinate-derived, not the original "Ordinary Feature").
+        let cf_dir = out_dir.join("adventurers_guide/class_feature");
+        let mut found: Option<String> = None;
+        for entry in walkdir(&cf_dir) {
+            if entry.extension().and_then(|e| e.to_str()) == Some("json") {
+                found = Some(std::fs::read_to_string(&entry).unwrap());
+            }
+        }
+        let written = found.expect("generate must write exactly one json file for the renamed unit");
+        let json: Value = serde_json::from_str(&written).unwrap();
+
+        assert_eq!(json["codex_generated_name"].as_bool(), Some(true));
+        assert!(
+            json["data"]["name"].as_str().unwrap().starts_with("Codex-Named Unit ("),
+            "data.name must carry the Codex-generated marker: {written}"
+        );
+        assert!(
+            json["data"]["key"].as_str().unwrap().starts_with("Codex-Named Unit ("),
+            "data.key must carry the Codex-generated marker: {written}"
+        );
+        assert_eq!(
+            json["rename"]["coordinate"].as_str(),
+            Some("adventurers_guide:ag_abilities_class.lst:1"),
+            "rename must record ONLY the coordinate + reason: {written}"
+        );
+        assert_eq!(json["rename"]["reason"].as_str(), Some("name_pi_blocked"));
+        assert!(
+            !written.contains("Ordinary Feature"),
+            "the original PI name must appear NOWHERE in the written file (§24b-2): {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// Regression test: `declared_pi_shipping_audit`'s DESC-PI-SHIPPED
+    /// check requires `pi_field` to still list `"description"` on a record
+    /// that is BOTH name-PI and desc-PI at once -- found live this cycle
+    /// (91 of 140 renamed `class_feature` units) when the rename branch
+    /// OVERWROTE `pi_field` with `"name"`/`"name,raw_tokens"` instead of
+    /// appending to whatever the description screen already set.
+    #[test]
+    fn generate_keeps_description_in_pi_field_when_both_name_and_desc_are_pi() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-both-pi-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/adventurers_guide");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("ag_abilities_class.lst"),
+            "Both PI\t\tNAMEISPI:YES\tDESCISPI:YES\tCATEGORY:Special Ability\tDESC:Secret prose.\n",
+        )
+        .unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "adventurers_guide".to_string(),
+            source_file: "ag_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Both PI".to_string(),
+            name: "Both PI".to_string(),
+            type_facet: None,
+        }];
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-23T00:00:00Z", &units, &BTreeMap::new())
+            .expect("generate must succeed against a well-formed fixture");
+
+        let cf_dir = out_dir.join("adventurers_guide/class_feature");
+        let mut found: Option<String> = None;
+        for entry in walkdir(&cf_dir) {
+            if entry.extension().and_then(|e| e.to_str()) == Some("json") {
+                found = Some(std::fs::read_to_string(&entry).unwrap());
+            }
+        }
+        let written = found.expect("generate must write exactly one json file for the unit");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        assert_eq!(json["data"]["description"].as_str(), Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER));
+        let pi_field = json["pi_field"].as_str().unwrap();
+        assert!(pi_field.split(',').any(|p| p == "description"), "pi_field must still list \"description\": {pi_field}");
+        assert!(pi_field.split(',').any(|p| p == "name"), "pi_field must also list \"name\": {pi_field}");
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// Recursive helper for the test above -- this module has no existing
+    /// directory walker exposed for tests to reuse.
+    fn walkdir(dir: &Path) -> Vec<PathBuf> {
+        let mut out = Vec::new();
+        let mut stack = vec![dir.to_path_buf()];
+        while let Some(d) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&d) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else {
+                    out.push(path);
+                }
+            }
+        }
+        out
     }
 
     /// W19-INTEGRATE (adversarial review, `advanced_class_guide` finding on

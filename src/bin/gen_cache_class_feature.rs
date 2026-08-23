@@ -49,11 +49,23 @@ fn main() {
     match class_feature::generate(&corpus_root, &grants_root, &out_dir, &ingested_at, &units, &corpus_class_names) {
         Ok(report) => {
             println!(
-                "class_feature cache generated: {} records across {} books; {} skipped (NAMEISPI:YES); ingested_at={ingested_at}",
+                "class_feature cache generated: {} records across {} books ({} renamed under a Codex-generated \
+                 neutral name, decisions.md §24); ingested_at={ingested_at}",
                 report.written,
                 report.books_written.len(),
                 report.name_pi_skipped,
             );
+            // `decisions.md §24b`-4: divergence entries carry coordinates +
+            // reason only, never the original PI string.
+            if let Ok(report_path) = std::env::var("CLASS_FEATURE_RENAME_REPORT") {
+                let doc = serde_json::json!({
+                    "population_name_pi_renamed": report.name_pi_skipped,
+                    "renamed_records": report.name_pi_renamed_records,
+                });
+                let text = serde_json::to_string_pretty(&doc).expect("plain-data JSON cannot fail to serialize");
+                std::fs::write(&report_path, text)
+                    .unwrap_or_else(|e| panic!("could not write CLASS_FEATURE_RENAME_REPORT={report_path}: {e}"));
+            }
             if !report.unresolved_citations.is_empty() {
                 eprintln!(
                     "WARNING: {} citation(s) did not resolve: {:?}",

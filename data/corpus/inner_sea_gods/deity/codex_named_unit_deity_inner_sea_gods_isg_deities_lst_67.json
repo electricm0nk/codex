@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_67)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_67)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Evil,Knowledge,Law,Rune|PREALIGN:LN,LE,NE"
+      },
+      {
+        "key": "DESC",
+        "value": "Archdevil of contracts, devils, secrets"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Crimson Son"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Trident and ring"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Mockingbird"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Red|Yellow"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Archdevils"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Trident"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 67,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_67)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:67"
+  }
+}

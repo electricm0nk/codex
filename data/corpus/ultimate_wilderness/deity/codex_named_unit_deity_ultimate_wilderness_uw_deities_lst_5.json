@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_5)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_5)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Darkness,Nobility,Travel,Exploration Subdomain,Loss Subdomain,Martyr Subdomain,Night Subdomain|PREALIGN:CG,TN,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of betrayal, exiles, shadows"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Traitor"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Eye with crescent moon pupil"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Eldest"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Rapier"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CN"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainChaos,InquisitorDomainDarkness,InquisitorDomainNobility,InquisitorDomainTravel,InquisitorDomainExplorationSubdomain,InquisitorDomainLossSubdomain,InquisitorDomainMartyrSubdomain,InquisitorDomainNightSubdomain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f",
+    "line": 5,
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_5)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_wilderness:uw_deities.lst:5"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_353)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_353)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Community,Evil,Protection|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Goddess of birth, fertility, tribes"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Dark Mother"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Two gauntleted fists"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Dire wolf"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Brown|Green"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Orc"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Scimitar"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 353,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_353)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:353"
+  }
+}

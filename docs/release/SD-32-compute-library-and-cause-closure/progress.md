@@ -5564,3 +5564,90 @@ Re-verified after: 682 files on disk, 682 staged, `feat` `no_record` still 0.
   `monster_ability` 967, `deity` 459, `spell` 285, `companion` 217, `equipment_modifier` 175,
   `equipment` 170, `class_feature` 140 — total **2,413**.
   Corpus SHA `7f818006e371188e5717fd18d74d18a420747fc6`.
+## Cycle: `epic-2-t9-onboarding-pi-name-rename-deity-classfeature` — `decisions.md §24` (2026-08-23)
+
+Applied `§24`'s neutral-name treatment to the last two PI-name-blocked populations, `deity` (459)
+and `class_feature` (140), following the `ability` lane's proved-out machinery (`576 -> 0`) unchanged.
+
+**`deity` (459):** `scripts/ingest_simple_filename_kinds.py` lifted its standing whole-kind exclusion
+(the module docstring's own "why deity is not ingested here" section — kept, retitled "why deity was
+excluded BEFORE this cycle"). Every `deity` row renames UNCONDITIONALLY (`NAME_ALWAYS_PI_KINDS`):
+per `§24a`'s own argument, this kind's row identity IS the PI content in every case, so there is no
+per-record blacklist/declared judgment call to make the way the script's other five kinds still make.
+Re-derived population fresh (`--dry-run` first): 459 seen, 459 written, 0 citation mismatches —
+matches the dispatch brief exactly.
+
+**`class_feature` (140, re-derived — brief's "~140" estimate):** `src/rules_core/cache_gen/
+class_feature.rs`'s `name_pi_skipped` counter had no committed coordinate list; enumerating it WAS
+the rename (there is no separate "list first" step in a generator that already computes the
+disposition per unit). New `src/rules_core/codex_neutral_name.rs` — the Rust port of `scripts/
+codex_neutral_name.py`, same four-input-only signature, own test proving the `§24b`-1 swap claim.
+`CacheRecord` gained `codex_generated_name`/`rename` fields (`#[serde(skip_serializing_if)]` on the
+latter); the `name_pi_skipped` branch now renames-and-writes instead of skip-and-continue. New
+`scrub_name_pi_tokens` (Rust) mirrors `ingest_ability.py`'s worked precedent.
+
+**Two real defects found and fixed before landing (§17a: verified by re-running full leak scans over
+all 599 renamed files, not trusted from the fix alone):**
+1. **Directory/`data.class` leak.** The class-derivation chain's LAST fallback tier ships the key's
+   raw owner-segment TEXT verbatim (safe for an ordinary `"Fighter ~ Bravery"`-shaped key). A
+   `"<Patron> ~ <Boon>"`-shaped Demonic-Obedience key's OWNER segment can itself be the patron's own
+   PI name — 7 of 140 renamed units leaked it into both `data.class` and the output directory before
+   this cycle's guard. Fixed by skipping that fallback tier entirely for a renamed (name-PI) unit:
+   `class` falls back to an honest `None`, directory placement falls back to the already-neutral
+   Codex name — never a guess from PI-tainted text. Zero-diff on every non-renamed record (verified:
+   `git diff` carries no `"class":` value change anywhere in the 17,814 already-existing records this
+   regen touched).
+2. **`pi_field` overwrite.** The rename branch OVERWROTE `pi_field`/`license`/`pi_marker` instead of
+   appending to what the description screen already computed — dropped `"description"` off the 91
+   records that are BOTH name-PI and desc-PI, failing `declared_pi_shipping_audit`'s DESC-PI-SHIPPED
+   check. Fixed to append (`redacted_fields` vec, description-first if already set, then name, then
+   raw_tokens). New regression test pins both fields present together.
+3. **Local blacklist-list staleness.** `pi_screening::PI_BLACKLIST_TERMS` (57 terms) is stale against
+   the actively-amended 60-term SD-32 T9 Python list — 2 of 140 renamed units leaked a non-declared
+   blacklist term through a raw token untouched by `scrub_name_pi_tokens`. Widening the SHARED
+   constant was tried and reverted: it makes `tests/pi_table_sweep.rs`'s corpus-wide gate newly fail
+   against `feat_gap_tables.rs`'s own already-shipped, out-of-this-cycle's-scope prose carrying the
+   same terms (a pre-existing, unrelated leak this cycle does not own). Landed instead as a LOCAL
+   `RENAME_SCRUB_SUPPLEMENTAL_TERMS` const scoped to `scrub_name_pi_tokens` only.
+
+**Zero-leak proof (both kinds, all 599 renamed files):** blacklist scan (0 hits), original
+name/key self-check by `(book, source_file, source_line)` coordinate (0 hits), directory-collision
+check (0 renamed unit overwrote an existing file — all 599 landed at new paths). `declared_pi_
+shipping_audit` run over the full `data/corpus` tree: 0 violations touching `deity`/`class_feature`;
+its remaining 28 violations are pre-existing `language`/`template` gaps, files this cycle never
+touched (`git status --porcelain` confirms clean on all 28).
+
+**Determinism proved, not assumed** (`§24b`-6): both kinds regenerated twice from a full `data/corpus`
+snapshot, diffed byte-for-byte — 0 differences besides `ingested_at`, across all 18,051 `class_feature`
+files and all 459 `deity` files.
+
+**`§24c` — ingestion and shape-classification reported separately** (`scripts/shape_ledger.py`
+re-run): `deity` — 459 ingested, shape: 9 `matched` + 450 `no_formula_tokens`, 0 unclassified,
+`no_record` 459 → **0**. `class_feature` — 140 renamed-and-ingested (of 17,954 total in-scope),
+shape (whole kind): 6,327 `matched` + 11,327 `no_formula_tokens`, 0 unclassified, `no_record`
+140 → **0** (kind-wide, `class_feature` had no other `no_record` residual). Both closed on
+ingestion AND classification, matching the `ability` lane's own reporting shape.
+
+**Campaign `no_record`** (`python3 scripts/shape_ledger.py`): population 35,328, `no_record` **2,664**
+(none in `deity`/`class_feature` — confirmed by per-kind breakdown of the ledger's own rows), down
+from the brief's ~3,440 starting figure (this cycle's own 599-unit close plus concurrent sibling-lane
+drift on the shared branch — not solely attributable to this cycle).
+
+**§15 — no undecidable Product Identity encountered.** Every `deity` row renamed per the operator's
+unconditional `§24` ruling for this kind (no per-record judgment call to make); every `class_feature`
+name-PI row's disposition came from the existing `declared.name`/blacklist union the generator
+already computed — nothing here was ambiguous enough to stop on.
+
+- **Status:** complete.
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t9-onboarding-pi-name-rename-deity-classfeature_cycle-1_cycle_receipt.md`.
+- **Files touched:** `scripts/ingest_simple_filename_kinds.py` (deity support), `scripts/codex_neutral_name.py`
+  (reused unchanged), new `src/rules_core/codex_neutral_name.rs`, `src/rules_core/mod.rs` (module
+  registration), `src/rules_core/cache_gen/class_feature.rs` (rename path + both defect fixes + 5 new
+  tests), `src/bin/gen_cache_class_feature.rs` (`CLASS_FEATURE_RENAME_REPORT` env), `data/corpus/*/deity/*.json`
+  (459 new), `data/corpus/*/class_feature/**/*.json` (17,954 regenerated, 140 newly under a
+  `codex_named_unit_*.json` filename), new `artifacts/gate-3-closure-invariant/24-deity-pi-name-renamed-units.json`
+  and `24-class-feature-pi-name-renamed-units.json` divergence logs, `kanban.md` row 11.
+- **What remains:** none — this was the last two `§24` PI-name-blocked populations named in the
+  dispatch brief. Campaign `no_record` (2,664) is now dominated by `monster_ability` (967), `feat`
+  (682), `spell` (339) — none of which are PI-name-blocked; a future cycle's scope, not this one's.

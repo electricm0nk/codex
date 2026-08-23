@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_10)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_10)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Knowledge,Law,Luck,Rune,Curse Subdomain,Fate Subdomain,Thought Subdomain,Wards Subdomain|PREALIGN:LN,LG,LE,TN"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of complexity, fate, triplets"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Three"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Green three-pointed knot"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Eldest"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Scythe"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LN"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainKnowledge,InquisitorDomainLaw,InquisitorDomainLuck,InquisitorDomainRune,InquisitorDomainCurseSubdomain,InquisitorDomainFateSubdomain,InquisitorDomainThoughtSubdomain,InquisitorDomainWardsSubdomain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f",
+    "line": 10,
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_10)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_wilderness:uw_deities.lst:10"
+  }
+}
