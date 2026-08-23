@@ -191,6 +191,23 @@ const BOOKS: &[BookInput] = &[
         already_ingested: None,
         dedup_within_book: true,
     },
+    // SD-32 card 11 (T9 onboarding, decisions.md §19 sign-off): Horror
+    // Adventures, the 11th book in this config -- this book's SECOND
+    // compiled record family (`RuleSetId::Ha` already exists for its
+    // `companion`/`monster`/`monster_ability` tables; see
+    // `rules_tables::horror_adventures::mod.rs`'s own doc comment). All 72
+    // base declarations in `ha_spells.lst` are clear per the T9 PI
+    // disposition (`t9-pi-signoff-application_cycle-1_cycle_receipt.md`);
+    // `pi_screen` still runs on every row rather than trusting that
+    // disposition blindly.
+    BookInput {
+        id: "horror_adventures",
+        display_name: "Horror Adventures",
+        lst_rel: "pathfinder/paizo/roleplaying_game/horror_adventures/ha_spells.lst",
+        out_path: "src/rules_core/rules_tables/horror_adventures/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
 ];
 
 /// Referenced so `cargo build`/`clippy` see these modules as used -- their
@@ -708,7 +725,13 @@ mod tests {
     }
 
     #[test]
-    fn books_table_names_exactly_the_nine_spell_bearing_books_this_binary_replaces() {
+    fn books_table_names_exactly_the_ten_spell_bearing_books_this_binary_replaces() {
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): +1,
+        // `horror_adventures` -- this module's own doc comment's "seven
+        // near-identical binaries plus the already-config-driven ISF/ISM/
+        // ISTEM trio" (nine total, hence the old test name) plus this
+        // cycle's tenth entry, which was never a per-book binary at all --
+        // it was added directly to this shared config.
         let ids: Vec<&str> = BOOKS.iter().map(|b| b.id).collect();
         assert_eq!(
             ids,
@@ -722,6 +745,7 @@ mod tests {
                 "inner_sea_faiths",
                 "inner_sea_magic",
                 "inner_sea_temples",
+                "horror_adventures",
             ]
         );
     }

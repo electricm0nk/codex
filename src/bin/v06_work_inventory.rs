@@ -3543,6 +3543,12 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         "ISF" => "inner_sea_faiths",
         "ISM" => "inner_sea_magic",
         "ISTEM" => "inner_sea_temples",
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): HA
+        // joins `spell_resolver::spell_catalog_rows()` as the catalog's
+        // 16th book, its second family of any kind. Same additive,
+        // single-line registration every prior spell-lane cycle made here
+        // before it. See `src/bin/ingest_spells.rs`.
+        "HA" => "horror_adventures",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

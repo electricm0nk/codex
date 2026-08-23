@@ -27,6 +27,10 @@
 
 mod companion_data;
 mod monster_data;
+/// SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): this book's
+/// third family, ingested by the shared config-driven `ingest_spells.rs`
+/// pass (`decisions.md §17`) rather than a dedicated per-book binary.
+pub mod spell_list;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,

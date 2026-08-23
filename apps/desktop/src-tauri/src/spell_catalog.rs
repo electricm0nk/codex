@@ -76,9 +76,9 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 };
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
-    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_faiths, inner_sea_gods,
-    inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
-    ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, crb, horror_adventures, inner_sea_faiths,
+    inner_sea_gods, inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat,
+    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use codex::rules_core::spell_resolver;
 
@@ -111,6 +111,10 @@ const BOOK_ISM: &str = "ISM";
 /// precondition`, AT-32-G0-003): Inner Sea Temples, the fifteenth book --
 /// this book's first record family of any kind.
 const BOOK_ISTEM: &str = "ISTEM";
+/// SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): Horror
+/// Adventures, the sixteenth book -- its second record family of any
+/// kind (`companion`/`monster`/`monster_ability` already ship).
+const BOOK_HA: &str = "HA";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -443,6 +447,22 @@ fn map_istem_entry(entry: &inner_sea_temples::spell_list::SpellListEntry) -> Spe
     }
 }
 
+/// Horror Adventures -- SD-32 card 11 (T9 onboarding, `decisions.md §19`
+/// sign-off), config-driven ingest (`src/bin/ingest_spells.rs`,
+/// `decisions.md §17`). Its table types `school`, `level` and
+/// `description` optionally, like ISF's/ISM's/ISTem's above.
+fn map_ha_entry(entry: &horror_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_HA.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_HA, entry.key),
+        range: range_for(BOOK_HA, entry.key),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -558,6 +578,17 @@ mod tests {
     /// (CRB/ACG/ARG/UI non-optional, APG optional); this test asserts the
     /// registry reproduces all five exactly, so the helpers are the proof
     /// rather than a second implementation that could drift.
+    ///
+    /// `bestiary_6` is deliberately NOT chained into `expected` below --
+    /// BOTH of its 2 rows are cross-book verbatim reprints the resolver's
+    /// own dedup drops (`spell_resolver::spell_catalog_rows`'s
+    /// "first-chained wins" pass), so it contributes zero net entries to
+    /// `actual` and omitting it entirely still balances. `horror_adventures`
+    /// (SD-32 card 11, T9 onboarding) is NOT zero-net -- only 2 of its 72
+    /// rows collide (`Green Caress`, `Verminous Transformation`, both
+    /// already served under `BOOK_UW`, earlier in the chain) -- so it IS
+    /// chained below, with those 2 keys excluded to mirror the same dedup
+    /// `actual` applies, preserving both count and relative order.
     #[test]
     fn mapping_helpers_agree_with_the_registry() {
         let expected: Vec<SpellCatalogEntryDto> = crb::spell_list::SPELL_LIST
@@ -576,6 +607,12 @@ mod tests {
             .chain(inner_sea_faiths::spell_list::SPELL_LIST.iter().map(map_isf_entry))
             .chain(inner_sea_magic::spell_list::SPELL_LIST.iter().map(map_ism_entry))
             .chain(inner_sea_temples::spell_list::SPELL_LIST.iter().map(map_istem_entry))
+            .chain(
+                horror_adventures::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| e.key != "Green Caress" && e.key != "Verminous Transformation")
+                    .map(map_ha_entry),
+            )
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -601,7 +638,14 @@ mod tests {
         // time later in the same file; the ingest binary dedups within a
         // book (first-declaration-wins, mirroring `spell_resolver`'s own
         // cross-book policy), so only 2 of the 3 ship.
-        assert_eq!(response.entries.len(), 2113);
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): +72
+        // HA (Horror Adventures), the sixteenth book, base declarations,
+        // but 2 ("Green Caress", "Verminous Transformation") are verbatim
+        // reprints of spells Ultimate Wilderness already ships (earlier in
+        // the chain) -- the resolver's cross-book dedup (SD-31 wave-24,
+        // first-chained wins) keeps only UW's copy, so only 70 of HA's 72
+        // reach the SERVED catalog. 2113 -> 2183.
+        assert_eq!(response.entries.len(), 2183);
         assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -616,6 +660,10 @@ mod tests {
         assert_eq!(book_entries(BOOK_ISF).len(), 2);
         assert_eq!(book_entries(BOOK_ISM).len(), 34);
         assert_eq!(book_entries(BOOK_ISTEM).len(), 21);
+        // 70, not 72: "Green Caress"/"Verminous Transformation" serve under
+        // BOOK_UW (earlier in the chain), not BOOK_HA -- see the comment
+        // above `response.entries.len()`'s own assertion.
+        assert_eq!(book_entries(BOOK_HA).len(), 70);
     }
 
     #[test]
@@ -644,7 +692,7 @@ mod tests {
             assert!(
                 [
                     BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
-                    BOOK_ISG, BOOK_UW, BOOK_AG, BOOK_ISF, BOOK_ISM, BOOK_ISTEM
+                    BOOK_ISG, BOOK_UW, BOOK_AG, BOOK_ISF, BOOK_ISM, BOOK_ISTEM, BOOK_HA
                 ]
                 .contains(&entry.book.as_str())
             );

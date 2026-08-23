@@ -113,10 +113,11 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
     acg, adventurers_guide as ag, advanced_race_guide as arg, apg, beastiary1, crb,
-    inner_sea_faiths as isf, inner_sea_gods as isg, inner_sea_magic as ism,
-    inner_sea_temples as istem, occult_adventures as oa, pathfinder_unchained as pu,
-    ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
-    ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
+    horror_adventures as ha, inner_sea_faiths as isf, inner_sea_gods as isg,
+    inner_sea_magic as ism, inner_sea_temples as istem, occult_adventures as oa,
+    pathfinder_unchained as pu, ultimate_combat as uc, ultimate_equipment as ue,
+    ultimate_intrigue as ui, ultimate_magic as um, ultimate_psionics as upsi,
+    ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -1126,6 +1127,28 @@ fn reach_of(family: &Family) -> Option<Reach> {
             istem::spell_list::SPELL_LIST
                 .iter()
                 .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off):
+        // Horror Adventures joins `spell_resolver::spell_catalog_rows()`
+        // as the catalog's 16th book, this book's SECOND reach claim
+        // (`companion`/`monster`/`monster_ability` already reach). 70 of
+        // its 72 base declarations carry a real `SCHOOL:`, `CLASSES:`
+        // level and `DESC:`, so `has_payload` is satisfied for those 70
+        // (`src/bin/ingest_spells.rs`). The other 2 ("Green Caress",
+        // "Verminous Transformation") are verbatim reprints of spells
+        // Ultimate Wilderness already ships (earlier in the chain) -- the
+        // resolver's cross-book dedup keeps only UW's copy, so they never
+        // carry `book=="HA"` in the served catalog (the exact
+        // `bestiary_6`/`ultimate_wilderness` shape above, at 2-of-72
+        // instead of 2-of-2 -- see the matching `OPEN_FINDINGS` entry
+        // below rather than claiming these 2 here).
+        ("horror_adventures", "spells") => Some(spells_reach(
+            "HA",
+            ha::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| k != "Green Caress" && k != "Verminous Transformation")
                 .collect(),
         )),
 
