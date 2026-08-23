@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_232)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_232)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You were born with the ability to stop the passage to death's door. Once per day, you can use stabilize as a spell-like ability, but with a range of touch."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

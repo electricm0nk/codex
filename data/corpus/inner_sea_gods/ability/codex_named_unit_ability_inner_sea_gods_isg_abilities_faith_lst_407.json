@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_407)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_407)",
@@ -21,15 +21,15 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Animate Rope|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Cat's Grace|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Haste|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -37,7 +37,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
@@ -45,11 +45,11 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|ElectricityResistanceBonus|15|TYPE=Resistance|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "CombatBonus|+2 bonus on weapon attack rolls against evil targets.|PREMULT:2,[PREVARGTEQ:SentinelBoonLVL,6],[!PREABILITY:1,CATEGORY=Special Ability,Paladin ~ Smite Evil]"
+        "value": "[redacted PI]"
       }
     ]
   },

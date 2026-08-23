@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_221)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_221)",
@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Obedience.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",

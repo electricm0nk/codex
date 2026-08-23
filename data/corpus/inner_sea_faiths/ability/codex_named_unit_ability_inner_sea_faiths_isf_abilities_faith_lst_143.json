@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_143)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_143)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Each day, upon performing your obedience, choose one of the following spell-like abilities: Ear-Piercing Scream 3/day, Shatter 2/day, or Fireball 1/day"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",

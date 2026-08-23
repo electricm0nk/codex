@@ -100,11 +100,15 @@ from codex_neutral_name import (  # noqa: E402
     neutral_key,
     neutral_name,
 )
+from pi_scrub import (  # noqa: E402
+    PI_MARKER_REDACTED,
+    REDACTED_PI_MARKER,
+    blacklist_term_hit_including_concatenated,
+    scrub_name_pi_tokens,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INVENTORY_PATH = os.path.join(REPO_ROOT, "docs/work-inventory.json")
-REDACTED_PI_MARKER = "[redacted PI]"  # src/rules_core/shape_b_v1.rs::REDACTED_PI_MARKER
-PI_MARKER_REDACTED = "redacted"  # src/rules_core/shape_b_v1.rs::PI_MARKER_REDACTED
 SOFT_HYPHEN = "­"
 CORE_ESSENTIALS_BASENAME = "core_essentials"
 
@@ -189,57 +193,6 @@ def row_tokens(line: str) -> list[dict[str, str]]:
     return tokens
 
 
-def scrub_name_pi_tokens(
-    tokens: list[dict[str, str]], name: str, key: str
-) -> tuple[list[dict[str, str]], bool]:
-    """`decisions.md §24b`-2: "The PI original appears nowhere that ships."
-
-    A record whose NAME is PI can carry that same name again inside another
-    token's VALUE -- most concretely a `KEY:` field that restates the row's
-    own full original key verbatim (found live this cycle: a
-    `NAMEISPI:YES` row whose OWN `KEY:` token repeats the identity string
-    the NAME column already carried). The 60-term blacklist scan alone is
-    not enough here -- it only catches the ~60 terms the T9 review
-    compiled, not every deity/proper-noun this kind's `NAMEISPI:YES`
-    declarations cover. This function additionally scrubs any token VALUE
-    that contains the record's OWN original `name` or `key` (or a
-    `~`-delimited segment of `key`, since a `'<Concept> ~ <Deity>'`-shaped
-    key embeds the PI term as one segment, not the whole string) as a
-    case-insensitive substring.
-
-    `name`/`key` are used ONLY to build the redaction needle set here --
-    they are never written into the returned record; the CALLER (this
-    module's `main`) never stores the original `name`/`key` on a renamed
-    record's `data.name`/`data.key`, which is the field `§24b`-1 forbids
-    deriving the new identity from. This function does something
-    different: it removes the original from OTHER fields, which `§24b`-2
-    separately requires.
-
-    Returns `(scrubbed_tokens, any_redacted)`. Never mutates the input."""
-    needles: set[str] = set()
-    for s in (name, key):
-        if s and s.strip():
-            needles.add(s.strip().lower())
-    if key:
-        for segment in re.split(r"\s*~\s*", key):
-            segment = segment.strip()
-            if segment:
-                needles.add(segment.lower())
-
-    scrubbed = []
-    any_redacted = False
-    for t in tokens:
-        value = t["value"]
-        blacklist_hit = normalized_term_hit(value) if value else None
-        identity_hit = bool(value) and any(needle in value.lower() for needle in needles)
-        if blacklist_hit or identity_hit:
-            scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
-            any_redacted = True
-        else:
-            scrubbed.append(dict(t))
-    return scrubbed, any_redacted
-
-
 def scrub_blacklist_pi_tokens(
     tokens: list[dict[str, str]], desc_already_redacted: bool
 ) -> tuple[list[dict[str, str]], bool]:
@@ -253,11 +206,14 @@ def scrub_blacklist_pi_tokens(
     still leak through a DIFFERENT token's value on an otherwise-clean
     record: a `SPELLLEVEL` token's own `PREDEITY:1,<deity>` segment, and a
     `TYPE`/`PREABILITY` token naming a published campaign-setting institution.
-    This function
-    is the union-closing fix: every token value is scanned with
-    `normalized_term_hit` (word-boundary, case-fold, OCR-normalized —
-    same scan `scrub_name_pi_tokens` already uses for the renamed branch),
-    independent of whether the record's own name triggered a rename.
+    This function is the union-closing fix: every token value is scanned
+    with `pi_scrub.blacklist_term_hit_including_concatenated` — the SAME
+    word-boundary blacklist scan `scrub_name_pi_tokens` uses for the renamed
+    branch, PLUS its alphanumeric-normalized (no-separator) concatenated-term
+    check, so a blacklisted term joined PascalCase-style into another token's
+    value (found live: a `TYPE:` token on a THIRD, otherwise-clean record,
+    concatenating a blacklisted term directly onto a suffix with no
+    separator) is caught here too, not only in the renamed branch.
 
     `desc_already_redacted` skips re-scanning a `DESC` token the caller has
     already replaced with [`REDACTED_PI_MARKER`] via the declared-PI /
@@ -272,7 +228,7 @@ def scrub_blacklist_pi_tokens(
             scrubbed.append(dict(t))
             continue
         value = t["value"]
-        if value and normalized_term_hit(value):
+        if value and blacklist_term_hit_including_concatenated(value):
             scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
             any_redacted = True
         else:

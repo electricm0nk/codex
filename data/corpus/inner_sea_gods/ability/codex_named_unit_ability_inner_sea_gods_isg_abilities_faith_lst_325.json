@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_325)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_325)",
@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Sanctuary|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Gentle Repose|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Speak with Dead|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "FEAT|AUTOMATIC|Extra Revelation|PREMULT:2,[PREVARGTEQ:EvangelistBoonLVL,9],[PREABILITY:1,CATEGORY=Special Ability,Oracle's Mystery]"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "WEAPONPROF=Dagger|TOHIT|2"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "SaveBonus|+4 sacred or profane bonus on saves vs. necromancy spells and death effects.|PREMULT:2,[PREVARGTEQ:EvangelistBoonLVL,9],[!PREABILITY:1,CATEGORY=Special Ability,Oracle's Mystery]"
+        "value": "[redacted PI]"
       }
     ]
   },

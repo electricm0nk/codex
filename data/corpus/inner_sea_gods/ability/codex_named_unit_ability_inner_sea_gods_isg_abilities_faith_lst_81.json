@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_81)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_81)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you can lash out with your melee weapon as if it were a whip, no matter what the weapon's type truly is. Your melee weapon elongates and grows flexible, gaining an extra 5 feet of reach while still maintaining its ability to strike targets adjacent to you (provided the weapon could normally do so). Using this ability does not provoke attacks of opportunity, and you can apply this ability only to melee weapons. You can use this ability %1 rounds per day. The rounds don't need to be consecutive, and activating and deactivating the ability is a free action.|min(5,(TL/4))+1"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

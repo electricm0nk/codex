@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_216)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_216)",
@@ -21,19 +21,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Ray of Sickening|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Blindness/Deafness|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Excruciating Deformation|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "SKILL|Intimidate|4|TYPE=Profane"
+        "value": "[redacted PI]"
       }
     ]
   },

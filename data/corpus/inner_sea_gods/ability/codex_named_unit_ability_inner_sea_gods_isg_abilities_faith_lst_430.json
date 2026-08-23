@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_430)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_430)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you call upon your connection with the earth and its hidden strength to levy it behind your holy attacks. Whenever you use your smite evil ability, you can choose to add 2d6 points of acid damage to your damage roll. If you don't have access to smite evil, you can instead add 2d6 points of acid damage to a single attack against an evil opponent three times per day. You must declare your use of this ability before you roll your attack. If you miss or if the target is not evil, the use is wasted."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

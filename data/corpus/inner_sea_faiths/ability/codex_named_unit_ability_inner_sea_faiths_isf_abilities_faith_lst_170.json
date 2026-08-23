@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_170)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_170)",
@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Nauseating Dart|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Pernicious Poison|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Poison|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon (spell variant)|CASTERLEVEL=TL|Horrid Wilting|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "WEAPONPROF=Spear|DAMAGE,TOHIT|1|PREVARGTEQ:SentinelBoonLVL,6"
+        "value": "[redacted PI]"
       }
     ]
   },

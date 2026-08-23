@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_242)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_242)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you the knowledge you've gained over the years regarding different creatures lets you strike your foes with unerring insight. As a standard action, you can study your opponent during combat, a task which requires you to succeed at a Knowledge check related to the enemy's type (CRB p.99). The DC is equal to 10 + your opponent's Hit Dice. If you succeed at the check, you gain a +2 bonus on weapon attack and damage rolls against that enemy. If you fail at the Knowledge check, you may try again with another action, but all subsequent attempts to use this ability against the same enemy take a cumulative -2 penalty."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

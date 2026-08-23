@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_128)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_128)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you can throw your deity's star-shaped favored weapon with great speed and ease. Three times per day, you can make a single ranged attack with a starknife as a swift action. To throw a starknife as a swift action, you must have it in hand, have sufficient actions available to draw the starknife, or have the Quick Draw feat or a similar ability."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

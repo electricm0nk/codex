@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_546)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_546)",
@@ -17,7 +17,7 @@
       },
       {
         "key": "TYPE",
-        "value": "NorgorberAspectChoice.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -45,7 +45,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description,name",
+  "pi_field": "description,name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

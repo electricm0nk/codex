@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_256)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_256)",
@@ -21,15 +21,15 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Enlarge Person|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Bull's Strength|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Rage|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

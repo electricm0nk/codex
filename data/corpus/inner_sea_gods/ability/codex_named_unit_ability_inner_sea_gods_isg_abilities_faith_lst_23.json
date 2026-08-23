@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_23)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_23)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you never become lost in cities of more than 5,000 inhabitants-upon entering a city, even for the first time, you can always retrace your steps and intuit where particular districts must be. Furthermore, you pick up local accents and vernacular instantly, giving you the cant of a citizen. You also gain a +4 sacred or profane bonus on Disguise and Knowledge (local) checks while in the bounds of a city."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

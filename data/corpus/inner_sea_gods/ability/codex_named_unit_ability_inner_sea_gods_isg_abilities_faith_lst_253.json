@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_253)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_253)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, your eidolon gains the frightful presence evolution for free, if you wish. Whenever you gain a new level in the summoner class (or the evangelist prestige class, if your aligned class has the eidolon class feature) and you reassign your evolution points, you can choose to assign or remove the frightful presence evolution. Once your choice has been made, it can't be altered until the next time you gain an appropriate level. If you don't have the eidolon class feature, you can instead use summon monster V once per day as a spell-like ability."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

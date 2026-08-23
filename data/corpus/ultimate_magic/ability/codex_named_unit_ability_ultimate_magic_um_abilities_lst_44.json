@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_ultimate_magic_um_abilities_lst_44)",
     "name": "Codex-Named Unit (ability_ultimate_magic_um_abilities_lst_44)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "SpecialQuality.Supernatural.PreparationRitual"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This improved boon allows you to see invisible creatures. You can activate the boon's effect as a swift action to gain the effects of see invisibility for up to 10 rounds. The rounds need not be consecutive, but you must spend a swift action each time you activate the boon's effect. The boon's effect is only spent when all 10 rounds of see invisibility are used up, or the next time you prepare wizard spells."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

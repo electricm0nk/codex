@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_279)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_279)",
@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Mage Armor|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Mirror Image|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Fly|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon (spell variant)|CASTERLEVEL=TL|Arcane Eye|PREVARGTEQ:EvangelistBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "CombatBonus|+4 sacred or profane bonus on concentration checks."
+        "value": "[redacted PI]"
       }
     ]
   },

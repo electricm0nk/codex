@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_19)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_19)",
@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Disguise Self|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Invisibility|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Gaseous Form|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "SKILL|Stealth|2|TYPE=Profane|PREVARGTEQ:EvangelistBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "CombatBonus|+2 profane bonus to confirm critical hits while wielding a sawtooth sabre."
+        "value": "[redacted PI]"
       }
     ]
   },

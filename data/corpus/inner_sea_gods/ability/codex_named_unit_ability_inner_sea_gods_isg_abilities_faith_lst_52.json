@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_52)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_52)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, your eyes take on the appearance of red-hot, glowing embers, granting you the ability to see in darkness much like devils. You gain darkvision to a range of 60 feet. If you chose either darkness or deeper darkness as the spell-like ability granted by your first boon, you can also see perfectly through both darkness and deeper darkness. If you already have darkvision to a range of 60 feet or more, instead increase the range of your darkvision by 10 feet. Your eyes make you extremely distinctive, causing you to take a -4 penalty on Disguise checks."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

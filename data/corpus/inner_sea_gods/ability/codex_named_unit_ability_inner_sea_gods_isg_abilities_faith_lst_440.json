@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_440)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_440)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, your knowledge of the arcane workings of death increases. Your familiar can teach you one new spell from either the Death or Magic domain spell list. The spell must be of a level you can cast, and once you choose the spell, your selection can't be changed. If you cast spells from a spell book, you learn a new spell in the same manner, though it appears magically in your spellbook. If you cast spells spontaneously, you can choose one spell to add to your list of spells known, but you gain no additional spell slots."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

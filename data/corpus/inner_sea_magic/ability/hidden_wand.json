@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:39:33Z",
   "data": {
     "key": "Hidden Wand ~ Guild",
     "name": "Hidden Wand",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You've trained under the philosophy that performances enhanced by magic are best when the magical enhancement itself is not obvious. When you activate a wand (or any similar spell trigger item that's relatively easy to conceal), you may make a Bluff check (opposed by the Perception check of any creature able to see you) to conceal the use of the item."
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",
@@ -52,9 +52,9 @@
   "wiring_class_signals": [
     "display:no_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null
 }

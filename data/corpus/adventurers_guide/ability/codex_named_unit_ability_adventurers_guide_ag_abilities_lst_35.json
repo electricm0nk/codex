@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_35)",
     "name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_35)",
@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "StudentOfPerfectionBonusFeat"
+        "value": "[redacted PI]"
       },
       {
         "key": "VISIBLE",
@@ -41,7 +41,7 @@
       },
       {
         "key": "BONUS",
-        "value": "ABILITYPOOL|House of Perfection Feat|1"
+        "value": "[redacted PI]"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_31)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_31)",
@@ -21,31 +21,31 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Lead Blades|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Spiritual Weapon|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Keen Edge|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon (quickened)|TIMES=3|CASTERLEVEL=TL|Bleed|PREVARGTEQ:SentinelBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "WEAPONPROF=Sawtooth Sabre|DAMAGE|2|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "CombatBonus|+2 profane bonus to confirm critical hits while wielding a sawtooth sabre."
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "CombatBonus|Wounds you inflict with a sawtooth sabre deal 1d4 points of bleed damage.|PREVARGTEQ:SentinelBoonLVL,6"
+        "value": "[redacted PI]"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_197)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_197)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "Imitating the leadership of your deity, you spur others on to great deeds. When you cast a spell that grants allies a morale bonus, you cast that spell at +1 caster level."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

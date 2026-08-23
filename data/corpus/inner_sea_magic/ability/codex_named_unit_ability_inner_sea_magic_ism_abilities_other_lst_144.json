@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_144)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_144)",
@@ -29,15 +29,15 @@
       },
       {
         "key": "PREVARGTEQ",
-        "value": "KiPool,1"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "You gain the ability to achieve inner focus. You gain 1 bonus ki point and can activate your inner focus multiple times per day by spending 1 ki point as a swift action."
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|KiPool|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

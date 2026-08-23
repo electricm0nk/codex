@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_210)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_210)",
@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Youthful Appearance|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Undetectable Alignment|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Nondetection|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "SKILL|Intimidate|4|TYPE=Profane"
+        "value": "[redacted PI]"
       },
       {
         "key": "VISION",
-        "value": "Darkvision (30')|PREMULT:2,[PREMULT:1,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6]],[!PREVISION:1,Darkvision=30]"
+        "value": "[redacted PI]"
       }
     ]
   },

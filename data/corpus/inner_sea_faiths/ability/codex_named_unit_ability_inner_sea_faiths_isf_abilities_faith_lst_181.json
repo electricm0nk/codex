@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_181)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_181)",
@@ -21,19 +21,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Doom|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Augury|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Bestow Curse|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon (spell variant)|CASTERLEVEL=TL|Insanity|PREVARGTEQ:EvangelistBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

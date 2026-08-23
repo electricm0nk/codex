@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_35)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_35)",
@@ -25,7 +25,7 @@
       },
       {
         "key": "DEFINE",
-        "value": "SecretSocietyFame|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
@@ -33,7 +33,7 @@
       },
       {
         "key": "DEFINE",
-        "value": "TheHarrowedSocietyFame|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -53,11 +53,11 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|SecretSocietyFame|TheHarrowedSocietyFame|TYPE=MagicSchool"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|GenericSchoolFame|TheHarrowedSocietyFame|TYPE=MagicSchool"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
@@ -65,7 +65,7 @@
       },
       {
         "key": "TEMPBONUS",
-        "value": "PC|VAR|TheHarrowedSocietyFame|%CHOICE"
+        "value": "[redacted PI]"
       },
       {
         "key": "TEMPVALUE",

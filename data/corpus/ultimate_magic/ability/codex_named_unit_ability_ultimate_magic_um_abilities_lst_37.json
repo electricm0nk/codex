@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_ultimate_magic_um_abilities_lst_37)",
     "name": "Codex-Named Unit (ability_ultimate_magic_um_abilities_lst_37)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "SpecialQuality.Supernatural.PreparationRitual"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "You use a trick perfected by Rul Thaven to ferret out invisible creatures. Spend this boon's effect as a swift action. You gain the effects of see invisibility for 1 round."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

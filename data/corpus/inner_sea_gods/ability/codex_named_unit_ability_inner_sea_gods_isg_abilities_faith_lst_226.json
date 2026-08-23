@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_226)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_226)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Obedience.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Over the course of 1 hour, spend an equal amount of time practicing with a weapon or your unarmed strikes, reading any text that you have never read before, and braiding a length of hair while contemplating the mysteries of the multiverse. Hang the length of hair around your neck when your obedience is complete and wear it for the rest of the day. Gain a +4 sacred or profane bonus on all Knowledge checks. The type of bonus depends on your alignment-if you're neither good nor evil, you must choose either sacred or profane the first time you perform your obedience, and this choice can't be changed."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

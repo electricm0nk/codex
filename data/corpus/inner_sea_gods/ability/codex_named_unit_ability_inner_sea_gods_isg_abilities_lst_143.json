@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_143)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_143)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You can change the fortunes of others, typically for the better. Once per day, you can allow an adjacent ally to reroll a skill check as an immediate action before the result is revealed. The ally must take the second roll, even if it is worse."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

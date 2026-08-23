@@ -85,11 +85,14 @@ from codex_neutral_name import (  # noqa: E402
     neutral_key,
     neutral_name,
 )
+from pi_scrub import (  # noqa: E402
+    PI_MARKER_REDACTED,
+    REDACTED_PI_MARKER,
+    scrub_name_pi_tokens,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INVENTORY_PATH = os.path.join(REPO_ROOT, "docs/work-inventory.json")
-REDACTED_PI_MARKER = "[redacted PI]"  # src/rules_core/shape_b_v1.rs::REDACTED_PI_MARKER
-PI_MARKER_REDACTED = "redacted"  # src/rules_core/shape_b_v1.rs::PI_MARKER_REDACTED
 CORE_ESSENTIALS_BASENAME = "core_essentials"
 
 # Mirrors `ingest_ability.py::CORPUS_WRITE_DIR_ALIASES` /
@@ -176,68 +179,6 @@ def declared_pi(tokens: list[dict[str, str]]) -> tuple[bool, bool]:
         elif t["key"].upper() == "DESCISPI":
             desc_declared = True
     return name_declared, desc_declared
-
-
-def scrub_name_pi_tokens(
-    tokens: list[dict[str, str]], name: str, key: str
-) -> tuple[list[dict[str, str]], bool]:
-    """`decisions.md §24b`-2: "The PI original appears nowhere that ships."
-    Mirrors `ingest_ability.py::scrub_name_pi_tokens` exactly -- a record
-    whose NAME is PI can carry that same name again inside another token's
-    VALUE (most concretely a `KEY:` field that restates the row's own full
-    original key verbatim). `name`/`key` are used ONLY to build the
-    redaction needle set here -- they are never written into the returned
-    record. Returns `(scrubbed_tokens, any_redacted)`. Never mutates the
-    input.
-
-    **Identifier-form matching (found live this cycle -- not present in the
-    `ingest_ability.py` original this was copied from, added here after a
-    real leak surfaced in this cycle's own dry-run output).** PCGen
-    `DEFINE`/`BONUS` tokens frequently name their own class/race-scoped
-    variables by concatenating the record's name with no separator at all
-    (`RedMantisAssassinLVL`, `WestcrownDevilLVL`) -- a space-preserving
-    substring check on the lowercased original string never matches a
-    value with no spaces. Every needle is therefore ALSO checked in a
-    fully alphanumeric-normalized form (`[^a-z0-9]` stripped) against the
-    same normalization of the value, bounded to needles of at least 6
-    normalized characters so a short, generic needle (an abbreviation, a
-    common word) cannot over-redact by coincidence."""
-    needles: set[str] = set()
-    norm_needles: set[str] = set()
-
-    def add_needle(s: str) -> None:
-        s = s.strip()
-        if not s:
-            return
-        needles.add(s.lower())
-        normalized = re.sub(r"[^a-z0-9]", "", s.lower())
-        if len(normalized) >= 6:
-            norm_needles.add(normalized)
-
-    for s in (name, key):
-        add_needle(s)
-    if key:
-        for segment in re.split(r"\s*~\s*", key):
-            add_needle(segment)
-            for word in re.split(r"[\s()]+", segment):
-                add_needle(word)
-
-    scrubbed = []
-    any_redacted = False
-    for t in tokens:
-        value = t["value"]
-        blacklist_hit = normalized_term_hit(value) if value else None
-        identity_hit = bool(value) and any(needle in value.lower() for needle in needles)
-        norm_value = re.sub(r"[^a-z0-9]", "", value.lower()) if value else ""
-        identity_hit = identity_hit or (
-            bool(norm_value) and any(n in norm_value for n in norm_needles)
-        )
-        if blacklist_hit or identity_hit:
-            scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
-            any_redacted = True
-        else:
-            scrubbed.append(dict(t))
-    return scrubbed, any_redacted
 
 
 def slugify(name: str, used: set[str]) -> str:

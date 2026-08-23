@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_229)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_229)",
@@ -17,7 +17,7 @@
       },
       {
         "key": "CATEGORY",
-        "value": "Special Ability"
+        "value": "[redacted PI]"
       },
       {
         "key": "TYPE",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You carry a burning hatred in your heart for all things demonic, and have studied their weaknesses carefully. You deal an amount of additional damage equal to your weapon's critical hit modifier when you score a successful critical hit with a weapon against a demon. This damage is added only after the damage is totaled, and is not multiplied by the critical hit multiplier."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

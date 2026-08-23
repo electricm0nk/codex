@@ -173,11 +173,18 @@ grep -rn "1883\|1,883" tests/ src/ scripts/ apps/ 2>/dev/null | grep -v /target/
 
 ## 10. Product Identity (`decisions.md §15`)
 
-5 units skipped, never transcribed, named individually in the committed report
-(`11-race-trait-generic-ingest-report.json`'s `pi_skipped_records`): `inner_sea_gods`'s "Spawn of
-Rovagug Traits" (term hit), `inner_sea_races`'s "Sovyrian-Born" (`NAMEISPI:YES`), and
-`inner_sea_world_guide`'s three "Daughter of Urgathoa" rows (term hit). These 5 remain permanently
-`no_record` by design — a name cannot be redacted.
+5 units skipped, never transcribed, named individually by coordinate in the committed report
+(`11-race-trait-generic-ingest-report.json`'s `pi_skipped_records`): `inner_sea_gods:isg_abilities_races.lst:12`
+(term hit), `inner_sea_races:isr_abilities_race.lst:67` (`NAMEISPI:YES`), and three rows in
+`inner_sea_world_guide:pfs_iswg_abilities_race.lst` (lines 34-36, term hit).
+
+**Superseded 2026-08-23 (`decisions.md §24`, SD-32 T9-onboarding-cause-closure cycle):** the "a name
+cannot be redacted" premise this section was written under is superseded — `§24` ingests exactly this
+shape under a Codex-generated neutral name. All 5 are now ingested (`data/corpus/<book>/
+race_trait_generic/codex_named_unit_*.json`, `codex_generated_name: true`); they are no longer
+permanently `no_record`. This receipt's own committed report (`11-race-trait-generic-ingest-report.json`)
+and this paragraph had each quoted the units' literal display names in plain text — a `§24b`-4 exposure
+now fixed by reducing both to coordinate-only form, since the underlying records ship under `§24`.
 
 ## 11. Reachability, claimed honestly (`decisions.md §20`'s own "lessons wave 1 paid for" item 4)
 

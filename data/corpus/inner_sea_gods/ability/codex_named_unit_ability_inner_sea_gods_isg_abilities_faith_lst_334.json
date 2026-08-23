@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_334)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_334)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Each day, upon performing your obedience, choose one of the following spell-like abilities: Hide from Undead 3/day, Defending Bone 2/day, or Halt Undead 1/day"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",

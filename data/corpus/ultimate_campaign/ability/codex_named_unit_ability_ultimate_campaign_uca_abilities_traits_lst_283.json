@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_283)",
     "name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_283)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "Your faith leads you to see the power and wonder in even the most horrible abominations. Once per day, you can cast speak with animals. When you cast this spell, it can affect animals (as normal) as well as aberrations and magical beasts with an Intelligence of 2 or lower."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

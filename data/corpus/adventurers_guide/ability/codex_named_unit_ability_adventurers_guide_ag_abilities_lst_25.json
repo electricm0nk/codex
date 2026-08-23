@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_25)",
     "name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_25)",
@@ -21,7 +21,7 @@
       },
       {
         "key": "TYPE",
-        "value": "GrayMaidenInitiateTraining.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -37,7 +37,7 @@
       },
       {
         "key": "BONUS",
-        "value": "MISC|SPELLFAILURE|-5|PREEQUIP:1,Gray Maiden Plate%"
+        "value": "[redacted PI]"
       }
     ]
   },

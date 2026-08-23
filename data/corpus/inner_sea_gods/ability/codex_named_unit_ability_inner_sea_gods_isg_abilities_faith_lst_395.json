@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_395)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_395)",
@@ -21,23 +21,23 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Silent Image|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Minor Image|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Major Image|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon (spell variant)|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=TL|Symbol of Persuasion|PREVARGTEQ:EvangelistBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "ABILITYPOOL|Versatile Performance|1|PREVARGTEQ:EvangelistBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",

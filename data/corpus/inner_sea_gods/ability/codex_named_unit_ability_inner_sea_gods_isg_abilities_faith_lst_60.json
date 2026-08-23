@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_60)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_60)",
@@ -21,31 +21,31 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Protection from Good|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Death Knell|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Defile Armor|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Resistance to Fire|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "SaveBonus|+4 profane bonus on saves vs. fire effects."
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "SaveBonus|+4 profane bonus on saves vs. poison.|PREVARGTEQ:SentinelBoonLVL,9"
+        "value": "[redacted PI]"
       }
     ]
   },

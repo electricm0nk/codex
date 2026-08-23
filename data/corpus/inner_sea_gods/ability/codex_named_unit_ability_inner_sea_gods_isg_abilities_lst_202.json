@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_202)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_202)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "Your studies of Chaldira Zuzaristan's exploits have given you a knack for avoiding trouble. Once per day before the result of a saving throw is known, you can reroll that saving throw. You must take the second result even ifit is worse."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

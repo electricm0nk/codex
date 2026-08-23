@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_324)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_324)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you gain the Extra Revelation feat, choosing a revelation from either your chosen mystery or the Bones mystery. If you don't have the revelation class feature, you instead gain a +4 sacred or profane bonus on saving throws against necromancy spells and death effects."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

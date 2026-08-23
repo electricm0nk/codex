@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_477)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_477)",
@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Compel Hostility|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Touch of Bloodletting|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Vampiric Touch|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VISION|Blindsense|10|PREMULT:2,[PREVARGTEQ:SentinelBoonLVL,9],[PREVISION:1,Blindsense=20]"
+        "value": "[redacted PI]"
       },
       {
         "key": "VISION",
-        "value": "Blindsense (20')|PREMULT:2,[PREVARGTEQ:SentinelBoonLVL,9],[!PREVISION:1,Blindsense=20]"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "SaveBonus|+2 sacred bonus on saves vs. spells that deal hit point damage."
+        "value": "[redacted PI]"
       }
     ]
   },

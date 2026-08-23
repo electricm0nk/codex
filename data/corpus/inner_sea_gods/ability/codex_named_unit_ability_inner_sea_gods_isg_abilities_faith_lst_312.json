@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_312)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_312)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, long practice has taught you how to deftly apply poison during combat. You can apply poison to a weapon or a single piece of ammunition as a move action. You never risk exposing yourself to the effects of the poison when applying it to the weapon, nor do you run the risk of poisoning yourself if you roll a natural 1 on an attack roll with a poisoned weapon."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

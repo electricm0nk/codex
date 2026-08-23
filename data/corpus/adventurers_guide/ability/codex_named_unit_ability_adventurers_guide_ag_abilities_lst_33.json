@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_33)",
     "name": "Codex-Named Unit (ability_adventurers_guide_ag_abilities_lst_33)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "HouseOfPerfection.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "UntwistingIronStudent|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -45,7 +45,7 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|UntwistingIronStudent|1"
+        "value": "[redacted PI]"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_408)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_408)",
@@ -21,19 +21,19 @@
       },
       {
         "key": "DEFINE",
-        "value": "SentinelSmiteEvilBonus|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|SentinelSmiteEvilBonus|CHA"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|SmiteEvilAttackBonus|SentinelSmiteEvilBonus"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|SmiteEvilDamageBonus|SentinelSmiteEvilBonus"
+        "value": "[redacted PI]"
       }
     ]
   },

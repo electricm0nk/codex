@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_117)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_117)",
@@ -21,15 +21,15 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Longstrider|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Darkvision|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Phantom Steed|PREVARGTEQ:EvangelistBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
@@ -37,11 +37,11 @@
       },
       {
         "key": "BONUS",
-        "value": "VISION|Darkvision|10|PREMULT:2,[PREVARGTEQ:EvangelistBoonLVL,9],[PREVISION:1,Darkvision=60]"
+        "value": "[redacted PI]"
       },
       {
         "key": "VISION",
-        "value": "Darkvision (60')|PREMULT:2,[PREVARGTEQ:EvangelistBoonLVL,9],[!PREVISION:1,Darkvision=60]"
+        "value": "[redacted PI]"
       }
     ]
   },

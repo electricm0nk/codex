@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_138)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_138)",
@@ -25,7 +25,7 @@
       },
       {
         "key": "!PREABILITY",
-        "value": "1,CATEGORY=FEAT,Far Shot"
+        "value": "[redacted PI]"
       },
       {
         "key": "PREDEITY",
@@ -33,11 +33,11 @@
       },
       {
         "key": "DESC",
-        "value": "Your training has made you adept at successfully making extraordinary bow shots. When using a bow, you gain the Far Shot feat."
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "FEAT|AUTOMATIC|Far Shot|PREEQUIP:1,TYPE=Bow"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

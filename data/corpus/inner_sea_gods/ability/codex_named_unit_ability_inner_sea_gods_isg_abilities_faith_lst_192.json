@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_192)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_192)",
@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Entangle|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Warp Wood|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Speak with Plants|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,12],[PREVARGTEQ:ExaltedBoonLVL,3]"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6]"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|ElectricityResistanceBonus|5+TL|TYPE=Resistance|PREMULT:1,[PREVARGTEQ:DeificBoonLVL,16],[PREVARGTEQ:ExaltedBoonLVL,6]"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "SaveBonus|+4 sacred or profane bonus on saves vs. electricity and water spells and effects."
+        "value": "[redacted PI]"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_336)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_336)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Obedience.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Spend an hour sitting on the grave of someone who suffered an accidental death. You must reflect on how chance has wronged you and vocally reject the influence of any gods associated with these wrongs. If no suitable grave exists, spend an hour telling strangers howv their religious beliefs and hopes for a just afterlife are folly and of no consequence. Alternatively, you can write this screed and post it in a public place within a settlement. If you're away from civilization, you can instead spend an hour sabotaging a path, bridge, tool, or other device so that it's dangerous for the next person who uses it. You gain a +4 profane bonus on Craft (traps) or Disable Device checks, chosen when you complete the obedience."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_431)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_431)",
@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Sanctuary|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Shield of Faith|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Prayer|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Domain Power ~ Artificer's Touch|PREMULT:2,[PREVARGTEQ:SentinelBoonLVL,6],[PREDOMAIN:1,Artifice]"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainArtificeLVL|TL|TYPE=Domain|PREVARGTEQ:SentinelBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "WEAPONPROF=Warhammer|TOHIT|1"
+        "value": "[redacted PI]"
       }
     ]
   },

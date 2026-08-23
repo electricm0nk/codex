@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_283)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_283)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you can deliver touch spells with a casting time of one standard action or longer through a quarterstaff. Using this ability doesn't change the casting time or other qualities of the spell, but you must make a melee attack with your quarterstaff against the target's AC rather than a touch attack against its touch AC. If you hit the target, you deal quarterstaff damage as well as discharge the spell effect. You can hold the charge as normal when delivering a touch spell through a quarterstaff."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

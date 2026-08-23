@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_ultimate_psionics_up_abilities_lst_202)",
     "name": "Codex-Named Unit (ability_ultimate_psionics_up_abilities_lst_202)",
@@ -21,7 +21,7 @@
       },
       {
         "key": "DESC",
-        "value": "Attuned to Groundscorn Boots of the Twice-Loved"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -29,15 +29,15 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Groundscorn Boots ~ Teleportation Dance|PREVARGTEQ:TL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Groundscorn Boots ~ Air Strider|PREVARGTEQ:TL,15"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Groundscorn Boots ~ Unshakable|PREVARGTEQ:TL,20"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
@@ -57,7 +57,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

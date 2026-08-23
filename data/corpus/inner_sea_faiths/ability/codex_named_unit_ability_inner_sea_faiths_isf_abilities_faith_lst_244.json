@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_244)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_244)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Obedience.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Find the nearest boulder, log, or other unattended object that you can reliably lift over your head, and hold it up high for the duration of the obedience while meditating on the ennobling nature of sports and tests of physical might. If you are interrupted at any time by any creature or person, you must challenge your interrupter to a contest of strength, speed, or stamina, with the boulder or another object of your obedience used as the main focus of the competition. Regardless of who wins, you gain a +2 sacred bonus on Acrobatics and Climb checks."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

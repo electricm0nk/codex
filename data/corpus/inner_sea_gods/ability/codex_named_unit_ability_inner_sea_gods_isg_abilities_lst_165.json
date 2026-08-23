@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_165)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_165)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "The Pallid Princess has blessed you with the ability to avoid the final fate. Once per day while you are below 0 hit points, at the start of your turn you can choose to stabilize without needing to succeed at a Constitution check."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

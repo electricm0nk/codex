@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_185)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_185)",
@@ -17,11 +17,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, once per day as a standard action, you can cast summon monster VII to summon a greater elemental of a type you choose. You gain telepathic communication with the elemental to a range of 100 feet, and the elemental obeys your commands perfectly."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_82)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_82)",
@@ -13,15 +13,15 @@
       },
       {
         "key": "CATEGORY",
-        "value": "Special Ability"
+        "value": "[redacted PI]"
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "If you have performed your daily obedience, you for %1 rounds per day, you can ignore attacks of opportunity you would otherwise provoke due to your movement. Using this ability is a free action, and the rounds in which you use it don't need to be consecutive. You still provoke attacks of opportunity normally for actions other than moving.|CHA"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

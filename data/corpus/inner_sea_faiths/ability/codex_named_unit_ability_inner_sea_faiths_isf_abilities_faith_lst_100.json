@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_100)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_100)",
@@ -21,27 +21,27 @@
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Monkey Fish|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Slipstream|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Water Breathing|PREVARGTEQ:SentinelBoonLVL,3"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Doom of Sailors Choice|CASTERLEVEL=TL|Control Water|PREVARGTEQ:SentinelBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "SPELLS",
-        "value": "Doom of Sailors Choice|CASTERLEVEL=TL|Control Winds|PREVARGTEQ:SentinelBoonLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
-        "value": "CombatBonus|+2 sacred or profane bonus to AC against attacks of opportunity."
+        "value": "[redacted PI]"
       }
     ]
   },

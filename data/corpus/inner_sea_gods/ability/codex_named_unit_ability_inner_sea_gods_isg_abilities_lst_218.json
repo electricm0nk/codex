@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_218)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_218)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "Your faith in the Father of Creation strengthens your ability to shield others. When you use the aid another action to grant your ally a bonus to AC, you grant a +3 bonus to AC instead of the normal +2."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_290)",
     "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_290)",
@@ -21,11 +21,11 @@
       },
       {
         "key": "TYPE",
-        "value": "Faith Based Obedience.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Collect two unblemished white rose blossoms, open to their fullest but without any wilted petals. Stand beside a river and cut the blossoms from the stems, then set them on the water to float downstream. Meditate upon the beautiful perfection of love and the imperfection of a life that would deny it to star-crossed lovers. You gain a +2 profane or sacred bonus on Charisma-based skill checks. The type of bonus depends on your alignment-if you're neither good nor evil, you must choose either sacred or profane the first time you perform your obedience, and this choice can be changed."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_147)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_147)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "Besmara sometimes answers your call. Once per day when casting a divine spell, you can speak or whisper her name in place of using a divine focus."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

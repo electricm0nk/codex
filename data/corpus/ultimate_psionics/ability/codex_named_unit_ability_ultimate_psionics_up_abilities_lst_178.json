@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:09:22Z",
+  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
     "key": "Codex-Named Unit (ability_ultimate_psionics_up_abilities_lst_178)",
     "name": "Codex-Named Unit (ability_ultimate_psionics_up_abilities_lst_178)",
@@ -25,15 +25,15 @@
       },
       {
         "key": "DESC",
-        "value": "Attuned to the Dancing Robes of Sharatwan"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "FEAT|AUTOMATIC|Speed of Thought|PREVARGTEQ:TL,4"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Dancing Robes of Sharatwan ~ Hands Alight|PREVARGTEQ:TL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -41,11 +41,11 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Dancing Robes of Sharatwan ~ The Price of Peace|PREVARGTEQ:TL,16"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Dancing Robes of Sharatwan ~ Energized Blades|PREVARGTEQ:TL,18"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
@@ -65,7 +65,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {
