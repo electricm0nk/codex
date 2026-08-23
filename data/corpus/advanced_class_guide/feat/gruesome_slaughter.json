@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Gruesome Slaughter",
+    "category": "Combat",
+    "name": "Gruesome Slaughter",
+    "description": "Creatures you demoralize by using the Killing Flourish feat must succeed at a Fortitude save (DC = %1) or become sickened for 1 minute.|CL/2+10+max(DEX,STR)",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Killing Flourish,Intimidating Prowess",
+      "PRECLASS:1,Slayer=11",
+      "PRESKILL:1,Intimidate=11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 85,
+    "record_key": "Gruesome Slaughter"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

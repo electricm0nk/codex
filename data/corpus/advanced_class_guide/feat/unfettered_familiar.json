@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Unfettered Familiar",
+    "category": "General",
+    "name": "Unfettered Familiar",
+    "description": "%1 times per day, you can cast a touch spell without being in contact with your familiar and designate your familiar as the \"toucher.\" You do not require line of sight to your familiar to use this ability, but you must be within 20 (+%2) feet of your familiar when you cast the spell, and if you can't see or hear your familiar, you must at least be able to speak with it. You may pick this feat multiple times. The range and uses per day increase each time you pick this feat.|UnfetteredFamiliarTimes|UnfetteredFamiliarRange",
+    "prerequisites": [
+      "PRECLASS:1,SPELLCASTER=5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 164,
+    "record_key": "Unfettered Familiar"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

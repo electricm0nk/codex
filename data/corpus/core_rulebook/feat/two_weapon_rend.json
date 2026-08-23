@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Two-Weapon Rend",
+    "category": "Combat",
+    "name": "Two-Weapon Rend",
+    "description": "Striking with both your weapons simultanoeusly, you can use them to deliver devastating wounds.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Double Slice,Improved Two-Weapon Fighting,Two-Weapon Fighting",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,17],[PREVARGTEQ:FeatDexRequirement,17]",
+      "PRETOTALAB:11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 180,
+    "record_key": "Two-Weapon Rend"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

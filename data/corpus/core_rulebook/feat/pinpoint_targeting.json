@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Pinpoint Targeting",
+    "category": "Combat",
+    "name": "Pinpoint Targeting",
+    "description": "You can target the weak points in your opponent's armor.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Improved Precise Shot,Point-Blank Shot,Precise Shot",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,19],[PREVARGTEQ:FeatDexRequirement,19]",
+      "PRETOTALAB:16"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 132,
+    "record_key": "Pinpoint Targeting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

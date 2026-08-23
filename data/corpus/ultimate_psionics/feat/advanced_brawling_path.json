@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Brawling Path",
+    "category": "Psionic",
+    "name": "Advanced Brawling Path",
+    "description": "When using the Brawling trance, you gain a +%1 to your grapple checks.  In addition, when using the Brawling maneuver, the damage you deal can be lethal, instead of non-lethal.|AdvancedBrawlingPathBonus",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Brawling Path ~ First,Brawling Path ~ Second",
+      "PREABILITY:2,CATEGORY=FEAT,Improved Grapple,Improved Unarmed Strike",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 23,
+    "record_key": "Advanced Brawling Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Eldritch Researcher",
+    "category": "Story",
+    "name": "Eldritch Researcher",
+    "description": "[Not Implemented] You seek new applications for magical energy. When casting a spell you've created, add 1 to your caster level. In addition, you gain a +2 bonus on Spellcraft checks. If you have 10 or more ranks in Spellcraft, this bonus increases to +4. Goal:Create a new spell of at least 6th level. Completion Benefit:The save DCs for any spells you create increase by 1 when you cast them. In addition, when applying metamagic feats to self-created spells, reduce the total level adjustment by 1. You can't reduce metamagic costs to lower than the spell's original level in this manner. Special:For a self-created spell to benef it from this feat, it must be a truly novel spell. Spells slightly altered from the original (for example, delayed blast fireball as compared to fireball) gain no benef it. Alchemists can benef it from this feat as though their formulae and extracts were spells.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must have created a new spell, or have The Way Things Work background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 13,
+    "record_key": "Eldritch Researcher"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

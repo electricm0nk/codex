@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Jabbing Style",
+    "category": "Combat",
+    "name": "Jabbing Style",
+    "description": "A cluster of quick strikes deals more damage than a single roundhouse swing.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PREMULT:1,[PRETOTALAB:6],[PREABILITY:1,CATEGORY=Special Ability,Brawler ~ Brawler's Flurry],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Flurry of Blows]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 105,
+    "record_key": "Jabbing Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improved Studied Combatant",
+    "category": "General",
+    "name": "Improved Studied Combatant",
+    "description": "Deep understanding of your foes' tics grants you the upper hand in combat.",
+    "prerequisites": [
+      "PREMULT:5,[PRESTAT:1,INT=13],[PRETOTALAB:8],[PRESKILL:1,TYPE.Knowledge=1],[PREABILITY:2,CATEGORY=FEAT,Amateur Investigator,Studied Combatant],[!PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Inspiration]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 92,
+    "record_key": "Improved Studied Combatant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

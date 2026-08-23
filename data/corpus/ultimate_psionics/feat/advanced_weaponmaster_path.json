@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Weaponmaster Path",
+    "category": "Psionic",
+    "name": "Advanced Weaponmaster Path",
+    "description": "When using the Weaponmaster trance, you gain a +%1 competence bonus to damage rolls made with a weapon.  In addition, when using the Weaponmaster maneuver, you can choose to make a free disarm attempt against your attacker in place of the single melee attack.  If the disarm is successful, you may then make a single melee attack against your opponent in place of the 5-foot step.|AdvancedWeaponmasterPathBonus",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Weaponmaster Path ~ First,Weaponmaster Path ~ Second",
+      "PREABILITY:3,CATEGORY=FEAT,Combat Expertise,Improved Disarm,Weapon Focus",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 31,
+    "record_key": "Advanced Weaponmaster Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

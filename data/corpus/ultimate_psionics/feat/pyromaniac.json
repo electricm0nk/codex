@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Pyromaniac",
+    "category": "General",
+    "name": "Pyromaniac",
+    "description": "Add your alchemist and pyrokineticist levels together to determine the damage done by your bombs and the number of bombs you can create each day. Additionally, when you apply your weapon afire ability to your bombs, all creatures in the splash area also take the extra damage from your weapon afire ability.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Pyrokinetic ~ Fire Lash,Bomb ~ Alchemist",
+      "PREVARGTEQ:AlchemistBombAdditionalDice,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 273,
+    "record_key": "Pyromaniac"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

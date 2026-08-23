@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Stronghold",
+    "category": "Story",
+    "name": "Stronghold",
+    "description": "[Not Implemented] You seek to build a bastion against which your enemies shall break like water against the rocks. You can spend a move action to give battle orders to your troops, granting creatures under your command within 60 feet your choice of a +1 morale bonus on attack rolls, a +1 dodge bonus to AC, or a +1 bonus on a single type of saving throw. All creatures must receive the same benefit. You can't use this benefit on allies not under your command. This is a language-dependent, mind-affecting effect. Goal:Build or capture a stronghold capable of housing a force of at least 200 troops, and staff it with at least 100 combat-capable soldiers (or the equivalent) under your command. You must also provide food and water sufficient to survive at least a 6-month siege and a gold reserve sufficient for at least 6 months of wages if your troops require pay. Completion Benefit:Your battle order bonuses improve to +2, and the range of your orders increases to 120 feet. In addition, you can give two different orders to your troops. For example, you could grant your archers +2 on attack rolls while your front line gains a +2 bonus to AC.",
+    "prerequisites": [
+      "PRETEXT:Prerequisites:You must have the Leadership feat and must lead at least 10 combat-capable followers (such as fighters or rangers)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 24,
+    "record_key": "Stronghold"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

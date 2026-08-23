@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Twist Away",
+    "category": "Combat",
+    "name": "Twist Away",
+    "description": "You must have Evasion or Improved Evasion to use this feat. While you are wearing light armor or no armor, if you are forced to attempt a Fortitude saving throw, you can use an immediate action to instead attempt a Reflex saving throw (at the same DC). If you succeed at this saving throw and the attack has a reduced effect on a successful save, you avoid the effect entirely. Whether the saving throw is successful or not, you are staggered until the end of your next turn. If you are prevented from becoming staggered, you can't use Twist Away, nor can you ingnore the staggered condition from Twist Away or remove it early.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 162,
+    "record_key": "Twist Away"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

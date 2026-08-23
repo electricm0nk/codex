@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Power Perfection",
+    "category": "Psionic",
+    "name": "Power Perfection",
+    "description": "Pick one power which you have the ability to manifest. Whenever you manifest that power you may apply any one metapsionic feat you have to that power without expending psionic focus or affecting its level or manifesting time, as long as the total power point cost of the power, including the metapsionic feat cost and any augmentation, does not exceed 17 power points. In addition, if you have other feats which allow you to apply a set numerical bonus to any aspect of this power (such as Power Penetration, Psionic Endowment, Weapon Focus [ray], and so on), double the bonus granted by that feat when applied to this power.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,TYPE.Metapsionic",
+      "PRESKILL:1,Spellcraft=15",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 245,
+    "record_key": "Power Perfection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Studied Combatant",
+    "category": "General",
+    "name": "Studied Combatant",
+    "description": "Your inspiration guides your strikes when you take a moment to assess your foe.",
+    "prerequisites": [
+      "PREMULT:5,[PRESTAT:1,INT=13],[PREABILITY:1,CATEGORY=FEAT,Amateur Investigator],[PRETOTALAB:6],[PRESKILL:1,TYPE.Knowledge=1],[!PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Inspiration]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 157,
+    "record_key": "Studied Combatant"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

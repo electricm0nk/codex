@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Lost Legacy",
+    "category": "Story",
+    "name": "Lost Legacy",
+    "description": "[Not Implemented] What once belonged to your family shall be yours again. You gain a +1 bonus on Charisma-based ability checks and skill checks. Goal:Regain your family's lost claim, either for yourself or another in your family. In the process of completing this claim, you must decisively defeat a challenging foe that seeks to deny your birthright. Completion Benefit:You gain a +1 bonus on Wisdom ability checks, Wisdom-based skill checks, and Will saving throws. Special:If you manage to regain your position without defeating a challenging foe, you may still complete this story feat at a later date if a suitable challenging foe attempts to steal your birthright again.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:Your family must have claim to an inherited title or position that no longer belongs to them, or have the Dishonored Family background. You can take this feat even if you have no knowledge of this lost family title."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 21,
+    "record_key": "Lost Legacy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

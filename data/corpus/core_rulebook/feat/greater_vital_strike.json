@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Vital Strike",
+    "category": "Combat",
+    "name": "Greater Vital Strike",
+    "description": "You can make a single attack that deals a tremendous amount of damage.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Vital Strike,Vital Strike",
+      "PRETOTALAB:16"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 87,
+    "record_key": "Greater Vital Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

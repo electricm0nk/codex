@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Psionic Unarmed Strike",
+    "category": "Psionic",
+    "name": "Psionic Unarmed Strike",
+    "description": "To use this feat, you must expend psionic focus.  You can attempt to make a single unarmed melee attack as a standard action against a target that is sheltered behind a wall, wall of force effect, or similar barrier.  Your attack briefly skips through the Astral Plane to bypass the barrier.  This does not grant you line of sight or extra reach, requiring you to make the attack without being able to see the target or use some other method of seeing the target (such as clairaudience/clairvoyance) and be within your normal reach for your unarmed attack.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Stunning Fist",
+      "PRESTAT:2,DEX=13,WIS=13",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 268,
+    "record_key": "Psionic Unarmed Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

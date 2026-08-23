@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Recovered Rage",
+    "category": "Combat",
+    "name": "Recovered Rage",
+    "description": "Whenever you reduce a foe to 0 or fewer hit points while you are raging or using raging song, you regain 1 round of rage or raging song (your choice if you have both abilities), as long as the number of Hit Dice that foe possesses are equal to or greater than %1. You cannot use this feat to regain more rounds of rage or raging song each day than your daily maximum number of rounds, nor can you ever exceed your maximum number of rounds.|CL/2",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE=Rage,TYPE=SkaldRagingSong"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 132,
+    "record_key": "Recovered Rage"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

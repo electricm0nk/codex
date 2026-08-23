@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Exhausting Critical",
+    "category": "Combat",
+    "name": "Exhausting Critical",
+    "description": "Your critical hits cause opponents to become exhausted.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Critical Focus,Tiring Critical",
+      "PREMULT:1,[PRETOTALAB:15],[PREVARGTEQ:CriticalFocusQualify,15]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 60,
+    "record_key": "Exhausting Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

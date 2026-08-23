@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Spontaneous Nature's Ally",
+    "category": "General",
+    "name": "Spontaneous Nature's Ally",
+    "description": "Instead of casting a cure spell, you can instead cast summon nature's ally.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Warpriest ~ Spontaneous Casting,Cleric ~ Spontaneous Casting",
+      "PREDOMAIN:1,Animal,Plant",
+      "PRESKILL:1,Knowledge (Nature)=5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 151,
+    "record_key": "Spontaneous Nature's Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Mind Knight's Arsenal",
+    "category": "Psionic",
+    "name": "Mind Knight's Arsenal",
+    "description": "When you summon a weapon with the call weaponry path power with which you have the Weapon Focus feat, the weapon's enhancement bonus is increased by 1 and it gains a single predetermined weapon special ability with a +1 base price modifier. The weapon special ability must be appropriate for the weapon you choose and must be selected from those weapon special abilities available to the soulknife. You can meditate for 8 hours to change which predetermined special ability it gets.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mind Knight Path ~ First,Mind Knight Path ~ Second",
+      "PREABILITY:1,CATEGORY=Special Ability,Call Weaponry Path Power",
+      "PREABILITY:1,CATEGORY=FEAT,Weapon Focus",
+      "PREMULT:1,[PRETOTALAB:3],[PREVARGTEQ:PrereqBAB,3]",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 211,
+    "record_key": "Mind Knight's Arsenal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

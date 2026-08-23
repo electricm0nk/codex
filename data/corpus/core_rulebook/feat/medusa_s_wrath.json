@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Medusa's Wrath",
+    "category": "Combat",
+    "name": "Medusa's Wrath",
+    "description": "You can take advantage of your opponent's confusion, delivering multiple blows.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Improved Unarmed Strike,Gorgon's Fist,Scorpion Style",
+      "PRETOTALAB:11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 124,
+    "record_key": "Medusa's Wrath"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

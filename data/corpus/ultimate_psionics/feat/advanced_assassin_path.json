@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Assassin Path",
+    "category": "Psionic",
+    "name": "Advanced Assassin Path",
+    "description": "When using the Assassin trance, you deal sneak attack as a rogue of half your psychic warrior level.  Your target must be eligible for sneak attack.  In addition, when using the Assassin maneuver, your opponent is staggered for %1 rounds (Fort DC %2 negates).|AdvancedAssassinPathDuration|AdvancedAssassinPathDC",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Assassin's Path ~ First,Assassin's Path ~ Second",
+      "PREABILITY:2,CATEGORY=FEAT,Deep Impact,Psionic Weapon",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 22,
+    "record_key": "Advanced Assassin Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

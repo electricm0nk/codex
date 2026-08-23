@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Confounding Tumble Deed",
+    "category": "Panache",
+    "name": "Confounding Tumble Deed",
+    "description": "You can befuddle a foe by striking a blow after tumbling.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Canny Tumble",
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Swashbuckler],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Panache]",
+      "PRESKILL:1,Acrobatics=7"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 32,
+    "record_key": "Confounding Tumble Deed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

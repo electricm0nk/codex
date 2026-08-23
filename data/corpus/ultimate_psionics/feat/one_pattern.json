@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "One Pattern",
+    "category": "Psionic",
+    "name": "One Pattern",
+    "description": "Your target no longer needs to match your active creature type to deal full damage with your disrupt pattern ability. If your target does match your active creature type, you inflict an extra 1 point of damage per dice of damage dealt with disrupt pattern. This extra damage is not multiplied on a critical hit.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Cryptic ~ Disrupt Pattern",
+      "PRESKILL:6,Knowledge (Arcana)=5,Knowledge (Dungeoneering)=5,Knowledge (Nature)=5,Knowlede (Planes)=5,Knowledge (Psionics)=5,Knowledge (Religion)=5",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 228,
+    "record_key": "One Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

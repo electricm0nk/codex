@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Winter's Strike",
+    "category": "Combat",
+    "name": "Winter's Strike",
+    "description": "%1 times per day, when you use Vital Strike (or Improved Vital Strike or Greater Vital Strike), your strike saps the strength of your opponent. The creature hit must succeed at a DC %2 Fortitude save or become fatigued for %3 rounds. You can choose to use this ability as a free action after you hit the target with the attack. This is a supernatural ability.|max(WIS,1)|CL/2+10+WIS|min(WIS,1)",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Vital Strike",
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Nature Magic],[PRECLASS:2,SPELLCASTER=1,Ranger=4],[PRECLASS:2,SPELLCASTER=1,Druid=1],[PRECLASS:2,SPELLCASTER=1,Hunter=1]",
+      "PRESKILL:1,Knowledge (Nature)=5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 169,
+    "record_key": "Winter's Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

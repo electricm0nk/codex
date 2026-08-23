@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Psychoportive Pathfinder",
+    "category": "Psionic",
+    "name": "Psychoportive Pathfinder",
+    "description": "Any time you manifest psychoport, you may, as a free action, choose to leave a marker for someone else to follow. This marker has a duration of one round. If another person casts teleport or greater teleport or manifests psychoport or greater psychoport in the space you left from, they can choose as part of casting the spell or manifesting the power to appear adjacent to you in a safe, uninhabited space even if they would normally fail due to lack of familiarity or lack of range.",
+    "prerequisites": [
+      "PRECLASS:1,Nomad=1",
+      "PRESPELL:1,Trace Teleport",
+      "PRESPELL:1,Psychoport,Psychoport(Greater)",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 271,
+    "record_key": "Psychoportive Pathfinder"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

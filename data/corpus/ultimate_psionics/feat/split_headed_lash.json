@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Split Headed Lash",
+    "category": "Psionic",
+    "name": "Split Headed Lash",
+    "description": "Expend focus to split one fire lash attack from a full attack into two attacks.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Pyrokineticist ~ Fire Lash",
+      "PREABILITY:3,CATEGORY=FEAT,Point-Blank Shot,Precise Shot,Weapon Focus (Whip)",
+      "PRESKILL:1,Knowledge (Psionics)=10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 315,
+    "record_key": "Split Headed Lash"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

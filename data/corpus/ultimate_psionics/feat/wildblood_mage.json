@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Wildblood Mage",
+    "category": "General",
+    "name": "Wildblood Mage",
+    "description": "Your wilder manifester level gains a +2 bonus as long as this bonus doesn't raise your manifester level above your current Hit Dice. Your sorcerer caster level gains a +2 bonus as long as this bonus doesn't raise your caster level above your current Hit Dice. In addition, you can use your wild surge on spells, increasing your caster level the wild surge amount, and your bloodline arcana is applied to applicable powers. [NOT IMPLEMENTED]",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Wilder ~ Wild Surge",
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Sorcerer Bloodline",
+      "PREVARGTEQ:WildSurge,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 356,
+    "record_key": "Wildblood Mage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

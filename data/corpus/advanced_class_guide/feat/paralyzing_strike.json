@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Paralyzing Strike",
+    "category": "Combat",
+    "name": "Paralyzing Strike",
+    "description": "Paralyzing Strike forces a foe damaged by your unarmed attack to attempt a DC %1 Fortitude saving throw, in addition to dealing damage normally. You must declare that you are using this feat before you make your attack roll-thus, a failed attack roll ruins the attempt. A defender who fails this saving throw is paralyzed for 1 round, until just before your next turn. You can use Paralyzing Strike %2 times per day, but no more than once per round. Constructs, incorporeal creatures, mindless creatures, plants, undead, and creatures that are immune to critical hits cannot be affected by this ability.|CL/2+10+WIS|ParalyzingStrikeTimes",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]",
+      "PRESTAT:1,WIS=13",
+      "PRETOTALAB:14"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 119,
+    "record_key": "Paralyzing Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

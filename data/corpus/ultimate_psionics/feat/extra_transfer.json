@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Extra Transfer",
+    "category": "Psionic",
+    "name": "Extra Transfer",
+    "description": "You can use transfer wounds or sickening touch 2 more times per day.  If you have both transfer wounds and sickening touch, choose which ability this feat affects when you take this feat.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Transfer Wounds,Miasmic ~ Sickening Touch",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 111,
+    "record_key": "Extra Transfer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

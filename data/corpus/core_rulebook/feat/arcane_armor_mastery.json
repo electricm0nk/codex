@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Arcane Armor Mastery",
+    "category": "Combat",
+    "name": "Arcane Armor Mastery",
+    "description": "You have mastered the ability to cast spells while wearing armor.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Arcane Armor Training",
+      "PREMULT:1,[PRECLASS:1,SPELLCASTER=7],[PREVARGTEQ:CasterLevel_Highest,7]",
+      "PREMULT:1,[PREPROFWITHARMOR:1,TYPE.Medium],[PREABILITY:1,CATEGORY=FEAT,Armor Proficiency (Medium)]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 16,
+    "record_key": "Arcane Armor Mastery"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

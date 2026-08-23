@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Bull Rush",
+    "category": "Combat",
+    "name": "Greater Bull Rush",
+    "description": "Your bull rush attacks throw enemies off balance.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Bull Rush,Power Attack",
+      "PRETOTALAB:6",
+      "PREVARGTEQ:PreStatScore_STR,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 75,
+    "record_key": "Greater Bull Rush"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

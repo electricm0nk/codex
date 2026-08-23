@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Forgotten Past",
+    "category": "Story",
+    "name": "Forgotten Past",
+    "description": "[Not Implemented] A pivotal event from your past eludes your memory. The duration of mind-affecting spells (even beneficial ones) is halved for you, to a minimum of 1 round. Your inquisitive nature gives you a +2 bonus on Perception checks. If you have 10 or more ranks in Perception, this bonus increases to +4. Goal:Regain a major portion of your lost memories. The exact means varies, possibly requiring a wish, assistance from a divine being, reliving a past life, or confronting the situation that led to your memory loss. This process must involve encountering a challenging foe, though possibly in ways other than direct confrontation. Completion Benefit:You roll twice whenever you attempt a saving throw against a mind-affecting effect, keeping the better result. Special:Restoration of memories by means less significant than miracle or wish does not qualify for the prerequisite.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must have suffered permanent memory loss or have the Reincarnated background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 17,
+    "record_key": "Forgotten Past"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

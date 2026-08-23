@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Advanced Mind Knight Path",
+    "category": "Psionic",
+    "name": "Advanced Mind Knight Path",
+    "description": "As long as you have both Mind Knight path powers, you can manifest both Mind Knight path powers at the same time as a single standard action.  Any time you manifest call weaponry, you may select one other 1st level power you know; you may manifest that power using Martial Power as if it were a Path power, as long as the attack is made using the weapon summoned.  In addition, when using the Mind Knight maneuver, you gain a +%1 compteence bonus on the attack rolls.|AdvancedMindKnightPathBonus",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mind Knight Path ~ First,Mind Knight Path ~ Second",
+      "PREABILITY:1,CATEGORY=FEAT,Psionic Meditation",
+      "PREABILITY:1,CATEGORY=FEAT,Psionic Shot,Psionic Weapon",
+      "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]",
+      "PREVARGTEQ:MaxManifesterLVL,10",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 29,
+    "record_key": "Advanced Mind Knight Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

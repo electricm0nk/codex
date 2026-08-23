@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Power Specialization",
+    "category": "Psionic",
+    "name": "Greater Power Specialization",
+    "description": "Increased bonus damage to damaging powers",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Power Specialization,Weapon Focus (Ray)",
+      "PREVARGTEQ:MaxManifesterLVL,12",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 145,
+    "record_key": "Greater Power Specialization"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

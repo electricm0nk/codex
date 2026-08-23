@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Dueling Cape Deed",
+    "category": "Combat",
+    "name": "Dueling Cape Deed",
+    "description": "As a move action, you can wrap a cape that you're wearing around your arm (removing it if necessary), and treat it as a buckler. If you are using the cape in this way, and an opponent misses you with a melee attack, as an immediate action you can spend 1 panache point to release your cape from your arm and entangle your foe in it. The foe can free it by using a full-round action to escape or by destroying the cape; a typical cape has hardness 1 and 3 hit points. You can use this feat with items similar in shape and weight to a cape, such as a cloak or a curtain.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Dodge",
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Swashbuckler],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Panache]",
+      "PRESKILL:1,Sleight of Hand=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 45,
+    "record_key": "Dueling Cape Deed"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

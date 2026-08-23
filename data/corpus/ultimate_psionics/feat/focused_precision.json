@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Focused Precision",
+    "category": "Combat",
+    "name": "Focused Precision",
+    "description": "While maintaining focus, you add your Dexterity modifier to damage rolls made with a crossbow or firearm for which you have the Weapon Focus feat.  Damage from this feat is precision-based damage. [NOT IMPLEMENTED]",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Internal,Marksman Combat Style",
+      "PREABILITY:1,CATEGORY=FEAT,Weapon Focus",
+      "PREMULT:1,[PRETOTALAB:7],[PREVARGTEQ:PrereqBAB,7]",
+      "PRESTAT:1,DEX=17",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 134,
+    "record_key": "Focused Precision"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Rapid Reload",
+    "category": "Combat",
+    "name": "Rapid Reload",
+    "description": "Choose a type of crossbow (hand, light, or heavy). You can reload such weapons quickly.",
+    "prerequisites": [
+      "PRETEXT:Weapon Proficiency (crossbow type chosen).",
+      "PREWEAPONPROF:1,TYPE.Crossbow"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 138,
+    "record_key": "Rapid Reload"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

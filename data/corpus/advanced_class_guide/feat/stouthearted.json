@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Stouthearted",
+    "category": "Combat",
+    "name": "Stouthearted",
+    "description": "While you are maintaining a raging song, if you fail a saving throw against a fear effect, you can expend a round of performing to reroll your saving throw as an immediate action. You must keep this second result, even if it lower.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE=SkaldRagingSong"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 156,
+    "record_key": "Stouthearted"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
