@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Companion Archetype ~ Verdant Companion",
+    "name": "Verdant Companion",
+    "description": "Favorites of druids who balance their responsibilities between flora and fauna, verdant companions are animals with some of the abilities and physical aspects of plants.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Archetype ~ Verdant Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CompanionArchetype.CF_CompanionShareSpells.CF_CompanionDevotion.CF_CompanionEvasion.CF_CompanionImprovedEvasion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Verdant Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion]"
+      },
+      {
+        "key": "DESC",
+        "value": "Favorites of druids who balance their responsibilities between flora and fauna, verdant companions are animals with some of the abilities and physical aspects of plants."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Verdant Companion ~ Not Quite Animal|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Verdant Companion ~ Photosynthesis|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Verdant Companion ~ Verdant Resistance|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Companion"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 429,
+    "record_key": "Companion Archetype ~ Verdant Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

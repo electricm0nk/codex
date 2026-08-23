@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Valet ~ Deliver Touch Spells",
+    "name": "Deliver Touch Spells",
+    "description": "A valet can deliver touch spells for his master. If the master and the valet are in contact at the time the master casts a touch spell, he can designate the valet as the \"toucher.\" The valet can then deliver the touch spell just as the master would. When delivering a harmless touch spell to a willing creature, a valet can move before and after delivering the spell, as long as its total movement does not exceed its speed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Valet ~ Deliver Touch Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A valet can deliver touch spells for his master. If the master and the valet are in contact at the time the master casts a touch spell, he can designate the valet as the \"toucher.\" The valet can then deliver the touch spell just as the master would. When delivering a harmless touch spell to a willing creature, a valet can move before and after delivering the spell, as long as its total movement does not exceed its speed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 634,
+    "record_key": "Valet ~ Deliver Touch Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

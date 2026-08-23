@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Precocious Companion ~ Expanded Tricks",
+    "name": "Expanded Tricks",
+    "description": "A precocious companion gains twice as many bonus tricks as normal for an animal companion. A hunter's animal companion can't use the additional bonus tricks to learn hunter's tricks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Precocious Companion ~ Expanded Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrecociousCompanionBonusTricks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A precocious companion gains twice as many bonus tricks as normal for an animal companion. A hunter's animal companion can't use the additional bonus tricks to learn hunter's tricks."
+      },
+      {
+        "key": "DESC",
+        "value": "The DC of the Handle Animal check to push a precocious companion to perform an unlearned trick is only 15, instead of 25.|PREVARGTEQ:MasterLevel,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Trick|PrecociousCompanionBonusTricks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrecociousCompanionBonusTricks|BonusTricks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 501,
+    "record_key": "Precocious Companion ~ Expanded Tricks"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

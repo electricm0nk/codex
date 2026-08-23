@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Soulbound Familiar ~ Alignment Variation",
+    "name": "Alignment Variation",
+    "description": "A soulbound familiar's alignment is always at least partially neutral, although it can also be chaotic, evil, good, or lawful, depending on the creature whose soul provided the fragment rather than on the master's alignment (unless the master donates a fragment of her own soul).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulbound Familiar ~ Alignment Variation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulboundCasterLevel|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=SoulboundCasterLevel|Rage|PREVARGTEQ:MasterLevel,8|PREALIGN:CN"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=SoulboundCasterLevel|Suggestion,12+CHA|PREVARGTEQ:MasterLevel,8|PREALIGN:LN"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=SoulboundCasterLevel|Deep Slumber,13+CHA|PREVARGTEQ:MasterLevel,8|PREALIGN:TN"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=SoulboundCasterLevel|Inflict Serious Wounds,13+CHA|PREVARGTEQ:MasterLevel,8|PREALIGN:NE"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=SoulboundCasterLevel|Heroism|PREVARGTEQ:MasterLevel,8|PREALIGN:NG"
+      },
+      {
+        "key": "DESC",
+        "value": "A soulbound familiar's alignment is always at least partially neutral, although it can also be chaotic, evil, good, or lawful, depending on the creature whose soul provided the fragment rather than on the master's alignment (unless the master donates a fragment of her own soul)."
+      },
+      {
+        "key": "DESC",
+        "value": "It gains rage as a spell-like ability, usable once per day.|PREVARGTEQ:MasterLevel,8|PREALIGN:CN"
+      },
+      {
+        "key": "DESC",
+        "value": "It gains suggestion as a spell-like ability, usable once per day.|PREVARGTEQ:MasterLevel,8|PREALIGN:LN"
+      },
+      {
+        "key": "DESC",
+        "value": "It gains deep slumber as a spell-like ability, usable once per day.|PREVARGTEQ:MasterLevel,8|PREALIGN:TN"
+      },
+      {
+        "key": "DESC",
+        "value": "It gains inflict serious wounds as a spell-like ability, usable once per day.|PREVARGTEQ:MasterLevel,8|PREALIGN:NE"
+      },
+      {
+        "key": "DESC",
+        "value": "It gains heroism as a spell-like ability, usable once per day.|PREVARGTEQ:MasterLevel,8|PREALIGN:NG"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulboundCasterLevel|MasterLevel-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulboundCasterLevel|3|PREVARGTEQ:MasterLevel,13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 627,
+    "record_key": "Soulbound Familiar ~ Alignment Variation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

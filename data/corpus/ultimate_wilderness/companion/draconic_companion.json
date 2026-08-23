@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Companion Archetype ~ Draconic Companion",
+    "name": "Draconic Companion",
+    "description": "Draconic companions bear a faint trace of dragon blood that grants them special abilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Archetype ~ Draconic Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CompanionArchetype.CF_CompanionShareSpells.CF_CompanionDevotion.CF_CompanionMultiattack.CF_CompanionEvasion.CF_CompanionImprovedEvasion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Draconic Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack,TYPE.CF_CompanionImprovedEvasion]"
+      },
+      {
+        "key": "DESC",
+        "value": "Draconic companions bear a faint trace of dragon blood that grants them special abilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Draconic Companion ~ Draconic Skills|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Draconic Companion ~ Not Quite Animal|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Draconic Companion ~ Draconic Sight|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Draconic Companion ~ Draconic Resistance|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Draconic Companion ~ Improved Draconic Resistance|PREVARGTEQ:MasterLevel,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Draconic Companion ~ Breath Weapon Choice|PREVARGTEQ:MasterLevel,9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Companion"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 423,
+    "record_key": "Companion Archetype ~ Draconic Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

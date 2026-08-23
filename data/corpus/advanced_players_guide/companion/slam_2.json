@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Temp Evolution ~ Slam",
+    "name": "Slam",
+    "description": "The eidolon can deliver a devastating slam attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Temp Evolution ~ Slam"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TempEvolutionChoice.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Arms"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Slam"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidArms,EidArmsUsed+1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidolonTempEvolutionPool,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TempEvolutionTaken,TempEvolutionsAllowed"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidSlamCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempEvolutionTaken|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon can deliver a devastating slam attack."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=7|NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Evolution ~ Slam"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionCost|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionTaken|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 241,
+    "record_key": "Temp Evolution ~ Slam"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

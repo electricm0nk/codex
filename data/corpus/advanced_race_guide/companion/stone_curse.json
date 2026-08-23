@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Evolution ~ Stone Curse",
+    "name": "Stone Curse",
+    "description": "If an Eidolon with this ability wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.|10+HD/2+STR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Stone Curse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Shaitan Binder Eidolon"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,18"
+      },
+      {
+        "key": "DESC",
+        "value": "If an Eidolon with this ability wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.|10+HD/2+STR"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 29,
+    "record_key": "Evolution ~ Stone Curse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

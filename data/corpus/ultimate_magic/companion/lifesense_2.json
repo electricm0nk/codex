@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Temp Evolution ~ Lifesense",
+    "name": "Lifesense",
+    "description": "You notice and locate living creatures within 60 feet, just as if you possessed the blindsight evolution.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Temp Evolution ~ Lifesense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TempEvolutionChoice.SpecialQuality.Supernatural.Sense"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Undead Appearance"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Lifesense"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,11"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidolonTempEvolutionPool,4"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TempEvolutionTaken,TempEvolutionsAllowed"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempEvolutionTaken|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You notice and locate living creatures within 60 feet, just as if you possessed the blindsight evolution."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Evolution ~ Lifesense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionCost|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionTaken|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 226,
+    "record_key": "Temp Evolution ~ Lifesense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

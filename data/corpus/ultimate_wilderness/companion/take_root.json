@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Take Root",
+    "name": "Take Root",
+    "description": "The companion extends its roots into the soil beneath it, anchoring itself in place and drawing water and nutrients from the soil. Taking root is a full-round action that provokes attacks of opportunity. While rooted, the companion cannot move, but it can otherwise act normally and gains a +4 bonus to CMD to resist bull rush, drag, overrun, reposition, and trip attempts. If the companion remains rooted for at least 1 hour, it absorbs enough water and nutrients to feed itself for a day. A separate command causes the companion to uproot itself as a full-round action. The companion can take root only in areas of soft soil.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Take Root"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACESUBTYPE=PlantCompanion"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion extends its roots into the soil beneath it, anchoring itself in place and drawing water and nutrients from the soil. Taking root is a full-round action that provokes attacks of opportunity. While rooted, the companion cannot move, but it can otherwise act normally and gains a +4 bonus to CMD to resist bull rush, drag, overrun, reposition, and trip attempts. If the companion remains rooted for at least 1 hour, it absorbs enough water and nutrients to feed itself for a day. A separate command causes the companion to uproot itself as a full-round action. The companion can take root only in areas of soft soil."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 116,
+    "record_key": "Animal Trick ~ Take Root"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

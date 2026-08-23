@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Bodyguard",
+    "name": "Bodyguard",
+    "description": "When an adjacent ally is attacked, you may use an attack of opportunity to attempt the aid another action to improve your ally's AC. You may not use the aid another action to improve your ally's attack roll with this attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Bodyguard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Combat Reflexes"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AllowCompanionFeatBodyguard,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When an adjacent ally is attacked, you may use an attack of opportunity to attempt the aid another action to improve your ally's AC. You may not use the aid another action to improve your ally's attack roll with this attack."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Bodyguard"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Advanced Player's Guide"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "APG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 673,
+    "record_key": "Animal Companion Feat ~ Bodyguard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

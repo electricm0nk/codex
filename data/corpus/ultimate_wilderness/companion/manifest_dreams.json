@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Figment ~ Manifest Dreams",
+    "name": "Manifest Dreams",
+    "description": "A figment is shaped by its master's dreams. Each time the master awakens from a full night's rest, he can apply to the figment %1 evolution points' worth of eidolon evolutions that don't have a base form requirement.|FigmentEvolutionPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Figment ~ Manifest Dreams"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FigmentEvolutionPoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A figment is shaped by its master's dreams. Each time the master awakens from a full night's rest, he can apply to the figment %1 evolution points' worth of eidolon evolutions that don't have a base form requirement.|FigmentEvolutionPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Eidolon Evolution|FigmentEvolutionPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FigmentEvolutionPoints|1+(MasterLevel>=7)+(MasterLevel>=13)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 571,
+    "record_key": "Figment ~ Manifest Dreams"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

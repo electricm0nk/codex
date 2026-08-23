@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Emissary ~ Share Will",
+    "name": "Share Will",
+    "description": "Whenever an emissary or its master fails a saving throw against a mind-affecting effect that affects only one of them, the other can attempt the saving throw as well. If this second saving throw is a success, treat the original result as a success, and the emissary and its master can't use this ability again for 24 hours. On a failure, both the emissary and its master suffer the effects of the failed saving throw, even if one of them wouldn't ordinarily be a valid target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ Share Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an emissary or its master fails a saving throw against a mind-affecting effect that affects only one of them, the other can attempt the saving throw as well. If this second saving throw is a success, treat the original result as a success, and the emissary and its master can't use this ability again for 24 hours. On a failure, both the emissary and its master suffer the effects of the failed saving throw, even if one of them wouldn't ordinarily be a valid target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 566,
+    "record_key": "Emissary ~ Share Will"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

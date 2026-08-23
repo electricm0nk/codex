@@ -227,6 +227,42 @@ def existing_slugs_by_book(root_repo: str, units: list[dict]) -> dict[str, set[s
     return out
 
 
+def existing_citations_by_book(root_repo: str, books: set[str]) -> dict[str, set[tuple[str, int]]]:
+    """Index every already-written `data/corpus/<book>/companion/*.json`
+    record's own `(source.path, source.line)` citation, per book.
+
+    **Why this exists (SD-32 T9-onboarding-cause-closure, 2026-08-23).**
+    `docs/work-inventory.json`'s `status` field is not updated by this
+    script writing a record -- it flips to something other than
+    `"not-ingested"` only when `v06_work_inventory` is rebuilt and re-run.
+    A second pass over the same stale inventory (e.g. after a PI-allowlist
+    widening) would otherwise re-process units a prior pass already wrote;
+    `slugify()`'s collision-avoidance means it would allocate a NEW
+    suffixed slug rather than overwrite, producing a duplicate record for
+    the identical PCGen citation. This index lets `main()` recognize that
+    case and skip it before a slug is ever allocated."""
+    out: dict[str, set[tuple[str, int]]] = defaultdict(set)
+    for book in books:
+        write_dir_book = CORPUS_WRITE_DIR_ALIASES.get(book, book)
+        d = os.path.join(root_repo, "data/corpus", write_dir_book, "companion")
+        if not os.path.isdir(d):
+            continue
+        for fn in os.listdir(d):
+            if not fn.endswith(".json"):
+                continue
+            try:
+                with open(os.path.join(d, fn), encoding="utf-8") as fh:
+                    rec = json.load(fh)
+            except (OSError, ValueError):
+                continue
+            src = rec.get("source") or {}
+            path = src.get("path")
+            line = src.get("line")
+            if path is not None and line is not None:
+                out[book].add((path, line))
+    return out
+
+
 def main() -> int:
     dry_run = "--dry-run" in sys.argv
     out_path = None
@@ -245,6 +281,7 @@ def main() -> int:
         "population": len(units),
         "written": 0,
         "pi_skipped": 0,
+        "skipped_existing_already_ingested": 0,
         "unresolved": [],
         "written_by_book": defaultdict(int),
         "pi_skipped_records": [],
@@ -253,6 +290,8 @@ def main() -> int:
 
     file_cache: dict[tuple[str, str], list[str]] = {}
     used_by_book = existing_slugs_by_book(REPO_ROOT, units)
+    books = {u["book"] for u in units}
+    citations_by_book = existing_citations_by_book(REPO_ROOT, books)
     ingested_at = ingested_at_now()
 
     for unit in units:
@@ -273,6 +312,16 @@ def main() -> int:
             )
             continue
         path = hits[0]
+
+        # Idempotency guard (SD-32 T9-onboarding-cause-closure, 2026-08-23):
+        # `docs/work-inventory.json`'s `status` field does not flip when this
+        # script writes a record, so a re-run over the same stale inventory
+        # must recognize a unit a prior pass already ingested by its own
+        # (source path, source line) citation -- never re-slug and duplicate it.
+        rel_path_for_citation = os.path.relpath(path, root)
+        if (rel_path_for_citation, line) in citations_by_book.get(book, ()):
+            report["skipped_existing_already_ingested"] += 1
+            continue
 
         raw_line = read_row(path, line)
         tokens = row_tokens(raw_line)

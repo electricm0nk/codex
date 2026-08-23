@@ -180,13 +180,20 @@ _GENERIC_CAPWORDS = set(
     # (6) equipment materials named explicitly in decisions.md §19c -- SRD-open crafting
     #     materials, not PI:
     "Adamantine", "Mithral",
+    # --- SD-32 T9-onboarding-cause-closure widening (2026-08-23, decisions.md §20/§19c) ---
+    # Re-derived the companion `no_record` residual (217, `scripts/shape_ledger.py`) against
+    # `ingest_companion.py`'s own 217 `still_undecidable` skip-list and read every flagged
+    # capitalized token in full row context. All are ordinary anatomy/ability-tag/PCGen-
+    # boilerplate words, none a setting-specific proper noun:
+    "Bite", "Claws", "Ex", "Using", "When", "Skill", "Eldritch", "Cooperative", "Crafting",
 }
 # Left deliberately OFF this allowlist (decisions.md §19c: "if a flagged row turns on a
 # token you are not willing to allowlist, leave it undecidable and say which"):
 #   "Shaitan" -- `advanced_race_guide:Stone Curse`'s PRERACE field
 #   (RACETYPE=Shaitan Binder Eidolon). Shaitan is a genie-kin creature subtype; whether
 #   it is Golarion/Paizo-specific or public-domain-mythological (as with "imp") was not
-#   resolved by this pass. Stays `still_undecidable`.
+#   resolved by this pass. Stays `still_undecidable`. Reconfirmed 2026-08-23: still the
+#   only capitalized-token holdout in the companion residual.
 
 # lowercase words that precede a creature-species mention but are not
 # themselves species names (generic role/anatomy/mechanic nouns) -- used
@@ -223,6 +230,67 @@ _GENERIC_LOWER_NOUNS = set(
     "different", "time", "augmented", "gore", "skilled", "climb", "normal", "overrun",
     "aberrant", "deathtouched", "feytouched", "verdant", "combat-trained", "full-round",
     "following", "specific", "saving", "effects", "armor", "touch", "bite", "spells",
+    # --- SD-32 T9-onboarding-cause-closure widening (2026-08-23, decisions.md §20/§19c) ---
+    # Re-derived the companion `no_record` residual (217, `scripts/shape_ledger.py`
+    # `--inventory docs/work-inventory.json`) against `ingest_companion.py`'s own 217
+    # `still_undecidable` `pi_skipped_records` and read every flagged lowercase term in
+    # full row context. Categories, named per decisions.md §19c's binding condition:
+    # (a) combat/mechanic action vocabulary -- not species names:
+    "charge", "damage", "link", "benefits", "benefit", "handle", "prerequisite",
+    "prerequisites", "attacker", "attacking", "primary", "second", "melee", "natural",
+    "reposition", "sunder", "trip", "disarm", "drag", "grapple", "steal", "defend", "turn",
+    "withdraw", "intercepted", "unarmed", "ranged", "combat",
+    # (b) ability-score/save/skill/class vocabulary (core OGL mechanic terms, incl. core
+    #     PF1e class names -- cleric/druid/wizard/rogue/fighter/shaman/witch are all
+    #     open-content base or APG classes, not Paizo-original proper nouns):
+    "charisma", "constitution", "fortitude", "cleric", "outsider", "druid", "wizard",
+    "rogue", "fighter", "shaman", "witch", "magical", "resistance", "immunity",
+    # (c) anatomy/creature-part vocabulary, generic across any species, not a species
+    #     name itself:
+    "sting", "tail", "tentacle", "wing", "claws",
+    # (d) generic-animal words that are common English nouns, not setting-specific
+    #     proper nouns (same posture as "Owlbear"/"Goblin", ogl-pi-blacklist.md §2.1):
+    "boar", "raven", "porcupine", "shadow", "shadows", "ghost",
+    # (e) magic/spellcraft mechanic vocabulary:
+    "incorporeal", "supernatural", "scrying", "divination", "nondetection", "antimagic",
+    "polymorph", "spelllike",
+    # (f) ordinary adjectives/adverbs/connectors the "a/an/the <noun>" heuristic
+    #     false-positives on -- read in full row context, none is a species name:
+    "at-will", "selected", "devastating", "surface", "usual", "invisible", "medium",
+    "light", "common", "caster", "living", "basic", "major", "minor", "powerful",
+    "improved", "typical", "surprise", "adjacent", "path", "list", "other", "base",
+    "next", "ally", "character", "poison", "deity", "spark", "negative", "giant",
+    "competence", "divine", "team", "grab", "barrier", "stone", "victim", "costly",
+    "past", "wish", "words", "young", "quickened", "forced", "official", "threatened",
+    "off-hand", "two-handed", "heavy", "jump", "running", "shield", "requisite", "fear",
+    "like", "random", "variety", "scent", "conversing", "communication", "blade",
+    "language", "will", "broken", "ritual", "special", "universal", "environment",
+    "space", "beginning", "unnatural", "enemy", "concentration", "disruptive",
+    "antagonize", "onset", "affliction", "harmful", "results", "archetype",
+    "teleportation", "wild", "designated", "flying", "specified", "latch", "person",
+    "unattended", "bury", "cocoon", "escape", "helpless", "place", "smells", "perform",
+    "guide", "guided", "locations", "presence", "dirty", "hostile-seeming", "menacing",
+    "venom", "vial", "disguise", "mundane", "observer", "opposed", "ordinary",
+    "recipient", "creatures", "event", "nearest", "safe", "silk", "separate", "soil",
+    "injury", "loss", "birthmark", "danger", "fray", "partially", "strange", "trace",
+    "faint", "first", "primal", "wider", "abilities", "advantage", "tendency",
+    "variable", "failed", "failure", "mind-affecting", "original", "success", "loyalty",
+    "paragon", "real", "relationship-the", "throne", "font", "moral", "subtle", "very",
+    "adventuring", "centerpiece", "entire", "bloodthirsty", "thrill", "tumor", "soul",
+    "consummate", "ball", "permanent", "course", "heart", "larger", "constant",
+    "bluff", "false", "hunter", "precocious", "unlearned", "actual", "finer", "subject",
+    "fragment", "tracker", "harmless", "willing", "teamwork", "sunlight", "construct",
+    "inanimate", "empathic", "diabolist", "auspice", "bully", "racer", "sage",
+    "alertness", "soulbound", "figment", "wrecker", "ambusher",
+    # (g) second pass, verified against a live `ingest_companion.py --dry-run` re-run
+    #     (not just the earlier static skip-list read) -- same posture, ordinary
+    #     mechanic/anatomy/adjective words, not species names:
+    "acrobatics", "mile", "water", "blindsight", "human", "stealth", "purposes",
+    "perception", "stimulus", "tenacious", "immediate", "strength", "last", "trainer",
+    "plant", "wisdom", "valid", "break", "focus", "cooperative",
+    # Left deliberately OFF (decisions.md §19c precedent): "shaitan" -- see the
+    # `_GENERIC_CAPWORDS` comment above; the same two `Shaitan Binder Eidolon` rows
+    # are the reason both sets exclude it.
 }
 
 

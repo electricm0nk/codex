@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Companion Porcupine ~ Quills",
+    "name": "Quills",
+    "description": "Any creature attacking a porcupine with natural weapons or an unarmed strike takes 1 point of piercing damage. A creature that grapples a porcupine takes 1d3 points of piercing damage each round it does so.|PREVARLT:CompanionAdvancement,1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Porcupine ~ Quills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.GiantPorcupineRacialTrait"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature attacking a porcupine with natural weapons or an unarmed strike takes 1 point of piercing damage. A creature that grapples a porcupine takes 1d3 points of piercing damage each round it does so.|PREVARLT:CompanionAdvancement,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature attacking a giant porcupine with light or one-handed melee weapons, natural weapons, or an unarmed strike takes 1d3 points of piercing damage. A creature that grapples a giant porcupine takes 2d4 points of piercing damage each round it does so.|PREVARGTEQ:CompanionAdvancement,1"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 311,
+    "record_key": "Companion Porcupine ~ Quills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

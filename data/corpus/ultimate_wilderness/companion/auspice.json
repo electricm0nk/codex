@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Companion Archetype ~ Auspice",
+    "name": "Auspice",
+    "description": "Auspices were born with a birthmark or other feature that seems to be in the shape of their master's deity's holy symbol; they are usually animal sacred to that deity's religion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Archetype ~ Auspice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CompanionArchetype.CF_CompanionShareSpells.CF_CompanionEvasion.CF_CompanionImprovedEvasion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Auspice],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion]"
+      },
+      {
+        "key": "DESC",
+        "value": "Auspices were born with a birthmark or other feature that seems to be in the shape of their master's deity's holy symbol; they are usually animal sacred to that deity's religion."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Auspice ~ Aligned|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Auspice ~ Auspicious Boon|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Auspice ~ Aligned Strike|PREVARGTEQ:MasterLevel,15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Companion"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 418,
+    "record_key": "Companion Archetype ~ Auspice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

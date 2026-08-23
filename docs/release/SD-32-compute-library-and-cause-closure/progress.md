@@ -5611,6 +5611,7 @@ pre-existing `CORPUS_KIND_NAMES` registration gap for other kinds (`ability`/`do
   correctly-excluded PI rows) — not this mechanism's remaining reach. `monster` kind (28 units)
   untouched, owned by a sibling lane.
 - Commit: (this cycle's commit — see push output).
+
 ## Cycle epic-2-corpus-literal-sweep-24-redaction-exemption — `corpus_literal_sweep` §24-redaction collision closed (2026-08-23)
 
 **The collision named in the dispatch brief:** `decisions.md §24`'s redaction (a `§24`-renamed
@@ -6133,3 +6134,96 @@ Next-cycle plan, named by shape and count (`decisions.md §20`/`§1a` — no sha
    per-record read, not another registration cycle.
 4. `occult_adventures` (5) is correctly out of scope — its monster row's negated `PRECAMPAIGN`
    gate is failed by this repo's own included-book set. Not a gap.
+
+## t9-companion-allowlist-widening + t9-simple-filename-kinds-concat-pi-fix (2026-08-23)
+
+**Scope: `companion`'s 217-unit `no_record` residual (dispatch brief's primary ask), plus the
+corpus-wide concatenated-blacklist-term PI defect (secondary ask).**
+
+### Companion: the deferral lead was correct, and closed to its real floor
+
+The dispatch brief's pointer — "these 217 may simply need the same `§24` treatment as
+`ability`/`deity`/`class_feature`" — turned out to be half right: `217 == 217` against
+`scripts/ingest_companion.py`'s own `still_undecidable` skip-list population (re-derived,
+`scripts/shape_ledger.py --inventory docs/work-inventory.json`), so the lead correctly identified
+the whole residual. But the disposition was different from `§24`: **these units were never
+name-PI-blocked at all.** They are a content-classifier false-positive bucket
+(`scripts/sd32_t9_pi_review_companion_monsterability.py::classify_uncertain_content`'s `a/an/the
+<noun>` species-reference heuristic and capitalized-token heuristic over-triggering on ordinary
+English/PF1e-mechanic words — `damage`, `charge`, `cleric`, `druid`, `Bite`, `Claws`, `Skill`, …).
+**No deity, place, or NPC name appears anywhere in the 217** — confirming, not contradicting, the
+brief's cited T9 PI review finding that companion content is generic game mechanic.
+
+Two categorized allowlist-widening rounds (`decisions.md §19c`'s own precedent and binding
+condition — every added token named, with its category and reason), each verified `--dry-run`
+before the next, closed **215 of the 217**. Residual: **2**, both the `Shaitan Binder Eidolon` rows
+(`advanced_race_guide:arg_abilities_companion.lst:30-31`) — deliberately left undecidable, unchanged
+from the prior review's own judgment (a genie-kin creature-subtype name whose setting-specific-vs-
+public-domain status was never resolved).
+
+**Idempotency defect found and fixed on the way.** `docs/work-inventory.json`'s `status` field for
+a `companion` unit does not flip when `ingest_companion.py` writes a record — only a
+`v06_work_inventory` rebuild changes it. A `--dry-run` before the fix showed the script about to
+re-process all 552 already-ingested units and allocate them NEW suffixed slugs (duplicating every
+one). Fixed at the cause: `existing_citations_by_book()` indexes every already-written record's own
+`(source.path, source.line)` citation and skips a match before slug allocation
+(`skipped_existing_already_ingested`, new report field). RED→GREEN proved
+(`scripts/tests/test_ingest_companion_idempotent_rerun.py`) before the real run.
+
+```
+companion no_record: 217 → 2 (scripts/shape_ledger.py, corpus SHA 7f818006e371188e5717fd18d74d18a420747fc6)
+population 769 = written 215 (this cycle) + 552 (already-ingested, correctly skipped) + pi_skipped 2
+bundle no_record: 1,114 → 899 (scripts/shape_ledger.py, same command, before/after)
+```
+
+215 new `data/corpus/<book>/companion/*.json` records (`git status --porcelain | grep '^?? data/corpus' | wc -l` → 215, 0 deletions).
+
+### Concatenated-blacklist-term PI shape: re-derived, root-caused, partially closed
+
+Re-derived the real count against the brief's ~184-212/~39-dirs estimate:
+`blacklist_term_hit_including_concatenated` scanned over every non-`pi_marker:redacted` corpus
+record's `raw_tokens`/`description` (50,173 files) → **43 concat-only hits across 9 kind
+directories** (the estimate also likely folded in 62 separate word-bounded-but-unredacted hits, a
+related but distinct defect this cycle did not trace to a cause).
+
+**Root-caused** for the population this cycle could safely reach: `scripts/ingest_simple_filename_
+kinds.py` only ever ran the blacklist-aware `scrub_name_pi_tokens` inside its `name_is_pi and
+always_pi` branch — a record with a clean name but a blacklisted term concatenated into some OTHER
+token's value (found live: `inner_sea_world_guide/template`'s `LANG:`/`TYPE:` tokens) fell through
+untouched. Built `scrub_all_tokens_for_concatenated_pi()`, wired unconditionally, TDD'd RED→GREEN.
+
+**Rebase found a sibling cycle had independently landed the IDENTICAL fix in the same window**
+(`ingest_ability.py::scrub_blacklist_pi_tokens`, wired into `ingest_simple_filename_kinds.py`'s
+`main()` unconditionally, imported instead of re-defined — the exact same `pi_scrub.
+blacklist_term_hit_including_concatenated` call, same "scan every token, not just the rename
+branch" shape). Dropped this cycle's own duplicate function and its now-redundant test file at
+merge time rather than shipping two implementations of the same check
+(`decisions.md §17`'s own named drift hazard) — kept the sibling's, already on `origin/tranche/12`.
+
+**`template` specifically remains un-regenerated even after the sibling's own fix landed** — their
+commit (`5c0178a397`, "PI leaks in domain/language/equipment raw_tokens") regenerated `domain`/
+`language`/`equipment`, not `template`. Re-confirmed live post-rebase:
+`human_ethnicity_garundi.json`'s `SUBRACE: Garundi` token (`ingested_at` from that same sibling
+commit) still returns a hit from `blacklist_term_hit_including_concatenated` — the code path is
+fixed for every `TARGET_KINDS` member including `template`, but that kind's own corpus files were
+not part of the sibling's regen scope. **Not run for real against the shipped corpus this cycle
+either** — `--kind template --dry-run` showed the script rewrites all 2,248 `template` records
+unconditionally (no exists-guard, fresh `ingested_at` stamp every run) to redact the ~42
+already-affected ones, an out-of-proportion blast radius to accept under time pressure without the
+full `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` + status-distribution-diff
+protocol. Named precisely instead of silently dropped: `template`'s residual (code fix landed,
+regen pending — a scoped `--kind template` follow-up cycle can now do it directly, no code work
+left); the `class_feature` hits are Rust-generator territory (`src/bin/gen_cache_class_feature.rs`
+and siblings) not reachable in this cycle's budget; `equipment`/`spell` hits are the sibling lane's
+territory per this cycle's own dispatch brief and are named for that lane, not fixed here.
+
+- **Status:** companion — complete (residual closed to its real floor, 2, named and justified).
+  Concatenated-PI-term — partial: cause fixed for `ingest_simple_filename_kinds.py`'s 5 applicable
+  kinds; 42 `template` + 5 `class_feature` + 1 `equipment` + 1 `spell` already-shipped records remain
+  un-redacted, named precisely, not silently dropped.
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-companion-allowlist-widening_cycle-1_cycle_receipt.md`.
+- **What remains:** (1) a scoped next-cycle regen of `ingest_simple_filename_kinds.py --kind template`
+  under the full corpus-regen protocol; (2) the Rust `class_feature` generators' own PI scrub path;
+  (3) handoff to the sibling `spell`/`equipment`/`equipment_modifier` lane for its 2 hits.
+- Commit: (this cycle's commit — see push output).

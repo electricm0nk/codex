@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Subdue",
+    "name": "Subdue",
+    "description": "The companion can attempt to subdue opponents. Once the command is given, the companion makes all its natural attacks as nonlethal attacks (taking the typical -4 penalty on attack rolls when using normally lethal attacks) until ordered to do otherwise.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Subdue"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animal Trick ~ Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion can attempt to subdue opponents. Once the command is given, the companion makes all its natural attacks as nonlethal attacks (taking the typical -4 penalty on attack rolls when using normally lethal attacks) until ordered to do otherwise."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 115,
+    "record_key": "Animal Trick ~ Subdue"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

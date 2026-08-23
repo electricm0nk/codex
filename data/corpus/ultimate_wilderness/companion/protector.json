@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar Archetype ~ Protector",
+    "name": "Protector",
+    "description": "Protector familiars are so devoted that they would give their lives for their masters. A tumor familiar can't be a protector.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Protector"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarAlertness.CF_FamiliarImprovedEvasion.CF_FamiliarDeliverTouchSpells.CF_FamiliarSpeakwithAnimalsofItsKind.CF_FamiliarSpellResistance"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Protector],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarSpellResistance]"
+      },
+      {
+        "key": "DESC",
+        "value": "Protector familiars are so devoted that they would give their lives for their masters. A tumor familiar can't be a protector."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Protector ~ Loyal Bodyguard|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Protector ~ Shield Master|PREVARGTEQ:MasterLevel,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Protector ~ Able Defender|PREVARGTEQ:MasterLevel,11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 543,
+    "record_key": "Familiar Archetype ~ Protector"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

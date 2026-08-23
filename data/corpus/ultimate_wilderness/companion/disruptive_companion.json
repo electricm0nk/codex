@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Disruptive Companion",
+    "name": "Disruptive Companion",
+    "description": "The animal companion is trained to interfere with its opponent's concentration, making even rote tasks difficult. Increase the concentration check DC of spells and spell-like abilities that opponents cast while within the animal companion's reach by +2. Additionally, opponents can't take 10 on d20 rolls or checks while within the animal companion's reach. If an opponent has an ability that allows it to always take 10 on certain skill checks while distracted (such as the skill mastery advanced talent), it gains the benefit of such abilities only if its number of skill ranks is at least 4 higher than the animal companion's Hit Dice. In addition, the animal companion counts as a fighter with a number of class levels equal to its Hit Dice for the purposes of qualifying for the Disruptive feat, as well as for any feat that lists the Disruptive feat as a prerequisite. The animal companion also adds those feats to the list of animal feats that it can choose from when gaining a new feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Disruptive Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal companion is trained to interfere with its opponent's concentration, making even rote tasks difficult. Increase the concentration check DC of spells and spell-like abilities that opponents cast while within the animal companion's reach by +2. Additionally, opponents can't take 10 on d20 rolls or checks while within the animal companion's reach. If an opponent has an ability that allows it to always take 10 on certain skill checks while distracted (such as the skill mastery advanced talent), it gains the benefit of such abilities only if its number of skill ranks is at least 4 higher than the animal companion's Hit Dice. In addition, the animal companion counts as a fighter with a number of class levels equal to its Hit Dice for the purposes of qualifying for the Disruptive feat, as well as for any feat that lists the Disruptive feat as a prerequisite. The animal companion also adds those feats to the list of animal feats that it can choose from when gaining a new feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Disruptive Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 657,
+    "record_key": "Animal Companion Feat ~ Disruptive Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

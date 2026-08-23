@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Auspice ~ Auspicious Boon",
+    "name": "Auspicious Boon",
+    "description": "[NOT IMPLEMENTED] The auspice can cast guidance as a spell-like ability at will as a full-round action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Auspice ~ Auspicious Boon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.SpellLike.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] The auspice can cast guidance as a spell-like ability at will as a full-round action."
+      },
+      {
+        "key": "DESC",
+        "value": " The auspice can access a spark of its associated deity's favor. Choose one of that deity's domains that grants a 1st-level domain power usable a number of times per day equal to 3 + the user's Wisdom modifier. The auspice can use that power once per day.|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 451,
+    "record_key": "Auspice ~ Auspicious Boon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

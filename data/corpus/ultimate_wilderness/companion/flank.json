@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Flank",
+    "name": "Flank",
+    "description": "You can instruct an animal to attack a foe you point to and always attempt to be adjacent to (and threatening) that foe. If you or an ally is also threatening the foe, the animal attempts to flank the foe, if possible. It performs flank only against targets it would normally attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Flank"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animal Trick ~ Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "You can instruct an animal to attack a foe you point to and always attempt to be adjacent to (and threatening) that foe. If you or an ally is also threatening the foe, the animal attempts to flank the foe, if possible. It performs flank only against targets it would normally attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 91,
+    "record_key": "Animal Trick ~ Flank"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

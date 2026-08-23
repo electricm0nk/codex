@@ -428,7 +428,7 @@ def main(argv: list[str] | None = None) -> int:
             out_tokens = scrubbed_tokens
             codex_generated_name = True
             fields_redacted.append("name")
-            if extra_redacted:
+            if extra_redacted and "raw_tokens" not in fields_redacted:
                 fields_redacted.append("raw_tokens")
             rename_info = {
                 "reason": "name_pi_blocked",

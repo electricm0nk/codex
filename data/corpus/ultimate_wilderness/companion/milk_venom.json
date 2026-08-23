@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Milk Venom",
+    "name": "Milk Venom",
+    "description": "The companion can be coaxed into providing a single dose of venom on command. This process takes 10 minutes, and it requires a vial or similar container in which to store the poison. A companion that has been specifically trained to be milked of its venom never bites, stings, or otherwise poisons its handler when being milked, although the handler must still succeed at a Handle Animal check to successfully harvest the venom (see Harvesting Poisons on page 142). A companion must have the poison ability to be taught this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Milk Venom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion can be coaxed into providing a single dose of venom on command. This process takes 10 minutes, and it requires a vial or similar container in which to store the poison. A companion that has been specifically trained to be milked of its venom never bites, stings, or otherwise poisons its handler when being milked, although the handler must still succeed at a Handle Animal check to successfully harvest the venom (see Harvesting Poisons on page 142). A companion must have the poison ability to be taught this trick."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 109,
+    "record_key": "Animal Trick ~ Milk Venom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

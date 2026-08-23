@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Bodyguard ~ Greater Tenacity",
+    "name": "Greater Tenacity",
+    "description": "A bodyguard with fewer than 0 hit points gains a +4 morale bonus on attack rolls, saving throws, and skill checks; immunity to fear effects; and temporary hit points equal to its master's class level (maximum 20). It dies only if its hit points reach a negative total equal to twice its Constitution score + its master's class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bodyguard ~ Greater Tenacity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A bodyguard with fewer than 0 hit points gains a +4 morale bonus on attack rolls, saving throws, and skill checks; immunity to fear effects; and temporary hit points equal to its master's class level (maximum 20). It dies only if its hit points reach a negative total equal to twice its Constitution score + its master's class level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 459,
+    "record_key": "Bodyguard ~ Greater Tenacity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

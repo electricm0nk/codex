@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Feytouched Companion ~ Fey Magic",
+    "name": "Fey Magic",
+    "description": "A feytouched companion can cast dancing lights at will as a spell-like ability as a full-round action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feytouched Companion ~ Fey Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Dancing Lights"
+      },
+      {
+        "key": "DESC",
+        "value": "A feytouched companion can cast dancing lights at will as a spell-like ability as a full-round action."
+      },
+      {
+        "key": "DESC",
+        "value": "A feytouched companion can ready an action for its master's spellcasting while adjacent to its master, to allow its master to spontaneously cast one of the following spells by sacrificing a spell slot of equal or higher level: faerie fire (1st), glitterdust (2nd), deep slumber (3rd), major image (4th), confusion (5th), feeblemind (7th), mislead (8th). A feytouched companion's master can cast each of the spells on the list only once each day in this way.|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 495,
+    "record_key": "Feytouched Companion ~ Fey Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

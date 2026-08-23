@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Heroic Defiance",
+    "name": "Heroic Defiance",
+    "description": "Once per day as an immediate action you can delay the onset of one harmful condition or affliction (such as panicked, paralyzed, stunned, and so on), including permanent and instantaneous conditions. Activating this feat delays the onset of the condition until the end of your next turn, after which time the condition takes its normal effect. This feat has no effect on hit point damage or ability damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Heroic Defiance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Diehard,Endurance"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "8"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AllowCompanionFeatHeroicDefiance,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as an immediate action you can delay the onset of one harmful condition or affliction (such as panicked, paralyzed, stunned, and so on), including permanent and instantaneous conditions. Activating this feat delays the onset of the condition until the end of your next turn, after which time the condition takes its normal effect. This feat has no effect on hit point damage or ability damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Heroic Defiance"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Advanced Player's Guide"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "APG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 682,
+    "record_key": "Animal Companion Feat ~ Heroic Defiance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Spin Silk",
+    "name": "Spin Silk",
+    "description": "The companion can create strands of delicate yet incredibly strong silk. Harvesting the silk takes 10 minutes, and it can be done once per day. This silk functions identically to a silk rope. The companion can produce a total of %1 feet of silk per day, which can be divided as the handler chooses in 10-foot increments. Silk produced in this way degrades into uselessness after 24 hours. Only companions with the web ability can learn this trick.|10*CONSCORE",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Spin Silk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion can create strands of delicate yet incredibly strong silk. Harvesting the silk takes 10 minutes, and it can be done once per day. This silk functions identically to a silk rope. The companion can produce a total of %1 feet of silk per day, which can be divided as the handler chooses in 10-foot increments. Silk produced in this way degrades into uselessness after 24 hours. Only companions with the web ability can learn this trick.|10*CONSCORE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 114,
+    "record_key": "Animal Trick ~ Spin Silk"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

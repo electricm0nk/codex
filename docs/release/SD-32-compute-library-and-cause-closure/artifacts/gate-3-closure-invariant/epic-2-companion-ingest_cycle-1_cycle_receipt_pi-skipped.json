@@ -5,6 +5,7 @@
   "pi_skipped_by_bucket": {
     "still_undecidable": 217
   },
+  "SUPERSEDED_note": "SD-32 T9-onboarding-cause-closure cycle (2026-08-23, decisions.md §19c/§20): re-derivation confirmed these 217 units are the ENTIRE companion no_record residual (scripts/shape_ledger.py, both counts identical) and NOT name-PI-blocked at all -- classifier false positives (a/an/the <noun> species-reference heuristic and capitalized-token heuristic over-triggering on ordinary English/PF1e-mechanic words, none a Golarion proper noun). Two more categorized allowlist-widening rounds in scripts/sd32_t9_pi_review_companion_monsterability.py (named per decisions.md §19c's binding condition) closed 215 of the 217. See epic-2-companion-allowlist-widening_cycle-1_cycle_receipt.md and the CURRENT report at epic-2-companion-allowlist-widening_cycle-1_pi-skipped.json (2 records: the Shaitan Binder Eidolon rows, deliberately left undecidable, unchanged from this file's own original judgment). This file is retained as history of the earlier ingest_companion.py pass, not as the current disposition of these 217 units.",
   "pi_skipped_records": [
     "advanced_players_guide:apg_abilities_companion.lst:131 'Grab' (key: 'Evolution ~ Grab') -- still_undecidable: lowercase creature-species-shaped reference(s): ['grab', 'selected']",
     "advanced_players_guide:apg_abilities_companion.lst:89 'Pounce' (key: 'Evolution ~ Pounce') -- still_undecidable: lowercase creature-species-shaped reference(s): ['charge']",

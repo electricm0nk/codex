@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Exemplar ~ Influence Animals",
+    "name": "Influence Animals",
+    "description": "An animal exemplar gains the ability to influence animals of its kind, as per the wild empathy ability of a druid of its master's level with a +4 racial bonus on the check, but only for animals of its kind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Exemplar ~ Influence Animals"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Charm Animal (caster's own kind only),11+CHA|PREVARGTEQ:MasterLevel,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Dominate Animal (caster's own kind only),13+CHA|PREVARGTEQ:MasterLevel,13"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal exemplar gains the ability to influence animals of its kind, as per the wild empathy ability of a druid of its master's level with a +4 racial bonus on the check, but only for animals of its kind."
+      },
+      {
+        "key": "DESC",
+        "value": "It can cast charm animal three times per day as a spell-like ability against animals of its kind.|PREVARGTEQ:MasterLevel,11"
+      },
+      {
+        "key": "DESC",
+        "value": "It can cast dominate animal once per day as a spell-like ability against animals of its kind.|PREVARGTEQ:MasterLevel,13"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 555,
+    "record_key": "Animal Exemplar ~ Influence Animals"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar Archetype ~ Valet",
+    "name": "Valet",
+    "description": "A valet is a consummate personal servant, able to fetch, deliver, and perform for its master's every need.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Valet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarAlertness.CF_FamiliarImprovedEvasion.CF_FamiliarDeliverTouchSpells.CF_FamiliarSpeakwithAnimalsofItsKind.CF_FamiliarScryonfamiliar.CF_FamiliarShareSpells"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Valet],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarScryonfamiliar,TYPE.CF_FamiliarShareSpells]"
+      },
+      {
+        "key": "DESC",
+        "value": "A valet is a consummate personal servant, able to fetch, deliver, and perform for its master's every need."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Class Skills|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Able Assistant|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Magical Manipulation|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Teammate|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Deliver Touch Spells|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Deliver Aid|PREVARGTEQ:CompanionAdvancement,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Valet ~ Aide to All|PREVARGTEQ:MasterLevel,13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 546,
+    "record_key": "Familiar Archetype ~ Valet"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

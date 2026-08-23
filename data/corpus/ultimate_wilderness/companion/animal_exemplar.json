@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar Archetype ~ Animal Exemplar",
+    "name": "Animal Exemplar",
+    "description": "An animal exemplar is a paragon of its species, able to command the loyalty of others of its kind. An animal exemplar familiar cannot be an improved familiar, plant, vermin, or other nonanimal themed familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Animal Exemplar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarSpeakwithAnimalsofItsKind.CF_FamiliarDeliverTouchSpells.CF_FamiliarSpellResistance.CF_FamiliarScryonFamiliar"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Animal Exemplar],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpellResistance,TYPE.CF_FamiliarScryonFamiliar]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACESUBTYPE=Augmented Magical Beast"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal exemplar is a paragon of its species, able to command the loyalty of others of its kind. An animal exemplar familiar cannot be an improved familiar, plant, vermin, or other nonanimal themed familiar."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Animal Exemplar ~ Class Skills|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Familiar ~ Speak with Animals of Its Kind|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Animal Exemplar ~ Influence Animals|PREVARGTEQ:CompanionAdvancement,1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 534,
+    "record_key": "Familiar Archetype ~ Animal Exemplar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
