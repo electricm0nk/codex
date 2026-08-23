@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Trip",
+    "delivery": "Extraordinary",
+    "description": "A creature with the trip special attack can attempt to trip its opponent as a free action without provoking an attack of opportunity if it hits with the specified attack. If the attempt fails, the creature is not tripped in return.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_trip",
+    "name": "Trip",
+    "owners": [],
+    "source_page": "p.305",
+    "traits": [
+      "Universal Monster Rule",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2383,
+    "record_key": "Universal Monster Rule ~ Trip"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

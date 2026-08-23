@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Guardian Naga ~ Spells",
+    "delivery": null,
+    "description": "A guardian naga casts spells as a 9th-level sorcerer, and can cast spells from the cleric list as well as those normally available to a sorcerer. Cleric spells are considered arcane spells for a guardian naga.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:guardian_naga_spells",
+    "name": "Spells",
+    "owners": [],
+    "source_page": "p.215",
+    "traits": [
+      "Spells"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 962,
+    "record_key": "Guardian Naga ~ Spells"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

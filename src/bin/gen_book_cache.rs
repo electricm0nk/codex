@@ -2483,6 +2483,21 @@ fn monster_book_corpus_root(spec: &MonsterBookSpec) -> PathBuf {
     if let Ok(v) = std::env::var(&override_var) {
         return PathBuf::from(v);
     }
+    // `decisions.md §20` (no_record-to-zero wave 2): every OTHER tool in this
+    // bundle (`scripts/census_independent.py`, `scripts/card15_reconcile.py`,
+    // `scripts/generic_pass_state_rederive.py`, ...) reads the repo-local
+    // pinned oracle via the plain `PCGEN_CORPUS_ROOT` env var
+    // (`artifacts/corpus/README.md`, `scripts/fetch-pcgen-oracle.sh`). This
+    // binary alone fell back straight to the deprecated
+    // `~/workspace/repos/pcgen/data` checkout the program's own standing
+    // rule says never to reference, with no way to point it at the pinned
+    // oracle short of a per-book override that also (undesirably) disables
+    // the `core_essentials` cross-book fallback below. Checked SECOND, after
+    // the per-book override, so an existing `PCGEN_CORPUS_ROOT_<BOOK>` still
+    // wins for a synthetic/test-only book directory exactly as before.
+    if let Ok(v) = std::env::var("PCGEN_CORPUS_ROOT") {
+        return PathBuf::from(v).join(spec.book_relative);
+    }
     let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
     PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
 }
@@ -2499,6 +2514,13 @@ fn monster_book_corpus_data_root(spec: &MonsterBookSpec) -> Option<PathBuf> {
     let override_var = format!("PCGEN_CORPUS_ROOT_{}", spec.corpus_book.to_uppercase());
     if std::env::var(&override_var).is_ok() {
         return None;
+    }
+    // See `monster_book_corpus_root`'s matching comment: the plain
+    // `PCGEN_CORPUS_ROOT` env var (the repo-local pinned oracle's `data/`
+    // root) is checked before the deprecated `~/workspace/repos/pcgen`
+    // fallback.
+    if let Ok(v) = std::env::var("PCGEN_CORPUS_ROOT") {
+        return Some(PathBuf::from(v));
     }
     let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
     Some(PathBuf::from(home).join("workspace/repos/pcgen/data"))

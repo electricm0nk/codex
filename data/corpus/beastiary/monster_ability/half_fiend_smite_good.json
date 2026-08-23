@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Half-Fiend ~ Smite Good",
+    "delivery": "Supernatural",
+    "description": "Once per day, as a swift action, the half-fiend can smite good as the smite evil ability of a paladin of the same level as the half-fiend's Hit Dice, except affecting a good target. The smite persists until target is dead or the half-fiend rests.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:half_fiend_smite_good",
+    "name": "Smite Good",
+    "owners": [],
+    "source_page": "p.171",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1321,
+    "record_key": "Half-Fiend ~ Smite Good"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Lycanthropic Empathy",
+    "delivery": "Extraordinary",
+    "description": "In any form, natural lycanthropes can communicate and empathize with animals related to their animal form. They can use Diplomacy to alter such an animal's attitude, and when so doing gain a +4 racial bonus on the check. Afflicted lycanthropes only gain this ability in animal or hybrid form.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:lycanthropic_empathy",
+    "name": "Lycanthropic Empathy",
+    "owners": [],
+    "source_page": "p.196",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1345,
+    "record_key": "Lycanthropic Empathy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

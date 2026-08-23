@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Telepathy",
+    "delivery": "Supernatural",
+    "description": "The creature can mentally communicate with any other creature within a certain range (specified in the creature's entry, usually 100 feet) that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_telepathy",
+    "name": "Telepathy",
+    "owners": [],
+    "source_page": "p.305",
+    "traits": [
+      "Universal Monster Rule",
+      "Communicate"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2382,
+    "record_key": "Universal Monster Rule ~ Telepathy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Salt Mephit ~ Dehydrate",
+    "delivery": "Supernatural",
+    "description": "Once per day a salt mephit can draw the moisture from an area in a 20-foot radius centered on itself. Living creatures within range take 2d8 points of damage (Fortitude DC 14 half; caster level 6th). This effect is especially devastating to plant and aquatic creatures, which take a -2 penalty on their saving throws. This ability is the equivalent of a 2nd-level spell.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:salt_mephit_dehydrate",
+    "name": "Dehydrate",
+    "owners": [],
+    "source_page": "p.203",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 889,
+    "record_key": "Salt Mephit ~ Dehydrate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

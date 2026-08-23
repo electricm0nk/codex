@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Breath Weapon ~ Cone of Force",
+    "delivery": "Supernatural",
+    "description": "%1' Cone of Force %2d%3, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.",
+    "description_variables": [
+      "BreathWeaponCone",
+      "BreathWeaponDice",
+      "BreathWeaponDamageDie",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:breath_weapon_cone_of_force",
+    "name": "Breath Weapon",
+    "owners": [],
+    "source_page": "p.298",
+    "traits": [
+      "BreathWeapon"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1316,
+    "record_key": "Breath Weapon ~ Cone of Force"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

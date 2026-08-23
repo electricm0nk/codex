@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Curse of Lycanthropy",
+    "delivery": "Supernatural",
+    "description": "A natural lycanthrope's bite attack in animal or hybrid form infects a humanoid target with lycanthropy (Fortitude DC 15 negates). If the victim's size is not within one size category of the lycanthrope, this ability has no effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:curse_of_lycanthropy",
+    "name": "Curse of Lycanthropy",
+    "owners": [],
+    "source_page": "p.196",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1344,
+    "record_key": "Curse of Lycanthropy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

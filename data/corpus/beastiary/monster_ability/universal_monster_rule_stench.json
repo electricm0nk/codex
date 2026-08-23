@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Stench",
+    "delivery": "Extraordinary",
+    "description": "A creature with the stench special ability secretes an oily chemical that nearly every other creature finds offensive. All living creatures (except those with the stench special ability) within %1 feet must succeed on a Fortitude save (DC %2) or be sickened. The duration of the sickened condition is given in the creature's descriptive text. Creatures that successfully save cannot be affected by the same creature's stench for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonus on their saving throws.",
+    "description_variables": [
+      "UMR_Stench_Range",
+      "UMR_Stench_DC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_stench",
+    "name": "Stench",
+    "owners": [],
+    "source_page": "p.304",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Quality",
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2381,
+    "record_key": "Universal Monster Rule ~ Stench"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

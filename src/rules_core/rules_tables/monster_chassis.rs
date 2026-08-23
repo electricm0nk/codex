@@ -637,14 +637,28 @@ mod tests {
 
     /// The chassis link, held closed in both directions for every book: an
     /// ability a monster names is defined here, an ability listed as external is
-    /// not, and every defined ability has at least one owner. An orphan means
-    /// the link was transcribed wrong in one direction and the catalog would
-    /// serve a record no monster row reaches. A CROSS-TABLE-OWNER ability
+    /// not, and every NAMED owner on a defined ability resolves back to a
+    /// monster that names it (or is a known cross-table exception). An orphan
+    /// means the link was transcribed wrong in one direction and the catalog
+    /// would serve a record no monster row reaches. A CROSS-TABLE-OWNER ability
     /// (`SD31-W23-MONSTER-001`, `decisions.md §58.3`) is the one owner shape
     /// that legitimately has no `ability_keys` back-reference in THIS book --
     /// its `MonsterStatBlock` ships from a different one -- and the book's own
     /// `cross_table_owner_names` is what tells this test apart a real
     /// dangling owner from that known, cited exception.
+    ///
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2)**: this no
+    /// longer requires every ability to carry an owner at all. An
+    /// intentionally owner-less record (no monster row of its book claims
+    /// it) now SHIPS with `owners: &[]` rather than being dropped, because an
+    /// un-ingested row's shape cannot be measured and Gate 1's DoD needs
+    /// every unit's shape measured; `list_monster_catalog` only ever walks a
+    /// monster's own `ability_keys`, so it never surfaces one. Each book that
+    /// ships owner-less records pins the EXACT set in its own module (e.g.
+    /// `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`)
+    /// — that is where a silent new arrival or disappearance is caught; this
+    /// test's remaining job is that every NON-empty owner list still
+    /// resolves correctly both ways.
     #[test]
     fn the_chassis_link_resolves_in_both_directions_for_every_book() {
         for book in MONSTER_BOOKS {
@@ -667,13 +681,6 @@ mod tests {
                 }
             }
             for ability in book.monster_abilities {
-                assert!(
-                    !ability.owners.is_empty(),
-                    "{}: {} ({}) is owned by no monster row",
-                    book.corpus_book,
-                    ability.name,
-                    ability.key
-                );
                 for owner in ability.owners {
                     match book.monster_resolve(owner) {
                         Some(monster) => assert!(
@@ -908,18 +915,28 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            2656,
+            2836,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
-             facet-widening change pass"
+             facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
+             wave 2): +180 owner-less `bestiary` records now ship for shape measurement \
+             rather than being dropped as orphans — see \
+             `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`"
         );
         assert_eq!(
-            digest, 0x7f1f_d137_006b_6cbd,
+            digest, 0xada4_55b5_de6b_afc7,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
              SpecialAttack/SpecialQuality row was reclassified, which is exactly the \
-             defect this test exists to catch (decisions.md §16)"
+             defect this test exists to catch (decisions.md §16). 0x7f1fd137006b6cbd -> \
+             0xada455b5de6bafc7 (`decisions.md §20`): the digest moves whenever the SORTED \
+             triple set gains members, even with zero reclassification — independently \
+             confirmed zero-reclassification here via `gen_book_cache beastiary`'s own report \
+             (`0 new monsters ... 529 already on disk, left untouched, 180 new monster \
+             abilities`) and a `git diff` of `bestiary/monster_data.rs` showing every \
+             pre-existing record's fields byte-identical (only file-position reordering, from \
+             orphans keeping their real `source_line` instead of being dropped)"
         );
     }
 }

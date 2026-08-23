@@ -2756,6 +2756,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
+    ("beastiary1", "monster_abilities", "Gap: 180 of Bestiary 1's 709 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2) ship with `owners: &[]` -- no monster row of this book claims them, because they are the corpus's own shared reference-library vocabulary (`Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`, `Regeneration ~ X`, `Immunity to X`, and similar generic special-ability text `scripts/transcribe_monster_tables.py`'s ownership pass finds no in-book stat block naming). They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set (a Universal Monster Rule applies to every creature of a stated type, not to one specific stat block), which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -3387,6 +3388,223 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Familiar Archetype ~ Sage",
             "Familiar Archetype ~ Soulbound Familiar",
             "Familiar Archetype ~ Valet",
+        ],
+    ),
+    (
+        "beastiary1",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2): 180 `monster_ability`
+        // rows no monster row of `bestiary` claims (a shared reference-library
+        // entry -- `Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`,
+        // `Regeneration ~ X`, `Immunity to X`, and similar generic special-
+        // ability text no single stat block in this book owns) now SHIP with
+        // `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`
+        // (`apps/desktop/src-tauri/src/monster_catalog.rs`), so an owner-less
+        // record here reaches no screen at all -- not the stub class
+        // `decisions.md §44.2` was written about, because a stub is a record
+        // a player's screen SHOWS empty, and these reach no screen. Pinned by
+        // exact key rather than by count so a NEW silent non-reach still
+        // fails here; `bestiary::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` pins the
+        // identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        //
+        // **Correction, same cycle**: an EARLIER version of this entry was
+        // pulled after empirically appearing to "already reach a player" --
+        // that read was wrong. It compared against `corpus_record_keys`
+        // BEFORE `gen_book_cache beastiary` had ever written these 180
+        // records to `data/corpus/`, so the denominator simply did not
+        // contain them yet; every one of the 180 looked "fixed" (recorded
+        // but not live) only because none was live at all. Re-checked AFTER
+        // the real regen (`reach_gate::tests::
+        // bestiary_1_monsters_reach_the_monster_catalog_record_by_record`,
+        // which panicked `NotSurfaced` naming all 180): they do not reach.
+        &[
+            "beastiary:monster_ability:ability_damage_ex",
+            "beastiary:monster_ability:ability_damage_su",
+            "beastiary:monster_ability:ability_drain_ex",
+            "beastiary:monster_ability:ability_drain_su",
+            "beastiary:monster_ability:afflicted_lycanthrope",
+            "beastiary:monster_ability:air_mephit_breath_weapon",
+            "beastiary:monster_ability:air_mephit_fast_healing",
+            "beastiary:monster_ability:aligned",
+            "beastiary:monster_ability:angel_protective_aura",
+            "beastiary:monster_ability:angel_save_vs_poison",
+            "beastiary:monster_ability:angel_truespeech",
+            "beastiary:monster_ability:animated_object_additional_attack",
+            "beastiary:monster_ability:animated_object_burrow_movement",
+            "beastiary:monster_ability:animated_object_climb_movement",
+            "beastiary:monster_ability:animated_object_constrict",
+            "beastiary:monster_ability:animated_object_faster_burrow",
+            "beastiary:monster_ability:animated_object_faster_climb",
+            "beastiary:monster_ability:animated_object_faster_fly",
+            "beastiary:monster_ability:animated_object_faster_swim",
+            "beastiary:monster_ability:animated_object_faster_walk",
+            "beastiary:monster_ability:animated_object_fly_movement",
+            "beastiary:monster_ability:animated_object_grab",
+            "beastiary:monster_ability:animated_object_metal_adamantine",
+            "beastiary:monster_ability:animated_object_metal_common",
+            "beastiary:monster_ability:animated_object_metal_mithral",
+            "beastiary:monster_ability:animated_object_stone",
+            "beastiary:monster_ability:animated_object_swim_movement",
+            "beastiary:monster_ability:animated_object_trample",
+            "beastiary:monster_ability:archon_aura_of_menace",
+            "beastiary:monster_ability:archon_save_vs_poison",
+            "beastiary:monster_ability:archon_teleport",
+            "beastiary:monster_ability:archon_truespeech",
+            "beastiary:monster_ability:azata_truespeech",
+            "beastiary:monster_ability:bleed",
+            "beastiary:monster_ability:bloody_skeleton_deathless",
+            "beastiary:monster_ability:breath_weapon_cone_of_force",
+            "beastiary:monster_ability:breath_weapon_cone_of_lightning",
+            "beastiary:monster_ability:breath_weapon_cone_of_piercing",
+            "beastiary:monster_ability:breath_weapon_cone_of_repulsion_gas",
+            "beastiary:monster_ability:breath_weapon_cone_of_sleep",
+            "beastiary:monster_ability:breath_weapon_cone_of_sonic",
+            "beastiary:monster_ability:breath_weapon_prismatic_spray",
+            "beastiary:monster_ability:burning_skeleton_fiery_aura",
+            "beastiary:monster_ability:burning_skeleton_fiery_death",
+            "beastiary:monster_ability:burning_skeleton_fire_damage",
+            "beastiary:monster_ability:can_t_be_disarmed",
+            "beastiary:monster_ability:celestial_creature_smite_evil",
+            "beastiary:monster_ability:cold_iron_cobra_attacks",
+            "beastiary:monster_ability:construct_traits_output",
+            "beastiary:monster_ability:corrupting_gaze",
+            "beastiary:monster_ability:corrupting_touch",
+            "beastiary:monster_ability:curse",
+            "beastiary:monster_ability:curse_of_lycanthropy",
+            "beastiary:monster_ability:disease_ex",
+            "beastiary:monster_ability:disease_su",
+            "beastiary:monster_ability:distraction",
+            "beastiary:monster_ability:dragon_traits_output",
+            "beastiary:monster_ability:draining_touch",
+            "beastiary:monster_ability:dust_mephit_breath_weapon",
+            "beastiary:monster_ability:dust_mephit_fast_healing",
+            "beastiary:monster_ability:earth_mephit_breath_weapon",
+            "beastiary:monster_ability:earth_mephit_change_size",
+            "beastiary:monster_ability:earth_mephit_fast_healing",
+            "beastiary:monster_ability:elemental_traits_output",
+            "beastiary:monster_ability:fey_traits_output",
+            "beastiary:monster_ability:fiendish_creature_smite_good",
+            "beastiary:monster_ability:fire_mephit_breath_weapon",
+            "beastiary:monster_ability:fire_mephit_fast_healing",
+            "beastiary:monster_ability:flight_ex",
+            "beastiary:monster_ability:frightful_moan",
+            "beastiary:monster_ability:gaze",
+            "beastiary:monster_ability:guardian_naga_spells",
+            "beastiary:monster_ability:gynosphinx_symbol_of_fear",
+            "beastiary:monster_ability:gynosphinx_symbol_of_pain",
+            "beastiary:monster_ability:gynosphinx_symbol_of_persuasion",
+            "beastiary:monster_ability:gynosphinx_symbol_of_sleep",
+            "beastiary:monster_ability:gynosphinx_symbol_of_stunning",
+            "beastiary:monster_ability:half_celestial_smite_evil",
+            "beastiary:monster_ability:half_fiend_smite_good",
+            "beastiary:monster_ability:humanoid_traits_output",
+            "beastiary:monster_ability:ice_mephit_breath_weapon",
+            "beastiary:monster_ability:ice_mephit_fast_healing",
+            "beastiary:monster_ability:immunity_to_ability_drain",
+            "beastiary:monster_ability:immunity_to_bleed",
+            "beastiary:monster_ability:immunity_to_bludgeoning_damage",
+            "beastiary:monster_ability:immunity_to_death_from_massive_damage",
+            "beastiary:monster_ability:immunity_to_emotion_effects",
+            "beastiary:monster_ability:immunity_to_exhaustion",
+            "beastiary:monster_ability:immunity_to_fatigue",
+            "beastiary:monster_ability:immunity_to_language_dependent_spells",
+            "beastiary:monster_ability:immunity_to_magic",
+            "beastiary:monster_ability:immunity_to_magic_missile",
+            "beastiary:monster_ability:immunity_to_magical_sleep",
+            "beastiary:monster_ability:immunity_to_necromancy",
+            "beastiary:monster_ability:immunity_to_negative_levels",
+            "beastiary:monster_ability:immunity_to_nonlethal_damage",
+            "beastiary:monster_ability:immunity_to_permanent_wounds",
+            "beastiary:monster_ability:immunity_to_phantasms",
+            "beastiary:monster_ability:immunity_to_piercing_damage",
+            "beastiary:monster_ability:immunity_to_slashing_damage",
+            "beastiary:monster_ability:immunity_to_strength_drain",
+            "beastiary:monster_ability:immunity_to_weapon_damage",
+            "beastiary:monster_ability:immunity_to_wind_effects",
+            "beastiary:monster_ability:incorporeal",
+            "beastiary:monster_ability:incorporeal_traits_output",
+            "beastiary:monster_ability:lich_fear_aura",
+            "beastiary:monster_ability:lich_paralyzing_touch",
+            "beastiary:monster_ability:lich_rejuvenation",
+            "beastiary:monster_ability:lycanthropic_empathy",
+            "beastiary:monster_ability:magma_mephit_breath_weapon",
+            "beastiary:monster_ability:magma_mephit_fast_healing",
+            "beastiary:monster_ability:magma_mephit_magma_form",
+            "beastiary:monster_ability:malevolence",
+            "beastiary:monster_ability:mephit_summon",
+            "beastiary:monster_ability:monstrous_humanoid_traits_output",
+            "beastiary:monster_ability:natural_lycanthrope",
+            "beastiary:monster_ability:ooze_mephit_breath_weapon",
+            "beastiary:monster_ability:ooze_mephit_fast_healing",
+            "beastiary:monster_ability:paralysis_ex",
+            "beastiary:monster_ability:paralysis_su",
+            "beastiary:monster_ability:plague_zombie_disease",
+            "beastiary:monster_ability:poison_ex",
+            "beastiary:monster_ability:poison_su",
+            "beastiary:monster_ability:pseudodragon_poison",
+            "beastiary:monster_ability:push",
+            "beastiary:monster_ability:regeneration_acid",
+            "beastiary:monster_ability:regeneration_acid_cold",
+            "beastiary:monster_ability:regeneration_acid_cold_fire",
+            "beastiary:monster_ability:regeneration_choose",
+            "beastiary:monster_ability:regeneration_epic",
+            "beastiary:monster_ability:regeneration_fire_or_good_spells",
+            "beastiary:monster_ability:rejuvenation",
+            "beastiary:monster_ability:resistance_to_acid_output",
+            "beastiary:monster_ability:resistance_to_cold_output",
+            "beastiary:monster_ability:resistance_to_electricity_output",
+            "beastiary:monster_ability:resistance_to_fire_output",
+            "beastiary:monster_ability:resistance_to_sonic_output",
+            "beastiary:monster_ability:salt_mephit_breath_weapon",
+            "beastiary:monster_ability:salt_mephit_dehydrate",
+            "beastiary:monster_ability:salt_mephit_fast_healing",
+            "beastiary:monster_ability:spirit_naga_spells",
+            "beastiary:monster_ability:steam_mephit_boiling_rain",
+            "beastiary:monster_ability:steam_mephit_breath_weapon",
+            "beastiary:monster_ability:steam_mephit_fast_healing",
+            "beastiary:monster_ability:svirfneblin_hatred",
+            "beastiary:monster_ability:telekinesis",
+            "beastiary:monster_ability:universal_monster_rule_breath_weapon",
+            "beastiary:monster_ability:universal_monster_rule_burn",
+            "beastiary:monster_ability:universal_monster_rule_change_shape",
+            "beastiary:monster_ability:universal_monster_rule_disease_extraordinary",
+            "beastiary:monster_ability:universal_monster_rule_disease_supernatural",
+            "beastiary:monster_ability:universal_monster_rule_fast_healing",
+            "beastiary:monster_ability:universal_monster_rule_grab",
+            "beastiary:monster_ability:universal_monster_rule_light_blindness",
+            "beastiary:monster_ability:universal_monster_rule_light_sensitivity",
+            "beastiary:monster_ability:universal_monster_rule_paralysis_extraordinary",
+            "beastiary:monster_ability:universal_monster_rule_paralysis_supernatural",
+            "beastiary:monster_ability:universal_monster_rule_poison_extraordinary",
+            "beastiary:monster_ability:universal_monster_rule_poison_supernatural",
+            "beastiary:monster_ability:universal_monster_rule_stench",
+            "beastiary:monster_ability:universal_monster_rule_telepathy",
+            "beastiary:monster_ability:universal_monster_rule_trip",
+            "beastiary:monster_ability:universal_monster_rule_whirlwind",
+            "beastiary:monster_ability:vampire_change_shape",
+            "beastiary:monster_ability:vampire_children_of_the_night",
+            "beastiary:monster_ability:vampire_create_spawn",
+            "beastiary:monster_ability:vampire_energy_drain",
+            "beastiary:monster_ability:vulnerability_to_acid",
+            "beastiary:monster_ability:vulnerability_to_electricity",
+            "beastiary:monster_ability:vulnerability_to_protection_from_evil",
+            "beastiary:monster_ability:vulnerability_to_sonic",
+            "beastiary:monster_ability:vulnerability_to_sunlight",
+            "beastiary:monster_ability:water_dependency",
+            "beastiary:monster_ability:water_mephit_breath_weapon",
+            "beastiary:monster_ability:water_mephit_fast_healing",
+            "beastiary:monster_ability:wererat",
+            "beastiary:monster_ability:werewolf",
+            "beastiary:monster_ability:zombie_death_burst",
+            "beastiary:monster_ability:zombie_quick_strikes",
+            "beastiary:monster_ability:zombie_staggered",
         ],
     ),
 ];
@@ -5004,13 +5222,38 @@ mod tests {
         // the multi-`TYPE:`-token parsing fix landed;
         // `rules_tables::bestiary::mod.rs`'s own comment carries the full
         // derivation).
+        // `decisions.md §20` (no_record-to-zero wave 2): 529 -> 709 on disk
+        // (+180 owner-less records, no monster row of this book claims them,
+        // now shipped for shape measurement rather than dropped as orphans --
+        // `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_
+        // non_reach`). Reach itself does NOT move: `list_monster_catalog`
+        // only ever walks a monster's own `ability_keys`
+        // (`monster_catalog.rs`), so an owner-less record surfaces nowhere.
+        // The 180 are named, individually, in `UNREACHED_RECORD_FINDINGS`
+        // under this same `("beastiary1", "monster_abilities")` key.
+        //
+        // (A same-cycle instrument note: an earlier draft of this comment
+        // claimed the 180 already reached `Surfaced` — that reading came
+        // from checking `unreached_records_are_exactly_the_recorded_findings`
+        // BEFORE `gen_book_cache beastiary` had ever written these 180
+        // records to `data/corpus/`, so the live `ingested` denominator did
+        // not contain them yet and every one looked "fixed" for having
+        // nothing to be un-fixed from. Re-checked after the real regen, via
+        // this very test failing `NotSurfaced` naming all 180: they do not
+        // reach. `decisions.md §17a`'s own lesson, paid twice in one cycle.)
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 529, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 709, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 529),
-            other => panic!("expected all 529 abilities to reach, got {other:?}"),
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                180,
+                "expected exactly the 180 owner-less records to be the whole shortfall \
+                 (the other 529 all reach — `assess` reports the family NotSurfaced as a \
+                 whole the instant ANY record is missing, never a partial Surfaced)"
+            ),
+            other => panic!("expected 180 named non-reaches (529 of 709 still reach), got {other:?}"),
         }
     }
 

@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Telekinesis",
+    "delivery": "Supernatural",
+    "description": "The ghost's death involved great physical trauma. The ghost can use telekinesis as a standard action once every 1d4 rounds (caster level 12th or equal to the ghost's HD, whichever is higher). Save DC %1",
+    "description_variables": [
+      "TelekinesisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:telekinesis",
+    "name": "Telekinesis",
+    "owners": [],
+    "source_page": "p.144",
+    "traits": [
+      "GhostAbility",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1307,
+    "record_key": "Telekinesis"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

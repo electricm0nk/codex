@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Dust Mephit ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "A dust mephit can unleash a 15' cone of dust every 4 rounds as a standard action that deals 1d4 slashing damage. The dust also causes living creatures to be sickened for 3 rounds. A reflex save (DC %1) halves the damage and negates the sickened effect.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:dust_mephit_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "source_page": "p.202",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 896,
+    "record_key": "Dust Mephit ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

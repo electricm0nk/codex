@@ -203,7 +203,22 @@ mod tests {
         // (`Morlock ~ Sneak Attack`, bare `Internal`; `Spectre ~ Create
         // Spawn`, comma-joined `TYPE:SpecialAttack,Supernatural` — a likely
         // corpus typo for `.`, deliberately not auto-corrected).
-        assert_eq!(monster_abilities().len(), 529);
+        // 529 -> 709 (`decisions.md §20`, no_record-to-zero wave 2): 180 of
+        // the 197 rows no monster row of this book claims now SHIP with
+        // `owners: &[]` rather than being dropped — an un-ingested row's
+        // shape cannot be measured, and Gate 1's DoD needs every unit's
+        // shape measured. The other 17 are excluded for an UNRELATED reason
+        // that now applies to them too, because they are no longer dropped
+        // before reaching those screens: `unscreenable`'s multi-`DESC:`
+        // shape (22 hits total, some against already-owned rows) and
+        // `unmodelled_facet` (2 hits total, both already-owned) — re-derive
+        // with `python3 scripts/transcribe_monster_tables.py bestiary`.
+        // `no_shipped_ability_is_an_orphan` below is rewritten to pin the
+        // exact owner-less set instead of forbidding it; reachability is
+        // NOT claimed for the 180 — each is pinned by exact key in
+        // `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+        // `("bestiary1", "monster_abilities")`.
+        assert_eq!(monster_abilities().len(), 709);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -252,7 +267,9 @@ mod tests {
         // `beastiary1`, never from here.
         // 802 -> 809 (T9 `MonsterAbilityFacet` widening cycle, +7 abilities;
         // see `the_chassis_ships_the_books_complement`'s own comment).
-        assert_eq!(monsters().len() + monster_abilities().len(), 809);
+        // 809 -> 989 (`decisions.md §20`, +180 owner-less abilities; see
+        // `the_chassis_ships_the_books_complement`'s own comment).
+        assert_eq!(monsters().len() + monster_abilities().len(), 989);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the
@@ -277,24 +294,55 @@ mod tests {
         }
     }
 
-    /// Every transcribed ability row names at least one owner -- a monster row
-    /// this table holds, or (since `SD31-W23-MONSTER-001`) one of the 55
-    /// cross-table-owner rows whose real owner ships from `beastiary1`
-    /// instead. **Corrected `SD31-W23-INTEGRATE-001`**: the book has 197
-    /// genuinely unowned rows this test's job is still to keep out (re-derived
-    /// directly against `scripts/transcribe_monster_tables.py bestiary`'s own
-    /// live stdout -- the prior "146" here was already stale before this
-    /// cycle, unrelated to the +55 cross-table fix); the point of this test
-    /// is that none got in.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2).** Until
+    /// this cycle every transcribed ability row named at least one owner --
+    /// a monster row this table holds, or one of the 55 cross-table-owner
+    /// rows whose real owner ships from `beastiary1` instead -- because an
+    /// unowned row was dropped rather than shipped. `§20` overturned that:
+    /// an un-ingested row's shape cannot be measured, so the 180 rows no
+    /// monster row of this book claims now SHIP with `owners: &[]`, and this
+    /// test's job changes from "forbid an empty owner list" to "pin the
+    /// EXACT set of records that carry one" -- a silent new arrival OR a
+    /// silent disappearance both fail here, by name, the same discipline
+    /// `monster_chassis::tests::widening_the_facet_vocabulary_does_not_
+    /// reclassify_any_existing_record` already established for the facet
+    /// axis. `list_monster_catalog` never walks these directly (only a
+    /// monster's own `ability_keys`), so shipping them does not surface a
+    /// stub; each key is pinned separately, by name, in `reach_gate.rs::
+    /// UNREACHED_RECORD_FINDINGS` under `("bestiary1", "monster_abilities")`
+    /// as a proven non-reach, not a silent claim of reachability.
     #[test]
-    fn no_shipped_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            180,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py bestiary` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x87d5_26f2_aaea_c3c6,
+            "the SET of owner-less keys moved even though the count held — a row gained or \
+             lost its owner. This does not mean a defect on its own (an in-book monster row \
+             could legitimately start/stop claiming one of these), but it means \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS`'s pinned key list for \
+             (\"bestiary1\", \"monster_abilities\") must move with it"
+        );
     }
 
     /// The stronger form, which this book needs more than any before it: 46 of

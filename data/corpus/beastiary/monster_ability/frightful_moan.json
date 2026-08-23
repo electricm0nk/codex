@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Frightful Moan",
+    "delivery": "Supernatural",
+    "description": "The ghost died in the throes of crippling terror. It can emit a frightful moan as a standard action. All living creatures within a 30-foot spread must succeed on a Will save DC %1 or become panicked for 2d4 rounds. This is a sonic mind-affecting fear effect. A creature that successfully saves against the moan cannot be affected by the same ghost's moan for 24 hours.",
+    "description_variables": [
+      "FrightfulMoanDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:frightful_moan",
+    "name": "Frightful Moan",
+    "owners": [],
+    "source_page": "p.144",
+    "traits": [
+      "GhostAbility",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1305,
+    "record_key": "Frightful Moan"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

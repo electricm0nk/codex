@@ -1012,14 +1012,40 @@ mod tests {
             .iter()
             .flat_map(|e| e.abilities.iter().map(|a| &a.key))
             .collect();
-        let records_held: usize = codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
-            .iter()
-            .map(|book| book.monster_abilities.len())
-            .sum();
+        // `decisions.md §20` (no_record-to-zero wave 2): the chassis now
+        // holds `owner: &[]` records too (no monster row of their book
+        // claims them; shipped for shape measurement, not for reach --
+        // `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_
+        // non_reach`, `reach_gate.rs`'s `("beastiary1", "monster_abilities")`
+        // `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS` entries). Those never
+        // reach `list_monster_catalog` (it only ever walks a monster's own
+        // `ability_keys`), so this invariant now compares against the OWNED
+        // subset only -- the owner-less count is asserted separately, so a
+        // record silently losing its owner (which WOULD move it here) still
+        // fails loudly, just under a different assertion.
+        let owned_records_held: usize =
+            codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+                .iter()
+                .flat_map(|book| book.monster_abilities.iter())
+                .filter(|ability| !ability.owners.is_empty())
+                .count();
+        let owner_less_records_held: usize =
+            codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+                .iter()
+                .flat_map(|book| book.monster_abilities.iter())
+                .filter(|ability| ability.owners.is_empty())
+                .count();
         assert_eq!(
             distinct_served.len(),
-            records_held,
-            "every ability record the chassis holds reaches the wire under its own key, once"
+            owned_records_held,
+            "every OWNED ability record the chassis holds reaches the wire under its own key, \
+             once"
+        );
+        assert_eq!(
+            owner_less_records_held, 180,
+            "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
+             from `scripts/transcribe_monster_tables.py bestiary`'s own stderr and update both \
+             this pin and `reach_gate.rs`'s matching entries"
         );
     }
 

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Poison (Extraordinary)",
+    "delivery": "Extraordinary",
+    "description": "A creature with this ability can poison those it attacks. The effects of the poison, including its save, frequency, and cure, are included in the creature's description. The saving throw to resist a poison is usually a Fort save (DC 10 + 1/2 poisoning creature's racial HD + creature's Con modifier; the exact DC is given in the creature's descriptive text). Poisons can be removed through neutralize poison and similar effects.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_poison_extraordinary",
+    "name": "Poison",
+    "owners": [],
+    "source_page": "p.302",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Ability"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2378,
+    "record_key": "Universal Monster Rule ~ Poison (Extraordinary)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

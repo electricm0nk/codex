@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Lich ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "Creatures of less than 5 HD in a 60-foot radius that look at the lich must succeed on a Will save or become frightened. Creatures with 5 HD or more must succeed at a Will save or be shaken for a number of rounds equal to the lich's Hit Dice. A creature that successfully saves cannot be affected again by the same lich's aura for 24 hours. This is a mind-affecting fear effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:lich_fear_aura",
+    "name": "Fear Aura",
+    "owners": [],
+    "source_page": "p.189",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1339,
+    "record_key": "Lich ~ Fear Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

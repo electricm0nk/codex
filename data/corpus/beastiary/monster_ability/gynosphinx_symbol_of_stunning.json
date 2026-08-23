@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Gynosphinx ~ Symbol of Stunning",
+    "delivery": null,
+    "description": "May cast Symbol of Stunning (DC 21) once per week. Symbol will last for 1 week maximum.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:gynosphinx_symbol_of_stunning",
+    "name": "Symbol of Stunning",
+    "owners": [],
+    "source_page": "p.257",
+    "traits": [
+      "Spelllike"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1150,
+    "record_key": "Gynosphinx ~ Symbol of Stunning"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "A creature with this special quality has the ability to assume the appearance of a specific creature or type of creature (usually a humanoid), but retains most of its own physical qualities. A creature cannot change shape to a form more than one size category smaller or larger than its original form. This ability functions as a polymorph spell, the type of which is listed in the creature's description, but the creature does not adjust its ability scores (although it gains any other abilities of the creature it mimics). Unless otherwise stated, it can remain in an alternate form indefinitely. Some creatures, such as lycanthropes, can transform into unique forms with special modifiers and abilities. These creatures do adjust their ability scores, as noted in their description.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_change_shape",
+    "name": "Change Shape",
+    "owners": [],
+    "source_page": "p.298",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Quality"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2368,
+    "record_key": "Universal Monster Rule ~ Change Shape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

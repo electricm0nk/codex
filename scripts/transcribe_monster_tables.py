@@ -1501,20 +1501,35 @@ def transcribe(book: str) -> str:
         )
 
     # An ability row no monster row of this book claims is an ORPHAN: the
-    # catalog renders an ability underneath its owning monster, so a record with
-    # no owner would load and never be shown -- the stub class `decisions.md
-    # §44.2` was written about. Round 2 dodged the question by taking the only
-    # two remaining orphan-free books; from round 3 on, every candidate book has
-    # orphans, and the rule is `kanban.md`'s: transcribe the LINKED subset and
-    # carry the orphans as an `OPEN_FINDINGS` entry naming their remedy. They
-    # stay `not-ingested` in the work inventory, which is the honest status --
-    # not `grounded`, and not silently emitted as unreachable rows.
+    # catalog renders an ability underneath its owning monster, so a record
+    # with no owner loads and is never shown by `list_monster_catalog` --
+    # never the stub class `decisions.md §44.2` was written about, because a
+    # stub is a record a player's screen SHOWS empty, and an owner-less
+    # record here reaches no screen at all (verified: `list_monster_catalog`
+    # only ever walks a monster's OWN `ability_keys`, `monster_catalog.rs`,
+    # never a bare scan of every `MonsterAbilityRecord`).
+    #
+    # `decisions.md §20` (2026-08-23) is dispositive: `no_record` means
+    # never-ingested, and an un-ingested row's shape cannot be measured --
+    # Gate 1's DoD is that every unit's shape IS measured, which is a
+    # strictly weaker claim than "reaches a player". Rounds 2-through-T9
+    # dropped orphans because a `not-ingested` row is honest about BOTH
+    # claims failing; that conflated the two. `§20`'s own text says to
+    # "claim reachability separately from ingestion, and only where
+    # `reach_gate.rs` actually proves it" -- which this cycle now does: an
+    # orphan SHIPS (owners: &[], shape measurable, `no_record` cleared) and
+    # is pinned as a **named, provable non-reach** in
+    # `reach_gate.rs::UNREACHED_RECORD_FINDINGS`, not silently claimed
+    # reachable. `unreached_records_are_exactly_the_recorded_findings` fails
+    # the build the moment an unpinned key stops reaching, so this cannot
+    # rot into a silent stub the way an unchecked drop could.
     orphans = [u for u in abilities if not owners[u["corpus_key"]]]
-    abilities = [u for u in abilities if owners[u["corpus_key"]]]
     if orphans:
         print(
-            f"{book}: {len(orphans)} orphan ability row(s) NOT transcribed "
-            "(no monster row of this book owns them): "
+            f"{book}: {len(orphans)} orphan ability row(s) transcribed WITHOUT an owner "
+            "(no monster row of this book claims them; ingested for shape measurement per "
+            "decisions.md §20, reachability NOT claimed -- see reach_gate.rs "
+            "UNREACHED_RECORD_FINDINGS): "
             + ", ".join(u["corpus_key"] for u in orphans),
             file=sys.stderr,
         )
@@ -1788,13 +1803,25 @@ def transcribe(book: str) -> str:
             f"//! {len(orphans)} further ability row(s) in this book are ORPHANS -- no monster"
         )
         out.append(
-            "//! row here claims them, so they are deliberately NOT transcribed (a record"
+            "//! row here claims them, so they SHIP with `owners: &[]` rather than being"
         )
         out.append(
-            "//! with no owner loads and is never shown). `not-ingested` is their honest status"
+            "//! dropped (`decisions.md §20`: an un-ingested row's shape cannot be measured,"
         )
         out.append(
-            "//! in the work inventory, and the round's receipt records them by key:"
+            "//! and Gate 1's DoD needs every unit's shape measured). `list_monster_catalog`"
+        )
+        out.append(
+            "//! only ever walks a monster's OWN `ability_keys`, so an owner-less record here"
+        )
+        out.append(
+            "//! reaches no screen -- reachability is NOT claimed for these, and each key is"
+        )
+        out.append(
+            "//! pinned as a named, provable non-reach in `reach_gate.rs::"
+        )
+        out.append(
+            "//! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:"
         )
         # Cited by FILE:LINE, not by key, for the same reason the PI block above
         # is: an orphan created by a PI drop carries the dropped row's declared

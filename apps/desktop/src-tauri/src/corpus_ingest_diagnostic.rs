@@ -1346,7 +1346,10 @@ mod tests {
         // and the multi-`TYPE:`-token parsing fix landed
         // (`rules_tables::bestiary::mod.rs`'s own comment carries the full
         // derivation).
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 529);
+        // `decisions.md §20` (no_record-to-zero wave 2): 529 -> 709 (+180),
+        // owner-less rows (no monster row of this book claims them) now
+        // ship for shape measurement rather than being dropped as orphans.
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 709);
     }
 
     #[test]

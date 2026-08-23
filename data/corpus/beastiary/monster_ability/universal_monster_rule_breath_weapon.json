@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Some creatures can exhale a cone, line, or cloud of energy or other magical effects. A breath weapon attack usually deals damage and is often based on some type of energy. Breath weapons allow a Reflex save for half damage (DC 10 + 1/2 breathing creature's racial HD + breathing creature's Con modifier; the exact DC is given in the creature's descriptive text). A creature is immune to its own breath weapon unless otherwise noted. Some breath weapons allow a Fortitude save or a Will save instead of a Reflex save. Each breath weapon also includes notes on how often it can be used, even if this number is limited in times per day.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "source_page": "p.298",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Attack",
+      "BreathWeapon"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2366,
+    "record_key": "Universal Monster Rule ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

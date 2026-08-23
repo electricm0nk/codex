@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Fiendish Creature ~ Smite Good",
+    "delivery": "Supernatural",
+    "description": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against good foes; smite persists until target is dead or the fiendish creature rests.",
+    "description_variables": [
+      "SmiteGoodTimes",
+      "SmiteGoodAttackBonus",
+      "SmiteGoodDamageBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:fiendish_creature_smite_good",
+    "name": "Smite Good",
+    "owners": [],
+    "source_page": "p.294",
+    "traits": [
+      "Special Attack"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1556,
+    "record_key": "Fiendish Creature ~ Smite Good"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

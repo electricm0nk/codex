@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Poison ~ Ex",
+    "delivery": "Extraordinary",
+    "description": "You can poison those you attack. The saving throw to resist a poison is usually a Fort save (DC %1). Poisons can be removed through neutralize poison and similar effects.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:poison_ex",
+    "name": "Poison",
+    "owners": [],
+    "source_page": "p.302",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1455,
+    "record_key": "Poison ~ Ex"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

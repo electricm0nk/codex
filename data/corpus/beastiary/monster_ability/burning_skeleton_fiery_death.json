@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Burning Skeleton ~ Fiery Death",
+    "delivery": "Supernatural",
+    "description": "A burning skeleton explodes into a burst of flame when it dies. Anyone adjacent to the skeleton when it is destroyed takes %1d6 points of fire damage. A DC %2 Reflex save halves this damage.",
+    "description_variables": [
+      "FieryDeathDice",
+      "FieryDeathSaveDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:burning_skeleton_fiery_death",
+    "name": "Fiery Death",
+    "owners": [],
+    "source_page": "p.251",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1362,
+    "record_key": "Burning Skeleton ~ Fiery Death"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

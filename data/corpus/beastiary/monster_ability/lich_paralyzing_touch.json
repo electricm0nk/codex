@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Lich ~ Paralyzing Touch",
+    "delivery": "Supernatural",
+    "description": "Any living creature a lich hits with its touch attack must succeed on a Fortitude save or be permanently paralyzed. Remove paralysis or any spell that can remove a curse can free the victim (see the bestow curse spell description, DC %1). The effect cannot be dispelled. Anyone paralyzed by a lich seems dead, though a DC 20 Perception check or a DC 15 Heal check reveals that the victim is still alive.",
+    "description_variables": [
+      "LichParalyzingTouchDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:lich_paralyzing_touch",
+    "name": "Paralyzing Touch",
+    "owners": [],
+    "source_page": "p.189",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1340,
+    "record_key": "Lich ~ Paralyzing Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

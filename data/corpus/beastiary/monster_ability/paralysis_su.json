@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "data": {
+    "corpus_key": "Paralysis ~ Su",
+    "delivery": "Supernatural",
+    "description": "You can render your victims immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A Tail Sweeped creature flying in the air at the time that it is paralyzed cannot flap its Tail Sweeps and falls. A swimmer can't swim and may drown.",
+    "description_variables": [
+      "ParalysisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:paralysis_su",
+    "name": "Paralysis",
+    "owners": [],
+    "source_page": "p.302",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1453,
+    "record_key": "Paralysis ~ Su"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
