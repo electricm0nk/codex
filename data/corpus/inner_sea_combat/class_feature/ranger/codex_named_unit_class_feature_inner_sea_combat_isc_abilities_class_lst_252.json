@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
+        "value": "[redacted PI]"
       },
       {
         "key": "VISIBLE",
@@ -34,35 +34,35 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Combat_Reflexes|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Exotic_Weapon_Proficiency_Whip|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Weapon_Finesse|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Whip_Mastery|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Trip|1|PREVARGTEQ:CombatStyleLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Whip_Mastery|1|PREVARGTEQ:CombatStyleLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Trip|1|PREVARGTEQ:CombatStyleLVL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Whip_Mastery|1|PREVARGTEQ:CombatStyleLVL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

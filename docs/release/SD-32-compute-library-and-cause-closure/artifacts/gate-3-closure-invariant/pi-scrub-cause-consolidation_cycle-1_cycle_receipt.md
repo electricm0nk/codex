@@ -6,6 +6,10 @@
   - `scripts/pi_scrub.py` (new) — the ONE shared `scrub_name_pi_tokens` implementation
   - `scripts/regen_generic_kind_pi_scrub.py` (new) — narrowly-scoped one-shot regen driver for
     already-shipped `codex_generated_name: true` `{race,monster,class,race_trait}_generic` records
+  - `scripts/regen_all_renamed_pi_scrub.py` (new) — general, directory-shape-agnostic one-shot regen
+    driver for every `codex_generated_name: true` record anywhere under `data/corpus/**` (added after
+    a second concurrent-cycle merge shipped `deity`/`class_feature` renamed records via yet another
+    ingest path, before this cycle's fix)
   - `scripts/ingest_ability.py` — local `scrub_name_pi_tokens`/`REDACTED_PI_MARKER`/`PI_MARKER_REDACTED`
     deleted, imports from `pi_scrub.py`
   - `scripts/ingest_generic_kind.py` — same
@@ -160,6 +164,46 @@ kinds) — 0 identity leaks, 0 blacklisted-term leaks. The corpus-wide (not-limi
 `ability`-directory contribution to the 212-record "Discovered" finding above is now 0 (184 remain,
 all in the other, out-of-scope kind directories).
 
+## Second concurrent-cycle merge: `deity`/`class_feature` `§24` renaming (later rebase)
+
+A later `git fetch && rebase` (this cycle's second push attempt) landed a THIRD concurrent cycle:
+`c1505f6497` ingested `deity` (459) and `class_feature` (140) name-PI-blocked units under `§24`
+neutral names via `ingest_simple_filename_kinds.py`, which imports `scrub_name_pi_tokens` FROM
+`ingest_ability.py` (`from ingest_ability import scrub_name_pi_tokens`) — a real, correct reuse of
+this cycle's own fix, not a fourth copy. But `c1505f6497` was authored and its records written
+BEFORE this cycle's fix reached `origin/tranche/12`, so its 599 new `codex_generated_name: true`
+records shipped through the PRE-fix `scrub_name_pi_tokens` (the stale, un-fixed logic still on
+`origin/tranche/12` at the time it ran) and were never regenerated after.
+
+**Re-derived the full population after this rebase, not assumed clean:** `grep -rl
+'"codex_generated_name": true' data/corpus | wc -l` → 1,256 (up from 657). Re-ran the `§17a`
+cross-check instrument — **110 distinct records leaking** (all identity-shape, 0 blacklist-term-
+shape), spanning `deity` and `class_feature` (the latter's directory layout differs from
+`ingest_generic_kind.py`'s: some records nest one level deeper under a class-name subdirectory,
+e.g. `class_feature/rogue/codex_named_unit_....json`, which neither existing regen driver's file
+glob covered).
+
+**Fixed generally, not per-directory-shape:** `regen_generic_kind_pi_scrub.py` is scoped to
+`{race,monster,class,race_trait}_generic/`; rather than write a THIRD narrowly-scoped driver for
+`deity`/`class_feature`'s two different layouts, wrote `scripts/regen_all_renamed_pi_scrub.py` —
+walks the WHOLE `data/corpus/` tree for any `codex_generated_name: true` record regardless of
+directory shape or which ingest path wrote it, using the identical
+`(rename.coordinate → work-inventory.json join → re-read cited row → scrub_name_pi_tokens)`
+sequence. This driver supersedes `regen_generic_kind_pi_scrub.py`'s narrower scope going forward
+(both are kept — the narrower one runs faster for its specific 46-record population when that is
+all that is needed; the general one is the safe default for "regenerate everything renamed").
+
+```bash
+PCGEN_CORPUS_ROOT=<pinned oracle>/data python3 scripts/regen_all_renamed_pi_scrub.py
+# {"scanned": 24033, "renamed_reprocessed": 1256, "non_renamed_skipped": 22777, "changed": 126, "unchanged": 1130}
+```
+
+126 changed (110 identity-leak records plus 16 more the coarser per-record diff caught beyond the
+110 my `§17a` instrument flagged — e.g. a token whose value changed shape without necessarily
+matching my instrument's own needle-length bound; the regen driver's own byte-diff is the ground
+truth, not my separate detector). **Re-verified after this second regen: 0 leaks across all 1,256
+`codex_generated_name: true` records**, both shapes, full-corpus cross-check.
+
 ## Regeneration (guarded generator path, no hand-edits)
 
 **`ability` — full deterministic rerun** (its own `load_units()` loads all 4,824 `kind: "ability"`
@@ -194,7 +238,7 @@ example partially anticipated, and one further `race_trait_generic` token). 44/4
 under checks 1-3 (the prior tail lane's own fix already covered the identity shape for all 46; only the
 NEW check 4 found anything left).
 
-## Verification: zero leaks across every `codex_generated_name: true` record, by command
+## Verification (first merge, 622-record population)
 
 ```bash
 # Full-corpus cross-check, all 622 codex_generated_name:true records (576 ability + 46 generic_kind),
@@ -219,7 +263,35 @@ grep -rl '"codex_generated_name": true' data/corpus | awk -F/ '{print $(NF-1)}' 
 #       1 race_generic
 ```
 
-Zero leaks confirmed across all 622, all 5 affected kind-directories.
+Zero leaks confirmed across all 622, all 5 affected kind-directories, as of the FIRST merge.
+
+## Final verification (after the second merge, 1,256-record population), by command
+
+```bash
+grep -rl '"codex_generated_name": true' data/corpus | wc -l
+# 1256
+grep -rl '"codex_generated_name": true' data/corpus | awk -F/ '{print $(NF-1)}' | sort | uniq -c | sort -rn
+#     576 ability
+#      21 class_generic
+#      19 monster_generic
+#       5 race_trait_generic
+#       1 race_generic
+#     ... 140 class_feature units across ~40 class-name/coordinate-named directories
+#      459 deity
+```
+
+```bash
+# Full-corpus cross-check (both leak shapes), joined against docs/work-inventory.json's
+# pre-rename name/corpus_key, all 1,256 codex_generated_name:true records:
+python3 <the §17a instrument above, re-run post BOTH merges>
+# renamed (codex_generated_name=true) records scanned: 1256
+# identity-leak token hits: 0  distinct records: 0
+# blacklist-term-leak token hits: 0  distinct records: 0
+# TOTAL distinct leaking records (union): 0
+```
+
+**Zero leaks confirmed across all 1,256 `codex_generated_name: true` records, every kind, every
+directory shape, as of this cycle's final push.**
 
 ## Sweeps, unchanged by design (`decisions.md §12c`)
 

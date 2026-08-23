@@ -20,7 +20,7 @@
       },
       {
         "key": "FACTSET",
-        "value": "Pantheon|Demon Lords"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEITYWEAP",
@@ -48,7 +48,7 @@
     "display:sd32_simple_filename_kind_ingest"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

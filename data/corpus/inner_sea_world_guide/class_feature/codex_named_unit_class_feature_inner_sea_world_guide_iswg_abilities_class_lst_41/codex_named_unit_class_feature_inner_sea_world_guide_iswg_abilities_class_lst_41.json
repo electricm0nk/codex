@@ -22,7 +22,7 @@
       },
       {
         "key": "DESC",
-        "value": "1/day, you may perform a harrowing for yourself and all allies within 20 ft. This harrowing takes 10 minutes, and allies to be affected by it must remain within 20 ft. for the entire time. This harrowing provides an insight bonus for 24 hrs based upon the suit with the most cards showing (in case of a tie, choose one). The suit bonuses are as follows. Strength: +1 on attack rolls; Dexterity: +1 to AC; Constitution: +1 on weapon damage rolls; Intelligence: +1 on all skill checks; Wisdom: +1 on all saving throws; Charisma: +1 on caster level and concentration checks."
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
@@ -42,7 +42,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "SpecialQuality.HKOrder"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -50,7 +50,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description,name",
+  "pi_field": "description,name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

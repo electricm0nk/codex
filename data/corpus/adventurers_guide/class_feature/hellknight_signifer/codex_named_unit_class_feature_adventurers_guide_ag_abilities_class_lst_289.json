@@ -26,11 +26,11 @@
       },
       {
         "key": "DEFINE",
-        "value": "SigniferArmorCheckBonus1|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "SigniferArmorCheckBonus2|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -50,27 +50,27 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|SigniferArmorCheckBonus1|max(0,ACCHECK-1)"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|SigniferArmorCheckBonus2|max(0,ACCHECK-2)"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "MISC|ACCHECK|SigniferArmorCheckBonus1|PREARMORTYPE:1,TYPE.HellknightArmor"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "MISC|ACCHECK|SigniferArmorCheckBonus2|PREARMORTYPE:1,TYPE.HellknightArmor|PREVARGTEQ:HellknightSigniferLVL,8"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "MISC|SPELLFAILURE|-5|PREARMORTYPE:1,TYPE.HellknightArmor"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "MISC|SPELLFAILURE|-5|PREARMORTYPE:1,TYPE.HellknightArmor|PREVARGTEQ:HellknightSigniferLVL,8"
+        "value": "[redacted PI]"
       }
     ]
   },

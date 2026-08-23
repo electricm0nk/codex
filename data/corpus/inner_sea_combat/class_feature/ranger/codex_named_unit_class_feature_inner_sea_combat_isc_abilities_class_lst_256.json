@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
+        "value": "[redacted PI]"
       },
       {
         "key": "VISIBLE",
@@ -30,39 +30,39 @@
       },
       {
         "key": "DESC",
-        "value": "If a ranger selects Gorurn's style, he can choose from the following list whenever he gains a combat style feat: Cleave, Improved Bull Rush, Power Attack, and Shield of SwingsAPG. At 6th level, he adds Cleaving Finish and Vital Strike to the list. At ioth level, he adds Death or Glory and Improved Vital Strike to the list."
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Cleave|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Bull_Rush|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Power_Attack|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Shield_of_Swings|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Cleaving_Finish|1|PREVARGTEQ:CombatStyleLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Vital_Strike|1|PREVARGTEQ:CombatStyleLVL,6"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Death_or_Glory|1|PREVARGTEQ:CombatStyleLVL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Vital_Strike|1|PREVARGTEQ:CombatStyleLVL,10"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",

@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "SpecialQuality.TotemSpirit"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
@@ -54,7 +54,7 @@
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

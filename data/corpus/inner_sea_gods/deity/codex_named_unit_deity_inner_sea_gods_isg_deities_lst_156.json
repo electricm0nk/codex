@@ -20,7 +20,7 @@
       },
       {
         "key": "FACT",
-        "value": "Title|The Feasting Flower"
+        "value": "[redacted PI]"
       },
       {
         "key": "FACT",
@@ -32,11 +32,11 @@
       },
       {
         "key": "FACTSET",
-        "value": "Colors|Green|Red"
+        "value": "[redacted PI]"
       },
       {
         "key": "FACTSET",
-        "value": "Pantheon|Eldest"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEITYWEAP",
@@ -64,7 +64,7 @@
     "display:sd32_simple_filename_kind_ingest"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

@@ -18,10 +18,6 @@
       },
       {
         "key": "TYPE",
-        "value": "InquisitorDomain"
-      },
-      {
-        "key": "PREMULT",
         "value": "[redacted PI]"
       },
       {
@@ -29,44 +25,48 @@
         "value": "[redacted PI]"
       },
       {
-        "key": "DEFINE",
-        "value": "DomainDeathLVL|0"
+        "key": "PREMULT",
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "DomainDeathDC|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "DomainDeathTimes|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "DeathDomain|0"
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Death Domain ~ Bleeding Touch"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Death Domain ~ Death's Embrace|PREVARGTEQ:DomainDeathLVL,8"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainDeathLVL|DomainLVL|TYPE=Domain"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainDeathDC|10+(DomainDeathLVL/2)+CHA|TYPE=Domain"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DomainDeathTimes|DomainPowerTimes|TYPE=Domain"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|DeathDomain|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCELONG",

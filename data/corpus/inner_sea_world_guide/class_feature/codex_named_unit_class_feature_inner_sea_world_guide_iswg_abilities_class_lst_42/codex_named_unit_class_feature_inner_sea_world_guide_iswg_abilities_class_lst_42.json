@@ -34,7 +34,7 @@
       },
       {
         "key": "ASPECT",
-        "value": "CheckCount|%1|HarrowerLvl"
+        "value": "[redacted PI]"
       },
       {
         "key": "ASPECT",
@@ -42,7 +42,7 @@
       },
       {
         "key": "ASPECT",
-        "value": "Ability Benefit|(%1/day)|HarrowerLvl"
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -58,7 +58,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description,name",
+  "pi_field": "description,name,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

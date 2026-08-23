@@ -26,7 +26,7 @@
       },
       {
         "key": "DEFINE",
-        "value": "BellflowerCropRange|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -42,11 +42,11 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|BellflowerCropRange|30|TYPE=Base"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|BellflowerCropRange|30|PREVARGTEQ:BellflowerTillerLVL,7"
+        "value": "[redacted PI]"
       }
     ]
   },

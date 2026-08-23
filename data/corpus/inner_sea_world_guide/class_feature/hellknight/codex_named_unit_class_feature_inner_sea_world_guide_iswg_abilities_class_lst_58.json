@@ -26,11 +26,11 @@
       },
       {
         "key": "DEFINE",
-        "value": "HellknightArmorLVL|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "HellknightArmorBonus|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -46,7 +46,7 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
