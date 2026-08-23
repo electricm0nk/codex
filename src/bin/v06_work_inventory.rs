@@ -2152,6 +2152,71 @@ mod refine_kind_monster_ability_tests {
         assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
+    /// `arg_abilities_race.lst:279` real shape (verbatim, tab-split) --
+    /// PCGen's own "Heart of the... Trait" pool-selector row granting the
+    /// already-modelled `Human ~ Heart of the Fields` trait (defined at line
+    /// 261, `CATEGORY:Special Ability`, real `DESC:`/`BONUS:`). No `TYPE:`,
+    /// no `DESC:`, no `BONUS*` of its own -- must be recognized as a
+    /// pointer, not a second independent object.
+    #[test]
+    fn arg_heart_of_the_trait_pool_selector_row_is_a_pure_ability_pointer() {
+        let fields = [
+            "Heart of the Fields",
+            "CATEGORY:Heart of the... Trait",
+            "MULT:YES",
+            "CHOOSE:NUMCHOICES=1|SKILL|TYPE=Craft|TYPE=Profession",
+            "ABILITY:Human Racial Trait|AUTOMATIC|Human ~ Heart of the Fields (%LIST)",
+        ];
+        assert!(is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
+    /// The real trait definition itself (`arg_abilities_race.lst:261`) must
+    /// NOT be caught by the same predicate -- it carries its own `DESC:` and
+    /// `BONUS:`, which is exactly what distinguishes real content from a
+    /// pointer.
+    #[test]
+    fn arg_heart_of_the_fields_real_definition_is_not_a_pure_ability_pointer() {
+        let fields = [
+            "Heart of the Fields",
+            "KEY:Human ~ Heart of the Fields",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
+            "DESC:Humans born in rural areas are used to hard labor.",
+            "CHOOSE:NUMCHOICES=1|SKILL|TYPE=Craft|TYPE=Profession",
+            "BONUS:SKILL|%LIST|TL/2|TYPE=Racial",
+        ];
+        assert!(!is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
+    /// The regression guard on the other side: a genuine `Adoptive
+    /// Parentage` grant row (`arg_abilities_race.lst:291`, already ingested,
+    /// `CATEGORY:Adoptive Parentage`, NOT `Special Ability`) carries its own
+    /// `DESC:`, so the predicate must not misclassify it as a pointer even
+    /// though its `CATEGORY:` is also not `Special Ability`. This is the
+    /// exact false-positive shape a category-only discriminator would have
+    /// hit (verified against the corpus-wide safety sweep before landing
+    /// this fix).
+    #[test]
+    fn arg_adoptive_parentage_real_grant_row_is_not_a_pure_ability_pointer() {
+        let fields = [
+            "Dwarf",
+            "CATEGORY:Adoptive Parentage",
+            "DESC:You were adopted and raised by dwarves.",
+            "ABILITY:Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Weapon Familiarity|Dwarf ~ Languages",
+            "SOURCEPAGE:p.72",
+        ];
+        assert!(!is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
+    /// A row that merely lacks `TYPE:`/`DESC:`/`BONUS*` but grants nothing
+    /// (no `AUTOMATIC` anywhere) must not be swept up either -- the
+    /// predicate requires all four conditions, not just the first three.
+    #[test]
+    fn row_with_no_type_desc_bonus_but_no_automatic_grant_is_not_a_pure_ability_pointer() {
+        let fields = ["Some Header", "CATEGORY:Something Else", "SOURCEPAGE:p.1"];
+        assert!(!is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
     /// Same shape, caught via the `FavClassBonus`-suffixed variable-name
     /// convention rather than the literal `Favored Class Bonus` KEY text --
     /// `acg_abilities_race.lst:316`'s "Animal Companion Hit Points" row, one of
@@ -2538,6 +2603,23 @@ fn is_excluded_race_trait_row(file_kind: Kind, fields: &[&str]) -> bool {
             .and_then(|t| t.split('.').next())
             .map(|first| first.starts_with(RACE_TRAIT_EXCLUDED_TYPE_PREFIX))
             .unwrap_or(false)
+}
+
+/// True when a `_abilities_race.lst` row carries no `TYPE:`, no `DESC:`, and
+/// no `BONUS*` token of its own -- only a `CATEGORY:` (naming a virtual
+/// ability pool, e.g. `Heart of the... Trait`, never `Special Ability`) plus
+/// an `ABILITY:<cat>|AUTOMATIC|<key>` grant of an ALREADY-modelled trait
+/// defined at a different line in the same file. See the call site's own
+/// doc comment (card 11 T2b, `decisions.md §20`/`§16`) for the full
+/// reasoning and the Svirfneblin precedent this generalizes. Corpus-wide
+/// safety proof: `scripts/t2b_pure_ability_pointer_row_safety_sweep.py`
+/// checks this predicate against every currently-ingested `race_trait`
+/// record's own source row and asserts zero false positives.
+fn is_pure_ability_pointer_race_trait_row(fields: &[&str]) -> bool {
+    !has_token(fields, "TYPE:")
+        && !has_token(fields, "DESC:")
+        && !has_token(fields, "BONUS")
+        && fields.iter().any(|f| f.contains("AUTOMATIC"))
 }
 
 /// Whether a record of this kind carries the token that proves it is an
@@ -3805,6 +3887,40 @@ fn enumerate_file(
             let is_choice_suboption = fields.iter().any(|f| f.trim() == "CATEGORY:Choice");
             if is_choice_suboption {
                 *out.trap_hits.entry("race_choice_suboption_row").or_default() += 1;
+                continue;
+            }
+
+            // A third `_abilities_race.lst` row shape carries no `TYPE:`, no
+            // `DESC:`, and no `BONUS*` token of its own at all -- only a
+            // `CATEGORY:` (naming a virtual ability pool, e.g. `Heart of
+            // the... Trait`, never `Special Ability`) plus an
+            // `ABILITY:<cat>|AUTOMATIC|<key>` grant of an ALREADY-modelled
+            // trait defined at a different line in the same file. It is
+            // PCGen's own pool-selector/companion-token plumbing for a race
+            // trait a player already has, not a second independent object --
+            // the identical shape `ingest_race_traits.rs`'s own doc comment
+            // already names for Svirfneblin's `Stalwart Watcher Output` row
+            // ("PCGen's internal `ABILITY:...|AUTOMATIC|...` companion token
+            // for the real trait ..., already ingested, not a second
+            // player-facing object") and correctly never writes a corpus
+            // record for (`parse_row` requires a `<Race> Racial Trait`/
+            // `<Race> Subrace`-suffixed `TYPE:`, which these rows lack, or
+            // the `Adoptive Parentage` `CATEGORY:` shape, which they are
+            // not). Counting it as its own `race_trait` unit anyway makes it
+            // permanently, unfixably `no_record`: no corpus record was ever
+            // meant to exist at its line (`decisions.md §20`'s Gate-1
+            // consequence otherwise makes an un-ingestible-by-design row
+            // look like an unmet criterion forever).
+            //
+            // Corpus-wide safety proof (not sampled): every one of the 831
+            // currently-ingested `race_trait` records' own source rows was
+            // read back from the pinned oracle and checked against this
+            // exact predicate -- zero matched (`scripts/
+            // t2b_pure_ability_pointer_row_safety_sweep.py`, committed
+            // alongside this fix). The predicate never excludes a row that
+            // already carries a real corpus record.
+            if is_pure_ability_pointer_race_trait_row(&fields) {
+                *out.trap_hits.entry("race_trait_pure_ability_pointer_row").or_default() += 1;
                 continue;
             }
         }
