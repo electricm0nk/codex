@@ -1731,6 +1731,65 @@ and after this sweep (not "none found" without having run the commands).
   aliasing) to target undispatched-but-corpus-declared classes, needed for the `Wild Talent`/
   `Implement School Focus Power`-shaped quick wins.
 
+### Cycle epic-2-t4-l9/1 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T4-L9 — CLOSED (471/471, feat-held gate)
+
+- **Card ID:** `epic-2-cause-closure` (T4-L9 lane — one of the five sub-populations
+  `decisions.md §13` ruled closed by doing the work; does not by itself set card 11's row
+  `complete` — four sibling shapes, T2b/T9/T12/T2a-residual, are still open).
+- **Actor:** `t4-l9-feat-gate`
+- **Base:** `8b8e00c0d` (pinned; footgun 1 fired — the assigned worktree started on a stray
+  `site-publish` merge commit with no `docs/`/`data/`/`scripts/` tree — self-healed via
+  `git reset --hard 8b8e00c0d`), rebased to `origin/tranche/12` before starting and again before
+  pushing.
+- **Files touched:** `apps/desktop/src-tauri/src/class_feature_descriptions.rs` (new DTO field
+  `granted_feat: Option<String>`), `apps/desktop/src-tauri/src/class_feature_feat_bridge.rs`
+  (populates `granted_feat`; 1 new test), `apps/desktop/src/boundary/loadClassFeatureDescriptions.ts`
+  (DTO type gains `grantedFeat`), `apps/desktop/src/characterHub/classFeaturesModel.ts`
+  (`unmatchedClassFeatureDescriptions` gains the feat-held arm), `apps/desktop/src/characterHub/
+  classFeaturesModel.test.ts` (4 new tests), `apps/desktop/src/characterHub/CharacterSheet.tsx`
+  (threads `selectedFeats` through), `docs/release/SD-32-compute-library-and-cause-closure/
+  kanban.md` (card 11 lane note), `docs/release/SD-32-compute-library-and-cause-closure/
+  progress.md` (this entry).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by class,
+  not by instance. `decisions.md §13` row T4-L9: "Needs a feat-held reachability gate; today's
+  gate is class-held." Consequence 3: a card at `complete` with a named, uncleared sub-population
+  is the half-deferral defect card 12 was reopened for.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete — T4-L9's 471-unit population closed corpus-wide (not a measurement cycle).
+- **Summary:** Re-derived first: **471**
+  (`class_feature_feat_bridge_serves_the_full_corpus_wide_population`, matches `decisions.md §13`'s
+  own figure exactly — no correction needed). Root cause: `class_feature_feat_bridge.rs`'s records
+  carry a synthetic pool-group `classSlug` (e.g. `golden_legionnaire`), never a real class token,
+  so T4-L8's own class-held gate (`unmatchedClassFeatureDescriptions`'s `heldTokens.has(d.
+  classSlug)`) could never match any of them — confirmed corpus-wide, not merely for the one
+  sampled record. Fixed by class: `ClassFeatureDescriptionDto` gains `granted_feat` (the exact
+  already-verified feat name `class_feature_feat_bridge.rs` matched on; `None` for L8's own
+  population), and `unmatchedClassFeatureDescriptions` gains a second reachability arm gated on the
+  character holding that feat, via `normalizeFeatIdentity` — the same fold `feat_identity.rs::holds`
+  mirrors on the Rust side (that module's own doc comment names the pairing). Closed by a predicate
+  over field presence, not a hand-listed set of the 471 keys — the T8 lane's own
+  "allowlist → predicate" precedent applied deliberately. New Rust test
+  (`every_bridged_record_corpus_wide_carries_its_granted_feat`) proves all 471 carry the field.
+  RED→GREEN proven twice, both reverted clean (diff empty after revert): TS (`isReachableByHeldCause`
+  reduced to the old class-only check, confirmed the intended failure) and Rust (`granted_feat`
+  forced to `None`, confirmed the intended failure). Suites: `cargo test --locked --lib` 2388/2388
+  (root workspace); desktop crate (**separate** cargo workspace, run explicitly per this bundle's
+  own standing lesson) 517/517 (516+1); `scripts/verify.sh --only reach` PASS (31); frontend suite
+  97/100 (same 3 pre-existing, unrelated `Cargo.toml`-version failures T4-L8's own cycle already
+  found and left untouched); `tsc --noEmit` clean. Pinned-count sweep: `grep -rn '\b471\b'` across
+  `src/`/`apps/`/`scripts/`/`tests/` found no other file asserting this figure that needed updating
+  — this cycle makes the existing 471 reachable, it does not change the count. Fixture discipline
+  (`decisions.md §3`) not applicable — no new interpreted magnitude; `granted_feat` is a
+  corpus-derived identity string already PI-screened/leak-checked upstream, carried through
+  unchanged from `sole_feat_grant_target`'s own already-verified result. Full detail:
+  `artifacts/gate-3-closure-invariant/epic-2-t4-l9_cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** T4 (L8 + L9) is now fully closed. Card 11 still needs T2b (2,472), T9
+  (2,712), T12 (2,453), and T2a's residual (~2,775 — sized to 2,640 by the T2a-residual-census
+  lane above) before a consolidation cycle can move the row to `complete`.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
