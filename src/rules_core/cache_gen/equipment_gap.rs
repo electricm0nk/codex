@@ -94,7 +94,7 @@ use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::rules_core::cache_gen::WiringClassIndex;
 use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
@@ -130,7 +130,7 @@ pub enum Source {
 /// never the original PI string. Mirrors `cache_gen::class_feature`'s own
 /// `RenameInfo` shape (own local copy, per the no-shared-types-file
 /// convention this file's own module doc comment already establishes).
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RenameInfo {
     pub reason: String,
     pub coordinate: String,
@@ -524,7 +524,7 @@ pub(crate) fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdent
 /// Also returns the coordinate-only divergence record
 /// (`§24b`-4: coordinate + reason, never the original string) for the
 /// caller's own `name_pi_renamed_records` report bucket.
-pub(crate) fn resolve_name_or_rename(
+pub fn resolve_name_or_rename(
     name_is_pi: bool,
     kind: &str,
     book_id: &str,
@@ -670,10 +670,55 @@ pub enum GenerationError {
 /// from `corpus_root` (a PCGen `data/` checkout).
 /// `ingested_at` is stamped at call time by the caller (real wall-clock
 /// ISO-8601, never derived).
+///
+/// `coordinates`, when `Some`, restricts the run to ONLY rows whose
+/// resolved `(book_id, source_file, source_line)` triple is a member of
+/// the set -- `src/bin/gen_cache_equipment_gap.rs`'s own `--coordinates
+/// <file>` mode, the SAME shape `gen_cache_class_feature.rs`'s
+/// `--coordinates` mode already established (`decisions.md §17`: reuse
+/// the existing precedent, do not invent a third). `None` (the default,
+/// unconditional path every existing caller keeps using unchanged) walks
+/// every row in `equipment_gap_tables::equipment_gap_rows()` exactly as
+/// before -- this parameter is purely additive.
+///
+/// A coordinate is checked AFTER the row's real citation is resolved
+/// (`find_citation`, or `entry.name_pi_citation` for an already-renamed
+/// row) using the SAME `(book_id, rel_path_str, line)` triple this
+/// module's own leak-report coordinates already name records by --
+/// filtering any earlier would require duplicating citation resolution in
+/// the caller. This does not change the no-clobber discipline
+/// `write_json` already enforces: to actually replace an already-shipped
+/// leaking record, the caller must first remove that one file (a guarded,
+/// coordinate-named `rm`, per the `template`/`race_trait` precedent in
+/// `t9-onboarding-pi-final-leaks-and-generators`'s own cycle receipt) --
+/// this scoping only narrows WHICH rows are attempted, it does not grant
+/// permission to overwrite.
+/// `true` when `(book_id, rel_path_str, line)` should be processed --
+/// `coordinates == None` (the default, unconditional path) always returns
+/// `true`; `Some(wanted)` returns `true` only for an exact member of the
+/// set. Factored out of `generate()`'s loop body so the scoping rule
+/// itself is directly unit-testable without needing a real PCGen oracle
+/// checkout (`generate()` reads the real, static
+/// `equipment_gap_tables::equipment_gap_rows()` table with no injection
+/// point, so an end-to-end test of this predicate would otherwise require
+/// `PCGEN_CORPUS_ROOT`).
+pub(crate) fn coordinate_is_wanted(
+    coordinates: Option<&BTreeSet<(String, String, u32)>>,
+    book_id: &str,
+    rel_path_str: &str,
+    line: u32,
+) -> bool {
+    match coordinates {
+        None => true,
+        Some(wanted) => wanted.contains(&(book_id.to_string(), rel_path_str.to_string(), line)),
+    }
+}
+
 pub fn generate(
     corpus_root: &Path,
     out_root: &Path,
     ingested_at: &str,
+    coordinates: Option<&BTreeSet<(String, String, u32)>>,
 ) -> Result<GenerationReport, GenerationError> {
     let mut report = GenerationReport::default();
     let mut used_by_book: HashMap<&'static str, BTreeSet<String>> = HashMap::new();
@@ -726,6 +771,10 @@ pub fn generate(
         };
         let abs_path = book_dir.join(&rel_path);
         let rel_path_str = rel_path.to_string_lossy().replace('\\', "/");
+
+        if !coordinate_is_wanted(coordinates, book_id, &rel_path_str, line) {
+            continue;
+        }
 
         // `SD31-W4-INTEGRATE-001` (`OPEN-ISSUES.md` row 48/49): a leading
         // `#` in the identity column is PCGen's own comment marker --
@@ -1611,5 +1660,60 @@ mod tests {
             mismatches.len(),
             mismatches
         );
+    }
+
+    // -----------------------------------------------------------------
+    // `t9-onboarding-pi-last-leak-and-generators` cycle: `--coordinates`
+    // scoped-regen mode (`decisions.md §17`, the SAME shape
+    // `gen_cache_class_feature.rs`'s own `--coordinates` mode already
+    // established; reused, not reinvented).
+    // -----------------------------------------------------------------
+
+    /// `coordinates == None` is the unconditional, corpus-wide default --
+    /// every existing caller's behaviour must stay byte-for-byte unchanged.
+    #[test]
+    fn coordinate_is_wanted_with_no_filter_accepts_everything() {
+        assert!(coordinate_is_wanted(None, "inner_sea_gods", "isg_equip.lst", 20));
+        assert!(coordinate_is_wanted(None, "core_rulebook", "cr_equip.lst", 1));
+    }
+
+    /// `Some(wanted)` accepts ONLY an exact `(book_id, source_file, line)`
+    /// member -- the real target this cycle regenerated.
+    #[test]
+    fn coordinate_is_wanted_with_a_filter_accepts_only_the_named_triple() {
+        let mut wanted = BTreeSet::new();
+        wanted.insert(("inner_sea_gods".to_string(), "isg_equip.lst".to_string(), 20u32));
+        assert!(coordinate_is_wanted(Some(&wanted), "inner_sea_gods", "isg_equip.lst", 20));
+    }
+
+    /// A near-miss on any ONE of the three coordinate fields must NOT
+    /// match -- proves this is an exact triple match, not a partial one
+    /// (wrong book, wrong file, and wrong line, each checked independently).
+    #[test]
+    fn coordinate_is_wanted_rejects_a_near_miss_on_any_single_field() {
+        let mut wanted = BTreeSet::new();
+        wanted.insert(("inner_sea_gods".to_string(), "isg_equip.lst".to_string(), 20u32));
+        assert!(
+            !coordinate_is_wanted(Some(&wanted), "inner_sea_world_guide", "isg_equip.lst", 20),
+            "wrong book_id must not match"
+        );
+        assert!(
+            !coordinate_is_wanted(Some(&wanted), "inner_sea_gods", "isg_equip_other.lst", 20),
+            "wrong source_file must not match"
+        );
+        assert!(
+            !coordinate_is_wanted(Some(&wanted), "inner_sea_gods", "isg_equip.lst", 21),
+            "wrong source_line must not match"
+        );
+    }
+
+    /// A row not named in `coordinates` at all is rejected, even when its
+    /// book/file DO appear in the set under a different line -- the whole
+    /// triple must match, not any subset.
+    #[test]
+    fn coordinate_is_wanted_rejects_an_unlisted_row_in_a_listed_book_and_file() {
+        let mut wanted = BTreeSet::new();
+        wanted.insert(("inner_sea_gods".to_string(), "isg_equip.lst".to_string(), 20u32));
+        assert!(!coordinate_is_wanted(Some(&wanted), "inner_sea_gods", "isg_equip.lst", 161));
     }
 }

@@ -7706,3 +7706,71 @@ tests, including two updated stale tests and one new positive fixture-transcript
 Full receipt:
 `artifacts/gate-3-closure-invariant/epic-2-t12-psion-shape3-closure_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## t9-onboarding-pi-last-leak-and-generators (Gate 3 / Card 11) — 2026-08-23
+
+The last named T9 PI leak (`inner_sea_gods` equipment, `description` field)
+closed. `gen_cache_equipment_gap` gained a `--coordinates <file>` scoped-regen
+mode -- reusing `gen_cache_class_feature`'s own `--coordinates` shape and
+`ingest_simple_filename_kinds`'s `--book` shape verbatim (`decisions.md
+§17`), not a third invention. Territory confirmed clear first (`equipment`/
+`equipment_modifier`/`ability` all `no_record` 0, per this dispatch's own
+brief). The leaking file was removed via a guarded, coordinate-named `rm`,
+then regenerated through the new scoped path; only `description` and
+`ingested_at` changed, `key`/`name`/`source.line`/`rename.coordinate`
+byte-identical (already correctly `§24`-renamed by a prior cycle).
+
+Corpus-wide zero-leak proof, both instruments still agreeing (`§17a`
+re-validated at this cycle's own HEAD before trusting either):
+`python3 scripts/sd32_t9_corpus_wide_pi_rescan.py` — 51360 records scanned,
+0 field-level hits (was 1/1, the one leak this cycle closed).
+
+`name`/`key` blacklist screening added to the two generators this bundle's
+own generator audit named as still having zero scan of those fields at all
+(`cache_gen::ultimate_equipment.rs`, `src/bin/gen_core_rulebook_cache.rs` —
+the seventh and eighth instances of "screens some shipped fields, not all"
+found in this bundle). Both route a hit through the same `decisions.md §24`
+neutral-rename path every other fixed generator already uses; both also
+gained the `description` supplementary strong-scan re-screen ("third
+defect" fix) already established elsewhere. `crb::json_cache::
+CorpusRecord<T>` gained `codex_generated_name`/`rename` fields
+(`#[serde(default)]`, additive) since this file predated `§24` entirely.
+Generator audit table in the cycle receipt updated; zero remaining named
+gaps (11 discovered identity-bearing generator files, all screen or have
+no free-text field by design).
+
+New structural test (the requirement the prior cycle did not deliver):
+`tests/generator_name_key_screening_static_audit.rs` inspects generator
+SOURCE CODE (not shipped corpus bytes) for a screen-symbol reference,
+dynamically discovering every file that defines a `name`/`key` identity
+field via `std::fs::read_dir` (never a hand-maintained list). Catches a
+future generator that omits the screen entirely, before any leak ships --
+the exact gap CHECK C (shipping-time, corpus-bytes-only) cannot close.
+Mutation-proved RED against the REAL on-disk `ultimate_equipment.rs`
+(every sanctioned symbol stripped from an in-memory copy, never written to
+disk), then reverted (`§1a`). What it does NOT prove, stated in its own
+doc comment: a textual co-occurrence check, not a data-flow proof; the
+closest FULL enforcement (a `ScreenedString` newtype every identity field
+is typed as) is a ~10-file schema refactor named as its own follow-on, not
+narrowed silently.
+
+One near-miss, caught and reverted before commit, logged
+(`docs/retro/events/t9-onboarding.jsonl`): sanity-running
+`gen_core_rulebook_cache` end-to-end wrote 29 previously-absent CRB spell
+records via that binary's own pre-existing exists-guard gap-fill behavior,
+unrelated to this cycle's fix and out of its granted scope.
+
+Verification: `cargo test --locked --lib cache_gen::` 186/186;
+`declared_pi_shipping_audit` 21/21 (unchanged); new structural test 4/4;
+`gen_core_rulebook_cache` unit tests 4/4; `rules_tables::crb::` 81/81;
+`cargo build --locked --lib --bins` clean. Two pre-existing red suites
+confirmed unrelated (`git status --porcelain` clean on their data paths
+before and after this cycle): `sd26_cache_core_rulebook.rs`'s class/
+equipment on-disk-vs-live-table count drift, `pi_screening_regeneration_
+round_trip.rs`'s `advanced_players_guide` stale-leftover drift.
+
+Card 11 / row 11 stays `in-progress`.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-onboarding-pi-last-leak-and-generators_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).

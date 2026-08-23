@@ -245,6 +245,26 @@ fn declared_pi_at(lst_path: &Path, line: u32) -> std::io::Result<DeclaredProduct
 /// first-column/`.COPY=`-suffix-only lookup order silently missed all 36;
 /// `KEY:`-first finds every one of them the same way it already found
 /// `Equipmods`.
+/// `true` when a record's identity is Product Identity -- the union of
+/// the row's own `NAMEISPI:YES` corpus declaration (`declared_name`) and
+/// the shared blacklist term scan against `name` (strong, word-bounded,
+/// case-folded, OCR-normalized, concatenated-identifier: the SAME scan
+/// `cache_gen::{acg,apg,beastiary1,equipment_gap}` already union into
+/// their own `name`/`key` screen, `t9-onboarding-pi-final-leaks-and-
+/// generators` cycle). Factored out so this exact predicate is directly
+/// unit-testable without needing a real corpus row from the compiled,
+/// non-injectable `equipment_tables()` static table.
+///
+/// t9-onboarding-pi-last-leak-and-generators cycle: before this fix, this
+/// generator's ONLY name-PI signal was `declared_name` -- there was no
+/// blacklist term scan of `name`/`key` at all, so a future
+/// `PI_BLACKLIST_TERMS` amendment could make an existing curated table
+/// entry newly PI with nothing here ever re-screening it (the seventh
+/// instance of "screens some shipped fields, not all" in this bundle).
+fn name_or_key_is_pi(declared_name: bool, name: &str) -> bool {
+    declared_name || pi_screening::blacklist_term_hit_including_concatenated(name).is_some()
+}
+
 fn resolve_line(corpus_root: &Path, entry: &ue::equipment_tables::EquipmentTableEntry) -> (u32, &'static str) {
     let category_file = equipment_category_file(entry.category);
     let path = book_dir(corpus_root).join(category_file);
@@ -508,19 +528,58 @@ fn generate_equipment(
         // name unredacted before that fix made it drop the row outright --
         // this cycle replaces the drop with the real §24 rename this
         // generator predates.
+        //
+        // t9-onboarding-pi-last-leak-and-generators cycle: this file had
+        // NO blacklist term scan of `name`/`key` at all -- only the
+        // declared `NAMEISPI:YES` reader above. Identical gap and
+        // identical fix to `cache_gen::{acg,apg,beastiary1}`'s own
+        // `name_or_key_is_pi` (`t9-onboarding-pi-final-leaks-and-generators`
+        // cycle): a future `PI_BLACKLIST_TERMS` amendment (this bundle has
+        // amended it at least 4 times, `decisions.md §19`) could make an
+        // EXISTING curated table entry newly PI with no code ever
+        // re-screening it. Unions the strong, word-bounded,
+        // OCR-normalized, concatenated-identifier scan into the same
+        // `name_is_pi` predicate the rename branch already reads --
+        // `declared.name` alone stays the fast path for every ordinary
+        // row (zero behaviour change when no blacklist term is present).
+        let name_is_pi = name_or_key_is_pi(declared.name, entry.name);
         let is_modifier = entry.category == EquipmentCategory::Equipmods;
         let kind = if is_modifier { "equipment_modifier" } else { "equipment" };
         let (record_name, record_key, codex_generated_name, rename_info, divergence) =
-            resolve_name_or_rename(declared.name, kind, "ultimate_equipment", category_file, line, entry.name, entry.key);
+            resolve_name_or_rename(name_is_pi, kind, "ultimate_equipment", category_file, line, entry.name, entry.key);
         if let Some(entry) = divergence {
             report.name_pi_dropped.push(format!("{category_file}:{line} {}", record_key));
             report.name_pi_renamed_records.push(entry);
         }
-        let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+        let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
             "description",
             entry.description,
             declared.description,
         );
+        // Same supplementary strong-scan re-screen `cache_gen::equipment_
+        // gap`'s own "third defect" fix already established (byte-for-byte
+        // shape, this cycle): `classify_optional_field_declared` screens
+        // `description` via the weak, bare-substring, case-SENSITIVE scan
+        // only -- never weakens an existing redaction, only strengthens a
+        // miss the weak scan let through.
+        let stored_desc = match &stored_desc {
+            Some(v) if v.as_str() != crate::rules_core::shape_b_v1::REDACTED_PI_MARKER => {
+                if pi_screening::blacklist_term_hit_including_concatenated(v).is_some() {
+                    license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                    pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                    if !pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "description")) {
+                        pi_field = Some(match pi_field.take() {
+                            Some(existing) => format!("{existing},description"),
+                            None => "description".to_string(),
+                        });
+                    }
+                    Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string())
+                } else {
+                    stored_desc.clone()
+                }
+            }
+            _ => stored_desc,
+        };
         let source = Source::LstToken {
             path: format!("{UE_DIR}/{category_file}"),
             sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
@@ -735,6 +794,55 @@ mod tests {
             }
         }
         assert!(found_renamed_record, "the renamed record must still be written to disk");
+    }
+
+    /// t9-onboarding-pi-last-leak-and-generators cycle: this file's
+    /// `description` screen (`pi_screening::classify_optional_field_
+    /// declared`, via `classify_field`) is the SAME weak, case-SENSITIVE,
+    /// bare-substring scan `cache_gen::equipment_gap` was fixed for --
+    /// proves the disagreement the supplementary strong re-screen closes,
+    /// mirroring `equipment_gap`'s own identical regression test
+    /// byte-for-byte (referencing the term by index, `§24b`-2).
+    #[test]
+    fn the_weak_description_scan_misses_a_lowercase_term_the_strong_scan_catches() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[9];
+        let lowercase_variant = term.to_lowercase();
+        let text = format!("carvings of {lowercase_variant} in one or both aspects");
+        let (weak_license, ..) = pi_screening::classify_field("description", &text);
+        assert_eq!(
+            weak_license,
+            crate::rules_core::shape_b_v1::License::Ogl,
+            "sanity: the weak scan must miss the lowercase form"
+        );
+        assert!(
+            pi_screening::blacklist_term_hit_including_concatenated(&text).is_some(),
+            "the strong scan this generator's own supplementary re-screen now uses must catch it"
+        );
+    }
+
+    // --- t9-onboarding-pi-last-leak-and-generators: `name`/`key` blacklist
+    // scan, independent of `NAMEISPI:YES` ---
+
+    #[test]
+    fn name_or_key_is_pi_is_true_when_declared() {
+        assert!(name_or_key_is_pi(true, "Perfectly Ordinary Widget"));
+    }
+
+    #[test]
+    fn name_or_key_is_pi_is_false_for_an_ordinary_undeclared_name() {
+        assert!(!name_or_key_is_pi(false, "Perfectly Ordinary Widget"));
+    }
+
+    /// The gap this cycle closes: a name carrying a blacklisted term with
+    /// NO `NAMEISPI:` declaration at all must still be flagged -- mirrors
+    /// `cache_gen::equipment_gap`'s `a_blacklisted_name_is_flagged_by_the_
+    /// term_scan`, referencing the term by index (`§24b`-2: never write a
+    /// blacklist term literally into a test).
+    #[test]
+    fn name_or_key_is_pi_is_true_for_an_undeclared_blacklisted_term() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[9];
+        let name = format!("{term}'s Blessed Blade");
+        assert!(name_or_key_is_pi(false, &name));
     }
 
     #[test]

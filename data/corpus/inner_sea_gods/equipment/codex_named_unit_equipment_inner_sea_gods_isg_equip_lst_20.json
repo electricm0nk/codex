@@ -1,14 +1,14 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:26:33Z",
+  "ingested_at": "2026-08-23T23:01:47Z",
   "data": {
     "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_20)",
     "category": "General",
     "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_20)",
     "cost_gp": 8000.0,
     "weight_lbs": 1000.0,
-    "description": "This altar is made of rough-hewn stone, weathered whale bone, or ancient wood, usually standing over or next to a body of natural water and featuring carvings of gozreh in one or both aspects. Unlike with most altars, its magic circle effect is aligned against one alignment component appropriate to the interests of the temple. Praying at the altar grants a +4 resistance bonus on saving throws against weather effects and a +2 circumstance bonus on Fly, Profession (Sailor), and Swim checks."
+    "description": "[redacted PI]"
   },
   "source": {
     "kind": "lst_token",
@@ -22,7 +22,7 @@
     "static:literal_magnitudes_only"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name",
+  "pi_field": "description,name",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {
