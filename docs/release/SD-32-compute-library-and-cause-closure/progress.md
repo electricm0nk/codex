@@ -2611,3 +2611,87 @@ and after this sweep (not "none found" without having run the commands).
 - **Receipt:** `artifacts/gate-3-closure-invariant/epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md`.
 - **Commit SHAs:** `55981abc6` (feature), `ac35f6bff` (retro-log append), `717db44f7` (this
   progress.md/kanban.md entry), all on `origin/tranche/12`.
+
+## Cycle `17-generic-spell-ingest` — `decisions.md §17` item 2, collapse the seven spell-ingest binaries
+
+**Status:** complete for its own stated scope. No kanban card flips to `complete` from this
+cycle alone (no dedicated row exists for §17 item 2; filed as supporting infrastructure toward
+card 11 `epic-2-cause-closure` and card 15 `census-scope-closure`, both left `in-progress` per
+the dispatch brief).
+
+- **Base:** worktree cut from a stray footgun-1 merge (no `docs/`/`data/`/`scripts/`);
+  `git reset --hard fe2f8082b` then rebased onto `origin/tranche/12` at `6ae4a364b`, then again
+  onto `a0ab14451` (two concurrent lanes landed §18 and a Gate 1/3 repair during this cycle) —
+  rebuilt + re-ran `cargo test --locked --lib`/`--bins` clean after each rebase, per the hard
+  rule.
+- **Files touched:** added `src/bin/ingest_spells.rs` (config-driven, 9-book `BOOKS` table,
+  ~830 lines incl. tests); deleted `src/bin/ingest_{adventurers_guide,inner_sea_gods,
+  inner_sea_setting,occult_adventures,ultimate_combat,ultimate_magic,ultimate_wilderness}
+  _spells.rs` (3,877 lines, seven binaries — the sixth one, `inner_sea_setting`, was itself
+  already a 3-book config-driven precedent this cycle generalised further); regenerated
+  (content-identical) `src/rules_core/rules_tables/{adventurers_guide,inner_sea_gods,
+  occult_adventures,ultimate_combat,ultimate_magic,ultimate_wilderness,inner_sea_faiths,
+  inner_sea_magic,inner_sea_temples}/spell_list.rs`; added
+  `artifacts/gate-0-census-closure/17-pi-screen-drift-diff.py` (reproducible drift proof, reads
+  the deleted binaries via `git show <ref>:<path>`) and
+  `artifacts/gate-0-census-closure/17-generic-spell-ingest_cycle_receipt.md`.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
+- **Wired-integration audit result:** `OK_NO_TOKENS`
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (fresh worktree's oracle slot was
+  empty; bootstrapped via `scripts/fetch-pcgen-oracle.sh`, confirmed populated via
+  `scripts/verify.sh --only preflight-oracle` before trusting any figure).
+- **Summary — the `pi_screen` finding (done first, highest stakes):** the seven binaries'
+  `pi_screen` hashed to **three distinct byte sequences**
+  (`53cbef5d`/`f5936f96`/`5952257a`), confirming the task brief's claim at the byte level. But
+  normalized (whitespace/comments stripped) they collapse to **two** groups differing by
+  exactly one trailing comma — same three calls, same order, same branch conditions in all
+  seven. **No live licensing-correctness defect in `pi_screen` itself** — the "three screens"
+  are formatting drift, not behavioural drift. Collapsed to one canonical copy anyway and
+  **mutation-tested**: deleting the `name_blacklisted` check left every *existing* pi_screen
+  test green (a real proof-coverage gap — none of the seven binaries' own tests exercised the
+  blacklist-only path, only the `NAMEISPI:YES`-declared path). Added
+  `pi_screen_drops_a_record_whose_name_is_blacklisted_with_no_declared_pi_token_at_all`
+  (name containing the blacklisted term "Iomedae", no declared PI token) — proved **RED** under
+  the mutation, then **GREEN** (19/19) on revert.
+- **Real (separate) defect found and fixed:** `occult_adventures`/`ultimate_combat`'s
+  `min_level` lacked `DOMAINS:` support and `PRESKILL`/`PREDEITY` bracket-stripping. Re-derived
+  against the pinned oracle: neither book's corpus contains a `DOMAINS:` token or a bracketed
+  clause (`grep -c` both = 0 for both books), so the unified (more general) form produces
+  byte-identical output for both — verified, not assumed.
+- **Output equivalence — proven for all 9 regenerated books, 814 entries combined:** every
+  `SPELL_LIST` entry byte-identical before/after; only the module doc-comment's generator-
+  provenance line differs (legitimate — the generator changed). **Zero content differences to
+  report** under this cycle's "any pi_screen-driven change is a finding" instruction — there is
+  none.
+- **What a new book now costs:** one 8-line `BookInput` entry (`id`, `display_name`, `lst_rel`,
+  `out_path`, `already_ingested`, `dedup_within_book`); one more 5-10 line function only if it
+  needs cross-book dedup (2 of 9 books do today).
+- **Wider-family assessment (not collapsed this cycle, per the brief):**
+  `ingest_class_spell_levels_arg.rs`/`ingest_apg_race_traits.rs`/`ingest_pu_classes.rs`/
+  `ingest_race_traits.rs`/`ingest_races.rs` are **not** seven near-duplicates of one shape —
+  each ingests a structurally distinct record type, so the "collapse N per-book copies into a
+  `BOOKS` config table" pattern does not transfer directly; only `pcgen_data_root()` boilerplate
+  is shared (a much smaller win). **Found in passing:** `ingest_races.rs` reads
+  `PCGEN_DATA_ROOT`, not the standard `PCGEN_CORPUS_ROOT` every other ingest binary (and this
+  bundle's every dispatch prompt) uses — pointing `PCGEN_CORPUS_ROOT` at the pinned oracle
+  silently does **not** redirect it; it falls back to the literal
+  `$HOME/workspace/repos/pcgen/data` path `AGENTS.md` forbids hardcoding, absent in a fresh
+  worktree. Not fixed (out of this cycle's `ingest_*_spells.rs` file scope) — named here so the
+  orchestrator can route it. The real leveraged item in the race/class family —
+  `IN_SCOPE_RACES` (34-race hand allowlist, `ingest_race_traits.rs:315`, widened
+  18→24→30→34 across SD-31 waves) — is the same "snowflake treatment" `§17` diagnosed for
+  spells, but its fix is corpus-driven enumeration (`§17` item 1's scope,
+  `v06_work_inventory.rs`), not this cycle's "merge duplicate binaries" pattern (item 2).
+- **Suites:** `cargo test --locked --bin ingest_spells` 19/19; `cargo test --locked --lib`
+  2390/2390; `cargo test --locked --bins` all green (0 `FAILED` across every bin suite); desktop
+  crate (separate cargo workspace, tested explicitly) `cargo build --locked` clean, `cargo test
+  --locked` 517/517. `scripts/verify.sh --only preflight-oracle` PASS.
+- **Discovery forwards:** two, filed in this cycle's own receipt — (1) `ingest_races.rs`'s
+  `PCGEN_DATA_ROOT` env-var drift (above); (2) `IN_SCOPE_RACES` as the race family's real
+  leveraged item, filed under `§17` item 1's scope rather than item 2's.
+- **Next-cycle plan:** `decisions.md §17` item 3 ("re-run the shape ledger over everything and
+  report what is genuinely left") belongs to whichever cycle owns card 15's reconciliation —
+  not scoped to this cycle.
+- **Receipt:** `artifacts/gate-0-census-closure/17-generic-spell-ingest_cycle_receipt.md`.
+- **Commit SHAs:** `dcbcd803f` (collapse), `a0ab14451` (retro-log append), both on
+  `origin/tranche/12`. This progress.md entry lands in the next commit on top.
