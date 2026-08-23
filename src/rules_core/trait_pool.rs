@@ -97,15 +97,46 @@ impl TraitPool {
 /// --kind trait` run against it.
 pub fn load_trait_pool(roots: &[BookCorpusRoot<'_>]) -> TraitPool {
     let mut pool = TraitPool::default();
+    // Two source directories per book, `trait_generic/` preferred over
+    // `ability/`, deduplicated by the record's own `key`.
+    //
+    // **Why `ability/` too.** `ingest_generic_kind.py --kind trait`'s
+    // `no_record`-ledger-gated design cannot yet see this population:
+    // `shape_ledger.py`'s `(book, source_file, source_line)` join is
+    // kind-blind, and a prior ingest pass (predating `Kind::Trait`,
+    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`) already wrote these
+    // SAME LST rows under `kind: ability` -- so the join finds THAT record at
+    // the same coordinate and reports `matched`/`no_formula_tokens`, never
+    // `no_record`, even though no `kind: trait` record exists anywhere.
+    // Confirmed directly: `data/corpus/inner_sea_races/ability/loner_of_the_
+    // rocks.json` carries `TYPE:Trait.RaceTrait.Oread Race Trait` verbatim,
+    // the exact real content `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`
+    // named (`isr_abilities.lst:78`) -- genuinely on disk, correctly shaped
+    // (identical `key`/`name`/`description`/`raw_tokens` schema to a generic-
+    // kind record), just filed under the wrong content-kind directory by an
+    // ingest pass this cycle did not run and does not own. Reading it here is
+    // NOT a corpus write (`data/corpus/**` stays hand-untouched) and is not a
+    // claim that the `ability` filing is correct -- it is this loader
+    // refusing to leave real, already-shipped, correctly-parseable content
+    // invisible to the resolver merely because a housekeeping re-file has not
+    // happened yet. `trait_generic/` is checked FIRST and wins on a key
+    // collision, so the moment a future cycle runs the generic-kind ingest
+    // (or retires these `ability` duplicates), this loader needs no change.
     for root in roots {
-        let dir = root.dir.join("trait_generic");
-        if !dir.is_dir() {
-            continue;
-        }
-        for path in find_json_files(&dir) {
-            let Some(record) = read_trait_record(root.book_id, &path) else { continue };
-            let Some(pool_key) = record.race_trait_pool().map(str::to_string) else { continue };
-            pool.by_pool.entry(pool_key).or_default().push(record);
+        for dir_name in ["trait_generic", "ability"] {
+            let dir = root.dir.join(dir_name);
+            if !dir.is_dir() {
+                continue;
+            }
+            for path in find_json_files(&dir) {
+                let Some(record) = read_trait_record(root.book_id, &path) else { continue };
+                let Some(pool_key) = record.race_trait_pool().map(str::to_string) else { continue };
+                let bucket = pool.by_pool.entry(pool_key).or_default();
+                if bucket.iter().any(|existing| existing.key == record.key) {
+                    continue;
+                }
+                bucket.push(record);
+            }
         }
     }
     for records in pool.by_pool.values_mut() {
@@ -339,14 +370,47 @@ mod tests {
     /// `corpus_loader.rs`'s own test proves for `load_equipment_corpus`.
     #[test]
     fn loading_the_real_corpus_today_finds_no_trait_generic_content_yet_without_panicking() {
+        // `bestiary_2` carries neither a `trait_generic/` directory nor any
+        // `ability/*.json` record whose TYPE names a `RaceTrait` pool -- it
+        // is not one of the 6 books `epic-6-kind-trait_cycle-1_cycle_
+        // receipt.md §1` found real Trait content in. This proves the
+        // "nothing here, no panic" half of the loader's contract; the next
+        // test proves the "real content, found and resolved" half.
         let roots =
             [BookCorpusRoot { book_id: "bestiary_2", dir: Path::new("data/corpus/bestiary_2") }];
         let pool = load_trait_pool(&roots);
-        assert_eq!(
-            pool.total_records(),
-            0,
-            "no kind:trait content is ingested anywhere in this repo yet -- this must read 0, \
-             never a fabricated non-zero count"
+        assert_eq!(pool.total_records(), 0, "bestiary_2 carries no Trait pool content of either shape");
+    }
+
+    /// Integration: `inner_sea_races/ability/loner_of_the_rocks.json` is a
+    /// REAL, already-shipped, on-disk corpus record (predates this cycle,
+    /// filed under `kind: ability` by an ingest pass that ran before
+    /// `Kind::Trait` existed) carrying `TYPE:Trait.RaceTrait.Oread Race
+    /// Trait` verbatim -- the exact record
+    /// `epic-6-kind-trait_cycle-1_cycle_receipt.md §1` names
+    /// (`isr_abilities.lst:78`). This proves the loader's `ability/`
+    /// fallback (this module's own doc comment on `load_trait_pool`) finds
+    /// and correctly pools REAL corpus content today, without waiting on
+    /// `ingest_generic_kind.py --kind trait`'s still-blocked `no_record`
+    /// discovery (`shape_ledger.py`'s kind-blind join already reports this
+    /// exact row `matched`, so that path alone would never surface it).
+    #[test]
+    fn loading_the_real_inner_sea_races_corpus_finds_the_real_oread_pool_member() {
+        let roots = [BookCorpusRoot {
+            book_id: "inner_sea_races",
+            dir: Path::new("data/corpus/inner_sea_races"),
+        }];
+        let pool = load_trait_pool(&roots);
+        assert!(pool.total_records() > 0, "inner_sea_races must carry real, already-shipped Trait content");
+        let oread_pool = pool.pool_for("Oread Race Trait");
+        assert!(
+            oread_pool.iter().any(|r| r.key == "Trait ~ Loner of the Rocks"),
+            "the real, on-disk Oread pool member must be found: {:?}",
+            oread_pool.iter().map(|r| &r.key).collect::<Vec<_>>()
         );
+        let member = oread_pool.iter().find(|r| r.key == "Trait ~ Loner of the Rocks").unwrap();
+        assert_eq!(member.name, "Loner of the Rocks");
+        assert!(member.description.as_deref().is_some_and(|d| d.contains("Heal and Survival")));
+        assert_eq!(member.book_id, "inner_sea_races");
     }
 }

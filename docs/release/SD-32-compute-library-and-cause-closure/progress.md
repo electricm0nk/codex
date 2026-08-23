@@ -6847,3 +6847,62 @@ to this cycle's scope, not investigated here). **Bundle `no_record` total: 227.*
 equipment_gap` (18/18, 1 pre-existing ignored) re-run post-rebase per the standing footgun-2
 instruction, both green. `git status --porcelain -- data/corpus` post-rebase: additive-only, zero
 deletions.
+
+## Cycle epic-6-kind-trait/2 — `decisions.md §25`, the `kind: trait` epic (row 16, 2026-08-23)
+
+**13 of the 14 target selector units now resolve a real, corpus-real Trait-pool grant end-to-end
+through the real character-builder command.** Full account:
+`artifacts/gate-3-closure-invariant/epic-6-kind-trait_cycle-2_cycle_receipt.md`.
+
+Read `ingest_races.rs`'s file-ownership boundary directly: its clear-list omits `bestiary_3`
+entirely, and all 3 races cycle 1 found "no chassis" for (Dhampir/Skinwalker/Rougarou) now have one
+(Dhampir landed via a sibling lane between cycles). Added `BookSource::selector_only`/
+`extra_clear_races` to `ingest_race_traits.rs` so 4 new `BookSource` entries admit ONLY the selector
+row from the 13 shared source files, never `ingest_races.rs`'s own co-located standard-trait content
+— proved by mutation (bypassing the guard live destructively overwrote 57 pre-existing files;
+reverted, fixed, re-verified). Ran the real ingest against the pinned oracle for all 4 books: 14 new
+corpus records, `git status --porcelain` confirming zero deletions.
+
+The cycle-1 `corpus_literal_sweep`/`hidden_wand.json` blocker was fixed mid-cycle by a sibling lane
+(see the immediately-preceding cycle section above) and picked up on rebase.
+
+Built the three named-precedent mechanisms in full: `src/rules_core/trait_pool.rs` (new module),
+`race_resolver::adopted_race_choose_selectors`, `AdoptedRaceOptionDto` in `race_trait_picker.rs`,
+and a `reach_gate.rs` extension + new `bestiary_3` dispatch arm.
+
+**New finding, superseding the fixed blocker:** `shape_ledger.py`'s `(book, source_file,
+source_line)` join is kind-blind, so all 487 `kind: trait` census units report `matched`/
+`no_formula_tokens` (never `no_record`) — a pre-`Kind::Trait` ingest pass already wrote a
+`kind: ability` record at the identical coordinate for every one of them. This makes
+`ingest_generic_kind.py --kind trait` permanently see zero units to ingest until that shared join is
+fixed (repo-wide blast radius, out of this epic's scope — logged, not fixed here:
+`docs/retro/events/t9-onboarding.jsonl`, recurrence-key
+`shape-ledger-kind-blind-join-hides-trait-population`).
+
+`trait_pool.rs`'s loader reads the real content anyway, via a documented, read-only `ability/`
+fallback directory scan (deduplicated against `trait_generic/`, which still wins on collision and
+stays the correct future home). Real integration test: 13 of 14 options resolve exactly 1 real grant
+each (pinned by exact prose for Oread → "Loner of the Rocks"); the 14th (Rougarou) is honestly empty
+because the pinned oracle genuinely grants it nothing anywhere.
+
+**Closure/reclassification/reachability (`decisions.md §16`), stated separately:** 0 closed under a
+formal new `kind: trait` write; 0 reclassified; reachability 13-with-real-payload / 1
+genuinely-and-provenly-empty.
+
+Verification: `cargo test --locked --bin ingest_race_traits` 21 passed (5 new); `cargo test --locked
+--lib race_resolver` 28 passed; `cargo test --locked --lib trait_pool` 7 passed;
+`apps/desktop/src-tauri`: `race_trait_picker` 19 passed (1 new), `race_catalog` 18 passed,
+`reach_gate` 23 passed / 8 pre-existing failures unrelated to this cycle (confirmed via `git log`
+predating this session on the affected corpus directories).
+
+- **Status:** `in-progress` — real progress, not closure. See the receipt's own §6 for the operator
+  question this cycle surfaces rather than decides: is 13/14-real-reachable via the `ability/`
+  fallback sufficient, or must the formal `kind: trait` write still land (which needs the
+  `shape_ledger.py` kind-blind-join fix first, as its own dedicated cycle)?
+- **Kanban:** row 16 (`epic-6-kind-trait`) updated in place, stays `in-progress`. Rows 11 and 15
+  untouched.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-6-kind-trait_cycle-2_cycle_receipt.md`.
+- **What remains:** an operator ruling on the question above; if the formal write is required, the
+  `shape_ledger.py` kind-blind-join fix (its own dedicated, adversarially-reviewed cycle) then
+  `ingest_generic_kind.py --kind trait --ledger <shape_ledger output>`.
+- Commit: (this cycle's commit — see push output).

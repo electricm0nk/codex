@@ -2166,17 +2166,15 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
     // SD-32 `decisions.md §25` cycle 2's "Adopted Race" selector rows -- the
     // same top-level-field shape the Adoptive Parentage block above uses, for
     // the identical reason (picking one is not a trait *of* the race it
-    // names). **Honestly `identity_only` for all 14 today**: the real
-    // `kind: trait` pool content this option's `grants` resolves against is
-    // not yet ingested anywhere in this repo (blocked on
-    // `docs/work-inventory.json`'s regen,
-    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §3`) -- see
-    // `race_trait_picker.rs`'s own
-    // `the_menu_command_carries_all_fourteen_adopted_race_options_with_no_pool_content_ingested_yet`.
-    // This is not a bug in the reach measurement; it is the measurement
-    // correctly reporting that this shape is ingested and selector-parsed
-    // but not yet player-reachable. Re-derive this claim once the pool
-    // regenerates.
+    // names). **13 of 14 resolve `with_payload` today**:
+    // `trait_pool::load_trait_pool`'s `ability/`-fallback (that module's own
+    // doc comment) finds real, already-shipped `inner_sea_races` content for
+    // every target race except Rougarou, whose pool is genuinely, corpus-
+    // wide empty (`epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own
+    // finding, re-confirmed here) -- see `BARE_RECORD_FINDINGS`'s single
+    // remaining entry and `race_trait_picker.rs`'s own
+    // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
+    // with_real_grants`.
     for option in menu.adopted_race_options.iter().filter(|option| option.book == wire_book) {
         if option.grants.is_empty() {
             identity_only.insert(option.key.clone());
@@ -2865,46 +2863,16 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
 /// rather than relaxed. See
 /// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
 const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
-    // SD-32 `decisions.md §25` cycle 2 (2026-08-23): the 14 "Adopted Race"
-    // selector records this cycle's new `selector_only` `BookSource`s
-    // ingested. Each reaches `list_alternate_racial_traits`'s new
-    // `adoptedRaceOptions` field carrying only its own key -- `grants` is
-    // honestly empty because the real `kind: trait` pool content it would
-    // resolve against is not yet ingested anywhere in this repo (blocked on
-    // `docs/work-inventory.json`'s regen,
-    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §3`). This is not a stub:
-    // the record, the selector-row parser and the resolver are all real and
-    // tested (`race_resolver.rs`'s `adopted_race_choose_selectors_finds_the_
-    // real_fourteen_unit_population`, `trait_pool.rs`'s resolver tests,
-    // `race_trait_picker.rs`'s `the_menu_command_carries_all_fourteen_
-    // adopted_race_options_with_no_pool_content_ingested_yet`) -- only the
-    // Trait pool content itself is pending. Delete these entries once that
-    // pool is ingested and each option's `grants` carries real members.
-    (
-        "bestiary_2",
-        "race_traits",
-        &[
-            "Adopted Race ~ Dhampir",
-            "Adopted Race ~ Fetchling",
-            "Adopted Race ~ Grippli",
-            "Adopted Race ~ Ifrit",
-            "Adopted Race ~ Oread",
-            "Adopted Race ~ Sylph",
-            "Adopted Race ~ Undine",
-        ],
-    ),
-    (
-        "bestiary_3",
-        "race_traits",
-        &[
-            "Adopted Race ~ Catfolk",
-            "Adopted Race ~ Ratfolk",
-            "Adopted Race ~ Suli",
-            "Adopted Race ~ Vanara",
-            "Adopted Race ~ Vishkanya",
-        ],
-    ),
-    ("bestiary_5", "race_traits", &["Adopted Race ~ Skinwalker"]),
+    // SD-32 `decisions.md §25` cycle 2 (2026-08-23): `Adopted Race ~
+    // Rougarou`, the one target race of the 14 whose Trait pool is
+    // genuinely, corpus-wide empty. `trait_pool::load_trait_pool` finds
+    // real content (via its `ability/`-fallback -- that module's own doc
+    // comment) for the other 13, so this is the only entry: re-confirms
+    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own "Rougarou has
+    // zero hits corpus-wide" finding at the reach-gate layer, not a gap this
+    // cycle left open. See `race_trait_picker.rs`'s own
+    // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
+    // with_real_grants`.
     ("bestiary_6", "race_traits", &["Adopted Race ~ Rougarou"]),
 ];
 

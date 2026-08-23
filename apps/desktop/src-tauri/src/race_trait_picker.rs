@@ -2186,16 +2186,21 @@ mod tests {
     /// `BookSource`s ingested, correctly book-coded, and none flagged
     /// malformed (every real oracle row's `CHOOSE:` token parses).
     ///
-    /// `grants` is honestly empty for every one of them today -- the real
-    /// Trait pool content (`inner_sea_races/isr_abilities.lst` etc.,
-    /// `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`) is not yet ingested
-    /// into `data/corpus/<book>/trait_generic/`, blocked on
-    /// `docs/work-inventory.json`'s regen (`§3`). This test pins that state
-    /// honestly rather than asserting a resolved grant this repo cannot yet
-    /// back with a real record — the moment the pool is ingested this
-    /// assertion must be revisited to expect real grants instead.
+    /// **13 of 14 resolve a real grant.** `trait_pool::load_trait_pool`'s
+    /// `ability/`-fallback (that module's own doc comment) finds real,
+    /// already-shipped `TYPE:Trait.RaceTrait.<X> Race Trait` content in
+    /// `inner_sea_races` for every target race except Rougarou --
+    /// re-confirming `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own
+    /// "inner_sea_races alone gives real content for 13 of the 14" finding,
+    /// this time end-to-end through the real menu command rather than a
+    /// standalone census script. Rougarou is honestly 0: cycle 1's own
+    /// corpus-wide scan proved no book anywhere grants a Rougarou Race Trait
+    /// (`race_resolver.rs`'s own `rougarou` chassis comment: no
+    /// `Rougarou_Replace*` flag is ever set `True` anywhere in the pinned
+    /// oracle), so an empty pool here is the correct, upstream-proven answer,
+    /// not a gap this cycle left open.
     #[test]
-    fn the_menu_command_carries_all_fourteen_adopted_race_options_with_no_pool_content_ingested_yet() {
+    fn the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_with_real_grants() {
         let menu = menu();
         let keys: Vec<&str> = menu.adopted_race_options.iter().map(|o| o.key.as_str()).collect();
         assert_eq!(
@@ -2219,13 +2224,36 @@ mod tests {
         );
         for option in &menu.adopted_race_options {
             assert!(!option.malformed_choose_token, "{:?}: every real oracle row must parse cleanly", option.key);
+            if option.key == "Adopted Race ~ Rougarou" {
+                assert!(option.grants.is_empty(), "Rougarou's pool is genuinely, corpus-wide empty");
+                continue;
+            }
+            assert_eq!(
+                option.grants.len(),
+                1,
+                "{:?}: exactly 1 real inner_sea_races pool member expected",
+                option.key
+            );
+            let grant = &option.grants[0];
+            assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
+            assert_eq!(grant.book, "ISR", "{:?}: the real pool member's own book", option.key);
             assert!(
-                option.grants.is_empty(),
-                "{:?}: honest today -- no kind:trait pool content is ingested yet, see this \
-                 test's own doc comment",
+                grant.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
+                "{:?}: grant must carry real corpus prose",
                 option.key
             );
         }
+        // The one real corpus prose sample, pinned by exact text so a future
+        // regeneration that silently changed the content would be caught.
+        let oread = menu.adopted_race_options.iter().find(|o| o.key == "Adopted Race ~ Oread").unwrap();
+        assert_eq!(oread.grants[0].name, "Loner of the Rocks");
+        assert_eq!(
+            oread.grants[0].description.as_deref(),
+            Some(
+                "You gain a +1 trait bonus on Heal and Survival checks. Your bonus on Survival \
+                 checks increases by 1 in underground or mountain environments."
+            )
+        );
         let books: BTreeSet<&str> = menu.adopted_race_options.iter().map(|o| o.book.as_str()).collect();
         assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6"]));
     }
