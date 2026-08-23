@@ -2609,5 +2609,5 @@ and after this sweep (not "none found" without having run the commands).
   it stays named, re-derivable T2b residual feeding the classifier-fix cycle's own re-measurement
   of T2b per `decisions.md §16` step 3.
 - **Receipt:** `artifacts/gate-3-closure-invariant/epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md`.
-- **Commit SHAs:** `ad37eba65` (feature), `7172263e9` (retro-log append), rebased to `ac35f6bff` on
-  `origin/tranche/12`.
+- **Commit SHAs:** `55981abc6` (feature), `ac35f6bff` (retro-log append), `717db44f7` (this
+  progress.md/kanban.md entry), all on `origin/tranche/12`.

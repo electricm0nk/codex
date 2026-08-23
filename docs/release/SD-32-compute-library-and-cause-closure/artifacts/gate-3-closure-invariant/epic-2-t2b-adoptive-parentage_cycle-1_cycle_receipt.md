@@ -5,7 +5,8 @@
 - **Base:** `e2bbff32ca328fa3a0a76f0286b2f479f1ae0bc2` (pinned `PIN`); worktree was cut from a stray
   `site-publish` merge commit with no `docs/`/`data/`/`scripts/` tree (footgun 1, fired again) —
   `git reset --hard "$PIN"` then re-verified before doing anything else.
-- **Commit SHA:** *(filled at push — see §6 step 6 of the dispatch procedure)*
+- **Commit SHA:** `55981abc6` (feature), `ac35f6bff` (retro-log append),
+  `717db44f7` (this receipt + kanban/progress.md), all on `origin/tranche/12`.
 - **Files touched:**
   - `src/bin/ingest_race_traits.rs` — `parse_row` gains a third row shape (Adoptive Parentage,
     no `TYPE:` token) alongside standard/alternate and heritage-selector; new fixture tests.
