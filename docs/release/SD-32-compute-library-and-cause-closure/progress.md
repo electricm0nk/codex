@@ -6373,3 +6373,56 @@ Confirmed unchanged this cycle.
   next win, needs a full-population regression check); `ultimate_magic`/`inner_sea_gods`/
   `adventurers_guide` `equipment` residuals (per-book trace needed); `spell`'s 167.
 - Commit: (this cycle's commit — see push output).
+
+## T9 `race_trait_generic` remediation structural gap-close (`t9-race-trait-remediation-mode`)
+
+Follow-on to `t9-generic-ingest-remediation-mode` (commit `067ae9cfe2`), which named
+`ingest_race_trait_generic.py` as carrying the same `no_record`-ledger-gated defect for its own
+population, zero confirmed leaks at that time. This cycle closes that capability gap.
+
+**Re-derivation (`§17a`):** the brief's "47-record population" is the sibling receipt's own figure
+for the `inner_sea_races/race_trait_generic/` directory alone. The script's real, corpus-wide
+population is **1,878** self-owned `race_trait_generic` records (of 1,884 total files across all
+`race_trait_generic/` directories; 6 carry `codex_generated_name` and belong to the sibling script,
+`ingest_generic_kind.py --kind race_trait`). `python3 scripts/pi_key_rawtokens_audit.py --kind
+race_trait_generic`: `confirmed_records=0` — zero leaks, confirmed fresh, not assumed.
+
+**Ownership predicate — the hard part, solved the opposite way from the sibling script.**
+`ingest_generic_kind.py` scopes ownership by PRESENCE of `codex_generated_name` (a key it always
+stamps). `ingest_race_trait_generic.py` never stamps that key at all (it has no rename mechanism —
+a name-PI unit is skipped outright, never ingested), so `find_owned_race_trait_files` scopes by
+ABSENCE of that key instead. Verified sound corpus-wide: all 1,878 "owned" files were checked
+field-by-field against this script's own exact write schema — zero mismatches, so the predicate
+cannot silently include the sibling's records.
+
+New `--remediate` mode (`find_owned_race_trait_files`/`remediate`, mirroring
+`t9-generic-ingest-remediation-mode`'s shape) re-derives every self-owned record from its own
+pinned-oracle citation and re-applies the current pipeline, PLUS a new raw_tokens-wide
+`blacklist_term_hit_including_concatenated` scan (imported from `scripts/pi_scrub.py`, never
+copied — `decisions.md §17`) this script's ordinary writer never had.
+
+**No leak invented to prove the path** (`decisions.md §17a`/dispatch brief's own constraint) — the
+proof is two mutation tests: an in-memory reintroduced-leak assertion (mirrors the sibling's own
+test shape), and an end-to-end run of `remediate` itself against a TEMP COPY of a real record
+dirtied with the same leak (monkeypatched file discovery, real corpus file never opened for write).
+Both RED→GREEN, both pass; the real on-disk record is byte-identical before and after.
+
+```
+python3 scripts/pi_key_rawtokens_audit.py --kind race_trait_generic
+  -> scanned=1884 confirmed_records=0
+python3 scripts/ingest_race_trait_generic.py --remediate --book <B> --dry-run
+  -> 0 changed, every book except bestiary_4 (territory), 1,763 scanned total
+git status --porcelain data/corpus  -> empty (0 M / 0 A / 0 D)
+```
+
+`bestiary_4/race_trait_generic` (115 self-owned files) is correctly identified as owned by the
+predicate but was never touched by a live run this cycle — the sibling `monster_ability` lane's
+territory, honoured throughout.
+
+- **Status:** complete (capability closed; 0 confirmed leaks to remediate, verified not assumed).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-race-trait-remediation-mode_cycle-1_cycle_receipt.md`.
+- **What remains:** none opened by this cycle — `bestiary_4`'s own remediation, if the sibling lane
+  ever needs it, and an operator ruling on how a rename-less script should handle a future
+  `name_pi_newly_detected` hit (not observed this cycle), both named in the receipt.
+- Commit: (this cycle's commit — see push output).

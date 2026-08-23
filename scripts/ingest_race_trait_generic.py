@@ -89,6 +89,9 @@ from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
     extract_free_text,
     normalized_term_hit,
 )
+from pi_scrub import (  # noqa: E402
+    blacklist_term_hit_including_concatenated,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INVENTORY_PATH = os.path.join(REPO_ROOT, "docs/work-inventory.json")
@@ -226,21 +229,235 @@ def load_units(no_record_ids: set[str]) -> list[dict]:
     return [u for u in units if u.get("kind") == "race_trait" and u.get("id") in no_record_ids]
 
 
+def find_owned_race_trait_files(book_filter: str | None) -> list[str]:
+    """Every `data/corpus/<book>/race_trait_generic/*.json` file that does
+    **not** carry a `codex_generated_name` key -- the structural ownership
+    marker `scripts/ingest_generic_kind.py` (and only that script) stamps on
+    every record it writes, including when invoked with `--kind race_trait`
+    against a `NAMEISPI:YES`/name-blacklisted unit this script itself always
+    skips outright (this script has no rename path of its own -- see
+    `remediate` below). `race_trait_generic/` is a directory SHARED between
+    the two scripts (one of the two "dormant shared-directory pairs" named
+    by `t9-generic-ingest-remediation-mode_cycle-1_cycle_receipt.md`); a
+    blanket rewrite of everything in it would touch the sibling script's
+    records.
+
+    Verified empirically, not merely assumed sound (`decisions.md §17a`):
+    `python3 scripts/pi_key_rawtokens_audit.py --kind race_trait_generic`
+    (2026-08-23) scans 1884 files corpus-wide; exactly 6 carry
+    `codex_generated_name` (`ingest_generic_kind.py`'s own `--kind
+    race_trait` output). Every one of the other 1878 was checked field-by-
+    field against this script's own exact write schema (`population`,
+    `completeness`, `ingested_at`, `data{key,name,description,raw_tokens}`,
+    `source{kind,path,sha256,line,record_key}`, `wiring_class`,
+    `wiring_class_signals`, `license`, `pi_field`, `pi_marker` -- no extra
+    key) with zero mismatches, so "absent `codex_generated_name`" identifies
+    exactly this script's own population here, not a default that could
+    silently include a third writer's records."""
+    out: list[str] = []
+    corpus_root_dir = os.path.join(REPO_ROOT, "data/corpus")
+    for dirpath, _dirnames, filenames in os.walk(corpus_root_dir):
+        if os.path.basename(dirpath) != "race_trait_generic":
+            continue
+        book_dir = os.path.basename(os.path.dirname(dirpath))
+        if book_filter and book_dir != book_filter:
+            continue
+        for fn in sorted(filenames):
+            if not fn.endswith(".json"):
+                continue
+            path = os.path.join(dirpath, fn)
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    rec = json.load(fh)
+            except (OSError, json.JSONDecodeError):
+                continue
+            if "codex_generated_name" in rec:
+                continue  # ingest_generic_kind.py's own record -- never touched
+            out.append(path)
+    return out
+
+
+def remediate(root: str, book_filter: str | None, dry_run: bool, out_path: str | None) -> int:
+    """`decisions.md §17`'s gap-close for the structural defect
+    `t9-generic-ingest-remediation-mode_cycle-1_cycle_receipt.md` names for
+    this script: the ordinary writer above is `no_record`-ledger-gated and
+    can therefore never re-touch a record it already shipped, even when the
+    CURRENT scrub pipeline would now catch a leak in it. `--remediate`
+    bypasses the ledger entirely: it walks every SELF-OWNED
+    (`find_owned_race_trait_files`) record already on disk, re-reads its own
+    pinned-oracle citation (`source.path` + `source.line` -- the coordinate
+    the ORIGINAL ingest used, never re-resolved by name), and re-derives the
+    record from scratch with the CURRENT redaction pipeline -- the same
+    `declared_pi`/`normalized_term_hit` checks the ordinary writer uses,
+    PLUS a scan of every `raw_tokens` VALUE (not only `DESC` and the row's
+    free text) against `scripts/pi_scrub.py::
+    blacklist_term_hit_including_concatenated` (imported, never re-defined
+    -- `decisions.md §17`), mirroring the same gap-close
+    `ingest_generic_kind.py`'s own `--remediate` already closed for its
+    kinds. A record is rewritten only if its content (everything except
+    `ingested_at`) actually changed.
+
+    This script's ordinary writer SKIPS a name-PI unit outright at ingest
+    time -- it has no Codex-generated-neutral-name rename path the way
+    `ingest_generic_kind.py` does. If re-derivation finds a previously-clean
+    shipped record's name/key NOW hits the blacklist (e.g. a term added
+    since the original ingest), `remediate` does not invent an unapproved
+    rename scheme for it, and it does not delete the record (that would
+    move `no_record`, which this mode must never do). It is reported under
+    `name_pi_newly_detected` by coordinate for an operator ruling, and left
+    untouched -- `decisions.md §15`'s stop-the-cycle-on-that-record
+    discipline, not a silent skip."""
+    paths = find_owned_race_trait_files(book_filter)
+    ingested_at = ingested_at_now()
+
+    report = {
+        "mode": "remediate",
+        "book_filter": book_filter,
+        "scanned": len(paths),
+        "changed": 0,
+        "unchanged": 0,
+        "unresolved": [],
+        "changed_paths": [],
+        "name_pi_newly_detected": [],
+    }
+
+    for path in paths:
+        with open(path, encoding="utf-8") as fh:
+            rec = json.load(fh)
+
+        src_rel = rec["source"]["path"]
+        src_line = rec["source"]["line"]
+        src_path = os.path.join(root, src_rel)
+        book_dir = os.path.basename(os.path.dirname(os.path.dirname(path)))
+        # Reverse the write-side alias so the book NAME (not the physical
+        # directory) is what's used in reporting -- the alias is a
+        # directory-naming detail, not part of a unit's coordinate.
+        book = next((b for b, d in CORPUS_WRITE_DIR_ALIASES.items() if d == book_dir), book_dir)
+
+        if not os.path.isfile(src_path):
+            report["unresolved"].append(path)
+            continue
+
+        raw_line = read_row(src_path, src_line)
+        tokens = row_tokens(raw_line)
+        name_declared, desc_declared = declared_pi(tokens)
+
+        name = rec["data"]["name"]
+        key = rec["data"]["key"]
+        name_hit = normalized_term_hit(name) or normalized_term_hit(key)
+        if name_declared or name_hit:
+            report["name_pi_newly_detected"].append(
+                f"{book}:{os.path.basename(src_rel)}:{src_line}"
+            )
+            continue
+
+        description = desc_value(tokens)
+        free_text = extract_free_text(raw_line)
+        desc_hit = normalized_term_hit(free_text) if free_text else None
+        pi_redacted = desc_declared or bool(desc_hit)
+        stored_description = description
+        if pi_redacted and description is not None:
+            stored_description = REDACTED_PI_MARKER
+            for t in tokens:
+                if t["key"] == "DESC":
+                    t["value"] = REDACTED_PI_MARKER
+
+        has_formula_token = any(t["key"] == "DEFINE" or t["key"].startswith("BONUS") for t in tokens)
+        wiring_class = "static" if has_formula_token else "display"
+        wiring_signals = (
+            ["static:has_magnitude_token"] if has_formula_token else ["display:no_magnitude_token"]
+        )
+
+        # `decisions.md §17` gap-close, mirroring `ingest_generic_kind.py`'s
+        # own `--remediate` widening: a record whose bare name/description
+        # are clean can still carry a blacklisted term inside a DIFFERENT
+        # raw-token value. Scan EVERY token's value, not only `DESC`.
+        blacklist_extra_redacted = False
+        scrubbed = []
+        for t in tokens:
+            value = t["value"]
+            if pi_redacted and t["key"] == "DESC" and value == REDACTED_PI_MARKER:
+                scrubbed.append(dict(t))
+                continue
+            if value and blacklist_term_hit_including_concatenated(value):
+                scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
+                blacklist_extra_redacted = True
+            else:
+                scrubbed.append(dict(t))
+        tokens = scrubbed
+
+        fields_redacted: list[str] = []
+        if pi_redacted:
+            fields_redacted.append("description")
+        if blacklist_extra_redacted:
+            fields_redacted.append("raw_tokens")
+
+        new_record = {
+            "population": rec.get("population", "in_scope"),
+            "completeness": "full" if stored_description else "chassis_only",
+            "ingested_at": rec.get("ingested_at"),
+            "data": {
+                "key": key,
+                "name": name,
+                "description": stored_description,
+                "raw_tokens": tokens,
+            },
+            "source": rec["source"],
+            "wiring_class": wiring_class,
+            "wiring_class_signals": wiring_signals,
+            "license": "PI-REDACTED" if fields_redacted else "OGL",
+            "pi_field": ",".join(fields_redacted) if fields_redacted else None,
+            "pi_marker": PI_MARKER_REDACTED if fields_redacted else None,
+        }
+
+        old_compare = {k: v for k, v in rec.items() if k != "ingested_at"}
+        new_compare = {k: v for k, v in new_record.items() if k != "ingested_at"}
+        if old_compare == new_compare:
+            report["unchanged"] += 1
+            continue
+
+        new_record["ingested_at"] = ingested_at
+        if not dry_run:
+            with open(path, "w", encoding="utf-8") as fh:
+                json.dump(new_record, fh, indent=2, ensure_ascii=False)
+                fh.write("\n")
+        report["changed"] += 1
+        report["changed_paths"].append(path)
+
+    text = json.dumps(report, indent=2)
+    print(text)
+    if out_path:
+        with open(out_path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+    return 0
+
+
 def main() -> int:
     dry_run = "--dry-run" in sys.argv
     out_path = None
     if "--out" in sys.argv:
         out_path = sys.argv[sys.argv.index("--out") + 1]
-    ledger_path = os.path.join(REPO_ROOT, "docs/work-inventory.json")
-    if "--ledger" in sys.argv:
-        ledger_path = sys.argv[sys.argv.index("--ledger") + 1]
-    else:
-        ledger_path = None
 
     root = corpus_root()
     if not os.path.isdir(root):
         print(f"PCGEN_CORPUS_ROOT ({root}) is not a directory", file=sys.stderr)
         return 1
+
+    if "--remediate" in sys.argv:
+        # `decisions.md §17` structural gap-close: the ordinary writer below
+        # is `no_record`-ledger-gated and can never re-touch a record it
+        # already shipped. `--remediate` never needs (and never consults)
+        # `no_record` status -- see `remediate` above.
+        book_filter = None
+        if "--book" in sys.argv:
+            book_filter = sys.argv[sys.argv.index("--book") + 1]
+        return remediate(root, book_filter, dry_run, out_path)
+
+    ledger_path = os.path.join(REPO_ROOT, "docs/work-inventory.json")
+    if "--ledger" in sys.argv:
+        ledger_path = sys.argv[sys.argv.index("--ledger") + 1]
+    else:
+        ledger_path = None
 
     if ledger_path is None:
         print("--ledger <shape_ledger_output.json> is required", file=sys.stderr)
