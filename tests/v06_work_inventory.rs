@@ -1061,13 +1061,36 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
         .iter()
         .filter_map(|v| v.as_str().map(|s| s.to_string()))
         .collect();
+    // `decisions.md §17` / commit `8e98424eb`: `up_powers.lst` is now
+    // enumerated as its own `Kind::Power` -- structurally spell-shaped
+    // (`SCHOOL`/`CLASSES`/`CASTTIME`/`RANGE`/`DESC` fields) but filed under a
+    // PCGen naming convention distinct from `*_spells.lst`, so
+    // `15-card-15-other-kinds-memo.md` §3 ruled it a parallel kind rather
+    // than folding it into `spell` -- Epic 9's deferral named `Spell`
+    // specifically ("mapping it to Spell is deliberately deferred"), and that
+    // mapping never happened; `up_powers.lst` was never made to masquerade as
+    // `spell`. This assertion previously pinned the pre-§17 state where the
+    // file was simply unenumerated; that state no longer exists, so the
+    // assertion is inverted to pin the new, real one instead of being
+    // deleted or loosened (`decisions.md §1a`).
     assert!(
-        not_enumerated.iter().any(|f| f == "up_powers.lst"),
-        "up_powers.lst must land in files_not_enumerated -- mapping it to Spell \
-         is deliberately deferred to Epic 9. Saw: {not_enumerated:?}"
+        !not_enumerated.iter().any(|f| f == "up_powers.lst"),
+        "up_powers.lst must NOT land in files_not_enumerated any more -- \
+         decisions.md §17 / commit 8e98424eb enumerates it as Kind::Power via \
+         SIMPLE_FILENAME_KINDS. Saw files_not_enumerated: {not_enumerated:?}"
     );
 
     let kinds = book["kinds"].as_object().expect("kinds object");
+    let power_kind = kinds
+        .get("power")
+        .expect("ultimate_psionics must contribute a power kind now that up_powers.lst enumerates");
+    assert_eq!(
+        power_kind["units"].as_u64(),
+        Some(421),
+        "ultimate_psionics' power kind must carry all 421 up_powers.lst rows \
+         (15-card-15-other-kinds-memo.md §3), got {:?}",
+        power_kind["units"]
+    );
     for expected in ["class", "race", "feat", "equipment"] {
         assert!(
             kinds.contains_key(expected),
@@ -1112,5 +1135,29 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
         feat_statuses.contains("text-complete") || feat_statuses.contains("grounded"),
         "ultimate_psionics' landed feat catalog must produce at least one text-complete or \
          grounded feat unit, statuses seen were {feat_statuses:?}"
+    );
+
+    // Pins the new `power` kind's own real per-unit status (`decisions.md
+    // §17`, commit `8e98424eb`): 421 units, all `not-ingested` -- a real,
+    // engine-consulted verdict (never `not-started`, already covered by the
+    // loop above) reflecting that Epic 9 deferred mapping this kind's rows
+    // to `Spell`'s ingest pipeline, not that the file goes unenumerated.
+    let power_units: Vec<&serde_json::Value> =
+        up_units.iter().filter(|u| u["kind"].as_str() == Some("power")).copied().collect();
+    assert_eq!(
+        power_units.len(),
+        421,
+        "ultimate_psionics must contribute exactly 421 power units \
+         (15-card-15-other-kinds-memo.md §3), got {}",
+        power_units.len()
+    );
+    let power_statuses: std::collections::BTreeSet<&str> =
+        power_units.iter().filter_map(|u| u["status"].as_str()).collect();
+    assert_eq!(
+        power_statuses,
+        std::collections::BTreeSet::from(["not-ingested"]),
+        "ultimate_psionics' power units must all be not-ingested (Epic 9 deferred mapping \
+         them into an engine pipeline, not enumeration itself), statuses seen were \
+         {power_statuses:?}"
     );
 }

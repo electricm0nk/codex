@@ -3140,3 +3140,60 @@ generic-spell-ingest `dcbcd803f`) were re-derived independently, not trusted.
 - **Next-cycle plan:** dispatch against the memo §7 mechanism table — `Kind::Ability` and the
   `is_internal_category` narrowing are the two highest-leverage items (7,660 units between them,
   both reusing already-proven classifiers, neither needing new investigation).
+
+## Cycle unred-powers-1 — un-red `tests/v06_work_inventory.rs:1064` (`ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status`)
+
+Third stale-deferral assertion fixed this bundle (same shape as `unred-branch`/`fd6339ce4` and
+`t2b-refine-kind-fix`). Base `origin/tranche/12` tip (`8046a9bfc`) was red — commit `8e98424eb`
+(card 15's generic-enumeration lane) landed `Kind::Power` via `SIMPLE_FILENAME_KINDS`, which now
+enumerates `up_powers.lst`'s 421 rows instead of leaving the file in `files_not_enumerated`, but a
+pinned test still asserted the pre-`8e98424eb` deferred state.
+
+**Disposition (a): deferral genuinely lifted, verified not just re-quoted.** `git diff
+8e98424eb..HEAD -- src/bin/v06_work_inventory.rs` empty — no cycle since touched the file.
+`15-card-15-other-kinds-memo.md` §3 (the design memo `8e98424eb` cites) analyzed `up_powers.lst`
+directly: 421 units, spell-shaped fields but a file-distinct PCGen naming convention, ruled a
+parallel `power` kind rather than folded into `spell`. Independently confirmed against
+`docs/work-inventory.json`: `ultimate_psionics`'s `spell` kind count is still 0 (unchanged) and all
+421 `power` units are `not-ingested`. **Epic 9's actual deferral — mapping the rows into `Spell`'s
+ingest pipeline — never happened and is still true**; the old assertion conflated "not mapped to
+Spell" with "not enumerated at all", which stopped being the same fact once `Kind::Power` landed.
+No data-table defect (disposition (b) does not apply) — `Kind::Power` claiming this file is correct
+per the memo's field-shape and naming-distinctness analysis.
+
+**Fix:** inverted the `files_not_enumerated` assertion (must NOT contain `up_powers.lst` now); added
+a count pin (`power` kind = exactly 421 units) and a per-unit status pin (all 421 `not-ingested`,
+nothing else) so the test still catches real drift in either direction. Did not delete or loosen
+anything (`decisions.md §1a`).
+
+**RED→GREEN proven by mutation, not just re-run:** reproduced the original failure at branch tip
+before touching anything; fixed → green; then twice re-mutated `docs/work-inventory.json` (re-added
+`up_powers.lst` to `files_not_enumerated`; separately set `power` kind's unit count to 420) and
+confirmed each mutation reproduced a RED for the new, correct reason before restoring the file
+byte-for-byte (`git status --porcelain -- docs/work-inventory.json` clean both times).
+
+**Sibling sweep (dispatch brief's explicit ask):** grepped `tests/*.rs` for pinned counts/deferral
+comments touching the five new kinds (`Template`/`Deity`/`Power`/`Domain`/`Language`). No other
+stale assertion found — the only other `Template`/`Deity`/`Domain`/`Language` hits are the unrelated
+legacy `sd17_*` `MetadataKind` parser suite and `sd27_*` tests reading the corpus directly (not the
+inventory's `Kind`), neither affected by `8e98424eb`. No test hardcodes the pre/post-`8e98424eb`
+totals (38,540/41,987).
+
+- **Card ID:** none (direct un-red against branch tip, same as `unred-branch`).
+- **Files:** `tests/v06_work_inventory.rs`.
+- **Identifier audit:** `OK_NO_BUNDLE_TAGS` (scoped to this cycle's own diff — the full
+  `BASE_BRANCH...HEAD` diff against `origin/develop`'s merge-base is dominated by this whole
+  bundle's own pre-existing SD-tagged history and is not a meaningful per-cycle signal; audited the
+  actual change this cycle introduced instead).
+- **Wired-integration audit:** `OK_NO_TOKENS` (same scoping).
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete.
+- **Suites:** `cargo test --locked --test v06_work_inventory --no-fail-fast` 16/16 (1 ignored, was
+  15/16 FAILED at base); `cargo test --locked --lib` 2390/2390 (13 ignored); `cargo test --locked
+  --manifest-path apps/desktop/src-tauri/Cargo.toml` (separate cargo workspace) 518/518; `scripts/
+  verify.sh --only reach` PASS (31 passed). `site-dashboard-check` known-failing from unrelated
+  dashboard-JSON staleness (declared in dispatch brief, not re-derived here).
+- **Retro:** `scripts/retro.py correction` logged (`docs/retro/events/unred-powers.jsonl`, id
+  `1787464765770-unred-powers-51a340`).
+- **Next-cycle plan:** none for this assertion. The memo §7 mechanism table (previous cycle's plan)
+  is still the right next dispatch target for card 15's residual population.
