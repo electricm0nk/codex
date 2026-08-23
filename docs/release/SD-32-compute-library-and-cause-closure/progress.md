@@ -6645,3 +6645,56 @@ least 5 of the 19 are this same `§24` shape, the remaining ~14 not isolated thi
   remaining ~14 `equipment` units; `inner_sea_intrigue`/`bestiary_2`/`inner_sea_combat`/
   `inner_sea_world_guide` and the remaining smaller `equipment` books; `spell`'s 167.
 - Commit: (this cycle's commit — see push output).
+
+## Cycle t9-monster-ability-owner-less-ingest-round5 — Card 11, T9 — `monster_ability` `no_record` 121 -> 100 (2026-08-23)
+
+Re-derived per `decisions.md §17a` before starting: the dispatch brief's own carried-forward note
+("`mythic_adventures` needs a `rules_tables/mythic_adventures/` module scaffolded from scratch — not
+yet attempted") was stale — a sibling `spell` lane (commit `3f8ddca7fd`) had already created that
+module directory for its own `spell_list`, in between round 4 and this cycle. Confirmed fresh:
+`python3 scripts/classify_monster_ability_rows.py mythic_adventures` → `0 21 0 0 21 0 0` (0 monster
+rows, 21 orphan ability rows, 0 PI, 0 `.COPY=`), the identical zero-monster shape round 4's two books
+share.
+
+**Landed:** registered `mythic_adventures` in `scripts/transcribe_monster_tables.py`'s `BOOKS` dict,
+`src/bin/gen_book_cache.rs`'s `MONSTER_BOOK_SPECS`, and `monster_chassis::MONSTER_BOOKS`; extended the
+already-existing `rules_tables/mythic_adventures/mod.rs` with a `monster_data` module and the two
+static accessors. Unlike round 4's two books, this book has **no** hand-rolled `gen_book_cache.rs`
+generator function, so `main`'s existing generic `monster_book_spec` fallback arm reaches it with
+**zero new generator code** — and, as a direct consequence, round 4's §0 near-miss (a bundled
+generator silently deleting unrelated pre-existing corpus files) structurally cannot recur for this
+book. All 21 orphan ability rows shipped; 0 refused (no multi-`DESC:` residual, unlike round 4's
+`pathfinder_unchained`).
+
+Re-derived: `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` — `monster_ability`
+`no_record` 121 → 100; bundle total 326 → 305 at commit time (later 278 after a concurrent sibling
+`equipment_modifier` lane's own closure landed via rebase, confirmed untouched by this cycle's own
+diff). `monster_chassis.rs`'s `widening_the_facet_vocabulary_does_not_reclassify_any_existing_record`
+pin repinned 3683→3704 / digest `0x2fa5c4578c0267bb`→`0xd732c20ec4c2a946`, both re-derived from a live
+test failure, not guessed. `reach_gate.rs`/`monster_catalog.rs` pins updated to match (1 new
+reach-claim arm, 21 new `UNREACHED_RECORD_FINDINGS` keys, owner-less-count 1027→1048).
+
+**Two pre-existing, unrelated `corpus_ingest_diagnostic.rs` test failures observed** (not caused by
+this cycle — that file is untouched by this diff): `the_two_ingested_books_totals_reconcile_with_...`
+fails on `advanced_race_guide` alone (`left: 1579, right: 2157`); `every_book_landed_in_rules_tables_is_reported`
+names `["inner_sea_races", "mythic_adventures"]` as landed-but-unreported (`mythic_adventures`'s gap
+here predates this cycle — the sibling `spell` lane's commit never added a `book_status(..)` row).
+Named per `decisions.md §22`, left for whichever lane owns that file.
+
+**Closure/reclassification/reachability (`decisions.md §16`):** closure 21 units, real ingestion;
+reclassification 0; reachability **0** (all 21 pinned as named, provable non-reach in
+`reach_gate.rs::UNREACHED_RECORD_FINDINGS`, matching every prior round's own standard).
+
+**What remains:** `monster_ability` `no_record` is now **100**, all real per-record/per-facet
+engineering across 10 already-registered books (`bestiary` 23, `bestiary_3` 21, `inner_sea_bestiary`
+12, `bestiary_2` 10, `horror_adventures` 9, `bestiary_4` 7, `inner_sea_gods` 6,
+`inner_sea_world_guide` 3, `pathfinder_unchained` 3, `bestiary_5` 1) plus `occult_adventures` (5
+units, correctly out of scope — negated `PRECAMPAIGN` gate, unchanged since round 3). **No further
+apply-the-mechanism-to-a-zero-monster-book cycles remain** — all 8 of the original zero-monster
+books are now registered; the residual is multi-`DESC:` parse refusals, `TYPE:`-facet-vocabulary
+gaps, and PI-declared exclusions, grouped by refusal reason per `decisions.md §17`, not per book.
+
+- **Status:** complete (card 11 stays `in-progress`).
+- **Kanban:** row 11, `t9-monster-ability-owner-less-ingest-round5` appended.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-monster-ability-owner-less-ingest-round5_cycle-1_cycle_receipt.md`.
+- Commit: `7fa02e5433`.
