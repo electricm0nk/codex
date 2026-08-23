@@ -349,9 +349,19 @@ def blacklist_term_hit_including_concatenated(value: str) -> str | None:
 
 
 def scrub_name_pi_tokens(
-    tokens: list[dict[str, str]], name: str, key: str
+    tokens: list[dict[str, str]], name: str, key: str, neutral_name: str | None = None
 ) -> tuple[list[dict[str, str]], bool]:
     """`decisions.md §24b`-2: "The PI original appears nowhere that ships."
+
+    `neutral_name`, when given, is the record's own `§24`-derived
+    (`codex_neutral_name.neutral_name`) coordinate-only name. It enables
+    NARROWER redaction (see the substitution branch below) for a value whose
+    ONLY hit is a plain, space-preserving self-reference to this record's own
+    name/key (never for a blacklisted term or a concatenated-identifier
+    match) -- so a genuine `BONUS:`/`DEFINE:` game-mechanical value survives
+    with only the self-referencing PI span replaced, instead of being wiped
+    whole. Omitting it (the default) reproduces the exact prior
+    full-redaction behaviour, byte for byte.
 
     A record whose NAME is PI can carry that same name again inside another
     token's VALUE (most concretely a `KEY:` field that restates the row's own
@@ -455,10 +465,50 @@ def scrub_name_pi_tokens(
         value_lower = value.lower()
 
         blacklist_hit = blacklist_term_hit_including_concatenated(value)  # checks 1+4
-        identity_hit = any(needle in value_lower for needle in needles)  # check 2
-        identity_hit = identity_hit or (  # check 3
+        space_preserving_hit = any(needle in value_lower for needle in needles)  # check 2
+        norm_only_hit = (  # check 3
             bool(norm_value) and any(n in norm_value for n in norm_needles)
         )
+        identity_hit = space_preserving_hit or norm_only_hit
+
+        # `decisions.md` T9-onboarding-cause-closure fix (2026-08-23, row 17's
+        # remaining 21): "a BONUS:/DEFINE: value is a game rule, not Product
+        # Identity, and §24 never authorised destroying mechanics." When the
+        # ONLY reason a value would be wiped is a plain, space-preserving
+        # self-reference to the record's OWN name/key (check 2 -- never a
+        # blacklisted term, and never the concatenated-identifier check 3,
+        # whose match position cannot be re-located in the original,
+        # un-normalized string), and the caller supplies the record's own
+        # `§24`-derived neutral name, redact ONLY the matched self-reference
+        # span(s) -- replacing each with the neutral name -- rather than the
+        # whole token. This is possible only for check 2 because that is the
+        # sole check whose match is a literal, case-insensitive substring of
+        # the ORIGINAL value with a locatable span; checks 1/3/4 match a
+        # NORMALIZED (OCR-folded / alnum-stripped) form that does not map
+        # back to a contiguous original-string span. A value that ALSO hits
+        # the blacklist (checks 1/4) or the norm-only identity form (check 3)
+        # is never narrowed -- it stays a full redaction, unchanged from the
+        # pre-existing behaviour.
+        if (
+            neutral_name
+            and space_preserving_hit
+            and not norm_only_hit
+            and not blacklist_hit
+        ):
+            narrowed_value = value
+            narrowed = False
+            for needle in sorted(needles, key=len, reverse=True):
+                pattern = re.compile(re.escape(needle), re.IGNORECASE)
+                if pattern.search(narrowed_value):
+                    narrowed_value = pattern.sub(neutral_name, narrowed_value)
+                    narrowed = True
+            if narrowed:
+                scrubbed.append({"key": t["key"], "value": narrowed_value})
+                any_redacted = True
+                continue
+            # Matched via `needles` but the case-insensitive re-scan found no
+            # span (should not happen given `space_preserving_hit` is True) --
+            # fail safe to a full redaction rather than ship un-narrowed PI.
 
         if blacklist_hit or identity_hit:
             scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})

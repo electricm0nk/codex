@@ -26,6 +26,23 @@ computes a new file path, slug, key, or name; only `data.raw_tokens` and
 `regen_generic_kind_pi_scrub.py`: `rename.coordinate` (`book:source_basename:
 line`) against `docs/work-inventory.json`'s `(book, source_file, source_line)`.
 
+**T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21) fix: this
+driver had the SAME DESC-blanking gap `regen_row17_pi_over_redaction.py`
+caught in its own first draft** (that script's module docstring, "Near-miss
+found and fixed live in this cycle"). This one re-derived `data.raw_tokens`
+via `scrub_name_pi_tokens` ALONE -- omitting the declared-PI DESC-blanking
+and blacklist-scan steps `ingest_generic_kind.py::remediate` performs first
+-- so a record whose `DESC` prose does not happen to literally contain its
+own PI name/key (an ordinary narrative sentence, not a restatement of the
+key) would ship its FULL, un-redacted description text in `data.raw_tokens`
+even when `DESCISPI:YES` declares it PI. Fixed by importing and calling the
+SAME canonical pipeline (`regen_row17_pi_over_redaction.redact_tokens`) that
+cycle wrote and mutation-proved, rather than re-implementing a second,
+divergent copy -- closing the exact "one path screens, another doesn't"
+duplication-drift shape `decisions.md §17` names. Also now threads this
+record's own `§24` neutral name into the narrower (non-full-wipe)
+self-reference redaction the same fix added.
+
 Run: `python3 scripts/regen_all_renamed_pi_scrub.py [--dry-run]`
 `PCGEN_CORPUS_ROOT` must point at a pinned PCGen `data/` checkout.
 """
@@ -38,8 +55,10 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 
-from ingest_ability import corpus_root, read_row, row_tokens  # noqa: E402
-from pi_scrub import scrub_name_pi_tokens  # noqa: E402
+from ingest_ability import corpus_root, read_row  # noqa: E402
+from codex_neutral_name import neutral_name as codex_neutral_name  # noqa: E402
+from pi_scrub import REDACTED_PI_MARKER  # noqa: E402
+from regen_row17_pi_over_redaction import redact_tokens  # noqa: E402
 
 INVENTORY_PATH = os.path.join(REPO_ROOT, "docs/work-inventory.json")
 
@@ -115,22 +134,38 @@ def main() -> int:
 
         orig_name = unit["name"]
         orig_key = unit.get("corpus_key") or unit.get("key") or unit["name"]
+        # This record already carries a `§24` Codex-generated identity
+        # (checked above) -- re-derive the SAME coordinate-only name (never
+        # re-mint a new one) so a self-reference-only value narrows to it
+        # instead of being wiped whole.
+        neutral_name_hint = codex_neutral_name(unit["kind"], book, source_basename, line)
 
         src_path = os.path.join(root, rec["source"]["path"])
         src_line = rec["source"]["line"]
         raw_line = read_row(src_path, src_line)
-        tokens = row_tokens(raw_line)
 
-        scrubbed_tokens, extra_redacted = scrub_name_pi_tokens(tokens, orig_name, orig_key)
+        # T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21):
+        # the SAME canonical pipeline `regen_row17_pi_over_redaction.py`
+        # mutation-proved (declared-PI detection -> DESC blanking ->
+        # blacklist scan -> identity/blacklist scan), never a re-derivation
+        # of only the identity/blacklist scan alone. This is what closes
+        # the DESC-PI-SHIPPED-IN-RAW-TOKENS gap this driver previously had.
+        scrubbed_tokens, stored_description, extra_redacted = redact_tokens(
+            raw_line, orig_name, orig_key, neutral_name_hint=neutral_name_hint
+        )
         report["renamed_reprocessed"] += 1
 
         old_tokens = rec.get("data", {}).get("raw_tokens")
-        if scrubbed_tokens != old_tokens:
+        old_description = rec.get("data", {}).get("description")
+        if scrubbed_tokens != old_tokens or stored_description != old_description:
             report["changed"] += 1
             report["changed_paths"].append(os.path.relpath(path, REPO_ROOT))
             rec["data"]["raw_tokens"] = scrubbed_tokens
+            rec["data"]["description"] = stored_description
             fields_redacted = (rec.get("pi_field") or "").split(",") if rec.get("pi_field") else []
             fields_redacted = [f for f in fields_redacted if f]
+            if stored_description == REDACTED_PI_MARKER and "description" not in fields_redacted:
+                fields_redacted.append("description")
             if extra_redacted and "raw_tokens" not in fields_redacted:
                 fields_redacted.append("raw_tokens")
             rec["pi_field"] = ",".join(fields_redacted) if fields_redacted else rec.get("pi_field")

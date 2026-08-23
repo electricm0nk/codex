@@ -1,20 +1,22 @@
 {
   "totals": {
-    "population": 34631,
-    "derived": 11404,
-    "measured_empty": 23083,
-    "fallthrough": 21,
-    "fallthrough_pi_redacted": 20,
-    "not_ingested": 123,
+    "population": 34521,
+    "derived": 11409,
+    "measured_empty": 22992,
+    "measured_pi_redacted": 14,
+    "fallthrough": 0,
+    "fallthrough_pi_redacted": 0,
+    "not_ingested": 106,
     "provisional_default_total": 0,
     "provisional_default_in_not_done_population": 0,
     "provisional_default_missing_reason": 0,
-    "row17_honest_size": 21
+    "row17_honest_size": 0
   },
   "per_kind_book": [
     {
       "derived": 35,
       "measured_empty": 74,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -26,6 +28,7 @@
     {
       "derived": 123,
       "measured_empty": 15,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -37,6 +40,7 @@
     {
       "derived": 318,
       "measured_empty": 34,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -48,6 +52,7 @@
     {
       "derived": 94,
       "measured_empty": 43,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -59,6 +64,7 @@
     {
       "derived": 11,
       "measured_empty": 19,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -70,6 +76,7 @@
     {
       "derived": 22,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -81,6 +88,7 @@
     {
       "derived": 5,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -92,6 +100,7 @@
     {
       "derived": 9,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -103,6 +112,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -114,6 +124,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -125,6 +136,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -136,6 +148,7 @@
     {
       "derived": 251,
       "measured_empty": 220,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -147,6 +160,7 @@
     {
       "derived": 310,
       "measured_empty": 241,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -158,6 +172,7 @@
     {
       "derived": 3,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -169,6 +184,7 @@
     {
       "derived": 27,
       "measured_empty": 160,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -180,17 +196,19 @@
     {
       "derived": 105,
       "measured_empty": 281,
-      "fallthrough": 1,
-      "fallthrough_pi_redacted": 1,
+      "measured_pi_redacted": 1,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "ability",
       "book": "inner_sea_gods",
       "provisional_default": 0,
-      "row17_actionable": 1
+      "row17_actionable": 0
     },
     {
       "derived": 60,
       "measured_empty": 87,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -202,6 +220,7 @@
     {
       "derived": 0,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -213,17 +232,19 @@
     {
       "derived": 4,
       "measured_empty": 62,
-      "fallthrough": 1,
-      "fallthrough_pi_redacted": 1,
+      "measured_pi_redacted": 1,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "ability",
       "book": "inner_sea_world_guide",
       "provisional_default": 0,
-      "row17_actionable": 1
+      "row17_actionable": 0
     },
     {
       "derived": 1,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -235,6 +256,7 @@
     {
       "derived": 139,
       "measured_empty": 277,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -246,6 +268,7 @@
     {
       "derived": 0,
       "measured_empty": 365,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -257,6 +280,7 @@
     {
       "derived": 34,
       "measured_empty": 58,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 1,
@@ -268,6 +292,7 @@
     {
       "derived": 4,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -279,6 +304,7 @@
     {
       "derived": 4,
       "measured_empty": 42,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -290,6 +316,7 @@
     {
       "derived": 191,
       "measured_empty": 320,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -301,6 +328,7 @@
     {
       "derived": 193,
       "measured_empty": 89,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -312,6 +340,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -323,6 +352,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -334,6 +364,7 @@
     {
       "derived": 12,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -345,6 +376,7 @@
     {
       "derived": 25,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -356,6 +388,7 @@
     {
       "derived": 27,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -367,6 +400,7 @@
     {
       "derived": 3,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -378,6 +412,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -389,6 +424,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -400,6 +436,7 @@
     {
       "derived": 17,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -411,6 +448,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -422,6 +460,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -433,6 +472,7 @@
     {
       "derived": 3,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -444,6 +484,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -455,6 +496,7 @@
     {
       "derived": 3,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -466,6 +508,7 @@
     {
       "derived": 5,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -477,6 +520,7 @@
     {
       "derived": 9,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -488,6 +532,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -499,6 +544,7 @@
     {
       "derived": 1,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -510,6 +556,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -521,6 +568,7 @@
     {
       "derived": 34,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -532,6 +580,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -543,6 +592,7 @@
     {
       "derived": 1054,
       "measured_empty": 1586,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -554,6 +604,7 @@
     {
       "derived": 861,
       "measured_empty": 1385,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -565,6 +616,7 @@
     {
       "derived": 120,
       "measured_empty": 581,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -574,19 +626,21 @@
       "row17_actionable": 0
     },
     {
-      "derived": 239,
+      "derived": 241,
       "measured_empty": 505,
-      "fallthrough": 9,
-      "fallthrough_pi_redacted": 9,
+      "measured_pi_redacted": 7,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "class_feature",
       "book": "adventurers_guide",
       "provisional_default": 0,
-      "row17_actionable": 9
+      "row17_actionable": 0
     },
     {
       "derived": 1,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -598,6 +652,7 @@
     {
       "derived": 3,
       "measured_empty": 19,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -609,6 +664,7 @@
     {
       "derived": 7,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -620,17 +676,19 @@
     {
       "derived": 28,
       "measured_empty": 141,
-      "fallthrough": 1,
-      "fallthrough_pi_redacted": 1,
+      "measured_pi_redacted": 1,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "class_feature",
       "book": "book_of_the_damned_volume_2",
       "provisional_default": 0,
-      "row17_actionable": 1
+      "row17_actionable": 0
     },
     {
       "derived": 769,
       "measured_empty": 672,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -642,6 +700,7 @@
     {
       "derived": 123,
       "measured_empty": 304,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -653,6 +712,7 @@
     {
       "derived": 35,
       "measured_empty": 272,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -664,6 +724,7 @@
     {
       "derived": 39,
       "measured_empty": 145,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -673,19 +734,21 @@
       "row17_actionable": 0
     },
     {
-      "derived": 125,
+      "derived": 126,
       "measured_empty": 97,
-      "fallthrough": 3,
-      "fallthrough_pi_redacted": 3,
+      "measured_pi_redacted": 2,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "class_feature",
       "book": "inner_sea_magic",
       "provisional_default": 0,
-      "row17_actionable": 3
+      "row17_actionable": 0
     },
     {
       "derived": 1,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -697,6 +760,7 @@
     {
       "derived": 69,
       "measured_empty": 107,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -708,6 +772,7 @@
     {
       "derived": 28,
       "measured_empty": 44,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -719,6 +784,7 @@
     {
       "derived": 249,
       "measured_empty": 781,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -730,6 +796,7 @@
     {
       "derived": 105,
       "measured_empty": 467,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -741,6 +808,7 @@
     {
       "derived": 206,
       "measured_empty": 1281,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -752,6 +820,7 @@
     {
       "derived": 399,
       "measured_empty": 529,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -763,6 +832,7 @@
     {
       "derived": 642,
       "measured_empty": 1130,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -774,6 +844,7 @@
     {
       "derived": 906,
       "measured_empty": 637,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -785,6 +856,7 @@
     {
       "derived": 305,
       "measured_empty": 626,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -796,6 +868,7 @@
     {
       "derived": 173,
       "measured_empty": 33,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -807,6 +880,7 @@
     {
       "derived": 12,
       "measured_empty": 7,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -818,6 +892,7 @@
     {
       "derived": 2,
       "measured_empty": 30,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -829,6 +904,7 @@
     {
       "derived": 6,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -840,6 +916,7 @@
     {
       "derived": 0,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -851,6 +928,7 @@
     {
       "derived": 2,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -862,6 +940,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -873,6 +952,7 @@
     {
       "derived": 5,
       "measured_empty": 25,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -884,6 +964,7 @@
     {
       "derived": 22,
       "measured_empty": 87,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -895,6 +976,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -906,6 +988,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -917,6 +1000,7 @@
     {
       "derived": 109,
       "measured_empty": 32,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -928,6 +1012,7 @@
     {
       "derived": 47,
       "measured_empty": 214,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -939,6 +1024,7 @@
     {
       "derived": 0,
       "measured_empty": 22,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -950,6 +1036,7 @@
     {
       "derived": 0,
       "measured_empty": 48,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -961,6 +1048,7 @@
     {
       "derived": 0,
       "measured_empty": 21,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -972,6 +1060,7 @@
     {
       "derived": 0,
       "measured_empty": 296,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -983,6 +1072,7 @@
     {
       "derived": 0,
       "measured_empty": 63,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -994,6 +1084,7 @@
     {
       "derived": 9,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1005,6 +1096,7 @@
     {
       "derived": 0,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1016,6 +1108,7 @@
     {
       "derived": 1,
       "measured_empty": 70,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1027,6 +1120,7 @@
     {
       "derived": 3,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1038,6 +1132,7 @@
     {
       "derived": 2,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1049,6 +1144,7 @@
     {
       "derived": 34,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1060,6 +1156,7 @@
     {
       "derived": 1,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1071,6 +1168,7 @@
     {
       "derived": 0,
       "measured_empty": 21,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1082,6 +1180,7 @@
     {
       "derived": 6,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1093,6 +1192,7 @@
     {
       "derived": 13,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1104,6 +1204,7 @@
     {
       "derived": 4,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1115,6 +1216,7 @@
     {
       "derived": 3,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1126,9 +1228,10 @@
     {
       "derived": 1,
       "measured_empty": 56,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 2,
+      "not_ingested": 0,
       "kind": "equipment",
       "book": "advanced_class_guide",
       "provisional_default": 0,
@@ -1137,6 +1240,7 @@
     {
       "derived": 0,
       "measured_empty": 28,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1148,6 +1252,7 @@
     {
       "derived": 0,
       "measured_empty": 15,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1159,6 +1264,7 @@
     {
       "derived": 0,
       "measured_empty": 115,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1170,6 +1276,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1181,6 +1288,7 @@
     {
       "derived": 0,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1192,6 +1300,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 1,
@@ -1203,6 +1312,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1214,6 +1324,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1225,6 +1336,7 @@
     {
       "derived": 1,
       "measured_empty": 250,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1236,6 +1348,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1247,6 +1360,7 @@
     {
       "derived": 0,
       "measured_empty": 42,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1258,6 +1372,7 @@
     {
       "derived": 0,
       "measured_empty": 45,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1269,6 +1384,7 @@
     {
       "derived": 0,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1280,6 +1396,7 @@
     {
       "derived": 0,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1291,6 +1408,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1302,6 +1420,7 @@
     {
       "derived": 0,
       "measured_empty": 43,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1313,6 +1432,7 @@
     {
       "derived": 0,
       "measured_empty": 7,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1324,6 +1444,7 @@
     {
       "derived": 0,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1335,6 +1456,7 @@
     {
       "derived": 0,
       "measured_empty": 27,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1346,6 +1468,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1357,6 +1480,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1367,7 +1491,8 @@
     },
     {
       "derived": 0,
-      "measured_empty": 169,
+      "measured_empty": 117,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 1,
@@ -1379,6 +1504,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1390,6 +1516,7 @@
     {
       "derived": 0,
       "measured_empty": 13,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 6,
@@ -1401,6 +1528,7 @@
     {
       "derived": 3,
       "measured_empty": 16,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1412,6 +1540,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1422,7 +1551,8 @@
     },
     {
       "derived": 0,
-      "measured_empty": 29,
+      "measured_empty": 14,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 14,
@@ -1433,7 +1563,8 @@
     },
     {
       "derived": 0,
-      "measured_empty": 14,
+      "measured_empty": 12,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1445,6 +1576,7 @@
     {
       "derived": 0,
       "measured_empty": 15,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1456,6 +1588,7 @@
     {
       "derived": 0,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 1,
@@ -1467,6 +1600,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1478,6 +1612,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1488,7 +1623,8 @@
     },
     {
       "derived": 2,
-      "measured_empty": 470,
+      "measured_empty": 469,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1500,6 +1636,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1511,6 +1648,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1522,6 +1660,7 @@
     {
       "derived": 0,
       "measured_empty": 62,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1533,6 +1672,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1544,6 +1684,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1555,6 +1696,7 @@
     {
       "derived": 2,
       "measured_empty": 143,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1566,6 +1708,7 @@
     {
       "derived": 0,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 4,
@@ -1576,7 +1719,8 @@
     },
     {
       "derived": 0,
-      "measured_empty": 21,
+      "measured_empty": 13,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1587,7 +1731,8 @@
     },
     {
       "derived": 0,
-      "measured_empty": 90,
+      "measured_empty": 88,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1597,8 +1742,9 @@
       "row17_actionable": 0
     },
     {
-      "derived": 8,
-      "measured_empty": 110,
+      "derived": 6,
+      "measured_empty": 106,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1610,6 +1756,7 @@
     {
       "derived": 0,
       "measured_empty": 39,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1621,6 +1768,7 @@
     {
       "derived": 29,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1632,6 +1780,7 @@
     {
       "derived": 0,
       "measured_empty": 71,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1641,19 +1790,21 @@
       "row17_actionable": 0
     },
     {
-      "derived": 15,
+      "derived": 16,
       "measured_empty": 65,
-      "fallthrough": 1,
-      "fallthrough_pi_redacted": 1,
+      "measured_pi_redacted": 0,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "feat",
       "book": "adventurers_guide",
       "provisional_default": 0,
-      "row17_actionable": 1
+      "row17_actionable": 0
     },
     {
       "derived": 4,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1665,6 +1816,7 @@
     {
       "derived": 2,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1676,6 +1828,7 @@
     {
       "derived": 0,
       "measured_empty": 68,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1687,6 +1840,7 @@
     {
       "derived": 0,
       "measured_empty": 37,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1698,6 +1852,7 @@
     {
       "derived": 0,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1709,6 +1864,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1720,6 +1876,7 @@
     {
       "derived": 0,
       "measured_empty": 23,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1731,6 +1888,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1742,6 +1900,7 @@
     {
       "derived": 0,
       "measured_empty": 7,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1753,6 +1912,7 @@
     {
       "derived": 0,
       "measured_empty": 26,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1764,6 +1924,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1773,19 +1934,21 @@
       "row17_actionable": 0
     },
     {
-      "derived": 2,
+      "derived": 3,
       "measured_empty": 17,
-      "fallthrough": 3,
-      "fallthrough_pi_redacted": 3,
+      "measured_pi_redacted": 2,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "feat",
       "book": "inner_sea_world_guide",
       "provisional_default": 0,
-      "row17_actionable": 3
+      "row17_actionable": 0
     },
     {
       "derived": 0,
       "measured_empty": 11,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1797,6 +1960,7 @@
     {
       "derived": 0,
       "measured_empty": 448,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1808,6 +1972,7 @@
     {
       "derived": 0,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1819,6 +1984,7 @@
     {
       "derived": 0,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1830,6 +1996,7 @@
     {
       "derived": 0,
       "measured_empty": 23,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1841,6 +2008,7 @@
     {
       "derived": 30,
       "measured_empty": 23,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1852,6 +2020,7 @@
     {
       "derived": 8,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1863,6 +2032,7 @@
     {
       "derived": 42,
       "measured_empty": 13,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1874,6 +2044,7 @@
     {
       "derived": 0,
       "measured_empty": 92,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1885,6 +2056,7 @@
     {
       "derived": 9,
       "measured_empty": 27,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1896,6 +2068,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1907,6 +2080,7 @@
     {
       "derived": 0,
       "measured_empty": 14,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1918,6 +2092,7 @@
     {
       "derived": 0,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1929,6 +2104,7 @@
     {
       "derived": 0,
       "measured_empty": 24,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1940,6 +2116,7 @@
     {
       "derived": 0,
       "measured_empty": 26,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1951,6 +2128,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1962,6 +2140,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1973,6 +2152,7 @@
     {
       "derived": 0,
       "measured_empty": 22,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1984,6 +2164,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1995,6 +2176,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2006,6 +2188,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2017,6 +2200,7 @@
     {
       "derived": 0,
       "measured_empty": 18,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2028,6 +2212,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2039,6 +2224,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2050,6 +2236,7 @@
     {
       "derived": 0,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2061,6 +2248,7 @@
     {
       "derived": 0,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2072,6 +2260,7 @@
     {
       "derived": 117,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2083,6 +2272,7 @@
     {
       "derived": 99,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2094,6 +2284,7 @@
     {
       "derived": 9,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2105,6 +2296,7 @@
     {
       "derived": 33,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2116,6 +2308,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2127,6 +2320,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2138,6 +2332,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2149,6 +2344,7 @@
     {
       "derived": 10,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2160,6 +2356,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2171,6 +2368,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2182,6 +2380,7 @@
     {
       "derived": 5,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2193,6 +2392,7 @@
     {
       "derived": 22,
       "measured_empty": 83,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 22,
@@ -2203,7 +2403,8 @@
     },
     {
       "derived": 62,
-      "measured_empty": 65,
+      "measured_empty": 64,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 9,
@@ -2215,6 +2416,7 @@
     {
       "derived": 0,
       "measured_empty": 135,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 21,
@@ -2226,6 +2428,7 @@
     {
       "derived": 3,
       "measured_empty": 173,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 7,
@@ -2237,6 +2440,7 @@
     {
       "derived": 0,
       "measured_empty": 12,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 1,
@@ -2248,6 +2452,7 @@
     {
       "derived": 0,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2259,6 +2464,7 @@
     {
       "derived": 4,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2270,6 +2476,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2281,6 +2488,7 @@
     {
       "derived": 0,
       "measured_empty": 24,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 9,
@@ -2291,10 +2499,11 @@
     },
     {
       "derived": 1,
-      "measured_empty": 17,
+      "measured_empty": 24,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 12,
+      "not_ingested": 5,
       "kind": "monster_ability",
       "book": "inner_sea_bestiary",
       "provisional_default": 0,
@@ -2302,10 +2511,11 @@
     },
     {
       "derived": 5,
-      "measured_empty": 17,
+      "measured_empty": 22,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 6,
+      "not_ingested": 1,
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "provisional_default": 0,
@@ -2313,10 +2523,11 @@
     },
     {
       "derived": 1,
-      "measured_empty": 9,
+      "measured_empty": 12,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 3,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "inner_sea_world_guide",
       "provisional_default": 0,
@@ -2324,18 +2535,8 @@
     },
     {
       "derived": 0,
-      "measured_empty": 21,
-      "fallthrough": 0,
-      "fallthrough_pi_redacted": 0,
-      "not_ingested": 0,
-      "kind": "monster_ability",
-      "book": "mythic_adventures",
-      "provisional_default": 0,
-      "row17_actionable": 0
-    },
-    {
-      "derived": 0,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2347,6 +2548,7 @@
     {
       "derived": 0,
       "measured_empty": 32,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 3,
@@ -2358,6 +2560,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2369,6 +2572,7 @@
     {
       "derived": 0,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2380,6 +2584,7 @@
     {
       "derived": 1,
       "measured_empty": 56,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2391,6 +2596,7 @@
     {
       "derived": 0,
       "measured_empty": 421,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2402,6 +2608,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2413,6 +2620,7 @@
     {
       "derived": 2,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2424,6 +2632,7 @@
     {
       "derived": 0,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2435,6 +2644,7 @@
     {
       "derived": 3,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2446,6 +2656,7 @@
     {
       "derived": 0,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2457,6 +2668,7 @@
     {
       "derived": 0,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2468,6 +2680,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2479,6 +2692,7 @@
     {
       "derived": 0,
       "measured_empty": 14,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2490,6 +2704,7 @@
     {
       "derived": 4,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2501,6 +2716,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2512,6 +2728,7 @@
     {
       "derived": 3,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2523,6 +2740,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2534,6 +2752,7 @@
     {
       "derived": 120,
       "measured_empty": 8,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2545,6 +2764,7 @@
     {
       "derived": 74,
       "measured_empty": 18,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2556,6 +2776,7 @@
     {
       "derived": 25,
       "measured_empty": 147,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2567,6 +2788,7 @@
     {
       "derived": 88,
       "measured_empty": 65,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2578,6 +2800,7 @@
     {
       "derived": 46,
       "measured_empty": 155,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2589,6 +2812,7 @@
     {
       "derived": 79,
       "measured_empty": 131,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2600,6 +2824,7 @@
     {
       "derived": 46,
       "measured_empty": 67,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2611,6 +2836,7 @@
     {
       "derived": 64,
       "measured_empty": 78,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2622,6 +2848,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2633,6 +2860,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2644,6 +2872,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2655,6 +2884,7 @@
     {
       "derived": 128,
       "measured_empty": 15,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2666,6 +2896,7 @@
     {
       "derived": 44,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2677,6 +2908,7 @@
     {
       "derived": 1,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2688,6 +2920,7 @@
     {
       "derived": 0,
       "measured_empty": 25,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2699,6 +2932,7 @@
     {
       "derived": 10,
       "measured_empty": 62,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2710,6 +2944,7 @@
     {
       "derived": 2,
       "measured_empty": 32,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2721,6 +2956,7 @@
     {
       "derived": 2,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2732,6 +2968,7 @@
     {
       "derived": 7,
       "measured_empty": 111,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2743,6 +2980,7 @@
     {
       "derived": 23,
       "measured_empty": 48,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2754,6 +2992,7 @@
     {
       "derived": 67,
       "measured_empty": 38,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2765,6 +3004,7 @@
     {
       "derived": 4,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2776,6 +3016,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2787,6 +3028,7 @@
     {
       "derived": 3,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2798,6 +3040,7 @@
     {
       "derived": 36,
       "measured_empty": 11,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2809,6 +3052,7 @@
     {
       "derived": 27,
       "measured_empty": 73,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2820,6 +3064,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2831,6 +3076,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2842,6 +3088,7 @@
     {
       "derived": 95,
       "measured_empty": 15,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2853,6 +3100,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2864,6 +3112,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2875,6 +3124,7 @@
     {
       "derived": 0,
       "measured_empty": 24,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2886,6 +3136,7 @@
     {
       "derived": 2,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2897,6 +3148,7 @@
     {
       "derived": 1,
       "measured_empty": 0,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2908,6 +3160,7 @@
     {
       "derived": 4,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2919,6 +3172,7 @@
     {
       "derived": 0,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2930,6 +3184,7 @@
     {
       "derived": 0,
       "measured_empty": 73,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2941,6 +3196,7 @@
     {
       "derived": 0,
       "measured_empty": 93,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2952,6 +3208,7 @@
     {
       "derived": 0,
       "measured_empty": 49,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2963,6 +3220,7 @@
     {
       "derived": 0,
       "measured_empty": 109,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2974,6 +3232,7 @@
     {
       "derived": 0,
       "measured_empty": 56,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2985,6 +3244,7 @@
     {
       "derived": 0,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -2996,6 +3256,7 @@
     {
       "derived": 0,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3007,6 +3268,7 @@
     {
       "derived": 0,
       "measured_empty": 12,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3018,6 +3280,7 @@
     {
       "derived": 0,
       "measured_empty": 92,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3029,6 +3292,7 @@
     {
       "derived": 0,
       "measured_empty": 72,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3040,6 +3304,7 @@
     {
       "derived": 0,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3051,6 +3316,7 @@
     {
       "derived": 0,
       "measured_empty": 88,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3062,6 +3328,7 @@
     {
       "derived": 0,
       "measured_empty": 26,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3073,6 +3340,7 @@
     {
       "derived": 0,
       "measured_empty": 39,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3084,6 +3352,7 @@
     {
       "derived": 0,
       "measured_empty": 29,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3095,6 +3364,7 @@
     {
       "derived": 0,
       "measured_empty": 21,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3106,6 +3376,7 @@
     {
       "derived": 0,
       "measured_empty": 22,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3117,6 +3388,7 @@
     {
       "derived": 0,
       "measured_empty": 24,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3128,6 +3400,7 @@
     {
       "derived": 0,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3139,6 +3412,7 @@
     {
       "derived": 0,
       "measured_empty": 338,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3150,6 +3424,7 @@
     {
       "derived": 0,
       "measured_empty": 7,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3161,6 +3436,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3172,6 +3448,7 @@
     {
       "derived": 0,
       "measured_empty": 12,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3183,6 +3460,7 @@
     {
       "derived": 0,
       "measured_empty": 66,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3194,6 +3472,7 @@
     {
       "derived": 0,
       "measured_empty": 11,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3205,6 +3484,7 @@
     {
       "derived": 1,
       "measured_empty": 21,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3216,6 +3496,7 @@
     {
       "derived": 17,
       "measured_empty": 21,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3227,6 +3508,7 @@
     {
       "derived": 0,
       "measured_empty": 50,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3238,6 +3520,7 @@
     {
       "derived": 5,
       "measured_empty": 5,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3249,6 +3532,7 @@
     {
       "derived": 475,
       "measured_empty": 575,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3260,6 +3544,7 @@
     {
       "derived": 22,
       "measured_empty": 127,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3271,6 +3556,7 @@
     {
       "derived": 9,
       "measured_empty": 54,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3282,6 +3568,7 @@
     {
       "derived": 55,
       "measured_empty": 128,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3293,6 +3580,7 @@
     {
       "derived": 0,
       "measured_empty": 23,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3304,6 +3592,7 @@
     {
       "derived": 0,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3315,6 +3604,7 @@
     {
       "derived": 45,
       "measured_empty": 7,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3326,6 +3616,7 @@
     {
       "derived": 73,
       "measured_empty": 189,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3337,6 +3628,7 @@
     {
       "derived": 25,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3348,6 +3640,7 @@
     {
       "derived": 3,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3359,6 +3652,7 @@
     {
       "derived": 0,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3370,6 +3664,7 @@
     {
       "derived": 1,
       "measured_empty": 2,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3381,6 +3676,7 @@
     {
       "derived": 2,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3392,6 +3688,7 @@
     {
       "derived": 2,
       "measured_empty": 1,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3403,6 +3700,7 @@
     {
       "derived": 0,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3414,6 +3712,7 @@
     {
       "derived": 1,
       "measured_empty": 83,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3425,6 +3724,7 @@
     {
       "derived": 5,
       "measured_empty": 10,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3436,6 +3736,7 @@
     {
       "derived": 1,
       "measured_empty": 3,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3447,6 +3748,7 @@
     {
       "derived": 0,
       "measured_empty": 12,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3458,6 +3760,7 @@
     {
       "derived": 1,
       "measured_empty": 6,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3469,6 +3772,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3480,6 +3784,7 @@
     {
       "derived": 0,
       "measured_empty": 4,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3491,6 +3796,7 @@
     {
       "derived": 8,
       "measured_empty": 15,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3502,6 +3808,7 @@
     {
       "derived": 38,
       "measured_empty": 66,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3513,6 +3820,7 @@
     {
       "derived": 17,
       "measured_empty": 9,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3524,6 +3832,7 @@
     {
       "derived": 58,
       "measured_empty": 32,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3533,19 +3842,21 @@
       "row17_actionable": 0
     },
     {
-      "derived": 26,
+      "derived": 27,
       "measured_empty": 88,
-      "fallthrough": 1,
-      "fallthrough_pi_redacted": 1,
+      "measured_pi_redacted": 0,
+      "fallthrough": 0,
+      "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "trait",
       "book": "inner_sea_gods",
       "provisional_default": 0,
-      "row17_actionable": 1
+      "row17_actionable": 0
     },
     {
       "derived": 30,
       "measured_empty": 66,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -3555,19 +3866,21 @@
       "row17_actionable": 0
     },
     {
-      "derived": 58,
+      "derived": 59,
       "measured_empty": 95,
-      "fallthrough": 1,
+      "measured_pi_redacted": 0,
+      "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "trait",
       "book": "ultimate_campaign",
       "provisional_default": 0,
-      "row17_actionable": 1
+      "row17_actionable": 0
     },
     {
       "derived": 6,
       "measured_empty": 26,
+      "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,

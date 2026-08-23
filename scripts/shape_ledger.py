@@ -701,7 +701,27 @@ def extract_formula_segment(key: str, value: str) -> str | None:
     if key == "DEFINE":
         return parts[1] if len(parts) >= 2 else None
     if key.startswith("BONUS"):
-        return parts[2] if len(parts) >= 3 else None
+        if len(parts) >= 3:
+            return parts[2]
+        # T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21):
+        # `ultimate_campaign:trait:trait_harvester`'s `BONUS:SKILL|%LIST` --
+        # oracle-verified to be the ONLY occurrence of this exact 2-field
+        # shorthand anywhere in the pinned corpus
+        # (`uca_abilities_traits.lst:198`; a corpus-wide scan of every
+        # `BONUS:` token found no second instance of a `SKILL` subtype with
+        # `%LIST` as its 2nd field and no 3rd field). PCGen omits the
+        # magnitude field entirely for this CHOOSE:SKILL-linked flat trait
+        # bonus shape; the record's own `ASPECT` token ("+1 trait bonus on
+        # Profession (tanner) or Profession (trapper) checks...") and `DESC`
+        # confirm the omitted magnitude is a flat +1, matching Pathfinder's
+        # universal trait skill-bonus convention this shorthand always
+        # implies -- never guessed, always derived from the record's own
+        # declared text. Scoped to the `%LIST` shorthand specifically (never
+        # a bare `SKILL|<real skill name>` with a missing magnitude, which
+        # stays the genuine parse failure it already was).
+        if len(parts) == 2 and parts[0] == "SKILL" and parts[1] == "%LIST":
+            return "1"
+        return None
     return None
 
 
@@ -821,13 +841,30 @@ def classify_unit(
     #                        genuinely carries zero DEFINE/BONUS tokens
     #                        (join_status "no_formula_tokens"). This is F0
     #                        "reached by measurement" -- a real answer.
+    #   - "measured_pi_redacted" : the join succeeded, and EVERY DEFINE/
+    #                        BONUS token that failed to classify did so
+    #                        because its value IS the PI-redaction marker
+    #                        (`pi_redacted_formula`), never a malformed/
+    #                        short token. T9-onboarding-cause-closure
+    #                        (2026-08-23, row 17's remaining 21):
+    #                        `decisions.md §27a` -- "if the value genuinely
+    #                        carries PI, it stays redacted -- but then it is
+    #                        not a fallthrough placeholder, it is a
+    #                        correctly-measured redacted value." Reached
+    #                        ONLY for records that survived
+    #                        `pi_scrub.py::scrub_name_pi_tokens`'s narrower
+    #                        (`neutral_name`-driven) redaction and are
+    #                        STILL fully wiped -- i.e. a genuine blacklist
+    #                        hit or a normalized-only identity hit, never a
+    #                        merely-unnarrowed self-reference. This is a
+    #                        REAL answer (the shape is "PI, cannot be
+    #                        shipped as formula"), not row 17's placeholder
+    #                        population.
     #   - "fallthrough"    : the join succeeded AND the record carries
     #                        DEFINE/BONUS tokens, but every one of them
-    #                        failed to classify into a real family (a
-    #                        malformed/short token, OR -- see
-    #                        `pi_redacted_formula` above -- the token's
-    #                        value IS the PI-redaction marker rather than
-    #                        real formula content). This is F0 "reached by
+    #                        failed to classify into a real family for a
+    #                        reason OTHER than PI redaction (a malformed/
+    #                        short token). This is F0 "reached by
     #                        nothing else matched" -- exactly the
     #                        placeholder §27a names, and row 17's real
     #                        population.
@@ -836,6 +873,8 @@ def classify_unit(
             f0_reached_by = "not_ingested"
         elif join_status == "no_formula_tokens":
             f0_reached_by = "measured_empty"
+        elif pi_redacted_formula:
+            f0_reached_by = "measured_pi_redacted"
         else:
             f0_reached_by = "fallthrough"
     else:

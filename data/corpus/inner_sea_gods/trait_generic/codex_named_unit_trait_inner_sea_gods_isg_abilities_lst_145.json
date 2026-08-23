@@ -9,7 +9,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "[redacted PI]"
+        "value": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_145)"
       },
       {
         "key": "NAMEISPI",
@@ -25,7 +25,7 @@
       },
       {
         "key": "PREMULT",
-        "value": "[redacted PI]"
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_145)],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.ReligionTrait]"
       },
       {
         "key": "DESC",
@@ -33,7 +33,7 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "ABILITYPOOL|Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_145)|1"
       },
       {
         "key": "SOURCEPAGE",

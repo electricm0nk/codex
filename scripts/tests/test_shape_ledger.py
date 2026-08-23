@@ -68,6 +68,30 @@ class ExtractFormulaSegmentTest(unittest.TestCase):
     def test_non_define_non_bonus_returns_none(self):
         self.assertIsNone(SL.extract_formula_segment("ABILITY", "Special Ability|X"))
 
+    def test_bonus_skill_percent_list_with_no_magnitude_field_is_implicit_flat_one(self):
+        """T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21):
+        `ultimate_campaign:trait:trait_harvester`'s `BONUS:SKILL|%LIST` --
+        oracle-verified (`uca_abilities_traits.lst:198`) to be the ONLY
+        occurrence of this exact 2-field shorthand anywhere in the pinned
+        corpus. PCGen omits the magnitude field entirely for a
+        CHOOSE:SKILL-linked flat trait bonus; the record's own `ASPECT`
+        token ("+1 trait bonus...") and `DESC` confirm the omitted
+        magnitude is a flat +1, matching Pathfinder's universal trait
+        skill-bonus convention this shorthand always implies.
+
+        Scoped narrowly to `%LIST` as the 2nd field specifically -- a bare
+        `SKILL|<real skill name>` with no magnitude (the pre-existing
+        `test_bonus_too_short_returns_none` case above, a genuinely
+        malformed/incomplete token) must still return `None`, never `1`."""
+        self.assertEqual(SL.extract_formula_segment("BONUS", "SKILL|%LIST"), "1")
+
+    def test_bonus_skill_named_target_with_no_magnitude_still_returns_none(self):
+        """Sibling guard: the implicit-1 rule is scoped to the `%LIST`
+        shorthand only -- a 2-field `SKILL|<name>` bonus (any name other
+        than `%LIST`) is a genuinely malformed/short token, not this
+        shorthand, and must stay `None`."""
+        self.assertIsNone(SL.extract_formula_segment("BONUS", "SKILL|Stealth"))
+
 
 class ClassifyFormulaTest(unittest.TestCase):
     def test_flat_constant(self):
@@ -426,18 +450,35 @@ class ClassifyUnitTest(unittest.TestCase):
         self.assertEqual(row["f0_reached_by"], "fallthrough")
         self.assertFalse(row["pi_redacted_formula"])
 
-    def test_pi_redacted_formula_value_is_fallthrough_and_flagged(self):
-        """A record whose BONUS/DEFINE VALUE is the redaction marker itself
+    def test_pi_redacted_formula_value_is_measured_pi_redacted_and_flagged(self):
+        """T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21):
+        a record whose BONUS/DEFINE VALUE is the redaction marker itself
         (`decisions.md §24b`: the record was renamed, its mechanical value
-        blanket-redacted alongside NAME/DESC) is not a genuine 'no formula'
-        measurement -- it is a placeholder, and `pi_redacted_formula` must
-        say so distinctly from an ordinary parse failure."""
+        blanket-redacted alongside NAME/DESC) is a genuinely-measured
+        answer -- "PI, cannot be shipped as formula" -- NOT a fallthrough
+        placeholder (`decisions.md §27a`: "if the value genuinely carries
+        PI, it stays redacted -- but then it is not a fallthrough
+        placeholder, it is a correctly-measured redacted value"). This
+        distinguishes it from an ordinary parse failure, which stays
+        `fallthrough` (see the next test)."""
         unit = _unit("b:trait:x", "trait", "b", "not-started", "static", "f.lst", 1)
         index = {("b", "trait", "f.lst", 1): [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]}
         row = SL.classify_unit(unit, index)
         self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
-        self.assertEqual(row["f0_reached_by"], "fallthrough")
+        self.assertEqual(row["f0_reached_by"], "measured_pi_redacted")
         self.assertTrue(row["pi_redacted_formula"])
+
+    def test_non_pi_parse_failure_stays_fallthrough_not_measured_pi_redacted(self):
+        """Sanity/mutation guard for the split above: a genuine parse
+        failure (malformed token, no redaction marker) must stay
+        `fallthrough` -- row 17's real, actionable population -- and must
+        NEVER be swept into `measured_pi_redacted` merely because it is
+        also F0."""
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
+        index = {("b", "spell", "f.lst", 1): [{"key": "DEFINE", "value": "OnlyOneField"}]}
+        row = SL.classify_unit(unit, index)
+        self.assertEqual(row["f0_reached_by"], "fallthrough")
+        self.assertFalse(row["pi_redacted_formula"])
 
     def test_join_match_picks_highest_priority_family(self):
         unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "f.lst", 1)
@@ -760,41 +801,54 @@ class BuildLedgerTest(unittest.TestCase):
     def test_f0_breakdown_separates_measured_from_fallthrough_and_moves_on_mutation(self):
         """decisions.md §27a / kanban.md row 17: the census this feeds must
         be able to go RED when a genuinely-derived unit is mutated to look
-        defaulted, and back to GREEN on revert -- proving the count is
-        live, not a static label. Also proves `f0_fallthrough_pi_redacted`
-        is a strict subset of `fallthrough`."""
+        PI-redacted, and back to GREEN on revert -- proving the count is
+        live, not a static label.
+
+        T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21):
+        a PI-redacted formula value is `measured_pi_redacted` (a real
+        answer), never `fallthrough` (a placeholder) -- so the fixture's
+        one genuinely-redacted `trait` unit counts there, and the mutated
+        spell (also PI-redacted) joins it, NOT `fallthrough`. A separate
+        `fallthrough` unit (a genuine, non-PI parse failure) proves that
+        bucket still moves independently."""
         units = [
             _unit("b:spell:no-record", "spell", "b", "not-started", "static", "missing.lst", 1),
             _unit("b:spell:empty", "spell", "b", "not-started", "static", "empty.lst", 1),
             _unit("b:spell:real", "spell", "b", "not-started", "static", "real.lst", 1),
             _unit("b:trait:redacted", "trait", "b", "not-started", "static", "red.lst", 1),
+            _unit("b:feat:malformed", "feat", "b", "not-started", "static", "bad.lst", 1),
         ]
         base_index = {
             ("b", "spell", "empty.lst", 1): [],
             ("b", "spell", "real.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|2"}],  # F1, genuinely derived
             ("b", "trait", "red.lst", 1): [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}],
+            ("b", "feat", "bad.lst", 1): [{"key": "DEFINE", "value": "OnlyOneField"}],  # genuine parse failure
         }
         ledger = SL.build_ledger(units, base_index)
         f0b = ledger["f0_breakdown"]
         self.assertEqual(f0b.get("not_ingested"), 1)
         self.assertEqual(f0b.get("measured_empty"), 1)
+        self.assertEqual(f0b.get("measured_pi_redacted"), 1)
         self.assertEqual(f0b.get("fallthrough"), 1)
-        self.assertEqual(ledger["f0_fallthrough_pi_redacted"], 1)
+        self.assertEqual(ledger["f0_fallthrough_pi_redacted"], 0)
         self.assertEqual(ledger["families"]["F1"]["count"], 1)
 
         # RED: mutate the genuinely-derived unit's own record so it now
-        # looks defaulted (its BONUS value becomes the PI-redaction
-        # marker, same shape as the real 84-unit finding this cycle
-        # re-derived) -- the fallthrough count MUST move.
+        # looks PI-redacted (its BONUS value becomes the PI-redaction
+        # marker, same shape as the real 20-unit finding this cycle
+        # re-derived) -- the measured_pi_redacted count MUST move, and
+        # `fallthrough` MUST stay untouched by it.
         mutated_index = dict(base_index)
         mutated_index[("b", "spell", "real.lst", 1)] = [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]
         mutated_ledger = SL.build_ledger(units, mutated_index)
-        self.assertEqual(mutated_ledger["f0_breakdown"].get("fallthrough"), 2)
-        self.assertEqual(mutated_ledger["f0_fallthrough_pi_redacted"], 2)
+        self.assertEqual(mutated_ledger["f0_breakdown"].get("measured_pi_redacted"), 2)
+        self.assertEqual(mutated_ledger["f0_breakdown"].get("fallthrough"), 1)
+        self.assertEqual(mutated_ledger["f0_fallthrough_pi_redacted"], 0)
         self.assertNotIn("F1", mutated_ledger["families"])
 
         # GREEN: revert -- back to the original, un-mutated counts.
         reverted_ledger = SL.build_ledger(units, base_index)
+        self.assertEqual(reverted_ledger["f0_breakdown"].get("measured_pi_redacted"), 1)
         self.assertEqual(reverted_ledger["f0_breakdown"].get("fallthrough"), 1)
         self.assertEqual(reverted_ledger["families"]["F1"]["count"], 1)
 

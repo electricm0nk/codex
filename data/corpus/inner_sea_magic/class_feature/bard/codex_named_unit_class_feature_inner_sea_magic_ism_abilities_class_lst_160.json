@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "[redacted PI]"
+        "value": "Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160)"
       },
       {
         "key": "NAMEISPI",
@@ -30,7 +30,7 @@
       },
       {
         "key": "PREMULT",
-        "value": "[redacted PI]"
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160)],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicPerformance,TYPE.BardDirgeOfDoom,TYPE.BardLoreMaster,TYPE.BardWellVersed,TYPE.BardInspireCompetence]"
       },
       {
         "key": "DESCISPI",
@@ -42,23 +42,23 @@
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) ~ Prima Donna|PRECLASS:1,Bard=2"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) ~ Costume Proficiency|PRECLASS:1,Bard=5"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) ~ Devastating Aria|PRECLASS:1,Bard=3"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) ~ Scathing Tirade|PRECLASS:1,Bard=8"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "ABILITYPOOL|Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160) Famous Region|1"
       },
       {
         "key": "COST",

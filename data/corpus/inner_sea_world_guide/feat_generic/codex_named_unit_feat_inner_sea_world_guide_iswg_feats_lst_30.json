@@ -21,7 +21,7 @@
       },
       {
         "key": "PREMULT",
-        "value": "[redacted PI]"
+        "value": "1,[PREABILITY:1,CATEGORY=FEAT,Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_30)],[PRELEVELMAX:1]"
       },
       {
         "key": "DESCISPI",
@@ -33,7 +33,7 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "ABILITYPOOL|Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_30)|1"
       },
       {
         "key": "SOURCEPAGE",

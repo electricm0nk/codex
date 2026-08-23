@@ -91,6 +91,7 @@ def build_census(inventory_path: str, corpus_root: str) -> dict:
         lambda: {
             "derived": 0,
             "measured_empty": 0,
+            "measured_pi_redacted": 0,
             "fallthrough": 0,
             "fallthrough_pi_redacted": 0,
             "not_ingested": 0,
@@ -104,6 +105,13 @@ def build_census(inventory_path: str, corpus_root: str) -> dict:
             bucket["not_ingested"] += 1
         elif reached_by == "measured_empty":
             bucket["measured_empty"] += 1
+        elif reached_by == "measured_pi_redacted":
+            # T9-onboarding-cause-closure (2026-08-23, row 17's remaining
+            # 21) / `decisions.md §27a`: a value that genuinely carries PI
+            # and stays redacted is a REAL answer, not row 17's placeholder
+            # population -- counted alongside `measured_empty`, never
+            # folded into `fallthrough`.
+            bucket["measured_pi_redacted"] += 1
         elif reached_by == "fallthrough":
             bucket["fallthrough"] += 1
             if row.get("pi_redacted_formula"):
@@ -129,6 +137,14 @@ def build_census(inventory_path: str, corpus_root: str) -> dict:
         "population": ledger["population"],
         "derived": sum(r["derived"] for r in per_kb_rows),
         "measured_empty": f0b.get("measured_empty", 0),
+        # T9-onboarding-cause-closure (2026-08-23, row 17's remaining 21) /
+        # `decisions.md §27a`: a value that genuinely carries PI and stays
+        # redacted is a REAL answer (measured, not placeholder) -- counted
+        # here alongside `measured_empty`, excluded from `row17_honest_size`
+        # below the same way. Never re-derive this by re-adding
+        # `fallthrough_pi_redacted` to `fallthrough`: the two counts are
+        # disjoint by construction (`shape_ledger.py::classify_unit`).
+        "measured_pi_redacted": f0b.get("measured_pi_redacted", 0),
         "fallthrough": f0b.get("fallthrough", 0),
         "fallthrough_pi_redacted": ledger.get("f0_fallthrough_pi_redacted", 0),
         "not_ingested": f0b.get("not_ingested", 0),
@@ -165,6 +181,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  derived (genuinely-classified, non-F0, or F0 by real measurement):")
     print(f"    derived (real family)         {t['derived']:>7}")
     print(f"    measured_empty (real F0)      {t['measured_empty']:>7}")
+    print(f"    measured_pi_redacted (real,   {t['measured_pi_redacted']:>7}   -- genuinely PI, correctly redacted;")
+    print(f"      cannot ship as formula)                  not row 17's placeholder population (§27a)")
     print()
     print(f"  row 17's actual population (placeholder / not genuinely derived):")
     print(f"    F0 by fallthrough             {t['fallthrough']:>7}   (of which PI-redacted formula: {t['fallthrough_pi_redacted']})")

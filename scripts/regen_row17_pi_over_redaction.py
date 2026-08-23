@@ -75,6 +75,7 @@ from pi_scrub import (  # noqa: E402
     blacklist_term_hit_including_concatenated,
     scrub_name_pi_tokens,
 )
+from codex_neutral_name import neutral_name as codex_neutral_name  # noqa: E402
 import coverage_ledger as CL  # noqa: E402
 from shape_ledger import (  # noqa: E402
     DEFAULT_CORPUS_ROOT,
@@ -107,12 +108,22 @@ def find_corpus_path(book: str, kind: str, source_file: str, line: int) -> str |
     return None
 
 
-def redact_tokens(raw_line: str, orig_name: str, orig_key: str) -> tuple[list[dict], str | None, bool]:
+def redact_tokens(
+    raw_line: str, orig_name: str, orig_key: str, neutral_name_hint: str | None = None
+) -> tuple[list[dict], str | None, bool]:
     """Mirrors `ingest_generic_kind.py::remediate`'s redaction pipeline
     exactly (declared-PI detection -> DESC blanking -> blacklist scan ->
     identity/blacklist scan via `scrub_name_pi_tokens`), so a record's
     `DESC` token is never left carrying un-redacted prose merely because
     the identity/blacklist checks alone did not happen to match it.
+
+    `neutral_name_hint`, when the record already carries a `§24`
+    Codex-generated name, is threaded into `scrub_name_pi_tokens` so a
+    value whose ONLY PI content is a plain self-reference to the record's
+    own (now-redacted) name/key is narrowed to that neutral name instead of
+    wiped whole (`decisions.md` row-17-remaining-21 fix, `scripts/pi_scrub.py`
+    docstring: "a BONUS:/DEFINE: value is a game rule, not Product Identity").
+
     Returns (final_tokens, stored_description, any_raw_tokens_redacted)."""
     tokens = row_tokens(raw_line)
     _name_declared, desc_declared = declared_pi(tokens)
@@ -143,7 +154,9 @@ def redact_tokens(raw_line: str, orig_name: str, orig_key: str) -> tuple[list[di
             scrubbed.append(dict(t))
     tokens = scrubbed
 
-    final_tokens, identity_extra_redacted = scrub_name_pi_tokens(tokens, orig_name, orig_key)
+    final_tokens, identity_extra_redacted = scrub_name_pi_tokens(
+        tokens, orig_name, orig_key, neutral_name=neutral_name_hint
+    )
     any_raw_redacted = blacklist_extra_redacted or identity_extra_redacted
     return final_tokens, stored_description, any_raw_redacted
 
@@ -202,7 +215,15 @@ def main() -> int:
         src_line = rec["source"]["line"]
         raw_line = read_row(src_path, src_line)
 
-        scrubbed_tokens, stored_description, extra_redacted = redact_tokens(raw_line, orig_name, orig_key)
+        # This record already carries a `§24` Codex-generated identity
+        # (checked above) -- re-derive the SAME coordinate-only name (never
+        # re-mint a new one) so a self-reference-only value narrows to it
+        # instead of being wiped whole.
+        neutral_name_hint = codex_neutral_name(row["kind"], unit["book"], unit["source_file"], unit["source_line"])
+
+        scrubbed_tokens, stored_description, extra_redacted = redact_tokens(
+            raw_line, orig_name, orig_key, neutral_name_hint=neutral_name_hint
+        )
 
         old_tokens = rec.get("data", {}).get("raw_tokens")
         old_description = rec.get("data", {}).get("description")

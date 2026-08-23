@@ -66,11 +66,16 @@ class BuildCensusFixtureTest(unittest.TestCase):
         self.corpus_root = os.path.join(self.tmp.name, "corpus")
         self.inventory_path = os.path.join(self.tmp.name, "work-inventory.json")
 
-        # Four not-done units, one of each shape this census must count:
+        # Five not-done units, one of each shape this census must count:
         #   1. genuinely derived (real family)
         #   2. measured_empty (record exists, zero formula tokens)
-        #   3. fallthrough via PI-redacted formula value
-        #   4. not_ingested (no corpus record at all)
+        #   3. measured_pi_redacted -- genuinely PI, correctly redacted;
+        #      a REAL answer, T9-onboarding-cause-closure (2026-08-23,
+        #      row 17's remaining 21) / decisions.md §27a -- NOT row 17's
+        #      placeholder population.
+        #   4. fallthrough -- a genuine, non-PI parse failure; still row
+        #      17's real, actionable population.
+        #   5. not_ingested (no corpus record at all)
         units = [
             {"id": "b:spell:derived", "kind": "spell", "book": "b", "status": "not-ingested",
              "wiring_class": "static", "source_file": "real.lst", "source_line": 1},
@@ -78,6 +83,8 @@ class BuildCensusFixtureTest(unittest.TestCase):
              "wiring_class": "static", "source_file": "empty.lst", "source_line": 1},
             {"id": "b:trait:redacted", "kind": "trait", "book": "b", "status": "not-ingested",
              "wiring_class": "static", "source_file": "red.lst", "source_line": 1},
+            {"id": "b:feat:malformed", "kind": "feat", "book": "b", "status": "not-ingested",
+             "wiring_class": "static", "source_file": "bad.lst", "source_line": 1},
             {"id": "b:spell:missing", "kind": "spell", "book": "b", "status": "not-ingested",
              "wiring_class": "static", "source_file": "missing.lst", "source_line": 1},
         ]
@@ -98,24 +105,39 @@ class BuildCensusFixtureTest(unittest.TestCase):
             {"key": "Codex-Named Unit", "raw_tokens": [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]},
             "red.lst", 1,
         )
+        _write_corpus_record(
+            self.corpus_root, "b", "feat", "malformed",
+            {"key": "Malformed Feat", "raw_tokens": [{"key": "DEFINE", "value": "OnlyOneField"}]},
+            "bad.lst", 1,
+        )
         # `missing.lst` unit deliberately has NO corpus record at all.
 
     def test_honest_size_arithmetic_on_known_fixture(self):
         census = RC.build_census(self.inventory_path, self.corpus_root)
         t = census["totals"]
-        self.assertEqual(t["population"], 4)
+        self.assertEqual(t["population"], 5)
         self.assertEqual(t["derived"], 1)
         self.assertEqual(t["measured_empty"], 1)
+        self.assertEqual(t["measured_pi_redacted"], 1)
         self.assertEqual(t["fallthrough"], 1)
-        self.assertEqual(t["fallthrough_pi_redacted"], 1)
+        self.assertEqual(t["fallthrough_pi_redacted"], 0)
         self.assertEqual(t["not_ingested"], 1)
         self.assertEqual(t["provisional_default_in_not_done_population"], 0)
-        self.assertEqual(t["row17_honest_size"], 1)  # just the fallthrough unit
+        self.assertEqual(t["row17_honest_size"], 1)  # just the (non-PI) fallthrough unit
 
     def test_census_goes_red_on_mutation_and_green_on_revert(self):
         """Prove-RED requirement: mutate a genuinely-derived unit's own
-        on-disk corpus record so it looks defaulted, confirm the honest
-        size count moves, then revert and confirm it moves back."""
+        on-disk corpus record so it looks like a genuine (non-PI) parse
+        failure, confirm the honest size count moves, then revert and
+        confirm it moves back.
+
+        Deliberately mutates to a MALFORMED token, not the PI-redaction
+        marker: T9-onboarding-cause-closure (2026-08-23, row 17's remaining
+        21) moved PI-redacted values OUT of `row17_honest_size` (they are a
+        real answer, `measured_pi_redacted`) -- so a PI-redaction mutation
+        would no longer move this count, and that is `test_pi_redacted_
+        mutation_moves_measured_pi_redacted_not_honest_size` below's job to
+        prove instead."""
         before = RC.build_census(self.inventory_path, self.corpus_root)
         self.assertEqual(before["totals"]["row17_honest_size"], 1)
         self.assertEqual(before["totals"]["derived"], 1)
@@ -124,7 +146,7 @@ class BuildCensusFixtureTest(unittest.TestCase):
         with open(derived_path) as fh:
             original = json.load(fh)
         mutated = json.loads(json.dumps(original))
-        mutated["data"]["raw_tokens"] = [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]
+        mutated["data"]["raw_tokens"] = [{"key": "DEFINE", "value": "OnlyOneField"}]
         with open(derived_path, "w", encoding="utf-8") as fh:
             json.dump(mutated, fh)
 
@@ -138,6 +160,36 @@ class BuildCensusFixtureTest(unittest.TestCase):
 
         after = RC.build_census(self.inventory_path, self.corpus_root)
         self.assertEqual(after["totals"]["row17_honest_size"], 1)  # GREEN: reverted
+        self.assertEqual(after["totals"]["derived"], 1)
+
+    def test_pi_redacted_mutation_moves_measured_pi_redacted_not_honest_size(self):
+        """Companion mutation proof: mutating a genuinely-derived unit to
+        the PI-redaction marker moves `measured_pi_redacted`, and leaves
+        `row17_honest_size` UNCHANGED -- proving the T9-onboarding-cause-
+        closure classification fix is load-bearing, not a static label."""
+        before = RC.build_census(self.inventory_path, self.corpus_root)
+        self.assertEqual(before["totals"]["measured_pi_redacted"], 1)
+        self.assertEqual(before["totals"]["row17_honest_size"], 1)
+
+        derived_path = os.path.join(self.corpus_root, "b", "spell", "derived.json")
+        with open(derived_path) as fh:
+            original = json.load(fh)
+        mutated = json.loads(json.dumps(original))
+        mutated["data"]["raw_tokens"] = [{"key": "BONUS", "value": PS.REDACTED_PI_MARKER}]
+        with open(derived_path, "w", encoding="utf-8") as fh:
+            json.dump(mutated, fh)
+
+        try:
+            during = RC.build_census(self.inventory_path, self.corpus_root)
+            self.assertEqual(during["totals"]["measured_pi_redacted"], 2)  # moved
+            self.assertEqual(during["totals"]["row17_honest_size"], 1)  # UNCHANGED
+            self.assertEqual(during["totals"]["derived"], 0)
+        finally:
+            with open(derived_path, "w", encoding="utf-8") as fh:
+                json.dump(original, fh)
+
+        after = RC.build_census(self.inventory_path, self.corpus_root)
+        self.assertEqual(after["totals"]["measured_pi_redacted"], 1)  # reverted
         self.assertEqual(after["totals"]["derived"], 1)
 
     def test_provisional_default_marker_counted_in_population(self):

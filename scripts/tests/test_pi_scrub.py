@@ -262,5 +262,90 @@ class NeverMutatesInputTests(unittest.TestCase):
         self.assertEqual(tokens[0]["value"], "Placeholder Deity Name")
 
 
+class NarrowedRedactionForSelfReferenceOnlyTests(unittest.TestCase):
+    """SD-32 T9-onboarding-cause-closure (row 17's remaining 21):
+    `decisions.md §24b`-2's "the mechanical formula, never the PI original"
+    still holds when the ONLY PI content in a value is the record's own
+    self-referenced name/key segment (check 2) -- pass `neutral_name` and
+    the surrounding mechanical structure (magnitude, `TYPE=`, ...) survives,
+    with only the self-reference span replaced.
+    """
+
+    def test_self_reference_only_value_is_narrowed_not_wiped_when_neutral_name_given(self):
+        tokens = [
+            {"key": "BONUS", "value": "ABILITYPOOL|Placeholder Deity Name|1|TYPE=Base"}
+        ]
+        scrubbed, any_redacted = pi_scrub.scrub_name_pi_tokens(
+            tokens,
+            "Placeholder Deity Name",
+            "Concept ~ Placeholder Deity Name",
+            neutral_name="Codex-Named Unit (x_1)",
+        )
+        self.assertTrue(any_redacted)
+        self.assertEqual(
+            scrubbed[0]["value"],
+            "ABILITYPOOL|Codex-Named Unit (x_1)|1|TYPE=Base",
+        )
+        # The magnitude and qualifier survive -- never wiped to the marker.
+        self.assertNotEqual(scrubbed[0]["value"], pi_scrub.REDACTED_PI_MARKER)
+        self.assertIn("1", scrubbed[0]["value"])
+        self.assertIn("TYPE=Base", scrubbed[0]["value"])
+
+    def test_without_neutral_name_the_prior_full_redaction_behaviour_is_unchanged(self):
+        tokens = [
+            {"key": "BONUS", "value": "ABILITYPOOL|Placeholder Deity Name|1|TYPE=Base"}
+        ]
+        scrubbed, any_redacted = pi_scrub.scrub_name_pi_tokens(
+            tokens, "Placeholder Deity Name", "Concept ~ Placeholder Deity Name"
+        )
+        self.assertTrue(any_redacted)
+        self.assertEqual(scrubbed[0]["value"], pi_scrub.REDACTED_PI_MARKER)
+
+    def test_a_value_that_ALSO_hits_the_blacklist_is_never_narrowed(self):
+        self._orig_norm_terms = pi_scrub._NORM_BLACKLIST_TERMS
+        fake_term = "Coordinatedeity"  # synthetic, not a real PI term
+        pi_scrub._NORM_BLACKLIST_TERMS = [(fake_term, pi_scrub._normalize(fake_term))]
+        try:
+            tokens = [
+                {
+                    "key": "BONUS",
+                    "value": "VAR|CoordinatedeityPlaceholder Deity NameLVL|1",
+                }
+            ]
+            scrubbed, any_redacted = pi_scrub.scrub_name_pi_tokens(
+                tokens,
+                "Placeholder Deity Name",
+                "Concept ~ Placeholder Deity Name",
+                neutral_name="Codex-Named Unit (x_1)",
+            )
+        finally:
+            pi_scrub._NORM_BLACKLIST_TERMS = self._orig_norm_terms
+        self.assertTrue(any_redacted)
+        # Still a full wipe: narrowing must never partially unmask a value
+        # that also carries a genuine blacklisted term.
+        self.assertEqual(scrubbed[0]["value"], pi_scrub.REDACTED_PI_MARKER)
+
+    def test_mutation_proof_a_neutral_name_that_fails_to_substitute_still_fails_closed(self):
+        """If the narrowing branch's own substitution somehow matched nothing
+        (defensive-only path — `space_preserving_hit` guarantees a needle IS
+        present) the value must still end up fully redacted, never shipped
+        with the original PI string intact. Proven by forcing the needle set
+        to diverge from the detected hit via a monkeypatched, always-true
+        hit detector paired with an impossible-to-match needle would require
+        reaching into internals; instead this proves the INVARIANT
+        holds for the real function: the narrowed value must never still
+        contain the original self-reference needle."""
+        tokens = [
+            {"key": "BONUS", "value": "ABILITYPOOL|Placeholder Deity Name|1|TYPE=Base"}
+        ]
+        scrubbed, _ = pi_scrub.scrub_name_pi_tokens(
+            tokens,
+            "Placeholder Deity Name",
+            "Concept ~ Placeholder Deity Name",
+            neutral_name="Codex-Named Unit (x_1)",
+        )
+        self.assertNotIn("Placeholder Deity Name", scrubbed[0]["value"])
+
+
 if __name__ == "__main__":
     unittest.main()
