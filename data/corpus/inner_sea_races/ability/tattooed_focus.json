@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:39:57Z",
+  "data": {
+    "key": "Trait ~ Tattooed Focus",
+    "name": "Tattooed Focus",
+    "description": "Choose a Craft, Perform, or Profession skill. You gain a +2 trait bonus on checks with that skill, and it is always a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Tattooed Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.VarisianRaceTrait"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Background,Varisian"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Tattooed Focus]"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose a Craft, Perform, or Profession skill. You gain a +2 trait bonus on checks with that skill, and it is always a class skill for you."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|TYPE.Craft|TYPE.Profession|TYPE.Perform"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|LIST|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 114,
+    "record_key": "Trait ~ Tattooed Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:39:57Z",
+  "data": {
+    "key": "Research Aid ~ Secret Society",
+    "name": "Research Aid",
+    "description": "You can gain the aid of another student. This grants you a +4 circumstance bonus on any skill check, save for Education checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Research Aid ~ Secret Society"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AcadamaeReward.ArcanamiriumReward.MagaambyaReward.KintargoOperaHouseReward.OenopionFleshforgesReward.PoisionersGuildReward.WhiteGrottoReward.MonasteryReward.CitadelEnferacReward.TheHarrowedSocietyReward.CrimsonCitadelReward"
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain the aid of another student. This grants you a +4 circumstance bonus on any skill check, save for Education checks."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 183,
+    "record_key": "Research Aid ~ Secret Society"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

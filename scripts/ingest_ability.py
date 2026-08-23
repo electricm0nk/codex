@@ -1,0 +1,337 @@
+#!/usr/bin/env python3
+"""Generic ingest of `Kind::Ability`'s enumerated-but-not-ingested units into
+`data/corpus/<book>/ability/*.json`.
+
+SD-32 `decisions.md §20`: `ability` is one of the 18 kinds whose 4,824-unit
+population reached `docs/work-inventory.json` (`kind: "ability"`,
+`15-ability_cycle_receipt.md`) but has NO corpus record at all, so
+`scripts/shape_ledger.py` reports every one of them `join_status: no_record` --
+their shape cannot be measured. This transcribes them.
+
+**Generic, not per-book** (`decisions.md §17`): a unit's own
+`(book, source_file, source_line)` citation, already established by
+`v06_work_inventory`'s enumeration, is resolved against the pinned corpus by
+searching for a directory whose basename equals the unit's `book` field
+(falling back to `core_essentials` for the `decisions.md §9`-reattributed
+units whose physical file lives there), then searching that directory for a
+file named `source_file`. No book is named in this file's own source; adding
+a 29th book costs nothing here. Verified against the current 28-book/102-file
+population before this cycle built anything:
+`docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-0-census-closure/17-ability-ingest-receipt.md`
+records the resolution check.
+
+**Nothing is computed.** Every emitted `raw_tokens` entry is a verbatim
+substring of the cited row (skip the identity column, split each remaining
+tab field on its first `:`). `corpus_literal_sweep` independently re-derives
+the same tokens from the same citation to confirm the copy byte for byte.
+
+**Product Identity.** Two independent screens, matching `class_feature`'s own
+generator and `decisions.md §15/§19`'s standing rule:
+
+1. The row's own declaration (`NAMEISPI:YES`/`DESCISPI:YES`).
+2. The amended, word-boundary, OCR-normalized 60-term blacklist scan
+   (`scripts/sd32_t9_pi_review_feat_equipment.py`'s own `normalized_term_hit`
+   -- imported, not re-typed, so this cycle's ingest inherits the exact
+   correction `decisions.md §19a` approved rather than forking a fourth copy
+   of the stale 57-term substring scan `src/rules_core/pi_screening.rs` still
+   carries, which `docs/governance/ogl-pi-blacklist.md`'s own frontmatter
+   says the next transcribing cycle -- this one -- must apply).
+
+**No soft-hyphen or other byte substitution is applied to the cited row.**
+`transcribe_monster_tables.py::read_row` replaces PCGen's PDF-extraction
+soft-hyphen artifact (U+00AD) with a plain `-` because its consumer is a
+*compiled Rust source table* (`clippy::invisible_characters` is deny-by-
+default there). This generator's consumer is `corpus_literal_sweep`, which
+independently re-derives `raw_tokens` by re-reading the SAME cited bytes and
+comparing byte-for-byte -- any substitution here would desync from it. Found
+live this cycle (`isg_abilities_faith.lst:53`'s "soul<U+00AD>scouring"):
+an early draft that copied the substitution produced exactly one
+`corpus_literal_sweep` MISMATCH, caught and reverted before landing.
+
+A `NAMEISPI:YES` declaration OR a name-blacklist hit (checked against BOTH
+the unit's bare `name` and its full `key`, since a key can carry a term the
+bare name does not -- `isg_abilities_faith.lst`'s own
+`"Exalted Boon ~ Asmodeus ~ Hellfire Blast"` is exactly this shape) **skips
+the whole record** (a name cannot be redacted). A `DESCISPI:YES` declaration OR a
+description-blacklist hit redacts only the `DESC` field (both in
+`data.description` and inside `data.raw_tokens`) to
+`shape_b_v1::REDACTED_PI_MARKER`, matching every other generator's
+`redact_desc_token_if_pi` precedent. Per `decisions.md §15`, a record this
+screen cannot confidently clear is never transcribed and never silently
+skipped -- it is reported in the run's own JSON report under
+`skipped_uncertain` so the cycle receipt can name it.
+
+Run: `python3 scripts/ingest_ability.py [--dry-run] [--out <report.json>]`
+`PCGEN_CORPUS_ROOT` must point at a pinned PCGen `data/` checkout.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+from collections import defaultdict
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
+    PI_BLACKLIST_TERMS,
+    extract_free_text,
+    normalized_term_hit,
+)
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+INVENTORY_PATH = os.path.join(REPO_ROOT, "docs/work-inventory.json")
+REDACTED_PI_MARKER = "[redacted PI]"  # src/rules_core/shape_b_v1.rs::REDACTED_PI_MARKER
+PI_MARKER_REDACTED = "redacted"  # src/rules_core/shape_b_v1.rs::PI_MARKER_REDACTED
+SOFT_HYPHEN = "­"
+CORE_ESSENTIALS_BASENAME = "core_essentials"
+
+
+def corpus_root() -> str:
+    return os.environ.get("PCGEN_CORPUS_ROOT", os.path.expanduser("~/workspace/repos/pcgen/data"))
+
+
+def build_dir_index(root: str) -> dict[str, list[str]]:
+    """basename -> every real directory under `root` with that basename."""
+    index: dict[str, list[str]] = defaultdict(list)
+    for dirpath, _dirnames, _filenames in os.walk(root):
+        index[os.path.basename(dirpath)].append(dirpath)
+    return index
+
+
+def find_file_under(root_dir: str, filename: str) -> list[str]:
+    hits = []
+    for dirpath, _dirnames, filenames in os.walk(root_dir):
+        if filename in filenames:
+            hits.append(os.path.join(dirpath, filename))
+    return sorted(hits)
+
+
+def resolve_file(dir_index: dict[str, list[str]], root: str, book: str, filename: str) -> list[str]:
+    """Real path(s) of `filename` under `book`'s corpus directory, falling back
+    to `core_essentials` when the book's own directory does not have it (the
+    `decisions.md §9` re-attribution case -- mirrors
+    `transcribe_monster_tables.py::resolve_book_file` exactly)."""
+    book_dirs = dir_index.get(book, [])
+    if len(book_dirs) == 1:
+        hits = find_file_under(book_dirs[0], filename)
+        if hits:
+            return hits
+    elif len(book_dirs) > 1:
+        return []  # ambiguous book directory -- caller reports, never guesses
+    ce_dirs = dir_index.get(CORE_ESSENTIALS_BASENAME, [])
+    if len(ce_dirs) == 1 and ce_dirs[0] not in book_dirs:
+        return find_file_under(ce_dirs[0], filename)
+    return []
+
+
+def read_row(path: str, line_no: int) -> str:
+    """The cited row, byte-verbatim (including any invisible PDF-extraction
+    artifact such as a soft hyphen) -- never substituted, so
+    `corpus_literal_sweep`'s independent byte-for-byte re-derivation matches.
+    See the module doc comment's "No soft-hyphen..." section for why this
+    deliberately does NOT mirror `transcribe_monster_tables.py::read_row`."""
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        lines = fh.read().split("\n")
+    if line_no < 1 or line_no > len(lines):
+        return ""
+    return lines[line_no - 1]
+
+
+def row_tokens(line: str) -> list[dict[str, str]]:
+    """Skip the identity column, split each remaining field on its first `:`.
+    Mirrors `cache_gen::class_feature::row_tokens` exactly (same rule, same
+    order) so the two generators' output is directly comparable."""
+    fields = [f.strip() for f in line.split("\t") if f.strip()]
+    fields = fields[1:]
+    tokens = []
+    for field in fields:
+        if ":" in field:
+            key, value = field.split(":", 1)
+        else:
+            key, value = field, ""
+        tokens.append({"key": key, "value": value})
+    return tokens
+
+
+def desc_value(tokens: list[dict[str, str]]) -> str | None:
+    for t in tokens:
+        if t["key"] == "DESC":
+            return t["value"]
+    return None
+
+
+def declared_pi(tokens: list[dict[str, str]]) -> tuple[bool, bool]:
+    name_declared = False
+    desc_declared = False
+    for t in tokens:
+        if t["value"].strip().upper() != "YES":
+            continue
+        if t["key"].upper() == "NAMEISPI":
+            name_declared = True
+        elif t["key"].upper() == "DESCISPI":
+            desc_declared = True
+    return name_declared, desc_declared
+
+
+def slugify(name: str, used: set[str]) -> str:
+    base = re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_") or "unnamed"
+    slug = base
+    n = 2
+    while slug in used:
+        slug = f"{base}_{n}"
+        n += 1
+    used.add(slug)
+    return slug
+
+
+def sha256_file(path: str) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        h.update(fh.read())
+    return h.hexdigest()
+
+
+def ingested_at_now() -> str:
+    out = subprocess.run(["date", "-u", "+%Y-%m-%dT%H:%M:%SZ"], capture_output=True, text=True, check=True)
+    return out.stdout.strip()
+
+
+def load_units() -> list[dict]:
+    with open(INVENTORY_PATH, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    units = doc["units"] if isinstance(doc, dict) and "units" in doc else doc
+    return [u for u in units if u.get("kind") == "ability"]
+
+
+def main() -> int:
+    dry_run = "--dry-run" in sys.argv
+    out_path = None
+    if "--out" in sys.argv:
+        out_path = sys.argv[sys.argv.index("--out") + 1]
+
+    root = corpus_root()
+    if not os.path.isdir(root):
+        print(f"PCGEN_CORPUS_ROOT ({root}) is not a directory", file=sys.stderr)
+        return 1
+
+    units = load_units()
+    dir_index = build_dir_index(root)
+
+    report = {
+        "population": len(units),
+        "written": 0,
+        "name_pi_skipped": 0,
+        "unresolved": [],
+        "written_by_book": defaultdict(int),
+        "pi_skipped_records": [],
+    }
+
+    file_cache: dict[tuple[str, str], list[str]] = {}
+    used_by_book: dict[str, set[str]] = defaultdict(set)
+    ingested_at = ingested_at_now()
+
+    for unit in units:
+        book = unit["book"]
+        source_file = unit["source_file"]
+        line = unit["source_line"]
+        key = unit.get("corpus_key") or unit.get("key") or unit["name"]
+        name = unit["name"]
+
+        cache_key = (book, source_file)
+        if cache_key not in file_cache:
+            file_cache[cache_key] = resolve_file(dir_index, root, book, source_file)
+        hits = file_cache[cache_key]
+        if len(hits) != 1:
+            report["unresolved"].append(
+                {"book": book, "source_file": source_file, "hits": len(hits), "key": key}
+            )
+            continue
+        path = hits[0]
+
+        raw_line = read_row(path, line)
+        tokens = row_tokens(raw_line)
+        name_declared, desc_declared = declared_pi(tokens)
+        # Scan BOTH the bare `name` and the full `key` -- a key can carry a
+        # blacklisted term the bare display name does not (found live this
+        # cycle: `isg_abilities_faith.lst`'s "Exalted Boon ~ Asmodeus ~
+        # Hellfire Blast" has name "Hellfire Blast", clean, but its key
+        # names a blacklisted deity).
+        name_hit = normalized_term_hit(name) or normalized_term_hit(key)
+        if name_declared or name_hit:
+            report["name_pi_skipped"] += 1
+            report["pi_skipped_records"].append(
+                f"{book}:{source_file}:{line} '{name}' (key: '{key}')"
+                + (" (NAMEISPI:YES)" if name_declared else f" (term: {name_hit})")
+            )
+            continue
+
+        description = desc_value(tokens)
+        free_text = extract_free_text(raw_line)
+        desc_hit = normalized_term_hit(free_text) if free_text else None
+        pi_redacted = desc_declared or bool(desc_hit)
+        stored_description = description
+        if pi_redacted and description is not None:
+            stored_description = REDACTED_PI_MARKER
+            for t in tokens:
+                if t["key"] == "DESC":
+                    t["value"] = REDACTED_PI_MARKER
+
+        has_formula_token = any(t["key"] == "DEFINE" or t["key"].startswith("BONUS") for t in tokens)
+        wiring_class = "static" if has_formula_token else "display"
+        wiring_signals = (
+            ["static:has_magnitude_token"] if has_formula_token else ["display:no_magnitude_token"]
+        )
+
+        rel_path = os.path.relpath(path, root)
+        sha256 = sha256_file(path)
+        used = used_by_book[book]
+        slug = slugify(name, used)
+
+        record = {
+            "population": "in_scope",
+            "completeness": "full" if stored_description else "chassis_only",
+            "ingested_at": ingested_at,
+            "data": {
+                "key": key,
+                "name": name,
+                "description": stored_description,
+                "raw_tokens": tokens,
+            },
+            "source": {
+                "kind": "lst_token",
+                "path": rel_path,
+                "sha256": sha256,
+                "line": line,
+                "record_key": key,
+            },
+            "wiring_class": wiring_class,
+            "wiring_class_signals": wiring_signals,
+            "license": "PI-REDACTED" if pi_redacted else "OGL",
+            "pi_field": "description" if pi_redacted else None,
+            "pi_marker": PI_MARKER_REDACTED if pi_redacted else None,
+        }
+
+        out_dir = os.path.join(REPO_ROOT, "data/corpus", book, "ability")
+        if not dry_run:
+            os.makedirs(out_dir, exist_ok=True)
+            with open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8") as fh:
+                json.dump(record, fh, indent=2, ensure_ascii=False)
+                fh.write("\n")
+        report["written"] += 1
+        report["written_by_book"][book] += 1
+
+    report["written_by_book"] = dict(sorted(report["written_by_book"].items()))
+    report["term_list_size"] = len(PI_BLACKLIST_TERMS)
+    text = json.dumps(report, indent=2)
+    print(text)
+    if out_path:
+        with open(out_path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

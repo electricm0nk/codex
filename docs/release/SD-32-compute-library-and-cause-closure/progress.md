@@ -4470,4 +4470,91 @@ nothing was stopped on. The `monster` names above are flagged, not touched.
   `BONUS:ABILITYPOOL` shape (~730 units) — trace ≥3 more pool-name→`KEY`-prefix mappings before
   generalising a rule. (3) `monster`'s remaining 28 unique-named creatures — PI-screen each by name
   first. `monster_ability`'s prior-cycle-named 86 units untouched, `feat`/`equipment` untouched.
+## `decisions.md §20` — `ability` corpus ingest (card 11, 2026-08-23)
+
+**Scope**: `Kind::Ability`'s 4,824-unit population (`15-ability_cycle_receipt.md`) was 100%
+`join_status: no_record` — enumerated by the `card-15-ability` cycle but never ingested, so Gate 1's
+"every unit's shape is measured" was unmet for the whole kind despite Gate 3's budget passing.
+`decisions.md §20` is dispositive: `no_record == 0` is the closure condition, not "budget not
+exceeded".
+
+**Found and reused an existing generic mechanism** (`decisions.md §17`): `cache_gen::class_feature::generate`
+(SD-31 E5-F1) already transcribes bare `*_abilities*.lst`-shaped rows (cited row → tab-tokenize,
+skip identity column, split on first `:` → PI-screen → write one JSON record) — the same shape
+`ability` needs, minus `class_feature`'s class-resolution machinery `ability` rows don't have.
+Ported the shared shape as a new, smaller generator (`scripts/ingest_ability.py`) rather than
+reaching into `class_feature.rs`'s private, class-specific helpers. Book-directory resolution
+generalised `transcribe_monster_tables.py::resolve_book_file`'s 9-book pattern to a single
+`os.walk` basename index covering all 28 books `ability`'s population names — verified before
+writing anything: 28/28 books and 102/102 (book, source_file) pairs resolve to exactly one real
+file.
+
+**PI screen upgraded to the operator-approved amended blacklist, not the stale production one**:
+`src/rules_core/pi_screening.rs` deliberately still carries the pre-`§19a` 57-term bare-substring
+scan (`ogl-pi-blacklist.md`'s own frontmatter defers the 60-term/word-boundary/OCR-normalized
+amendment to "the cycle that actually transcribes corpus data under this amended blacklist" — this
+one). Imported `scripts/sd32_t9_pi_review_feat_equipment.py`'s own `normalized_term_hit`/
+`PI_BLACKLIST_TERMS` rather than forking a fifth copy.
+
+**Two defects found and fixed before landing anything** (validate the instrument, `decisions.md
+§17a`): (1) an early draft mirrored `transcribe_monster_tables.py::read_row`'s soft-hyphen (U+00AD)
+substitution — wrong here, because it serves a compiled-Rust-table consumer
+(`clippy::invisible_characters` deny-by-default), not this generator's `corpus_literal_sweep`
+byte-for-byte re-derivation. Caught by exactly one `corpus_literal_sweep` MISMATCH
+(`inner_sea_gods/ability/hellfire_blast.json`) on the first full run; fixed by removing the
+substitution, re-ran clean from a fresh `data/corpus/*/ability/` state. (2) The PI name-screen
+initially scanned only each unit's bare `name`, missing a blacklisted term embedded in the fuller
+`key` (`isg_abilities_faith.lst:53`'s "Hellfire Blast" / `Exalted Boon ~ Asmodeus ~ Hellfire Blast`
+is the live counter-example). Fixed by scanning both — raised `name_pi_skipped` from 400 to 576,
+every additional skip a real key-embedded term, spot-checked.
+
+**§15 — 576 records stopped, none silently skipped.** Every one named by
+`(book, source_file, line, name, key, reason)` in
+`artifacts/gate-3-closure-invariant/17-ability-pi-skipped.json`. Spot-checked all 15 of
+`apg_abilities.lst`'s named Trait rows — every hit is a genuine deity/place name in the record's
+own name or key, not a word-boundary false positive ("Nex"/"next"-class collision does not recur).
+These 576 stay `no_record` until an operator PI ruling clears them — a name cannot be redacted, so
+there is no automatic path to closing them this cycle.
+
+**Fixture discipline** (`decisions.md §3`): `corpus_literal_sweep` CLEAN — 0 findings across all
+4,248 new records (30,786 records examined, 285,525 tokens compared, 31,943 digests checked).
+
+**Reachability — honest claim: 0.** `reach_gate.rs` defines no `ability`/`AbilityRecord`
+reachability entry at all; no engine consumes `Kind::Ability` (Gate 2 not attempted for this kind).
+This cycle closes Gate-1 measurability only.
+
+```bash
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/l.json
+python3 -c "
+import json,collections
+r=json.load(open('/tmp/l.json'))['rows']
+nr=[x for x in r if x['join_status']=='no_record']
+print(collections.Counter(x.get('kind','?') for x in nr).most_common())"
+```
+
+| | before | after | delta |
+|---|---:|---:|---:|
+| `ability` `no_record` | 4,824 | 576 | **−4,248** |
+
+**No Rust code touched, `docs/work-inventory.json` untouched** (0 verification stamps at risk), so
+no Rust suite is affected by this cycle's own diff.
+
+**Dual audit** (own diff, `scripts/ingest_ability.py`): two `sd32_` hits are both literal
+references to the already-existing, pre-cycle module `scripts/sd32_t9_pi_review_feat_equipment.py`
+this cycle imports (not a new bundle-tag identifier this cycle invented) — `OK_NO_TOKENS` clean
+otherwise.
+
+- **Status:** complete (this lane's own bounded scope — the `ability` kind's `no_record` is not
+  yet zero; the 576 PI-blocked residual needs an operator ruling, named as next-cycle scope, not
+  silently absorbed. Card 11 stays `in-progress`: this is one of the 18 `decisions.md §20` kinds,
+  not the whole bundle).
+- **Kanban:** row 11 prepended (`ability-ingest` entry); rows 11, 15 left `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-ability-ingest_cycle-1_cycle_receipt.md`.
+- **What remains:** 576 name-level PI stops need an operator ruling (name-carrying-PI has no
+  redaction path) or a per-book `ogl-pi-blacklist.md §3` override; `wiring_class` here is a
+  narrower `static`/`display`-only heuristic (has a `DEFINE`/`BONUS*` token or not), not
+  `WiringClassIndex`'s full `.MOD`/`.COPY=` closure — a future Gate-2 engine cycle for `ability`
+  should re-derive it properly; `scripts/ingest_ability.py` has no unit tests yet, named not
+  hidden; 17 other `decisions.md §20` kinds remain at their own `no_record` figures, untouched by
+  this cycle.
 - Commit: (recorded after push).
