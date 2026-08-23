@@ -2695,3 +2695,76 @@ the dispatch brief).
 - **Receipt:** `artifacts/gate-0-census-closure/17-generic-spell-ingest_cycle_receipt.md`.
 - **Commit SHAs:** `dcbcd803f` (collapse), `a0ab14451` (retro-log append), both on
   `origin/tranche/12`. This progress.md entry lands in the next commit on top.
+
+## Cycle `t9-pi-review-spell/1` — Card 11, shape T9 — per-record PI review, `spell` kind, `decisions.md §18`
+
+- **Card ID:** `epic-2-cause-closure`. **Scope:** read-only review lane, per `decisions.md §18`'s
+  ruling (per-record review of the 1,344 `uncertain` T9 units before further sign-off). This
+  cycle's slice: the 352 `uncertain` units in the `spell` kind. Transcribes nothing, ingests
+  nothing, changes no corpus data. Does **not** amend `docs/governance/ogl-pi-blacklist.md`
+  (status stays `DRAFT`) and does **not** change card 11's status (stays `in-progress`) or T9's
+  paused-onboarding state.
+- **Files touched:** `scripts/sd32_t9_pi_review_spell.py` (new, committed re-derive/review script,
+  imports and extends `scripts/sd32_t9_pi_exposure_audit.py` rather than duplicating it),
+  `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/t9-pi-review-spell.md`
+  (new memo), `docs/retro/events/spell.jsonl` (1 correction), this entry.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (`BASE_BRANCH=$(git merge-base HEAD
+  origin/develop); git diff --unified=0 "${BASE_BRANCH}...HEAD" -- scripts docs/release
+  ':!**/__tests__/**' ':!**/*.test.*' | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'`
+  → no matches).
+- **Wired-integration audit result:** `OK_NO_TOKENS` (same diff, no
+  `STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack` tokens).
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`),
+  re-fetched fresh this cycle to the repo-local slot (`scripts/fetch-pcgen-oracle.sh --dest
+  <repo-local pcgen slot>`, empty on this fresh worktree).
+- **Status:** review/evidence-only cycle, zero units transcribed or closed. Card 11 row stays
+  `in-progress`.
+
+- **Notes:**
+
+  **Footgun 1 fired** on this worktree (stray `site-publish` merge, no `docs/`/`data/`/`scripts/`)
+  — reset to the pinned SHA and rebased onto `origin/tranche/12` before any other work.
+
+  **Step 1 — re-derived the `spell`-kind population.** total=732, blocked=31, clear=349,
+  uncertain=352 — byte-identical to `t9-pi-exposure-audit.md §3`. No correction against spell's
+  own figures. **One correction filed** against the audit's T9-wide total, which no longer
+  re-derives (2,712 → 3,573, entirely from `monster_ability` 517 → 1,378) on this cycle's later
+  pin — outside this lane's kind and scope, logged for whichever lane owns `monster_ability`.
+
+  **Step 2 — per-record review of all 352 `spell` `uncertain` units.** Extracted every record's
+  `DESC:` free text, triaged every capitalized word against an iteratively-built ~180-word ordinary
+  D&D/Pathfinder mechanical-vocabulary allowlist (built by reading every flagged word's real
+  sentence context, not assumed up front) plus a roman-numeral exception. **Result: 350 clear, 2
+  still_undecidable, 0 blocked.** The two: `inner_sea_races:Bleaching Resistance` (names "the
+  Bleaching," a Golarion-specific curse/event) and `monster_codex:Gift of the Deep` (a bracketed
+  `[Molenti]` option reading as a named creature-variant label, unlike its plain-English sibling
+  options). Both read in full in the memo; both lean PI in this reviewer's judgment but match no
+  existing blacklist rule, so neither is forced into a bucket.
+
+  **Step 3 — clear-bucket recheck, normalized (case-fold + bounded OCR) scan**, all 349 `clear` +
+  352 `uncertain` spell rows. **`newly_blocked = 0`, `newly_uncertain = 0`.** Two false-positive
+  traps hit and fixed while building the scan (recorded in the memo so a future cycle doesn't
+  rediscover them): naive case-folding alone reopens a `Nex`-inside-`next` hole the original
+  case-sensitive scan closed (fixed with word-boundary matching); folding `|` into the
+  OCR-confusion table (it is PCGen's own field delimiter, not an OCR artifact) produced a false
+  NEGATIVE on the blacklist's own recorded `Cayden CaiLean` incident. Verified post-fix the scan
+  still catches both recorded incidents (`Cayden CaiLean`, `lrori`).
+
+  **Step 4 — proposed `§2.3` addition for `spell`** (not applied, blacklist stays `DRAFT`): names
+  two concrete unlisted-PI shapes found this cycle (named setting phenomena; named creature-variant
+  labels inside bracketed spell options) for the existing `SpellCacheData.description` entry.
+
+  **Step 5 — `.MOD`/`.COPY` question, spell kind: 0 of 732 units affected.** No cross-reference
+  inheritance rule needed for this kind.
+
+  **Step 6 — 10-record spot-check table** (2 still_undecidable, 7 clear, 1 already-blocked for
+  contrast) in the memo §6.
+
+- **Discovery forwards:** the T9-wide population drift (`monster_ability` 517→1,378) affects
+  whichever lane owns that kind's own uncertain-bucket re-derivation — its denominator has moved
+  since the audit's base.
+- **Next-cycle plan:** the 2 `still_undecidable` spell records and this lane's proposed `§2.3`
+  addition feed the operator's next ruling on `ogl-pi-blacklist.md`; the remaining kinds'
+  per-record reviews (`companion`, `feat`, `monster_ability`, `equipment`) are separate lanes.
+- **Receipt:** `artifacts/gate-3-closure-invariant/epic-2-t9-pi-review-spell_cycle-1_cycle_receipt.md`.
+- **Commit SHA:** (this cycle's commit — see push log), on `origin/tranche/12`.
