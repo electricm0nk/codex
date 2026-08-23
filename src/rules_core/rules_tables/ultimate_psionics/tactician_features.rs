@@ -82,6 +82,57 @@ pub fn master_strategist_bonus(level: u8, intelligence: i16) -> Option<i16> {
     Some(intelligence)
 }
 
+// --- SD-32 card 11 (T12) follow-up: `Tactician Manifesting`'s three
+// magnitudes, same shape-3 grant convention `psion_features` names,
+// surfaced by that cycle's widened census. `tactician_power_points.json`'s
+// `BasePowerPoints` ladder is the SAME full-manifester progression
+// `psion_features::psion_power_points_total` documents (2,4,5,6,8,10,11,
+// 12,14,16,18,20,21,23,25,26,29,30,31,32).
+
+pub fn tactician_power_points_total(level: u8, int_mod: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let base: i16 = match level {
+        1 => 2,
+        2 => 4,
+        3 => 5,
+        4 => 6,
+        5 => 8,
+        6 => 10,
+        7 => 11,
+        8 => 12,
+        9 => 14,
+        10 => 16,
+        11 => 18,
+        12 => 20,
+        13 => 21,
+        14 => 23,
+        15 => 25,
+        16 => 26,
+        17 => 29,
+        18 => 30,
+        19 => 31,
+        _ => 32, // level >= 20
+    };
+    Some(base + (int_mod * i16::from(level)) / 2)
+}
+
+pub fn tactician_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+pub fn tactician_max_power_level(level: u8, int_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    Some(((mpl + 1) / 2).min(9).min(int_score - 10))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -123,5 +174,27 @@ mod tests {
     fn master_strategist_bonus_is_gated_to_the_capstone() {
         assert_eq!(master_strategist_bonus(20, 4), Some(4));
         assert_eq!(master_strategist_bonus(19, 4), None);
+    }
+
+    #[test]
+    fn tactician_power_points_total_matches_psion_s_full_manifester_ladder() {
+        assert_eq!(tactician_power_points_total(1, 0), Some(2));
+        assert_eq!(tactician_power_points_total(20, 0), Some(32));
+        assert_eq!(tactician_power_points_total(5, 3), Some(8 + (3 * 5) / 2));
+        assert_eq!(tactician_power_points_total(0, 0), None);
+    }
+
+    #[test]
+    fn tactician_powers_known_equals_class_level() {
+        assert_eq!(tactician_powers_known(1), Some(1));
+        assert_eq!(tactician_powers_known(20), Some(20));
+        assert_eq!(tactician_powers_known(0), None);
+    }
+
+    #[test]
+    fn tactician_max_power_level_is_capped_by_the_lowest_of_three_terms() {
+        assert_eq!(tactician_max_power_level(1, 10), Some(0)); // min(9,1,0)
+        assert_eq!(tactician_max_power_level(20, 20), Some(9)); // min(9,10,10)
+        assert_eq!(tactician_max_power_level(0, 20), None);
     }
 }

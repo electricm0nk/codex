@@ -81,6 +81,57 @@ pub fn steal_life_dc(level: u8, wisdom: i16) -> Option<i16> {
     Some(10 + wisdom + i16::from(level) / 2)
 }
 
+// --- SD-32 card 11 (T12) follow-up: `Vitalist Manifesting`'s three
+// magnitudes, same shape-3 grant convention `psion_features` names,
+// surfaced by that cycle's widened census. `vitalist_power_points.json`'s
+// `BasePowerPoints` ladder is the SAME full-manifester progression
+// `psion_features::psion_power_points_total` documents.
+
+pub fn vitalist_power_points_total(level: u8, wis_mod: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let base: i16 = match level {
+        1 => 2,
+        2 => 4,
+        3 => 5,
+        4 => 6,
+        5 => 8,
+        6 => 10,
+        7 => 11,
+        8 => 12,
+        9 => 14,
+        10 => 16,
+        11 => 18,
+        12 => 20,
+        13 => 21,
+        14 => 23,
+        15 => 25,
+        16 => 26,
+        17 => 29,
+        18 => 30,
+        19 => 31,
+        _ => 32, // level >= 20
+    };
+    Some(base + (wis_mod * i16::from(level)) / 2)
+}
+
+pub fn vitalist_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let pkl = i16::from(level);
+    Some(1 + (pkl + 1) / 2)
+}
+
+pub fn vitalist_max_power_level(level: u8, wis_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    Some(((mpl + 1) / 2).min(9).min(wis_score - 10))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -124,5 +175,26 @@ mod tests {
         assert_eq!(steal_life_dc(14, 4), Some(21)); // 10+4+7
         assert_eq!(steal_life_dc(20, 4), Some(24)); // 10+4+10
         assert_eq!(steal_life_dc(13, 4), None);
+    }
+
+    #[test]
+    fn vitalist_power_points_total_matches_psion_s_full_manifester_ladder() {
+        assert_eq!(vitalist_power_points_total(1, 0), Some(2));
+        assert_eq!(vitalist_power_points_total(20, 0), Some(32));
+        assert_eq!(vitalist_power_points_total(0, 0), None);
+    }
+
+    #[test]
+    fn vitalist_powers_known_is_one_plus_half_level_rounded_up() {
+        assert_eq!(vitalist_powers_known(1), Some(2)); // 1+(2/2)=2
+        assert_eq!(vitalist_powers_known(20), Some(11)); // 1+(21/2)=11
+        assert_eq!(vitalist_powers_known(0), None);
+    }
+
+    #[test]
+    fn vitalist_max_power_level_is_capped_by_the_lowest_of_three_terms() {
+        assert_eq!(vitalist_max_power_level(1, 10), Some(0));
+        assert_eq!(vitalist_max_power_level(20, 20), Some(9));
+        assert_eq!(vitalist_max_power_level(0, 20), None);
     }
 }

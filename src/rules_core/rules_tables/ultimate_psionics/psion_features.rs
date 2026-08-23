@@ -84,19 +84,29 @@
 //! (`PsionPPStat` = `PsionPrimeStat` = Intelligence modifier, `PsionPPL` =
 //! manifester level = class level for a single-classed Psion).
 //!
-//! `Psion Powers Known` / `Psion Maximum Power Level Known`
-//! (`Psion Manifesting Variables`'s own `PsionPowersKnown`/
-//! `PsionMaxPowerLevel` terms) are **not** grounded here: their two
-//! `BONUS:VAR|PsionPowersKnown|...` entries carry no `TYPE=`, and unlike
-//! `BasePowerPoints`'s ladder, the "replace, don't sum" reading produces
-//! an implausible level-11 drop (21 -> 1) while the "sum" reading produces
-//! a plausible continuing climb -- the two most-common PCGen `BONUS:VAR`
-//! combination conventions genuinely disagree on this specific pair, and
-//! nothing in this repo can execute real PCGen to settle it. Escalated,
-//! not guessed: named explicitly in this cycle's receipt as a blocker on
-//! the SPECIFIC combination semantics of `PsionPowersKnown`/
-//! `PsionMaxPowerLevel`, sized (2 more magnitudes on this one record), not
-//! filed as an exclusion.
+//! # `Psion Powers Known` / `Psion Maximum Power Level Known`: resolved, not guessed (SD-32 T12 follow-up)
+//!
+//! A previous cycle escalated `PsionPowersKnown`'s two `BONUS:VAR` entries
+//! (`min(21,(2*PsionPKL)+1)` unconditional, `floor((PsionPKL-10)*3/2)`
+//! added when `PsionPKL>=11`, neither carrying a `TYPE=`) as a "genuine
+//! `BONUS:VAR` combination-semantics ambiguity this repo cannot resolve
+//! without live PCGen." **That claim does not survive a check against this
+//! repo's own already-built, PCGen-source-cited resolution**:
+//! `pilot_compute::bonus_stack_reader`'s module doc (point 2) cites
+//! `pcgen/core/PlayerCharacter.java:2136` -> `BonusManager.java`'s
+//! `getTotalBonusTo`/`sumActiveBonusMap` directly: **multiple `BONUS:VAR`
+//! entries sharing one target variable SUM, gated by each entry's own
+//! `PREVARGTEQ` currently passing** -- not this reader's own policy
+//! choice, the real PCGen aggregation. Applied here: below level 11 (in
+//! `PsionPKL` terms) only the unconditional term is active; at
+//! `PsionPKL>=11` BOTH terms sum. This is the exact "sum" reading the
+//! escalating cycle had already identified as the plausible one (versus
+//! "replace", which produces an implausible level-11 drop) -- the citation
+//! confirms it as PCGen's real behavior rather than leaving it a guess.
+//! [`psion_powers_known`] grounds it. `PsionMaxPowerLevel` has only ONE
+//! `BONUS:VAR` term on the record (`min(9,floor((PsionMPL+1)/2),
+//! PsionPLStatScore-10)`) -- no combination question at all, grounded by
+//! [`psion_max_power_level`].
 
 /// `Psion Power Points`: `BasePowerPoints` (a level-keyed table, "highest
 /// satisfied `PREVARGTEQ:PsionPPL,N` threshold wins" -- see this module's
@@ -131,6 +141,36 @@ pub fn psion_power_points_total(level: u8, int_mod: i16) -> Option<i16> {
     };
     let bonus = (int_mod * i16::from(level)) / 2;
     Some(base + bonus)
+}
+
+/// `PsionPowersKnown`: `min(21,(2*PsionPKL)+1)` always active, plus
+/// `floor((PsionPKL-10)*3/2)` summed on top once `PsionPKL>=11`
+/// (`bonus_stack_reader`'s documented PCGen "multiple `BONUS:VAR` on one
+/// target SUM, gated by each entry's own currently-passing `PREVARGTEQ`"
+/// semantics -- see this module's own doc comment). `PsionPKL` is the raw
+/// class level on a single-classed Psion (no bonus manifester levels
+/// tracked by this engine). `None` below level 1.
+pub fn psion_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let pkl = i16::from(level);
+    let base = (2 * pkl + 1).min(21);
+    let bonus = if pkl >= 11 { ((pkl - 10) * 3) / 2 } else { 0 };
+    Some(base + bonus)
+}
+
+/// `PsionMaxPowerLevel`'s single `BONUS:VAR` term:
+/// `min(9,floor((PsionMPL+1)/2),PsionPLStatScore-10)` -- no combination
+/// question (one term, no sibling entry on the same target). `int_score`
+/// is the Psion's raw Intelligence score (`PsionPLStatScore = INTSCORE`,
+/// not the modifier). `None` below level 1.
+pub fn psion_max_power_level(level: u8, int_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    Some(((mpl + 1) / 2).min(9).min(int_score - 10))
 }
 
 #[cfg(test)]
@@ -187,5 +227,45 @@ mod tests {
     fn psion_power_points_total_handles_a_negative_int_modifier() {
         // Level 4, INT modifier -1: base 6, bonus (-1*4)/2 = -2.
         assert_eq!(psion_power_points_total(4, -1), Some(4));
+    }
+
+    #[test]
+    fn psion_powers_known_only_the_base_term_below_level_eleven() {
+        // Level 1: min(21,2*1+1)=3, no bonus term yet.
+        assert_eq!(psion_powers_known(1), Some(3));
+        // Level 10: min(21,2*10+1)=21 (base term itself saturates here).
+        assert_eq!(psion_powers_known(10), Some(21));
+        assert_eq!(psion_powers_known(0), None);
+    }
+
+    #[test]
+    fn psion_powers_known_sums_both_terms_from_level_eleven() {
+        // Level 11: base min(21,23)=21, bonus floor(1*3/2)=1 -> 22.
+        assert_eq!(psion_powers_known(11), Some(22));
+        // Level 20: base min(21,41)=21, bonus floor(10*3/2)=15 -> 36.
+        assert_eq!(psion_powers_known(20), Some(36));
+    }
+
+    #[test]
+    fn psion_powers_known_mutation_proof_replace_semantics_would_drop_at_level_eleven() {
+        // Sanity check on the module doc's own claim: a "replace, don't
+        // sum" reading (using ONLY the level->=11 term once its gate
+        // passes) produces an implausible drop from level 10's 21 to a
+        // level-11 value of 1 -- this is why "sum" (this function's real
+        // behavior) is the correct PCGen semantics, not a coin flip.
+        let replace_semantics_at_11 = ((11i16 - 10) * 3) / 2; // = 1
+        assert_eq!(replace_semantics_at_11, 1);
+        assert_ne!(psion_powers_known(11), Some(replace_semantics_at_11));
+    }
+
+    #[test]
+    fn psion_max_power_level_is_capped_by_the_lowest_of_three_terms() {
+        // Level 1, INT score 10 (modifier 0): min(9, floor(2/2)=1, 10-10=0) = 0.
+        assert_eq!(psion_max_power_level(1, 10), Some(0));
+        // Level 20, INT score 20 (modifier +5): min(9, floor(21/2)=10, 20-10=10) = 9.
+        assert_eq!(psion_max_power_level(20, 20), Some(9));
+        // Level 5, INT score 12: min(9, floor(6/2)=3, 12-10=2) = 2 (stat-capped).
+        assert_eq!(psion_max_power_level(5, 12), Some(2));
+        assert_eq!(psion_max_power_level(0, 20), None);
     }
 }

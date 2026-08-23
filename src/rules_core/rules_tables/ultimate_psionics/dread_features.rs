@@ -79,6 +79,41 @@ pub fn fear_incarnate_damage_reduction(level: u8) -> Option<i16> {
     Some(10)
 }
 
+// --- SD-32 card 11 (T12) follow-up: `Dread Manifesting`'s three
+// magnitudes, same shape-3 grant convention as Cryptic (identical ladder
+// and `PowersKnown`/`MaxPowerLevel` shape) except `DreadPrimeStat`/
+// `DreadPLStatScore` read Charisma, not Intelligence.
+
+pub fn dread_power_points_total(level: u8, cha_mod: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let base: i16 = match level {
+        1 => 1,
+        2 => 1,
+        3..=5 => 2,
+        6..=10 => 4,
+        11..=15 => 8,
+        _ => 12, // 16..=20
+    };
+    Some(base + (cha_mod * i16::from(level)) / 2)
+}
+
+pub fn dread_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+pub fn dread_max_power_level(level: u8, cha_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    Some(((mpl + 2) / 3).min(6).min(cha_score - 10))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -120,5 +155,27 @@ mod tests {
     fn fear_incarnate_is_a_flat_dr_ten_at_the_capstone() {
         assert_eq!(fear_incarnate_damage_reduction(20), Some(10));
         assert_eq!(fear_incarnate_damage_reduction(19), None);
+    }
+
+    #[test]
+    fn dread_power_points_total_uses_the_base_ladder_and_cha_bonus() {
+        assert_eq!(dread_power_points_total(1, 0), Some(1));
+        assert_eq!(dread_power_points_total(20, 0), Some(12));
+        assert_eq!(dread_power_points_total(5, 3), Some(2 + (3 * 5) / 2));
+        assert_eq!(dread_power_points_total(0, 0), None);
+    }
+
+    #[test]
+    fn dread_powers_known_equals_class_level() {
+        assert_eq!(dread_powers_known(1), Some(1));
+        assert_eq!(dread_powers_known(20), Some(20));
+        assert_eq!(dread_powers_known(0), None);
+    }
+
+    #[test]
+    fn dread_max_power_level_is_capped_by_the_lowest_of_three_terms() {
+        assert_eq!(dread_max_power_level(1, 10), Some(0));
+        assert_eq!(dread_max_power_level(20, 20), Some(6));
+        assert_eq!(dread_max_power_level(0, 20), None);
     }
 }

@@ -26092,23 +26092,23 @@ fn compute_class_chassis(
         if class_level.class_id == "class:antipaladin" {
             ground_antipaladin_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:cryptic" {
-            ground_cryptic_class_features(class_level.level, explanations);
+            ground_cryptic_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:dread" {
-            ground_dread_class_features(class_level.level, ability_modifiers, explanations);
+            ground_dread_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:marksman" {
-            ground_marksman_class_features(class_level.level, ability_modifiers, explanations);
+            ground_marksman_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:psychic_warrior" {
-            ground_psychic_warrior_class_features(class_level.level, explanations);
+            ground_psychic_warrior_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:soulknife" {
             ground_soulknife_class_features(class_level.level, explanations);
         } else if class_level.class_id == "class:aegis" {
             ground_aegis_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:tactician" {
-            ground_tactician_class_features(class_level.level, ability_modifiers, explanations);
+            ground_tactician_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:vitalist" {
-            ground_vitalist_class_features(class_level.level, ability_modifiers, explanations);
+            ground_vitalist_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:wilder" {
-            ground_wilder_class_features(class_level.level, explanations);
+            ground_wilder_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:kineticist" {
             ground_kineticist_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:medium" {
@@ -26128,7 +26128,7 @@ fn compute_class_chassis(
         } else if class_level.class_id == "class:vigilante" {
             ground_vigilante_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:psion" {
-            ground_psion_class_features(class_level.level, ability_modifiers, explanations);
+            ground_psion_class_features(input, class_level.level, ability_modifiers, explanations);
         }
 
         Some((base_attack_bonus, base_saves))
@@ -27010,13 +27010,110 @@ fn ground_antipaladin_class_features(
             ),
         });
     }
+
+    // SD-32 card 11 (T12) follow-up: three magnitude-bearing records the
+    // `psion` cycle's widened census surfaced on this class -- see
+    // `antipaladin_features`'s own module doc comment.
+    if let Some(tier) = af::aura_of_evil_strength_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.aura_of_evil.strength_level".to_owned(),
+            value: tier,
+            detail: format!(
+                "Antipaladin level {level} Aura of Evil: aura strength level {tier} \
+                 (a pure class-level pass-through selecting one of four DESC-prose tiers: \
+                 faint at 1, moderate at 2-4, strong at 5-10, overwhelming at 11+)"
+            ),
+        });
+    }
+    if let Some(cl) = af::detect_good_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.detect_good.caster_level".to_owned(),
+            value: cl,
+            detail: format!(
+                "Antipaladin level {level} Detect Good: at-will spell-like ability, caster \
+                 level {cl} (a pure class-level pass-through)"
+            ),
+        });
+    }
+    if let Some(uses) = af::smite_good_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.smite_good.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Antipaladin level {level} Smite Good: {uses} uses per day \
+                 (min((level+2)/3, 7))"
+            ),
+        });
+    }
+    if let Some(bonus) = af::smite_good_attack_and_ac_bonus(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.smite_good.attack_and_ac_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Antipaladin level {level} Smite Good: +{bonus} on attack rolls against the \
+                 smite's target and +{bonus} deflection bonus to AC against it (Charisma \
+                 modifier {cha}, floored at 0; one token sets both)"
+            ),
+        });
+    }
+    if let Some(dmg) = af::smite_good_damage_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.smite_good.damage_bonus".to_owned(),
+            value: dmg,
+            detail: format!(
+                "Antipaladin level {level} Smite Good: +{dmg} damage on the smite's target \
+                 (+{} against a good outsider, good-aligned dragon, or good cleric/paladin -- \
+                 the record's own %4 = SmiteGoodDamageBonus*2)",
+                dmg * 2
+            ),
+        });
+    }
 }
 
 /// Grounds Cryptic's six magnitude-bearing features
 /// (`rules_tables::ultimate_psionics::cryptic_features`) — SD-32 card 11
 /// (T12), the second class attempted end-to-end after Antipaladin.
-fn ground_cryptic_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+fn ground_cryptic_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
     use crate::rules_core::rules_tables::ultimate_psionics::cryptic_features as cf;
+    let int_mod = ability_modifiers.intelligence;
+    let int_score = input.chosen.ability_scores.intelligence;
+
+    // SD-32 card 11 (T12) follow-up: `Cryptic Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = cf::cryptic_power_points_total(level, int_mod) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.cryptic_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Cryptic level {level} Cryptic Manifesting: {v} power points (base ladder + \
+                 (Intelligence modifier {int_mod} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = cf::cryptic_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.cryptic_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Cryptic level {level} Cryptic Manifesting: {v} powers known (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = cf::cryptic_max_power_level(level, int_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.cryptic_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Cryptic level {level} Cryptic Manifesting: maximum power level known {v} \
+                 (min(6, floor((level+2)/3), Intelligence score {int_score} - 10))"
+            ),
+        });
+    }
 
     if let Some(dr) = cf::altered_defense_damage_reduction(level) {
         explanations.push(ComputationExplanation {
@@ -27080,12 +27177,46 @@ fn ground_cryptic_class_features(level: u8, explanations: &mut Vec<ComputationEx
 /// (`rules_tables::ultimate_psionics::dread_features`) — SD-32 card 11
 /// (T12), the third class attempted end-to-end.
 fn ground_dread_class_features(
+    input: &CharacterInput,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::rules_tables::ultimate_psionics::dread_features as df;
     let cha = ability_modifiers.charisma;
+    let cha_score = input.chosen.ability_scores.charisma;
+
+    // SD-32 card 11 (T12) follow-up: `Dread Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = df::dread_power_points_total(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.dread_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Dread level {level} Dread Manifesting: {v} power points (base ladder + \
+                 (Charisma modifier {cha} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = df::dread_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.dread_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Dread level {level} Dread Manifesting: {v} powers known (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = df::dread_max_power_level(level, cha_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.dread_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Dread level {level} Dread Manifesting: maximum power level known {v} \
+                 (min(6, floor((level+2)/3), Charisma score {cha_score} - 10))"
+            ),
+        });
+    }
 
     if let Some(dmg) = df::devastating_touch_bonus_damage(level) {
         explanations.push(ComputationExplanation {
@@ -27150,12 +27281,52 @@ fn ground_dread_class_features(
 /// (`rules_tables::ultimate_psionics::marksman_features`) — SD-32 card 11
 /// (T12), the fourth class attempted end-to-end.
 fn ground_marksman_class_features(
+    input: &CharacterInput,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::rules_tables::ultimate_psionics::marksman_features as mf;
     let dex = ability_modifiers.dexterity;
+    let wis = ability_modifiers.wisdom;
+    let wis_score = input.chosen.ability_scores.wisdom;
+
+    // SD-32 card 11 (T12) follow-up: `Marksman Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = mf::marksman_power_points_total(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.marksman_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Marksman level {level} Marksman Manifesting: {v} power points (base ladder + \
+                 (Wisdom modifier {wis} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = mf::marksman_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.marksman_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Marksman level {level} Marksman Manifesting: {v} powers known \
+                 (min(9,floor((3*level-1)/4)), plus floor((level-13)/2) summed in once \
+                 level >= 15 -- PCGen's documented multiple-BONUS:VAR-on-one-target SUM \
+                 semantics, bonus_stack_reader.rs)"
+            ),
+        });
+    }
+    if let Some(v) = mf::marksman_max_power_level(level, wis_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.marksman_manifesting.max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Marksman level {level} Marksman Manifesting: maximum power level known {v} \
+                 (0 below level 2; min(4, floor((level+3)/4), Wisdom score {wis_score} - 10) \
+                 from level 2)"
+            ),
+        });
+    }
 
     if let Some(uses) = mf::wind_reader_uses_per_day(level) {
         explanations.push(ComputationExplanation {
@@ -27213,10 +27384,53 @@ fn ground_marksman_class_features(
 /// (`rules_tables::ultimate_psionics::psychic_warrior_features`) — SD-32
 /// card 11 (T12), the fifth class attempted end-to-end.
 fn ground_psychic_warrior_class_features(
+    input: &CharacterInput,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::rules_tables::ultimate_psionics::psychic_warrior_features as pwf;
+    let wis = ability_modifiers.wisdom;
+    let wis_score = input.chosen.ability_scores.wisdom;
+
+    // SD-32 card 11 (T12) follow-up: `Psychic Warrior Manifesting`'s
+    // shape-3 magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = pwf::psychic_warrior_power_points_total(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+power_points"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic Warrior level {level} Psychic Warrior Manifesting: {v} power \
+                 points (base ladder + (Wisdom modifier {wis} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = pwf::psychic_warrior_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+powers_known"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic Warrior level {level} Psychic Warrior Manifesting: {v} powers \
+                 known (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = pwf::psychic_warrior_max_power_level(level, wis_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic Warrior level {level} Psychic Warrior Manifesting: maximum power \
+                 level known {v} (min(6, floor((level+2)/3), Wisdom score {wis_score} - 10))"
+            ),
+        });
+    }
 
     if let Some(lvl) = pwf::warriors_path_level(level) {
         explanations.push(ComputationExplanation {
@@ -27380,6 +27594,7 @@ fn ground_aegis_class_features(
 /// (`rules_tables::ultimate_psionics::tactician_features`) — SD-32 card 11
 /// (T12), cycle 3, the seventh class of `ultimate_psionics` attempted.
 fn ground_tactician_class_features(
+    input: &CharacterInput,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
@@ -27387,6 +27602,44 @@ fn ground_tactician_class_features(
     use crate::rules_core::rules_tables::ultimate_psionics::tactician_features as tf;
     let int = ability_modifiers.intelligence;
     let cha = ability_modifiers.charisma;
+    let int_score = input.chosen.ability_scores.intelligence;
+
+    // SD-32 card 11 (T12) follow-up: `Tactician Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census. Same
+    // full-manifester `BasePowerPoints` ladder as `psion` itself.
+    if let Some(v) = tf::tactician_power_points_total(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.tactician_manifesting.power_points"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Tactician level {level} Tactician Manifesting: {v} power points (base \
+                 ladder + (Intelligence modifier {int} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = tf::tactician_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.tactician_manifesting.powers_known"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Tactician level {level} Tactician Manifesting: {v} powers known \
+                 (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = tf::tactician_max_power_level(level, int_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.tactician_manifesting.max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Tactician level {level} Tactician Manifesting: maximum power level known \
+                 {v} (min(9, floor((level+1)/2), Intelligence score {int_score} - 10))"
+            ),
+        });
+    }
 
     if let Some(minds) = tf::collective_minds(level, int) {
         explanations.push(ComputationExplanation {
@@ -27454,12 +27707,49 @@ fn ground_tactician_class_features(
 /// (`rules_tables::ultimate_psionics::vitalist_features`) — SD-32 card 11
 /// (T12), cycle 3, the eighth class of `ultimate_psionics` attempted.
 fn ground_vitalist_class_features(
+    input: &CharacterInput,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::rules_tables::ultimate_psionics::vitalist_features as vf;
     let wis = ability_modifiers.wisdom;
+    let wis_score = input.chosen.ability_scores.wisdom;
+
+    // SD-32 card 11 (T12) follow-up: `Vitalist Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census. Same
+    // full-manifester `BasePowerPoints` ladder as `psion`/Tactician.
+    if let Some(v) = vf::vitalist_power_points_total(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.vitalist_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Vitalist level {level} Vitalist Manifesting: {v} power points (base ladder \
+                 + (Wisdom modifier {wis} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vitalist_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.vitalist_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Vitalist level {level} Vitalist Manifesting: {v} powers known \
+                 (1 + floor((level+1)/2))"
+            ),
+        });
+    }
+    if let Some(v) = vf::vitalist_max_power_level(level, wis_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.vitalist_manifesting.max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Vitalist level {level} Vitalist Manifesting: maximum power level known {v} \
+                 (min(9, floor((level+1)/2), Wisdom score {wis_score} - 10))"
+            ),
+        });
+    }
 
     if let Some(minds) = vf::collective_minds(level, wis) {
         explanations.push(ComputationExplanation {
@@ -27527,8 +27817,49 @@ fn ground_vitalist_class_features(
 /// (`rules_tables::ultimate_psionics::wilder_features`) — SD-32 card 11
 /// (T12), cycle 3, the ninth and last class of `ultimate_psionics`
 /// attempted, closing the whole source book.
-fn ground_wilder_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+fn ground_wilder_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
     use crate::rules_core::rules_tables::ultimate_psionics::wilder_features as wf;
+    let cha = ability_modifiers.charisma;
+    let cha_score = input.chosen.ability_scores.charisma;
+
+    // SD-32 card 11 (T12) follow-up: `Wilder Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census. Same
+    // full-manifester `BasePowerPoints` ladder as `psion`/Tactician/Vitalist.
+    if let Some(v) = wf::wilder_power_points_total(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wilder_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Wilder level {level} Wilder Manifesting: {v} power points (base ladder + \
+                 (Charisma modifier {cha} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = wf::wilder_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wilder_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Wilder level {level} Wilder Manifesting: {v} powers known \
+                 (1 + floor(level/2))"
+            ),
+        });
+    }
+    if let Some(v) = wf::wilder_max_power_level(level, cha_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wilder_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Wilder level {level} Wilder Manifesting: maximum power level known {v} \
+                 (min(9, floor((level+1)/2), Charisma score {cha_score} - 10))"
+            ),
+        });
+    }
 
     if let Some(pct) = wf::psychic_enervation_percent(level) {
         explanations.push(ComputationExplanation {
@@ -28274,9 +28605,15 @@ fn ground_vigilante_class_features(
 /// "7 classes need a third shape" false lead, not a repeat of that
 /// case-sensitivity bug) and for the discipline-choice pool population
 /// (32 magnitude leaves) this function deliberately does not attempt.
-fn ground_psion_class_features(level: u8, ability_modifiers: &AbilityModifiers, explanations: &mut Vec<ComputationExplanation>) {
+fn ground_psion_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
     use crate::rules_core::rules_tables::ultimate_psionics::psion_features as pf;
     let int_mod = ability_modifiers.intelligence;
+    let int_score = input.chosen.ability_scores.intelligence;
 
     if let Some(v) = pf::psion_power_points_total(level, int_mod) {
         explanations.push(ComputationExplanation {
@@ -28285,6 +28622,30 @@ fn ground_psion_class_features(level: u8, ability_modifiers: &AbilityModifiers, 
             detail: format!(
                 "Psion level {level} Psion Manifesting: {v} power points (base ladder + \
                  (Intelligence modifier {int_mod} * level)/2)"
+            ),
+        });
+    }
+    // SD-32 T12 follow-up: closes the previously-escalated PsionPowersKnown/
+    // PsionMaxPowerLevel ambiguity -- see `psion_features`'s own doc comment.
+    if let Some(v) = pf::psion_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psion.psion_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Psion level {level} Psion Manifesting: {v} powers known \
+                 (min(21,2*level+1), plus floor((level-10)*3/2) summed in once level >= 11 -- \
+                 PCGen's documented multiple-BONUS:VAR-on-one-target SUM semantics, \
+                 bonus_stack_reader.rs)"
+            ),
+        });
+    }
+    if let Some(v) = pf::psion_max_power_level(level, int_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psion.psion_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Psion level {level} Psion Manifesting: maximum power level known {v} \
+                 (min(9, floor((level+1)/2), Intelligence score {int_score} - 10))"
             ),
         });
     }
@@ -48957,6 +49318,16 @@ mod untabled_base_class_feature_roster_wiring_tests {
             value("class_feature.untabled.antipaladin.unholy_champion.banishment_caster_level"),
             20,
         );
+        // SD-32 card 11 (T12) follow-up: three magnitude-bearing records
+        // the `psion` cycle's widened census surfaced on this class.
+        assert_eq!(value("class_feature.untabled.antipaladin.aura_of_evil.strength_level"), 20);
+        assert_eq!(value("class_feature.untabled.antipaladin.detect_good.caster_level"), 20);
+        assert_eq!(value("class_feature.untabled.antipaladin.smite_good.uses_per_day"), 7); // capped
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.smite_good.attack_and_ac_bonus"),
+            3,
+        );
+        assert_eq!(value("class_feature.untabled.antipaladin.smite_good.damage_bonus"), 20);
     }
 
     /// Below every grant level (a level-1 Antipaladin, one below Touch of
@@ -48964,16 +49335,44 @@ mod untabled_base_class_feature_roster_wiring_tests {
     /// fire -- the "absent means not yet granted" contract, proven live at
     /// the real dispatch site.
     #[test]
-    fn antipaladin_level_1_has_none_of_the_seven_magnitudes_yet() {
+    fn antipaladin_level_1_has_none_of_the_original_seven_magnitudes_yet() {
+        // The ORIGINAL seven Antipaladin magnitudes (Touch of Corruption,
+        // Unholy Resilience, Cruelty, Channel Negative Energy, Fiendish
+        // Boon, Aura of Depravity, Unholy Champion) are all gated at level
+        // >= 2. SD-32 card 11 (T12)'s widened-census follow-up cycle added
+        // three MORE magnitudes (Aura of Evil, Detect Good, Smite Good)
+        // whose own roster `min_level` is 1 -- those legitimately DO appear
+        // at level 1 now, so this test (renamed from
+        // `..._has_none_of_the_seven_magnitudes_yet`, which the new grants
+        // made stale) asserts the original seven's absence specifically,
+        // not a blanket absence of every `antipaladin.` id.
         let input = antipaladin_input(1);
         let computation = compute_pilot_base_chassis(&input);
         let ids = explanation_ids(&computation);
+        const ORIGINAL_SEVEN_PREFIXES: [&str; 7] = [
+            "class_feature.untabled.antipaladin.touch_of_corruption.",
+            "class_feature.untabled.antipaladin.unholy_resilience.",
+            "class_feature.untabled.antipaladin.cruelty.",
+            "class_feature.untabled.antipaladin.channel_negative_energy.",
+            "class_feature.untabled.antipaladin.fiendish_boon.",
+            "class_feature.untabled.antipaladin.aura_of_depravity.",
+            "class_feature.untabled.antipaladin.unholy_champion.",
+        ];
         assert!(
-            ids.iter().all(|id| !id.starts_with("class_feature.untabled.antipaladin.")
-                || id.starts_with("class_feature.untabled.antipaladin.corpus_record.")),
-            "level-1 Antipaladin must have no magnitude explanations yet, only (if any) roster \
-             identity records: {ids:?}"
+            ids.iter().all(|id| !ORIGINAL_SEVEN_PREFIXES.iter().any(|p| id.starts_with(p))),
+            "level-1 Antipaladin must have none of the original seven (all min_level >= 2) \
+             magnitude explanations yet: {ids:?}"
         );
+        // The three level-1-gated follow-up magnitudes DO appear.
+        for id in [
+            "class_feature.untabled.antipaladin.aura_of_evil.strength_level",
+            "class_feature.untabled.antipaladin.detect_good.caster_level",
+            "class_feature.untabled.antipaladin.smite_good.uses_per_day",
+            "class_feature.untabled.antipaladin.smite_good.attack_and_ac_bonus",
+            "class_feature.untabled.antipaladin.smite_good.damage_bonus",
+        ] {
+            assert!(ids.contains(&id.to_owned()), "expected {id} at level 1, got: {ids:?}");
+        }
     }
 
     /// SD-32 card 11 (T12), classes 2-6 of the group attempted after
@@ -49015,6 +49414,22 @@ mod untabled_base_class_feature_roster_wiring_tests {
             value("class_feature.untabled.cryptic.unchanging_pattern.power_resistance"),
             32, // 12+20
         );
+        // SD-32 card 11 (T12) follow-up: `Cryptic Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let int_score = input.chosen.ability_scores.intelligence;
+        let int_mod = (int_score - 10) / 2;
+        assert_eq!(
+            value("class_feature.untabled.cryptic.cryptic_manifesting.power_points"),
+            12 + (int_mod * 20) / 2,
+        );
+        assert_eq!(
+            value("class_feature.untabled.cryptic.cryptic_manifesting.powers_known"),
+            20,
+        );
+        assert_eq!(
+            value("class_feature.untabled.cryptic.cryptic_manifesting.max_power_level"),
+            ((20 + 2) / 3).min(6).min(int_score - 10),
+        );
     }
 
     #[test]
@@ -49046,6 +49461,18 @@ mod untabled_base_class_feature_roster_wiring_tests {
             3, // charisma modifier only
         );
         assert_eq!(value("class_feature.untabled.dread.fear_incarnate.damage_reduction"), 10);
+        // SD-32 card 11 (T12) follow-up: `Dread Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let cha_score = input.chosen.ability_scores.charisma;
+        assert_eq!(
+            value("class_feature.untabled.dread.dread_manifesting.power_points"),
+            12 + (3 * 20) / 2,
+        );
+        assert_eq!(value("class_feature.untabled.dread.dread_manifesting.powers_known"), 20);
+        assert_eq!(
+            value("class_feature.untabled.dread.dread_manifesting.max_power_level"),
+            ((20 + 2) / 3).min(6).min(cha_score - 10),
+        );
     }
 
     #[test]
@@ -49073,6 +49500,21 @@ mod untabled_base_class_feature_roster_wiring_tests {
             value("class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus"),
             1,
         );
+        // SD-32 card 11 (T12) follow-up: `Marksman Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let wis_score = input.chosen.ability_scores.wisdom; // fixture default 12, modifier +1
+        assert_eq!(
+            value("class_feature.untabled.marksman.marksman_manifesting.power_points"),
+            6 + (1 * 20) / 2, // ladder value 6 + (WIS modifier 1 * level)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.marksman.marksman_manifesting.powers_known"),
+            12, // min(9,floor(59/4)=14)=9, + floor(7/2)=3 -> 12
+        );
+        assert_eq!(
+            value("class_feature.untabled.marksman.marksman_manifesting.max_power_level"),
+            ((20 + 3) / 4).min(4).min(wis_score - 10),
+        );
     }
 
     #[test]
@@ -49096,6 +49538,31 @@ mod untabled_base_class_feature_roster_wiring_tests {
         assert_eq!(
             value("class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day"),
             1,
+        );
+        // SD-32 card 11 (T12) follow-up: `Psychic Warrior Manifesting`'s
+        // three shape-3 magnitudes, proven live through the real dispatch
+        // site.
+        let wis_score = input.chosen.ability_scores.wisdom; // fixture default 12, modifier +1
+        assert_eq!(
+            value(
+                "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+power_points"
+            ),
+            12 + (1 * 20) / 2, // ladder value 12 + (WIS modifier 1 * level)/2
+        );
+        assert_eq!(
+            value(
+                "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+powers_known"
+            ),
+            20,
+        );
+        assert_eq!(
+            value(
+                "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+max_power_level"
+            ),
+            ((20 + 2) / 3).min(6).min(wis_score - 10),
         );
     }
 
@@ -49208,6 +49675,21 @@ mod untabled_base_class_feature_roster_wiring_tests {
             value("class_feature.untabled.tactician.master_strategist.bonus"),
             3, // intelligence modifier only
         );
+        // SD-32 card 11 (T12) follow-up: `Tactician Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let int_score = input.chosen.ability_scores.intelligence;
+        assert_eq!(
+            value("class_feature.untabled.tactician.tactician_manifesting.power_points"),
+            32 + (3 * 20) / 2,
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.tactician_manifesting.powers_known"),
+            20,
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.tactician_manifesting.max_power_level"),
+            ((20 + 1) / 2).min(9).min(int_score - 10),
+        );
     }
 
     #[test]
@@ -49245,6 +49727,21 @@ mod untabled_base_class_feature_roster_wiring_tests {
             value("class_feature.untabled.vitalist.steal_life.dc"),
             23, // 10+3+10
         );
+        // SD-32 card 11 (T12) follow-up: `Vitalist Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let wis_score = input.chosen.ability_scores.wisdom;
+        assert_eq!(
+            value("class_feature.untabled.vitalist.vitalist_manifesting.power_points"),
+            32 + (3 * 20) / 2,
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.vitalist_manifesting.powers_known"),
+            11, // 1+(21/2)
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.vitalist_manifesting.max_power_level"),
+            ((20 + 1) / 2).min(9).min(wis_score - 10),
+        );
     }
 
     #[test]
@@ -49273,6 +49770,21 @@ mod untabled_base_class_feature_roster_wiring_tests {
         assert_eq!(
             value("class_feature.untabled.wilder.surging_euphoria.duration_rounds"),
             6, // mirrors wild_surge bonus
+        );
+        // SD-32 card 11 (T12) follow-up: `Wilder Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let cha_score = input.chosen.ability_scores.charisma; // fixture default 8, modifier -1
+        assert_eq!(
+            value("class_feature.untabled.wilder.wilder_manifesting.power_points"),
+            32 + (-1 * 20) / 2, // ladder value 32 + (CHA modifier -1 * level)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.wilder_manifesting.powers_known"),
+            11, // 1+(20/2)
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.wilder_manifesting.max_power_level"),
+            ((20 + 1) / 2).min(9).min(cha_score - 10),
         );
     }
 

@@ -141,6 +141,76 @@ pub fn unholy_champion_banishment_caster_level(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
+// --- SD-32 card 11 (T12) follow-up: three magnitude-bearing records the
+// `psion` cycle's widened census surfaced on this class after cycle 4's
+// receipt had reported it "108 of 108... complete" (decisions.md §17a —
+// re-derive, don't inherit a prior census's confident total). All three are
+// mirrors of the CRB Paladin's Aura of Good/Detect Evil/Smite Evil, same
+// construction discipline as this module's other seven.
+
+/// `aura_of_evil.json`'s own `BONUS:VAR|AuraEvilLVL|AlignmentAuraLVL` is a
+/// pure level pass-through (`AlignmentAuraLVL` is never set to anything but
+/// the antipaladin's own class level on a single-classed character) that
+/// selects which of the record's four `PREVAR`-gated `DESC` tiers displays
+/// (faint at 1, moderate at 2-4, strong at 5-10, overwhelming at 11+) — the
+/// same "ability_modifier-only... pure pass-through" shape cycle 4 already
+/// closed for Vitalist's Health Sense. `None` below level 1 (the roster's
+/// own `min_level` for this key).
+pub fn aura_of_evil_strength_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `detect_good.json`'s own `SPELLS:Class|TIMES=ATWILL|
+/// CASTERLEVEL=DetectGoodLVL|Detect Good,11+WIS` token: `DetectGoodLVL` is
+/// the antipaladin's own class level (no other producer sets it), used as
+/// the at-will spell-like ability's caster level. `None` below level 1.
+pub fn detect_good_caster_level(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// `smite_good.json`'s own `BONUS:VAR|SmiteGoodTimes|
+/// min((SmiteGoodLVL+2)/3,7)`: uses per day, one at level 1, growing every
+/// three levels, capped at 7 (reached at level 19 — the same growth rate as
+/// this class's own Touch of Corruption / the Paladin's Smite Evil,
+/// `1+(level-1)/3`, algebraically identical for level >= 1). `None` below
+/// level 1 (the roster's own `min_level` for this key).
+pub fn smite_good_uses_per_day(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(((i16::from(level) + 2) / 3).min(7))
+}
+
+/// `smite_good.json`'s own `BONUS:VAR|SmiteGoodAttackBonus,SmiteGoodACBonus|
+/// max(CHA,0)`: one formula sets both the attack-roll bonus and the
+/// deflection AC bonus against the smite's target, floored at 0. `None`
+/// below level 1.
+pub fn smite_good_attack_and_ac_bonus(level: u8, charisma_modifier: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(charisma_modifier.max(0))
+}
+
+/// `smite_good.json`'s own `BONUS:VAR|SmiteGoodDamageBonus|SmiteGoodLVL`:
+/// damage-roll bonus equal to antipaladin level (doubled against a good
+/// outsider/good-aligned dragon/good cleric-or-paladin, the record's own
+/// `%4` = `SmiteGoodDamageBonus*2` DESC substitution — computed at the call
+/// site from this same base, not a second independent token). `None` below
+/// level 1.
+pub fn smite_good_damage_bonus(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -212,5 +282,41 @@ mod tests {
         // the RAW-correct value instead of literally reproducing that.
         assert_eq!(unholy_champion_banishment_caster_level(20), Some(20));
         assert_eq!(unholy_champion_banishment_caster_level(19), None);
+    }
+
+    #[test]
+    fn aura_of_evil_strength_is_the_raw_class_level_from_level_one() {
+        assert_eq!(aura_of_evil_strength_level(1), Some(1));
+        assert_eq!(aura_of_evil_strength_level(11), Some(11));
+        assert_eq!(aura_of_evil_strength_level(0), None);
+    }
+
+    #[test]
+    fn detect_good_caster_level_is_the_raw_class_level_from_level_one() {
+        assert_eq!(detect_good_caster_level(1), Some(1));
+        assert_eq!(detect_good_caster_level(20), Some(20));
+        assert_eq!(detect_good_caster_level(0), None);
+    }
+
+    #[test]
+    fn smite_good_uses_per_day_grows_every_three_levels_and_caps_at_seven() {
+        assert_eq!(smite_good_uses_per_day(1), Some(1));
+        assert_eq!(smite_good_uses_per_day(4), Some(2));
+        assert_eq!(smite_good_uses_per_day(19), Some(7));
+        assert_eq!(smite_good_uses_per_day(20), Some(7));
+        assert_eq!(smite_good_uses_per_day(0), None);
+    }
+
+    #[test]
+    fn smite_good_attack_and_ac_bonus_floors_a_negative_charisma_modifier_at_zero() {
+        assert_eq!(smite_good_attack_and_ac_bonus(1, -2), Some(0));
+        assert_eq!(smite_good_attack_and_ac_bonus(1, 4), Some(4));
+        assert_eq!(smite_good_attack_and_ac_bonus(0, 4), None);
+    }
+
+    #[test]
+    fn smite_good_damage_bonus_equals_class_level_and_the_call_site_doubles_it() {
+        assert_eq!(smite_good_damage_bonus(5), Some(5));
+        assert_eq!(smite_good_damage_bonus(0), None);
     }
 }

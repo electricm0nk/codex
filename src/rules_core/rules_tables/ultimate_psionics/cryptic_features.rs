@@ -75,6 +75,49 @@ pub fn unchanging_pattern_power_resistance(level: u8) -> Option<i16> {
     Some(12 + i16::from(level))
 }
 
+// --- SD-32 card 11 (T12) follow-up: `Cryptic Manifesting`'s three
+// magnitudes, the same shape-3 grant convention `psion_features` names,
+// surfaced by that cycle's widened census. `cryptic_power_points.json`'s
+// `BasePowerPoints` ladder ("highest satisfied `PREVARGTEQ:CrypticPPL,N`
+// threshold wins", same idiom `psion_features::psion_power_points_total`
+// documents) plus `BonusPowerPoints|(CrypticPPStat*CrypticPPL)/2` (`
+// CrypticPPStat = CrypticPrimeStat` = Intelligence modifier).
+// `cryptic_manifesting_variables.json`'s `CrypticPowersKnown` has a single
+// unconditional `BONUS:VAR|CrypticPowersKnown|CrypticPKL` term (no
+// combination question). `CrypticMaxPowerLevel` has a single term
+// `min(6,floor((CrypticMPL+2)/3),CrypticPLStatScore-10)`
+// (`CrypticPLStatScore = INTSCORE`, the raw ability score, not modifier).
+
+pub fn cryptic_power_points_total(level: u8, int_mod: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let base: i16 = match level {
+        1 => 1,
+        2 => 1,
+        3..=5 => 2,
+        6..=10 => 4,
+        11..=15 => 8,
+        _ => 12, // 16..=20
+    };
+    Some(base + (int_mod * i16::from(level)) / 2)
+}
+
+pub fn cryptic_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+pub fn cryptic_max_power_level(level: u8, int_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    Some(((mpl + 2) / 3).min(6).min(int_score - 10))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -120,5 +163,27 @@ mod tests {
         assert_eq!(unchanging_pattern_power_resistance(18), Some(30));
         assert_eq!(unchanging_pattern_power_resistance(20), Some(32));
         assert_eq!(unchanging_pattern_power_resistance(17), None);
+    }
+
+    #[test]
+    fn cryptic_power_points_total_uses_the_base_ladder_and_int_bonus() {
+        assert_eq!(cryptic_power_points_total(1, 0), Some(1));
+        assert_eq!(cryptic_power_points_total(20, 0), Some(12));
+        assert_eq!(cryptic_power_points_total(5, 3), Some(2 + (3 * 5) / 2));
+        assert_eq!(cryptic_power_points_total(0, 0), None);
+    }
+
+    #[test]
+    fn cryptic_powers_known_equals_class_level() {
+        assert_eq!(cryptic_powers_known(1), Some(1));
+        assert_eq!(cryptic_powers_known(20), Some(20));
+        assert_eq!(cryptic_powers_known(0), None);
+    }
+
+    #[test]
+    fn cryptic_max_power_level_is_capped_by_the_lowest_of_three_terms() {
+        assert_eq!(cryptic_max_power_level(1, 10), Some(0)); // min(6,1,0)
+        assert_eq!(cryptic_max_power_level(20, 20), Some(6));
+        assert_eq!(cryptic_max_power_level(0, 20), None);
     }
 }

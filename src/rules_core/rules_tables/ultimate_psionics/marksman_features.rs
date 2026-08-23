@@ -71,6 +71,55 @@ pub fn ranged_specialist_critical_multiplier_bonus(level: u8) -> Option<i16> {
     Some(1)
 }
 
+// --- SD-32 card 11 (T12) follow-up: `Marksman Manifesting`'s three
+// magnitudes, the same shape-3 grant convention `psion_features` names,
+// surfaced by that cycle's widened census. `marksman_power_points.json`'s
+// `BasePowerPoints` ladder ("highest satisfied threshold wins") is a
+// slower (1/6-manifester) progression than the full-manifester classes.
+// `MarksmanPowersKnown` has TWO `BONUS:VAR` terms sharing one target
+// (`min(9,floor((3*MarksmanPKL-1)/4))` unconditional, plus
+// `floor((MarksmanLVL-13)/2)` once `MarksmanPKL>=15`) -- resolved by the
+// same SUM semantics `psion_features::psion_powers_known` documents
+// (`bonus_stack_reader.rs`, citing `pcgen/core/PlayerCharacter.java:2136`).
+// `MarksmanMaxPowerLevel`'s single term carries its own
+// `PREVARGTEQ:MarksmanMPL,2` gate -- 0 below level 2.
+
+pub fn marksman_power_points_total(level: u8, wis_mod: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let base: i16 = match level {
+        1..=3 => 1,
+        4..=7 => 2,
+        8..=10 => 3,
+        11..=13 => 4,
+        14..=17 => 5,
+        _ => 6, // 18..=20
+    };
+    Some(base + (wis_mod * i16::from(level)) / 2)
+}
+
+pub fn marksman_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let pkl = i16::from(level);
+    let base = ((3 * pkl - 1) / 4).min(9);
+    let bonus = if pkl >= 15 { (pkl - 13) / 2 } else { 0 };
+    Some(base + bonus)
+}
+
+pub fn marksman_max_power_level(level: u8, wis_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    if mpl < 2 {
+        return Some(0);
+    }
+    Some(((mpl + 3) / 4).min(4).min(wis_score - 10))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -102,5 +151,35 @@ mod tests {
     fn ranged_specialist_is_a_flat_plus_one_at_the_capstone() {
         assert_eq!(ranged_specialist_critical_multiplier_bonus(19), Some(1));
         assert_eq!(ranged_specialist_critical_multiplier_bonus(18), None);
+    }
+
+    #[test]
+    fn marksman_power_points_total_uses_the_slower_ladder_and_wis_bonus() {
+        assert_eq!(marksman_power_points_total(1, 0), Some(1));
+        assert_eq!(marksman_power_points_total(20, 0), Some(6));
+        assert_eq!(marksman_power_points_total(0, 0), None);
+    }
+
+    #[test]
+    fn marksman_powers_known_only_the_base_term_below_level_fifteen() {
+        assert_eq!(marksman_powers_known(1), Some(0)); // (3-1)/4=0
+        assert_eq!(marksman_powers_known(14), Some(9)); // min(9,(41)/4=10)=9
+        assert_eq!(marksman_powers_known(0), None);
+    }
+
+    #[test]
+    fn marksman_powers_known_sums_both_terms_from_level_fifteen() {
+        // Level 15: base min(9,floor(44/4)=11)=9, bonus floor(2/2)=1 -> 10.
+        assert_eq!(marksman_powers_known(15), Some(10));
+        // Level 20: base 9 (already saturated), bonus floor(7/2)=3 -> 12.
+        assert_eq!(marksman_powers_known(20), Some(12));
+    }
+
+    #[test]
+    fn marksman_max_power_level_is_zero_below_level_two_then_capped() {
+        assert_eq!(marksman_max_power_level(1, 20), Some(0));
+        assert_eq!(marksman_max_power_level(2, 20), Some(1)); // min(4,floor(5/4)=1,10)
+        assert_eq!(marksman_max_power_level(20, 20), Some(4)); // min(4,5,10)
+        assert_eq!(marksman_max_power_level(0, 20), None);
     }
 }
