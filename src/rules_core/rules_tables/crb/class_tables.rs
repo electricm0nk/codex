@@ -46,8 +46,13 @@ impl ClassId {
     ];
 }
 
+/// `pub(crate)` (rather than private) so
+/// `pilot_compute::untabled_base_class_chassis` (SD-32 Epic 3's
+/// 20-real-base-classes-without-tables cycle) can reuse this exact
+/// classification and the two formula functions below rather than
+/// re-declaring a second, independently-maintained copy of either.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum BabProgression {
+pub(crate) enum BabProgression {
     Full,
     ThreeQuarter,
     Half,
@@ -145,7 +150,8 @@ pub struct ClassTableRow {
     pub will_save: i16,
 }
 
-fn base_attack_bonus(bab: BabProgression, level: u8) -> i16 {
+/// `pub(crate)` -- see `BabProgression`'s own doc comment for why.
+pub(crate) fn base_attack_bonus(bab: BabProgression, level: u8) -> i16 {
     let level = level as i16;
     match bab {
         BabProgression::Full => level,
@@ -154,7 +160,8 @@ fn base_attack_bonus(bab: BabProgression, level: u8) -> i16 {
     }
 }
 
-fn save_bonus(level: u8, good: bool) -> i16 {
+/// `pub(crate)` -- see `BabProgression`'s own doc comment for why.
+pub(crate) fn save_bonus(level: u8, good: bool) -> i16 {
     let level = level as i16;
     if good {
         level / 2 + 2

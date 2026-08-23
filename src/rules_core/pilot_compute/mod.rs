@@ -172,6 +172,7 @@ pub(crate) mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
 pub mod prestige_class_entry_gate;
+pub mod untabled_base_class_chassis;
 /// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
 /// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
 /// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
@@ -26004,6 +26005,71 @@ fn compute_class_chassis(
             explanations,
             diagnostics,
         )
+    } else if let Some(row) =
+        untabled_base_class_chassis::resolve(&class_level.class_id, class_level.level)
+    {
+        // SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001), second
+        // half: a real base class (Aegis, Antipaladin, Cryptic, Dread,
+        // Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion,
+        // Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist,
+        // Tactician, Vigilante, Vitalist, or Wilder) that had no dispatch
+        // arm anywhere in this function until this cycle. Unlike the
+        // prestige-entry-gate arm below, this one DOES produce a real
+        // chassis magnitude -- base attack bonus and all three base saves,
+        // computed from `untabled_base_class_chassis::resolve`'s
+        // corpus-derived registry via the same
+        // `rules_tables::crb::class_tables` formulas the CRB table itself
+        // uses. See `untabled_base_class_chassis`'s own doc comment for the
+        // 18-vs-20 population correction and the re-derive command.
+        let base_attack_bonus = row.base_attack_bonus;
+        let base_saves = BaseSaves {
+            fortitude: row.fort_save,
+            reflex: row.ref_save,
+            will: row.will_save,
+        };
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_attack_bonus".to_owned(),
+            value: base_attack_bonus,
+            detail: format!(
+                "{} ({}) level {} base attack bonus from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {base_attack_bonus}",
+                row.display_name, class_level.class_id, class_level.level
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.fortitude".to_owned(),
+            value: base_saves.fortitude,
+            detail: format!(
+                "{} ({}) level {} base Fortitude save from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.reflex".to_owned(),
+            value: base_saves.reflex,
+            detail: format!(
+                "{} ({}) level {} base Reflex save from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.will".to_owned(),
+            value: base_saves.will,
+            detail: format!(
+                "{} ({}) level {} base Will save from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.will
+            ),
+        });
+
+        Some((base_attack_bonus, base_saves))
     } else if let Some(gate) =
         prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
     {
@@ -47116,6 +47182,93 @@ mod prestige_class_entry_gate_wiring_tests {
             .unwrap_or_else(|| panic!("expected met entry-gate diagnostic: {:?}", computation.diagnostics));
         assert!(message.contains("Arcane Archer"));
         assert!(diagnostic(&computation, "class_chassis.prestige_entry_gate.unmet").is_none());
+    }
+}
+
+/// SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001), second half:
+/// proves the 20-real-base-classes-without-tables registry really runs
+/// through the real `compute_pilot_base_chassis` → `compute_class_chassis`
+/// call site (not a direct unit call on `untabled_base_class_chassis`
+/// alone), for a real corpus-derived class, `class:kineticist`.
+#[cfg(test)]
+mod untabled_base_class_chassis_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn kineticist_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:kineticist".to_owned();
+        input.chosen.class_levels[0].level = level;
+        input
+    }
+
+    fn diagnostic<'a>(
+        computation: &'a PilotBaseChassisComputation,
+        id: &str,
+    ) -> Option<&'a str> {
+        computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == id)
+            .map(|d| d.message.as_str())
+    }
+
+    /// RED, confirmed manually before this wiring landed: the `else { None
+    /// }` arm produced `base_attack_bonus == 0` and a bare
+    /// `class_chassis.unsupported` diagnostic for a `class:kineticist`
+    /// single-class input -- the class was recognized by nothing at all.
+    /// GREEN below: a real chassis magnitude reaches the top-level
+    /// computation, and `class_chassis.unsupported` no longer fires for
+    /// this class.
+    #[test]
+    fn kineticist_level_20_reaches_a_real_base_attack_bonus_and_saves() {
+        let input = kineticist_input(20);
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(
+            computation.base_attack_bonus, 15,
+            "Kineticist level 20 ThreeQuarter BAB: (20*3)/4 = 15, from the real \
+             compute_pilot_base_chassis -> compute_class_chassis call site"
+        );
+        assert_eq!(computation.base_saves.fortitude, 12); // good: 20/2+2
+        assert_eq!(computation.base_saves.reflex, 12); // good: 20/2+2
+        assert_eq!(computation.base_saves.will, 6); // poor: 20/3
+        assert!(
+            diagnostic(&computation, "class_chassis.unsupported").is_none(),
+            "class_chassis.unsupported must NOT fire once class:kineticist has a real \
+             dispatch arm: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    #[test]
+    fn kineticist_level_1_matches_the_oracle_at_the_low_end_too() {
+        let input = kineticist_input(1);
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(computation.base_attack_bonus, 0); // ThreeQuarter BAB: (1*3)/4 = 0
+        assert_eq!(computation.base_saves.fortitude, 2); // good: 1/2+2 = 2
+        assert_eq!(computation.base_saves.reflex, 2); // good: 1/2+2 = 2
+        assert_eq!(computation.base_saves.will, 0); // poor: 1/3 = 0
+    }
+
+    /// An unregistered class id (neither this registry, nor any of the
+    /// other five dispatch families) must still fall through to the
+    /// pre-existing `class_chassis.unsupported` diagnostic -- this wiring
+    /// must not accidentally become a catch-all.
+    #[test]
+    fn unregistered_class_id_still_falls_through_to_unsupported() {
+        let mut input = kineticist_input(5);
+        input.chosen.class_levels[0].class_id = "class:not_a_real_class".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(computation.base_attack_bonus, 0);
+        assert!(diagnostic(&computation, "class_chassis.unsupported").is_some());
     }
 }
 
