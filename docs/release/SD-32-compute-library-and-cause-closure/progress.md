@@ -3528,3 +3528,62 @@ this sign-off is read more broadly than T9's own four amendments + two ruled que
   and a real next-cycle scope, not a quick follow-on. 21 rows remain genuinely unpinned even by that
   mechanism.
 - Receipt: `artifacts/gate-0-census-closure/15-internal_cycle_receipt.md`.
+## Cycle epic-2-t12-roster-mechanism (2026-08-23) — Card 11, shape T12 — generic roster mechanism built, 15 units reach `text-complete`
+
+- Built the next lever the prior `epic-2-t12-modelled-class-books` cycle named: a
+  `push_pu_class_feature_records`-shaped generic roster mechanism — one corpus-derived fixture, one
+  push function, reused across every class it covers, zero per-class code.
+- `scripts/census_untabled_base_class_feature_roster.py` extracts PCGen's own
+  `CATEGORY=Class|<X>.MOD` own-named-group grant rows (one regex, mechanical) against the 20-class
+  `untabled_base_class_chassis` registry — found data for **3 of 20** (`antipaladin`, `magus`,
+  `vigilante`; 40 records). The other 17 use a different progression shape, **confirmed absent by
+  direct scan, not merely unchecked** (a unit test pins this for `cryptic`).
+- `src/rules_core/pilot_compute/untabled_base_class_feature_roster.rs` (new, `include_str!`
+  fixture-loading module) + `push_untabled_base_class_feature_records` (`pilot_compute/mod.rs`, new)
+  wired into `untabled_base_class_chassis::resolve`'s dispatch arm.
+- **§17a re-derivation:** T12's live population moved 951 → 1,004 since the prior cycle's own
+  receipt — a concurrent sibling lane (`card-15-internal`) grew the corpus-wide `class_feature` kind
+  independently (+2,593 units) between the two cycles; logged as a `scripts/retro.py correction`
+  (`docs/retro/events/card11-t12-roster.jsonl`), not folded into this cycle's own effect.
+- **Live re-derive, fixture-checked, not fabricated (`decisions.md §16`):** of the 44 own-named
+  units under the 3 covered classes, **15 now reach `text-complete`** via
+  `explanation_id_observed_and_corpus_record_carries_real_description` — Antipaladin: Aura of
+  Cowardice/Despair/Sin/Vengeance, Plague Bringer (5); Vigilante: Dual Identity, Startling
+  Appearance, Vengeance Strike, Weapon and Armor Proficiencies (4); Magus: Cantrips, Counterstrike,
+  Greater Spell Access, Knowledge Pool, Spellstrike, True Magus (6). Every one is a text-only record
+  correctly promoted under `decisions.md §7`'s zero-magnitude rule.
+- **Zero units reach `grounded`** — the pre-existing STRICT check (`non_roster_ids()`, unmodified)
+  that already protects `push_pu_class_feature_records`'s own PU roster from over-crediting excludes
+  every `.corpus_record.` id from magnitude-bearing promotion, confirmed live. The other 29 of 44
+  units stay honestly `not-ingested`: 25 are magnitude-bearing records needing real per-feature
+  compute functions (Antipaladin's Touch of Corruption, Magus's Spellstrike, ...), 4 are outside
+  this fixture's own scope (not a `.MOD`-granted own-named feature at all).
+- **RED → GREEN proven three times:** (1) mutated `roster_for` to always return empty — both
+  fixture-content tests failed for the intended reason, reverted, GREEN; (2) commented out the
+  `push_untabled_base_class_feature_records(...)` call at its real dispatch site — both wiring tests
+  failed for the intended reason (a live `compute_pilot_base_chassis` call carried no
+  `class_feature.untabled.*` id), reverted, GREEN; (3) level-gating proven both directions live
+  (level 2 carries Touch of Corruption but not the level-3-gated Aura of Cowardice; level 3 gains
+  it).
+- **Suites:** targeted module `untabled_base_class_feature_roster` (+ wiring tests) 7/7;
+  `cargo build --locked --lib` clean; `cargo build --locked --bin v06_work_inventory` clean;
+  `cargo test --locked --bin v06_work_inventory` 329/329 (unchanged from pre-cycle baseline — this
+  cycle's own change is additive at the compute layer only, the classifier binary itself untouched).
+  Full unscoped `cargo test --locked --lib` not re-run this cycle per this dispatch's own "scope
+  your test runs" instruction; the only call sites of the new code are this cycle's own new module,
+  its own wiring tests, and the one dispatch-arm call site (`grep -rn
+  'untabled_base_class_feature_roster' src/ tests/ apps/` confirms).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`. **Wired-integration audit result:**
+  `OK_NO_TOKENS`.
+- **Status:** complete (this lane's own bounded scope). Kanban row 11 stays `in-progress` — T12 is
+  one of card 11's five open sub-shapes and this cycle does not close it in full.
+- **Kanban:** row 11 prepended with this cycle's summary, cycle tag `t12-roster-mechanism` appended.
+- **Next-cycle plan:** (1) identify the progression shape for the 17 uncovered registry classes
+  (psionics classes `psion`/`psychic`/`psychic_warrior`/`soulknife` are the next plausible
+  shared-shape investigation). (2) Build real per-feature magnitude functions for the highest-value
+  of the 25 already-identified magnitude-bearing records under the 3 covered classes (Magus's
+  Spellstrike and Arcane Pool are its signature mechanics). (3) Escalate the 11-large tier's
+  magnitude-bearing cost as a named, mechanism-sized plan once more classes' progression shapes are
+  known — this cycle's mechanism already covers 6 of Magus's own-named units (one of the 11-large
+  tier), a real, small, proven data point, not the whole tier.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t12-roster-mechanism_cycle-1_cycle_receipt.md`.

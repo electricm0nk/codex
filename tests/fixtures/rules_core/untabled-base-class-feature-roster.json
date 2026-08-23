@@ -1,0 +1,404 @@
+{
+  "entries": [
+    {
+      "class_id": "antipaladin",
+      "description": "You surrounds your hand with a fiendish flame, causing terrible wounds to open on those you touch. You can use this ability %1 times per day. As a touch attack, you can cause %2d6 points of damage. Using this ability is a standard action that does not provoke attacks of opportunity. Alternatively, you can use this power to heal undead creatures, restoring %2d6 hit points. This ability is modified by any feat, spell, or effect that specifically works with the lay on hands paladin class feature.|LayOnHandsTimes|LayOnHandsDice",
+      "key": "Antipaladin ~ Touch of Corruption",
+      "min_level": 2,
+      "name": "Touch of Corruption",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 79,
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "At 2nd level, an antipaladin gains a bonus equal to his Charisma bonus (if any) on all saving throws.",
+      "key": "Antipaladin ~ Unholy Resilience",
+      "min_level": 2,
+      "name": "Unholy Resilience",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 80,
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "You radiate a palpably daunting aura that causes all enemies within 10 feet to take a -4 penalty on saving throws against fear effects. Creatures that are normally immune to fear lose that immunity while within 10 feet of you. This ability functions only while you remain conscious, not if you are unconscious or dead.",
+      "key": "Antipaladin ~ Aura of Cowardice",
+      "min_level": 3,
+      "name": "Aura of Cowardice",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 81,
+      "text_only": true
+    },
+    {
+      "class_id": "antipaladin",
+      "description": " At 3rd level, and every three levels thereafter, an antipaladin can select one cruelty. Each cruelty adds an effect to the antipaladin's touch of corruption ability. Whenever the antipaladin uses touch of corruption to deal damage to one target, the target also receives the additional effect from one of the cruelties possessed by the antipaladin. This choice is made when the touch is used. The target receives a Fortitude save to avoid this cruelty. If the save is successful, the target takes the damage as normal, but not the effects of the cruelty. The DC of this save is %1.|CrueltyDC",
+      "key": "Antipaladin ~ Cruelty",
+      "min_level": 3,
+      "name": "Cruelty",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 82,
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "The powers of darkness make you a beacon of corruption and disease. You do not take any damage or from diseases. You can still contract diseases and spread them to others, but You are otherwise immune to their effects.",
+      "key": "Antipaladin ~ Plague Bringer",
+      "min_level": 3,
+      "name": "Plague Bringer",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 83,
+      "text_only": true
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. Using this ability consumes two uses of your touch of corruption ability.|AntipaladinChannelDice|AntipaladinChannelDieSize|AntipaladinChannelDC",
+      "key": "Antipaladin ~ Channel Negative Energy",
+      "min_level": 4,
+      "name": "Channel Negative Energy",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 84,
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "",
+      "key": "Antipaladin ~ Fiendish Boon",
+      "min_level": 5,
+      "name": "Fiendish Boon",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 85,
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "Enemies within 10 feet of you take a -2 penalty on all saving throws. This penalty does not stack with the penalty from aura of cowardice. This ability functions only while you remain conscious, not if you are unconscious or dead.",
+      "key": "Antipaladin ~ Aura of Despair",
+      "min_level": 8,
+      "name": "Aura of Despair",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 86,
+      "text_only": true
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "You can expend two uses of your Smite Good ability to grant the ability to smite good to all allies within 10 feet, using your bonuses. Allies must use this Smite Good ability by the start of your next turn, and the bonuses last for 1 minute. Using this ability is a free action. Good creatures gain no benefit from this ability.",
+      "key": "Antipaladin ~ Aura of Vengeance",
+      "min_level": 11,
+      "name": "Aura of Vengeance",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 87,
+      "text_only": true
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "Your weapons are treated as evil-aligned for the purposes of overcoming damage reduction. Any attack made against an enemy within 10 feet of your is treated as evil-aligned for the purposes of overcoming damage reduction. This ability functions only while you remain conscious, not if you are unconscious or dead.",
+      "key": "Antipaladin ~ Aura of Sin",
+      "min_level": 14,
+      "name": "Aura of Sin",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 88,
+      "text_only": true
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "You gain DR 5/good. Each enemy within 10 feet takes a -4 penalty on saving throws against compulsion effects. This ability functions only while you remain conscious, not if you are unconscious or dead.",
+      "key": "Antipaladin ~ Aura of Depravity",
+      "min_level": 17,
+      "name": "Aura of Depravity",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 89,
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "You are a conduit for the might of the dark powers. Your DR increases to 10/good. Whenever you use Smite Good and successfully strike a good outsider, the outsider is also subject to a Banishment at caster level %1 (you weapon and unholy symbol automatically count as objects that the subject hates). After the Banishment effect and the damage from the attack is resolved, the smite immediately ends. In addition, whenever you channel negative energy or use touch of corruption to damage a creature, you deal the maximum possible amount.|UnholyChampionCasterLevel",
+      "key": "Antipaladin ~ Unholy Champion",
+      "min_level": 20,
+      "name": "Unholy Champion",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 90,
+      "text_only": false
+    },
+    {
+      "class_id": "magus",
+      "description": "You have a reservoir of mystical arcane energy that you draw upon to fuel your powers and enhance your weapon. This arcane pool has %1 points. The pool refreshes once per day when you prepare your spells. You can expend 1 point from your arcane pool as a swift action to grant any weapon you are holding a +%2 enhancement bonus for 1 minute. These bonuses can be added to the weapon, stacking with existing weapon enhancement to a maximum of +5. Multiple uses of this ability do not stack with themselves.|MagusArcanePool|MagusArcanePoolBonus",
+      "key": "Magus ~ Arcane Pool",
+      "min_level": 1,
+      "name": "Arcane Pool",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 10,
+      "text_only": false
+    },
+    {
+      "class_id": "magus",
+      "description": "You can cast magus spells while wearing light armor without incurring the normal arcane spell failure chance. Like any other arcane spellcaster, a magus wearing medium armor, heavy armor, or a shield incurs a chance of arcane spell failure if the spell in question has a somatic component. A multiclass magus still incurs the normal arcane spell failure chance for arcane spells received from other classes.|PREVARGTEQ:MagusArmorProficiencyLVL,1|PREVARLT:MagusArmorProficiencyLVL,7",
+      "key": "Magus ~ Armor Proficiency",
+      "min_level": 1,
+      "name": "Armor Proficiency",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 9,
+      "text_only": false
+    },
+    {
+      "class_id": "magus",
+      "description": "You can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not expended when cast and may be used again.",
+      "key": "Magus ~ Cantrips",
+      "min_level": 1,
+      "name": "Cantrips",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 12,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "",
+      "key": "Magus ~ Spell Combat",
+      "min_level": 1,
+      "name": "Spell Combat",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 11,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "Whenever you cast a spell with a range of \"touch\" from the magus spell list, you can deliver the spell through any weapon you are wielding as part of a melee attack. Instead of the free melee touch attack normally allowed to deliver the spell, a magus can make one free melee attack with his weapon (at his highest base attack bonus) as part of casting this spell. If successful, this melee attack deals its normal damage as well as the effects of the spell. If you make this attack in concert with spell combat, this melee attack takes all the penalties accrued by spell combat melee attacks. This attack uses the weapon's critical range (20, 19-20, or 18-20 and modified by the keen weapon property or similar effects), but the spell effect only deals x2 damage on a successful critical hit, while the weapon damage uses its own critical modifier.",
+      "key": "Magus ~ Spellstrike",
+      "min_level": 2,
+      "name": "Spellstrike",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 13,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "As he gains levels, a magus learns arcane secrets tailored to his specific way of blending martial puissance and magical skill. Starting at 3rd level, a magus gains one magus arcana. He gains an additional magus arcana for every three levels of magus attained after 3rd level. Unless specifically noted in a magus arcana's description, a magus cannot select a particular magus arcana more than once. Magus arcana that affect spells can only be used to modify spells from the magus spell list unless otherwise noted.",
+      "key": "Magus ~ Magus Arcana",
+      "min_level": 3,
+      "name": "Magus Arcana",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 14,
+      "text_only": false
+    },
+    {
+      "class_id": "magus",
+      "description": "",
+      "key": "Magus ~ Spell Recall",
+      "min_level": 4,
+      "name": "Spell Recall",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 15,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "At 5th level, and every six levels thereafter, a magus gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat, item creation, or metamagic feats. He must meet the prerequisites for these feats as normal.",
+      "key": "Magus ~ Bonus Feats",
+      "min_level": 5,
+      "name": "Bonus Feats",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 16,
+      "text_only": false
+    },
+    {
+      "class_id": "magus",
+      "description": "When you prepare your magus spells, you can decide to expend 1 or more points from your arcane pool, up to your Intelligence bonus. For each point you expend, you can treat any one spell from the magus spell list as if it were in your spellbook and can prepare that spell as normal that day. If you do not cast spells prepared in this way before the next time you prepares spells, you lose those spells. You can also cast spells added in this way using your spell recall ability, but only until you prepares spells again.",
+      "key": "Magus ~ Knowledge Pool",
+      "min_level": 7,
+      "name": "Knowledge Pool",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 17,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "",
+      "key": "Magus ~ Improved Spell Combat",
+      "min_level": 8,
+      "name": "Improved Spell Combat",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 18,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "You count 1/2 your total magus level as your fighter level for the purpose of qualifying for feats. If you have levels in fighter, these levels stack.",
+      "key": "Magus ~ Fighter Training",
+      "min_level": 10,
+      "name": "Fighter Training",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 19,
+      "text_only": false
+    },
+    {
+      "class_id": "magus",
+      "description": "",
+      "key": "Magus ~ Improved Spell Recall",
+      "min_level": 11,
+      "name": "Improved Spell Recall",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 20,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "",
+      "key": "Magus ~ Greater Spell Combat",
+      "min_level": 14,
+      "name": "Greater Spell Combat",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 21,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "Whenever an enemy within your reach successfully casts a spell defensively, that enemy provokes an attack of opportunity from you after the spell is complete. This attack of opportunity cannot disrupt the spell.",
+      "key": "Magus ~ Counterstrike",
+      "min_level": 16,
+      "name": "Counterstrike",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 22,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "You gain access to an expanded spell list. You learn and place 14 spells from the wizard's spell list into your spellbook as magus spells of their wizard level. You gain two of each of the following wizard spells not on the magus spell list: 0-level, 1st-level, 2nd-level, 3rd-level, 4th-level, 5th-level, and 6th-level. You can ignore the somatic component of these spells, casting them without the normal chance of spell failure.",
+      "key": "Magus ~ Greater Spell Access",
+      "min_level": 19,
+      "name": "Greater Spell Access",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 23,
+      "text_only": true
+    },
+    {
+      "class_id": "magus",
+      "description": "You are a master of spells and combat. You can cast spells and wield your weapons effectively at the same time. This functions much like two-weapon fighting, but the offhand weapon is a spell that is being cast. To use this ability, you must have one hand free, while wielding a light or one-handed melee weapon in the other hand. As a full-round action, you can make all of your attacks with your melee weapon without penalty. You can also cast any spell with a casting time of 1 standard action from the magus spell list. You can choose to cast the spell first or make the weapon attacks first, but you cannot cast the spell between weapon attacks if you have more than one attack. You don not need to make a concentration check to cast the spell defensively. You must have one hand free to use this ability, even if the spell being cast does not contain somatic components. Whenever you use spell combat and your spell targets the same creature as your melee attacks, you can choose to either increase the DC to resist the spell by +2, grant yourself a +2 circumstance bonus on any checks made to overcome spell resistance, or grant yourself a +2 circumstance bonus on all attack rolls made against the target during your turn.",
+      "key": "Magus ~ True Magus",
+      "min_level": 20,
+      "name": "True Magus",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+      "source_line": 24,
+      "text_only": true
+    },
+    {
+      "class_id": "vigilante",
+      "description": "",
+      "key": "Vigilante ~ Class Skills",
+      "min_level": 1,
+      "name": "Class Skills",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 8,
+      "text_only": true
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante hides his true identity, allowing him to move about social circles and nobility without carrying the stigma of his ruthless actions. In effect, the vigilante has two identities: one is a polite member of society while the other is a skilled and cunning warrior. To keep up this charade, the vigilante usually has two names: his true name, used in polite company, and his vigilante name, used to strike fear in the hearts of those who oppose him. Knowledge checks about one do not reveal information about the other, unless the vigilante's true identity revealed to the world at large. The vigilante can start each day in either of his identities, referred to simply as social or vigilante. Changing from one identity to another takes 1 minute and must be done out of sight from other creatures to preserve the vigilante's secret. Changing identities is more than just changing outfits and clothing (although that is certainly a part of it); the process often also involves applying make-up, altering his hair, and adjusting other personal effects. Furthermore, the change is as much a state of mind as of body, so items such as a hat of disguise and similar spells and effects that change the user's appearance do not reduce the time required to change identities. Most social talents require the vigilante to be in his social identity, but a vigilante who uses vigilante talents in his social identity risks exposing his secret. Despite being a single person, a vigilante's dual nature allows him to have two alignments, one for each of his identities. When in an identity, he is treated as having that identity's alignment for all spells, magic items, and abilities that rely on alignment. For the purpose of meeting a qualification for a feat, class, or any ability, he is only eligible if both of his alignments meet the requirements. A vigilante's two alignments cannot be more than one step from each other on a single alignment axis. For example, a vigilante with a lawful neutral social identity could have a vigilante identity that is lawful good, lawful neutral, lawful evil, neutral, neutral good, or neutral evil. If a vigilante is the target of an effect that would change his alignment, it changes both of his alignments to the new alignment. Any attempts to scry or otherwise locate the vigilante work only if the vigilante is currently in the identity the creature is attempting to locate (or if the creature knows that the two identities are the same individual). Otherwise, the spell or effect has no effect, revealing nothing but darkness, as if the target were invalid or did not exist.",
+      "key": "Vigilante ~ Dual Identity",
+      "min_level": 1,
+      "name": "Dual Identity",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 10,
+      "text_only": true
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante knows how to behave in a way that appears perfectly proper and normal for his current identity. Should anyone suspect him of being anything other than what he appears to be while either in his social or vigilante identity, he can attempt a Disguise check with a +%1 circumstance bonus to appear as his current identity, and not as his other identity.|SeamlessGuiseBonus",
+      "key": "Vigilante ~ Seamless Guise",
+      "min_level": 1,
+      "name": "Seamless Guise",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 11,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "Starting at 1st level, and every 2 levels thereafter, a vigilante gains a social talent. Unless otherwise noted, a talent can be selected only once. Some talents require the vigilante to meet other prerequisites before they can be chosen, such as having another social talent or attaining a minimum vigilante level. Once a talent has been chosen, it cannot be changed.",
+      "key": "Vigilante ~ Social Talent",
+      "min_level": 1,
+      "name": "Social Talent",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 12,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante must choose to be either an avenger or a stalker. Once this choice is made, it can't be changed. While many vigilante talents are usable by both specializations, some are unique to each specialization.",
+      "key": "Vigilante ~ Vigilante Specialization",
+      "min_level": 1,
+      "name": "Vigilante Specialization",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 13,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "Vigilantes are proficient with all simple and martial weapons, light armor, medium armor, and shields (except tower shields).",
+      "key": "Vigilante ~ Weapon and Armor Proficiencies",
+      "min_level": 1,
+      "name": "Weapon and Armor Proficiencies",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 9,
+      "text_only": true
+    },
+    {
+      "class_id": "vigilante",
+      "description": "Starting at 2nd level and every 2 levels thereafter, a vigilante gains a vigilante talent. Unless otherwise noted, a talent can be selected only once. Some talents require the vigilante to meet prerequisites before they can be chosen, such as possessing another vigilante talent, possessing a particular specialization, or attaining a minimum level. Once a talent has been selected, it can't be changed. If the vigilante uses any of these talents while in his social identity, he must succeed at a Disguise check against the Perception checks of all onlookers (without the +%1 circumstance bonus from seamless guise) or the onlookers will realize that he is more than his social identity appears to be and perhaps discover the social and vigilante identities are one and the same.|SeamlessGuiseBonus",
+      "key": "Vigilante ~ Vigilante Talent",
+      "min_level": 2,
+      "name": "Vigilante Talent",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 14,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante adds %1 to the DC of any attempts to Intimidate him.|VigilanteUnshakableDCBonus",
+      "key": "Vigilante ~ Unshakable",
+      "min_level": 3,
+      "name": "Unshakable",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 15,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante learns to use the element of surprise to his advantage, startling foes that are unaware of his presence. Whenever a vigilante with this ability attempts an attack against a foe that is completely unaware of the vigilante's presence (usually due to Stealth or invisibility), the foe is treated as flat-footed for the rest of the vigilante's turn (uncanny dodge or a similar ability prevents this effect unless the vigilante is at least 4 levels higher than the foe with uncanny dodge). The foe also takes a -4 penalty on attacks made against the vigilante until the start of the vigilante's next turn.",
+      "key": "Vigilante ~ Startling Appearance",
+      "min_level": 5,
+      "name": "Startling Appearance",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 16,
+      "text_only": true
+    },
+    {
+      "class_id": "vigilante",
+      "description": "Whenever a vigilante with this ability makes an attack against a foe that is unaware of the vigilante's presence, the vigilante can, as a free action, attempt an Intimidate check to demoralize the target of his attack and any enemies within 10 feet who can see the attack. This check is attempted before the attack roll against the foe is made and resolved. The vigilante rolls only one Intimidate check and applies the result to all the targets. If the check succeeds against the target of the vigilante's attack, that foe is also frightened for 1 round, in addition to being shaken as normal, unless the foe succeeds at a Will save (DC %1). Once a creature has been the target of this ability (either as the target of the attack or as a nearby creature, regardless of whether or not it was successful), it is immune to that vigilante's frightening appearance for 24 hours. This effect is in addition to the bonuses gained from the startling appearance ability. This is a mind-affecting fear effect.|10+VigilanteLVL/2+CHA",
+      "key": "Vigilante ~ Frightening Appearance",
+      "min_level": 11,
+      "name": "Frightening Appearance",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 17,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante can leave his foes unable to respond when he appears. Whenever a vigilante with this ability makes a successful attack against a foe that is unaware of the vigilante's presence, the foe must make a successful Will save (DC %1) or be stunned until the end of the vigilante's next turn. If the creature has more than %2 HD, it receives a +4 circumstance bonus on this save. This ability is in addition to the effects of startling appearance and frightening appearance. Once a creature has been the target of this ability (regardless of whether or not the saving throw is successful), it is immune to that vigilante's stunning appearance for 24 hours. This is a mind-affecting fear effect.|10+VigilanteLVL/2+CHA|VigilanteLVL",
+      "key": "Vigilante ~ Stunning Appearance",
+      "min_level": 17,
+      "name": "Stunning Appearance",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 18,
+      "text_only": false
+    },
+    {
+      "class_id": "vigilante",
+      "description": "A vigilante can study a target to strike more viciously. He can spend up to 5 standard actions, which all must be in consecutive rounds. On the following round, he can make a vengeance strike against the studied creature. The target must remain unaware of the vigilante's presence (or not see him as a threat) until the attack. For each round spent studying the target, the vigilante grants himself one of the following benefits on his vengeance strike: gain a +4 circumstance bonus on the attack roll, deal an additional 3d6 points of precision damage if he hits, or treat the attack roll as if it were 2 higher for the purposes of determining whether the attack hit or threatens a critical hit (to maximum effective roll of 20). Each round of study can be spent in a different way or the same way (they stack with each other), but each round of study must be allocated before the attack roll is made.",
+      "key": "Vigilante ~ Vengeance Strike",
+      "min_level": 20,
+      "name": "Vengeance Strike",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "source_line": 19,
+      "text_only": true
+    }
+  ]
+}

@@ -173,6 +173,7 @@ mod class_slayer;
 mod class_ultimate_combat;
 pub mod prestige_class_entry_gate;
 pub mod untabled_base_class_chassis;
+pub mod untabled_base_class_feature_roster;
 /// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
 /// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
 /// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
@@ -26075,6 +26076,16 @@ fn compute_class_chassis(
             ),
         });
 
+        // SD-32 card 11 (T12, `epic-2-t12-modelled-class-books` cycle-1's
+        // own named next lever): the generic corpus-derived roster,
+        // reused across every class the fixture covers. See
+        // `push_untabled_base_class_feature_records`'s own doc comment.
+        push_untabled_base_class_feature_records(
+            &class_level.class_id,
+            class_level.level,
+            explanations,
+        );
+
         Some((base_attack_bonus, base_saves))
     } else if let Some(gate) =
         prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
@@ -26787,6 +26798,48 @@ fn push_pu_class_feature_records(
                 "{display_name} level {level}: `{}` is a class feature of this character, granted \
                  from class level {granted_at}.{citation}{rules_text}",
                 record.name
+            ),
+        });
+    }
+}
+
+/// Emits one receipt row per granted, level-reached record in
+/// [`untabled_base_class_feature_roster::roster_for`] for `class_id_str`
+/// (the `"class:<name>"` form `compute_class_chassis` dispatches with).
+///
+/// SD-32 card 11 (T12): the generic form of [`push_pu_class_feature_records`]
+/// above. That function's own four Rust tables are hand-curated per class;
+/// this one reads a single corpus-derived fixture keyed by class id and
+/// pushes the SAME id shape (`class_feature.untabled.<class>.corpus_record.
+/// <slug>`), so a class costs nothing here beyond adding its own rows to the
+/// fixture — no new Rust match arm, no new push function. Reuses
+/// [`pu_feature_slug`] for the id's slug segment: the transform is not
+/// Pathfinder-Unchained-specific despite the name (`class_feature_engine_
+/// join_slug` in `v06_work_inventory.rs` is the identical rule, duplicated
+/// there because that file is a `bin`, not a library, and cannot import
+/// this one).
+///
+/// A class absent from the fixture (18 of the 20 registry entries, as of
+/// this cycle — see the fixture's own doc comment) simply gets no rows here,
+/// same as before this function existed; no fabricated row is ever emitted.
+fn push_untabled_base_class_feature_records(
+    class_id_str: &str,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let bare_class_id = class_id_str.strip_prefix("class:").unwrap_or(class_id_str);
+    for record in untabled_base_class_feature_roster::roster_for(bare_class_id) {
+        if level < record.min_level {
+            continue;
+        }
+        let slug = pu_feature_slug(&record.key);
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.untabled.{bare_class_id}.corpus_record.{slug}"),
+            value: i16::from(record.min_level),
+            detail: format!(
+                "{class_id_str} level {level}: `{}` is a class feature of this character, \
+                 granted from class level {} (source: {}:{}).",
+                record.name, record.min_level, record.source_file, record.source_line
             ),
         });
     }
@@ -47275,6 +47328,89 @@ mod untabled_base_class_chassis_wiring_tests {
         let computation = compute_pilot_base_chassis(&input);
         assert_eq!(computation.base_attack_bonus, 0);
         assert!(diagnostic(&computation, "class_chassis.unsupported").is_some());
+    }
+}
+
+/// SD-32 card 11 (T12): proves the generic corpus-derived class-feature
+/// roster (`untabled_base_class_feature_roster::roster_for`,
+/// `push_untabled_base_class_feature_records`) really runs through the real
+/// `compute_pilot_base_chassis` → `compute_class_chassis` →
+/// `untabled_base_class_chassis::resolve` dispatch arm, for a real
+/// corpus-derived class the fixture has data for (`class:antipaladin`), not
+/// a direct unit call on the roster module alone.
+#[cfg(test)]
+mod untabled_base_class_feature_roster_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn antipaladin_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:antipaladin".to_owned();
+        input.chosen.class_levels[0].level = level;
+        input
+    }
+
+    fn explanation_ids(computation: &PilotBaseChassisComputation) -> Vec<String> {
+        computation.explanations.iter().map(|e| e.id.clone()).collect()
+    }
+
+    /// RED, confirmed manually before this wiring landed (and re-confirmed
+    /// live by mutating `roster_for` to return an empty `Vec` and re-running
+    /// this exact test, which failed for the intended reason): a level-2
+    /// Antipaladin's `Touch of Corruption` (min_level 2, per the oracle's
+    /// own `PREVARGTEQ:Antipaladin_CFP_Level,2`) produced no
+    /// `class_feature.untabled.*` explanation at all. GREEN below: the id
+    /// now reaches the top-level computation.
+    #[test]
+    fn antipaladin_level_2_reaches_touch_of_corruption_via_the_generic_roster() {
+        let input = antipaladin_input(2);
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.antipaladin.corpus_record.touch_of_corruption".to_owned()),
+            "level-2 Antipaladin must carry the granted Touch of Corruption roster id; got: {ids:?}"
+        );
+        // A feature gated to a higher level (Aura of Cowardice, min_level 3)
+        // must NOT appear yet -- the same "absent means not yet granted"
+        // contract `push_pu_class_feature_records` already uses.
+        assert!(
+            !ids.contains(&"class_feature.untabled.antipaladin.corpus_record.aura_of_cowardice".to_owned()),
+            "level-2 Antipaladin must not yet carry a level-3-gated feature; got: {ids:?}"
+        );
+    }
+
+    #[test]
+    fn antipaladin_level_3_gains_the_level_3_gated_feature() {
+        let input = antipaladin_input(3);
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.antipaladin.corpus_record.aura_of_cowardice".to_owned()),
+            "level-3 Antipaladin must carry Aura of Cowardice; got: {ids:?}"
+        );
+    }
+
+    /// A registry class the roster fixture has NO data for (Cryptic) must
+    /// emit zero `class_feature.untabled.*` ids -- confirms the mechanism
+    /// never fabricates a row for a class it has no corpus evidence for.
+    #[test]
+    fn a_class_with_no_roster_data_emits_no_untabled_class_feature_ids() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.iter().all(|id| !id.starts_with("class_feature.untabled.cryptic.")),
+            "cryptic has no roster fixture data; must emit none: {ids:?}"
+        );
     }
 }
 
