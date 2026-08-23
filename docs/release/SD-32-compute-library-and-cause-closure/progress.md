@@ -2768,3 +2768,93 @@ the dispatch brief).
   per-record reviews (`companion`, `feat`, `monster_ability`, `equipment`) are separate lanes.
 - **Receipt:** `artifacts/gate-3-closure-invariant/epic-2-t9-pi-review-spell_cycle-1_cycle_receipt.md`.
 - **Commit SHA:** (this cycle's commit — see push log), on `origin/tranche/12`.
+
+## Cycle `companion-monsterability/1` — Card 11, shape T9 — per-record PI review of `companion` + `monster_ability`, `decisions.md §18`
+
+- **Card ID:** `epic-2-cause-closure`. **Scope:** read-only review lane, per `decisions.md §18`'s
+  ruling (per-record review of the audit's uncertain bucket before any further blacklist sign-off).
+  Transcribes nothing, ingests nothing, changes no corpus data. Does **not** amend
+  `docs/governance/ogl-pi-blacklist.md` (status stays `DRAFT`) and does **not** change card 11's
+  status (stays `in-progress`) or T9's paused-onboarding state.
+- **Files touched:** `scripts/sd32_t9_pi_review_companion_monsterability.py` (new, committed
+  re-derive/review script, imports and extends `scripts/sd32_t9_pi_exposure_audit.py` rather than
+  redoing it), `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/t9-pi-review-companion-monsterability.md`
+  (new memo), `docs/retro/events/companion-monsterability.jsonl` (1 correction), this entry.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (`BASE_BRANCH=$(git merge-base HEAD
+  origin/develop); git diff --unified=0 "${BASE_BRANCH}...HEAD" -- scripts docs/release
+  ':!**/__tests__/**' ':!**/*.test.*' | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'`
+  → no matches).
+- **Wired-integration audit result:** `OK_NO_TOKENS` (same diff, no
+  `STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack` tokens).
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`
+  (`scripts/pcgen-oracle-pin.env`), re-fetched fresh this cycle to the repo-local slot (empty on
+  this fresh worktree; `scripts/fetch-pcgen-oracle.sh --dest <repo-local pcgen slot>`).
+- **Status:** review/evidence-only cycle, zero units transcribed or closed. Card 11 row stays
+  `in-progress`.
+
+- **Notes:**
+
+  **Population re-derived, and it had drifted since the audit.** The audit's base commit predates
+  `6ae4a364b` (T2b classifier fix, `refine_kind` cross-references `CR:`-bearing race names), which
+  moved 864 units corpus-wide from `race_trait` into `monster_ability`. Re-running
+  `v06_work_inventory` + `sd32_t9_census.py` at this cycle's HEAD (`b4192a712`) found
+  `monster_ability` now at **1,378 total / 1,187 uncertain / 111 clear / 80 blocked** — not the
+  audit's 517/359/78/80. `companion` re-derived unchanged (726/443/283/0). **Correction filed**
+  against `t9-pi-exposure-audit.md §3`'s `monster_ability` row
+  (`docs/retro/events/companion-monsterability.jsonl`, `--verified-by` the rebuild+re-run above).
+  This review's own figures use the re-derived population throughout; the memo's §0/§1 state both
+  numbers so the drift is visible.
+
+  **Every one of 2,104 in-scope rows (726 companion + 1,378 monster_ability) run through a
+  three-stage classifier**, not sampled: (1) reuse the audit script's exact NAMEISPI/DESCISPI +
+  57-term scan, (2) a normalized (case-fold + OCR-fold) re-scan of the free-text prose only
+  (word-bounded, to avoid the false-positive class this cycle found and fixed — see below) covering
+  both the `clear` and `uncertain` buckets per `decisions.md §18` item 2, (3) a content classifier
+  for rows still unresolved after (2): capitalized-proper-noun and lowercase-creature-species
+  detectors, sentence-initial capitals correctly excluded. **Result:** `companion` 366 clear / 360
+  still_undecidable / 0 blocked; `monster_ability` 344 clear / 954 still_undecidable / 80 blocked
+  (unchanged). `newly_blocked = 0` for both kinds across the full 2,104-row normalized re-scan —
+  a validated negative finding (the scan function correctly resolves both `ogl-pi-blacklist.md §4`
+  incident strings when tested directly; these two kinds simply carry no deity/place vocabulary).
+
+  **Headline content finding, `companion`:** contrary to the dispatch brief's expectation, a full
+  read of the original 443 uncertain rows found **zero** deity/place/NPC references — the kind is
+  entirely Summoner-eidolon-evolution / animal-companion-trick / familiar-archetype game mechanic
+  text. **Headline content finding, `monster_ability`:** the opposite shape — its `DESC`/`KEY` text
+  routinely embeds the *owning creature's own name* (e.g. "a jinushigami wields...", `KEY:Star-Spawn
+  of Cthulhu ~ Immortality`), and whether that name is PI depends on whether the named creature is
+  SRD-declared-Open, a per-name legal call this script does not make. **Proposed §2.3 rule for
+  both kinds** (paste-ready, not applied) is in the memo §4 — the specific gap `decisions.md §18`
+  named (802 combined uncertain units with no field-classification entry at all, now 1,630 at the
+  re-derived count) is answered with content-grounded language, not left unrules.
+
+  **Two false-positive classes found and fixed while building the normalized scan** (logged as
+  findings, not just implementation notes): whole-row scanning hit inside PCGen's own camelCase
+  variable names (`...DamageBonus` folding to contain the 3-letter term `Geb`); raw substring
+  matching (even scoped to prose) is unsafe for short terms without word boundaries. Both fixed;
+  `sd32_t9_pi_exposure_audit.py`'s own exact-match scan carries the same unbounded-substring risk
+  for its short terms and was not fixed here (out of this cycle's file-touch scope) — named in the
+  memo §5 for that script's own maintainers.
+
+  **`.MOD`/`.COPY` question, this cycle's kinds:** 6 rows affected (2 monster_ability, 4
+  companion). Recommendation: yes, a `.MOD`/`.COPY` row should inherit its target's PI status by
+  construction (it clones the target's content); this review did not trace all 6 targets'
+  classifications (flagged as an open boundary, not assumed) — all 6 are already
+  `still_undecidable` on their own, so the untraced dependency doesn't change this memo's headline
+  counts.
+
+  **Spot-check material:** up to 10 named real records per kind with call + one-line reason, in
+  memo §7 (includes a cross-corpus inconsistency flag: `bestiary_4`'s three `Star-Spawn of Cthulhu`
+  `monster_ability` rows carry no PI declaration while this same corpus's own `spell` kind already
+  declares "Summon Monster IX (Cthulhu)" `NAMEISPI:YES` — same mythos, inconsistent declaration).
+
+  **Not claimed:** that a human read all 1,314 `still_undecidable` rows' prose individually token
+  by token. What was reviewed and how (pattern-level, every distinct capitalized-token/species-
+  reference pattern the classifier surfaced) is stated plainly in the memo §2, and §7's named
+  spot-checks let the operator verify the pattern-level review against real rows directly.
+
+- **Environment:** `RETRO_ACTOR=companion-monsterability`,
+  `CARGO_TARGET_DIR=/home/ubuntu/.cache/codex-targets/sd32-companion-monsterability`, repo-local
+  PCGen oracle slot (bootstrapped fresh this cycle, confirmed on-pin before trusting any figure).
+- **Memo:** `artifacts/gate-3-closure-invariant/t9-pi-review-companion-monsterability.md`.
+- **`df -h /` at end of cycle:** 664G available, 32% used.
