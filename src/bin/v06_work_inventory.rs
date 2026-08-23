@@ -10509,6 +10509,97 @@ mod race_trait_grounding_tests {
         }
     }
 
+    // ----- T2b closure investigation (SD-32 Epic 2, `epic-2-t2b` lane) -----
+
+    /// Every `data/corpus/*/race_trait/**/*.json` record's own source
+    /// coordinate, `(<lst basename>, <line>)` -- the same join key
+    /// `EngineFacts::race_trait_engine_book` uses. Walks every book
+    /// directory that HAS a `race_trait/` subtree, not just the app's own
+    /// `RACE_CORPUS_BOOKS` list -- this must see everything actually
+    /// ingested anywhere, including a book the app's own loader does not
+    /// yet read, so a false "never ingested" verdict below cannot hide
+    /// behind that narrower list.
+    fn ingested_race_trait_source_coordinates(repo_root: &Path) -> BTreeSet<(String, usize)> {
+        let mut out = BTreeSet::new();
+        let corpus_root = repo_root.join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        for book in books.flatten() {
+            let root = book.path().join("race_trait");
+            if !root.is_dir() {
+                continue;
+            }
+            let mut stack = vec![root];
+            while let Some(dir) = stack.pop() {
+                let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        stack.push(path);
+                        continue;
+                    }
+                    if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                        continue;
+                    }
+                    let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                    let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+                        continue;
+                    };
+                    let Some(src_path) = value.pointer("/source/path").and_then(|v| v.as_str())
+                    else {
+                        continue;
+                    };
+                    let Some(line) = value.pointer("/source/line").and_then(|v| v.as_u64())
+                    else {
+                        continue;
+                    };
+                    let Some(base) = Path::new(src_path).file_name() else { continue };
+                    out.insert((base.to_string_lossy().into_owned(), line as usize));
+                }
+            }
+        }
+        out
+    }
+
+    /// **The T2b re-scoping finding, pinned as a standing regression.**
+    /// `epic-breakdown.md`'s T2b row and card 11's cycle-1 receipt name
+    /// `modelled_race_of_race_trait`'s compound-key matching as the cause of
+    /// the corpus-wide `race_trait_race_not_modelled` population (2,472
+    /// units, re-derived from `docs/work-inventory.json`,
+    /// `scripts/retro.py correction` filed under `epic-2-t2b`). It is not:
+    /// cross-referencing every ingested `data/corpus/*/race_trait/**/*.json`
+    /// record's own `source.path`/`source.line` against all 2,472 residual
+    /// units' coordinates finds ZERO overlap. This matcher only ever runs
+    /// against an ALREADY-INGESTED unit (`classify`'s `Kind::RaceTrait` arm
+    /// calls it on a `CorpusUnit` built from a real `data/corpus` record),
+    /// so if a coordinate was never ingested at all, the matcher never gets
+    /// a chance to misjudge it -- the population is a raw-content ingestion
+    /// gap (71% in books never registered in `race_catalog.rs`'s
+    /// `RACE_CORPUS_BOOKS`; the remainder in registered books but never
+    /// transcribed from the pinned oracle's `.lst` rows), not a matching
+    /// defect. This pins three hand-verified samples, one per un-ingested
+    /// cause this finding names (a `mod_only` phantom-shaped row, a
+    /// no-`~`-at-all row, and an "Adopted Race ~ &lt;real non-CRB race&gt;"
+    /// selector row) as a standing regression: if any of them is EVER
+    /// ingested, this test starts asserting against the wrong population and
+    /// must be re-derived, not silently patched around.
+    #[test]
+    fn the_t2b_residual_population_is_never_ingested_not_a_matcher_miss() {
+        let ingested = ingested_race_trait_source_coordinates(&probe_root());
+        for (file, line) in [
+            ("acg_abilities_race.lst", 9),        // "Arcanist Exploit ~ Arcane Barrier"
+            ("arg_abilities_race.lst", 2204),     // "Fins to Feet"
+            ("fetchling_abilities_race.lst", 32), // "Adopted Race ~ Fetchling"
+        ] {
+            assert!(
+                !ingested.contains(&(file.to_string(), line)),
+                "{file}:{line} must NOT be present in data/corpus/*/race_trait -- if it now \
+                 is, T2b's residual population has genuinely shrunk by real ingestion and \
+                 this test's own premise (the sampled cause is un-ingested, not a matcher \
+                 miss) needs re-deriving against the real corpus"
+            );
+        }
+    }
+
     // ----- `race` kind: the creation-roster probe (SD-31 wave 14) -----
 
     fn race_unit(book: &str, name: &str, file: &str, line: usize) -> CorpusUnit {
