@@ -3319,3 +3319,82 @@ totals (38,540/41,987).
   or escalate `Domain Power`'s multi-owner disposition to the operator if a work lane wants it
   resolved before row 11 can close.
 - Receipt: `artifacts/gate-3-closure-invariant/epic-2-t2a-residual-alias-tier_cycle-1_cycle_receipt.md`.
+
+## Cycle `card-15-ability` — `census-scope-closure` / `Kind::Ability` (2026-08-23)
+
+- **Card ID:** `census-scope-closure` (kanban card 15). **Status stays `in-progress`.**
+- **§17a re-derivation:** the dispatch brief cited "5,886 units... 2,371 (A) / 243 (B)". Both
+  figures were checked before building anything and neither survived: the population is 5,926 (an
+  already-landed, unrelated `ability_category:Internal` reroute grew it 839→879), and the
+  "2,371/243" split belongs to a *different* population entirely (`class_feature`'s
+  `_abilities_class.lst` Internal reroute, `decisions.md §14c`, already committed before this
+  cycle) — not this card's bare-`*abilities*.lst` bucket, whose own adjudicated split is the memo's
+  5,108 (A) / 778 (B).
+- **Found and fixed before landing anything:** 97 rows across 6 in-scope
+  `*_abilities_familiar*.lst` files were falling into census's `row_dependent` branch even though
+  `src/bin/v06_work_inventory.rs`'s `file_kind` already routes them to the tracked `companion` kind
+  — a real census/inventory disagreement. Fixed by matching Rust's own filename-check order.
+- **Ported, not reinvented:** the ability-category lane's own adjudicated per-row classifier
+  (`15-card-15-ability-category-classify.py`'s content/gateway/B-duplicate test) into
+  `scripts/census_independent.py`'s production `row_dependent` branch, then landed `Kind::Ability`
+  in `src/bin/v06_work_inventory.rs` through the same per-row-disposition shape — `file_kind`
+  fallback, `refine_kind`'s `CATEGORY:FEAT` redirect, `has_classifying_token`'s content-only gate.
+  Narrowed the file-wide `is_internal_category` trap for `Kind::Ability` alone so real
+  `CATEGORY:Internal` content is not silently dropped before the content test runs — every other
+  kind's behaviour (including `class_feature`'s own Internal rows) is unchanged, proven by a
+  dedicated regression test.
+- **Live figures (re-derived, not the memo's stale pin):** census population 5,926 → after the
+  companion-routing fix, 5,829 real `ability_category:*` units → **5,028 (A) / 801 (B)**.
+  `docs/work-inventory.json` gained **4,824** real `ability` units (289 fewer than the census's raw
+  5,028, all `core_essentials` residual deletions per `decisions.md §16` —
+  `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` raised 171→460 on the same evidence-only terms the
+  prior Template/Language raise established, both pins investigated via `DEBUG_RESIDUAL=1`, not
+  asserted past).
+- **Mutation-proved the exclusion rule does not swallow real objects** (dispatch brief item 4):
+  `test_exclusion_rule_mutation_proof_widening_it_swallows_a_real_object` widens
+  `_ABILITY_CONTENT_RE` to treat a bare `TYPE:` field as content, reproduces the swallowing bug live
+  (RED), reverts (GREEN).
+- **B-duplicate cross-kind check deliberately NOT ported to Rust this cycle** — tiny population (8
+  units at the memo's own count), no safe proxy without a `CorpusUnit` schema change to distinguish
+  an explicit `KEY:` token from a bare-identity fallback; approximating it risked over-excluding
+  real (A) rows, the opposite failure this cycle's own mandate forbids. Under-exclude, not
+  over-exclude, per `decisions.md §1a`. Flagged, not hidden.
+- **Side effect found and reported, not silently absorbed:** the same `abilit` fallback exposed a
+  PRE-EXISTING Rust/census disagreement for 3 in-scope `*_abilities_feat.lst` files (`isg`/`isc`/
+  `isf`) that `v06_work_inventory.rs`'s OLD `file_kind` never enumerated at all (no `_feats`
+  substring match), even though census's looser `"feat" in b` check already counted them. `feat`
+  kind grew 2,610→2,722 (+112) as real, previously-invisible content became visible — verified by
+  id-diff, 0 pre-existing units removed, 0 stamps lost. Census still slightly disagrees on these 3
+  files by 3 units (no per-row filtering at that branch) — reported, not fixed (tiny, out of this
+  cycle's scope).
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS.
+- **Wired-integration audit result:** OK_NO_TOKENS.
+- **Acceptance criterion:** `decisions.md §12b` — census, inventory, and shape-ledger populations
+  reconcile to each other with one committed command; every unit in the reconciled total carries a
+  family.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **`scripts/card15_reconcile.py`** updated (`ability_category_disposition_a` and
+  `ability_category_gateway_picklist_duplicate` retired from pending into live-derived
+  `already_tracked_a`/`disposed_b_applied` entries) and re-run: **`equals_total_this_run: True`,
+  `remaining_undisposed: 0`** — the piles sum exactly for the live 18,992-unit total.
+- **Gate 3** (`scripts/shape_coverage_standing_gate.py`, budget constants **NOT** modified, per
+  dispatch brief instruction): still `FAIL`. `no_record` 13,975/28,490 (pre-cycle) →
+  **18,904/33,426** — `decisions.md §14`'s already-reopened tension, one more instance of real
+  enumeration growth outrunning ingestion, not a new blocker.
+- **Suites:** `cargo test --locked --bin v06_work_inventory` 325/325 (314 pre-cycle + 9 new + 2 from
+  a concurrent card-11 landing rebased in); `cargo test --locked --lib` 2,402/2,402 (2,388
+  pre-cycle); `cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml` (separate
+  workspace) 518/518 (517 pre-cycle); `python3 -m unittest scripts.tests.test_census_independent`
+  26/26 (20 pre-cycle, +6 new).
+- **Status:** complete (cycle), `in-progress` (kanban card 15 — the `class_feature` residual, 179 +
+  2,574 units, is the only remaining disposition-(A) population).
+- **Kanban:** row 15 stays `in-progress`, appended with this cycle's full narrative.
+- **Discovery forwards:** none requiring a new card — the two findings above (`_abilities_feat.lst`
+  3-unit census/inventory gap; B-duplicate not ported to Rust) are both small, reported, and left
+  for a future cycle to pick up if it touches this population again.
+- **Next-cycle plan:** `class_feature` residual (179 + 2,574) needs `v06_work_inventory.rs`'s OWN
+  `is_internal_category` trap narrowed for the `class_feature` kind specifically — a second,
+  independent codepath from this cycle's `Kind::Ability` carve-out, using the WIDER
+  `_ROW_CONTENT_FIELD_RE` field list (not this cycle's narrower `_ABILITY_CONTENT_RE`) since that is
+  the population's own already-adjudicated rule. Not yet attempted.
+- Receipt: `artifacts/gate-0-census-closure/15-ability_cycle_receipt.md`.
