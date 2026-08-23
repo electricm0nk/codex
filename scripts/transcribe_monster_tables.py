@@ -252,6 +252,22 @@ BOOKS = {
     # NAMEISPI:YES pu_abilities_race.lst arg_abilities_race.lst` -> 0, 0).
     "pathfinder_unchained": "pathfinder/paizo/roleplaying_game/pathfinder_unchained",
     "advanced_race_guide": "pathfinder/paizo/roleplaying_game/advanced_race_guide",
+    # `decisions.md §20` no_record-to-zero, round 5: the last of the original
+    # ZERO-monster books this lane had never registered, deferred by round 4
+    # ("its `rules_tables/` module directory does not exist yet"). That
+    # deferral is now stale -- a sibling T2 (`spell`) lane already created
+    # `rules_tables/mythic_adventures/` (for `spell_list`, `decisions.md §20`
+    # spell round), so this cycle only adds `mod monster_data;` to the
+    # existing module, not a whole new directory. Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py mythic_adventures` ->
+    # `mythic_adventures 0 21 0 0 21 0 0` (0 monster rows, 21 ability rows, all
+    # 21 orphan, 0 PI, 0 `.COPY=`) -- the identical zero-monster shape every
+    # other book in this dict already handles. `ma_abilities_race.lst` (21
+    # rows) loads UNGATED at the book's own `.pcc` root (`grep -n
+    # 'ABILITY:ma_abilities_race.lst' _mythic_adventures.pcc` -> line 40, no
+    # `PRECAMPAIGN`). Zero Product Identity rows (`grep -c
+    # 'NAMEISPI:YES\|DESCISPI:YES' ma_abilities_race.lst` -> 0).
+    "mythic_adventures": "pathfinder/paizo/roleplaying_game/mythic_adventures",
 }
 
 # Books part of whose monster rows another compiled table of THIS repo already

@@ -641,6 +641,16 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monster_abilities: super::advanced_race_guide::monster_abilities_static(),
         cross_table_owner_names: &[],
     },
+    // `decisions.md §20` no_record-to-zero, round 5: the last of the original
+    // 8 zero-monster books, deferred by round 4 pending its `rules_tables/`
+    // module (created since by a sibling `spell` lane); the mechanism itself
+    // is unchanged.
+    MonsterBook {
+        corpus_book: "mythic_adventures",
+        monsters: super::mythic_adventures::monsters_static(),
+        monster_abilities: super::mythic_adventures::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -970,7 +980,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3683,
+            3704,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -994,10 +1004,14 @@ mod tests {
              shape — see `pathfinder_unchained/monster_data.rs`'s own header) and \
              `advanced_race_guide` (+1) — again structurally additive only, reached via each \
              book's own `gen_book_cache.rs` generator function extended to also call \
-             `gen_monster_book`."
+             `gen_monster_book`. 3683 -> 3704 (`decisions.md §20` round 5, +21): the last of \
+             the original 8 unregistered zero-monster books, `mythic_adventures` (+21, all 21 \
+             orphan candidates shipped, 0 refused) — structurally additive only, reached \
+             entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm, \
+             no new generator code."
         );
         assert_eq!(
-            digest, 0x2fa5_c457_8c02_67bb,
+            digest, 0xd732_c20e_c4c2_a946,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -1017,7 +1031,11 @@ mod tests {
              appended to `MONSTER_BOOKS`. 0x5c2ee6087da263c9 -> 0x2fa5c4578c0267bb \
              (`decisions.md §20` round 4): the sorted triple set gains 70 new members from 2 \
              newly-registered books (`pathfinder_unchained`/`advanced_race_guide`) — zero \
-             reclassification, same reasoning as round 3, only new `MonsterBook` rows appended"
+             reclassification, same reasoning as round 3, only new `MonsterBook` rows appended. \
+             0x2fa5c4578c0267bb -> 0xd732c20ec4c2a946 (`decisions.md §20` round 5): the sorted \
+             triple set gains 21 new members from the last newly-registered book \
+             (`mythic_adventures`) — zero reclassification, same reasoning as rounds 3-4, only \
+             one new `MonsterBook` row appended"
         );
     }
 }

@@ -2655,6 +2655,22 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Advanced Race Guide, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
         classified_by_cycle: "SD32-T9-NORECORD-R4",
     },
+    // `decisions.md §20` no_record-to-zero, round 5. This book carries no
+    // hand-rolled `gen_book_cache.rs` function (its `spell` family is
+    // reached through `src/bin/ingest_spells.rs`'s config-driven path
+    // instead), so it is reached entirely through `main`'s generic
+    // `monster_book_spec` fallback arm below -- no new generator code, only
+    // this registry row. `ma_abilities_race.lst` loads UNGATED at the
+    // book's own `.pcc` root (line 40, no `PRECAMPAIGN`).
+    MonsterBookSpec {
+        corpus_book: "mythic_adventures",
+        book_relative: "pathfinder/paizo/roleplaying_game/mythic_adventures",
+        races_lsts: &[],
+        abilities_lsts: &["ma_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _mythic_adventures.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Mythic Adventures, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES or DESCISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R5",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

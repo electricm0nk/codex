@@ -1666,6 +1666,15 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("advanced_race_guide", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("advanced_race_guide", "ARG"))
         }
+        // `decisions.md §20` no_record-to-zero, round 5. The last of the
+        // original 8 ZERO-monster books -- same shape as round 4 immediately
+        // above: no `("book", "monsters")` claim, only `monster_abilities`,
+        // under the wire code this book already serves its OTHER families
+        // with (`monster_catalog::BOOK_MYTHIC`, this book's existing
+        // `("mythic_adventures", "equipment")` arm above).
+        ("mythic_adventures", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("mythic_adventures", "MYTHIC"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by
@@ -2807,6 +2816,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("bestiary_5", "monster_abilities", "Gap: all 39 of Bestiary 5's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("pathfinder_unchained", "monster_abilities", "Gap: 69 of Pathfinder Unchained's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 4) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. A further 3 of the book's 72 orphan candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped this round, and NOT counted in this Gap figure (they stay `no_record`, not owner-less-shipped). Remedy: none needed for the 69 that ship -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-DESC: residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -4597,6 +4607,44 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // `python3 scripts/transcribe_monster_tables.py advanced_race_guide 2>&1 >/dev/null`.
         &[
             "advanced_race_guide:monster_ability:grippli_toxic_skin_grippli_poison",
+        ],
+    ),
+    (
+        "mythic_adventures",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 5: all 21 of this
+        // book's `monster_ability` records SHIP with `owners: &[]` --
+        // mythic_adventures has ZERO monster rows of its own
+        // (`scripts/classify_monster_ability_rows.py`'s "ZERO-monster books"
+        // line), so nothing in this book can ever own an ability row, and
+        // every one is shipped anyway per `decisions.md §20`: an
+        // un-ingested row's shape cannot be measured, and Gate 1's DoD
+        // needs every unit's shape measured. Pinned by exact key rather
+        // than by count so a NEW silent non-reach still fails here.
+        // Re-derive: `python3 scripts/transcribe_monster_tables.py
+        // mythic_adventures 2>&1 >/dev/null`.
+        &[
+            "mythic_adventures:monster_ability:block_attacks",
+            "mythic_adventures:monster_ability:dragon_blood",
+            "mythic_adventures:monster_ability:dragon_cantrips",
+            "mythic_adventures:monster_ability:dragon_fury",
+            "mythic_adventures:monster_ability:dual_initiative",
+            "mythic_adventures:monster_ability:feral_savagery",
+            "mythic_adventures:monster_ability:fortification",
+            "mythic_adventures:monster_ability:greensight",
+            "mythic_adventures:monster_ability:lingering_breath",
+            "mythic_adventures:monster_ability:mistsight",
+            "mythic_adventures:monster_ability:mythic_magic",
+            "mythic_adventures:monster_ability:mythic_power",
+            "mythic_adventures:monster_ability:poisonous_blood",
+            "mythic_adventures:monster_ability:powerful_blows",
+            "mythic_adventures:monster_ability:second_save",
+            "mythic_adventures:monster_ability:simple_arcane_spellcasting",
+            "mythic_adventures:monster_ability:simple_divine_spellcasting",
+            "mythic_adventures:monster_ability:smother",
+            "mythic_adventures:monster_ability:steal",
+            "mythic_adventures:monster_ability:surge",
+            "mythic_adventures:monster_ability:x_ray_vision",
         ],
     ),
     (

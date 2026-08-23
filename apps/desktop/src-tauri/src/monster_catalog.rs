@@ -180,6 +180,13 @@ const BOOK_B5: &str = "B5";
 const BOOK_PU: &str = "PU";
 const BOOK_ARG: &str = "ARG";
 
+/// `decisions.md §20` no_record-to-zero, round 5: `mythic_adventures`, the
+/// last of the original 8 zero-monster books. Already serves its `equipment`/
+/// `spell` families under this same wire code (`equipment_catalog`'s
+/// `"MYTHIC"` assertions, `reach_gate`'s `("mythic_adventures", "equipment")`
+/// arm) — reused, not invented.
+const BOOK_MYTHIC: &str = "MYTHIC";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -222,6 +229,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "bestiary_5" => "Bestiary 5",
         "pathfinder_unchained" => "Pathfinder Unchained",
         "advanced_race_guide" => "Advanced Race Guide",
+        "mythic_adventures" => "Mythic Adventures",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -254,6 +262,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "bestiary_5" => BOOK_B5,
         "pathfinder_unchained" => BOOK_PU,
         "advanced_race_guide" => BOOK_ARG,
+        "mythic_adventures" => BOOK_MYTHIC,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -1091,8 +1100,13 @@ mod tests {
         // unscreenable multi-DESC: shape) and `advanced_race_guide` (+1).
         // Re-derived: `python3 scripts/shape_ledger.py --inventory
         // docs/work-inventory.json` -- `monster_ability` `no_record` 191 -> 121.
+        // 1027 -> 1048 (`decisions.md §20` round 5, +21): the last of the
+        // original 8 zero-monster books, `mythic_adventures` (+21, all 21
+        // orphan candidates shipped, 0 refused). Re-derived: `python3
+        // scripts/shape_ledger.py --inventory docs/work-inventory.json` --
+        // `monster_ability` `no_record` 121 -> 100.
         assert_eq!(
-            owner_less_records_held, 1027,
+            owner_less_records_held, 1048,
             "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
              from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
              update both this pin and `reach_gate.rs`'s matching entries"
