@@ -85,19 +85,27 @@ def main(argv: list[str] | None = None) -> int:
     ledger = SL.build_ledger(not_done, corpus_index)
 
     # -- Card 15 disposition status of the census's kind_unenumerable set --
-    # (B) proven-not-an-object, applied in code THIS cycle. `ce__sizes.lst`
-    # (9 units) was REMOVED from total_kind_unenumerable_units entirely
-    # (27,847 -> 27,838); the CATEGORY:Internal reroute (2,614 units) is
-    # still counted in the live total (it moved bucket, from `class_feature`
-    # to `ability_category:Internal`) -- both are reported here for the
-    # narrative, but only the 9 actually change `total_this_run` below.
+    # (B) proven-not-an-object. `ce__sizes.lst` (9 units) is REMOVED from
+    # total_kind_unenumerable_units entirely (a `non_object_file`, not
+    # counted anywhere). The CATEGORY:Internal bare-marker reroute (40
+    # units, post-adjudication -- narrowed from the original lane's blanket
+    # 2,614) is still counted in the live total: it only moves bucket, from
+    # `class_feature` to `ability_category:Internal` (837 -> 879). Only the
+    # 9 actually shrink `total_this_run` below.
     disposed_b_applied = {
-        "class_feature_category_internal_reroute": {
-            "units": 2614,
+        "class_feature_category_internal_bare_marker_reroute": {
+            "units": 40,
             "still_counted_in_total_this_run": True,
-            "proof": "artifacts/gate-0-census-closure/15-card-15-class-feature-memo.md §2",
-            "applied_in": "scripts/census_independent.py _classify_kind_by_filename "
-            "+ count_objects row_dependent_class_feature branch",
+            "proof": "artifacts/gate-0-census-closure/"
+            "15-card-15-category-internal-adjudication-memo.md (decisions.md "
+            "§14c item 4) -- only a CATEGORY:Internal row with neither a "
+            "content field nor a resolved ABILITY:...|AUTOMATIC| gateway "
+            "reroutes; narrowed from the original lane's blanket 2,614 "
+            "after per-row adjudication found that blanket rule wrong for "
+            "90.7% of the population",
+            "applied_in": "scripts/census_independent.py "
+            "_row_is_bare_internal_marker + count_objects "
+            "row_dependent_class_feature branch",
         },
         "ce__sizes_lst_engine_covered": {
             "units": 9,
@@ -107,11 +115,14 @@ def main(argv: list[str] | None = None) -> int:
             "applied_in": "scripts/census_independent.py NON_OBJECT_FILENAME_TOKENS",
         },
     }
+    disposed_b_still_counted_total = sum(
+        v["units"] for v in disposed_b_applied.values() if v["still_counted_in_total_this_run"]
+    )
 
     # (A) real objects a measurement lane identified, NOT yet added to the
     # inventory/census "kind" population this cycle:
     pending_a = {
-        "class_feature_residual": {
+        "class_feature_residual_original": {
             "units": 179,
             "memo": "15-card-15-class-feature-memo.md §3",
             "why_not_applied": "root cause of the drop (likely a pool-membership "
@@ -119,14 +130,30 @@ def main(argv: list[str] | None = None) -> int:
             "by the memo itself -- adding a blind rescue list risks silently "
             "re-triggering whatever dedup step currently excludes them",
         },
+        "class_feature_internal_adjudicated_pending": {
+            "units": 2574,
+            "memo": "15-card-15-category-internal-adjudication-memo.md "
+            "(decisions.md §14c item 4): 2,371 (A) real content/resolved-"
+            "gateway rows + 203 proven facets the census conservatively "
+            "keeps counted (cross-file resolution not built into the "
+            "walker; under-exclude, not over-exclude, per decisions.md §1a)",
+            "why_not_applied": "adjudicated this run but not yet enumerated "
+            "into docs/work-inventory.json -- requires narrowing "
+            "v06_work_inventory.rs's own separate, unconditional "
+            "CATEGORY:Internal trap (`is_internal_category` in "
+            "enumerate_file) the same way census_independent.py's "
+            "row_dependent_class_feature branch was narrowed; that is a "
+            "second, independent codepath from the census walker and was "
+            "not attempted this cycle -- flagged forward, not silently "
+            "skipped",
+        },
         "ability_category_disposition_a": {
             "units": 5108,
             "memo": "15-card-15-ability-category-memo.md",
             "why_not_applied": "requires a new Kind::Ability variant across "
             "src/bin/v06_work_inventory.rs (enum, file_kind, enumerate_file, "
             "refine_kind, duplicate-identity handling) -- too large a surface "
-            "to land safely in this cycle's remaining budget; see also the "
-            "CATEGORY:Internal A/B tension flagged below",
+            "to land safely in this cycle's remaining budget",
         },
         "other_kinds_disposition_a": {
             "units": 3551,
@@ -142,20 +169,25 @@ def main(argv: list[str] | None = None) -> int:
             "why_not_applied": "each is a new Kind variant, same surface-area "
             "concern as ability_category above",
         },
-        "skill_new_kind": {
-            "units": 170,
-            "memo": "15-card-15-other-kinds-memo.md §7a",
-            "why_not_applied": "new Kind::Skill variant, same surface-area "
-            "concern as ability_category above",
-        },
     }
-    # (A) already applied in a PRIOR cycle: the 15,438 class_feature rows
-    # the census walk agrees with docs/work-inventory.json on (physical
-    # book/source_file/source_line join, memo §0/§5). Census still buckets
-    # ALL class_feature rows as kind_unenumerable (it is not one of census's
-    # own TEN_KINDS -- `_classify_kind_by_filename` never returns
-    # `("kind", "class_feature")`), so this figure is part of
-    # `total_this_run` even though the underlying units are fully tracked.
+    # (A) already applied: the 15,438 class_feature rows the census walk
+    # agrees with docs/work-inventory.json on (physical book/source_file/
+    # source_line join, memo §0/§5), PLUS the 149 `skill` units landed THIS
+    # cycle (`Kind::Skill`, `src/bin/v06_work_inventory.rs`) -- 170 real
+    # `*_skills.lst` rows the census walk finds, minus 21
+    # `core_essentials/ce_skills.lst` rows correctly deleted by the
+    # pre-existing `decisions.md §16` core_essentials-residual guard (real,
+    # re-derived population growth, not a predicate widening -- see
+    # `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment, raised
+    # 117 -> 138 this cycle for exactly this reason). Census still buckets
+    # class_feature as kind_unenumerable (not one of census's own
+    # `ADDED_KINDS`/`TEN_KINDS` for the matched-15,438 subset -- the
+    # unmatched residual above), so that figure is part of `total_this_run`
+    # even though the underlying units are fully tracked; `skill` moved OUT
+    # of `kind_unenumerable` entirely once `Kind::Skill` landed, so it is
+    # NOT part of `total_this_run` (`census_unenumerable_total`) any more --
+    # tracked here for the "sum the piles" narrative, excluded from
+    # `accounted_total` below to avoid double-subtracting it.
     already_tracked_a = {
         "class_feature_already_in_inventory": {
             "units": 15438,
@@ -163,9 +195,22 @@ def main(argv: list[str] | None = None) -> int:
             "note": "already a real inventory unit under kind=class_feature; "
             "counted here only because census's bucket model has no "
             "class_feature 'kind' bucket to move it into",
-        }
+            "counts_toward_total_this_run": True,
+        },
+        "skill_landed_this_cycle": {
+            "units": 149,
+            "census_raw_count": 170,
+            "core_essentials_residual_deleted": 21,
+            "memo": "15-card-15-other-kinds-memo.md §7a; landed via "
+            "Kind::Skill this cycle (card-15-enumerate)",
+            "note": "moved OUT of census's kind_unenumerable entirely -- "
+            "does not count toward total_this_run below",
+            "counts_toward_total_this_run": False,
+        },
     }
-    already_tracked_total = sum(v["units"] for v in already_tracked_a.values())
+    already_tracked_total = sum(
+        v["units"] for v in already_tracked_a.values() if v["counts_toward_total_this_run"]
+    )
     pending_a_total = sum(v["units"] for v in pending_a.values())
 
     # (B) real dispositions a measurement lane proposed but NOT yet applied
@@ -180,47 +225,40 @@ def main(argv: list[str] | None = None) -> int:
     }
     pending_b_total = sum(v["units"] for v in pending_b_unapplied.values())
 
-    # A genuine, unresolved cross-lane tension this cycle found and did NOT
-    # paper over (`decisions.md §1a`): the class_feature lane's §2 disposes
-    # ALL 2,614 CATEGORY:Internal _abilities_class.lst rows as (B) purely on
-    # the walker's own existing, content-blind internal_namespace precedent
-    # (v06_work_inventory.rs drops every CATEGORY:Internal row unconditionally,
-    # regardless of formula content). The ability_category lane's own
-    # PER-ROW classifier, run against the *original* 839-unit
-    # ability_category:Internal population, found 685/839 (81.6%) carry
-    # independent DEFINE/BONUS/DESC/etc content and disposed them (A), not
-    # (B). Both lanes cite real evidence; they were never reconciled against
-    # each other. This script does NOT resolve it -- it is named here so the
-    # next integration cycle inherits a real open question, not a rounded-off
-    # one.
-    unresolved_tension = {
+    # The class_feature-lane-vs-ability_category-lane CATEGORY:Internal
+    # tension `decisions.md §14c` item 4 named is RESOLVED (not just
+    # flagged) as of the `category-internal-adjudication` cycle: split
+    # 2,371 (A) / 243 (B) -- 203 proven facets + 40 proven inert -- per-row,
+    # not by the class_feature lane's original blanket-(B) file-kind rule.
+    # Kept here (renamed from `unresolved_tension`) as the settled record,
+    # not an open question.
+    resolved_tension = {
         "finding": "class_feature-lane (B)-for-all vs ability_category-lane "
-        "(A)-for-81.6%, both applied to CATEGORY:Internal rows, never "
-        "cross-checked",
-        "class_feature_lane_claim": "all 2,614 rerouted rows are (B), citing "
-        "the walker's existing unconditional CATEGORY:Internal exclusion rule",
-        "ability_category_lane_finding": "685/839 (81.6%) of the ORIGINAL "
-        "ability_category:Internal population carry independent formula "
-        "content and were disposed (A), not (B)",
-        "action_taken_this_cycle": "the census bucket-relabeling fix "
-        "(_abilities_class.lst -> ability_category:Internal) was applied "
-        "because it matches the walker's own existing, already-shipped "
-        "behaviour for every OTHER _abilities_*.lst file -- a consistency "
-        "fix, not a fresh content judgement. This script does NOT apply "
-        "the ability_category lane's A/B split to any of the 3,453 rows "
-        "now in this bucket (839 original + 2,614 rerouted).",
+        "(A)-for-81.6%, both applied to CATEGORY:Internal rows -- disjoint "
+        "populations (bare *abilities*.lst files vs _abilities_class.lst "
+        "files specifically), not a contradiction",
+        "resolution": "artifacts/gate-0-census-closure/"
+        "15-card-15-category-internal-adjudication-memo.md (decisions.md "
+        "§14c item 4): 2,371 (A) / 243 (B) of the 2,614 rerouted rows, "
+        "per-row proof, not blanket file-kind exclusion",
+        "code_fix_applied": "census_independent.py's reroute now excludes "
+        "only the 40 provably-bare rows (`_row_is_bare_internal_marker`); "
+        "the 203 proven facets stay counted as class_feature "
+        "(under-exclude, not over-exclude) -- see "
+        "`class_feature_internal_adjudicated_pending` above for the "
+        "enumeration status of the 2,574 that stay counted",
     }
 
-    # Units of `total_this_run` (27,838) accounted for by SOME disposition,
-    # applied or not: the 2,614 Internal-reroute rows are still physically
-    # present in the live total (they moved bucket, weren't removed), the
-    # 15,438 already-tracked class_feature rows are still counted too (see
-    # `already_tracked_a` note), plus every pending (A)/(B) bucket.
-    still_counted_reroute = disposed_b_applied["class_feature_category_internal_reroute"][
-        "units"
-    ]
+    # Units of `total_this_run` accounted for by SOME disposition, applied
+    # or not: the 40 Internal-bare-marker rows are STILL counted in the
+    # total (relabeled into `ability_category:Internal`, not removed --
+    # `disposed_b_still_counted_total`), the 15,438 already-tracked
+    # class_feature rows are still counted (see `already_tracked_a` note),
+    # `skill` (149 landed + 21 residual-deleted, 170 total) moved OUT of
+    # `kind_unenumerable` entirely this cycle and is excluded here, plus
+    # every pending (A)/(B) bucket.
     accounted_total = (
-        still_counted_reroute + already_tracked_total + pending_a_total + pending_b_total
+        disposed_b_still_counted_total + already_tracked_total + pending_a_total + pending_b_total
     )
     remaining_undisposed = census_unenumerable_total - accounted_total
 
@@ -263,19 +301,28 @@ def main(argv: list[str] | None = None) -> int:
         ),
         "disposition_status_of_kind_unenumerable": {
             "total_this_run": census_unenumerable_total,
-            "removed_from_total_this_cycle": {
+            "removed_from_total_across_all_card_15_cycles": {
                 "ce__sizes_lst": 9,
-                "note": "27,847 (pre-cycle) - 9 = 27,838 (total_this_run, above)",
+                "skill_this_cycle": 170,
+                "note": "27,847 (pre-any-card-15-cycle) - 9 (ce__sizes.lst, "
+                "non_object_file) - 170 (skill moved to a real kind, "
+                "Kind::Skill, this cycle) = 27,668 (total_this_run, above). "
+                "The CATEGORY:Internal reroute (originally 2,614, narrowed "
+                "to 40 by adjudication) never leaves total_this_run at all "
+                "-- it only moves bucket (class_feature <-> "
+                "ability_category:Internal), so it does not appear in this "
+                "subtraction.",
             },
-            "b_disposed_applied_this_cycle_still_counted_in_total": {
-                "total": still_counted_reroute,
-                "detail": {
-                    "class_feature_category_internal_reroute": disposed_b_applied[
-                        "class_feature_category_internal_reroute"
-                    ]
-                },
+            "b_disposed_applied": {
+                "total_still_counted_in_total_this_run": disposed_b_still_counted_total,
+                "total_removed_from_total_this_run": sum(
+                    v["units"]
+                    for v in disposed_b_applied.values()
+                    if not v["still_counted_in_total_this_run"]
+                ),
+                "detail": disposed_b_applied,
             },
-            "a_already_tracked_prior_cycle_still_counted_in_total": {
+            "a_already_tracked_still_counted_in_total": {
                 "total": already_tracked_total,
                 "detail": already_tracked_a,
             },
@@ -287,19 +334,19 @@ def main(argv: list[str] | None = None) -> int:
                 "total": pending_b_total,
                 "detail": pending_b_unapplied,
             },
-            "unresolved_cross_lane_tension": unresolved_tension,
+            "category_internal_tension_resolution": resolved_tension,
             "arithmetic_check": {
-                "still_counted_reroute_plus_already_tracked_plus_pending_a_plus_pending_b": accounted_total,
+                "disposed_b_still_counted_plus_already_tracked_plus_pending_a_plus_pending_b": accounted_total,
                 "equals_total_this_run": accounted_total == census_unenumerable_total,
                 "remaining_undisposed": remaining_undisposed,
-                "note": "every unit in total_this_run (27,838) is accounted for "
-                "by exactly one row above: 2,614 (Internal reroute, disposed "
-                "by consistency with the walker's own existing rule, tension "
-                "flagged) + 15,438 (class_feature, already tracked in a prior "
-                "cycle) + 179 (class_feature residual, pending) + 5,886 "
-                "(ability_category total: 5,108 pending-A + 778 pending-B) + "
-                "3,551 (other-kinds pending-A) + 170 (skill pending-A) = "
-                "27,838.",
+                "note": "every unit in total_this_run (27,668) is accounted "
+                "for by exactly one row above: 40 (Internal bare-marker "
+                "reroute, disposed B, still counted -- moved into "
+                "ability_category:Internal) + 15,438 (class_feature, "
+                "already tracked) + 179 (class_feature residual, original, "
+                "pending A) + 2,574 (class_feature Internal-adjudicated, "
+                "pending A) + 5,108 (ability pending-A) + 3,551 (other-kinds "
+                "pending-A) + 778 (ability_category pending-B) = 27,668.",
             },
         },
         "gate_3_standing_gate_still_passes": None,  # filled by caller/report consumer

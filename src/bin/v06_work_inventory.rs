@@ -177,6 +177,16 @@ enum Kind {
     /// evidence this variant exists to fix.
     MonsterAbility,
     Companion,
+    /// SD-32 card 15 (`decisions.md §12b`): the SRD skill-definition
+    /// population (`Acrobatics`, `Craft (Alchemy)`, ...), 170 units across
+    /// 10 in-scope `*_skills.lst` files. Distinct from
+    /// `src/rules_core/skill_allocation.rs` (skill-POINT allocation
+    /// logic) -- this kind is the per-skill definition table itself
+    /// (`KEYSTAT:`/`ACHECK:`/class-skill `BONUS:` rows), which had no
+    /// engine table and no inventory kind before this cycle. See
+    /// `artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md`
+    /// §7a for the full corpus proof.
+    Skill,
 }
 
 impl Kind {
@@ -193,6 +203,7 @@ impl Kind {
             Kind::Monster => "monster",
             Kind::MonsterAbility => "monster_ability",
             Kind::Companion => "companion",
+            Kind::Skill => "skill",
         }
     }
 
@@ -210,6 +221,7 @@ impl Kind {
         Kind::Monster,
         Kind::MonsterAbility,
         Kind::Companion,
+        Kind::Skill,
     ];
 }
 
@@ -271,7 +283,51 @@ fn file_kind(basename: &str) -> Option<Kind> {
     if basename.contains("_equip") {
         return Some(Kind::Equipment);
     }
+    // SD-32 card 15 (`decisions.md §12b`): checked after every other branch
+    // above so a coincidental `_skills` substring inside an already-handled
+    // shape never wins first -- verified against the pinned oracle that no
+    // `_classes`/`_feats`/`_equip*`/`_abilities_*` basename also contains
+    // `_skills` (`find "$PCGEN_CORPUS_ROOT/pathfinder" -iname '*_skills.lst'`
+    // -- every hit is a dedicated `*_skills.lst` file).
+    if basename.contains("_skills") {
+        return Some(Kind::Skill);
+    }
     None
+}
+
+#[cfg(test)]
+mod file_kind_skill_tests {
+    use super::*;
+
+    /// SD-32 card 15: the 10 real in-scope `*_skills.lst` basenames at the
+    /// pinned oracle SHA (`15-card-15-other-kinds-memo.md` §7a) all resolve
+    /// to `Kind::Skill`.
+    #[test]
+    fn skills_basenames_resolve_to_kind_skill() {
+        for basename in [
+            "cr_skills.lst",
+            "pu_skills.lst",
+            "ce_skills.lst",
+            "up_skills.lst",
+            "isb_skills.lst",
+            "uc_skills.lst",
+            "ism_skills.lst",
+            "b2_skills.lst",
+            "b4_skills.lst",
+            "ue_skills.lst",
+        ] {
+            assert_eq!(file_kind(basename), Some(Kind::Skill), "{basename}");
+        }
+    }
+
+    /// Regression guard: a coincidental `_skills` substring must never win
+    /// over an already-handled shape checked earlier in `file_kind`.
+    #[test]
+    fn skills_check_does_not_shadow_earlier_branches() {
+        assert_eq!(file_kind("cr_classes.lst"), Some(Kind::Class));
+        assert_eq!(file_kind("cr_feats.lst"), Some(Kind::Feat));
+        assert_eq!(file_kind("cr_races.lst"), Some(Kind::Race));
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -1841,7 +1897,27 @@ fn is_core_essentials_residual(book: &str) -> bool {
 /// own `PINNED_BASELINE`; a future cycle that legitimately resolves more of
 /// the residual lowers both constants in the same commit as the fix, never
 /// raises either to make a regression pass.
-const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 117;
+///
+/// **SD-32 card 15 (`decisions.md §12b`) raised this from 117 to 138**, the
+/// one exception this doc comment's own rule anticipates: not a predicate
+/// widening (`is_core_essentials_residual`'s exact-match body is byte-for-byte
+/// unchanged) and not hiding a bug, but real, previously-invisible content
+/// becoming visible for the first time. `Kind::Skill` landing means
+/// `core_essentials/ce_skills.lst` (a PCGen-internal Versatile-Performance
+/// skill-substitution table -- conditional named skills like `Bluff (Perform
+/// (Act))`, invented by PCGen's own data model, no independent Paizo print
+/// source) is enumerated for the first time; all 21 of its rows carry
+/// neither a per-race path signal (it lives at `core_essentials/`'s top
+/// level, not under `races/<slug>/`) nor a resolvable `SOURCELONG:`
+/// directive, so they land in the SAME book-agnostic-bookkeeping category
+/// the existing 116 already documents (the file's own header carries no
+/// SOURCELONG at all). Re-derive: `CE_CORPUS=<pinned oracle path>
+/// cargo test --locked --lib
+/// core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline
+/// -- --nocapture` after exporting `PCGEN_CORPUS_ROOT`; 116 (pre-existing) +
+/// 21 (`ce_skills.lst`) = 137, plus this constant's own established
+/// 1-unit downstream-rescue margin = 138.
+const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 138;
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
 fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut BookEnumeration) {
@@ -7097,6 +7173,14 @@ fn classify(
         // in the wrong kind before this cycle; real content with no
         // engine table now, honestly reported as such.
         Kind::MonsterAbility => not_ingested("monster_ability_has_no_engine_table"),
+        // SD-32 card 15 (`decisions.md §12b`): the per-skill definition
+        // table (`KEYSTAT:`/`ACHECK:`/class-skill `BONUS:` rows) has no
+        // engine table -- `src/rules_core/skill_allocation.rs` is
+        // skill-POINT allocation, not a per-skill data source ingesting
+        // these corpus rows. Real, newly-visible content with no engine
+        // table yet, honestly reported as such -- same shape as
+        // `Kind::Companion`/`Kind::MonsterAbility` above.
+        Kind::Skill => not_ingested("skill_content_has_no_engine_table"),
     }
 }
 
@@ -15583,6 +15667,12 @@ mod core_essentials_book_attribution_tests {
     /// failure, on a box that has not bootstrapped the pin -- `verify.sh`'s
     /// `preflight-oracle` stage runs first in every cycle specifically so
     /// this condition is never actually hit in the gate that matters.
+    ///
+    /// **SD-32 card 15 raised this pin from 117 to 138** (`CORE_ESSENTIALS_
+    /// RESIDUAL_DELETION_CEILING`'s doc comment above carries the full
+    /// re-derive command and the exact 21-row `ce_skills.lst` accounting --
+    /// real new content becoming visible for the first time via
+    /// `Kind::Skill`, not a predicate widening).
     #[test]
     fn core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline() {
         let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -15601,7 +15691,7 @@ mod core_essentials_book_attribution_tests {
         }
         let enumeration = enumerate_book(&book_dir, "core_essentials");
         let residual = enumeration.units.iter().filter(|u| u.book == "core_essentials").count();
-        const PINNED_BASELINE: usize = 117;
+        const PINNED_BASELINE: usize = 138;
         assert!(
             residual <= PINNED_BASELINE,
             "core_essentials residual GREW to {residual} (pinned baseline {PINNED_BASELINE}) -- \

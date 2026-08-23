@@ -155,6 +155,19 @@ TEN_KINDS = (
     "race_trait",
 )
 
+# SD-32 card 15 (`decisions.md §12b`): kinds added after AT-32-G0-002's
+# original ten-kind list, one at a time as each is proven safe to land in
+# `src/bin/v06_work_inventory.rs`'s producer -- see that file's `Kind` enum
+# doc comments for the corpus proof behind each addition. Kept separate from
+# `TEN_KINDS` rather than folded in, so AT-32-G0-002's own criterion text
+# ("the ten kinds") stays a truthful description of what it originally named;
+# `ALL_KINDS` below is the walker's own live list.
+ADDED_KINDS = (
+    "skill",  # 170 units, 10 `*_skills.lst` files -- `15-card-15-other-kinds-memo.md` §7a.
+)
+
+ALL_KINDS = TEN_KINDS + ADDED_KINDS
+
 # System/engine wiring files -- no discrete named narrative objects live in
 # these, so they are skipped entirely rather than filed as
 # kind_unenumerable (which is reserved for real, named content objects
@@ -360,6 +373,13 @@ def _classify_kind_by_filename(basename: str, book_id: str):
         if book_id in MONSTER_BOOK_IDS and "_pc" not in b:
             return ("kind", "monster")
         return ("kind", "race")
+
+    # SD-32 card 15 (`decisions.md §12b`): moved out of `unclassified:<file>`
+    # once `Kind::Skill` landed in the Rust producer
+    # (`src/bin/v06_work_inventory.rs`), so the walker and the inventory
+    # agree per this card's own acceptance bar. See `ADDED_KINDS` above.
+    if "skill" in b:
+        return ("kind", "skill")
 
     return ("kind_unenumerable", f"unclassified:{basename}")
 

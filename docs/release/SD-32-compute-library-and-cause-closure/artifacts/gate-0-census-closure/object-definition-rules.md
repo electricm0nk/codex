@@ -39,7 +39,30 @@ Corpus SHA: `grep PCGEN_ORACLE_SHA scripts/pcgen-oracle-pin.env`.
 | `race` | filename contains `race` (not `companion`), book NOT in the monster-book set (or is `_pc` suffixed even inside one) | 241 |
 | `race_trait` | filename contains `abilit` + `_race`, book NOT in the monster-book set | 5,637 |
 
-**Ten-kind total: 28,037 units** (`total_counted_units`).
+**Ten-kind total (AT-32-G0-002's original list): 28,037 units** (figures above are as first
+measured; re-derive live with the command at the top of this file — they have since moved as card
+15 cycles land).
+
+## Kinds added after AT-32-G0-002 (`decisions.md §12b`, card 15)
+
+`census_independent.py`'s `ADDED_KINDS` tuple (kept separate from `TEN_KINDS` so AT-32-G0-002's own
+"ten kinds" text stays a truthful description of what it originally named). Each addition needs a
+matching `Kind::*` variant in `src/bin/v06_work_inventory.rs` so the walker and the inventory agree
+(§12b's own acceptance bar) — landed incrementally, one kind per cycle, per
+`workflow-instruction.md`'s "decompose by kind, land incrementally" instruction.
+
+| Kind | Filename rule | Census raw count | Landed in inventory | Cycle |
+|---|---|---:|---:|---|
+| `skill` | filename contains `skill` | 170 | 149 (21 `core_essentials/ce_skills.lst` rows correctly deleted by the pre-existing `decisions.md §16` core_essentials-residual guard — real population growth, not a predicate widening; see `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment, raised 117→138) | `card-15-enumerate` |
+
+**Known consequence, not remediated this cycle:** landing `skill`'s 149 real units raises Gate 3's
+(`scripts/shape_coverage_standing_gate.py`) `no_record` population share (10,419/24,914 → 10,560/
+25,055), because none of these rows have ever been ingested into `data/corpus` under any kind —
+`scripts/verify.sh --only shape-coverage-standing-gate` now FAILs
+(`no_record_budget_exceeded=True`). This is the gate correctly reporting real, previously-invisible
+uncovered content, not a defect in the enumeration — see the `card-15-enumerate` cycle receipt for
+the full analysis and the escalation this raises (card 15's enumerate mandate vs. Gate 3's
+"shrink-only" budget doctrine, `scripts/shape_coverage_standing_gate.py` lines ~68-72).
 
 ## Kind-unenumerable — named and counted, not pretended to be zero (AT-32-G0-002)
 

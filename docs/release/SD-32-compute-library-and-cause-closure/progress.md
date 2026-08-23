@@ -2177,6 +2177,57 @@ and after this sweep (not "none found" without having run the commands).
   Open blockers` below. Receipt:
   `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-bestiary_5_cycle_receipt.md`.
 
+### Cycle card-15-enumerate — Gate 0 / Card 15 `census-scope-closure` — lands `Kind::Skill` through the real producer
+
+- **Card ID:** `census-scope-closure` (card 15). Row stays `in-progress` — one of eight pending
+  disposition-(A) buckets landed this cycle; §12b's acceptance bar not met.
+- **Files touched:** `src/bin/v06_work_inventory.rs` (`Kind::Skill` enum/id/ALL/file_kind/verdict
+  arm, `file_kind_skill_tests`, `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`/`PINNED_BASELINE`
+  117→138), `scripts/census_independent.py` (`ADDED_KINDS`), `scripts/tests/test_census_independent.py`
+  (1 test), `scripts/card15_reconcile.py` (corrected stale 2,614→40 figure, added the 2,574-unit
+  Internal-adjudicated pending bucket, moved `skill` to already-tracked), `scripts/observer/
+  pf1e_dashboard_producer.py` (prose citation), `docs/work-inventory.json` (regenerated through the
+  real producer, `cargo run --bin v06_work_inventory` with `CORPUS_LITERAL_SWEEP_REPORT`/
+  `DERIVED_FIXTURE_CHECK_REPORT` set — the guarded path, no `--allow-stamp-loss`), `artifacts/
+  gate-0-census-closure/{diff.json,15-reconcile.json,object-definition-rules.md}`.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** partial — `skill` landed and green; 7 of 8 pending buckets remain, plus a newly-found
+  Gate 3 tension (below), unresolved.
+- **Summary:** Landed `Kind::Skill` (170 real `*_skills.lst` rows the census walk finds; 149 land in
+  `docs/work-inventory.json`, 21 `core_essentials/ce_skills.lst` rows correctly deleted by the
+  pre-existing `decisions.md §16` core_essentials-residual guard — real, re-derived population
+  growth, not a predicate widening, so `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` was raised
+  117→138 with the full re-derive command in its own doc comment, reproduced against the unmodified
+  HEAD baseline first to confirm the growth was real and not caused by this cycle's own code).
+  `docs/work-inventory.json` `totals.units` 38,391→38,540, 0 units removed, 0 verification stamps
+  lost (diffed by id). Corrected `scripts/card15_reconcile.py`'s stale hardcoded figures left by the
+  `category-internal-adjudication` cycle (2,614→40 for the Internal reroute; added the 2,574-unit
+  `class_feature_internal_adjudicated_pending` bucket that cycle flagged as its own remaining scope)
+  — `remaining_undisposed: 0`, full arithmetic reconciles to the live `total_kind_unenumerable_units`
+  (27,668, down from 27,838 as `skill` moved out of the census's `kind_unenumerable` bucket
+  entirely). **Found, escalated, NOT silently resolved:** landing `skill`'s 149 real units makes
+  `scripts/verify.sh --only shape-coverage-standing-gate` FAIL again (`no_record_budget_exceeded=True`
+  — population 24,914→25,055, no_record 10,419→10,560, share 41.822%→42.147%), because none of
+  `skill`'s content has ever been ingested into `data/corpus`. That file's own doc comment
+  explicitly anticipates and forbids this exact case ("a newly-added population with no corpus
+  coverage... now fails the gate... nothing in this gate lets the budget rise") — unlike the
+  core_essentials ceiling, this is not an oversight to correct but the gate doing its job, and every
+  remaining disposition-(A) bucket has the identical property (none ever ingested), so this
+  regression will recur on the next kind landed too. Did NOT touch `scripts/shape_coverage_standing_gate.py`
+  (the sibling `gate-1-shape-closure`/`gate-3-closure-invariant` lane's own file, re-closed this same
+  wave) — raising a ruling request instead of deciding unilaterally which of card 15's or Gate 3's
+  doctrine yields. Full analysis: `artifacts/gate-0-census-closure/15-enumerate_cycle_receipt.md`.
+- **Verification:** `python3 -m unittest scripts.tests.test_census_independent scripts.tests.test_shape_coverage_standing_gate scripts.tests.test_shape_ledger` → 58 OK; `cargo test --locked --bin v06_work_inventory` → 301 passed, 1 failed (pre-existing, unrelated — `uncompiled_books_stay_none`/`inner_sea_temples`, a 5th book compiled since that test's comment last enumerated four such drifts); `cargo test --locked --lib` → 2388 passed; desktop crate → 517 passed; `--only shape-coverage-standing-gate-selftest` → PASS (synthetic, unaffected); `--only shape-coverage-standing-gate` → FAIL (see above); `--only reach` → see cycle receipt for the live pasted result.
+- **Discovery forwards:** the Gate 3 no_record-budget tension above — needs an operator ruling
+  before the next new-kind bucket lands (any of them will reproduce the identical regression).
+- **Next-cycle plan:** get the Gate 3 ruling first; then land the six clean other-kinds buckets
+  (3,551, same filename-rule pattern as `skill`); then `ability` (5,108, largest/most complex);
+  then narrow `v06_work_inventory.rs`'s separate `is_internal_category` trap for the 2,574
+  class_feature-Internal-adjudicated rows; then pin the 179 residual's root cause before any
+  rescue; then apply the 778 `ability_category` (B) exclusions; then re-run
+  `scripts/card15_reconcile.py` and confirm `remaining_undisposed: 0` **and** every unit carries a
+  matched-corpus family (not just F0-by-default) before setting row 15 `complete`.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).

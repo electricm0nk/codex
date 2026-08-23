@@ -302,6 +302,24 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
             self.assertEqual(counts["counts_by_kind"].get("race"), 1)
             self.assertNotIn("monster", counts["counts_by_kind"])
 
+    def test_skills_file_counts_as_skill_kind_not_unclassified(self):
+        # SD-32 card 15 (`decisions.md §12b`): `*_skills.lst` moved from
+        # `kind_unenumerable["unclassified:<file>"]` into the `skill` kind
+        # once `Kind::Skill` landed in `src/bin/v06_work_inventory.rs`, so
+        # the walker and the inventory agree.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_skills.lst"),
+                "Acrobatics\tKEYSTAT:DEX\tACHECK:YES\tTYPE:Dexterity.ACHECK.Base\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["counts_by_kind"].get("skill"), 1)
+            self.assertNotIn("unclassified:cr_skills.lst", counts["kind_unenumerable"])
+
     def test_non_object_files_are_skipped_not_miscounted(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = os.path.join(tmp, "pathfinder")

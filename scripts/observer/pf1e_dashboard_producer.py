@@ -258,8 +258,12 @@ FUTURE_STATE_BOOKS = [
     # core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline`,
     # `v06_work_inventory.rs`) and `main()`'s own
     # `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` assertion both still ratchet
-    # the pre-deletion residual at 117, so a regression is caught before this
-    # panel would ever need to report a non-zero figure again.)
+    # the pre-deletion residual, so a regression is caught before this panel
+    # would ever need to report a non-zero figure again. SD-32 card 15
+    # (`decisions.md §12b`) raised the ratchet from 117 to 138 when
+    # `Kind::Skill` made `core_essentials/ce_skills.lst`'s 21
+    # previously-unenumerated, unattributable rows visible for the first
+    # time -- see that constant's own doc comment for the re-derive command.)
     {"id": "core_essentials", "title": "Core Essentials", "channel": ""},
     {"id": "advanced_race_guide", "title": "Advanced Race Guide", "channel": "SD-27"},
     {"id": "pathfinder_unchained", "title": "Pathfinder Unchained", "channel": "SD-27"},
