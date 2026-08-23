@@ -2799,8 +2799,18 @@ fn verified_citation_line(
         .lines
         .get(idx)
         .unwrap_or_else(|| panic!("{} has no line {recorded}", file.relative_path));
-    if !codex_generated_name {
-        let first_col = line.split('\t').next().unwrap_or_default().trim();
+    let first_col = line.split('\t').next().unwrap_or_default().trim();
+    // A `.COPY=` overlay row's own first column is a compound directive
+    // (`CATEGORY=Special Ability|Rake.COPY=Rake`), not the record's display
+    // name -- the same "row's first column is not the emitted name" shape
+    // `codex_generated_name` exempts, but structural rather than a rename:
+    // provable from the line's own bytes, never guessed (`decisions.md
+    // §27`'s provisional-facet-default cycle, round 8 -- `Aurumvorax ~
+    // Rake`/`Carnivorous Blob ~ Split`). A `.COPY=` MONSTER row never
+    // reaches this function at all (dropped before emission, see the
+    // `.COPY=` screen above), so this only ever exempts an ABILITY row.
+    let is_copy_overlay_row = first_col.contains(".COPY=");
+    if !codex_generated_name && !is_copy_overlay_row {
         assert_eq!(
             first_col, display_name,
             "{}:{recorded} names {first_col:?}, not {display_name:?} -- the table's recorded \
@@ -2862,6 +2872,42 @@ mod tests {
     // not just the bare basename -- `CorpusLines::line`'s single-level
     // `dir.join(file)` join otherwise silently resolves a nested citation
     // to a nonexistent top-level path.
+
+    // `decisions.md §27`'s provisional-facet-default cycle (round 8):
+    // `verified_citation_line` used to assert a cited line's own first
+    // column equals the emitted `display_name` unconditionally (except for
+    // `codex_generated_name`) -- a `.COPY=` overlay ability row's first
+    // column is a compound directive (`CATEGORY=Special Ability|Rake.COPY=
+    // Rake`), never the emitted name, so this panicked on every real
+    // `.COPY=` ability row before the fix.
+
+    #[test]
+    fn verified_citation_line_exempts_a_copy_overlay_rows_compound_first_column() {
+        let file = CorpusFile {
+            relative_path: "test.lst".to_string(),
+            sha256: String::new(),
+            lines: vec!["CATEGORY=Special Ability|Rake.COPY=Rake\tKEY:Aurumvorax ~ Rake".to_string()],
+        };
+        // Would panic under the pre-fix code: first column
+        // (`CATEGORY=Special Ability|Rake.COPY=Rake`) != display_name (`Rake`).
+        assert_eq!(verified_citation_line(&file, 1, "Rake", false), 1);
+    }
+
+    #[test]
+    fn verified_citation_line_still_catches_a_genuinely_stale_citation() {
+        // Mutation-style proof this is not a blanket bypass: a row that is
+        // NOT a `.COPY=` overlay and whose first column genuinely diverges
+        // from the emitted name must still panic.
+        let file = CorpusFile {
+            relative_path: "test.lst".to_string(),
+            sha256: String::new(),
+            lines: vec!["Stale Name\tKEY:Something ~ Else".to_string()],
+        };
+        let result = std::panic::catch_unwind(|| {
+            verified_citation_line(&file, 1, "Different Name", false)
+        });
+        assert!(result.is_err(), "a genuinely stale citation must still panic");
+    }
 
     #[test]
     fn wiring_class_file_arg_keeps_the_subdirectory_a_bare_basename_would_drop() {

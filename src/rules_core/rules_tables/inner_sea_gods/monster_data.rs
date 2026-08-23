@@ -11,7 +11,7 @@
 //!   * `isg_races.lst` -- 36 monster rows
 //!   * `isg_races_b4.lst` -- 3 monster rows
 //!   * `isg_abilities_races_b4.lst` -- 16 monster-ability rows
-//!   * `isg_abilities_races.lst` -- 147 monster-ability rows
+//!   * `isg_abilities_races.lst` -- 148 monster-ability rows
 //!
 //! 3 ability row(s) of this book have their OWN name/key match
 //! a `pi_screening::PI_BLACKLIST_TERMS` term -- `decisions.md §24`'s "the name
@@ -51,6 +51,14 @@
 //!   * `isg_abilities_races.lst:43`
 //!   * `isg_abilities_races.lst:44`
 //!   * `isg_abilities_races.lst:45`
+//!
+//! 1 ability row(s) ship with a `decisions.md §27`
+//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
+//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
+//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
+//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
+//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
+//!   * `Xocothian ~ Speed Burst` (delivery_only_no_facet_segment)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -407,7 +415,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Will):6"),
         source_page: Some("p.291"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d8") }, NaturalAttack { name: "Wing", damage_dice: Some("1d6") }],
-        ability_keys: &["Xocothian ~ Form of Sea and Sky", "Xocothian ~ Speak with Animals"],
+        ability_keys: &["Xocothian ~ Form of Sea and Sky", "Xocothian ~ Speed Burst", "Xocothian ~ Speak with Animals"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: 2 }],
         has_spell_like_abilities: false,
@@ -838,7 +846,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_gods monster-ability record (163 rows).
+/// Every inner_sea_gods monster-ability record (164 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "First Blade ~ Powerful Blows (Slam)",
@@ -2116,6 +2124,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Xocothian"],
         source_file: "isg_abilities_races.lst",
         source_line: 177,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Xocothian ~ Speed Burst",
+        name: "Speed Burst",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["ModifyMovement"],
+        description: Some("A xocothian can fly or swim up to 200 feet as a full-round action. When using this ability, it must move in a straight line. This does not provoke attacks of opportunity."),
+        description_variables: &[],
+        source_page: None,
+        owners: &["Xocothian"],
+        source_file: "isg_abilities_races.lst",
+        source_line: 178,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

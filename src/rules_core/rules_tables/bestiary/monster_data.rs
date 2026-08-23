@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b1_races.lst` -- 280 monster rows
-//!   * `b1_abilities_race.lst` -- 528 monster-ability rows
+//!   * `b1_abilities_race.lst` -- 529 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 182 monster-ability rows
 //!
 //! 4 monster row(s) of this book are `<Record>.MOD` OVERLAY
@@ -373,6 +373,14 @@
 //!   * `ce_abilities_race.lst:1750` (Outsider Traits Output)
 //!   * `ce_abilities_race.lst:1752` (Swarm Traits Output)
 //!   * `ce_abilities_race.lst:1753` (Undead Traits Output)
+//!
+//! 1 ability row(s) ship with a `decisions.md §27`
+//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
+//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
+//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
+//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
+//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
+//!   * `Morlock ~ Sneak Attack` (type_internal_only_no_facet_no_delivery)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -5980,7 +5988,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary monster-ability record (710 rows).
+/// Every bestiary monster-ability record (711 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Aboleth ~ Mucus Cloud",
@@ -11738,6 +11746,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Morlock"],
         source_file: "b1_abilities_race.lst",
         source_line: 944,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Morlock ~ Sneak Attack",
+        name: "Sneak Attack",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Internal"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &["Morlock"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 945,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

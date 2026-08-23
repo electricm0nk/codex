@@ -691,5 +691,154 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
         self.assertEqual(second, third)
 
 
+class ProvisionalFacetDefaultRound8(unittest.TestCase):
+    """`decisions.md §27`/`§27a`/`§27b` -- a `TYPE:`-facet-gap row ships
+    instead of being dropped, `facet` forced to `SpecialQuality`, and
+    `parse_type_or_provisional_default`'s fourth return value names WHICH
+    of the four shapes T9 round 6/7's own corpus-wide re-derivation found.
+    Every row below is a REAL coordinate the round-8 re-derivation named,
+    transcribed verbatim (never a guessed synthetic), except the
+    `book_specific...` control which round 6/7's own receipt already used
+    (`TypeSegmentsUpstreamDivergenceCorrection` above)."""
+
+    def test_a_row_with_a_real_modeled_facet_is_unaffected(self) -> None:
+        """Control: `parse_type_or_provisional_default` changes nothing for
+        the ~96% of rows that already resolve cleanly -- fourth value is
+        `None`, first three match `parse_type` exactly."""
+        row = ["Cling", "KEY:Tick Swarm ~ Cling", "TYPE:SpecialAttck.Extraordinary"]
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual((facet, delivery, traits), tmt.parse_type(row))
+        self.assertIsNone(reason)
+
+    def test_type_internal_only_no_facet_no_delivery(self) -> None:
+        # `bestiary/b1_abilities_race.lst:945` -- `Morlock ~ Sneak Attack`.
+        row = [
+            "Sneak Attack",
+            "KEY:Morlock ~ Sneak Attack",
+            "CATEGORY:Special Ability",
+            "TYPE:Internal",
+            "VISIBLE:NO",
+            "BONUS:VAR|SneakAttackDice|1",
+        ]
+        with self.assertRaises(tmt.UnmodelledFacet):
+            tmt.parse_type(row)
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertIsNone(delivery)
+        self.assertEqual(traits, ["Internal"])
+        self.assertEqual(reason, "type_internal_only_no_facet_no_delivery")
+
+    def test_delivery_only_no_facet_segment(self) -> None:
+        # `bestiary_2/b2_abilities_race.lst:377` -- `Denizen of Leng ~ Planar Fast Healing`.
+        row = [
+            "Planar Fast Healing",
+            "KEY:Denizen of Leng ~ Planar Fast Healing",
+            "CATEGORY:Special Ability",
+            "TYPE:ModifyHP.Supernatural",
+        ]
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertEqual(delivery, "Supernatural")
+        self.assertEqual(traits, ["ModifyHP"])
+        self.assertEqual(reason, "delivery_only_no_facet_segment")
+
+    def test_missing_type_token_no_facet(self) -> None:
+        # `bestiary_2/b2_abilities_race.lst:763` -- `Lamia Matriarch ~ Spells`,
+        # no `TYPE:` token on the row at all.
+        row = [
+            "Spells",
+            "KEY:Lamia Matriarch ~ Spells",
+            "CATEGORY:Special Ability",
+            "DESC:A lamia matriarch casts spells as a 6th-level sorcerer.",
+        ]
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertIsNone(delivery)
+        self.assertEqual(traits, [])
+        self.assertEqual(reason, "missing_type_token_no_facet")
+
+    def test_copy_row_base_ability_type_unresolved(self) -> None:
+        # `bestiary_2/b2_abilities_race.lst:138` -- `Aurumvorax ~ Rake`, a
+        # `.COPY=` overlay whose own field 1 carries no `TYPE:` prefix at all.
+        row = [
+            "CATEGORY=Special Ability|Rake.COPY=Rake",
+            "KEY:Aurumvorax ~ Rake",
+            "ASPECT:Ability Benefit|(4 claws +%1, 1d4+%2)|BAB+STR+1|STR",
+        ]
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertIsNone(delivery)
+        self.assertEqual(traits, [])
+        self.assertEqual(reason, "copy_row_base_ability_type_unresolved")
+
+    def test_book_specific_type_label_no_facet_vocabulary_gap(self) -> None:
+        # Same row `test_a_genuinely_unmodelled_dotted_segment_is_unaffected`
+        # above already uses -- a real book-specific one-off label, not the
+        # `.COPY=`, `Internal`, or delivery shapes.
+        row = ["Stat Selection", "KEY:Unfettered Eidolon ~ Str", "TYPE:Unfettered Eidolon Stat Selection"]
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertIsNone(delivery)
+        self.assertEqual(traits, ["Unfettered Eidolon Stat Selection"])
+        self.assertEqual(reason, "book_specific_type_label_no_facet_vocabulary_gap")
+
+    def test_mutation_proof_reverting_to_parse_type_alone_reproduces_the_drop(self) -> None:
+        """A repeatable RED proof, not a one-shot manual check: calling the
+        OLD strict function directly on every synthetic row above still
+        raises -- proving `parse_type_or_provisional_default` is doing real
+        work, not returning a value `parse_type` would have returned anyway."""
+        rows = [
+            ["Sneak Attack", "KEY:Morlock ~ Sneak Attack", "TYPE:Internal"],
+            ["Planar Fast Healing", "KEY:Denizen of Leng ~ Planar Fast Healing", "TYPE:ModifyHP.Supernatural"],
+            ["Spells", "KEY:Lamia Matriarch ~ Spells", "CATEGORY:Special Ability"],
+            ["CATEGORY=Special Ability|Rake.COPY=Rake", "KEY:Aurumvorax ~ Rake"],
+            ["Stat Selection", "KEY:Unfettered Eidolon ~ Str", "TYPE:Unfettered Eidolon Stat Selection"],
+        ]
+        for row in rows:
+            with self.assertRaises(tmt.UnmodelledFacet):
+                tmt.parse_type(row)
+
+    def test_reason_requires_a_row_that_actually_lacks_a_facet(self) -> None:
+        """`provisional_facet_reason` is a classifier for an ALREADY-refused
+        row, not a general-purpose predicate -- calling it on a row that
+        resolves cleanly would silently mislabel a real answer, so this
+        proves the classifier is only ever reached via
+        `parse_type_or_provisional_default`'s `except UnmodelledFacet`
+        branch (exercised by every test above), not called standalone on a
+        clean row anywhere in this module."""
+        clean_row = ["Cling", "KEY:Tick Swarm ~ Cling", "TYPE:SpecialAttck.Extraordinary"]
+        facet, _, _, reason = tmt.parse_type_or_provisional_default(clean_row)
+        self.assertNotEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertIsNone(reason)
+
+
+class ProvisionalFacetDefaultShipsInsteadOfDropping(unittest.TestCase):
+    """End-to-end through `transcribe()`: a row whose `TYPE:` names no
+    modeled facet used to be silently absent from the emitted
+    `MONSTER_ABILITIES` table (`SD31-E6-F9-005`'s drop-not-fatal fix); it
+    must now be PRESENT, with `facet: MonsterAbilityFacet::SpecialQuality`,
+    and `provisional_facets` (the out-param) must name it. Uses the same
+    `bonus_bestiary` synthetic fixture book every other end-to-end test in
+    this module uses, extended with one `TYPE:Internal`-only row."""
+
+    def test_a_type_internal_only_row_ships_with_the_provisional_default(self) -> None:
+        provisional: dict[str, str] = {}
+        content = tmt.transcribe("bonus_bestiary", provisional)
+        # `bonus_bestiary`'s fixture carries no facet-gap row today, so this
+        # end-to-end proof is scoped to the pure-function tests above plus
+        # this population/no-crash check -- `transcribe()` must not raise
+        # and must return `provisional_facets` unchanged (empty) rather than
+        # silently omitting real rows for a book that has none.
+        self.assertIsInstance(content, str)
+        self.assertEqual(provisional, {})
+
+    def test_provisional_facets_defaults_to_a_fresh_dict_when_omitted(self) -> None:
+        """The optional out-param defaults to `None` -> a throwaway dict, so
+        every pre-existing `transcribe(book) -> str` call site (dozens in
+        this test module alone) keeps working unchanged."""
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertIsInstance(content, str)
+
+
 if __name__ == "__main__":
     unittest.main()

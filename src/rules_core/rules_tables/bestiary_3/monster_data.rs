@@ -10,7 +10,7 @@
 //! Sources, with the line each record was read from carried per row:
 //!   * `b3_races.lst` -- 261 monster rows
 //!   * `vishkanya_abilities_race.lst` -- 1 monster-ability rows
-//!   * `b3_abilities_race.lst` -- 653 monster-ability rows
+//!   * `b3_abilities_race.lst` -- 664 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 21 monster-ability rows
 //!
 //! 286 further ability row(s) in this book are ORPHANS -- no monster
@@ -324,6 +324,24 @@
 //!   * `ce_abilities_race.lst:2311` (Traits Output ~ Kyton)
 //!   * `ce_abilities_race.lst:2312` (Traits Output ~ Leshy)
 //!   * `ce_abilities_race.lst:2313` (Traits Output ~ Rakshasa)
+//!
+//! 11 ability row(s) ship with a `decisions.md §27`
+//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
+//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
+//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
+//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
+//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
+//!   * `Adlet ~ Spell-Like Abilities` (delivery_only_no_facet_segment)
+//!   * `Asurendra ~ None` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Lunar Naga ~ Spells` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Royal Naga ~ Spells` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Unfettered Eidolon ~ Cha` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Unfettered Eidolon ~ Con` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Unfettered Eidolon ~ Dex` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Unfettered Eidolon ~ Int` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Unfettered Eidolon ~ Str` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Unfettered Eidolon ~ Wis` (book_specific_type_label_no_facet_vocabulary_gap)
+//!   * `Water Naga ~ Spells` (book_specific_type_label_no_facet_vocabulary_gap)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -380,7 +398,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Humanoid:15"),
         source_page: Some("p.9"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        ability_keys: &["Adlet ~ Arctic Stride", "Adlet ~ Frozen Breath"],
+        ability_keys: &["Adlet ~ Arctic Stride", "Adlet ~ Frozen Breath", "Adlet ~ Spell-Like Abilities"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 16 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 2 }],
         has_spell_like_abilities: false,
@@ -5551,7 +5569,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_3 monster-ability record (675 rows).
+/// Every bestiary_3 monster-ability record (686 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Vishkanya ~ Toxic ~ Vishkanya Venom",
@@ -5677,6 +5695,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Adlet"],
         source_file: "b3_abilities_race.lst",
         source_line: 299,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Adlet ~ Spell-Like Abilities",
+        name: "Spell-Like Abilities",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("(CL 10th; concentration +11); Constant-pass without trace, ray of frost; 3/day-fog cloud, sleet storm; 1/day-ice storm, wind walk (self only)"),
+        description_variables: &[],
+        source_page: Some("p.9"),
+        owners: &["Adlet"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 301,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -6221,6 +6255,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Asura (Asurendra)"],
         source_file: "b3_abilities_race.lst",
         source_line: 403,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Asurendra ~ None",
+        name: "None",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["AsurendraAdditional"],
+        description: None,
+        description_variables: &[],
+        source_page: Some("p."),
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 405,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -12994,6 +13044,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Lunar Naga ~ Spells",
+        name: "Spells",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["LunarNagaRacialAbility"],
+        description: Some("A lunar naga casts spells as a 5th-level sorcerer."),
+        description_variables: &[],
+        source_page: Some("p.197"),
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1289,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Royal Naga ~ Change Shape",
         name: "Change Shape",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -13026,6 +13092,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Royal Naga ~ Spells",
+        name: "Spells",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["RoyalNagaRacialAbility"],
+        description: Some("A royal naga casts spells as a 9th-level sorcerer."),
+        description_variables: &[],
+        source_page: Some("p.198"),
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1294,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Royal Naga ~ Spell-Like Abilities",
         name: "Spell-Like Abilities",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -13053,6 +13135,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b3_abilities_race.lst",
         source_line: 1298,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Water Naga ~ Spells",
+        name: "Spells",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["WaterNagaRacialAbility"],
+        description: Some("A water naga casts spells as a 7th-level sorcerer."),
+        description_variables: &[],
+        source_page: Some("p.199"),
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1299,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -16013,6 +16111,102 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Zuvembie"],
         source_file: "b3_abilities_race.lst",
         source_line: 1703,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unfettered Eidolon ~ Str",
+        name: "+1 Str",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Unfettered Eidolon Stat Selection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1720,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unfettered Eidolon ~ Dex",
+        name: "+1 Dex",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Unfettered Eidolon Stat Selection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1721,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unfettered Eidolon ~ Con",
+        name: "+1 Con",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Unfettered Eidolon Stat Selection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1722,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unfettered Eidolon ~ Int",
+        name: "+1 Int",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Unfettered Eidolon Stat Selection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1723,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unfettered Eidolon ~ Wis",
+        name: "+1 Wis",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Unfettered Eidolon Stat Selection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1724,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unfettered Eidolon ~ Cha",
+        name: "+1 Cha",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["Unfettered Eidolon Stat Selection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1725,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

@@ -225,12 +225,19 @@ mod tests {
         // 409 owned + 266 owner-less (`decisions.md §20`, no_record-to-zero
         // wave 2 follow-on) = 675. The owner-less count is pinned separately
         // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 409/675 -> 410/686 (`decisions.md §27`/round 8, +11 total): the
+        // `TYPE:`-facet-vocabulary-gap group closes via the provisional
+        // `SpecialQuality` default. +1 owned (`Adlet ~ Spell-Like
+        // Abilities`, this comment's own previously-named excluded row,
+        // now shipping); +10 owner-less (`Asurendra ~ None`, `Lunar/Royal/
+        // Water Naga ~ Spells`, `Unfettered Eidolon ~
+        // Str/Dex/Con/Int/Wis/Cha`) — pinned separately below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 409);
-        assert_eq!(monster_abilities().len(), 675);
+        assert_eq!(owned, 410);
+        assert_eq!(monster_abilities().len(), 686);
     }
 
     /// The first book in the lane to lose NO monster row: no `NAMEISPI:YES`, no
@@ -269,9 +276,15 @@ mod tests {
             .collect();
         unowned.sort_unstable();
 
+        // 266 -> 276 (`decisions.md §27`/round 8, +10): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default -- 10 of the 11 newly-shipped rows are owner-less
+        // (`Asurendra ~ None`, `Lunar/Royal/Water Naga ~ Spells`,
+        // `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`); the 11th
+        // (`Adlet ~ Spell-Like Abilities`) is owned, see the test above.
         assert_eq!(
             unowned.len(),
-            266,
+            276,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py bestiary_3` run, and update the matching \
@@ -282,7 +295,7 @@ mod tests {
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0xf294_251a_43b5_b6ae,
+            digest, 0x01b4_2774_3381_b829,
             "the owner-less key SET changed (same count, different members) — re-derive and \
              update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
         );

@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b2_races.lst` -- 314 monster rows
-//!   * `b2_abilities_race.lst` -- 527 monster-ability rows
+//!   * `b2_abilities_race.lst` -- 535 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 130 monster-ability rows
 //!
 //! 2 monster row(s) of this book are `<Base>.COPY=<Variant>`
@@ -124,6 +124,21 @@
 //! `parse_desc` deliberately, hand-verified per row, to reach them:
 //!   * `ce_abilities_race.lst:1955` (Telepathy ~ Miles)
 //!   * `ce_abilities_race.lst:2043` (Voidworm ~ Change Shape)
+//!
+//! 8 ability row(s) ship with a `decisions.md §27`
+//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
+//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
+//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
+//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
+//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
+//!   * `Aurumvorax ~ Rake` (copy_row_base_ability_type_unresolved)
+//!   * `Bunyip ~ Blood Rage` (copy_row_base_ability_type_unresolved)
+//!   * `Carnivorous Blob ~ Split` (copy_row_base_ability_type_unresolved)
+//!   * `Denizen of Leng ~ Planar Fast Healing` (delivery_only_no_facet_segment)
+//!   * `Howler ~ Abyssal Strike` (delivery_only_no_facet_segment)
+//!   * `Lamia Matriarch ~ Spells` (missing_type_token_no_facet)
+//!   * `Mothman ~ Agent of Fate` (delivery_only_no_facet_segment)
+//!   * `Yrthak ~ Sonic Lance` (delivery_only_no_facet_segment)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -640,7 +655,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Magical Beast:12"),
         source_page: Some("p.35"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d6") }, NaturalAttack { name: "Claw", damage_dice: Some("1d4") }],
-        ability_keys: &["Aurumvorax ~ Grab"],
+        ability_keys: &["Aurumvorax ~ Grab", "Aurumvorax ~ Rake"],
         external_ability_refs: &["Ferocity", "Immunity to Poison", "Resistance to Fire", "Scent"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 10 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }],
         has_spell_like_abilities: false,
@@ -1040,7 +1055,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Magical Beast:5"),
         source_page: Some("p.50"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d8") }],
-        ability_keys: &["Bunyip ~ Roar"],
+        ability_keys: &["Bunyip ~ Blood Rage", "Bunyip ~ Roar"],
         external_ability_refs: &["Amphibious", "Bleed", "Keen Scent"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "CHA", amount: -4 }],
         has_spell_like_abilities: false,
@@ -1060,7 +1075,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Ooze:16"),
         source_page: Some("p.51"),
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("8d6") }],
-        ability_keys: &["Carnivorous Blob ~ Absorb Flesh", "Carnivorous Blob ~ Con Drain", "Carnivorous Blob ~ Reactive Strike", "Grab ~ Slam"],
+        ability_keys: &["Carnivorous Blob ~ Absorb Flesh", "Carnivorous Blob ~ Con Drain", "Carnivorous Blob ~ Reactive Strike", "Carnivorous Blob ~ Split", "Grab ~ Slam"],
         external_ability_refs: &["Can't Be Tripped", "Constrict", "Immunity to Acid", "Resistance to Electricity", "Resistance to Fire", "Vulnerability to Cold"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 26 }, StatAdjustment { ability: "CON", amount: 14 }, StatAdjustment { ability: "WIS", amount: -9 }, StatAdjustment { ability: "CHA", amount: -9 }],
         has_spell_like_abilities: false,
@@ -1800,7 +1815,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Ref):10"),
         source_page: Some("p.82"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d6") }, NaturalAttack { name: "Claw", damage_dice: Some("1d4") }],
-        ability_keys: &["Denizen of Leng ~ Dexterity Drain", "Denizen of Leng ~ Unusual Anatomy", "No Breath", "Tongues ~ Constant"],
+        ability_keys: &["Denizen of Leng ~ Dexterity Drain", "Denizen of Leng ~ Planar Fast Healing", "Denizen of Leng ~ Unusual Anatomy", "No Breath", "Tongues ~ Constant"],
         external_ability_refs: &["Immunity to Poison", "Resistance to Cold", "Resistance to Electricity", "Sneak Attack"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 8 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 10 }],
         has_spell_like_abilities: true,
@@ -3660,7 +3675,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Ref):5"),
         source_page: Some("p.159"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d8") }, NaturalAttack { name: "Quills", damage_dice: Some("1d4") }],
-        ability_keys: &["Howler ~ Howl", "Howler ~ Pain", "Howler ~ Quill Defense"],
+        ability_keys: &["Howler ~ Abyssal Strike", "Howler ~ Howl", "Howler ~ Pain", "Howler ~ Quill Defense"],
         external_ability_refs: &["Cannot Speak"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "INT", amount: -4 }],
         has_spell_like_abilities: false,
@@ -4040,7 +4055,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Monstrous Humanoid:12"),
         source_page: Some("p.175"),
         natural_attacks: &[NaturalAttack { name: "Touch", damage_dice: Some("0") }],
-        ability_keys: &["Lamia ~ Wisdom Drain Matriarch", "Undersized Weapons"],
+        ability_keys: &["Lamia ~ Wisdom Drain Matriarch", "Lamia Matriarch ~ Spells", "Undersized Weapons"],
         external_ability_refs: &["Can't Be Tripped", "Change Shape ~ Lama Matriarch", "Immunity to Mind-Affecting Effects"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 10 }, StatAdjustment { ability: "CHA", amount: 10 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "INT", amount: 6 }, StatAdjustment { ability: "WIS", amount: 6 }],
         has_spell_like_abilities: false,
@@ -4460,7 +4475,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Monstrous Humanoid:9"),
         source_page: Some("p.194"),
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: Some("1d6") }],
-        ability_keys: &["Blur ~ Constant", "Mothman ~ Mind-Warping Gaze"],
+        ability_keys: &["Blur ~ Constant", "Mothman ~ Agent of Fate", "Mothman ~ Mind-Warping Gaze"],
         external_ability_refs: &["Cannot Speak", "Flight Maneuverability", "Telepathy"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "WIS", amount: 8 }, StatAdjustment { ability: "CHA", amount: 8 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "INT", amount: 6 }],
         has_spell_like_abilities: true,
@@ -6400,7 +6415,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Magical Beast:12"),
         source_page: Some("p.290"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("2d6") }, NaturalAttack { name: "Claw", damage_dice: Some("1d8") }, NaturalAttack { name: "Sonic Lance", damage_dice: Some("8d6") }],
-        ability_keys: &["Yrthak ~ Blind", "Yrthak ~ Explosion", "Yrthak ~ Immunity to Gaze Attacks", "Yrthak ~ Immunity to Visual Effects and Illusions", "Yrthak ~ Immunity to Sight-Based Attacks"],
+        ability_keys: &["Yrthak ~ Blind", "Yrthak ~ Explosion", "Yrthak ~ Sonic Lance", "Yrthak ~ Immunity to Gaze Attacks", "Yrthak ~ Immunity to Visual Effects and Illusions", "Yrthak ~ Immunity to Sight-Based Attacks"],
         external_ability_refs: &["Flight Maneuverability", "Immunity to Sonic"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 14 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: -4 }],
         has_spell_like_abilities: false,
@@ -6411,7 +6426,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_2 monster-ability record (657 rows).
+/// Every bestiary_2 monster-ability record (665 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Achaierai ~ Black Cloud",
@@ -7118,6 +7133,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Aurumvorax ~ Rake",
+        name: "Rake",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &["Aurumvorax"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 138,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Aurumvorax ~ Grab",
         name: "Grab",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -7470,6 +7501,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Bunyip ~ Blood Rage",
+        name: "Blood Rage",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: Some("A bunyip's blood rage ability activates whenever it detects blood in the water using its keen scent, but otherwise functions as the universal monster rule of the same name."),
+        description_variables: &[],
+        source_page: Some("p.50"),
+        owners: &["Bunyip"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 208,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Carnivorous Blob ~ Absorb Flesh",
         name: "Absorb Flesh",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -7513,6 +7560,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Carnivorous Blob"],
         source_file: "b2_abilities_race.lst",
         source_line: 214,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Carnivorous Blob ~ Split",
+        name: "Split",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &["Carnivorous Blob"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 215,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -8457,6 +8520,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Denizen of Leng"],
         source_file: "b2_abilities_race.lst",
         source_line: 376,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Denizen of Leng ~ Planar Fast Healing",
+        name: "Planar Fast Healing",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["ModifyHP"],
+        description: Some("A denizen of Leng maintains a connection to Leng at all times, and when away from Leng, it has fast healing 5.  It loses this ability on Leng or in areas where planar connections do not function.  If killed, a denizen's body dissolves into nothingness in 1d4 rounds, leaving behind its equipment.  A slain denizen reforms in Leng, similar to a slain summoned creature; it can only be permanently killed if its fast healing is negated."),
+        description_variables: &[],
+        source_page: Some("p.82"),
+        owners: &["Denizen of Leng"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 377,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -10142,6 +10221,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Howler ~ Abyssal Strike",
+        name: "Abyssal Strike",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A howler's bite and quills are considered to be chaotic-aligned and evil-aligned for the purpose of overcoming damage reduction."),
+        description_variables: &[],
+        source_page: Some("p.159"),
+        owners: &["Howler"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 695,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Howler ~ Howl",
         name: "Howl",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -10553,6 +10648,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lamia Matriarch"],
         source_file: "b2_abilities_race.lst",
         source_line: 762,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Lamia Matriarch ~ Spells",
+        name: "Spells",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: Some("A lamia matriarch casts spells as a 6th-level sorcerer, and can cast spells from the cleric list as well as those normally available to a sorcerer.  Cleric spells are considered arcane spells for a lamia matriarch."),
+        description_variables: &[],
+        source_page: Some("p.175"),
+        owners: &["Lamia Matriarch"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 763,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -11001,6 +11112,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mosquito (Giant)", "Mosquito Swarm"],
         source_file: "b2_abilities_race.lst",
         source_line: 845,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Mothman ~ Agent of Fate",
+        name: "Agent of Fate",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("A mothman may recreate the effects of any spell of 5th level or lower once per day as a spell-like ability, but only if doing so steers the flow of fate in its proper course.  What the proper flow of fate entails is determined by the GM.  Typical uses of this ability include casting major image to coax someone to a portentous location, casting raise dead to return someone with an important fate to life, or using rusting grasp to weaken a structure and cause some necessary calamity."),
+        description_variables: &[],
+        source_page: Some("p.194"),
+        owners: &["Mothman"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 851,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -14825,6 +14952,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yrthak"],
         source_file: "b2_abilities_race.lst",
         source_line: 1416,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Yrthak ~ Sonic Lance",
+        name: "Sonic Lance",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Once per round, a yrthak can focus sonic energy in a 60-foot ray that deals 8d6 sonic damage to one target."),
+        description_variables: &[],
+        source_page: None,
+        owners: &["Yrthak"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 1418,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

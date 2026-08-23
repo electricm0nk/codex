@@ -1007,7 +1007,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3726,
+            3749,
             // 3706 -> 3711 (`decisions.md §27b`, +5): `occult_adventures`
             // registered for the first time, all 5 rows owner-less.
             // 3711 -> 3726 (`decisions.md §24`/round 7, +15): the T9
@@ -1024,6 +1024,32 @@ mod tests {
             // `MonsterAbilityRecord` blocks appended, zero removed, across
             // the 3 books (`inner_sea_bestiary`, `inner_sea_gods`,
             // `inner_sea_world_guide`) this group's population lives in.
+            // 3726 -> 3749 (`decisions.md §27`/round 8, +23): the
+            // `TYPE:`-facet-vocabulary-gap group closes via the operator's
+            // provisional-default ruling — a row whose `TYPE:` segments name
+            // no modeled facet now ships with `facet:
+            // MonsterAbilityFacet::SpecialQuality` (a PROVISIONAL default,
+            // not a measured shape; marked via `data.shape_provisional_
+            // default`/`data.shape_provisional_reason` on the shipped JSON
+            // record, `workflow-instruction.md §6a`) instead of being
+            // dropped. 22 of the 23 are the T9 round 6/7-named 22-unit
+            // remaining population (`bestiary` +1, `bestiary_2` +7,
+            // `bestiary_3` +11, `inner_sea_bestiary` +2, `inner_sea_gods`
+            // +1); the 23rd (`bestiary_2`'s `Bunyip ~ Blood Rage`) is a
+            // `.COPY=`-shaped row `docs/work-inventory.json` already counted
+            // `text-complete` by evidence alone with no backing corpus
+            // record — this cycle's regen incidentally backs that claim
+            // with a real record for the first time, same mechanism, same
+            // provisional marker. Strictly additive: every one of the 23
+            // was previously ABSENT from the set entirely (raised
+            // `UnmodelledFacet` and was dropped, never shipped under a
+            // different facet), so no existing triple's facet/delivery
+            // value changed — confirmed by `git diff --stat`'s 5-book
+            // regeneration showing only new `MonsterAbilityRecord` blocks
+            // appended, zero removed (`bestiary`, `bestiary_2`,
+            // `bestiary_3`, `inner_sea_bestiary`, `inner_sea_gods`), and by
+            // this test's own digest re-derivation below from the live
+            // failing run, never guessed, per `decisions.md §17a`.
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -1068,7 +1094,7 @@ mod tests {
              (`occult_adventures`) appended, all 5 rows ship owner-less."
         );
         assert_eq!(
-            digest, 0xc7f5_5369_ed18_7098,
+            digest, 0xfc51_2110_6900_558e,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -1104,7 +1130,13 @@ mod tests {
              the set entirely (dropped, not shipped under a different facet), so no existing \
              triple's facet/delivery value changed; re-derived live from this test's own \
              failing run after merging both concurrent lanes' changes, never guessed, per \
-             `decisions.md §17a`."
+             `decisions.md §17a`. 0xc7f55369ed187098 -> 0xfc5121106900558e (`decisions.md §27`/ \
+             round 8): the digest moves because the sorted triple set gains 23 more members (the \
+             `TYPE:`-facet-gap group closing via the provisional `SpecialQuality` default) — zero \
+             reclassification: every one of the 23 was previously ABSENT from the set entirely \
+             (raised `UnmodelledFacet` and was dropped, never shipped under a different facet), \
+             so no existing triple's facet/delivery value changed; re-derived live from this \
+             test's own failing run, never guessed, per `decisions.md §17a`."
         );
     }
 }

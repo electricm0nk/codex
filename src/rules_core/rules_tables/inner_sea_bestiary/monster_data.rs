@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `isb_races.lst` -- 38 monster rows
-//!   * `isb_abilities_race.lst` -- 187 monster-ability rows
+//!   * `isb_abilities_race.lst` -- 189 monster-ability rows
 //!
 //! 2 monster row(s) and 0 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
@@ -110,6 +110,15 @@
 //!   * `isb_abilities_race.lst:203` (Mana Wastes Mutant ~ Acid Resistance)
 //!   * `isb_abilities_race.lst:204` (Mana Wastes Mutant ~ Acidic Pustules)
 //!   * `isb_abilities_race.lst:206` (Mana Wastes Mutant ~ Disease)
+//!
+//! 2 ability row(s) ship with a `decisions.md §27`
+//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
+//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
+//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
+//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
+//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
+//!   * `Lorthact ~ Spell-Like Abilities` (delivery_only_no_facet_segment)
+//!   * `Petrified Maiden ~ Weapon Selection` (book_specific_type_label_no_facet_vocabulary_gap)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -426,7 +435,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Ref/Will):32"),
         source_page: Some("p.26"),
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: Some("1d6") }],
-        ability_keys: &["Good ~ Regeneration", "Lorthact ~ Infernal Duke Traits", "Lorthact ~ Intelligence Drain", "Lorthact ~ Scholastic Masquerade", "Lorthact ~ Spell Reservoir", "Lorthact ~ Temporal Anomaly"],
+        ability_keys: &["Good ~ Regeneration", "Lorthact ~ Infernal Duke Traits", "Lorthact ~ Intelligence Drain", "Lorthact ~ Scholastic Masquerade", "Lorthact ~ Spell-Like Abilities", "Lorthact ~ Spell Reservoir", "Lorthact ~ Temporal Anomaly"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 12 }, StatAdjustment { ability: "DEX", amount: 22 }, StatAdjustment { ability: "CON", amount: 24 }, StatAdjustment { ability: "INT", amount: 20 }, StatAdjustment { ability: "WIS", amount: 16 }, StatAdjustment { ability: "CHA", amount: 26 }],
         has_spell_like_abilities: false,
@@ -546,7 +555,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Undead:9"),
         source_page: Some("p.37"),
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("1d6") }],
-        ability_keys: &["Can't Be Disarmed", "Petrified Maiden ~ Curse of Stone", "Petrified Maiden ~ Petrified Body", "Petrified Maiden ~ Reconstitution", "Petrified Maiden ~ Weapon Expertise"],
+        ability_keys: &["Can't Be Disarmed", "Petrified Maiden ~ Curse of Stone", "Petrified Maiden ~ Petrified Body", "Petrified Maiden ~ Reconstitution", "Petrified Maiden ~ Weapon Expertise", "Petrified Maiden ~ Weapon Selection"],
         external_ability_refs: &["Channel Resistance"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: -10 }, StatAdjustment { ability: "INT", amount: -2 }, StatAdjustment { ability: "CHA", amount: 6 }],
         has_spell_like_abilities: false,
@@ -877,7 +886,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_bestiary monster-ability record (187 rows).
+/// Every inner_sea_bestiary monster-ability record (189 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Apostasy Wraith ~ Razmiri Aversion",
@@ -1824,6 +1833,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Lorthact ~ Spell-Like Abilities",
+        name: "Spell-Like Abilities",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("Lorthact has spell-like abilities"),
+        description_variables: &[],
+        source_page: Some("p.26"),
+        owners: &["Lorthact"],
+        source_file: "isb_abilities_race.lst",
+        source_line: 194,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Lorthact ~ Infernal Duke Traits",
         name: "Infernal Duke Traits",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -2363,6 +2388,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Petrified Maiden"],
         source_file: "isb_abilities_race.lst",
         source_line: 253,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Petrified Maiden ~ Weapon Selection",
+        name: "Weapon Selection",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["PetrifiedMaidenWeaponSelection"],
+        description: None,
+        description_variables: &[],
+        source_page: None,
+        owners: &["Petrified Maiden"],
+        source_file: "isb_abilities_race.lst",
+        source_line: 257,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

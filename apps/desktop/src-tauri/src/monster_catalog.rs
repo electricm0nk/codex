@@ -1133,8 +1133,19 @@ mod tests {
         // scripts/shape_ledger.py --inventory docs/work-inventory.json` --
         // `monster_ability` `no_record` 98 -> 83 (before merging this
         // cycle with `§27b`'s own separate 5-unit closure).
+        // 1066 -> 1076 (`decisions.md §27`/round 8, +10): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default. Of the 23 total defaulted rows (22 real `no_record`
+        // population + 1 bonus `.COPY=` row already `text-complete` by
+        // inventory evidence alone), 13 land OWNED (namespaced `<Monster> ~
+        // <Ability>` keys whose owner resolves through the existing prefix
+        // pass) and do not move this count; the remaining 10 are owner-less
+        // (all 10 in `bestiary_3`: `Asurendra ~ None`, `Lunar/Royal/Water
+        // Naga ~ Spells`, `Unfettered Eidolon ~
+        // Str/Dex/Con/Int/Wis/Cha`). Re-derived: `python3
+        // scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null`.
         assert_eq!(
-            owner_less_records_held, 1066,
+            owner_less_records_held, 1076,
             "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
              from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
              update both this pin and `reach_gate.rs`'s matching entries"

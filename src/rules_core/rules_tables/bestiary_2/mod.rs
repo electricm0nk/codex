@@ -283,12 +283,21 @@ mod tests {
         // diff (`git diff --stat` for `bestiary_2/monster_data.rs` shows
         // zero deletions, only the 3 trailing `codex_generated_name`/
         // `rename_*` fields appended per record).
+        // 572/657 -> 580/665 (`decisions.md §27`/round 8, +8 owned): the
+        // `TYPE:`-facet-vocabulary-gap group closes via the provisional
+        // `SpecialQuality` default -- all 8 are namespaced `<Monster> ~
+        // <Ability>` keys whose owner resolves through the existing prefix
+        // pass (`Aurumvorax ~ Rake`, `Bunyip ~ Blood Rage`, `Carnivorous
+        // Blob ~ Split`, `Denizen of Leng ~ Planar Fast Healing`, `Howler ~
+        // Abyssal Strike`, `Lamia Matriarch ~ Spells`, `Mothman ~ Agent of
+        // Fate`, `Yrthak ~ Sonic Lance`), so all 8 land in `owned`, none in
+        // the owner-less pin below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 572);
-        assert_eq!(monster_abilities().len(), 657);
+        assert_eq!(owned, 580);
+        assert_eq!(monster_abilities().len(), 665);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**

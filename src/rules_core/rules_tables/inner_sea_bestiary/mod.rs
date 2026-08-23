@@ -112,12 +112,19 @@ mod tests {
         // (see `the_product_identity_rows_are_not_records` below, renamed
         // to reflect the new outcome). All 7 are orphans (`owned`
         // unchanged) -- no monster row of this book claims them.
+        // 152/187 -> 154/189 (`decisions.md §27`/round 8, +2 owned): the
+        // `TYPE:`-facet-vocabulary-gap group closes via the provisional
+        // `SpecialQuality` default -- `Lorthact ~ Spell-Like Abilities`
+        // (delivery-only `SpellLike`) and `Petrified Maiden ~ Weapon
+        // Selection` (book-specific label), both namespaced `<Monster> ~
+        // <Ability>` keys whose owner resolves through the existing prefix
+        // pass, so both land in `owned`.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 152);
-        assert_eq!(monster_abilities().len(), 187);
+        assert_eq!(owned, 154);
+        assert_eq!(monster_abilities().len(), 189);
     }
 
     /// The shipped total is the classifier's `reachable remainder` **minus the
@@ -144,14 +151,25 @@ mod tests {
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(monsters().len() + owned, classifier_reachable - cascade);
-        assert_eq!(monsters().len() + owned, 190);
-        // 190 owned/reachable + 28 owner-less (`decisions.md §20`) = 218, the
+        // `decisions.md §27`/round 8 adds a FIFTH mechanism the classifier's
+        // four-term formula above (written before this ruling existed) does
+        // not model: 2 owned rows now ship via the provisional
+        // `SpecialQuality` default instead of being refused as
+        // `UnmodelledFacet` (`the_book_ships_thirty_eight_monsters_and_
+        // one_hundred_fifty_two_abilities`'s own comment). The classifier
+        // arithmetic is left as historical documentation of the FOUR terms
+        // it actually models; the two assertions below diverge by exactly
+        // this +2 rather than being kept artificially equal.
+        assert_eq!(monsters().len() + owned, classifier_reachable - cascade + 2);
+        assert_eq!(monsters().len() + owned, 192);
+        // 192 owned/reachable + 28 owner-less (`decisions.md §20`) = 220, the
         // book's real total shipped count.
         // 218 -> 225 (`decisions.md §24`/round 7, +7 owner-less; see
         // `the_book_ships_thirty_eight_monsters_and_one_hundred_fifty_two_
         // abilities`'s own comment). `owned` (190) is UNCHANGED.
-        assert_eq!(monsters().len() + monster_abilities().len(), 225);
+        // 225 -> 227 (`decisions.md §27`/round 8, +2 owned; see this test's
+        // own comment above).
+        assert_eq!(monsters().len() + monster_abilities().len(), 227);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**

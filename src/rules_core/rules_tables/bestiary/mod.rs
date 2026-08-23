@@ -233,7 +233,11 @@ mod tests {
         // `bestiary/monster_data.rs` shows zero deletions, only the 3
         // trailing `codex_generated_name`/`rename_*` fields appended per
         // record).
-        assert_eq!(monster_abilities().len(), 710);
+        // 710 -> 711 (`decisions.md §27`/round 8, +1): `Morlock ~ Sneak
+        // Attack` (`TYPE:Internal`, no facet/delivery segment) now ships
+        // with a PROVISIONAL `SpecialQuality` facet default instead of
+        // being dropped -- `reason: type_internal_only_no_facet_no_delivery`.
+        assert_eq!(monster_abilities().len(), 711);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -287,7 +291,10 @@ mod tests {
         // 989 -> 990 (`decisions.md §22`/round 6, +1; see
         // `the_chassis_ships_the_books_complement`'s own comment on the
         // identical, previously-unpinned delta here).
-        assert_eq!(monsters().len() + monster_abilities().len(), 990);
+        // 990 -> 991 (`decisions.md §27`/round 8, +1; see
+        // `the_chassis_ships_the_books_complement`'s own comment on the
+        // identical delta here).
+        assert_eq!(monsters().len() + monster_abilities().len(), 991);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the

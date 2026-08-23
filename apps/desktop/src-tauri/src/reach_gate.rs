@@ -2842,7 +2842,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
     ("beastiary1", "monster_abilities", "Gap: 180 of Bestiary 1's 709 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2) ship with `owners: &[]` -- no monster row of this book claims them, because they are the corpus's own shared reference-library vocabulary (`Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`, `Regeneration ~ X`, `Immunity to X`, and similar generic special-ability text `scripts/transcribe_monster_tables.py`'s ownership pass finds no in-book stat block naming). They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set (a Universal Monster Rule applies to every creature of a stated type, not to one specific stat block), which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("bestiary_2", "monster_abilities", "Gap: 85 of Bestiary 2's 656 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
-    ("bestiary_3", "monster_abilities", "Gap: 266 of Bestiary 3's 675 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_3", "monster_abilities", "Gap: 276 of Bestiary 3's 686 `monster_ability` records (10 added `decisions.md §27`/round 8, the `TYPE:`-facet-vocabulary-gap group's provisional-default closure) (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("bestiary_4", "monster_abilities", "Gap: 187 of Bestiary 4's 806 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("horror_adventures", "monster_abilities", "Gap: 56 of Horror Adventures's 62 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("inner_sea_bestiary", "monster_abilities", "Gap: 35 of Inner Sea Bestiary's 187 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
@@ -3843,7 +3843,10 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // written about. Pinned by exact key rather than by count so a NEW
         // silent non-reach still fails here; `bestiary_3::tests::
         // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
-        // 0xf294_251a_43b5_b6ae) pins the identical set from the corpus side. Re-derive:
+        // 0x01b4_2774_3381_b829, updated `decisions.md §27`/round 8 — 10 new
+        // owner-less keys from the `TYPE:`-facet-vocabulary-gap group's
+        // provisional-default closure) pins the identical set from the
+        // corpus side. Re-derive:
         // `python3 scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null
         // | grep 'orphan ability row'`.
         &[
@@ -3871,6 +3874,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:asura_save_bonus",
             "bestiary_3:monster_ability:asurendra_create_asura",
             "bestiary_3:monster_ability:asurendra_death",
+            "bestiary_3:monster_ability:asurendra_none",
             "bestiary_3:monster_ability:asurendra_sacrilege",
             "bestiary_3:monster_ability:asurendra_shaping",
             "bestiary_3:monster_ability:asurendra_spell_like_abilities",
@@ -4020,6 +4024,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:leshy_verdant_burst",
             "bestiary_3:monster_ability:lunar_naga_hypnosis",
             "bestiary_3:monster_ability:lunar_naga_poison",
+            "bestiary_3:monster_ability:lunar_naga_spells",
             "bestiary_3:monster_ability:maharaja_extra_initiative",
             "bestiary_3:monster_ability:maharaja_spells",
             "bestiary_3:monster_ability:marai_confusion",
@@ -4043,6 +4048,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:royal_naga_change_shape",
             "bestiary_3:monster_ability:royal_naga_dual_gaze",
             "bestiary_3:monster_ability:royal_naga_spell_like_abilities",
+            "bestiary_3:monster_ability:royal_naga_spells",
             "bestiary_3:monster_ability:schir_disease",
             "bestiary_3:monster_ability:schir_spell_like_abilities",
             "bestiary_3:monster_ability:seaweed_leshy_air_cyst",
@@ -4094,6 +4100,12 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:tripurasura_elusive",
             "bestiary_3:monster_ability:tripurasura_poison",
             "bestiary_3:monster_ability:tripurasura_spell_like_abilities",
+            "bestiary_3:monster_ability:unfettered_eidolon_cha",
+            "bestiary_3:monster_ability:unfettered_eidolon_con",
+            "bestiary_3:monster_ability:unfettered_eidolon_dex",
+            "bestiary_3:monster_ability:unfettered_eidolon_int",
+            "bestiary_3:monster_ability:unfettered_eidolon_str",
+            "bestiary_3:monster_ability:unfettered_eidolon_wis",
             "bestiary_3:monster_ability:upasunda_infused_weapons",
             "bestiary_3:monster_ability:upasunda_multiweapon_mastery",
             "bestiary_3:monster_ability:upasunda_spell_like_abilities",
@@ -4106,6 +4118,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:vulnudaemon_aura_of_doom",
             "bestiary_3:monster_ability:vulnudaemon_spell_like_abilities",
             "bestiary_3:monster_ability:water_naga_poison",
+            "bestiary_3:monster_ability:water_naga_spells",
             "bestiary_3:monster_ability:water_yai_acidic_missile",
             "bestiary_3:monster_ability:water_yai_flowing_robes",
             "bestiary_3:monster_ability:water_yai_liquid_form",
@@ -6325,12 +6338,17 @@ mod tests {
         // now ingests (a misspelled `TYPE:SpecialAttck` facet segment this
         // book's own parser previously refused). It is OWNED (by
         // `Tick Swarm`), so it joins `owned_abilities`, not `owner_less`.
-        assert_eq!(abilities.len(), 657, "every row on disk for this book/kind");
+        // 657 -> 665 (`decisions.md §27`/round 8, +8): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default -- all 8 are namespaced `<Monster> ~ <Ability>` keys whose
+        // owner resolves through the existing prefix pass, so all 8 join
+        // `owned_abilities`, none `owner_less`.
+        assert_eq!(abilities.len(), 665, "every row on disk for this book/kind");
         let owner_less = recorded_unreached(&Family::new("bestiary_2", "monster_abilities"));
         assert_eq!(owner_less.len(), 85, "the owner-less rows this cycle's mechanism shipped");
         let owned_abilities: BTreeSet<String> =
             abilities.difference(&owner_less).cloned().collect();
-        assert_eq!(owned_abilities.len(), 572, "the owned (reachable) rows on disk");
+        assert_eq!(owned_abilities.len(), 580, "the owned (reachable) rows on disk");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -6472,15 +6490,21 @@ mod tests {
         // follow-on, +266 owner-less rows -- shape measurable, reachability
         // NOT claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS`
         // under this same key).
-        assert_eq!(abilities.len(), 675, "every row on disk for this book/kind");
+        // 675 -> 686 (`decisions.md §27`/round 8, +11): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default. +1 owned (`Adlet ~ Spell-Like Abilities`); +10
+        // owner-less (`Asurendra ~ None`, `Lunar/Royal/Water Naga ~
+        // Spells`, `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`), added to
+        // `UNREACHED_RECORD_FINDINGS` above.
+        assert_eq!(abilities.len(), 686, "every row on disk for this book/kind");
         let owner_less = recorded_unreached(&Family::new("bestiary_3", "monster_abilities"));
-        assert_eq!(owner_less.len(), 266, "the owner-less rows this cycle's mechanism shipped");
+        assert_eq!(owner_less.len(), 276, "the owner-less rows this cycle's mechanism shipped");
         let owned_abilities: BTreeSet<String> =
             abilities.difference(&owner_less).cloned().collect();
         assert_eq!(
             owned_abilities.len(),
-            409,
-            "the 409 owned, reachable rows on disk after the T9 widening cycle"
+            410,
+            "the 410 owned, reachable rows on disk after the T9 widening cycle plus round 8's +1"
         );
 
         let response = crate::monster_catalog::build_monster_catalog();
@@ -6552,17 +6576,19 @@ mod tests {
         // `ability_keys`), so the claim is `NotSurfaced` naming exactly the
         // 266 -- pinned by exact key in `UNREACHED_RECORD_FINDINGS` under
         // this same key.
+        // 266 -> 276 (`decisions.md §27`/round 8, +10; see this test's own
+        // comment above).
         match reach_of(&Family::new("bestiary_3", "monster_abilities"))
             .expect("a claim is declared")
         {
             Reach::NotSurfaced { missing, .. } => assert_eq!(
                 missing.len(),
-                266,
-                "expected exactly the 266 owner-less records to be the whole shortfall (the \
-                 other 409 all reach)"
+                276,
+                "expected exactly the 276 owner-less records to be the whole shortfall (the \
+                 other 410 all reach)"
             ),
             other => {
-                panic!("expected 266 named non-reaches (409 of 675 still reach), got {other:?}")
+                panic!("expected 276 named non-reaches (410 of 686 still reach), got {other:?}")
             }
         }
     }
@@ -6654,8 +6680,13 @@ mod tests {
         // previously refused). It is OWNED (by `Spectre`), so it joins the
         // 529-strong reaching set, not the 180 named non-reaches below —
         // `missing.len()` is unchanged.
+        // 710 -> 711 (`decisions.md §27`/round 8, +1): `Morlock ~ Sneak
+        // Attack` (`TYPE:Internal`, no facet/delivery) now ships with a
+        // provisional `SpecialQuality` facet default. It is OWNED (by
+        // `Morlock`), so it joins the reaching set too — `missing.len()` is
+        // unchanged.
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 710, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 711, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {

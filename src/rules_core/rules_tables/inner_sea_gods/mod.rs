@@ -187,12 +187,17 @@ mod tests {
         // key instead of being dropped; all three are orphans here (no
         // monster row of this book claims them), pinned below. 158 -> 163
         // total (+2 owned +3 owner-less).
+        // 158/163 -> 159/164 (`decisions.md §27`/round 8, +1 owned): the
+        // one previously-excluded `Xocothian ~ Speed Burst` row (this
+        // comment's own paragraph above, `TYPE:ModifyMovement.
+        // Extraordinary`, delivery-only) now ships with a PROVISIONAL
+        // `SpecialQuality` facet default instead of being dropped.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 158);
-        assert_eq!(monster_abilities().len(), 163);
+        assert_eq!(owned, 159);
+        assert_eq!(monster_abilities().len(), 164);
     }
 
     /// The three `support/` monster rows ship, and they are the reason this

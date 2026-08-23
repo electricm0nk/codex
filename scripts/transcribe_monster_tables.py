@@ -1186,6 +1186,88 @@ def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
     return facet, delivery, traits
 
 
+# `decisions.md §27`'s provisional default, unblocked by the operator ruling
+# (T9 round 6 escalated this exact population and refused to invent a
+# default unilaterally; §27 grants it, conditioned on every defaulted unit
+# carrying a machine-countable marker naming WHY -- `workflow-instruction.md
+# §6a`'s contract, enforced by `scripts/shape_provisional_marker.py`, the
+# ONLY sanctioned place that writes the marker fields).
+PROVISIONAL_FACET_DEFAULT = "SpecialQuality"
+
+
+def provisional_facet_reason(row: list[str]) -> str:
+    """Classify WHY a row's `TYPE:` segments name no modeled facet, for the
+    `§27` provisional-default marker. Never guesses a real facet -- only
+    names which of four shapes T9 round 6/7's own re-derivation found in
+    this population, so the eventual `row 17` real-categorization pass
+    (`§27a`) starts from a labeled bucket rather than one undifferentiated
+    pile. Four shapes, corpus-wide re-derived (`§17a`), not four guesses:
+
+    * **`copy_row_base_ability_type_unresolved`** -- the row carries NO
+      `TYPE:` token at all because its identity field is a `.COPY=` overlay
+      (`CATEGORY=Special Ability|Rake.COPY=Rake`), and the bare-named base
+      ability (`Rake`, unqualified) it copies from does not exist as its
+      own row in ANY book this script reads -- confirmed by a corpus-wide
+      search, not assumed absent.
+    * **`missing_type_token_no_facet`** -- the row carries no `TYPE:` token
+      and is not a `.COPY=` row either (`Lamia Matriarch ~ Spells`: a
+      `CATEGORY:`/`DESC:` row PCGen itself never gave a `TYPE:`).
+    * **`type_internal_only_no_facet_no_delivery`** -- the row's ONLY
+      segment is `Internal` (PCGen's own `CATEGORY:Internal` bundle-row
+      marker, not a delivery or a facet), naming a hidden bonus-granter a
+      player never sees (`VISIBLE:NO`), round 6's own "genuinely novel
+      shape".
+    * **`delivery_only_no_facet_segment`** -- the row states HOW the
+      ability is delivered (`SpellLike`, `Extraordinary`, `Supernatural`)
+      but never states WHAT facet it is -- exactly `decisions.md §27`'s own
+      cited example (`ModifyHP.Supernatural`).
+    * **`book_specific_type_label_no_facet_vocabulary_gap`** -- none of the
+      above: a genuine book-specific one-off `TYPE:` string
+      (`AsurendraAdditional`, `Unfettered Eidolon Stat Selection`, …) that
+      would need its own per-record policy call to assign a real facet,
+      round 6's own residual bucket.
+    """
+    segments = type_segments(row)
+    if not segments:
+        if ".COPY=" in row[0]:
+            return "copy_row_base_ability_type_unresolved"
+        return "missing_type_token_no_facet"
+    if segments == ["Internal"]:
+        return "type_internal_only_no_facet_no_delivery"
+    if any(segment in DELIVERIES for segment in segments):
+        return "delivery_only_no_facet_segment"
+    return "book_specific_type_label_no_facet_vocabulary_gap"
+
+
+def parse_type_or_provisional_default(
+    row: list[str],
+) -> tuple[str, str | None, list[str], str | None]:
+    """`parse_type`, widened by `decisions.md §27`'s provisional default.
+
+    A row that genuinely declares a modeled facet returns exactly what
+    `parse_type` would, with a `None` fourth value -- this function changes
+    NOTHING for the ~96% of rows that already resolve cleanly. A row with
+    no modeled facet ships anyway (`facet` forced to
+    `PROVISIONAL_FACET_DEFAULT`, `delivery`/`traits` read off the row's own
+    segments exactly as `parse_type` would have, had it not raised) and the
+    fourth value names why, via `provisional_facet_reason`.
+
+    This function only classifies and returns the facet/reason -- it never
+    touches a corpus record. The caller stamps the returned reason onto the
+    shipped JSON record via `scripts/shape_provisional_marker.py`'s
+    `stamp_provisional_default`, the only sanctioned place that writes the
+    marker (`workflow-instruction.md §6a`).
+    """
+    try:
+        facet, delivery, traits = parse_type(row)
+        return facet, delivery, traits, None
+    except UnmodelledFacet:
+        segments = type_segments(row)
+        delivery = next((segment for segment in segments if segment in DELIVERIES), None)
+        traits = [segment for segment in segments if segment != delivery]
+        return PROVISIONAL_FACET_DEFAULT, delivery, traits, provisional_facet_reason(row)
+
+
 def cross_table_served_monster_keys(corpus_dir: str) -> set[str]:
     """Monster corpus keys another compiled table of the same book already ships.
 
@@ -1217,7 +1299,15 @@ def cross_table_served_monster_keys(corpus_dir: str) -> set[str]:
     return served
 
 
-def transcribe(book: str) -> str:
+def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> str:
+    """`provisional_facets`, if given, is filled IN PLACE with
+    `{corpus_key: reason}` for every ability row this call defaults via
+    `decisions.md §27` (see `parse_type_or_provisional_default`). Optional
+    and defaults to a throwaway dict so every existing caller's
+    `transcribe(book) -> str` signature is unchanged -- only `write_book`
+    passes a real dict, to hand the population to the stamping step."""
+    if provisional_facets is None:
+        provisional_facets = {}
     book_relative = BOOKS[book]
     root = os.path.join(corpus_root(), book_relative)
     inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
@@ -1369,11 +1459,15 @@ def transcribe(book: str) -> str:
     unscreenable: set[str] = set()
 
     # Ability rows whose `TYPE:` segments name no facet the chassis models
-    # (`UnmodelledFacet`). Same shape as `unscreenable` above and for the
-    # identical reason (`SD31-E6-F9-005`'s fix, applied to the sibling defect
-    # this cycle found in the same function): a row this cannot resolve is
-    # filtered out below, not fatal for the rest of the book.
-    unmodelled_facet: set[str] = set()
+    # USED to be dropped here (`UnmodelledFacet`, `SD31-E6-F9-005`'s fix).
+    # `decisions.md §27` now grants a provisional default instead -- see
+    # `parse_type_or_provisional_default` -- so this population ships.
+    # Populated here, in `ability_pi_reason`'s own pre-pass (which already
+    # runs once per ability, before the header block below is written), not
+    # in the emission loop -- the header needs the final count and the
+    # emission loop runs after it. The caller's dict (already substituted
+    # for `None` at the top of this function) is mutated IN PLACE, never
+    # rebound, so a caller-supplied dict (`write_book`) stays valid.
 
     # Ability rows whose `DESC:` text is declared Product Identity
     # (`DESCISPI:YES`) OR whose description text carries an undeclared
@@ -1405,16 +1499,9 @@ def transcribe(book: str) -> str:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         if token(row, "NAMEISPI:") == "YES":
             return "NAMEISPI:YES"
-        try:
-            _facet, _delivery, traits = parse_type(row)
-        except UnmodelledFacet:
-            # This row will not ship regardless of PI status -- same
-            # reasoning as the `UnmodelledDesc` branch just below: an
-            # unresolvable row is not a clean row, so it is reported as
-            # neither PI-clear nor PI-blocked. Filtered out of `abilities`
-            # below, before the `unscreenable` pass runs.
-            unmodelled_facet.add(unit["corpus_key"])
-            return None
+        _facet, _delivery, traits, reason = parse_type_or_provisional_default(row)
+        if reason:
+            provisional_facets[unit["corpus_key"]] = reason
         try:
             description, variables = parse_desc(row)
         except UnmodelledDesc:
@@ -1772,41 +1859,27 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
-    # Same shape, same reason, for a row whose `TYPE:` segments name no facet
-    # this chassis models (`UnmodelledFacet`). Before this pass existed
-    # `parse_type` raised `SystemExit` directly from the emission loop and
-    # stopped `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/
-    # `inner_sea_gods` from transcribing ANY ability row at all -- the T9
-    # widening cycle's own re-derivation found this crashed every genuinely
-    # modelled row in the same book, the identical `SD31-E6-F9-005` defect
-    # class found again.
-    unmodelled_facet_shipping = [u for u in abilities if u["corpus_key"] in unmodelled_facet]
-    if unmodelled_facet_shipping:
-        unmodelled_facet_keys = {u["corpus_key"] for u in unmodelled_facet_shipping}
-        abilities = [u for u in abilities if u["corpus_key"] not in unmodelled_facet_keys]
-        for key in monster_ability_keys:
-            monster_ability_keys[key] = [
-                a for a in monster_ability_keys[key] if a not in unmodelled_facet_keys
-            ]
-        print(
-            f"{book}: {len(unmodelled_facet_shipping)} owned ability row(s) NOT transcribed "
-            "(TYPE: segments name no facet this chassis models -- widen MonsterAbilityFacet "
-            "deliberately, never guess): "
-            + "; ".join(
-                f"{u['source_file']}:{u['source_line']} ({u['corpus_key']})"
-                for u in unmodelled_facet_shipping
-            ),
-            file=sys.stderr,
-        )
+    # A row whose `TYPE:` segments name no facet this chassis models USED to
+    # be dropped here exactly like `unscreenable` above. `decisions.md §27`
+    # now grants a provisional `SpecialQuality` default instead of a drop --
+    # the row SHIPS, `parse_type_or_provisional_default` supplies the
+    # default facet, and the emission loop below records which corpus_keys
+    # were defaulted (and why) into `provisional_facets` for the caller to
+    # stamp via `shape_provisional_marker.stamp_provisional_default`. No
+    # rows are removed from `abilities` for this reason any more.
 
     # Finalized against whatever `abilities` actually ships after every screen
     # above (the `.COPY=`/`.MOD`/cross-table/orphan passes can each remove a
     # row this set was computed before) -- an ability no longer shipping has
     # no description left to redact either, and one dropped for an unrelated
-    # reason (e.g. `unmodelled_facet`) has no name left to rename.
+    # reason (e.g. `unscreenable`) has no name left to rename.
     shipping_keys = {u["corpus_key"] for u in abilities}
     desc_redacted &= shipping_keys
     name_renamed = {k: v for k, v in name_renamed.items() if k in shipping_keys}
+    # Same reason, applied to `provisional_facets` -- IN PLACE (never
+    # rebound: `write_book` holds a reference to this exact dict).
+    for key in [k for k in provisional_facets if k not in shipping_keys]:
+        del provisional_facets[key]
 
     # Every ability key this table emits, after renaming: the identity a
     # cross-reference (a monster's own `ability_keys` list) must use to find
@@ -2090,6 +2163,28 @@ def transcribe(book: str) -> str:
         )
         for unit in unscreenable_shipping:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({unit['corpus_key']})")
+    if provisional_facets:
+        out.append("//!")
+        out.append(
+            f"//! {len(provisional_facets)} ability row(s) ship with a `decisions.md §27`"
+        )
+        out.append(
+            "//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name"
+        )
+        out.append(
+            "//! no facet this chassis models) -- this is NOT a measured shape, only an ingest"
+        )
+        out.append(
+            "//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`"
+        )
+        out.append(
+            "//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are"
+        )
+        out.append(
+            "//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:"
+        )
+        for key in sorted(provisional_facets):
+            out.append(f"//!   * `{key}` ({provisional_facets[key]})")
     out.append("")
     # `MonsterSpellLikeAbility` is imported only when this book actually
     # constructs one. Four registered books (Monster Codex, both Book of the
@@ -2186,7 +2281,9 @@ def transcribe(book: str) -> str:
     out.append("pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[")
     for unit in abilities:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
-        facet, delivery, traits = parse_type(row)
+        facet, delivery, traits, facet_provisional_reason = parse_type_or_provisional_default(row)
+        if facet_provisional_reason:
+            provisional_facets[unit["corpus_key"]] = facet_provisional_reason
         description, variables = parse_desc(row)
         if unit["corpus_key"] in desc_redacted:
             # `DESCISPI:YES`, or an undeclared blacklist-term hit found by
@@ -2233,7 +2330,41 @@ def transcribe(book: str) -> str:
         out.append("    },")
     out.append("];")
     out.append("")
+    if provisional_facets:
+        print(
+            f"{book}: {len(provisional_facets)} ability row(s) shipped with a "
+            "decisions.md §27 PROVISIONAL SpecialQuality facet default (not a "
+            "measured shape -- stamped via shape_provisional_marker, see "
+            "workflow-instruction.md §6a): "
+            + ", ".join(sorted(provisional_facets)),
+            file=sys.stderr,
+        )
     return "\n".join(out)
+
+
+# The `data/corpus/` directory name a book's chassis output actually lands
+# in, when it differs from the transcriber's own `BOOKS` key. Reuses
+# `CROSS_TABLE_MONSTER_RECORDS`'s key/value pair rather than a second
+# hand-written map (`decisions.md §17`) -- that dict already names this
+# exact fact for a different reason (the `bestiary` -> `beastiary` on-disk
+# spelling), and it is the only book in this lane whose key and corpus
+# directory diverge.
+def corpus_output_dir(book: str) -> str:
+    return CROSS_TABLE_MONSTER_RECORDS.get(book, book)
+
+
+def provisional_facet_units(book: str) -> dict[str, str]:
+    """Read-only: `{corpus_key: reason}` for every `monster_ability` row
+    `book` currently ships (or would ship) under `decisions.md §27`'s
+    provisional facet default. Calls `transcribe()` purely for its
+    classification side effect on `provisional_facets` -- this performs no
+    file I/O and can be called any number of times without writing
+    anything, which is what lets the stamping step (run after `gen_book_
+    cache` has already produced the JSON files) recompute the population
+    instead of needing `write_book` to have captured and persisted it."""
+    provisional_facets: dict[str, str] = {}
+    transcribe(book, provisional_facets)
+    return provisional_facets
 
 
 def write_book(book: str) -> str:

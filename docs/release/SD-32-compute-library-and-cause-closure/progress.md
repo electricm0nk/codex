@@ -7579,3 +7579,77 @@ Full receipt:
 `artifacts/gate-3-closure-invariant/t9-onboarding-equipment-modifier-ability-fix_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
 Commit: (this cycle's commit -- see push output).
+
+## T9 `monster_ability` provisional-facet-default closure, round 8 (2026-08-23) — Card 11
+
+`decisions.md §27` (unblocked by the operator ruling) closes the `monster_ability` `TYPE:`-facet-
+vocabulary-gap group T9 round 6/7 left named-not-closed. Re-derived (`§17a`, never trusted the
+dispatch brief's own figures) **22 real `no_record` units** across 5 books (`bestiary` 1, `bestiary_2`
+7, `bestiary_3` 11, `inner_sea_bestiary` 2, `inner_sea_gods` 1) plus **1 bonus unit**
+(`bestiary_2`'s `Bunyip ~ Blood Rage`, a `.COPY=` row the inventory already counted `text-complete` by
+evidence alone with no backing corpus record — this cycle's regen incidentally backs that claim for
+the first time, same mechanism).
+
+New `parse_type_or_provisional_default`/`provisional_facet_reason` in
+`scripts/transcribe_monster_tables.py` classify each row into one of **five named, machine-countable
+shapes** rather than guessing a single default: `delivery_only_no_facet_segment` (7 — `decisions.md
+§27`'s own cited case, e.g. bare `SpellLike`), `book_specific_type_label_no_facet_vocabulary_gap`
+(11), `copy_row_base_ability_type_unresolved` (3 — a `.COPY=` overlay row whose own first column is a
+compound directive, not a `TYPE:` token, and whose bare-named base ability was confirmed absent from
+every book this script reads before defaulting), `type_internal_only_no_facet_no_delivery` (1 — round
+6's own named "genuinely novel shape", `Morlock ~ Sneak Attack`, decided per `§27b`'s "novelty is
+grounds for sizing, not exclusion"), `missing_type_token_no_facet` (1).
+
+Every defaulted record is stamped via the ONE sanctioned `scripts/shape_provisional_marker.py::
+stamp_provisional_default` — never written by hand — in a new post-regen step,
+`scripts/stamp_monster_ability_provisional_facets.py`, required because this pipeline is Rust-
+generated JSON (`gen_book_cache.rs`), not a Python ingest path: the marker is applied to the shipped
+JSON record after `gen_book_cache` writes it, matched by `data.corpus_key`. `scripts/row17_census.py`
+confirms: "§27 provisional default 22 (corpus-wide total incl. done units: 23)".
+
+`monster_ability` `no_record`: **78 → 56**; bundle-wide: **106 → 84**.
+
+**Two real defects found and fixed on the way, both TDD'd:**
+
+1. `gen_book_cache.rs::verified_citation_line` panicked on every `.COPY=` ability row — its own first
+   column is a compound directive, never the emitted name. Widened with a structural
+   `first_col.contains(".COPY=")` bypass (provable from the line's own bytes, not a guess); a `.COPY=`
+   MONSTER row never reaches this function at all (dropped before emission), so this only ever exempts
+   an ABILITY row. Two new tests, including a negative control proving a genuinely stale citation still
+   panics.
+2. **Near-miss, caught and reverted before commit.** `cargo run --bin enrich_monster_ability_raw_tokens`
+   (mandatory per its own doc comment) is book-agnostic and enriched **1,829** records corpus-wide when
+   only this cycle's own 23 needed it — `git status --porcelain` caught the 1,806 out-of-territory
+   files immediately, reverted via `git checkout --` (never `git stash`), the 23 in-scope ones kept
+   with both `raw_tokens` and the provisional marker intact.
+
+8 cross-file pins repinned, every one re-derived from a live failing run's own printed value, never
+guessed: `monster_chassis.rs`'s corpus-wide no-reclassification digest (3726 → 3749 records,
+`0xc7f5_5369_ed18_7098` → `0xfc51_2110_6900_558e`), 5 books' own `mod.rs` owned/owner-less/total
+counts (`bestiary_3`'s owner-less-key digest also re-derived), `monster_catalog.rs`'s corpus-wide
+owner-less pin (1066 → 1076), `corpus_ingest_diagnostic.rs`'s `beastiary1` count (710 → 711),
+`reach_gate.rs`'s `bestiary_1`/`bestiary_2`/`bestiary_3` book-level tests plus 10 new `bestiary_3` keys
+added to `UNREACHED_RECORD_FINDINGS`.
+
+RED→GREEN: new `ProvisionalFacetDefaultRound8` (9 tests) / `ProvisionalFacetDefaultShipsInsteadOfDropping`
+(2 tests) in `scripts/tests/test_transcribe_monster_tables.py`, including a mutation-proof re-running
+the OLD `parse_type` directly on every synthetic row to confirm it still raises. Full suites green:
+`python3 -m unittest scripts.tests.test_transcribe_monster_tables` 33/34 (1 pre-existing, confirmed
+unrelated); `cargo test --locked --lib monster_chassis::`/`rules_tables::` 569/569; `apps/desktop`
+`monster_catalog::` 26/26; `corpus_ingest_diagnostic::` 14/15 (1 pre-existing `advanced_race_guide`
+failure, sibling lane's own named territory); `reach_gate::` 23/31 (8 failures IDENTICAL to round
+4/5/6/7's own documented baseline — every one `advanced_race_guide`/`apg`/`bestiary_4`/`bestiary_5`/
+`inner_sea_races` `companions`, unrelated to this cycle). Full PI scan of every added line and every
+new corpus record: zero hits.
+
+**Remaining `monster_ability` `no_record`: 56, unchanged shape from round 6/7 — the multi-`DESC:`
+parse-refusal group.** Re-confirmed live this cycle: 56 + 22 = 78 with no third undiscovered group.
+`occult_adventures`'s 5 units and `advanced_race_guide`'s 2 companion units are already closed by an
+earlier commit in this history (`916228e9a7`, `§27b` EVERYTHING) — re-confirmed live, not re-touched
+this cycle.
+
+Card 11 / row 11 stays `in-progress`.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-monster-ability-provisional-facet-default-round8_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).

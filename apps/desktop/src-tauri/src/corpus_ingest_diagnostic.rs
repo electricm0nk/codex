@@ -1553,7 +1553,11 @@ mod tests {
         // `decisions.md §22`/round 6: 709 -> 710 (+1), `Spectre ~ Create
         // Spawn` now ingests (a comma-delimiter `TYPE:` row this book's own
         // parser previously refused) -- owned, so it joins the reaching set.
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 710);
+        // `decisions.md §27`/round 8: 710 -> 711 (+1), `Morlock ~ Sneak
+        // Attack` (`TYPE:Internal`, no facet/delivery) now ships with a
+        // provisional `SpecialQuality` facet default instead of being
+        // dropped -- owned (Morlock claims it), so it joins the reaching set.
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 711);
     }
 
     #[test]
