@@ -2612,6 +2612,76 @@ and after this sweep (not "none found" without having run the commands).
 - **Commit SHAs:** `55981abc6` (feature), `ac35f6bff` (retro-log append), `717db44f7` (this
   progress.md/kanban.md entry), all on `origin/tranche/12`.
 
+### T2b re-measurement cycle (this entry, appended, 2026-08-23) — MEASUREMENT ONLY, 0 units banked, kanban row 11 stays `in-progress`
+
+Triggered by the Opus adversarial verdict (`NOT_SOUND`) on the classifier-fix + Adoptive
+Parentage wave. Re-verified all seven of the verdict's findings **fresh at this cycle's own tip**
+(`b4192a712`, one unrelated commit past the reviewed `57780b5bc`) before doing anything else, per
+the dispatch brief's instruction not to build a tidy re-measurement on an unsound base — **all
+seven still stand**, none fixed this cycle: (1) 112 Ultimate Psionics units reclassified to
+`monster_ability` on a discriminator the corpus's own `TYPE:...PC`+`CR:` marker contradicts; (2)
+the stress test's "0 false positives" is true by construction (10-dir hardcoded allow-list,
+`dreamscarred_press` never in scope); (3) `origin/tranche/12` still red on
+`cargo test --locked --test v06_work_inventory sd30_campaign_setting_books…` (unrelated card-15
+`inner_sea_faiths` regression); (5) the 7 Adoptive Parentage closures are still absent from
+`docs/work-inventory.json` — real corpus records exist (`ingested_at: 2026-08-23T04:02:31Z`) but
+the ledger was never regenerated; (6) `adoptiveParentageOptions` still renders nowhere in
+`apps/desktop/src/`; (7) `kanban.md` row 11's summary line still quotes stale T2b 2,472/T9 2,712.
+Suites re-run fresh: `cargo test --locked --lib` 2390/2390; desktop crate 518/518;
+`scripts/verify.sh --only reach` PASS (31); `--test v06_work_inventory` 16 passed, 1 pre-existing
+FAILED (finding 3).
+
+**T2b re-derived: 1,578, unchanged** since the classifier-fix cycle (no code has touched its
+classifier or evidence family since). Decomposed with **no residual**: 236 header rows (by-design,
+not-work) + 2 `Adopted Race` selector rows proven empty (Rougarou, known; **bestiary_4's
+Changeling, new finding this cycle**, same 1-file-corpus-wide proof shape) + 7 stale-ledger rows
+already closed in substance but not in the ledger (finding 5) + **35 real `Adopted Race` selector
+units blocked on a new-`kind:trait`-surface ruling** + 1,298 real per-book/per-record backlog.
+
+**Correction logged** (`scripts/retro.py correction`, `docs/retro/events/t2b-remeasure.jsonl`):
+the Adoptive Parentage receipt's "21 units / 5 books" `Adopted Race` census was scoped too
+narrowly — a corpus-wide join over the *current* T2b population finds the same selector shape in
+**9 books, 37 units** (35 real, 2 proven empty), not 4 books / 14 units. The new-kind epic it
+escalated is 2.7× larger than reported; the ruling needed is unchanged.
+
+**Major new finding, not previously named:** a further, book-level classifier-noise residual the
+`decisions.md §16` item-1 fix's KEY-prefix discriminator structurally cannot reach, because it
+requires a `CR:`-bearing `*_races.lst` entry to match against and several books have none at all.
+`mythic_adventures` and `pathfinder_unchained` carry **zero** `*_races.lst` file; `occult_adventures`'s
+is a 15-line non-race stub; `advanced_class_guide` has none either; `advanced_players_guide`'s is a
+2-name animal-companion stub. Spot-checked "other"-bucket content in all five is monster-template
+or class-feature material (`Mythic Aboleth`, `Agathion Base Form`, `Emotional Focus / Anger`,
+`Arcanist Exploit`, `Bard Spell Level 0`), not race content — **≥316 units, high-confidence, book-level
+proof**. A further, *unproven* (row-heuristic only, not row-by-row like `bestiary_3` got) suspect
+residual sits in `bestiary_2` (≤165 of 171 "other"), `bestiary` (≤82 of 85), `bestiary_4` (≤64 of
+85) — the `epic-2-t2b-refine-kind-fix` receipt's own `## DISCOVERED` entry named these seven books'
+residuals as unexamined; this is the first follow-up look, not a full proof. **Recommendation:
+extend the classifier fix (a second discriminator — does the book carry any race file at all) and
+re-measure again before dispatching any further per-book onboarding cycle**, or the next wave risks
+fabricating race chassis for monster/class content, the exact shape `decisions.md §1a` forbids.
+
+**The ARG lane's formula-interpreter blocker (29 Samsaran-linked units) is stale.** `§24` cited in
+that receipt is `SD-27 decisions.md §24.1`; `SD-31 decisions.md` Decision 20 (2026-08-21) already
+overturned it before this bundle started. `src/rules_core/pilot_compute/formula_interpreter.rs`
+(1,345 lines) exists, is fixture-gated, and passes in the suite — just not yet wired into
+`ingest_race_traits.rs`/`race_resolver.rs`. Standing lesson 7 applied: checked, not remembered: the
+condition is met. The 29 units' only remaining blocker is Samsaran's own `IN_SCOPE_RACES` status.
+
+Full per-book "still genuinely open" dispatch list (26 books, live counts, status per book) and the
+four confirmed mechanism-shaped clusters (bestiary_5's 8-chassis + Skinwalker heritage-selector,
+the corrected 35-unit Adopted Race epic, the Changeling/Dhampir/Samsaran cross-book chassis
+cluster, the book-level classifier-noise cluster) are in the memo. Re-derive script (new,
+committed): `scripts/t2b_remeasure_other_bucket_probe.py`.
+
+**Dual-audit:** `OK_NO_BUNDLE_TAGS` (one inspected false positive — `sd30_campaign_setting_books…`
+is a real, pre-existing test function name quoted in prose, not a content leak); `OK_NO_TOKENS`.
+
+**No engine code, corpus data, or pinned count changed this cycle.** kanban row 11 left
+`in-progress`.
+
+- **Memo:** `artifacts/gate-3-closure-invariant/card11-t2b-remeasure.md`.
+- **Commit SHA:** `adac1fb22`, on `origin/tranche/12`.
+
 ## Cycle `17-generic-spell-ingest` — `decisions.md §17` item 2, collapse the seven spell-ingest binaries
 
 **Status:** complete for its own stated scope. No kanban card flips to `complete` from this
