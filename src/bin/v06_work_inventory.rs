@@ -500,7 +500,7 @@ mod kind_ability_tests {
     fn category_feat_row_redirects_to_feat() {
         let fields = ["Magical Lineage", "KEY:Magical Lineage ~ Metamagic", "CATEGORY:FEAT", "TYPE:Metamagic"];
         let empty = BTreeSet::new();
-        assert_eq!(refine_kind(Kind::Ability, &fields, &empty), Kind::Feat);
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new()), Kind::Feat);
     }
 
     /// A non-FEAT bare-abilities row stays `Kind::Ability` under `refine_kind`.
@@ -508,7 +508,7 @@ mod kind_ability_tests {
     fn non_feat_ability_row_stays_ability_under_refine_kind() {
         let fields = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
         let empty = BTreeSet::new();
-        assert_eq!(refine_kind(Kind::Ability, &fields, &empty), Kind::Ability);
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new()), Kind::Ability);
     }
 
     /// `has_classifying_token`: only content-bearing (A) rows pass; a
@@ -558,6 +558,7 @@ mod kind_ability_tests {
             Kind::Ability,
             text,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
@@ -579,6 +580,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::Ability,
             text,
+            &empty,
             &empty,
             &mut out,
         );
@@ -602,6 +604,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::ClassFeature,
             text,
+            &empty,
             &empty,
             &mut out,
         );
@@ -639,6 +642,7 @@ mod kind_ability_tests {
             Kind::ClassFeature,
             text,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 0, "{:?}", out.units);
@@ -661,6 +665,7 @@ mod kind_ability_tests {
             Kind::ClassFeature,
             text,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
@@ -681,6 +686,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::ClassFeature,
             text,
+            &empty,
             &empty,
             &mut out,
         );
@@ -1828,6 +1834,69 @@ fn book_cr_bearing_race_names(book_dir: &Path) -> BTreeSet<String> {
     names
 }
 
+/// SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md §5`,
+/// `decisions.md §17a`): the class-name-shaped sibling to
+/// [`book_cr_bearing_race_names`]. Several `_abilities_race.lst`-owning
+/// books carry NO playable race chassis at all (`mythic_adventures`,
+/// `pathfinder_unchained`, `advanced_class_guide` have no `*_races.lst` file
+/// on disk; `occult_adventures`'s `oa_races.lst` and
+/// `advanced_players_guide`'s `apg_races_companion.lst` are non-PC-race
+/// companion/phantom stubs, 0 `CR:` tokens either way) -- so
+/// `book_cr_bearing_race_names` is always empty for them and `refine_kind`'s
+/// existing KEY-prefix check can never fire. Their `_abilities_race.lst`
+/// rows are filed there purely by `file_kind`'s whole-file filename guess;
+/// some of that content is a real class's own per-class bookkeeping
+/// (`Skald Spell Level 0`, `Warpriest`'s "Class Feature" TYPE facet, an
+/// Oracle Curse tracker) mis-typed `race_trait`.
+///
+/// This function collects every `CLASS:<Name>` declared in the book's own
+/// `*classes*.lst` file(s), **gated on `TYPE:` containing `.PC`** -- the
+/// corpus's own player-class-vs-monster-class discriminator (a monster's
+/// racial-hit-dice `CLASS:` entry, e.g. `bestiary`'s `CLASS:Drider`, always
+/// carries `TYPE:Monster`, never `.PC`; re-derived corpus-wide before this
+/// fix landed: the un-gated version wrongly matched `bestiary`'s `Drider`/
+/// `Guardian Naga`, `bonus_bestiary`'s `Faerie Dragon`/`Water Naga`, and
+/// `core_essentials`'s `Dragon Age (N)` monster-class rows, all real
+/// content this fix must not touch -- gating on `.PC` removes every one of
+/// those false positives while keeping every genuine player class).
+fn book_pc_class_names(book_dir: &Path) -> BTreeSet<String> {
+    let mut names = BTreeSet::new();
+    let mut stack = vec![book_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            let basename = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+            if !basename.contains("classes") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for line in text.lines() {
+                let fields = tab_fields(line);
+                let mut class_name: Option<&str> = None;
+                let mut type_value: Option<&str> = None;
+                for field in &fields {
+                    if let Some(rest) = field.strip_prefix("CLASS:") {
+                        class_name = Some(rest.trim());
+                    } else if let Some(rest) = field.strip_prefix("TYPE:") {
+                        type_value = Some(rest.trim());
+                    }
+                }
+                if let (Some(name), Some(ty)) = (class_name, type_value) {
+                    if ty.split('.').any(|seg| seg == "PC") {
+                        names.insert(name.to_string());
+                    }
+                }
+            }
+        }
+    }
+    names
+}
+
 /// A record's kind, refined from the file-level guess by what the record
 /// itself says.
 ///
@@ -1854,7 +1923,28 @@ fn book_cr_bearing_race_names(book_dir: &Path) -> BTreeSet<String> {
 ///   name) by construction: this check reads the KEY, not the TYPE, so it
 ///   shares no vocabulary with the trap that made a naive TYPE-segment
 ///   widening unsafe (`t2b-bestiary_3-measurement-receipt.md` §6 item 1).
-fn refine_kind(file_kind: Kind, fields: &[&str], book_monster_race_names: &BTreeSet<String>) -> Kind {
+/// - SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md
+///   §5`, `decisions.md §17a`): a row whose `KEY:` prefix exactly names, or
+///   begins with (`"<Name> "`), one of `book_pc_class_names`'s same-book
+///   genuine player classes (`TYPE:` gated on `.PC`, see that function's own
+///   doc comment) is that class's own bookkeeping row filed in the wrong
+///   file, not a racial trait -- e.g. `advanced_class_guide`'s
+///   `Skald Spell Level 0` (`TYPE:BonusSpellKnownSkald`) or `Warpriest`
+///   (`TYPE:Warpriest Class Feature.SpecialQuality.Supernatural`, the TYPE
+///   literally says "Class Feature"). Reclassifies to `Kind::ClassFeature`.
+///   Gated by the SAME `is_choice_row` guard as the monster-ability arm
+///   above: a Favored Class Bonus row (`advanced_players_guide`'s bare
+///   `Alchemist`, `TYPE:FavoredClass`, `BONUS:ABILITYPOOL|Favored Class
+///   Bonus|...`) also has a KEY prefix that is literally a class name, and
+///   is a third, distinct data shape neither `race_trait` nor
+///   `class_feature` -- moving it would be exactly as wrong as moving it to
+///   `monster_ability`, so it stays `RaceTrait` untouched, same as today.
+fn refine_kind(
+    file_kind: Kind,
+    fields: &[&str],
+    book_monster_race_names: &BTreeSet<String>,
+    book_pc_class_names: &BTreeSet<String>,
+) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
         Kind::RaceTrait => {
@@ -1874,6 +1964,34 @@ fn refine_kind(file_kind: Kind, fields: &[&str], book_monster_race_names: &BTree
                 .trim();
             if !is_choice_row && !key_prefix.is_empty() && book_monster_race_names.contains(key_prefix) {
                 return Kind::MonsterAbility;
+            }
+            // The class-feature arm falls back to the row's own bare first
+            // column when no `KEY:` field is present -- unlike the
+            // monster-ability arm above (unchanged, still `KEY:`-only, to
+            // avoid perturbing `decisions.md §16`'s already-signed-off
+            // classifier). Real-corpus shape this fallback is FOR:
+            // `acg_abilities_race.lst`'s `Skald Spell Level 0` and
+            // `Warpriest` rows carry no `KEY:` field at all -- PCGen's own
+            // convention where the bare first column IS the identity, the
+            // same fallback `enumerate_file`'s own `display_name`/`key`
+            // resolution already uses for every other kind.
+            let bare_key_prefix = token_value(fields, "KEY:")
+                .or_else(|| fields.first().copied())
+                .unwrap_or("")
+                .split(" ~ ")
+                .next()
+                .unwrap_or("")
+                .trim();
+            if !is_choice_row
+                && !bare_key_prefix.is_empty()
+                && book_pc_class_names.iter().any(|class_name| {
+                    bare_key_prefix == class_name.as_str()
+                        || bare_key_prefix
+                            .strip_prefix(class_name.as_str())
+                            .is_some_and(|rest| rest.starts_with(' '))
+                })
+            {
+                return Kind::ClassFeature;
             }
             Kind::RaceTrait
         }
@@ -2012,7 +2130,7 @@ mod refine_kind_monster_ability_tests {
             "DESC:Gain a bonus.",
             "BONUS:VAR|ElfHunterCritConfLongbowBonus|1",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `uw_abilities_race.lst:235` -- the auto-granted "Output" display row a
@@ -2031,7 +2149,7 @@ mod refine_kind_monster_ability_tests {
             "VISIBLE:EXPORT",
             "DESC:Add a bonus on wild empathy checks.|DwarfShifterEmpathyBonus/2",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// Same shape, caught via the `FavClassBonus`-suffixed variable-name
@@ -2049,7 +2167,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality",
             "DESC:Your animal companion has extra hit points.|HalfOrcHunterFavClassBonus",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `ce_abilities_race.lst:1739`, one of Core Essentials' 380 genuine
@@ -2066,7 +2184,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Aberrations breathe, eat, and sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// `uw_abilities_race.lst:25`, one of `ultimate_wilderness`'s 2 genuine
@@ -2082,7 +2200,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Plants breathe and eat, but do not sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// A bare `NaturalAttack`/`Universal Monster Rule` first segment is
@@ -2094,7 +2212,7 @@ mod refine_kind_monster_ability_tests {
     #[test]
     fn natural_attack_first_segment_is_never_gated_by_the_choice_test() {
         let fields = ["Bite 1 (Medium)", "CATEGORY:Special Ability", "TYPE:NaturalAttack"];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// SD-32 card 11 T2b classifier fix (`decisions.md §16`): `bestiary_3`'s
@@ -2113,7 +2231,7 @@ mod refine_kind_monster_ability_tests {
         ];
         let mut names = BTreeSet::new();
         names.insert("Bandersnatch".to_string());
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// The named trap (`t2b-bestiary_3-measurement-receipt.md` §6 item 1):
@@ -2139,7 +2257,7 @@ mod refine_kind_monster_ability_tests {
         // never the race name embedded inside the KEY's own suffix.
         let mut names = BTreeSet::new();
         names.insert("Human".to_string());
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// A row whose KEY prefix happens to equal a book monster/race name is
@@ -2158,7 +2276,7 @@ mod refine_kind_monster_ability_tests {
         ];
         let mut names = BTreeSet::new();
         names.insert("Bandersnatch".to_string());
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// Regression guard for the over-widening this fix must NOT do: a row
@@ -2189,7 +2307,95 @@ mod refine_kind_monster_ability_tests {
         // `book_cr_bearing_race_names` never reads `*_templates.lst`, so no
         // caller ever passes a set containing it. An empty set here is not a
         // weaker test; it IS the invariant.
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+    }
+
+    /// SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md
+    /// §5`, `decisions.md §17a`): `advanced_class_guide/acg_abilities_race.lst`'s
+    /// `Skald Spell Level 0` -- ACG has no `*_races.lst` at all, so
+    /// `book_monster_race_names` is always empty for it and the pre-existing
+    /// KEY-prefix arm can never fire. Its own `TYPE:BonusSpellKnownSkald`
+    /// names Skald's own bonus-spell-known bookkeeping, not a racial trait.
+    #[test]
+    fn book_class_name_prefix_row_reclassifies_to_class_feature() {
+        let fields = [
+            "Skald Spell Level 0",
+            "CATEGORY:Special Ability",
+            "TYPE:BonusSpellKnownSkald",
+            "PREVARGTEQ:(charbonusto(\"PCLEVEL\",\"Skald\") + classlevel(\"Skald\")),1",
+            "STACK:YES",
+            "MULT:YES",
+            "CHOOSE:NOCHOICE",
+            "BONUS:SPELLKNOWN|CLASS=Skald;LEVEL=0|1",
+        ];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Skald".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            Kind::ClassFeature
+        );
+    }
+
+    /// The exact-name form (no ` ~ ` suffix, no trailing-word compound) also
+    /// reclassifies -- `advanced_class_guide`'s `Warpriest`, whose own
+    /// `TYPE:` literally says "Class Feature".
+    #[test]
+    fn bare_class_name_key_reclassifies_to_class_feature() {
+        let fields = [
+            "Warpriest",
+            "CATEGORY:Special Ability",
+            "TYPE:Warpriest Class Feature.SpecialQuality.Supernatural",
+        ];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Warpriest".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            Kind::ClassFeature
+        );
+    }
+
+    /// A Favored Class Bonus row whose bare KEY happens to equal a genuine
+    /// player class name (`advanced_players_guide`'s bare `Alchemist`,
+    /// `TYPE:FavoredClass`) is a THIRD, distinct data shape -- neither race
+    /// content nor a class feature -- and must stay `RaceTrait` untouched,
+    /// gated by the same `is_player_favored_class_choice_row` guard the
+    /// monster-ability arm already uses. Moving this would be exactly the
+    /// "convenient kind for an ambiguous row" failure `decisions.md §1a`
+    /// forbids.
+    #[test]
+    fn favored_class_bonus_row_with_bare_class_name_key_stays_race_trait() {
+        let fields = [
+            "Alchemist",
+            "CATEGORY:Special Ability",
+            "TYPE:FavoredClass",
+            "VISIBLE:DISPLAY",
+            "STACK:NO",
+            "MULT:NO",
+            "BONUS:ABILITYPOOL|Favored Class Bonus|var(\"CL=Alchemist\")",
+        ];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Alchemist".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            Kind::RaceTrait
+        );
+    }
+
+    /// Regression guard: a KEY prefix that merely starts with the SAME
+    /// letters as a class name but is a different word entirely (no space
+    /// boundary) must not match -- e.g. a hypothetical `Skaldic Rite` must
+    /// not be caught by a bare-substring `starts_with("Skald")` check. This
+    /// test would fail if the space-boundary guard in `refine_kind` were
+    /// ever weakened to plain `starts_with`.
+    #[test]
+    fn class_name_prefix_match_requires_a_word_boundary() {
+        let fields = ["Skaldic Rite", "CATEGORY:Special Ability", "TYPE:SkaldicRiteFeature"];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Skald".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            Kind::RaceTrait
+        );
     }
 }
 
@@ -2264,6 +2470,59 @@ mod book_cr_bearing_race_names_tests {
         let names = book_cr_bearing_race_names(&dir);
         assert!(!names.contains("Feral"), "{names:?}");
         assert!(!names.contains("Aasimar"), "playable race, CR:-less: {names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+}
+
+#[cfg(test)]
+mod book_pc_class_names_tests {
+    use super::*;
+
+    /// End-to-end: a temp book directory whose `*_classes.lst` mixes a real
+    /// player class (`TYPE:Base.PC...`) with a monster hit-dice class
+    /// (`TYPE:Monster`) -- the exact real-corpus shape (`bestiary`'s
+    /// `CLASS:Drider`) that a naive un-gated `CLASS:` scan wrongly matched
+    /// during this cycle's own corpus-wide safety check before the `.PC`
+    /// gate was added. Only the player class must survive.
+    #[test]
+    fn collects_only_pc_gated_classes_and_excludes_monster_classes() {
+        let dir = std::env::temp_dir().join(format!("codex-t2b-pc-class-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("acg_classes.lst"),
+            "CLASS:Arcanist\tHD:6\tTYPE:Base.PC\tMAXLEVEL:20\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("b1_classes_race.lst"),
+            "CLASS:Drider\tOUTPUTNAME:Aberration\tHD:8\tTYPE:Monster\tMAXLEVEL:NOLIMIT\n",
+        )
+        .unwrap();
+
+        let names = book_pc_class_names(&dir);
+        assert!(names.contains("Arcanist"), "{names:?}");
+        assert!(!names.contains("Drider"), "a monster hit-dice class must not be a PC class: {names:?}");
+        assert_eq!(names.len(), 1, "{names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A book with no `*classes*.lst` file at all (`mythic_adventures`,
+    /// `pathfinder_unchained`'s real shape) returns an empty set, not an
+    /// error -- `refine_kind`'s new arm is then structurally a no-op for
+    /// that book, same as `book_cr_bearing_race_names` already behaves when
+    /// no `*_races.lst` exists.
+    #[test]
+    fn book_with_no_classes_file_returns_empty_set() {
+        let dir = std::env::temp_dir().join(format!("codex-t2b-pc-class-empty-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("ma_abilities_race.lst"), "Mucus Cloud\tKEY:Mythic Aboleth ~ Mucus Cloud\n").unwrap();
+
+        let names = book_pc_class_names(&dir);
+        assert!(names.is_empty(), "{names:?}");
 
         std::fs::remove_dir_all(&dir).ok();
     }
@@ -3159,6 +3418,7 @@ fn enumerate_file(
     kind: Kind,
     text: &str,
     book_monster_race_names: &BTreeSet<String>,
+    book_pc_class_names: &BTreeSet<String>,
     out: &mut BookEnumeration,
 ) {
     // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
@@ -3318,7 +3578,7 @@ fn enumerate_file(
                 .filter(|t| has_token(&fields, t))
                 .count();
             out.mod_targets.push((
-                refine_kind(kind, &fields, book_monster_race_names),
+                refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names),
                 base.clone(),
                 base,
                 Provenance { file: rel.clone(), line: line_number },
@@ -3400,7 +3660,7 @@ fn enumerate_file(
             continue;
         }
 
-        let record_kind = refine_kind(kind, &fields, book_monster_race_names);
+        let record_kind = refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names);
         if !has_classifying_token(record_kind, &fields) {
             *out.trap_hits.entry("missing_classifying_token").or_default() += 1;
             continue;
@@ -3486,6 +3746,10 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
     // prefix against every `CR:`-bearing `*_races.lst` entry in this book,
     // not just the ones in the same directory as the abilities file.
     let book_monster_race_names = book_cr_bearing_race_names(book_dir);
+    // SD-32 card 11 T2b classifier fix, cluster 4: same one-per-book
+    // computation shape as `book_monster_race_names` above, see
+    // `book_pc_class_names`'s own doc comment.
+    let book_pc_class_names = book_pc_class_names(book_dir);
 
     for path in files {
         let basename = path
@@ -3495,7 +3759,15 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
         match file_kind(&basename) {
             Some(kind) => {
                 if let Ok(text) = std::fs::read_to_string(&path) {
-                    enumerate_file(&path, book, kind, &text, &book_monster_race_names, &mut out);
+                    enumerate_file(
+                        &path,
+                        book,
+                        kind,
+                        &text,
+                        &book_monster_race_names,
+                        &book_pc_class_names,
+                        &mut out,
+                    );
                 } else {
                     out.files_not_enumerated.insert(basename);
                 }
