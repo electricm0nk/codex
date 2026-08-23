@@ -790,6 +790,32 @@ and after this sweep (not "none found" without having run the commands).
   unrelated-automation origin branch without an explicit ruling is out of this card's scope.
 - **Disk:** `df -h /` → 968G total, 239G used, 730G available, 25% used. No pressure.
 
+## Cycle 1 — Closure / Card 13 `closure-epilogue` — bundle closure complete
+
+- **Card ID:** `closure-epilogue`
+- **Commit SHAs:** `571a3aaf7`, `df5e7d867`, `fd4403b7d`, `89a71b283`, `c10e03566`, `8e7b14205`,
+  `c18286205`, `8053a3d8c`, `0721aabdd`, `8c074194a`, `881cecbe2`, `e2bbbae77`, `8bdfcf23f` (in
+  order; PR #375 opened between the last two).
+- **Acceptance criterion:** AT-32-CLOSE-001 — all four gates met, every Epic 1-5 card complete or
+  filed under Open blockers, retrospective written+cited same-cycle, full worktree/branch sweep,
+  then (only then) the PR, architecture-docs refresh, and release notes.
+- **Status:** complete
+- **Summary:** All five `workflow-instruction.md §13` steps done — see this file's own "## Open
+  blockers" entry (card 11), the retrospective (`docs/retro/sd32-compute-library-and-cause-closure-retrospective.md`),
+  this file's "Closure epilogue — full worktree/branch sweep" section above, the new `receipts.md`
+  (5 closure-pipeline receipts: 2 failing + 1 passing architecture-truth-up, 1 graphify-update
+  PASS, 1 merge-conflict-resolution post-pr MERGEABLE), and `release-notes.md`'s populated
+  sections. `tranche/12 → develop` PR: [#375](https://github.com/electricm0nk/codex/pull/375),
+  `mergeable=MERGEABLE`, 0 conflicting files. Full detail:
+  `artifacts/epic-5-protective-sweep/closure-epilogue_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card. `release-notes.md` "Known issues" names the
+  `check-release-manifest.yml` `paths:`-filter staleness found during the architecture-docs
+  refresh (out of `docs/architecture/`'s own write scope to fix).
+- **Next-cycle plan:** none — this is the bundle's final epic. The `tranche/12 → develop` merge is
+  the operator's own action (standing scope). A successor SD-N bundle picks up card 11's remaining
+  Epic 2 blocker shapes (`forward-scope-register.md` C2.5), Epic 3's 18-untabled-base-class half
+  (C1.1), and the `check-release-manifest.yml` fix.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).

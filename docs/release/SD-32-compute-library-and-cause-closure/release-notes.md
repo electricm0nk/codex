@@ -120,5 +120,8 @@ named owners.** See "Deferred findings" below; full reasoning in
   #374 (merged 2026-08-22T19:53Z), verified by content.
 - **Build version:** `0.12.0` (`grep -h '"version"' apps/desktop/package.json
   apps/desktop/src-tauri/tauri.conf.json`).
-- **`tranche/12 → develop` PR:** [Populated once the PR opens — §13 step 4]
-- **Merge SHA:** [Populated once the PR merges]
+- **`tranche/12 → develop` PR:** [PR #375](https://github.com/electricm0nk/codex/pull/375) — opened
+  2026-08-22, `mergeable=MERGEABLE`, 0 conflicting files
+  (`docs/release/SD-32-compute-library-and-cause-closure/receipts.md`'s `merge_conflict:post_pr`
+  receipt).
+- **Merge SHA:** [Populated once the PR merges — operator approves this merge per standing scope]
