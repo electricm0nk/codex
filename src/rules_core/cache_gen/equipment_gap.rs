@@ -499,6 +499,19 @@ pub(crate) fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
 /// real citation line (446 vs. this row's 895) -- two real corpus rows,
 /// same slug, and the first `write_json` implementation clobbered the
 /// better one before this guard existed.
+/// Reads `<out_dir>/<slug>.json`'s own `source.line` (`None` if the file
+/// is absent, unreadable, or carries no such field -- never fabricated;
+/// callers treat `None` the same as "not a same-line rerun", i.e. any
+/// existing-but-unparseable file still blocks a write via `write_json`'s
+/// own `path.exists()` guard, this function only ever widens what CAN be
+/// disambiguated, never what gets skipped).
+pub(crate) fn existing_source_line(out_dir: &Path, slug: &str) -> Option<u32> {
+    let path = out_dir.join(format!("{slug}.json"));
+    let text = std::fs::read_to_string(path).ok()?;
+    let value: serde_json::Value = serde_json::from_str(&text).ok()?;
+    value.get("source")?.get("line")?.as_u64().map(|n| n as u32)
+}
+
 pub(crate) fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<bool> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
@@ -532,6 +545,16 @@ pub struct GenerationReport {
     /// content (see the `generate()` loop's doc comment for the real
     /// example this guards against).
     pub excluded_non_content_directive: Vec<String>,
+    /// Rows that slugified to the SAME path as an already-shipped file but
+    /// whose own resolved citation `line` differs from that file's own
+    /// `source.line` -- a genuine second real corpus row hiding behind one
+    /// occupied slug (`write_json`'s doc comment names the exact incident
+    /// this disambiguates), not a rerun of the same row. Written under a
+    /// `slugify`-disambiguated (`-2`, `-3`, ...) sibling filename rather
+    /// than silently dropped. Disjoint from `skipped_pre_existing`, whose
+    /// entries share the SAME line as the file already on disk (a true
+    /// idempotent rerun).
+    pub disambiguated_collision: Vec<String>,
 }
 
 #[derive(Debug)]
@@ -661,13 +684,30 @@ pub fn generate(
         };
 
         let used = used_by_book.entry(book_id).or_default();
-        let slug = slugify(entry.key, used);
+        let mut slug = slugify(entry.key, used);
         let book_out = out_root.join(book_id).join("equipment");
         let (write_dir, is_modifier) = if entry.category == "Equipmods" {
             (book_out.join("equipmods"), true)
         } else {
             (book_out.clone(), false)
         };
+        // A genuine second real corpus row can slugify to the same path an
+        // already-shipped file occupies (`write_json`'s own doc comment
+        // names the incident: `core_rulebook`'s "Intelligent Item Purpose
+        // (Slay All)"/"(Slay Creature Type)" `.COPY=`-named rows collide
+        // with the already-shipped BASE declaration's own richer record).
+        // Disambiguate ONLY when the citation line genuinely differs --
+        // when it matches, this is an ordinary idempotent rerun of the
+        // SAME row, and must keep skipping exactly as before.
+        if let Some(existing_line) = existing_source_line(&write_dir, &slug) {
+            if existing_line != line {
+                report.disambiguated_collision.push(format!(
+                    "{book_id}:{} (line {line}, was slug of the line-{existing_line} record)",
+                    entry.key
+                ));
+                slug = slugify(entry.key, used);
+            }
+        }
         let wrote = write_json(&write_dir, &slug, &record)
             .map_err(|_| GenerationError::CorpusUnreachable(book_out.clone()))?;
         if !wrote {
@@ -962,6 +1002,93 @@ mod tests {
     /// the old strategy order (first-column before `.COPY=`) let the
     /// template row win, citing the wrong line. `.COPY=<key>` must win
     /// over the coincidental first-column match on the same identifier.
+    /// `existing_source_line` regression: `None` for an absent file, `None`
+    /// for a file with no readable `source.line` (never fabricates a line
+    /// out of malformed/foreign JSON), and `Some(real line)` for a real
+    /// shipped-shaped record.
+    #[test]
+    fn existing_source_line_reads_a_real_record_and_is_none_otherwise() {
+        let dir = std::env::temp_dir().join(format!("cgeq_existing_line_test_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        assert_eq!(existing_source_line(&dir, "absent"), None);
+
+        std::fs::write(dir.join("not_json.json"), "not json at all").unwrap();
+        assert_eq!(existing_source_line(&dir, "not_json"), None);
+
+        std::fs::write(
+            dir.join("real.json"),
+            r#"{"source":{"kind":"lst_token","path":"x.lst","sha256":"a","line":446,"record_key":"x"}}"#,
+        )
+        .unwrap();
+        assert_eq!(existing_source_line(&dir, "real"), Some(446));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// RED->GREEN regression for the real defect `write_json`'s own doc
+    /// comment names: `core_rulebook`'s `.COPY=`-named row "Intelligent
+    /// Item Purpose (Slay All)" (citation line 895) slugifies to the exact
+    /// same filename as the ALREADY-SHIPPED base declaration "Intelligent
+    /// Item ~ Purpose / Slay All" (citation line 446) -- two real corpus
+    /// rows, one slug. Before this cycle's `existing_source_line` check,
+    /// `generate()`'s loop called `write_json` once, saw `path.exists()`,
+    /// and silently dropped the second row forever (never fabricated,
+    /// but also never written -- a real `no_record` unit that no config
+    /// change alone could close). This test proves the disambiguation
+    /// decision in isolation, without a full `generate()` run: a
+    /// DIFFERENT line must trigger a second `slugify` call (which the
+    /// `used`-set mechanism already disambiguates via `-2`); the SAME line
+    /// must not (an ordinary idempotent rerun stays a single file).
+    #[test]
+    fn a_different_citation_line_at_an_occupied_slug_is_disambiguated_not_dropped() {
+        let dir = std::env::temp_dir().join(format!("cgeq_collision_test_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("intelligent_item_purpose_slay_all.json"),
+            r#"{"source":{"kind":"lst_token","path":"x.lst","sha256":"a","line":446,"record_key":"Intelligent Item ~ Purpose / Slay All"}}"#,
+        )
+        .unwrap();
+
+        // RED (the defect, reproduced): naive re-slugify without checking
+        // the existing file's own line would just collide with itself
+        // again on the FIRST call, since `used` starts empty for this
+        // invocation -- there is nothing in `used` yet to disambiguate
+        // against, which is exactly why the fix needs `existing_source_line`
+        // rather than relying on `slugify`'s in-run set alone.
+        let mut used_naive: BTreeSet<String> = BTreeSet::new();
+        let naive_slug = slugify("Intelligent Item Purpose (Slay All)", &mut used_naive);
+        assert_eq!(
+            naive_slug, "intelligent_item_purpose_slay_all",
+            "sanity: the two real records really do collide on one slug"
+        );
+
+        // GREEN (the fix): a genuinely different line disambiguates.
+        let mut used: BTreeSet<String> = BTreeSet::new();
+        let mut slug = slugify("Intelligent Item Purpose (Slay All)", &mut used);
+        let new_line: u32 = 895;
+        if let Some(existing_line) = existing_source_line(&dir, &slug) {
+            assert_eq!(existing_line, 446);
+            if existing_line != new_line {
+                slug = slugify("Intelligent Item Purpose (Slay All)", &mut used);
+            }
+        } else {
+            panic!("existing_source_line must read the fixture's real line");
+        }
+        assert_eq!(slug, "intelligent_item_purpose_slay_all-2");
+
+        // Idempotency preserved: a SAME-line rerun must not disambiguate.
+        let mut used2: BTreeSet<String> = BTreeSet::new();
+        let mut slug2 = slugify("Intelligent Item ~ Purpose / Slay All", &mut used2);
+        let rerun_line: u32 = 446;
+        if let Some(existing_line) = existing_source_line(&dir, &slug2) {
+            if existing_line != rerun_line {
+                slug2 = slugify("Intelligent Item ~ Purpose / Slay All", &mut used2);
+            }
+        }
+        assert_eq!(slug2, "intelligent_item_purpose_slay_all");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
     #[test]
     fn find_citation_prefers_a_copy_variant_over_a_coincidental_first_column_match() {
         let dir = std::env::temp_dir().join(format!("cgeq_test_copy_vs_first_col_{}", std::process::id()));

@@ -6752,4 +6752,70 @@ in this cycle's own dispatch brief did not recur.
 - **What remains:** `epic-6-kind-trait` row 16's own remaining scope (unblocked by this cycle, not
   worked here): `ingest_races.rs` BookSource additions, `ingest_generic_kind.py --kind trait` run,
   `trait_pool`/`race_trait_picker.rs`/`reach_gate.rs` build.
+
+## Cycle: `spell-no-record-words-of-power` + `equipment-modifier-no-record-wave5` (2026-08-23)
+
+Dispatch scope: `spell`'s 57 and `equipment_modifier`'s 6 (`decisions.md §20`). `§17a`
+re-derivation matched the dispatch brief exactly:
+`monster_ability 121, equipment 113, spell 57, equipment_modifier 6, companion 2`.
+
+**Work item 1 — `spell` 57 -> 54.** The prior receipt's next-cycle-plan item 1 ("`ultimate_magic`'s
+Words-of-Power file, same missing-config-row shape as `bestiary_6`, cheapest win") was checked and
+its own shape claim corrected: no compiled `SpellListEntry` table existed for
+`um_spells_wordsofpower.lst` at all (unlike `bestiary_6`, where the table already existed and only
+the corpus dump was missing) — this was genuine new-content ingest, one new `BookInput`
+(`ingest_spells.rs`) generating a new module (`rules_tables::ultimate_magic_wordsofpower`) plus one
+new `BookSpec` (`spell_lane_dump.rs`, `book_id: "ultimate_magic"`, a second source file for the same
+shipped book). 3 new records, 0 PI-dropped, additive-only (`git status --porcelain -- data/corpus`
+before/after: 3 new untracked files, zero modifications). `cargo test --locked --lib
+rules_core::cache_gen::spell_lane_dump` 9/9, `rules_core::rules_tables::` 504/504 (no regression),
+`--bin ingest_spells` 19/19 (pinned book-count test renamed/updated 20->21).
+
+**Work item 2 — `equipment_modifier` 6 -> 4.** Traced the prior cycle's own named-but-unfixed gap:
+`core_rulebook`'s 2 `.COPY=`-named "Intelligent Item Purpose" rows (`Slay All`/`Slay Creature Type`,
+real citations `cr_equipmods.lst:895`/`:890`) slugify to the SAME filename as the already-shipped
+BASE declaration's own richer record (`:446`/`:441` — a wholly different, earlier pipeline).
+`write_json`'s guard could only skip-or-write, with no way to tell "same row, idempotent rerun"
+apart from "two real rows, one slug." Fix: `existing_source_line` (new helper, reads the on-disk
+file's own `source.line` via `serde_json::Value`, never fabricates) gates a second `slugify` call —
+disambiguates ONLY when the citation line genuinely differs, so idempotent reruns are unaffected.
+Verified against the REAL generator before trusting the diff (`§17a`): `cargo run --bin
+gen_cache_equipment_gap` -> exactly the 2 targeted units disambiguated, `equipment_written: 0`
+(this fix's live population is `equipment_modifier`-only today), `skipped_pre_existing`'s other
+1,874 entries unchanged. Integration-level RED->GREEN by hand-mutating the real production
+condition (`if existing_line != line` -> `if false && ...`): RED = 0 records written (pre-fix
+silent-drop behavior reproduced); reverted, GREEN = 2 records written. 2 new unit tests
+(`existing_source_line_reads_a_real_record_and_is_none_otherwise`,
+`a_different_citation_line_at_an_occupied_slug_is_disambiguated_not_dropped`). `cargo test --locked
+--lib rules_core::cache_gen::` 146/146 (11 pre-existing ignored, no regression).
+
+- **`no_record`, before/after this cycle:**
+
+| Kind | Before | After | Delta |
+|---|---:|---:|---:|
+| `spell` | 57 | 54 | -3 |
+| `equipment_modifier` | 6 | 4 | -2 |
+| `equipment` / `monster_ability` / `companion` | 113 / 121 / 2 | unchanged | 0 |
+| **Bundle total** | **299** | **294** | **-5** |
+
+- Gate 3 standing check (constants untouched): `python3 scripts/shape_coverage_standing_gate.py
+  --inventory docs/work-inventory.json` -> `no_record budget: 294/35328 vs. baseline 21521/36028 --
+  exceeded: False`.
+- **Closure/reclassification/reachability** (`§16`): closure = 5 units (3 `spell` + 2
+  `equipment_modifier`, all real new-content or previously-invisible real records); reclassification
+  = 0; reachability = 0 (Gate-1 measurability only, same precedent every prior widening cycle here
+  has set).
+- **PI screening:** 0 drops across both work items.
+- **Kanban:** row 11 entry prepended (both receipts cited), stays `in-progress`.
+- Receipts: `artifacts/gate-3-closure-invariant/spell-no-record-words-of-power_cycle-1_cycle_receipt.md`,
+  `artifacts/gate-3-closure-invariant/equipment-modifier-no-record-wave5_cycle-1_cycle_receipt.md`.
+- **What remains:** `spell`'s 54 (all traced by coordinate in the prior wave's own receipt, unchanged
+  this cycle: `advanced_players_guide`'s 24 citation-mismatch trio, ~23 PI-name-blocked units across
+  6 books, and a small remainder); `equipment_modifier`'s 4 (`advanced_players_guide`'s 2, `crrsve_
+  brst_m`/`_r`; `adventurers_guide`'s 1, `special_ability_agile_maiden_armor`; `ultimate_combat`'s 1,
+  `reach` — none traced this cycle, no `disambiguated_collision` hit for any of them so their cause
+  differs from this cycle's fix); `equipment`'s 113 and `monster_ability`'s 121 (unchanged AT THE
+  START of this cycle — a concurrent sibling lane's `t9-monster-ability-owner-less-ingest-round5`
+  moved it to 100 in the meantime; see that cycle's own entry above), untouched, sibling lanes'
+  scope.
 - Commit: (this cycle's commit — see push output).

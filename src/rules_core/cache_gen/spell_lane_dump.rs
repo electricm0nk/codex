@@ -66,7 +66,7 @@ use crate::rules_core::rules_tables::{
     book_of_the_damned_volume_2, horror_adventures, inner_sea_faiths, inner_sea_gods,
     inner_sea_intrigue, inner_sea_magic, inner_sea_races, inner_sea_temples, inner_sea_world_guide,
     monster_codex, mythic_adventures, occult_adventures, ultimate_combat, ultimate_equipment,
-    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    ultimate_intrigue, ultimate_magic, ultimate_magic_wordsofpower, ultimate_wilderness,
 };
 
 // ---------------------------------------------------------------------
@@ -163,6 +163,31 @@ fn book_specs() -> Vec<BookSpec> {
             dir: "pathfinder/paizo/roleplaying_game/ultimate_magic",
             spell_file: "um_spells.lst",
             entries: ultimate_magic::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        // SD-32 `decisions.md §20`, no_record-to-zero wave: `ultimate_magic`'s
+        // SECOND source file, same shipped `book_id` -- the Words of Power
+        // subsystem's three "Example Word Spells"
+        // (`um_spells_wordsofpower.lst`), a distinct `.lst` file this
+        // generator's own `ultimate_magic` `BookSpec` above never reads.
+        // Two `BookSpec`s sharing one `book_id`/`out_spell_dir` is the same
+        // shape `spell_mod_access`'s cross-generator self-erasure guard
+        // (below, in `generate()`) already exists to make safe: each
+        // spec's `remove_stale_owned_files` call is scoped to its OWN
+        // `spell_file`'s cited lines only, so this entry cannot touch the
+        // other `ultimate_magic` `BookSpec`'s files, and vice versa.
+        BookSpec {
+            book_id: "ultimate_magic",
+            dir: "pathfinder/paizo/roleplaying_game/ultimate_magic",
+            spell_file: "um_spells_wordsofpower.lst",
+            entries: ultimate_magic_wordsofpower::spell_list::SPELL_LIST
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,

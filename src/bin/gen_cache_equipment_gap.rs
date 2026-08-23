@@ -69,6 +69,13 @@ fn main() {
                     report.skipped_pre_existing
                 );
             }
+            if !report.disambiguated_collision.is_empty() {
+                eprintln!(
+                    "NOTE: {} record(s) written under a disambiguated slug -- a DIFFERENT real citation line than the file already occupying that slug: {:?}",
+                    report.disambiguated_collision.len(),
+                    report.disambiguated_collision
+                );
+            }
             if !report.excluded_non_content_directive.is_empty() {
                 eprintln!(
                     "NOTE: {} record(s) excluded as non-content (.FORGET directive or a disabled #-prefixed row): {:?}",

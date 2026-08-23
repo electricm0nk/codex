@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:32:31Z",
+  "data": {
+    "key": "Burst Fire Blast",
+    "school": "Evocation",
+    "level": 3,
+    "description": "Deals (min(10,CASTERLEVEL))d6 fire damage in 10 foot burst."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells_wordsofpower.lst",
+    "sha256": "53faed48c3b6d8ed8504b3c4a15732115da75e8d1135cb400bd90e7cd3ae10a4",
+    "line": 7,
+    "record_key": "Burst Fire Blast"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

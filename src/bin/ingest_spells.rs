@@ -159,6 +159,22 @@ const BOOKS: &[BookInput] = &[
         already_ingested: None,
         dedup_within_book: false,
     },
+    // SD-32 `decisions.md §20`, no_record-to-zero wave: `ultimate_magic`'s
+    // SECOND source file -- the Words of Power variant subsystem's three
+    // "Example Word Spells" (`um_spells_wordsofpower.lst`), each a normal
+    // base spell declaration. A prior cycle's receipt speculated this was
+    // the same "missing config row over an already-compiled table" shape
+    // as `bestiary_6`; re-derived (`decisions.md §17a`) and found wrong --
+    // no compiled table existed for this file at all, so this is a real
+    // new `BookInput`/module, not a one-line config addition.
+    BookInput {
+        id: "ultimate_magic_wordsofpower",
+        display_name: "Ultimate Magic (Words of Power examples)",
+        lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells_wordsofpower.lst",
+        out_path: "src/rules_core/rules_tables/ultimate_magic_wordsofpower/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
     BookInput {
         id: "ultimate_wilderness",
         display_name: "Ultimate Wilderness",
@@ -842,7 +858,7 @@ mod tests {
     }
 
     #[test]
-    fn books_table_names_exactly_the_twenty_spell_bearing_books_this_binary_replaces() {
+    fn books_table_names_exactly_the_twenty_one_spell_bearing_books_this_binary_replaces() {
         // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): +1,
         // `horror_adventures` -- this module's own doc comment's "seven
         // near-identical binaries plus the already-config-driven ISF/ISM/
@@ -864,6 +880,7 @@ mod tests {
                 "occult_adventures",
                 "ultimate_combat",
                 "ultimate_magic",
+                "ultimate_magic_wordsofpower",
                 "ultimate_wilderness",
                 "inner_sea_faiths",
                 "inner_sea_magic",

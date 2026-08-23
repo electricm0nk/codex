@@ -87,6 +87,11 @@ pub mod ultimate_equipment;
 pub mod ultimate_intrigue;
 pub mod ultimate_combat;
 pub mod ultimate_magic;
+/// Ultimate Magic — Words of Power example combined spells. SD-32
+/// `decisions.md §20`, `no_record`-to-zero wave: a second, distinct
+/// source `.lst` file for the SAME shipped book (`ultimate_magic`); see
+/// this module's own doc comment for why it is a separate Rust module.
+pub mod ultimate_magic_wordsofpower;
 pub mod ultimate_psionics;
 pub mod ultimate_wilderness;
 
