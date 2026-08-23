@@ -5853,3 +5853,100 @@ is disposition 2 (raise a hand): the fix belongs to a future cycle scoped to
 `scripts/ingest_ability.py`'s two-scan disagreement (reconcile `blacklist_term_hit_including_
 concatenated` and `normalized_term_hit` to agree, or gate the raw-token scan on the SAME verdict
 the description scan already computed).
+
+### Cycle t9-onboarding-equipment-modifier/1 — Gate 1 `gate-1-shape-closure`, `equipment_modifier` `no_record` cross-generator gap (`decisions.md §20`)
+
+**Scope:** `equipment` (170) / `equipment_modifier` (175) / `spell`'s remaining 285 `no_record`
+units, per the dispatch brief. `monster_ability`/`companion` explicitly out of scope.
+
+**Re-derivation of the brief's figures** (`§17a`): `python3 scripts/shape_ledger.py --inventory
+docs/work-inventory.json` → bundle `no_record` 1,114 total; `equipment` 170, `equipment_modifier`
+175 — matched the brief exactly.
+
+**The brief's lead, re-derived and corrected:** the brief named `gen_equipment_gap_tables.rs`'s row
+selection as capturing a `.COPY=` alias key instead of a base declaration, for a traced
+`ultimate_psionics` unit. Traced the named unit
+(`ultimate_psionics:equipment_modifier:special_ability_psionic_blade_weapon`, `up_equipmods.lst:12`)
+end to end: `gen_equipment_gap_tables.rs` regenerates byte-identical against the pinned oracle (not
+stale) and its `.COPY=` inheritance/keying is correct for this unit — no key collision inside that
+generator. **The real defect is one level up**, in
+`cache_gen::hand_authored_equipment.rs`/`gen_cache_hand_authored_equipment`: its four per-book
+adapters called only each book's `equipment_tables()` accessor, but `equipment_tables()` never held
+any `Equipmods`-category rows to begin with — those live behind a wholly separate `equipmod_tables()`
+accessor. The adapter's own category filter was therefore a no-op, misread (by a prior cycle, and
+initially by this one) as proof the exclusion was deliberate. Meanwhile
+`gen_equipment_gap_tables.rs`'s own `held` skip-set (`equipment_resolver::
+hand_authored_equipment_rows()`, which does not filter by category) already excludes those same
+keys, assuming the hand-authored path covered them. **Two generators, each assuming the other's
+territory covered a population neither actually wrote** — 132 of 139 hand-authored `Equipmods` rows
+(113 UPSI / 19 UC / 7 UI; UM's `equipmod_tables()` is genuinely empty) were `no_record`.
+
+**Fix:** chained `equipmod_tables()` into all four adapters; routed `Equipmods` rows to
+`equipment/equipmods/` (matching `cache_gen::equipment_gap`'s own directory convention) instead of
+the `equipment/` root, so `write_json`'s no-clobber write is a real de-dup against that sibling
+generator's output, not a coincidence. New `GenerationReport.equipment_modifier_written` field;
+`gen_cache_hand_authored_equipment`'s stdout and fatal-check updated to cover both counts.
+
+**RED → GREEN:** unit-level test (`ultimate_psionics_adapter_includes_equipmods_rows_too`) proved
+red before the `.chain()` fix, for the intended reason (no entry carried `category == "Equipmods"`).
+A second, real (non-mocked) end-to-end fixture test
+(`an_equipmods_row_lands_under_equipment_equipmods_not_the_equipment_root`) runs the actual
+`generate()` against a temp corpus/out root and was mutation-proved by temporarily reverting the
+routing branch to always write to the `equipment/` root — failed for the intended reason
+(`equipmods/ must exist -- the row must have been written there: NotFound`) — then reverted to
+green. That same test also proves no-clobber: a second `generate()` run over a slug pre-seeded with
+sentinel content leaves it untouched and reports it via `skipped_pre_existing`, not
+`equipment_modifier_written`. Full `rules_core::cache_gen` module: 137 passed, 0 failed, 10
+pre-existing ignores. `tests/equipment_gap_tables.rs` (sibling generator's own suite, checked for
+regression): 7/7 passed.
+
+**Corpus regeneration:** ran `gen_cache_hand_authored_equipment` against the pinned oracle
+(`7f818006e371188e5717fd18d74d18a420747fc6`). 139 new `equipment_modifier` corpus records written;
+620 already-shipped `equipment`-kind rows correctly `skipped_pre_existing` (a prior run of this same
+binary, pre-dating this cycle). `git status --porcelain` verified additive-only: zero modifications
+to any existing tracked corpus file, only new files under `equipment/equipmods/`. No
+`--allow-stamp-loss`-shaped hazard here — this binary is a pure additive one-off writer using
+`write_json`'s no-clobber semantics, never a deleting regen — so the corpus-regen report-env-var
+requirement does not apply; verified safety directly via `git status --porcelain` instead.
+
+**Gate 3 standing budget** (constants NOT touched, per the dispatch brief): `python3
+scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.json` →
+`no_record budget: 982/35328 vs. baseline 21521/36028 -- exceeded: False`.
+
+**Closure/reclassification/reachability, reported separately (`§16`):** 132 units closed (real
+ingest, `no_record` → `matched`/`no_formula_tokens`). Zero reclassified — no unit changed `kind`
+this cycle. All 139 written records were already `wiring_class: computed` in
+`docs/work-inventory.json` before this cycle (pre-existing hand-authored engine wiring); this cycle
+gave them a corpus JSON record, it did not newly wire anything.
+
+**Bundle `no_record`, before → after this cycle:**
+
+| Kind | Before | After |
+|---|---:|---:|
+| `spell` | 285 | 285 (unstarted) |
+| `monster_ability` | 267 | 267 (out of scope) |
+| `companion` | 217 | 217 (out of scope) |
+| `equipment` | 170 | 170 (this defect does not explain any of it) |
+| `equipment_modifier` | 175 | **43** |
+| **Bundle total** | **1,114** | **982** |
+
+**What is NOT done, named explicitly:** `equipment` (170) untouched — cross-checked, 0 of the 132
+units this fix closed are `equipment` kind, so its root cause is still unknown and needs its own
+trace. `equipment_modifier`'s residual 43 not investigated (likely a distinct cause, since this
+cycle's population is now fully covered). `spell` (285) not started this cycle — the dispatch
+brief's warning against running `gen_cache_spell_lane_dump` (armed self-erasure defect against
+`spell_mod_access`) was honored, and no alternative `spell` path was reached within this cycle's
+time; a sibling lane's `3113458009 fix(sd32): cross-generator self-erasure guard — spell_lane_dump
+vs spell_mod_access` landed concurrently on `tranche/12` and should be re-checked by the next
+`spell`-scoped cycle before assuming that generator is still unsafe to run.
+
+Receipt: `artifacts/gate-1-shape-closure/005_equipment_modifier_no_record_closure_cycle_receipt.md`.
+Commit: `9e057bf733` (pre-rebase), landed on `tranche/12` at `54a5d94ef6`.
+
+Kanban row 5 (`gate-1-shape-closure`) note prepended in the same cycle. Rows 11 and 15 left
+`in-progress`, untouched, per the dispatch brief.
+
+Next-cycle plan: `equipment` (170, root cause untraced) and `equipment_modifier`'s residual (43)
+are the natural next targets in this scope; `spell` (285) needs either the
+`gen_cache_spell_lane_dump` self-erasure fix confirmed landed, or a different ingestion path per
+`§17`'s "search for the existing path" discipline.
