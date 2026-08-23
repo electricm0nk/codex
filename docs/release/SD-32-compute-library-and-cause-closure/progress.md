@@ -1625,6 +1625,51 @@ own cycle entry above (and `kanban.md` row 11) for the current, real state.
   that row's own note — and `decisions.md §12` binds it to closure the same way. No PR may open
   while either row is short of `complete`.
 
+### Card 11 `epic-2-cause-closure`, T2b — `inner_sea_races` 45-unit residual needs a scope ruling (lane `epic-2-t2b-w1b`, 2026-08-23)
+
+- **Cycle:** `epic-2-t2b-w1b/1` (`artifacts/gate-3-closure-invariant/
+  epic-2-t2b-w1b-inner_sea_races_cycle_receipt.md`). This lane's dispatch brief scoped
+  `inner_sea_races` as "ingest-tool extension only... no chassis-load wiring needed," following
+  `card11-t2b-census-census.md`'s characterization of the book's 59 open units as uniform
+  never-transcribed content.
+- **What failed / what remains:** 14 of 59 units closed or confirmed not-work within the granted
+  scope (12 closed by re-running the existing ingest binary; 1 confirmed correctly excluded). The
+  remaining **45** are NOT the shape the brief described: they belong to races with no chassis
+  this project has ever built (Android, Changeling, Dhampir + its 4 subrace families, Gathlain,
+  Geneiekin, Ghoran, Kasatha, Lashunta, Samsaran, Skinwalker, Syrinx, Triaxian, Trox, Wyrwood,
+  Wyvaran), or need the Dhampir/Changeling/Skinwalker heritage-selector mechanism this project has
+  already, repeatedly, deliberately deferred elsewhere (`ingest_races.rs`'s own `skinwalker` doc
+  comment: "a genuinely new mechanism, deferred (not stubbed) to a follow-on batch"). Both are
+  chassis-load wiring — explicitly out of this lane's granted scope, and adding a race to
+  `ingest_race_traits.rs`'s `IN_SCOPE_RACES` without a matching chassis in `ingest_races.rs`
+  would ship records `RaceCorpus::chassis()` never populates ("loaded but permanently
+  unreachable," the same file's own module doc), which this lane refuses to do to satisfy a
+  counter.
+- **Command that shows it:** `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+  u=[x for x in d['units'] if x['book']=='inner_sea_races' and x['kind']=='race_trait' and
+  x['evidence']=='race_trait_race_not_modelled']; print(len(u))"` → 59 before this cycle;
+  `find data/corpus/inner_sea_races/race_trait -name '*.json' | wc -l` → 94 after (was 82); the
+  45-unit remainder's race list is enumerated in the receipt above.
+- **Named owner:** the operator. The exact ruling needed: (a) widen this T2b lane's scope to
+  include chassis wiring for the 15 races named above (decomposed into its own cycle(s), per
+  `AGENTS.md` Blocker Discipline — "a blocker bigger than one cycle is a sequencing problem, not
+  an exemption"), or (b) authorize a dedicated follow-on cycle scoped specifically to the
+  Dhampir/Changeling/Skinwalker heritage-selector mechanism first (closes ~23 of the 45 —
+  Dhampir's own 7 units plus its 4 subrace families' 4 units each — without touching the other 8
+  chassis-less races), or (c) some other explicit sequencing. Per `decisions.md §13`, "no matter
+  what... I want the work done" — this filing is not proposing the 45 move to
+  `forward-scope-register.md`; it is asking which shape of cycle does the work next.
+- **Retro event:** `scripts/retro.py correction --subject t2b-census --claimed "inner_sea_races:
+  59 never-transcribed per-record units, ingest-tool extension" --actual "12 close by re-running
+  the existing binary (stale regen); 1 correctly not-work; 45 need new race chassis or a deferred
+  heritage-selector mechanism, both out of ingest-tool-extension scope" --verified-by "ls
+  data/corpus/inner_sea_races/race_trait/ before/after cargo run --bin ingest_race_traits --
+  inner_sea_races"`.
+- **Does this block bundle closure?** Yes, transitively — it is part of card 11's T2b population,
+  already covered by the standing blocker immediately above (T2b: 0 of 2,472 fixed at that
+  filing's time; this lane's own 12-unit close is the first real progress against that count, not
+  a new independent blocker on top of it).
+
 ## Closure epilogue — full worktree/branch sweep (card 13, `workflow-instruction.md §13` step 3)
 
 Run 2026-08-22, after all four gates and cards 1-10,12 landed on origin and card 11 was filed
@@ -2001,6 +2046,67 @@ and after this sweep (not "none found" without having run the commands).
   `decisions.md §1a`. Escalating per `AGENTS.md` Blocker Discipline disposition 2 — see the
   receipt's §6 for the exact next steps.
 
+## Cycle epic-2-t2b-w1b/1 — Card 11, shape T2b, book `inner_sea_races` — 12 units closed (stale regen)
+
+- **Card ID:** `epic-2-cause-closure` (row 11; T2b, `inner_sea_races` only)
+- **Commit SHA:** `f7e709f50`
+- **Files touched:** `src/bin/ingest_race_traits.rs` (count-pinning test), `apps/desktop/src-tauri/
+  src/reach_gate.rs` (reach test + findings), 12 new `data/corpus/inner_sea_races/race_trait/*`
+  records, this entry's receipt.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (own-commit diff)
+- **Wired-integration audit result:** `OK_NO_TOKENS` (own-commit diff)
+- **Acceptance criterion:** AT-32-E2-001 — cause closure closes by class.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (partial closure of the book — 12 of 59 census units; see receipt)
+- **Summary:** Correction to `card11-t2b-census-census.md`'s "59 never-transcribed units, same
+  shape as T9" characterization. `ingest_race_traits.rs`'s `IN_SCOPE_RACES` widened 18→34 across
+  three SD-31 waves but `inner_sea_races` was never re-run after — 10 already-in-scope races'
+  real rows sat un-transcribed. Re-running the unmodified binary against the pinned oracle closed
+  **12** (record count 82→94). **1** further unit (`Svirfneblin ~ Stalwart Watcher Output`) is
+  correctly not-work — a PCGen `AUTOMATIC` companion token, not a second object. **2** of the 12
+  newly-ingested records are themselves genuinely unreached (`Mostly Human ~ Suli ~ Languages`:
+  unmodelled Geneiekin heritage, same as its Ifrit/Sylph/Undine siblings; `Suli ~ Trusted
+  Mediator`: a genuine upstream PCGen data omission), recorded by name in `reach_gate.rs`, not
+  force-reached. **45 units remain genuinely open**, needing a race chassis this project has not
+  built (Android, Changeling, Dhampir+4 subrace families, Gathlain, Geneiekin, Ghoran, Kasatha,
+  Lashunta, Samsaran, Skinwalker, Syrinx, Triaxian, Trox, Wyrwood, Wyvaran) or the deferred
+  Dhampir/Changeling/Skinwalker heritage-selector mechanism — both are chassis-load wiring, out
+  of this lane's granted scope. Escalated below.
+- **Dual-audit:** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+- **Discovery forwards:** `bestiary_2`/`advanced_race_guide` likely carry the same stale-regen
+  shape (both widened `IN_SCOPE_RACES` across the same SD-31 waves) — worth a sibling lane
+  checking before assuming their remainder is all net-new onboarding.
+- **Next-cycle plan:** `bestiary_5` next (this lane). Receipt:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-inner_sea_races_cycle_receipt.md`.
+
+## Cycle epic-2-t2b-w1b/2 — Card 11, shape T2b, book `horror_adventures` — 0 units, census claim corrected
+
+- **Card ID:** `epic-2-cause-closure` (row 11; T2b, `horror_adventures` only)
+- **Commit SHA:** (this docs-only commit — see push log)
+- **Files touched:** receipt + this entry only. **No production code touched.**
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (no production diff exists)
+- **Wired-integration audit result:** `OK_NO_TOKENS` (no production diff exists)
+- **Acceptance criterion:** AT-32-E2-001 — cause closure closes by class.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete — 0 real open units (was 4 per the census memo)
+- **Summary:** Correction to `card11-t2b-census-census.md §4`'s "4 real work units" for
+  `horror_adventures`. All 4 (`Lich ~ Rejuvenation`, `Lycanthrope ~ Change Shape`, `Ghoulish
+  Creature Paralysis`, `Vampiric Creature Energy Drain`) are creature-**template** `.MOD`/`.COPY=`
+  rows (`origin: mod_only`/`copy` in `docs/work-inventory.json`), never player-facing `<Race>
+  Racial Trait` content — `ingest_race_traits.rs`'s existing `is_mod_row` guard and TYPE-suffix
+  gate already, correctly, permanently exclude all four, which is why the book's `reach_gate.rs`
+  test already shows full 43/43 reach with zero shortfall. **No code change needed or made.**
+  This is the same `race_trait`-by-filename classifier-noise shape `epic-2-t2b-w1-c` and
+  `epic-2-t2b-w1-d`'s `bestiary_3` cycle (above) independently found in other books — a third,
+  independent corroboration, in a third book, of the same underlying `v06_work_inventory.rs`
+  producer defect. Fixing that classifier is out of this lane's granted scope
+  (`ingest_races.rs`/`ingest_race_traits.rs` extension only); the receipt cross-links Card 15.
+- **Dual-audit:** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS` (no production diff exists).
+- **Discovery forwards:** filed in `## DISCOVERED` below, cross-linking the two prior T2b
+  classifier-noise findings rather than duplicating them.
+- **Next-cycle plan:** `bestiary_5` (this lane). Receipt:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-horror_adventures_cycle_receipt.md`.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
@@ -2143,3 +2249,14 @@ and after this sweep (not "none found" without having run the commands).
 - **Discovery forwards:** none requiring a new card — scoped audit against the existing T9 line of
   card 11, per the dispatch brief.
 - **Disk:** `df -h /` → 968G total, 293G used, 676G available, 31% used.
+
+- 2026-08-23, Cycle `epic-2-t2b-w1b/2` (`epic-2-cause-closure`, T2b lane, book `horror_adventures`):
+  a third, independent corroboration of the `race_trait`-by-filename classifier-noise defect
+  `epic-2-t2b-w1-c` and `epic-2-t2b-w1-d` (`bestiary_3`, above) already found — all 4 of
+  `horror_adventures`'s non-header residual T2b units are creature-template `.MOD`/`.COPY=` rows
+  (`Lich ~ Rejuvenation`, `Lycanthrope ~ Change Shape`, `Ghoulish Creature Paralysis`, `Vampiric
+  Creature Energy Drain`), never race content, already correctly excluded by
+  `ingest_race_traits.rs`'s existing guards. Same fix site as the two entries above
+  (`docs/work-inventory.json`'s producer, `v06_work_inventory.rs`), out of this lane's granted
+  scope. Full evidence:
+  `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-horror_adventures_cycle_receipt.md`.
