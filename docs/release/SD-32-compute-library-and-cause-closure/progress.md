@@ -2307,6 +2307,30 @@ and after this sweep (not "none found" without having run the commands).
   `DEFINE:`/`SPELLS:` field, needs a fresh ID — current `D9` is taken by a different, already-landed
   finding) never landed under any wording. Doc-only, low risk — proposed target: next cycle touching
   `docs/release/SD-31-corpus-closure-grind/todo/`.
+- 2026-08-23, Cycle `t2b-adoptive-parentage/1` (`epic-2-cause-closure`, T2b lane): **correction to
+  two prior DISCOVERED entries above** (`epic-2-t2b-w1-c/1`'s "same PCGen mechanism, 4 books" and
+  `t2b-w1-d/1`'s "makes it 5") — the "Adoptive Parentage" mechanism is actually **two structurally
+  different PCGen row shapes**, not one spread across 5 books. `advanced_race_guide`'s 7
+  `CATEGORY:Adoptive Parentage` rows are a flat `ABILITY:...AUTOMATIC` grant of two already-modelled
+  traits — the CHOOSE pool for a DIFFERENT, already-ingested ARG alternate trait (`Human ~ Adoptive
+  Parentage`, `:257`), only reachable by a Human character who has taken that alternate. The other
+  14 units (`bestiary_2`/`bestiary_3`/`bestiary_5`/`bestiary_6`'s `KEY:Adopted Race ~ <X>` rows) are
+  a genuine `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X> Race Trait` selector-picker, a
+  different mechanic entirely. The 7 are now closed (see this cycle's own progress.md entry above);
+  the 14 need a new `kind: trait` content surface + `player_companion` book onboarding, not "the
+  same selector, once". Proposed target: none further needed on the shape identification itself;
+  the new-kind scope is the real open item, named in this cycle's own entry above.
+- 2026-08-23, Cycle `t2b-adoptive-parentage/1` (`epic-2-cause-closure`, T2b lane): closing the
+  13 real (non-Rougarou) `adopted_race_choose_selector` units needs a **new `kind: trait` content
+  surface** — this project has never modelled PF1e's chargen "Trait" mechanic (no `kind: trait`
+  exists anywhere in `data/corpus/`, confirmed by directory listing) — plus onboarding several
+  unregistered `player_companion` books that carry each race's real trait pool
+  (`people_of_the_sands`, `blood_of_the_elements`, `bastards_of_golarion`, `agents_of_evil`,
+  `blood_of_the_night` confirmed unregistered; `inner_sea_races` is registered and partially
+  covers some). This is a new-kind epic (new ingest tool, new schema, new reach-gate family, new
+  picker), not a T2b-shaped ingest-tool row extension. Proposed target: an operator ruling on
+  whether this scope belongs in SD-32 or a successor bundle, per `AGENTS.md` Blocker Discipline
+  disposition 2. Full evidence: `artifacts/gate-3-closure-invariant/epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md §9`.
 
 ## Cycle `t9-pi-audit/1` — Card 11, shape T9 — Product-Identity exposure audit, `decisions.md §15`
 
@@ -2491,3 +2515,99 @@ and after this sweep (not "none found" without having run the commands).
   cycle must re-derive its own population before sizing work.
 - **Next-cycle plan:** `decisions.md §16` item 2 (`AdoptiveRace` selector mechanism, 5 books) next,
   then re-measure T2b's true residual once both land, per §16's own 3-cycle plan.
+
+## Cycle `t2b-adoptive-parentage/1` — Card 11, shape T2b — Adoptive Parentage selector, `decisions.md §16` item 2, 7 of 21 units closed by class
+
+- **Actor:** `t2b-adoptive-parentage`. **Card:** `epic-2-cause-closure` (row 11, stays `in-progress`).
+- **Base:** `e2bbff32ca328fa3a0a76f0286b2f479f1ae0bc2`, footgun 1 fired (stray `site-publish` merge
+  commit), `git reset --hard` + re-verify before starting.
+- **Re-derived population, corpus-wide, by class** (`scripts/t2b_adoptive_parentage_census.py`,
+  committed, re-runnable): the 21-unit "Adoptive Parentage"/"Adopted Race" population
+  `decisions.md §16` item 2 names is **two structurally different PCGen row shapes**, not one:
+  - **7 units, `advanced_race_guide`** (`arg_abilities_race.lst:291-297`, `###Block: Adoptive
+    Parentage Options`) — the `CHOOSE:ABILITYSELECTION|Adoptive Parentage|ANY` pool for the
+    already-ingested `Human ~ Adoptive Parentage` alternate trait (`:257`). Each is a flat
+    `ABILITY:<Race> Racial Trait|AUTOMATIC|<Race> ~ Weapon Familiarity|<Race> ~ Languages` grant —
+    two already-modelled traits, no further `CHOOSE`.
+  - **14 units** (`bestiary_2` 7, `bestiary_3` 5, `bestiary_5` 1, `bestiary_6` 1,
+    `KEY:Adopted Race ~ <X>` rows) — a genuinely different `CHOOSE:ABILITYSELECTION|Special
+    Ability|TYPE=<X> Race Trait` selector-picker shape, pool discovered by TYPE rather than named.
+- **Closed this cycle: the 7 `arg_flat_grant` units.**
+  `src/bin/ingest_race_traits.rs::parse_row` gains a third recognised row shape (no `TYPE:` token at
+  all, `CATEGORY:Adoptive Parentage`, race key = the row's own bare display name — the row genuinely
+  carries no explicit `KEY:` either). `src/rules_core/race_resolver.rs` gains
+  `RaceCorpus::traits_by_category` + `adoptive_parentage_options` + `AdoptiveParentageOption`/
+  `AdoptiveParentageGrant`, resolving each option's two grant targets against the corpus's own
+  already-ingested standard traits — real content, `unresolved_grants` empty for all 7
+  (`adoptive_parentage_resolves_all_seven_arg_options_to_a_modelled_race_with_real_grants`). Wired
+  into the real player-facing IPC surface, not just the resolver: `race_trait_picker.rs`'s
+  `AlternateRacialTraitsResponse` gains `adoptive_parentage_options` (new DTOs
+  `AdoptiveParentageOptionDto`/`AdoptiveParentageGrantDto`); `reach_gate.rs`'s `race_traits_reach`
+  asks for it too. **Proven to reach, not just ingest**:
+  `args_alternate_racial_traits_are_visible_only_because_the_corpus_is_scanned` (via
+  `scripts/verify.sh --only reach`) reports `Reach::Surfaced { records: 421 }` for the whole
+  `advanced_race_guide` family (was 414).
+- **The correction to wave 1's finding — proven per row, corpus-wide, not by analogy.** Two wave-1
+  receipts (`epic-2-t2b-bestiary2_cycle-1`, `epic-2-t2b-bestiary6_cycle-1`) concluded all 8
+  `bestiary_2`/`bestiary_6` `Adopted Race ~ <X>` rows are "the identical browse-only-stub shape" as
+  Rougarou, by grepping **each row's own file only**. This cycle's dispatch brief required
+  establishing, per row, whether real content exists behind the selector before treating it as a
+  stub — re-derived corpus-wide (`grep -rl -F '<Race> Race Trait' <pinned oracle root>`): **13 of the
+  14 `adopted_race_choose_selector` rows have real content elsewhere in the pinned oracle** (mostly
+  unregistered `player_companion` books' PF1e "Trait" — a character-creation mechanic this project
+  has never modelled, distinct from racial traits — e.g. `Oread ~ Loner of the Rocks` in
+  `inner_sea_races/isr_abilities.lst:78`, and `bastards_of_golarion`'s `Stoic Dignity` literally
+  names `PREABILITY:...,Adoptive Race ~ Oread` as an alternate prerequisite, confirming the
+  mechanic is real). **Only Rougarou is genuinely proven empty** — 1 file corpus-wide (itself),
+  matching `ingest_races.rs`'s own prior finding exactly. `scripts/retro.py correction` logged
+  against both wave-1 receipts (`docs/retro/events/t2b-adoptive-parentage.jsonl`,
+  `--verified-by 'python3 scripts/t2b_adoptive_parentage_census.py'`).
+- **NOT closed: the 14 `adopted_race_choose_selector` units (13 real, 1 proven empty).** Ingesting
+  the 13 real ones needs a new `kind: trait` content surface (no `kind: trait` exists anywhere in
+  `data/corpus/` today) plus onboarding several unregistered `player_companion` books to have
+  anything for the pool to resolve against — a new-kind epic, not "the selector, once". Per
+  `decisions.md §1a`/§3, fabricating a picker over content this corpus does not carry would
+  manufacture false coverage; refused. **Escalated, not silently deferred**
+  (`AGENTS.md` Blocker Discipline disposition 2) — named here for whichever cycle is granted that
+  scope. Rougarou's 1 unit stays excluded, matching existing precedent (now proven, not assumed).
+- **RED → GREEN proven three times**, each reverted after confirming the intended failure: (1)
+  ingest `parse_row`'s new branch reverted to `return None` — new fixture test failed
+  ("Adoptive Parentage row is not dropped"); (2) `adoptive_parentage_options` run against the
+  corpus before re-running the ingest tool — `left: [] right: [7 keys]`; (3) `reach_gate`'s new
+  loop neutered with `.filter(|_| false)` — `NotSurfaced { missing: {7 keys} }`.
+- **Every other pinned corpus-wide count this record-count change touches, swept in the same
+  commit** (per this bundle's own standing lesson — a count change compiles clean and leaves
+  siblings red): 414→421 and 824→831 in `tests/sd27_alternate_racial_trait_reachability.rs`,
+  `src/rules_core/race_resolver.rs`, `tests/v06_work_inventory.rs` (also widened its
+  `CATEGORY:Special Ability`-only assertion to name the real third category, `Adoptive
+  Parentage`), `src/bin/ingest_apg_race_traits.rs` (verified the 7 new bare keys collide with none
+  of APG's own), and `apps/desktop/src/characterHub/raceCreationCoverage.test.ts` (589→596).
+- **Suites:** `cargo test --locked --lib` 2390/2390; `cargo test --locked --bin ingest_race_traits`
+  16/16; `cargo test --locked --bin ingest_apg_race_traits` 8/8;
+  `cargo test --locked --test sd27_alternate_racial_trait_reachability` 15/15; desktop crate
+  (separate cargo workspace) `cargo test --locked` 518/518 (517+1 new picker test);
+  `scripts/verify.sh --only reach` PASS (31 passed). Re-ran the full `--lib` suite again after
+  rebasing onto the concurrent classifier lane's `refine_kind` fix (`6ae4a364b`) before pushing —
+  still 2390/2390, and this cycle's own 21-unit census is unaffected by that fix (re-verified with
+  the same committed script).
+- **One pre-existing, unrelated failure found and named, not touched:**
+  `tests/v06_work_inventory.rs::sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books`
+  — `inner_sea_faiths` registered `in_scope` where the test expects `future_state`. Confirmed
+  pre-existing and out of scope by diffing this cycle's own edit against
+  `git show HEAD:tests/v06_work_inventory.rs`, which touches only the two `CATEGORY` lines named
+  above — nothing here touches `docs/work-inventory.json`/`data/stubs/inner_sea_faiths.json`, which
+  is the concurrent classifier/card-15 lane's own territory, matching this cycle's own
+  coordination note in the dispatch brief.
+- **Dual-audit:** `OK_NO_BUNDLE_TAGS` (one inspected false positive — the `diff --git` header for
+  `tests/sd27_alternate_racial_trait_reachability.rs`'s own pre-existing filename matches
+  `sd[0-9]+_`, not a content leak); `OK_NO_TOKENS` (one inspected false positive —
+  `reach_gate.rs:3983`'s pre-existing `` `SD-31-corpus-closure-grind/todo/sweeps.md` `` path
+  reference, committed 2026-08-22, predates this cycle, confirmed via `git blame`).
+- **Discovery forwards:** filed in `## DISCOVERED` below.
+- **Next-cycle plan:** the 14-unit residual (13 real-content, 1 proven-empty) is the concrete next
+  step once an operator grants the new `kind: trait` content-surface scope named above; until then
+  it stays named, re-derivable T2b residual feeding the classifier-fix cycle's own re-measurement
+  of T2b per `decisions.md §16` step 3.
+- **Receipt:** `artifacts/gate-3-closure-invariant/epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md`.
+- **Commit SHAs:** `ad37eba65` (feature), `7172263e9` (retro-log append), rebased to `ac35f6bff` on
+  `origin/tranche/12`.
