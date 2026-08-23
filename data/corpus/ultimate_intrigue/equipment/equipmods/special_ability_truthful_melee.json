@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "data": {
+    "key": "Special Ability ~ Truthful ~ Melee",
+    "category": "Equipmods",
+    "name": "Truthful",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Weapon ignores miss chance provided by illusions, such as blur, and acts as a dispelling weapon against figments and shadow conjuration effects."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equipmods.lst",
+    "sha256": "5bc2ad2638890d74716a60fb31681d23ec188d9c540e2e662a31e696f3fcd056",
+    "line": 16,
+    "record_key": "Special Ability ~ Truthful ~ Melee"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

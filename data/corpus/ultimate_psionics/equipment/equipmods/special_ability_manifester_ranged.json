@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "data": {
+    "key": "Special Ability ~ Manifester ~ Ranged",
+    "category": "Equipmods",
+    "name": "Manifester",
+    "cost_gp": 16000.0,
+    "weight_lbs": null,
+    "description": "generates 5 power points per day that the wielder can use when manifesting a power; all must be used at once"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968",
+    "line": 90,
+    "record_key": "Special Ability ~ Manifester ~ Ranged"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

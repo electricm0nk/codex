@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "data": {
+    "key": "Material ~ Crystal / Deep",
+    "category": "Equipmods",
+    "name": "Crystal (Deep)",
+    "cost_gp": 0.0,
+    "weight_lbs": null,
+    "description": "30hp/inch and 10 hardness;Weapon may be charged with 2 Psionic Power Points for +2d6 damage"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968",
+    "line": 18,
+    "record_key": "Material ~ Crystal / Deep"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

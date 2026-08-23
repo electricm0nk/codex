@@ -46,8 +46,8 @@ fn main() {
     match hand_authored_equipment::generate(&corpus_root, &out_root, &ingested_at) {
         Ok(report) => {
             println!(
-                "Hand-authored equipment cache generated: {} equipment records; ingested_at={ingested_at}",
-                report.equipment_written
+                "Hand-authored equipment cache generated: {} equipment, {} equipment_modifier records; ingested_at={ingested_at}",
+                report.equipment_written, report.equipment_modifier_written
             );
             if !report.unresolved_citations.is_empty() {
                 eprintln!(
@@ -70,7 +70,7 @@ fn main() {
                     report.skipped_pre_existing
                 );
             }
-            if report.equipment_written == 0 {
+            if report.equipment_written == 0 && report.equipment_modifier_written == 0 {
                 eprintln!("FATAL: zero records written -- corpus likely unreachable.");
                 std::process::exit(1);
             }
