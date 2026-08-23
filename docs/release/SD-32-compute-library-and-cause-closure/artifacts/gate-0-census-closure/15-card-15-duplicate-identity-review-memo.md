@@ -313,7 +313,7 @@ card-15 cycle. No PI-screening question arises at this layer.
 
 ## §16 — a unit moved out of a shape is not a unit closed
 
-All 4 newly-landed units are `status: not-ingested` — enumerated, not engineered. No unit was
+Of the 4 newly-landed units, 1 (`vigilante_favored_maneuver_bull_rush_favored_maneuver_sunder`, the Vigilante has a modelled class) is `status: not-ingested`; the other 3 (`native_cunning_grapple_overrun`, `social_grace_craft_armor_craft_baskets`, `green_faith_marshal_panther_domain_vulture` — racial-trait-shaped rows whose own group prefix names no modelled class) are `status: unknown`, the honest default for a `class_feature` row `classify()` cannot attribute to any class. Re-derived directly from `docs/work-inventory.json` (`status`/`evidence` fields), not assumed from every other prior cycle's own `not-ingested`-only pattern -- verified rather than repeated. No unit was
 removed from any shape.
 
 ## Sweep of pinned counts — `tests/`, `src/`, `scripts/`, `apps/`
