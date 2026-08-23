@@ -1529,6 +1529,50 @@ closed. This entry is left in place as the historical record of what card 13's c
 filed and why the operator rejected it, not edited to look retroactively correct; see each lane's
 own cycle entry above (and `kanban.md` row 11) for the current, real state.
 
+### Card 11 `epic-2-cause-closure` — reopened, ruling needed on four shapes (reclosure-epilogue cycle 2, 2026-08-22)
+
+- **Cycle:** `closure-epilogue` cycle 2 (`reclosure-epilogue`), acting on an adversarial closure
+  review that found the consolidation cycle above (the one this file's addendum, immediately
+  above, treats as settled) closed row 11 to `complete` without an operator ruling, in the same
+  substance `decisions.md §10` already rejected once in PR #375 — this time re-filed under a
+  self-cited `decisions.md §11` condition 4 rather than under `## Open blockers`.
+- **What failed / what remains:** `decisions.md §11` condition 4 ("T8 closing removes the last
+  non-`complete` condition on card 11") is scoped to the T8 classifier fix and was committed
+  **before**, not after, the T2b and T9 lane reports that explicitly asked for a ruling —
+  `for c in c72e8a606 00c62e134 b440d1680; do git show -s --format='%ci %h %s' $c; done | sort`
+  shows Decision 11 (`c72e8a606`, 2026-08-22 20:45:47) landing 8 and 13 minutes before the T9
+  (`00c62e134`, 20:53:13) and T2b (`b440d1680`, 20:58:30) lane commits, so it cannot have already
+  answered questions asked afterward. The consolidation cycle's chronology claim in `kanban.md` row
+  11 (superseded text, retained below) asserted the reverse. Four shapes remain genuinely open:
+  T2b (0 of 2,472 fixed — real cause is a two-part ingestion gap, not a matcher fix), T9 (0 of
+  2,712 fixed — 114 forensically checked, ~2,598 not yet), T12 (2,453 unchanged, classifier still
+  never reads `data.class`), and T2a's own ~2,775-record residual (the T2a lane's own receipt:
+  "if the operator wants T2a driven further toward zero before the row is marked `complete`").
+  T4's L9 (471 units) is separately not closed, named by the T4 lane's own receipt as needing a
+  feat-held, not class-held, reachability gate.
+- **Command that shows it:** `sed -n '/^| 11 /p' docs/release/SD-32-compute-library-and-cause-closure/kanban.md`
+  (status `in-progress`, correction note prepended); per-shape figures in
+  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`,
+  `epic-2-t2a-t12_cycle-1_cycle_receipt.md`, `epic-2-t4_cycle-1_cycle_receipt.md`,
+  `epic-2-cause-closure_cycle-2_epic-2-t2b_cycle_receipt.md`,
+  `epic-2-t9_cycle-1_cycle_receipt.md`.
+- **Named owner:** the operator. `decisions.md §10` item 2: "Only an operator ruling may move scope
+  out of a card and into `forward-scope-register.md`." The exact ruling needed: for each of
+  T2b/T9/T12/T2a's-residual, does a zero-units-fixed, cause-disproven-or-unchanged measurement
+  cycle count as that shape's own closure (standing lesson 6), or does the operator authorize
+  moving the named residual population to `forward-scope-register.md` as successor-bundle scope?
+  For T4's L9, does the row close with L9 named as out-of-lane residual, or must the feat-held
+  reachability gate land first?
+- **Retro event:** `scripts/retro.py correction --subject "kanban row 11 consolidation cycle"
+  --claimed "decisions.md §11 cond.4 committed after T2b/T9 lane reports, authorizing closure"
+  --actual "committed 8-13 minutes before both lane commits, scoped to T8 only" --verified-by
+  "git show -s --format='%ci %h %s' c72e8a606 00c62e134 b440d1680"`.
+- **Does this block bundle closure?** **Yes.** `decisions.md §10` item 1: "A card at
+  `returned-to-backlog`, `in-progress`, or `DISCOVERED-forked` blocks closure." Row 11 is back to
+  `in-progress`. Row 15 (`census-scope-closure`) also remains `in-progress` independently — see
+  that row's own note — and `decisions.md §12` binds it to closure the same way. No PR may open
+  while either row is short of `complete`.
+
 ## Closure epilogue — full worktree/branch sweep (card 13, `workflow-instruction.md §13` step 3)
 
 Run 2026-08-22, after all four gates and cards 1-10,12 landed on origin and card 11 was filed

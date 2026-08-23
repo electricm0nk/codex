@@ -172,6 +172,13 @@ NON_OBJECT_FILENAME_TOKENS = (
     "profs_weapon",
     "profs_armor",
     "profs_shield",
+    # SD-32 card 15 (`decisions.md §12b`): `ce__sizes.lst` is PF1e's fixed
+    # 9-variant size table (Fine..Colossal), not corpus content -- already
+    # engine-covered byte-for-byte by `src/rules_core/size.rs`'s
+    # `SizeCategory` enum. Proven by class in `artifacts/gate-0-census-
+    # closure/15-card-15-other-kinds-memo.md` §7b, not assumed from the
+    # filename alone.
+    "__sizes",
 )
 
 
@@ -316,7 +323,15 @@ def _classify_kind_by_filename(basename: str, book_id: str):
                 return ("kind", "monster_ability")
             return ("kind", "race_trait")
         if "_class" in b:
-            return ("kind_unenumerable", "class_feature")
+            # SD-32 card 15 (`decisions.md §12b`): a `_abilities_class.lst`
+            # row carrying `CATEGORY:Internal` is the same PCGen bookkeeping
+            # marker the bare-`abilit` branch below already excludes via the
+            # `row_dependent` path -- this file kind just never re-checked it
+            # per row, so 2,614 `CATEGORY:Internal` rows were mis-bucketed as
+            # `class_feature` instead of `ability_category:Internal`. Proven
+            # by class in `artifacts/gate-0-census-closure/
+            # 15-card-15-class-feature-memo.md` §2/§5.
+            return ("row_dependent_class_feature", None)
         # bare abilities file: row-level CATEGORY: tag decides (handled by caller)
         return ("row_dependent", None)
 
@@ -407,6 +422,19 @@ def count_objects(pathfinder_root: str, in_scope: List[BookDir]) -> dict:
                                 "kind_unenumerable",
                                 f"ability_category:{cat or 'UNKNOWN'}",
                             )
+                    elif bucket == "row_dependent_class_feature":
+                        cat = _row_category_tag(raw_line)
+                        if cat and cat.upper() == "INTERNAL":
+                            # Card 15 §2: PCGen bookkeeping record, not a
+                            # player-facing class feature -- file it under
+                            # the same bucket the bare-`abilit` branch above
+                            # already uses for this exact marker.
+                            row_bucket, row_key = (
+                                "kind_unenumerable",
+                                "ability_category:Internal",
+                            )
+                        else:
+                            row_bucket, row_key = "kind_unenumerable", "class_feature"
                     else:
                         row_bucket, row_key = bucket, key
 

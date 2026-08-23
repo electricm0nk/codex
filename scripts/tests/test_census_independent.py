@@ -159,6 +159,48 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
             self.assertEqual(counts["kind_unenumerable"].get("class_feature"), 1)
             self.assertNotIn("class_feature", counts["counts_by_kind"])
 
+    def test_class_feature_internal_rows_reroute_to_ability_category_internal(self):
+        # Card 15 (`decisions.md §12b`): a `_abilities_class.lst` row
+        # carrying `CATEGORY:Internal` is PCGen bookkeeping, not a
+        # class_feature, and should land in the same bucket the bare
+        # `abilit` branch already uses for this exact marker.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities_class.lst"),
+                "Rage\tCATEGORY:Special Ability\n"
+                "Damage Reduction ~ All\tCATEGORY:Internal\tDR:ClassFeatureDR_ALL/-\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["kind_unenumerable"].get("class_feature"), 1)
+            self.assertEqual(
+                counts["kind_unenumerable"].get("ability_category:Internal"), 1
+            )
+            self.assertNotIn("class_feature", counts["counts_by_kind"])
+
+    def test_ce_sizes_file_is_non_object_not_kind_unenumerable(self):
+        # Card 15 §7b: PF1e's fixed 9-variant size table, already covered
+        # by `src/rules_core/size.rs`'s `SizeCategory` enum -- not an object.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_essentials"
+            _touch(os.path.join(root, book, "core_essentials.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "ce__sizes.lst"),
+                "Fine\tSOMEFIELD:x\n",
+            )
+            bd = CI.BookDir(book, "core_essentials", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["total_counted_units"], 0)
+            self.assertEqual(counts["total_kind_unenumerable_units"], 0)
+            self.assertIn(
+                "paizo/roleplaying_game/core_essentials/ce__sizes.lst",
+                counts["non_object_files"],
+            )
+
     def test_bestiary_races_file_counts_as_monster_not_race(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = os.path.join(tmp, "pathfinder")

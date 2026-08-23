@@ -132,6 +132,46 @@ class FabricatedUncoveredObjectTest(unittest.TestCase):
         self.assertNotEqual(status, 0, "a fabricated uncovered object must fail the gate")
         self.assertEqual(report["unclassified_count"], 1)
 
+    def test_fabricated_new_kind_with_uncovered_object_fails_the_gate(self):
+        """Card 15 (`decisions.md §12b`): the integration cycle widens
+        `docs/work-inventory.json` with brand-new kinds (`ability`, `skill`,
+        `template`, ...) that never existed when this gate was written.
+        `classify_unit()` is kind-agnostic (it joins purely on
+        `book`/`source_file`/`source_line`, never branching on `kind` --
+        `shape_ledger.py`'s own `classify_unit` docstring), so this proves
+        that generic mechanism actually catches a future object of a KIND
+        THIS GATE HAS NEVER SEEN, not only a familiar `spell`/`feat` row."""
+        units = [
+            _unit("b:ability:x", "ability", "b", "not-started", "static", "f.lst", 1),
+            _unit("b:ability:y", "ability", "b", "not-started", "static", "f.lst", 2),
+        ]
+        inventory = {"units": units}
+        real_build_ledger = SL.build_ledger
+
+        def fabricated_build_ledger(units_arg, corpus_index):
+            ledger = real_build_ledger(units_arg, corpus_index)
+            ledger["rows"].append(
+                {
+                    "id": "b:ability:fabricated-gap",
+                    "kind": "ability",
+                    "book": "b",
+                    "family": None,
+                    "join_status": "no_record",
+                }
+            )
+            ledger["population"] += 1
+            ledger["unclassified_count"] += 1
+            ledger["unclassified"].append("b:ability:fabricated-gap")
+            return ledger
+
+        with mock.patch.object(SL, "build_ledger", side_effect=fabricated_build_ledger):
+            status, report = G.run_gate(inventory, corpus_root="/nonexistent")
+
+        self.assertNotEqual(
+            status, 0, "a new-kind uncovered object must fail the gate too"
+        )
+        self.assertEqual(report["unclassified_count"], 1)
+
     def test_pile_mismatch_fails_the_gate(self):
         """Sum-the-piles: if the per-family rollup does not add back to the
         population, the gate must fail even when unclassified_count reads

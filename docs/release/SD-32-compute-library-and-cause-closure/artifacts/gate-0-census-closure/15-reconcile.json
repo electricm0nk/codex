@@ -1,0 +1,132 @@
+{
+  "populations": {
+    "census_tracked_kind_population": {
+      "value": 28037,
+      "command": "python3 scripts/census_independent.py --pcgen-root $PCGEN_CORPUS_ROOT --inventory docs/work-inventory.json --output <path>; sum(counts_by_kind.values())"
+    },
+    "census_kind_unenumerable_population": {
+      "value": 27838,
+      "command": "same run; total_kind_unenumerable_units"
+    },
+    "inventory_all_units_population": {
+      "value": 38391,
+      "command": "len(json.load(open('docs/work-inventory.json'))['units'])",
+      "by_kind": {
+        "class": 185,
+        "class_feature": 15439,
+        "race_trait": 3504,
+        "feat": 2610,
+        "spell": 2843,
+        "equipment": 6227,
+        "equipment_modifier": 1580,
+        "companion": 1696,
+        "race": 95,
+        "monster_ability": 2942,
+        "monster": 1270
+      }
+    },
+    "ledger_not_done_population": {
+      "value": 24914,
+      "command": "scripts/shape_ledger.py (coverage_ledger.not_done_population -> shape_ledger.build_ledger)",
+      "unclassified_count": 0,
+      "families": {
+        "F0": 20113,
+        "F2": 1490,
+        "F1": 1790,
+        "F10": 3,
+        "F4": 570,
+        "F3": 303,
+        "F5": 361,
+        "F8": 41,
+        "F6": 211,
+        "F9": 27,
+        "F7": 5
+      }
+    }
+  },
+  "relationship": "The three populations are legitimately different (decisions.md \u00a712c), not forced equal: census_tracked_kind_population + census_kind_unenumerable_population is the FULL corpus walk (every row the walker can see); inventory_all_units_population is everything v06_work_inventory.rs currently enumerates (a subset of the census's tracked-kind population plus units the census's coarser filename rules miss or split differently); ledger_not_done_population is the inventory's not-done subset only. This cycle's job was to shrink census_kind_unenumerable_population by disposing every one of its units (A) or (B) -- see disposition_status.",
+  "disposition_status_of_kind_unenumerable": {
+    "total_this_run": 27838,
+    "removed_from_total_this_cycle": {
+      "ce__sizes_lst": 9,
+      "note": "27,847 (pre-cycle) - 9 = 27,838 (total_this_run, above)"
+    },
+    "b_disposed_applied_this_cycle_still_counted_in_total": {
+      "total": 2614,
+      "detail": {
+        "class_feature_category_internal_reroute": {
+          "units": 2614,
+          "still_counted_in_total_this_run": true,
+          "proof": "artifacts/gate-0-census-closure/15-card-15-class-feature-memo.md \u00a72",
+          "applied_in": "scripts/census_independent.py _classify_kind_by_filename + count_objects row_dependent_class_feature branch"
+        }
+      }
+    },
+    "a_already_tracked_prior_cycle_still_counted_in_total": {
+      "total": 15438,
+      "detail": {
+        "class_feature_already_in_inventory": {
+          "units": 15438,
+          "memo": "15-card-15-class-feature-memo.md \u00a70/\u00a75",
+          "note": "already a real inventory unit under kind=class_feature; counted here only because census's bucket model has no class_feature 'kind' bucket to move it into"
+        }
+      }
+    },
+    "a_identified_not_yet_integrated": {
+      "total": 9008,
+      "detail": {
+        "class_feature_residual": {
+          "units": 179,
+          "memo": "15-card-15-class-feature-memo.md \u00a73",
+          "why_not_applied": "root cause of the drop (likely a pool-membership dedup step in v06_work_inventory.rs) is explicitly NOT fully pinned by the memo itself -- adding a blind rescue list risks silently re-triggering whatever dedup step currently excludes them"
+        },
+        "ability_category_disposition_a": {
+          "units": 5108,
+          "memo": "15-card-15-ability-category-memo.md",
+          "why_not_applied": "requires a new Kind::Ability variant across src/bin/v06_work_inventory.rs (enum, file_kind, enumerate_file, refine_kind, duplicate-identity handling) -- too large a surface to land safely in this cycle's remaining budget; see also the CATEGORY:Internal A/B tension flagged below"
+        },
+        "other_kinds_disposition_a": {
+          "units": 3551,
+          "memo": "15-card-15-other-kinds-memo.md \u00a71-6",
+          "buckets": {
+            "template_row": 2343,
+            "deity": 460,
+            "power": 421,
+            "domain": 183,
+            "language": 143,
+            "kit": 1
+          },
+          "why_not_applied": "each is a new Kind variant, same surface-area concern as ability_category above"
+        },
+        "skill_new_kind": {
+          "units": 170,
+          "memo": "15-card-15-other-kinds-memo.md \u00a77a",
+          "why_not_applied": "new Kind::Skill variant, same surface-area concern as ability_category above"
+        }
+      }
+    },
+    "b_proposed_not_yet_applied_in_code": {
+      "total": 778,
+      "detail": {
+        "ability_category_gateway_picklist_duplicate": {
+          "units": 778,
+          "memo": "15-card-15-ability-category-summary.md",
+          "why_not_applied": "no per-row exclusion rule written in census_independent.py yet; also blocked on the same tension below"
+        }
+      }
+    },
+    "unresolved_cross_lane_tension": {
+      "finding": "class_feature-lane (B)-for-all vs ability_category-lane (A)-for-81.6%, both applied to CATEGORY:Internal rows, never cross-checked",
+      "class_feature_lane_claim": "all 2,614 rerouted rows are (B), citing the walker's existing unconditional CATEGORY:Internal exclusion rule",
+      "ability_category_lane_finding": "685/839 (81.6%) of the ORIGINAL ability_category:Internal population carry independent formula content and were disposed (A), not (B)",
+      "action_taken_this_cycle": "the census bucket-relabeling fix (_abilities_class.lst -> ability_category:Internal) was applied because it matches the walker's own existing, already-shipped behaviour for every OTHER _abilities_*.lst file -- a consistency fix, not a fresh content judgement. This script does NOT apply the ability_category lane's A/B split to any of the 3,453 rows now in this bucket (839 original + 2,614 rerouted)."
+    },
+    "arithmetic_check": {
+      "still_counted_reroute_plus_already_tracked_plus_pending_a_plus_pending_b": 27838,
+      "equals_total_this_run": true,
+      "remaining_undisposed": 0,
+      "note": "every unit in total_this_run (27,838) is accounted for by exactly one row above: 2,614 (Internal reroute, disposed by consistency with the walker's own existing rule, tension flagged) + 15,438 (class_feature, already tracked in a prior cycle) + 179 (class_feature residual, pending) + 5,886 (ability_category total: 5,108 pending-A + 778 pending-B) + 3,551 (other-kinds pending-A) + 170 (skill pending-A) = 27,838."
+    }
+  },
+  "gate_3_standing_gate_still_passes": null
+}
