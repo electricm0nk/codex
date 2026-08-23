@@ -36,7 +36,7 @@
 //! `cache_gen::equipment_gap::find_citation` must for its wider,
 //! book-directory-scoped search.
 //!
-//! ## PI screening -- BOTH contracts, NAME and DESCRIPTION
+//! ## PI screening -- NAME, DESCRIPTION, and PREREQUISITES
 //!
 //! Same union `cache_gen::equipment_gap` applies: a row whose NAME carries
 //! declared PI (`NAMEISPI:YES`) or a blacklist term hit is excluded whole
@@ -47,6 +47,32 @@
 //! `feat_gap_tables.rs`), so this is defense in depth, not the only gate --
 //! the same posture `cache_gen::spell_lane_dump` documents for its own
 //! re-screen of an already-screened compiled table.
+//!
+//! **`prerequisites` shipped completely unscreened until SD-32's PI-leak-
+//! screening-path cycle (2026-08-23).** `FeatData.prerequisites` was
+//! written straight from `entry.prerequisites` with no call into
+//! `pi_screening` at all -- the same "screens one branch, not every
+//! shipped field" shape `cache_gen::class_feature.rs`'s own
+//! `redact_concatenated_blacklist_tokens` doc comment names for
+//! `raw_tokens`. Two already-shipped records proved this live:
+//! `data/corpus/inner_sea_combat/feat/{falling_water_gambit,
+//! duelist_of_the_shrouded_lake,duelist_of_the_roaring_falls}.json`
+//! (their `prerequisites` carry "Aldori" plainly -- a per-book-override
+//! blacklist term whose Python/Rust copies had also drifted by one entry,
+//! `decisions.md §12b`, unrelated to this defect) and
+//! `data/corpus/inner_sea_gods/feat/protective_channel.json` (whose
+//! `description` was correctly redacted at generation time, but whose
+//! `prerequisites` spells the deity's name "lomedae" -- an upstream PCGen
+//! typo, lowercase `l` for capital `I`, that only the OCR-normalized scan
+//! catches; a bare-substring scan would not). [`screen_prerequisites`]
+//! below closes this: every `prerequisites` line is screened against
+//! [`pi_screening::blacklist_term_hit_including_concatenated`] (word-
+//! bounded, OCR-normalized, catches a concatenated PascalCase hit too) and
+//! only the offending line(s) are redacted, mirroring
+//! `scrub_name_pi_tokens`'s per-token posture rather than
+//! `classify_optional_field_declared`'s whole-value one, because a
+//! `PRE*` line is an independent mechanical fact and most of a row's
+//! prerequisite lines carry no prose at all.
 
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
@@ -308,6 +334,28 @@ pub(crate) fn find_citation(corpus_root: &Path, spec_files: &[&str], key: &str, 
     None
 }
 
+/// Screens each `prerequisites` line against
+/// [`pi_screening::blacklist_term_hit_including_concatenated`], redacting
+/// only the line(s) that hit -- other `PRE*` lines on the same row are left
+/// untouched. Closes the gap this module's doc comment names: prior to this
+/// fix, `prerequisites` was never screened at all, regardless of what `name`
+/// or `description` found. Returns `(screened_lines, any_redacted)`.
+pub(crate) fn screen_prerequisites(prerequisites: &[String]) -> (Vec<String>, bool) {
+    let mut any_redacted = false;
+    let screened = prerequisites
+        .iter()
+        .map(|line| {
+            if pi_screening::blacklist_term_hit_including_concatenated(line).is_some() {
+                any_redacted = true;
+                crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string()
+            } else {
+                line.clone()
+            }
+        })
+        .collect();
+    (screened, any_redacted)
+}
+
 pub(crate) fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
     if line == 0 {
         return DeclaredProductIdentity::default();
@@ -439,11 +487,32 @@ pub fn generate(
             let (wiring_class, wiring_class_signals) =
                 wiring_index.wiring_class_for(&mut wiring_lines, &rel_path_str, line, entry.key, entry.key);
 
-            let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+            let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
                 "description",
                 entry.description,
                 declared.description,
             );
+
+            let owned_prerequisites: Option<Vec<String>> =
+                entry.prerequisites.map(|p| p.iter().map(|s| s.to_string()).collect());
+            let (stored_prerequisites, prereqs_redacted) = match &owned_prerequisites {
+                Some(lines) => {
+                    let (screened, redacted) = screen_prerequisites(lines);
+                    (Some(screened), redacted)
+                }
+                None => (None, false),
+            };
+            if prereqs_redacted {
+                license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                let already_named = pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "prerequisites"));
+                if !already_named {
+                    pi_field = Some(match pi_field.take() {
+                        Some(existing) => format!("{existing},prerequisites"),
+                        None => "prerequisites".to_string(),
+                    });
+                }
+            }
 
             let completeness =
                 if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
@@ -457,7 +526,7 @@ pub fn generate(
                     category: entry.category.to_string(),
                     name: entry.name.to_string(),
                     description: stored_desc,
-                    prerequisites: entry.prerequisites.map(|p| p.iter().map(|s| s.to_string()).collect()),
+                    prerequisites: stored_prerequisites,
                 },
                 source: Source::LstToken {
                     path: format!("{}/{}", spec.dir, rel_path_str),
@@ -543,6 +612,51 @@ mod tests {
         std::fs::write(dir.join("book_feats.lst"), "SomethingElse\tTYPE:General\n").unwrap();
         assert_eq!(find_citation(&dir, &["book_feats.lst"], "NoSuchKey", "NoSuchName"), None);
         std::fs::remove_dir_all(&dir).ok();
+    }
+
+    // --- `screen_prerequisites` (PI-leak-screening-path cycle, 2026-08-23) ---
+
+    #[test]
+    fn screen_prerequisites_redacts_a_plainly_spelled_blacklist_term() {
+        // Real shape: `data/corpus/inner_sea_combat/feat/falling_water_gambit.json`'s
+        // own PRETEXT line before this fix.
+        let lines = vec![
+            "PRETEXT:Prerequisites: Aldori Dueling Disciple, base attack bonus +8.".to_string(),
+        ];
+        let (screened, any_redacted) = screen_prerequisites(&lines);
+        assert!(any_redacted);
+        assert_eq!(screened, vec![crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string()]);
+    }
+
+    #[test]
+    fn screen_prerequisites_redacts_an_ocr_style_upstream_typo() {
+        // Real shape: `data/corpus/inner_sea_gods/feat/protective_channel.json`'s
+        // own PCGen source spells the deity's name "lomedae" (lowercase `l`
+        // for capital `I`) -- a bare-substring scan against "Iomedae" would
+        // not catch this; the OCR-normalized scan does.
+        let lines = vec!["PREDEITY:1,lomedae".to_string()];
+        let (screened, any_redacted) = screen_prerequisites(&lines);
+        assert!(any_redacted);
+        assert_eq!(screened, vec![crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string()]);
+    }
+
+    #[test]
+    fn screen_prerequisites_leaves_clean_lines_untouched_and_redacts_only_the_hit() {
+        let lines = vec!["PRETOTALAB:8".to_string(), "PREDEITY:1,lomedae".to_string()];
+        let (screened, any_redacted) = screen_prerequisites(&lines);
+        assert!(any_redacted);
+        assert_eq!(
+            screened,
+            vec!["PRETOTALAB:8".to_string(), crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string()]
+        );
+    }
+
+    #[test]
+    fn screen_prerequisites_no_hit_is_untouched() {
+        let lines = vec!["PRETOTALAB:8".to_string(), "PREFEAT:1,Weapon Finesse".to_string()];
+        let (screened, any_redacted) = screen_prerequisites(&lines);
+        assert!(!any_redacted);
+        assert_eq!(screened, lines);
     }
 
     #[test]

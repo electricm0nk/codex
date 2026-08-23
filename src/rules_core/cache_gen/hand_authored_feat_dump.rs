@@ -40,7 +40,7 @@
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 
-use crate::rules_core::cache_gen::feat_gap::{declared_pi_at, find_citation, BookSpec};
+use crate::rules_core::cache_gen::feat_gap::{declared_pi_at, find_citation, screen_prerequisites, BookSpec};
 use crate::rules_core::cache_gen::feat_gap::{CacheRecord, Completeness, FeatData, Population, Source};
 use crate::rules_core::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening;
@@ -191,11 +191,38 @@ pub fn generate(
             let (wiring_class, wiring_class_signals) =
                 wiring_index.wiring_class_for(&mut wiring_lines, &rel_path_str, line, entry.key, entry.key);
 
-            let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+            let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
                 "description",
                 entry.description,
                 declared.description,
             );
+
+            // PI-leak-screening-path cycle (2026-08-23): `prerequisites` was
+            // never screened here either -- same defect, same fix, as
+            // `cache_gen::feat_gap::generate`'s own sibling change; see that
+            // module's doc comment for the confirmed-leak records this
+            // closed. Reuses `screen_prerequisites` directly rather than
+            // forking a second copy.
+            let owned_prerequisites: Option<Vec<String>> =
+                entry.prerequisites.map(|p| p.iter().map(|s| s.to_string()).collect());
+            let (stored_prerequisites, prereqs_redacted) = match &owned_prerequisites {
+                Some(lines) => {
+                    let (screened, redacted) = screen_prerequisites(lines);
+                    (Some(screened), redacted)
+                }
+                None => (None, false),
+            };
+            if prereqs_redacted {
+                license = License::PiRedacted;
+                pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                let already_named = pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "prerequisites"));
+                if !already_named {
+                    pi_field = Some(match pi_field.take() {
+                        Some(existing) => format!("{existing},prerequisites"),
+                        None => "prerequisites".to_string(),
+                    });
+                }
+            }
 
             let completeness =
                 if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
@@ -209,7 +236,7 @@ pub fn generate(
                     category: entry.category.to_string(),
                     name: entry.name.to_string(),
                     description: stored_desc,
-                    prerequisites: entry.prerequisites.map(|p| p.iter().map(|s| s.to_string()).collect()),
+                    prerequisites: stored_prerequisites,
                 },
                 source: Source::LstToken {
                     path: format!("{}/{}", spec.dir, rel_path_str),

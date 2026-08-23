@@ -7111,3 +7111,49 @@ Dual audit on `git diff -- src/rules_core/cache_gen/class_feature.rs`: `OK_NO_BU
   separate lane's territory, untouched here per this dispatch's Territory section. `class_feature`'s
   own `no_record` is 0 — no further work in this kind's territory.
 - Commit: (this cycle's commit — see push output).
+
+## Cycle sd32-pi-leak-screening-path-inner-sea-combat-feat -- Card 11, T9 -- feat PI-leak screening-path defect closed (2026-08-23)
+
+**Scope:** close the 3 (re-derived: 4) pre-existing `feat` PI leaks logged-not-fixed by
+`sd32-integrity-sweep-stale-pair-scan-and-pi-blacklist-sync` (`ec060ad20c`); find and fix the
+screening-path defect that let them ship; regenerate through the guarded path; prove the class
+closed by re-scanning every kind against the full 61-term list.
+
+**Re-derivation (`§17a`):** population was 4, not 3 -- the brief's upstream lane checked only
+`name`+`description`; widening the scan to every `data.*` field (name/description/prerequisites and
+any list/dict field) against `pi_scrub.normalized_term_hit` found a 4th record,
+`inner_sea_gods/feat/protective_channel.json`, hit in `data.prerequisites`. Logged as a
+`scripts/retro.py correction` (`docs/retro/events/t9-onboarding.jsonl`, id
+`1787512582838-t9-onboarding-0dc310`).
+
+**Root cause:** `cache_gen::feat_gap::generate()` (and its sibling `hand_authored_feat_dump.rs`)
+screened `name` (whole-record exclusion) and `description` (whole-value redaction) but never
+screened `prerequisites` at all -- the same "screens one field, not every shipped field" shape a
+sibling lane already named for `raw_tokens` in `cache_gen::class_feature.rs`. A second, compounding
+defect: the write path's no-clobber policy means an already-shipped record is never rescreened when
+the blacklist term list grows, which is why the 3 original `inner_sea_combat` records' `description`
+field (which the current code WOULD correctly redact) still shipped raw -- the term was added to
+`pi_screening.rs` roughly two hours after those 3 files were first written.
+
+**Fix (TDD):** new `cache_gen::feat_gap::screen_prerequisites()` (word-bounded, OCR-normalized
+per-line scan, mirrors the scan already used elsewhere in this codebase) wired into both
+`feat_gap::generate()` and `hand_authored_feat_dump::generate()`. RED proved for the intended reason
+(3 of 4 new tests failed against a temporarily no-op'd function, the no-hit control correctly still
+passed), then GREEN: 14/14 `feat_gap` + 2/2 `hand_authored_feat_dump` tests.
+
+**Regeneration through the guarded path:** the 4 leaking files were `git rm`'d (never hand-edited)
+and regenerated via `cargo run --locked --bin gen_cache_feat_gap` against the pinned oracle --
+`git status --porcelain` confirmed exactly the 4 target files touched; the no-clobber policy
+protected all 645 other already-shipped gap-lane rows (named individually in the binary's own
+"skipped" list). All 4 now correctly `license: PI-REDACTED`.
+
+**Class-closure scan (`§4`):** full 61-term list, every `data.*` field, all kinds, post-fix. `feat`:
+**0** (was 4). Every other kind: **0**, except `class_feature`: **31** confirmed hits (3 of which are
+a `§26`-class OCR-fold false positive against an ordinary English word, unrelated term) --
+**named by coordinate in the receipt below, `class_feature` lane's territory, not touched here.**
+`declared_pi_shipping_audit`: 65 violations, unchanged before/after (pre-existing
+`bestiary_4/monster_ability` metadata gap, `monster_ability` lane's territory).
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/sd32-pi-leak-screening-path-inner-sea-combat-feat_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).
