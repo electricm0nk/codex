@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Resistance to Negative Energy ~ Output",
+    "delivery": "Extraordinary",
+    "description": "You may ignore %1 points of Negative Energy damage each time you take negative energy damage.",
+    "description_variables": [
+      "NegativeEnergyResistanceBonus"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:resistance_to_negative_energy_output",
+    "name": "Resistance to Negative Energy ~ Output",
+    "owners": [],
+    "source_page": "p.303",
+    "traits": [
+      "Resistance"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 70,
+    "record_key": "Resistance to Negative Energy ~ Output"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

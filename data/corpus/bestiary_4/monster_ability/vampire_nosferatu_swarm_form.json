@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Vampire (Nosferatu) ~ Swarm Form",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a nosferatu can change into a bat swarm, centipede swarm, rat swarm, or spider swarm. The nosferatu gains the natural weapons and extraordinary special attacks of the swarm it has transformed into. The swarm has the same number of hit points as the nosferatu. While in swarm form, a nosferatu can't use its claw attacks or any of its special attacks. It retains the defensive abilities, weaknesses, and special qualities it gains from being a nosferatu, counts as an undead creature, and can use any of the swarm's abilities and defenses. It can remain in swarm form until it assumes another form or until the next sunrise.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:vampire_nosferatu_swarm_form",
+    "name": "Swarm Form",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1413,
+    "record_key": "Vampire (Nosferatu) ~ Swarm Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Ogrekin ~ Vestigal Limb",
+    "delivery": null,
+    "description": "Vestigal third arm (can't be used to use items) grants a +4 racial bonus on grapple checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ogrekin_vestigal_limb",
+    "name": "Vestigal Limb",
+    "owners": [],
+    "source_page": "p.204",
+    "traits": [
+      "OgrekinBeneficialDeformity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 913,
+    "record_key": "Ogrekin ~ Vestigal Limb"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

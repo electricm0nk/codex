@@ -11,7 +11,7 @@
 //!   * `isg_races.lst` -- 36 monster rows
 //!   * `isg_races_b4.lst` -- 3 monster rows
 //!   * `isg_abilities_races_b4.lst` -- 16 monster-ability rows
-//!   * `isg_abilities_races.lst` -- 140 monster-ability rows
+//!   * `isg_abilities_races.lst` -- 142 monster-ability rows
 //!
 //! 0 monster row(s) and 5 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
@@ -27,9 +27,13 @@
 //!   * `isg_abilities_races.lst:155` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
 //!
 //! 2 further ability row(s) in this book are ORPHANS -- no monster
-//! row here claims them, so they are deliberately NOT transcribed (a record
-//! with no owner loads and is never shown). `not-ingested` is their honest status
-//! in the work inventory, and the round's receipt records them by key:
+//! row here claims them, so they SHIP with `owners: &[]` rather than being
+//! dropped (`decisions.md §20`: an un-ingested row's shape cannot be measured,
+//! and Gate 1's DoD needs every unit's shape measured). `list_monster_catalog`
+//! only ever walks a monster's OWN `ability_keys`, so an owner-less record here
+//! reaches no screen -- reachability is NOT claimed for these, and each key is
+//! pinned as a named, provable non-reach in `reach_gate.rs::
+//! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
 //!   * `isg_abilities_races.lst:38`
 //!   * `isg_abilities_races.lst:39`
 
@@ -819,7 +823,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_gods monster-ability record (156 rows).
+/// Every inner_sea_gods monster-ability record (158 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "First Blade ~ Powerful Blows (Slam)",
@@ -1028,6 +1032,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Psychopomp (Ahmuuth)"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 34,
+    },
+    MonsterAbilityRecord {
+        key: "Herald ~ Always Armed",
+        name: "Always Armed",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Heralds can summon their signature weapon as a standard action. If its herald doesn't have a signature weapon, it can summon any nonmagical weapon as a standard action (including special materials); the weapon disappears if it leaves the herald's grasp."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "isg_abilities_races.lst",
+        source_line: 38,
+    },
+    MonsterAbilityRecord {
+        key: "Herald ~ Emissary",
+        name: "Emissary",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Heralds can always be summoned by the faithful using greater planar ally or gate, regardless of limitations of that spell, even if it's not an outsider."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "isg_abilities_races.lst",
+        source_line: 39,
     },
     MonsterAbilityRecord {
         key: "Lawgiver ~ Immunity to Rust",

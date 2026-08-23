@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Wyrwood ~ Construct Traits",
+    "delivery": null,
+    "description": "Constructs have no Constitution score. Any DCs or other statistics that rely on a Constitution score treat a construct as having a score of 10 (no bonus or penalty). Constructs have immunity to all mind-affecting effects (charms, compulsions, morale effects, patterns, and phantasms) and immunity to bleed, disease, death effects, necromancy effects, paralysis, poison, sleep effects, and stunning. A construct cannot heal damage on its own, but can be repaired through the use of the Craft Construct feat. Constructs can also be healed through spells such as make whole. A construct with the fast healing special quality still benefits from that quality. Constructs are not subject to ability damage, ability drain, fatigue, exhaustion, energy drain, or nonlethal damage. Constructs have immunity to any effect that requires a Fortitude save (unless the effect also works on objects, or is harmless). Constructs are not at risk of death from massive damage and are immediately destroyed when reduced to 0 hit points or less. A construct cannot be raised or resurrected. A construct is hard to destroy, and gains %1 bonus hit points (based on size). Constructs do not breathe, eat, or sleep.",
+    "description_variables": [
+      "(max(SIZE-2,0)+max(SIZE-6,0))*10"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:wyrwood_construct_traits",
+    "name": "Construct Traits",
+    "owners": [],
+    "source_page": "p.307",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
+    "line": 24,
+    "record_key": "Wyrwood ~ Construct Traits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

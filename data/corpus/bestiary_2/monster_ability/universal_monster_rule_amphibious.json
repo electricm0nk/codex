@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Amphibious",
+    "delivery": "Extraordinary",
+    "description": "Creatures with this special quality have the aquatic subtype, but they can survive indefinitely on land.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:universal_monster_rule_amphibious",
+    "name": "Amphibious",
+    "owners": [],
+    "source_page": "p.294",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Quality"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2411,
+    "record_key": "Universal Monster Rule ~ Amphibious"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

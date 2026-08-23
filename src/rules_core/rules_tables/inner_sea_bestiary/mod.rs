@@ -103,7 +103,15 @@ mod tests {
     #[test]
     fn the_book_ships_thirty_eight_monsters_and_one_hundred_fifty_two_abilities() {
         assert_eq!(monsters().len(), 38);
-        assert_eq!(monster_abilities().len(), 152);
+        // 152 owned + 28 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 180. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 152);
+        assert_eq!(monster_abilities().len(), 180);
     }
 
     /// The shipped total is the classifier's `reachable remainder` **minus the
@@ -126,22 +134,56 @@ mod tests {
         // comment is.
         let classifier_reachable = 230 - 26 - 7;
         let cascade = 2 + 5;
-        assert_eq!(monsters().len() + monster_abilities().len(), classifier_reachable - cascade);
-        assert_eq!(monsters().len() + monster_abilities().len(), 190);
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(monsters().len() + owned, classifier_reachable - cascade);
+        assert_eq!(monsters().len() + owned, 190);
+        // 190 owned/reachable + 28 owner-less (`decisions.md §20`) = 218, the
+        // book's real total shipped count.
+        assert_eq!(monsters().len() + monster_abilities().len(), 218);
     }
 
-    /// Every transcribed ability row is owned by a monster row of this book.
-    /// The book has 31 rows nothing shipped owns; the point of this test is
-    /// that none got in.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// The 28 rows no shipped monster row of this book claims now SHIP with
+    /// `owners: &[]`, and this test pins the EXACT set of records that carry
+    /// one — a silent new arrival OR a silent disappearance both fail here,
+    /// by name. `list_monster_catalog` never walks these directly (only a
+    /// monster's own `ability_keys`), so shipping them does not surface a
+    /// stub; each key is pinned separately, by name, in `reach_gate.rs::
+    /// UNREACHED_RECORD_FINDINGS` under
+    /// `("inner_sea_bestiary", "monster_abilities")` as a proven non-reach,
+    /// not a silent claim of reachability.
     #[test]
-    fn no_shipped_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            28,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py inner_sea_bestiary` run, and update the \
+             matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0xfb2e_b118_c0c5_f992,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
     }
 
     /// Every owner named by a shipped ability is itself a shipped monster —

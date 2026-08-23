@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Moonbound Werewolf ~ Moonbound",
+    "delivery": "Supernatural",
+    "description": "A moonbound werewolf gains benefits and drawbacks based on the current phase of the moon. For the purposes of this ability, the moon is in one of four phases at any given time: full, nearly full, new, and other. The moon is full for the 3-day period when the moon appears the largest in the sky, it is nearly full for 4 days before it is full and 4 days afterward, and it is new for a 3-day period when the moon appears the darkest in the sky. The \"other\" phase encompasses the rest of each month. GMs who need to randomly determine the phase of the moon can use the table below. [d8-Moon Phase] 1=New; 2-5=Other; 6-7=Nearly full; 8=Full",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:moonbound_werewolf_moonbound",
+    "name": "Moonbound",
+    "owners": [],
+    "source_page": "p.251",
+    "traits": [
+      "MoonboundWerewolf"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 311,
+    "record_key": "Moonbound Werewolf ~ Moonbound"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

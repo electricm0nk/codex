@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Powerful Blows (Tentacle)",
+    "delivery": "Extraordinary",
+    "description": "The creature's tentacle attacks add 1-1/2 times the creature's Strength bonus to damage instead of its normal Strength bonus or half its Strength bonus.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:powerful_blows_tentacle",
+    "name": "Powerful Blows (Tentacle)",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 61,
+    "record_key": "Powerful Blows (Tentacle)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Implacable Stalker ~ Sense Fear",
+    "delivery": "Supernatural",
+    "description": "An implacable stalker is able to sense the fear of nearby living creatures. This functions similarly to blindsight, with a range of 120 feet, except it only allows the implacable stalker to detect creatures that are currently experiencing any level of fear ranging from spooked to horrified (see page 10). Additionally, this ability allows the implacable stalker to detect such creatures even through solid barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:implacable_stalker_sense_fear",
+    "name": "Sense Fear",
+    "owners": [],
+    "source_page": "p.238",
+    "traits": [
+      "ImplacableStalker",
+      "Senses"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 289,
+    "record_key": "Implacable Stalker ~ Sense Fear"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

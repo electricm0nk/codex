@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "data": {
+    "corpus_key": "Asurendra ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 20th; concentration +30) Constant-dimensional lock (enemies only), freedom of movement, tongues, true seeing At will-death knell (DC 22), greater dispel magic, greater scrying, greater teleport (self plus 50 lbs. of objects only) 3/day-quickened baleful polymorph (DC 25), quickened blade barrier (DC 26), blasphemy (DC 27), quickened death knell (DC 22), deeper darkness, demand (DC 28) 1/day-power word stun, summon (level 9, any 1 CR 19 or lower asura 100%%), time stop",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:asurendra_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "AsurendraRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 411,
+    "record_key": "Asurendra ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Dread Lord ~ One with the Land",
+    "delivery": "Extraordinary",
+    "description": "A dread lord can shape the hazardous landscapes formed as a consequence of its domain's creation to its will. It can replace any normal or supernatural hazard present in its domain with another hazard, but the process takes 24 hours, during which time neither hazard functions. The combined CR of all hazards found within a lord's domain (that is, the CR of a hypothetical encounter with all of the hazards at once) can't exceed twice its Hit Dice, and it cannot create any hazards whose CR exceeds its own. A dread lord's affinity with the land grants it a +2 bonus on all Will saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:dread_lord_one_with_the_land",
+    "name": "One with the Land",
+    "owners": [],
+    "source_page": "p.235",
+    "traits": [
+      "DreadLord"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 252,
+    "record_key": "Dread Lord ~ One with the Land"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

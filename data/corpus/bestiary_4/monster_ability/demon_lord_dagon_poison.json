@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Demon Lord (Dagon) ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Breath weapon-contact; save Fort DC %1; frequency 1 / round for 6 rounds; effect 1d6 Con drain and confused for 1 round; cure 3 consecutive saves.",
+    "description_variables": [
+      "26+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:demon_lord_dagon_poison",
+    "name": "Poison",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 441,
+    "record_key": "Demon Lord (Dagon) ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

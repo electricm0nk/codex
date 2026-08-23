@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "data": {
+    "corpus_key": "Clockwork Leviathan ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "A clockwork leviathan's breath weapon is a powerful jet of scorching steam-it functions equally well above and under water.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_leviathan_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "source_page": "p.55",
+    "traits": [
+      "ClockworkLeviathanRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 571,
+    "record_key": "Clockwork Leviathan ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

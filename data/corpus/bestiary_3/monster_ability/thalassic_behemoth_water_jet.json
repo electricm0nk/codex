@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "data": {
+    "corpus_key": "Thalassic Behemoth ~ Water Jet",
+    "delivery": "Supernatural",
+    "description": "A thalassic behemoth can blast water from its blowhole with surprising force and accuracy. This water jet has a range of 240 feet with no range penalties. A target hit by the water jet is subject to the behemoth's push ability and must succeed at a DC %%1 Fortitude save or be stunned for 1d4+1 rounds. The save DC is Constitution-based.",
+    "description_variables": [
+      "WaterJetDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thalassic_behemoth_water_jet",
+    "name": "Water Jet",
+    "owners": [],
+    "source_page": "p.38",
+    "traits": [
+      "ThalassicBehemothRacialAbility",
+      "Water Jet"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 488,
+    "record_key": "Thalassic Behemoth ~ Water Jet"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

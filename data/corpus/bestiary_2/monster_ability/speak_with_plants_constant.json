@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Speak with Plants ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You can communicate with normal plants and plant creatures, and can ask questions of and receive answers from them, as per the spell Speak with Plants, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:speak_with_plants_constant",
+    "name": "Speak with Plants",
+    "owners": [],
+    "source_page": "p.346",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2211,
+    "record_key": "Speak with Plants ~ Constant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

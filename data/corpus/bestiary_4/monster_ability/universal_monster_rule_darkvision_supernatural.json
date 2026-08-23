@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Darkvision (Supernatural)",
+    "delivery": "Supernatural",
+    "description": "A creature with darkvision can see in total darkness, to a range of %1 feet. Within this range, the creature can see as clearly as a sighted creature could see in an area of bright light. Darkvision is black and white only but is otherwise like normal sight.",
+    "description_variables": [
+      "UMR_DarkvisionSu_Range"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:universal_monster_rule_darkvision_supernatural",
+    "name": "Darkvision",
+    "owners": [],
+    "source_page": "p.292",
+    "traits": [
+      "Universal Monster Rule",
+      "Sense",
+      "Vision"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2426,
+    "record_key": "Universal Monster Rule ~ Darkvision (Supernatural)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

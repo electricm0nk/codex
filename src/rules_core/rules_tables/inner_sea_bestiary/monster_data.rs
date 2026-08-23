@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `isb_races.lst` -- 38 monster rows
-//!   * `isb_abilities_race.lst` -- 152 monster-ability rows
+//!   * `isb_abilities_race.lst` -- 180 monster-ability rows
 //!
 //! 2 monster row(s) and 7 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
@@ -29,9 +29,13 @@
 //!   * `isb_abilities_race.lst:318` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
 //!
 //! 31 further ability row(s) in this book are ORPHANS -- no monster
-//! row here claims them, so they are deliberately NOT transcribed (a record
-//! with no owner loads and is never shown). `not-ingested` is their honest status
-//! in the work inventory, and the round's receipt records them by key:
+//! row here claims them, so they SHIP with `owners: &[]` rather than being
+//! dropped (`decisions.md §20`: an un-ingested row's shape cannot be measured,
+//! and Gate 1's DoD needs every unit's shape measured). `list_monster_catalog`
+//! only ever walks a monster's OWN `ability_keys`, so an owner-less record here
+//! reaches no screen -- reachability is NOT claimed for these, and each key is
+//! pinned as a named, provable non-reach in `reach_gate.rs::
+//! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
 //!   * `isb_abilities_race.lst:45`
 //!   * `isb_abilities_race.lst:46`
 //!   * `isb_abilities_race.lst:47`
@@ -63,6 +67,16 @@
 //!   * `isb_abilities_race.lst:437`
 //!   * `isb_abilities_race.lst:439`
 //!   * `isb_abilities_race.lst:442`
+//!
+//! 3 further ability row(s) of this book ARE owned
+//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
+//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
+//! `BONUS:VAR`-set value), and picking one by position would risk shipping
+//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
+//! `parse_desc` deliberately, hand-verified per row, to reach them:
+//!   * `isb_abilities_race.lst:203` (Mana Wastes Mutant ~ Acid Resistance)
+//!   * `isb_abilities_race.lst:204` (Mana Wastes Mutant ~ Acidic Pustules)
+//!   * `isb_abilities_race.lst:206` (Mana Wastes Mutant ~ Disease)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -830,7 +844,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_bestiary monster-ability record (152 rows).
+/// Every inner_sea_bestiary monster-ability record (180 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Apostasy Wraith ~ Razmiri Aversion",
@@ -896,6 +910,84 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Beetle (Stalk)"],
         source_file: "isb_abilities_race.lst",
         source_line: 41,
+    },
+    MonsterAbilityRecord {
+        key: "Blighted Fey ~ Fungal Rejuvenation",
+        name: "Fungal Rejuvenation",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("The Blighted Fey gains Fast Healing 5 while within 300 yards of any blighted tree within the Fangwood and while on moist ground."),
+        description_variables: &[],
+        source_page: Some("p.7"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 45,
+    },
+    MonsterAbilityRecord {
+        key: "Blighted Fey ~ Parasitic Bond",
+        name: "Parasitic Bond",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Following a successful Thorn Throw attack, the target must make a DC %1 Fortitude save or be cursed. For 5 rounds, all hit point damage taken by the blighted fey is halved and the target takes the other half."),
+        description_variables: &["10+TL/2+CON"],
+        source_page: Some("p.7"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 46,
+    },
+    MonsterAbilityRecord {
+        key: "Blighted Fey ~ Thorn Throw",
+        name: "Thorn Throw",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A Blighted Fey can shoot a fistful of needle-sharp thorns at a single target"),
+        description_variables: &[],
+        source_page: Some("p.7"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 47,
+    },
+    MonsterAbilityRecord {
+        key: "Blighted Fey ~ Cyth-V'sug's Unity",
+        name: "Cyth-V'sug's Unity",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Blighted fey within 100 feet of each other can communicate through a shared fungal hive mind."),
+        description_variables: &[],
+        source_page: Some("p.7"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 48,
+    },
+    MonsterAbilityRecord {
+        key: "Blighted Fey ~ Daughters of Arlantia",
+        name: "Daughters of Arlantia",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Blighted Fey dryads are no longer dependant upon a single tree, but must remain within 300 yards of any blighted tree."),
+        description_variables: &[],
+        source_page: Some("p.7"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 49,
+    },
+    MonsterAbilityRecord {
+        key: "Blighted Fey ~ Tainted Blood",
+        name: "Tainted Blood",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Any creature that successfully ingests all or part of a Blighted Fey must make a Fortitude save with a DC of %1 or take 1 point of Str damage and 1 point of Dex damage. 1 minute later, the creature must save again or be nauseated 1 min and take 1d6 Str damage and 1d6 Dex damage."),
+        description_variables: &["10+TL/2+CON"],
+        source_page: Some("p.7"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 50,
     },
     MonsterAbilityRecord {
         key: "Cayhound ~ Spell-Like Abilities",
@@ -1221,6 +1313,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Golem (Noqual)"],
         source_file: "isb_abilities_race.lst",
         source_line: 134,
+    },
+    MonsterAbilityRecord {
+        key: "Noqual Golem ~ Powerful Blows",
+        name: "Powerful Blows",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A noqual golem inflicts 1-1/2 times its Strength bonus and threatens a critical hit on a 19-20 with its slam attacks."),
+        description_variables: &[],
+        source_page: Some("p.18"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 135,
     },
     MonsterAbilityRecord {
         key: "Noqual Golem ~ Spell Absorption",
@@ -1574,6 +1679,84 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 199,
     },
     MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Breath Weapon",
+        name: "Breath Weapon",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["MutantSpecialAbility"],
+        description: Some("30-ft acid cone, %1d6 damage, Reflex half (DC %2)"),
+        description_variables: &["HD/2", "10+HD/2+CON"],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 205,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Increased Speed",
+        name: "Increased Speed",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["MutantSpecialAbility"],
+        description: Some("Some Mana Wastes mutants are transformed in such a way that their base speed increases"),
+        description_variables: &[],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 207,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Deformed Arm",
+        name: "Deformed Arm",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["MutantDeformity"],
+        description: Some("One hand can't wield weapons, but the mutant's slam attack deals damage as if it were two size categories larger than its actual size."),
+        description_variables: &[],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 208,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Deformed Leg",
+        name: "Deformed Leg",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["MutantDeformity"],
+        description: Some("The mutant's base speed is reduced by 10 feet (minimum base speed of 5 feet), but it gains a +4 racial bonus to its CMD."),
+        description_variables: &[],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 209,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Shattered Hide",
+        name: "Shattered Mind",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["MutantDeformity"],
+        description: Some("The mutant takes a -2 penalty to Intelligence, but gains a +2 racial bonus on Will saves."),
+        description_variables: &[],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 210,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Warped Mind",
+        name: "Warped Hide",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["MutantDeformity"],
+        description: Some("The mutant loses its +2 racial bonus to Con, but gains an additional +2 bonus to its natural armor."),
+        description_variables: &[],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 211,
+    },
+    MonsterAbilityRecord {
         key: "Deadly Mantis ~ Fling",
         name: "Fling",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -1884,6 +2067,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Psychopomp (Memitim)", "Psychopomp (Shoki)", "Psychopomp (Viduus)"],
         source_file: "isb_abilities_race.lst",
         source_line: 261,
+    },
+    MonsterAbilityRecord {
+        key: "Psychopomp ~ Spirit Touch",
+        name: "Spirit Touch",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A psychopomp's natural weapons, as well as any weapon it wields , are treated as though they had the .Ghost Touch weapon special ability."),
+        description_variables: &[],
+        source_page: Some("p.38"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 262,
+    },
+    MonsterAbilityRecord {
+        key: "Psychopomp ~ Spirit Sense",
+        name: "Spirit Sense",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A psychopomp notices, locates, and can distinguish between living and undead creatures within 6o feet, just as if it had the blindsight ability."),
+        description_variables: &[],
+        source_page: Some("p.38"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 263,
     },
     MonsterAbilityRecord {
         key: "Memitim ~ Terminal Aura",
@@ -2198,6 +2407,71 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 308,
     },
     MonsterAbilityRecord {
+        key: "Chemnosit ~ Hungry Gaze",
+        name: "Hungry Gaze",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("3d6 nonlethal plus fatigue (Fort DC 30 negates). Affected creatures gain an overwhelming compulsion to eat flesh of creatures of its type (its own if none others available). Will DC 30 negates.[DC %1]"),
+        description_variables: &["HungryGazeDC"],
+        source_page: Some("p.47"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 322,
+    },
+    MonsterAbilityRecord {
+        key: "Chemnosit ~ Spines",
+        name: "Spines",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Creatures dealing melee attacks take 2d6+12 piercing."),
+        description_variables: &[],
+        source_page: Some("p.47"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 323,
+    },
+    MonsterAbilityRecord {
+        key: "Volnagur ~ Blood Rage",
+        name: "Blood Rage",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Any creature taking bleed damage from Volnagur's razor tongues takes a -4 penalty on Will saves and is affected as the Murderous Command spell (Will DC 16 negates) each round that bleeding continues, ignoring allies that are also taking bleed damage from Volnagur."),
+        description_variables: &[],
+        source_page: Some("p.48"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 327,
+    },
+    MonsterAbilityRecord {
+        key: "Volnagur ~ Eye Rays",
+        name: "Eye Rays",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Volnagur fires eye rays at a range of up to 120 feet. Creatures struck by his eye rays are nauseated for 1 minute (Fortitude DC 29 negates).[DC %1]"),
+        description_variables: &["EyeRaysDC"],
+        source_page: Some("p.48"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 328,
+    },
+    MonsterAbilityRecord {
+        key: "Volnagur ~ Shatter Silence",
+        name: "Shatter Silence",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("At the beginning of its turn, any Silence effect within 6o feet is targeted as dispel magic (caster level 25th)."),
+        description_variables: &[],
+        source_page: Some("p.48"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 329,
+    },
+    MonsterAbilityRecord {
         key: "Spellscar Fext ~ Deadly Slam",
         name: "Deadly Slam",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -2378,6 +2652,71 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Umbral Shepherd"],
         source_file: "isb_abilities_race.lst",
         source_line: 375,
+    },
+    MonsterAbilityRecord {
+        key: "Vetala ~ Drain Prana",
+        name: "Drain Prana",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: None,
+        traits: &["Supernatural q"],
+        description: Some("A Vetala can drain the mental vitality of a grappled opponent. If the vetala establishes or maintains a pin, it drains this energy, dealing 1d4 points of Charisma damage. Additionally, the victim is affected by the spell Modify Memory, as if the Vetala had spent 5 minutes concentrating. The Vetala gains perfect knowledge of any memory it chooses to eliminate using this ability."),
+        description_variables: &[],
+        source_page: Some("p.55"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 379,
+    },
+    MonsterAbilityRecord {
+        key: "Vetala ~ Malevolence",
+        name: "Malevolence",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("As a full-round action, a Vetala can attempt to take control of a helpless living creature's body, as the spell Magic Jar (caster level 10th or the Vetala's Hit Dice, whichever is higher), except that it does not require a receptacle. The target can resist the attack with a successful Will save (DC %1)."),
+        description_variables: &["10+TL/2+CHA"],
+        source_page: Some("p.55"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 380,
+    },
+    MonsterAbilityRecord {
+        key: "Vetala ~ Possess Corpse",
+        name: "Possess Corpse",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("As a full-round action, a Vetala can possess a Large or smaller corpse just as it can a living body. The Vetala's consciousness leaves its body and takes control of the corpse, animating it as either a skeleton or zombie (depending on its state of decay). The Vetala can remain in control of a corpse indefinitely, and can communicate through the body, but cannot use any of its other special abilities."),
+        description_variables: &[],
+        source_page: Some("p.55"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 382,
+    },
+    MonsterAbilityRecord {
+        key: "Vetala ~ Fast Healing",
+        name: "Fast Healing",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("If reduced to 0 hit points in combat, a vetala is helpless and its fast healing ceases to function for 1 hour. Additional damage dealt to the vetala has no effect. Its body might be subjected to any method of dismemberment or desecration, but after 1 hour-regardless of the state of its remains-it regains 1 hit point, is no longer helpless, and resumes healing at the rate of 5 hit points per round. However, consecrating the vetala's remains and burying the body destroys it forever."),
+        description_variables: &[],
+        source_page: Some("p.54"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 383,
+    },
+    MonsterAbilityRecord {
+        key: "Vetala ~ Weakness to Prayer",
+        name: "Weakness to Prayer",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: Some("Vetalas cannot tolerate the sound of prayers or religious mantras recited by those truly faithful to a good deity. Any character with a good-aligned deity can force a vetala to recoil by dramatically praying as a standard action. A recoiling vetala must stay at least 5 feet away from a praying character and cannot touch or make melee attacks against it. After 1 round, a vetala can fight past its revulsion and function normally each round it succeeds at a DC 25 Will save. The prayers of those who worship non-good deities or worship no deity have no effect on a vetala."),
+        description_variables: &[],
+        source_page: Some("p.54"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 384,
     },
     MonsterAbilityRecord {
         key: "Veiled Master ~ Spell-Like Abilities",
@@ -2770,6 +3109,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 432,
     },
     MonsterAbilityRecord {
+        key: "Immunity to Bleed Effects",
+        name: "Immunity to Bleed Effects",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Immunity"],
+        description: Some("You are never affected by bleed effects."),
+        description_variables: &[],
+        source_page: Some("p.46"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 437,
+    },
+    MonsterAbilityRecord {
         key: "Immunity to Turning",
         name: "Immunity to Turning",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -2783,6 +3135,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 438,
     },
     MonsterAbilityRecord {
+        key: "Immunity to Permanent Wounds",
+        name: "Immunity to Permanent Wounds",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Immunity"],
+        description: Some("You are never affected by permanent wounds."),
+        description_variables: &[],
+        source_page: Some("p.46"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 439,
+    },
+    MonsterAbilityRecord {
         key: "Good ~ Regeneration",
         name: "Regeneration",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -2794,6 +3159,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lorthact", "Nightripper"],
         source_file: "isb_abilities_race.lst",
         source_line: 440,
+    },
+    MonsterAbilityRecord {
+        key: "Resistance to Mind-Affecting ~ Output",
+        name: "Resistance to Mind-Affecting ~ Output",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Resistance"],
+        description: Some("You may add %1 points to any saving throw to resist Mind-Affecting effects."),
+        description_variables: &["MindAffectingResistanceBonus"],
+        source_page: None,
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 442,
     },
     MonsterAbilityRecord {
         key: "Can't Be Disarmed",

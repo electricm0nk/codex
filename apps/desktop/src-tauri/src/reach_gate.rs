@@ -2757,6 +2757,14 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
     ("beastiary1", "monster_abilities", "Gap: 180 of Bestiary 1's 709 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2) ship with `owners: &[]` -- no monster row of this book claims them, because they are the corpus's own shared reference-library vocabulary (`Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`, `Regeneration ~ X`, `Immunity to X`, and similar generic special-ability text `scripts/transcribe_monster_tables.py`'s ownership pass finds no in-book stat block naming). They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set (a Universal Monster Rule applies to every creature of a stated type, not to one specific stat block), which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_2", "monster_abilities", "Gap: 85 of Bestiary 2's 656 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_3", "monster_abilities", "Gap: 266 of Bestiary 3's 675 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_4", "monster_abilities", "Gap: 187 of Bestiary 4's 806 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("horror_adventures", "monster_abilities", "Gap: 56 of Horror Adventures's 62 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("inner_sea_bestiary", "monster_abilities", "Gap: 28 of Inner Sea Bestiary's 180 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("inner_sea_gods", "monster_abilities", "Gap: 2 of Inner Sea Gods's 158 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("inner_sea_world_guide", "monster_abilities", "Gap: 13 of Inner Sea World Guide's 27 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("ultimate_psionics", "monster_abilities", "Gap: 64 of Ultimate Psionics's 191 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -3605,6 +3613,867 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "beastiary:monster_ability:zombie_death_burst",
             "beastiary:monster_ability:zombie_quick_strikes",
             "beastiary:monster_ability:zombie_staggered",
+        ],
+    ),
+    (
+        "bestiary_2",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 85
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `bestiary_2::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0xfb07_0eb2_4302_5d02) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary_2 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "bestiary_2:monster_ability:acid_draconal_breath_weapon",
+            "bestiary_2:monster_ability:aeon_envisaging",
+            "bestiary_2:monster_ability:aeon_extension_of_all",
+            "bestiary_2:monster_ability:aeon_void_form",
+            "bestiary_2:monster_ability:black_scorpion_poison",
+            "bestiary_2:monster_ability:black_scorpion_rapid_stinging",
+            "bestiary_2:monster_ability:cave_scorpion_poison",
+            "bestiary_2:monster_ability:cold_draconal_breath_weapon",
+            "bestiary_2:monster_ability:companion_favored_terrain",
+            "bestiary_2:monster_ability:crab_companion_water_dependency",
+            "bestiary_2:monster_ability:detect_poison_constant",
+            "bestiary_2:monster_ability:detect_snares_and_pits_constant",
+            "bestiary_2:monster_ability:detect_thoughts_constant",
+            "bestiary_2:monster_ability:discern_lies_constant",
+            "bestiary_2:monster_ability:draconal_acid",
+            "bestiary_2:monster_ability:draconal_cold",
+            "bestiary_2:monster_ability:draconal_fire",
+            "bestiary_2:monster_ability:emotion_aura_courage_fear",
+            "bestiary_2:monster_ability:emotion_aura_empathy_apathy",
+            "bestiary_2:monster_ability:emotion_aura_hope_despair",
+            "bestiary_2:monster_ability:entrap_su",
+            "bestiary_2:monster_ability:entropic_creature_smite_law",
+            "bestiary_2:monster_ability:fire_draconal_breath_weapon",
+            "bestiary_2:monster_ability:giant_centipede_companion_poison",
+            "bestiary_2:monster_ability:giant_spider_companion_poison",
+            "bestiary_2:monster_ability:giant_tarantula_poison",
+            "bestiary_2:monster_ability:giant_whiptail_centipede_poison",
+            "bestiary_2:monster_ability:giant_whiptail_centipede_tail_slap",
+            "bestiary_2:monster_ability:greensting_scorpion_companion_poison",
+            "bestiary_2:monster_ability:greensting_scorpion_poison",
+            "bestiary_2:monster_ability:inevitable_constructed",
+            "bestiary_2:monster_ability:inevitable_truespeech",
+            "bestiary_2:monster_ability:juju_zombie_immunity_to_magic_missile",
+            "bestiary_2:monster_ability:nightshade_channel_energy",
+            "bestiary_2:monster_ability:octopus_companion_ink_cloud",
+            "bestiary_2:monster_ability:octopus_companion_jet",
+            "bestiary_2:monster_ability:octopus_companion_poison",
+            "bestiary_2:monster_ability:ogrekin_deformed_hand",
+            "bestiary_2:monster_ability:ogrekin_fragile",
+            "bestiary_2:monster_ability:ogrekin_light_sensitive",
+            "bestiary_2:monster_ability:ogrekin_obese",
+            "bestiary_2:monster_ability:ogrekin_oversized_limb",
+            "bestiary_2:monster_ability:ogrekin_oversized_maw",
+            "bestiary_2:monster_ability:ogrekin_quick_metabolism",
+            "bestiary_2:monster_ability:ogrekin_stunted_legs",
+            "bestiary_2:monster_ability:ogrekin_thick_skin",
+            "bestiary_2:monster_ability:ogrekin_vestigal_limb",
+            "bestiary_2:monster_ability:ogrekin_vestigal_twin",
+            "bestiary_2:monster_ability:ogrekin_weak_mind",
+            "bestiary_2:monster_ability:oni_change_shape",
+            "bestiary_2:monster_ability:petitioner_larva",
+            "bestiary_2:monster_ability:petitioner_the_chosen",
+            "bestiary_2:monster_ability:petitioner_the_cleansed",
+            "bestiary_2:monster_ability:petitioner_the_damned",
+            "bestiary_2:monster_ability:petitioner_the_dead",
+            "bestiary_2:monster_ability:petitioner_the_elect",
+            "bestiary_2:monster_ability:petitioner_the_hunted",
+            "bestiary_2:monster_ability:petitioner_the_remade",
+            "bestiary_2:monster_ability:petitioner_the_shapeless",
+            "bestiary_2:monster_ability:poison_fiendish_bile",
+            "bestiary_2:monster_ability:poison_mysterious_blood",
+            "bestiary_2:monster_ability:poison_vile_disjunction",
+            "bestiary_2:monster_ability:poisonous_magma_ooze_poison",
+            "bestiary_2:monster_ability:protean_change_shape",
+            "bestiary_2:monster_ability:ravener_breath_weapon",
+            "bestiary_2:monster_ability:ravener_critical_hits",
+            "bestiary_2:monster_ability:ravener_soul_consumption",
+            "bestiary_2:monster_ability:ravener_soul_magic",
+            "bestiary_2:monster_ability:regeneration_chaotic",
+            "bestiary_2:monster_ability:resolute_creature_smite_chaos",
+            "bestiary_2:monster_ability:sound_mimicry",
+            "bestiary_2:monster_ability:speak_with_plants_constant",
+            "bestiary_2:monster_ability:titan_centipede_poison",
+            "bestiary_2:monster_ability:trip_tail_slap",
+            "bestiary_2:monster_ability:universal_monster_rule_all_around_vision",
+            "bestiary_2:monster_ability:universal_monster_rule_amphibious",
+            "bestiary_2:monster_ability:universal_monster_rule_earth_glide",
+            "bestiary_2:monster_ability:universal_monster_rule_see_in_darkness",
+            "bestiary_2:monster_ability:void_zombie_blood_drain",
+            "bestiary_2:monster_ability:werebear",
+            "bestiary_2:monster_ability:wereboar",
+            "bestiary_2:monster_ability:weretiger",
+            "bestiary_2:monster_ability:worm_that_walks_discorporate",
+            "bestiary_2:monster_ability:worm_that_walks_squirming_embrace",
+            "bestiary_2:monster_ability:worm_that_walks_tenacious",
+        ],
+    ),
+    (
+        "bestiary_3",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 266
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `bestiary_3::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0xf294_251a_43b5_b6ae) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "bestiary_3:monster_ability:adlet_shaman",
+            "bestiary_3:monster_ability:aghash_cursed_gaze",
+            "bestiary_3:monster_ability:aghash_sandstorm",
+            "bestiary_3:monster_ability:aghash_spell_like_abilities",
+            "bestiary_3:monster_ability:aghasura_spell_like_abilities",
+            "bestiary_3:monster_ability:akvan_armor_training",
+            "bestiary_3:monster_ability:akvan_aura_of_hopelessness",
+            "bestiary_3:monster_ability:akvan_create_ghul",
+            "bestiary_3:monster_ability:akvan_prince_crumbling_earth",
+            "bestiary_3:monster_ability:akvan_prince_dying_ember",
+            "bestiary_3:monster_ability:akvan_prince_gasping_wind",
+            "bestiary_3:monster_ability:akvan_prince_thirsty_sea",
+            "bestiary_3:monster_ability:akvan_prince_unbalanced_soul",
+            "bestiary_3:monster_ability:akvan_shake_faith",
+            "bestiary_3:monster_ability:akvan_spell_like_abilities",
+            "bestiary_3:monster_ability:akvan_torturous_gullet",
+            "bestiary_3:monster_ability:androsphinx_roar",
+            "bestiary_3:monster_ability:androsphinx_spells",
+            "bestiary_3:monster_ability:ash_giant_disease",
+            "bestiary_3:monster_ability:ash_giant_oversized_weapon",
+            "bestiary_3:monster_ability:ash_giant_vermin_empathy",
+            "bestiary_3:monster_ability:asura_save_bonus",
+            "bestiary_3:monster_ability:asurendra_create_asura",
+            "bestiary_3:monster_ability:asurendra_death",
+            "bestiary_3:monster_ability:asurendra_sacrilege",
+            "bestiary_3:monster_ability:asurendra_shaping",
+            "bestiary_3:monster_ability:asurendra_spell_like_abilities",
+            "bestiary_3:monster_ability:behemoth_ruinous",
+            "bestiary_3:monster_ability:behemoth_unstoppable",
+            "bestiary_3:monster_ability:behemoth_vulnerable_to_miracles_and_wishes",
+            "bestiary_3:monster_ability:bone_golem_bone_prison",
+            "bestiary_3:monster_ability:bone_golem_immunity_to_magic",
+            "bestiary_3:monster_ability:brass_golem_brass_falchion",
+            "bestiary_3:monster_ability:brass_golem_breath_weapon",
+            "bestiary_3:monster_ability:brass_golem_death_throes",
+            "bestiary_3:monster_ability:brass_golem_immunity_to_magic",
+            "bestiary_3:monster_ability:brass_golem_spell_like_abilities",
+            "bestiary_3:monster_ability:cairn_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:cairn_linnorm_death_curse",
+            "bestiary_3:monster_ability:cairn_linnorm_poison",
+            "bestiary_3:monster_ability:cannon_golem_alloyed",
+            "bestiary_3:monster_ability:cannon_golem_blasting_critical",
+            "bestiary_3:monster_ability:cannon_golem_cannon",
+            "bestiary_3:monster_ability:cannon_golem_gun_training",
+            "bestiary_3:monster_ability:cannon_golem_immunity_to_magic",
+            "bestiary_3:monster_ability:cave_giant_axe_wielder",
+            "bestiary_3:monster_ability:clockwork_difficult_to_create",
+            "bestiary_3:monster_ability:clockwork_goliath_cannon",
+            "bestiary_3:monster_ability:clockwork_goliath_self_destruction",
+            "bestiary_3:monster_ability:clockwork_leviathan_breath_weapon",
+            "bestiary_3:monster_ability:clockwork_leviathan_grind",
+            "bestiary_3:monster_ability:clockwork_leviathan_swallow_whole",
+            "bestiary_3:monster_ability:clockwork_servant_net",
+            "bestiary_3:monster_ability:clockwork_servant_repair_clockwork",
+            "bestiary_3:monster_ability:clockwork_soldier_efficient_winding",
+            "bestiary_3:monster_ability:clockwork_soldier_latch",
+            "bestiary_3:monster_ability:clockwork_soldier_proficient",
+            "bestiary_3:monster_ability:clockwork_soldier_standby",
+            "bestiary_3:monster_ability:clockwork_spy_record_audio",
+            "bestiary_3:monster_ability:clockwork_spy_self_destruct",
+            "bestiary_3:monster_ability:clockwork_swift_reactions",
+            "bestiary_3:monster_ability:clockwork_winding",
+            "bestiary_3:monster_ability:coloxus_droning_wings",
+            "bestiary_3:monster_ability:coloxus_siphon",
+            "bestiary_3:monster_ability:coloxus_spell_like_abilities",
+            "bestiary_3:monster_ability:contract_devil_binding_contract",
+            "bestiary_3:monster_ability:contract_devil_impale",
+            "bestiary_3:monster_ability:contract_devil_infernal_contract",
+            "bestiary_3:monster_ability:contract_devil_infernal_investment",
+            "bestiary_3:monster_ability:contract_devil_spell_like_abilities",
+            "bestiary_3:monster_ability:criosphinx_spell_like_abilities",
+            "bestiary_3:monster_ability:criosphinx_swooping_charge",
+            "bestiary_3:monster_ability:crucidaemon_chained_daggers",
+            "bestiary_3:monster_ability:crucidaemon_spell_like_abilities",
+            "bestiary_3:monster_ability:crucidaemon_trap_making",
+            "bestiary_3:monster_ability:dandasuka_spell_like_abilities",
+            "bestiary_3:monster_ability:dandasuka_spells",
+            "bestiary_3:monster_ability:deadfall_scorpion_poison",
+            "bestiary_3:monster_ability:deadfall_scorpion_sudden_strike",
+            "bestiary_3:monster_ability:deep_sea_serpent_elusive",
+            "bestiary_3:monster_ability:deep_sea_serpent_powerful_tail",
+            "bestiary_3:monster_ability:deep_sea_serpent_surge",
+            "bestiary_3:monster_ability:demodand_faith_stealing_strike",
+            "bestiary_3:monster_ability:demodand_heretical_soul",
+            "bestiary_3:monster_ability:desert_drake_dazzling_emergence",
+            "bestiary_3:monster_ability:desert_drake_sandstorm_breath",
+            "bestiary_3:monster_ability:desert_drake_savage_bite",
+            "bestiary_3:monster_ability:desert_drake_speed_surge",
+            "bestiary_3:monster_ability:desert_giant_sandwalking",
+            "bestiary_3:monster_ability:desert_giant_scimitar_training",
+            "bestiary_3:monster_ability:div_see_in_darkness",
+            "bestiary_3:monster_ability:emperor_kirin",
+            "bestiary_3:monster_ability:eremite_evisceration",
+            "bestiary_3:monster_ability:eremite_graft_flesh",
+            "bestiary_3:monster_ability:eremite_immune_to_pain",
+            "bestiary_3:monster_ability:eremite_pain",
+            "bestiary_3:monster_ability:eremite_shadow_traveler",
+            "bestiary_3:monster_ability:eremite_spell_like_abilities",
+            "bestiary_3:monster_ability:eremite_unnerving_gaze",
+            "bestiary_3:monster_ability:fire_yai_fiery_missile",
+            "bestiary_3:monster_ability:fire_yai_smoke_form",
+            "bestiary_3:monster_ability:fire_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:fjord_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:fjord_linnorm_death_curse",
+            "bestiary_3:monster_ability:fjord_linnorm_poison",
+            "bestiary_3:monster_ability:fuath_congeal_water",
+            "bestiary_3:monster_ability:fuath_spell_like_abilities",
+            "bestiary_3:monster_ability:fuath_vulnerable_to_sunlight",
+            "bestiary_3:monster_ability:fungus_leshy_puffball",
+            "bestiary_3:monster_ability:fungus_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:fungus_leshy_spores",
+            "bestiary_3:monster_ability:ghawwas_boiling_sea",
+            "bestiary_3:monster_ability:ghawwas_poison",
+            "bestiary_3:monster_ability:ghawwas_rough_hide",
+            "bestiary_3:monster_ability:ghawwas_spell_like_abilities",
+            "bestiary_3:monster_ability:ghost_scorpion_poison",
+            "bestiary_3:monster_ability:giant_crab_spider_poison",
+            "bestiary_3:monster_ability:giant_owl_animal_telepathy",
+            "bestiary_3:monster_ability:giant_owl_insightful_senses",
+            "bestiary_3:monster_ability:giant_owl_piercing_stare",
+            "bestiary_3:monster_ability:giant_porcupine_quills",
+            "bestiary_3:monster_ability:giant_rot_grub_gnaw",
+            "bestiary_3:monster_ability:giant_rot_grub_poison",
+            "bestiary_3:monster_ability:giant_sea_anemone_anchored",
+            "bestiary_3:monster_ability:giant_sea_anemone_poison",
+            "bestiary_3:monster_ability:giant_sea_anemone_sightless",
+            "bestiary_3:monster_ability:giant_skunk_musk",
+            "bestiary_3:monster_ability:giant_vulture_diseased",
+            "bestiary_3:monster_ability:gourd_leshy_ensnare",
+            "bestiary_3:monster_ability:gourd_leshy_keepsake",
+            "bestiary_3:monster_ability:gourd_leshy_seed",
+            "bestiary_3:monster_ability:gourd_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:hekatonkheires_hands_of_war",
+            "bestiary_3:monster_ability:hekatonkheires_hundred_handed_whirlwind",
+            "bestiary_3:monster_ability:hekatonkheires_planar_leap",
+            "bestiary_3:monster_ability:hekatonkheires_spell_like_abilities",
+            "bestiary_3:monster_ability:hekatonkheires_stunning_slam",
+            "bestiary_3:monster_ability:hieracosphinx_shriek",
+            "bestiary_3:monster_ability:ice_yai_icy_missile",
+            "bestiary_3:monster_ability:ice_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:ice_yai_staggering_strikes",
+            "bestiary_3:monster_ability:incubus_pain_redoubled",
+            "bestiary_3:monster_ability:incubus_spell_like_abilities",
+            "bestiary_3:monster_ability:interlocutor_spell_like_abilities",
+            "bestiary_3:monster_ability:interlocutor_surgical_strikes",
+            "bestiary_3:monster_ability:interlocutor_unnerving_gaze",
+            "bestiary_3:monster_ability:jinushigami_infused_quarterstaff",
+            "bestiary_3:monster_ability:jinushigami_manipulate_terrain",
+            "bestiary_3:monster_ability:jinushigami_spell_like_abilities",
+            "bestiary_3:monster_ability:jinushigami_ward",
+            "bestiary_3:monster_ability:jotund_troll_all_seeing_attacks",
+            "bestiary_3:monster_ability:jotund_troll_cacophonous_roar",
+            "bestiary_3:monster_ability:jotund_troll_multiple_minds",
+            "bestiary_3:monster_ability:jungle_giant_archery_expert",
+            "bestiary_3:monster_ability:jungle_giant_spell_storing",
+            "bestiary_3:monster_ability:jungle_giant_warding_tattoos",
+            "bestiary_3:monster_ability:kami_fast_healing",
+            "bestiary_3:monster_ability:kami_merge_with_ward",
+            "bestiary_3:monster_ability:kami_ward",
+            "bestiary_3:monster_ability:kodama_distracting_gaze",
+            "bestiary_3:monster_ability:kodama_spell_like_abilities",
+            "bestiary_3:monster_ability:kuwa_spell_like_abilities",
+            "bestiary_3:monster_ability:kyton_regeneration",
+            "bestiary_3:monster_ability:kyton_unnerving_gaze",
+            "bestiary_3:monster_ability:leaf_leshy_glide",
+            "bestiary_3:monster_ability:leaf_leshy_seedpods",
+            "bestiary_3:monster_ability:leaf_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:leshy_change_shape",
+            "bestiary_3:monster_ability:leshy_plantspeech",
+            "bestiary_3:monster_ability:leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:leshy_verdant_burst",
+            "bestiary_3:monster_ability:lunar_naga_hypnosis",
+            "bestiary_3:monster_ability:lunar_naga_poison",
+            "bestiary_3:monster_ability:maharaja_extra_initiative",
+            "bestiary_3:monster_ability:maharaja_spells",
+            "bestiary_3:monster_ability:marai_confusion",
+            "bestiary_3:monster_ability:marai_energy_bolts",
+            "bestiary_3:monster_ability:marai_spells",
+            "bestiary_3:monster_ability:moss_troll_fear_of_fire",
+            "bestiary_3:monster_ability:moss_troll_tree_climber",
+            "bestiary_3:monster_ability:ogre_spider_poison",
+            "bestiary_3:monster_ability:pairaka_disease",
+            "bestiary_3:monster_ability:pairaka_lustful_dreams",
+            "bestiary_3:monster_ability:pairaka_spell_like_abilities",
+            "bestiary_3:monster_ability:rajadhiraja",
+            "bestiary_3:monster_ability:rakshasa_change_shape",
+            "bestiary_3:monster_ability:rakshasa_detect_thoughts",
+            "bestiary_3:monster_ability:rift_drake_clinging_corrosion",
+            "bestiary_3:monster_ability:rift_drake_savage_bite",
+            "bestiary_3:monster_ability:rift_drake_speed_surge",
+            "bestiary_3:monster_ability:river_drake_caustic_mucus",
+            "bestiary_3:monster_ability:river_drake_speed_surge",
+            "bestiary_3:monster_ability:rot_grub_swarm_infestation",
+            "bestiary_3:monster_ability:royal_naga_change_shape",
+            "bestiary_3:monster_ability:royal_naga_dual_gaze",
+            "bestiary_3:monster_ability:royal_naga_spell_like_abilities",
+            "bestiary_3:monster_ability:schir_disease",
+            "bestiary_3:monster_ability:schir_spell_like_abilities",
+            "bestiary_3:monster_ability:seaweed_leshy_air_cyst",
+            "bestiary_3:monster_ability:seaweed_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:seaweed_leshy_water_jet",
+            "bestiary_3:monster_ability:sepid_deflect_rays",
+            "bestiary_3:monster_ability:sepid_rain_of_debris",
+            "bestiary_3:monster_ability:sepid_spell_like_abilities",
+            "bestiary_3:monster_ability:shikigami_improvised_weapon_mastery",
+            "bestiary_3:monster_ability:shikigami_spell_like_abilities",
+            "bestiary_3:monster_ability:shipwrecker_crab_powerful_claws",
+            "bestiary_3:monster_ability:shira_consume_essence",
+            "bestiary_3:monster_ability:shira_dusty_pelt",
+            "bestiary_3:monster_ability:shira_spell_like_abilities",
+            "bestiary_3:monster_ability:taiga_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:taiga_linnorm_death_curse",
+            "bestiary_3:monster_ability:taiga_linnorm_poison",
+            "bestiary_3:monster_ability:taiga_linnorm_spines",
+            "bestiary_3:monster_ability:tataka_martial_artist",
+            "bestiary_3:monster_ability:tataka_spell_like_abilities",
+            "bestiary_3:monster_ability:tataka_spells",
+            "bestiary_3:monster_ability:tempest_behemoth_gale",
+            "bestiary_3:monster_ability:tempest_behemoth_scales",
+            "bestiary_3:monster_ability:tempest_behemoth_spell_like_abilities",
+            "bestiary_3:monster_ability:tempest_behemoth_thunderbolt",
+            "bestiary_3:monster_ability:thalassic_behemoth_spell_like_abilities",
+            "bestiary_3:monster_ability:thalassic_behemoth_water_jet",
+            "bestiary_3:monster_ability:thriae_queen_launch_merope",
+            "bestiary_3:monster_ability:thriae_queen_merope_coat",
+            "bestiary_3:monster_ability:thriae_queen_poison",
+            "bestiary_3:monster_ability:thriae_queen_spawn_soldiers",
+            "bestiary_3:monster_ability:thriae_queen_spell_like_abilities",
+            "bestiary_3:monster_ability:thriae_seer_merope_consumption",
+            "bestiary_3:monster_ability:thriae_seer_mind_sting",
+            "bestiary_3:monster_ability:thriae_seer_spell_like_abilities",
+            "bestiary_3:monster_ability:thriae_soldier_merope_consumption",
+            "bestiary_3:monster_ability:thriae_soldier_poison",
+            "bestiary_3:monster_ability:thunder_behemoth_mighty_roar",
+            "bestiary_3:monster_ability:thunder_behemoth_rock_spitting",
+            "bestiary_3:monster_ability:thunder_behemoth_spell_like_abilities",
+            "bestiary_3:monster_ability:thunder_behemoth_swallow_whole",
+            "bestiary_3:monster_ability:tor_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:tor_linnorm_death_curse",
+            "bestiary_3:monster_ability:tor_linnorm_lava_affinity",
+            "bestiary_3:monster_ability:tor_linnorm_poison",
+            "bestiary_3:monster_ability:toshigami_spell_like_abilities",
+            "bestiary_3:monster_ability:toshigami_touch_of_ages",
+            "bestiary_3:monster_ability:tripurasura_change_shape",
+            "bestiary_3:monster_ability:tripurasura_elusive",
+            "bestiary_3:monster_ability:tripurasura_poison",
+            "bestiary_3:monster_ability:tripurasura_spell_like_abilities",
+            "bestiary_3:monster_ability:upasunda_infused_weapons",
+            "bestiary_3:monster_ability:upasunda_multiweapon_mastery",
+            "bestiary_3:monster_ability:upasunda_spell_like_abilities",
+            "bestiary_3:monster_ability:vishkanya_toxic_vishkanya_venom",
+            "bestiary_3:monster_ability:void_yai_commanding_voice",
+            "bestiary_3:monster_ability:void_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:void_yai_void_form",
+            "bestiary_3:monster_ability:void_yai_void_missile",
+            "bestiary_3:monster_ability:void_yai_void_trap",
+            "bestiary_3:monster_ability:vulnudaemon_aura_of_doom",
+            "bestiary_3:monster_ability:vulnudaemon_spell_like_abilities",
+            "bestiary_3:monster_ability:water_naga_poison",
+            "bestiary_3:monster_ability:water_yai_acidic_missile",
+            "bestiary_3:monster_ability:water_yai_flowing_robes",
+            "bestiary_3:monster_ability:water_yai_liquid_form",
+            "bestiary_3:monster_ability:water_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:zuishin_healing_arrow",
+            "bestiary_3:monster_ability:zuishin_holy_weapons",
+            "bestiary_3:monster_ability:zuishin_spell_like_abilities",
+        ],
+    ),
+    (
+        "bestiary_4",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 187
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `bestiary_4::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x87ed_3d78_0aa9_ca92) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary_4 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "bestiary_4:monster_ability:broken_soul_agonized_wail",
+            "bestiary_4:monster_ability:broken_soul_baleful_gaze",
+            "bestiary_4:monster_ability:broken_soul_stat_bonuses",
+            "bestiary_4:monster_ability:broken_soul_torturous_touch",
+            "bestiary_4:monster_ability:colossus_alternate_form",
+            "bestiary_4:monster_ability:colossus_mythic_creation",
+            "bestiary_4:monster_ability:colossus_mythic_quickening",
+            "bestiary_4:monster_ability:colossus_mythic_resilience",
+            "bestiary_4:monster_ability:colossus_pinning_stomp",
+            "bestiary_4:monster_ability:colossus_selective_antimagic_aura",
+            "bestiary_4:monster_ability:demon_lord_abyssal_resurrection",
+            "bestiary_4:monster_ability:demon_lord_dagon_breath_weapon",
+            "bestiary_4:monster_ability:demon_lord_dagon_command_aquatic_creature",
+            "bestiary_4:monster_ability:demon_lord_dagon_poison",
+            "bestiary_4:monster_ability:demon_lord_dagon_transformation",
+            "bestiary_4:monster_ability:demon_lord_frightful_presence",
+            "bestiary_4:monster_ability:demon_lord_grant_spells",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_clutch_foe",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_crushing_blow",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_favored_enemy",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_powerful_slam",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_vengeful_strike",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_aura_of_locusts",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_avian_mastery",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_hear_name",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_poison",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_possession",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_profane_wishcraft",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_swarm_master",
+            "bestiary_4:monster_ability:demon_lord_powerful_weaponry",
+            "bestiary_4:monster_ability:demon_lord_regeneration",
+            "bestiary_4:monster_ability:demon_lord_summon_demons",
+            "bestiary_4:monster_ability:devilbound_creature_contract_bound",
+            "bestiary_4:monster_ability:devilbound_creature_evil_aura",
+            "bestiary_4:monster_ability:devilbound_creature_signatory_devil",
+            "bestiary_4:monster_ability:devilbound_creature_summon_devil",
+            "bestiary_4:monster_ability:divine_guardian_ability_healing",
+            "bestiary_4:monster_ability:divine_guardian_aura",
+            "bestiary_4:monster_ability:divine_guardian_blessed_life",
+            "bestiary_4:monster_ability:divine_guardian_divine_swiftness",
+            "bestiary_4:monster_ability:divine_guardian_sacred_site",
+            "bestiary_4:monster_ability:drakainia_spawn_chameleon_scales",
+            "bestiary_4:monster_ability:drakainia_spawn_covered_in_eyes",
+            "bestiary_4:monster_ability:drakainia_spawn_favored_spawn",
+            "bestiary_4:monster_ability:drakainia_spawn_impenetrable_skin",
+            "bestiary_4:monster_ability:drakainia_spawn_multiple_heads",
+            "bestiary_4:monster_ability:drakainia_spawn_poison_glands",
+            "bestiary_4:monster_ability:drakainia_spawn_serpent_headed_tail",
+            "bestiary_4:monster_ability:drakainia_spawn_sticky",
+            "bestiary_4:monster_ability:drakainia_spawn_tentacles",
+            "bestiary_4:monster_ability:drakainia_spawn_vestigial_companion",
+            "bestiary_4:monster_ability:dread_gholdako_paralysis",
+            "bestiary_4:monster_ability:ectoplasmic_creature_alterations",
+            "bestiary_4:monster_ability:ectoplasmic_creature_horrifying_ooze",
+            "bestiary_4:monster_ability:ectoplasmic_creature_phase_lurch",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_greater_slaying_arrow",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_horned_lord_s_charge",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_lightning_rod",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_perfect_archer",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_unbound",
+            "bestiary_4:monster_ability:empyreal_lord_grant_spells",
+            "bestiary_4:monster_ability:empyreal_lord_improved_resistance",
+            "bestiary_4:monster_ability:empyreal_lord_korada_combat_style_master",
+            "bestiary_4:monster_ability:empyreal_lord_korada_never_flat_footed",
+            "bestiary_4:monster_ability:empyreal_lord_korada_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_korada_shatter_spells",
+            "bestiary_4:monster_ability:empyreal_lord_korada_tranquil_master",
+            "bestiary_4:monster_ability:empyreal_lord_powerful_weaponry",
+            "bestiary_4:monster_ability:empyreal_lord_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_seed_of_life",
+            "bestiary_4:monster_ability:empyreal_lord_vildeis_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_vildeis_smite_evil",
+            "bestiary_4:monster_ability:empyreal_lord_vildeis_zealous_vision",
+            "bestiary_4:monster_ability:formian_hive_mind",
+            "bestiary_4:monster_ability:formian_telepathic_caster",
+            "bestiary_4:monster_ability:fungal_creature_create_spawn",
+            "bestiary_4:monster_ability:fungal_creature_fungal_blood_or_flesh",
+            "bestiary_4:monster_ability:fungal_creature_fungal_metabolism",
+            "bestiary_4:monster_ability:fungal_creature_fungal_spores",
+            "bestiary_4:monster_ability:fungal_creature_poison_spore_cloud",
+            "bestiary_4:monster_ability:fungal_creature_poisonous_blood",
+            "bestiary_4:monster_ability:fungal_creature_rejuvenation",
+            "bestiary_4:monster_ability:grab_medium",
+            "bestiary_4:monster_ability:great_old_one_bokrug_critical_poisoning",
+            "bestiary_4:monster_ability:great_old_one_bokrug_immortality",
+            "bestiary_4:monster_ability:great_old_one_bokrug_poison",
+            "bestiary_4:monster_ability:great_old_one_bokrug_spines",
+            "bestiary_4:monster_ability:great_old_one_bokrug_toxic_breath",
+            "bestiary_4:monster_ability:great_old_one_bokrug_unspeakable_presence",
+            "bestiary_4:monster_ability:great_old_one_bokrug_vengeful_dreams",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_cleaving_claws",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_dreams_of_madness",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_greater_starflight",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_immortality",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_non_euclidean",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_unspeakable_presence",
+            "bestiary_4:monster_ability:great_old_one_hastur_fulvous_dreams",
+            "bestiary_4:monster_ability:great_old_one_hastur_immortality",
+            "bestiary_4:monster_ability:great_old_one_hastur_reveal_visage",
+            "bestiary_4:monster_ability:great_old_one_hastur_tattered_lash",
+            "bestiary_4:monster_ability:great_old_one_hastur_unspeakable_presence",
+            "bestiary_4:monster_ability:great_old_one_hastur_wish",
+            "bestiary_4:monster_ability:great_old_one_hastur_yellow_sign",
+            "bestiary_4:monster_ability:great_old_one_immortality",
+            "bestiary_4:monster_ability:great_old_one_immunities",
+            "bestiary_4:monster_ability:great_old_one_insanity",
+            "bestiary_4:monster_ability:great_old_one_mythic",
+            "bestiary_4:monster_ability:great_old_one_otherworldly_insight",
+            "bestiary_4:monster_ability:great_old_one_overcome_damage_reduction",
+            "bestiary_4:monster_ability:great_old_one_unspeakable_presence",
+            "bestiary_4:monster_ability:hide_in_plain_sight",
+            "bestiary_4:monster_ability:immunity_to_dismissal",
+            "bestiary_4:monster_ability:kaiju_agyra_blinding_flash",
+            "bestiary_4:monster_ability:kaiju_agyra_breath_weapon",
+            "bestiary_4:monster_ability:kaiju_agyra_electrified_corpse",
+            "bestiary_4:monster_ability:kaiju_agyra_hurricane",
+            "bestiary_4:monster_ability:kaiju_agyra_rebirth",
+            "bestiary_4:monster_ability:kaiju_agyra_storm_flier",
+            "bestiary_4:monster_ability:kaiju_agyra_swift_flight",
+            "bestiary_4:monster_ability:kaiju_agyra_thunderous_blast",
+            "bestiary_4:monster_ability:kaiju_bezravnis_burrowing_charge",
+            "bestiary_4:monster_ability:kaiju_bezravnis_heat_beam",
+            "bestiary_4:monster_ability:kaiju_bezravnis_poison",
+            "bestiary_4:monster_ability:kaiju_bezravnis_web",
+            "bestiary_4:monster_ability:kaiju_hurl_foe",
+            "bestiary_4:monster_ability:kaiju_massive",
+            "bestiary_4:monster_ability:kaiju_mogaru_absorb_energy",
+            "bestiary_4:monster_ability:kaiju_mogaru_breath_weapon",
+            "bestiary_4:monster_ability:kaiju_mogaru_firebolts",
+            "bestiary_4:monster_ability:kaiju_mogaru_reflexive_breath",
+            "bestiary_4:monster_ability:kaiju_mogaru_sense_kaiju",
+            "bestiary_4:monster_ability:kaiju_mogaru_susceptible_to_song",
+            "bestiary_4:monster_ability:kaiju_overcome_damage_reduction",
+            "bestiary_4:monster_ability:kaiju_recovery",
+            "bestiary_4:monster_ability:mummified_creature_burst_of_vengeance",
+            "bestiary_4:monster_ability:mummified_creature_dust_stroke",
+            "bestiary_4:monster_ability:mummified_creature_fail_safe",
+            "bestiary_4:monster_ability:mummified_creature_frightful_presence",
+            "bestiary_4:monster_ability:mummified_creature_powerful_attacks",
+            "bestiary_4:monster_ability:nightmare_creature_fear_aura",
+            "bestiary_4:monster_ability:nightmare_creature_feign_death",
+            "bestiary_4:monster_ability:nightmare_creature_frightful_presence",
+            "bestiary_4:monster_ability:nightmare_creature_illusion_resistance",
+            "bestiary_4:monster_ability:nightmare_creature_night_terrors",
+            "bestiary_4:monster_ability:nightmare_creature_regeneration",
+            "bestiary_4:monster_ability:nightmare_lord_dream_slave",
+            "bestiary_4:monster_ability:nightmare_lord_nightmare_magic",
+            "bestiary_4:monster_ability:pod_spawned_loss_of_magic",
+            "bestiary_4:monster_ability:pod_spawned_mimic",
+            "bestiary_4:monster_ability:powerful_blows_claw",
+            "bestiary_4:monster_ability:powerful_blows_sting",
+            "bestiary_4:monster_ability:powerful_blows_tentacle",
+            "bestiary_4:monster_ability:protection_from_good_constant",
+            "bestiary_4:monster_ability:psychopomp_spirit_touch",
+            "bestiary_4:monster_ability:psychopomp_spiritsense",
+            "bestiary_4:monster_ability:regeneration_deific_or_mythic",
+            "bestiary_4:monster_ability:regeneration_epic_and_evil_energy",
+            "bestiary_4:monster_ability:resistance_to_negative_energy_output",
+            "bestiary_4:monster_ability:sanctuary_constant",
+            "bestiary_4:monster_ability:shadow_creature_shadow_blend",
+            "bestiary_4:monster_ability:shadow_lord_cloying_gloom_blast",
+            "bestiary_4:monster_ability:shadow_lord_incorporeal_step",
+            "bestiary_4:monster_ability:shadow_lord_planar_thinning",
+            "bestiary_4:monster_ability:shadow_lord_shadow_summoning",
+            "bestiary_4:monster_ability:shadow_lord_touch_attack",
+            "bestiary_4:monster_ability:spawn_of_yog_sothoth_devastation",
+            "bestiary_4:monster_ability:spawn_of_yog_sothoth_invisibility",
+            "bestiary_4:monster_ability:star_spawn_of_cthulhu_immortality",
+            "bestiary_4:monster_ability:star_spawn_of_cthulhu_limited_starflight",
+            "bestiary_4:monster_ability:star_spawn_of_cthulhu_overwhelming_mind",
+            "bestiary_4:monster_ability:universal_monster_rule_darkvision_extraordinary",
+            "bestiary_4:monster_ability:universal_monster_rule_darkvision_supernatural",
+            "bestiary_4:monster_ability:vampire_nosferatu_blood_drain",
+            "bestiary_4:monster_ability:vampire_nosferatu_dominate",
+            "bestiary_4:monster_ability:vampire_nosferatu_escape",
+            "bestiary_4:monster_ability:vampire_nosferatu_spider_climb",
+            "bestiary_4:monster_ability:vampire_nosferatu_swarm_form",
+            "bestiary_4:monster_ability:vampire_nosferatu_telekinesis",
+            "bestiary_4:monster_ability:vampire_nosferatu_telepathy",
+            "bestiary_4:monster_ability:vampire_nosferatu_weaknesses",
+            "bestiary_4:monster_ability:werebat",
+            "bestiary_4:monster_ability:werecrocodile",
+            "bestiary_4:monster_ability:werecrocodile_death_roll",
+            "bestiary_4:monster_ability:werecrocodile_sprint",
+            "bestiary_4:monster_ability:wereshark",
+            "bestiary_4:monster_ability:wyrwood_construct_traits",
+        ],
+    ),
+    (
+        "horror_adventures",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 56
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `horror_adventures::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x4db7_998b_4652_eb60) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py horror_adventures 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "horror_adventures:monster_ability:accursed_creature_cursed",
+            "horror_adventures:monster_ability:bestial_werewolf_change_shape",
+            "horror_adventures:monster_ability:bestial_werewolf_feral_counter",
+            "horror_adventures:monster_ability:cursed_lord_immortal_curse",
+            "horror_adventures:monster_ability:cursed_lord_trapped",
+            "horror_adventures:monster_ability:dread_lord_fear_aura",
+            "horror_adventures:monster_ability:dread_lord_landlocked",
+            "horror_adventures:monster_ability:dread_lord_magical_mastery",
+            "horror_adventures:monster_ability:dread_lord_one_with_the_land",
+            "horror_adventures:monster_ability:dread_lord_physical_mastery",
+            "horror_adventures:monster_ability:familial_lich_familial_possession",
+            "horror_adventures:monster_ability:hellbound_creature_contract_bound",
+            "horror_adventures:monster_ability:hive_blind",
+            "horror_adventures:monster_ability:hive_corrosive_blood",
+            "horror_adventures:monster_ability:hive_death_throes",
+            "horror_adventures:monster_ability:hive_heat_adaptability",
+            "horror_adventures:monster_ability:hive_hive_mind",
+            "horror_adventures:monster_ability:implacable_stalker_fear_aura",
+            "horror_adventures:monster_ability:implacable_stalker_gory_display",
+            "horror_adventures:monster_ability:implacable_stalker_nightmare_resurrection",
+            "horror_adventures:monster_ability:implacable_stalker_right_behind_you",
+            "horror_adventures:monster_ability:implacable_stalker_sense_fear",
+            "horror_adventures:monster_ability:implacable_stalker_terrifying_inevitability",
+            "horror_adventures:monster_ability:kyton_apostle_agonizing_prayer",
+            "horror_adventures:monster_ability:kyton_apostle_bleeding_touch",
+            "horror_adventures:monster_ability:kyton_apostle_shadow_traveler",
+            "horror_adventures:monster_ability:kyton_apostle_spell_like_abilities",
+            "horror_adventures:monster_ability:kyton_apostle_unnerving_gaze",
+            "horror_adventures:monster_ability:lich_creature_touch_attack",
+            "horror_adventures:monster_ability:lycanthropic_creature_change_shape",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_full_moon",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_near_full_moon",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_new_moon",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_other_moon",
+            "horror_adventures:monster_ability:possessed_creature_two_minds",
+            "horror_adventures:monster_ability:promethean_creature_promethean_metabolism",
+            "horror_adventures:monster_ability:shadowbound_creature_refuge_in_pain",
+            "horror_adventures:monster_ability:shadowbound_creature_regretful_gaze",
+            "horror_adventures:monster_ability:shadowbound_creature_weaver_of_lies",
+            "horror_adventures:monster_ability:traits_output_deep_one",
+            "horror_adventures:monster_ability:trompe_l_oeil_armor_class",
+            "horror_adventures:monster_ability:trompe_l_oeil_attacks",
+            "horror_adventures:monster_ability:trompe_l_oeil_autotelic",
+            "horror_adventures:monster_ability:trompe_l_oeil_enter_painting",
+            "horror_adventures:monster_ability:trompe_l_oeil_rejuvenation",
+            "horror_adventures:monster_ability:trompe_l_oeil_skills",
+            "horror_adventures:monster_ability:undead_phantom_channel_resistance",
+            "horror_adventures:monster_ability:undead_phantom_cling_of_the_grave",
+            "horror_adventures:monster_ability:undead_phantom_lifedrinker",
+            "horror_adventures:monster_ability:undead_phantom_unnatural_aura",
+            "horror_adventures:monster_ability:unknown_assume_likeness",
+            "horror_adventures:monster_ability:unknown_dream_movements",
+            "horror_adventures:monster_ability:unknown_hallucinatory_camouflage",
+            "horror_adventures:monster_ability:unknown_spell_like_abilities",
+            "horror_adventures:monster_ability:unknown_victimize",
+        ],
+    ),
+    (
+        "inner_sea_bestiary",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 28
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `inner_sea_bestiary::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0xfb2e_b118_c0c5_f992) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py inner_sea_bestiary 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "inner_sea_bestiary:monster_ability:blighted_fey_cyth_v_sug_s_unity",
+            "inner_sea_bestiary:monster_ability:blighted_fey_daughters_of_arlantia",
+            "inner_sea_bestiary:monster_ability:blighted_fey_fungal_rejuvenation",
+            "inner_sea_bestiary:monster_ability:blighted_fey_parasitic_bond",
+            "inner_sea_bestiary:monster_ability:blighted_fey_tainted_blood",
+            "inner_sea_bestiary:monster_ability:blighted_fey_thorn_throw",
+            "inner_sea_bestiary:monster_ability:chemnosit_hungry_gaze",
+            "inner_sea_bestiary:monster_ability:chemnosit_spines",
+            "inner_sea_bestiary:monster_ability:immunity_to_bleed_effects",
+            "inner_sea_bestiary:monster_ability:immunity_to_permanent_wounds",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_breath_weapon",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_arm",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_leg",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_increased_speed",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_shattered_hide",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_warped_mind",
+            "inner_sea_bestiary:monster_ability:noqual_golem_powerful_blows",
+            "inner_sea_bestiary:monster_ability:psychopomp_spirit_sense",
+            "inner_sea_bestiary:monster_ability:psychopomp_spirit_touch",
+            "inner_sea_bestiary:monster_ability:resistance_to_mind_affecting_output",
+            "inner_sea_bestiary:monster_ability:vetala_drain_prana",
+            "inner_sea_bestiary:monster_ability:vetala_fast_healing",
+            "inner_sea_bestiary:monster_ability:vetala_malevolence",
+            "inner_sea_bestiary:monster_ability:vetala_possess_corpse",
+            "inner_sea_bestiary:monster_ability:vetala_weakness_to_prayer",
+            "inner_sea_bestiary:monster_ability:volnagur_blood_rage",
+            "inner_sea_bestiary:monster_ability:volnagur_eye_rays",
+            "inner_sea_bestiary:monster_ability:volnagur_shatter_silence",
+        ],
+    ),
+    (
+        "inner_sea_gods",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 2
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `inner_sea_gods::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x7a3d_5f6f_8544_d9fc) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py inner_sea_gods 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "inner_sea_gods:monster_ability:herald_always_armed",
+            "inner_sea_gods:monster_ability:herald_emissary",
+        ],
+    ),
+    (
+        "inner_sea_world_guide",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 13
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `inner_sea_world_guide::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x3cbe_09ea_f548_c83a) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py inner_sea_world_guide 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "inner_sea_world_guide:monster_ability:clockwork_difficult_to_create",
+            "inner_sea_world_guide:monster_ability:clockwork_swift_reactions",
+            "inner_sea_world_guide:monster_ability:clockwork_winding",
+            "inner_sea_world_guide:monster_ability:constant_desecrate",
+            "inner_sea_world_guide:monster_ability:constant_water_breathing",
+            "inner_sea_world_guide:monster_ability:nascent_demon_lord_aligned_strike",
+            "inner_sea_world_guide:monster_ability:nascent_demon_lord_grant_spells",
+            "inner_sea_world_guide:monster_ability:sandpoint_devil_bay",
+            "inner_sea_world_guide:monster_ability:sandpoint_devil_hellfire_breath",
+            "inner_sea_world_guide:monster_ability:sandpoint_devil_kick",
+            "inner_sea_world_guide:monster_ability:treerazer_aura_of_corruption",
+            "inner_sea_world_guide:monster_ability:treerazer_defoliation",
+            "inner_sea_world_guide:monster_ability:treerazer_regeneration",
+        ],
+    ),
+    (
+        "ultimate_psionics",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 64
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `ultimate_psionics::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x20e3_944a_3d90_ea44) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py ultimate_psionics 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "ultimate_psionics:monster_ability:astral_armor_spikes",
+            "ultimate_psionics:monster_ability:astral_blindsight",
+            "ultimate_psionics:monster_ability:astral_buff",
+            "ultimate_psionics:monster_ability:astral_celerity",
+            "ultimate_psionics:monster_ability:astral_cleave",
+            "ultimate_psionics:monster_ability:astral_compact_form",
+            "ultimate_psionics:monster_ability:astral_concussion",
+            "ultimate_psionics:monster_ability:astral_constrict",
+            "ultimate_psionics:monster_ability:astral_deflection",
+            "ultimate_psionics:monster_ability:astral_dimension_slide",
+            "ultimate_psionics:monster_ability:astral_dodge",
+            "ultimate_psionics:monster_ability:astral_energy_bolt",
+            "ultimate_psionics:monster_ability:astral_extra_attack",
+            "ultimate_psionics:monster_ability:astral_extra_buff",
+            "ultimate_psionics:monster_ability:astral_extreme_damage_reduction",
+            "ultimate_psionics:monster_ability:astral_extreme_deflection",
+            "ultimate_psionics:monster_ability:astral_fast_healing",
+            "ultimate_psionics:monster_ability:astral_fly",
+            "ultimate_psionics:monster_ability:astral_grab",
+            "ultimate_psionics:monster_ability:astral_great_cleave",
+            "ultimate_psionics:monster_ability:astral_greater_might",
+            "ultimate_psionics:monster_ability:astral_heavy_deflection",
+            "ultimate_psionics:monster_ability:astral_improved_buff",
+            "ultimate_psionics:monster_ability:astral_improved_bull_rush",
+            "ultimate_psionics:monster_ability:astral_improved_critical",
+            "ultimate_psionics:monster_ability:astral_improved_damage_reduction",
+            "ultimate_psionics:monster_ability:astral_improved_fly",
+            "ultimate_psionics:monster_ability:astral_improved_might",
+            "ultimate_psionics:monster_ability:astral_improved_slam_attack",
+            "ultimate_psionics:monster_ability:astral_improved_swim",
+            "ultimate_psionics:monster_ability:astral_might",
+            "ultimate_psionics:monster_ability:astral_mobility",
+            "ultimate_psionics:monster_ability:astral_muscle",
+            "ultimate_psionics:monster_ability:astral_natural_invisibility",
+            "ultimate_psionics:monster_ability:astral_poison_touch",
+            "ultimate_psionics:monster_ability:astral_pounce",
+            "ultimate_psionics:monster_ability:astral_power_attack",
+            "ultimate_psionics:monster_ability:astral_power_resistance",
+            "ultimate_psionics:monster_ability:astral_reach",
+            "ultimate_psionics:monster_ability:astral_rend",
+            "ultimate_psionics:monster_ability:astral_resistance_to_acid",
+            "ultimate_psionics:monster_ability:astral_resistance_to_cold",
+            "ultimate_psionics:monster_ability:astral_resistance_to_electricity",
+            "ultimate_psionics:monster_ability:astral_resistance_to_fire",
+            "ultimate_psionics:monster_ability:astral_resistance_to_sonic",
+            "ultimate_psionics:monster_ability:astral_smite",
+            "ultimate_psionics:monster_ability:astral_spring_attack",
+            "ultimate_psionics:monster_ability:astral_stunning_fist",
+            "ultimate_psionics:monster_ability:astral_swim",
+            "ultimate_psionics:monster_ability:astral_tail_slap",
+            "ultimate_psionics:monster_ability:astral_talons",
+            "ultimate_psionics:monster_ability:astral_trample",
+            "ultimate_psionics:monster_ability:astral_trip",
+            "ultimate_psionics:monster_ability:astral_two_menu_a_abilities",
+            "ultimate_psionics:monster_ability:astral_two_menu_b_abilities",
+            "ultimate_psionics:monster_ability:astral_utility",
+            "ultimate_psionics:monster_ability:astral_warrior_link",
+            "ultimate_psionics:monster_ability:astral_whirlwind_attack",
+            "ultimate_psionics:monster_ability:energy_touch_acid",
+            "ultimate_psionics:monster_ability:energy_touch_cold",
+            "ultimate_psionics:monster_ability:energy_touch_electricity",
+            "ultimate_psionics:monster_ability:energy_touch_fire",
+            "ultimate_psionics:monster_ability:horror_devastating_touch",
+            "ultimate_psionics:monster_ability:horror_link",
         ],
     ),
 ];
@@ -4825,10 +5694,20 @@ mod tests {
             9,
             "the 9 shippable rows; the book's other 5 carry NAMEISPI:YES"
         );
+        // 14 -> 27 (`decisions.md §20`, no_record-to-zero wave 2 follow-on,
+        // +13 owner-less rows -- shape measurable, reachability NOT
+        // claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS` under
+        // this same key).
+        assert_eq!(abilities.len(), 27, "every non-PI row on disk for this book/kind");
+        let owner_less =
+            recorded_unreached(&Family::new("inner_sea_world_guide", "monster_abilities"));
+        assert_eq!(owner_less.len(), 13, "the owner-less rows this cycle's mechanism shipped");
+        let owned_abilities: BTreeSet<String> =
+            abilities.difference(&owner_less).cloned().collect();
         assert_eq!(
-            abilities.len(),
+            owned_abilities.len(),
             14,
-            "the 14 owned, non-PI rows; the book's other 16 are PI or orphaned"
+            "the 14 owned, non-PI, non-orphan rows; the book's other 16 are PI or orphaned"
         );
 
         let response = crate::monster_catalog::build_monster_catalog();
@@ -4845,7 +5724,7 @@ mod tests {
             .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
             .collect();
         assert_eq!(served_monsters, monsters, "served monsters");
-        assert_eq!(served_abilities, abilities, "served abilities");
+        assert_eq!(served_abilities, owned_abilities, "served abilities");
 
         // Not a count and not a name list: the property is checked against the
         // LIVE blacklist, so a term added to `PI_BLACKLIST_TERMS` later fails
@@ -4879,14 +5758,22 @@ mod tests {
             }
             other => panic!("expected every monster to reach, got {other:?}"),
         }
+        // **Superseded `decisions.md §20` (no_record-to-zero wave 2
+        // follow-on).** 13 owner-less rows now ship for shape measurement;
+        // reach itself does not move for them (`list_monster_catalog` only
+        // ever walks a monster's own `ability_keys`), so the claim is
+        // `NotSurfaced` naming exactly the 13 -- pinned by exact key in
+        // `UNREACHED_RECORD_FINDINGS` under this same key.
         match reach_of(&Family::new("inner_sea_world_guide", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, surface } => {
-                assert_eq!(records, 14);
-                assert_eq!(surface, "list_monster_catalog");
-            }
-            other => panic!("expected every linked ability to reach, got {other:?}"),
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                13,
+                "expected exactly the 13 owner-less records to be the whole shortfall (the \
+                 other 14 all reach)"
+            ),
+            other => panic!("expected 13 named non-reaches (14 of 27 still reach), got {other:?}"),
         }
     }
 
@@ -4949,7 +5836,16 @@ mod tests {
         // very test's own `BUNDLE_OWNED_NO_JSON_TWIN_YET` list already named
         // as served-but-not-yet-on-disk -- `gen_book_cache` wrote their JSON
         // twin for the first time, closing that gap incidentally).
-        assert_eq!(abilities.len(), 571, "the owned rows on disk for this book/kind");
+        // 571 -> 656 (`decisions.md §20`, no_record-to-zero wave 2
+        // follow-on, +85 owner-less rows -- shape measurable, reachability
+        // NOT claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS`
+        // under this same key).
+        assert_eq!(abilities.len(), 656, "every row on disk for this book/kind");
+        let owner_less = recorded_unreached(&Family::new("bestiary_2", "monster_abilities"));
+        assert_eq!(owner_less.len(), 85, "the owner-less rows this cycle's mechanism shipped");
+        let owned_abilities: BTreeSet<String> =
+            abilities.difference(&owner_less).cloned().collect();
+        assert_eq!(owned_abilities.len(), 571, "the owned (reachable) rows on disk");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -4995,7 +5891,7 @@ mod tests {
             "bestiary_2:monster_ability:umbral_dragon_umbral_scion",
             "bestiary_2:monster_ability:water_breathing",
         ];
-        let expected_served: BTreeSet<String> = abilities
+        let expected_served: BTreeSet<String> = owned_abilities
             .iter()
             .cloned()
             .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
@@ -5025,18 +5921,26 @@ mod tests {
             }
             other => panic!("expected every monster to reach, got {other:?}"),
         }
+        // **Superseded `decisions.md §20` (no_record-to-zero wave 2
+        // follow-on).** 85 owner-less rows now ship for shape measurement
+        // (SD31-E6-F9-005: 401 -> 493; T9 `MonsterAbilityFacet` widening:
+        // 493 -> 571 owned; this cycle: +85 owner-less = 656 total). Reach
+        // itself does not move for the 85 (`list_monster_catalog` only ever
+        // walks a monster's own `ability_keys`), so the claim is
+        // `NotSurfaced` naming exactly the 85 -- pinned by exact key in
+        // `UNREACHED_RECORD_FINDINGS` under this same key.
         match reach_of(&Family::new("bestiary_2", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, surface } => {
-                // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493.
-                // T9 `MonsterAbilityFacet` widening cycle: 493 -> 571 (see
-                // the `abilities.len()` assertion above in this same test
-                // for the full derivation).
-                assert_eq!(records, 571);
-                assert_eq!(surface, "list_monster_catalog");
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                85,
+                "expected exactly the 85 owner-less records to be the whole shortfall (the \
+                 other 571 all reach)"
+            ),
+            other => {
+                panic!("expected 85 named non-reaches (571 of 656 still reach), got {other:?}")
             }
-            other => panic!("expected every linked ability to reach, got {other:?}"),
         }
     }
 
@@ -5079,8 +5983,17 @@ mod tests {
         // bestiary_3::mod.rs`'s own comment carries the full derivation, and
         // `gen_book_cache -- bestiary_3` wrote all 409 to disk, closing the
         // `BUNDLE_OWNED_NO_JSON_TWIN_YET` gap below for every key it names.
+        // 409 -> 675 (`decisions.md §20`, no_record-to-zero wave 2
+        // follow-on, +266 owner-less rows -- shape measurable, reachability
+        // NOT claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS`
+        // under this same key).
+        assert_eq!(abilities.len(), 675, "every row on disk for this book/kind");
+        let owner_less = recorded_unreached(&Family::new("bestiary_3", "monster_abilities"));
+        assert_eq!(owner_less.len(), 266, "the owner-less rows this cycle's mechanism shipped");
+        let owned_abilities: BTreeSet<String> =
+            abilities.difference(&owner_less).cloned().collect();
         assert_eq!(
-            abilities.len(),
+            owned_abilities.len(),
             409,
             "the 409 owned, reachable rows on disk after the T9 widening cycle"
         );
@@ -5117,7 +6030,7 @@ mod tests {
             "bestiary_3:monster_ability:legion_archon_flames_of_faith",
             "bestiary_3:monster_ability:legion_archon_second_skin",
         ];
-        let expected_served: BTreeSet<String> = abilities
+        let expected_served: BTreeSet<String> = owned_abilities
             .iter()
             .cloned()
             .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
@@ -5146,16 +6059,26 @@ mod tests {
             }
             other => panic!("expected every monster to reach, got {other:?}"),
         }
+        // **Superseded `decisions.md §20` (no_record-to-zero wave 2
+        // follow-on).** 266 owner-less rows now ship for shape measurement
+        // (T9 `MonsterAbilityFacet` widening: 27 -> 409 owned; this cycle:
+        // +266 owner-less = 675 total). Reach itself does not move for the
+        // 266 (`list_monster_catalog` only ever walks a monster's own
+        // `ability_keys`), so the claim is `NotSurfaced` naming exactly the
+        // 266 -- pinned by exact key in `UNREACHED_RECORD_FINDINGS` under
+        // this same key.
         match reach_of(&Family::new("bestiary_3", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, surface } => {
-                // T9 `MonsterAbilityFacet` widening cycle: 27 -> 409 (see the
-                // `abilities.len()` assertion above in this same test).
-                assert_eq!(records, 409);
-                assert_eq!(surface, "list_monster_catalog");
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                266,
+                "expected exactly the 266 owner-less records to be the whole shortfall (the \
+                 other 409 all reach)"
+            ),
+            other => {
+                panic!("expected 266 named non-reaches (409 of 675 still reach), got {other:?}")
             }
-            other => panic!("expected every linked ability to reach, got {other:?}"),
         }
     }
 

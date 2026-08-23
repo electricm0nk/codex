@@ -915,16 +915,22 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            2836,
+            3537,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
              wave 2): +180 owner-less `bestiary` records now ship for shape measurement \
              rather than being dropped as orphans — see \
-             `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`"
+             `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`. \
+             2836 -> 3537 (`decisions.md §20`, no_record-to-zero wave 2 FOLLOW-ON, +701): the \
+             identical owner-less-ship mechanism applied to the 8 remaining registered books \
+             (`bestiary_2` +85, `bestiary_3` +266, `bestiary_4` +187, `horror_adventures` +56, \
+             `inner_sea_bestiary` +28, `inner_sea_gods` +2, `inner_sea_world_guide` +13, \
+             `ultimate_psionics` +64) — each book's own module pins its exact owner-less set, \
+             see `every_owner_less_ability_is_a_named_and_pinned_non_reach` in each"
         );
         assert_eq!(
-            digest, 0xada4_55b5_de6b_afc7,
+            digest, 0x020f_6b24_5185_886e,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Devilbound Creature ~ Summon Devil",
+    "delivery": "Supernatural",
+    "description": "The creature gains the summon universal monster ability and can summon a devil once per day with a 100%% chance of success. The devil remains for 1 hour. The creature's caster level or Hit Dice, whichever is higher, determines the most powerful kind of devil it can summon and the effective spell level of this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:devilbound_creature_summon_devil",
+    "name": "Summon Devil",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 481,
+    "record_key": "Devilbound Creature ~ Summon Devil"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

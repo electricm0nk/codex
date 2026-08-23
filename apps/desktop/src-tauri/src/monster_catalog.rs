@@ -1041,11 +1041,18 @@ mod tests {
             "every OWNED ability record the chassis holds reaches the wire under its own key, \
              once"
         );
+        // 180 -> 881 (`decisions.md §20`, no_record-to-zero wave 2
+        // follow-on, +701): the identical owner-less-ship mechanism applied
+        // to the 8 remaining registered books with any real orphan
+        // population -- `bestiary_2` +85, `bestiary_3` +266, `bestiary_4`
+        // +187, `horror_adventures` +56, `inner_sea_bestiary` +28,
+        // `inner_sea_gods` +2, `inner_sea_world_guide` +13,
+        // `ultimate_psionics` +64.
         assert_eq!(
-            owner_less_records_held, 180,
+            owner_less_records_held, 881,
             "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
-             from `scripts/transcribe_monster_tables.py bestiary`'s own stderr and update both \
-             this pin and `reach_gate.rs`'s matching entries"
+             from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
+             update both this pin and `reach_gate.rs`'s matching entries"
         );
     }
 

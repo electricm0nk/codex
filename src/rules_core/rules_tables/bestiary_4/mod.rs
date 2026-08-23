@@ -198,32 +198,69 @@ mod tests {
     #[test]
     fn the_book_ships_two_hundred_six_monsters_and_six_hundred_nineteen_abilities() {
         assert_eq!(monsters().len(), 206);
-        assert_eq!(monster_abilities().len(), 619);
+        // 619 owned + 187 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 806. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 619);
+        assert_eq!(monster_abilities().len(), 806);
     }
 
-    /// The shipped total, pinned directly. 749 -> 783 -> 825 (+42, same cause
-    /// as the test above); re-derive with `python3 scripts/classify_monster_
-    /// ability_rows.py bestiary_4` (whose own "remaining"/"reachable
-    /// remainder" framing answers a different, inventory-status-relative
-    /// question and is no longer the live source for this number) or
-    /// `scripts/scan_monster_ability_bundle_rows.py bestiary_4` rather than
-    /// re-deriving by hand.
+    /// The shipped total, pinned directly. 749 -> 783 -> 825 -> 1012 (+187,
+    /// same cause as the test above); re-derive with `python3 scripts/
+    /// classify_monster_ability_rows.py bestiary_4` (whose own "remaining"/
+    /// "reachable remainder" framing answers a different, inventory-status-
+    /// relative question and is no longer the live source for this number)
+    /// or `scripts/scan_monster_ability_bundle_rows.py bestiary_4` rather
+    /// than re-deriving by hand.
     #[test]
     fn the_shipped_total_is_the_books_real_measured_count() {
-        assert_eq!(monsters().len() + monster_abilities().len(), 825);
+        assert_eq!(monsters().len() + monster_abilities().len(), 1012);
     }
 
-    /// Every transcribed ability row is owned by a monster row of this book.
-    /// The book has 225 orphans; the point of this test is that none got in.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// An owner-less ability row no longer forbids shipping: an un-ingested
+    /// row's shape cannot be measured, so the 187 rows no monster row of
+    /// this book claims now SHIP with `owners: &[]`, and this test's job
+    /// changes from "forbid an empty owner list" to "pin the EXACT set of
+    /// records that carry one". `list_monster_catalog` never walks these
+    /// directly (only a monster's own `ability_keys`), so shipping them does
+    /// not surface a stub; each key is pinned separately, by name, in
+    /// `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+    /// `("bestiary_4", "monster_abilities")` as a proven non-reach, not a
+    /// silent claim of reachability.
     #[test]
-    fn no_shipped_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            187,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py bestiary_4` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x87ed_3d78_0aa9_ca92,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
     }
 
     /// Every owner named by a shipped ability is itself a shipped monster.
@@ -280,26 +317,36 @@ mod tests {
         }
     }
 
-    /// A representative pin over the orphan classes, by the corpus line each
-    /// row is, so a regeneration that quietly pulls one back in fails here.
-    ///
-    /// One row from each cause: `b4_abilities_races_ce.lst:11` from the file
-    /// that ships nothing, `b4_abilities_race.lst:324` from the rows no monster
-    /// ever named, and `b4_abilities_race.lst:439`
-    /// (`Demon Lord (Dagon) ~ Breath Weapon`) from the 73-row cascade this
-    /// round's own PI screen created.
+    /// **Superseded `decisions.md §20`.** These now ship owner-less (shape
+    /// measurable, reachability not claimed) instead of being excluded —
+    /// each is one of the 187 pinned by
+    /// `every_owner_less_ability_is_a_named_and_pinned_non_reach` above. One
+    /// row from each original cause: `b4_abilities_race.lst:324` from the
+    /// rows no monster ever named, and `b4_abilities_race.lst:439`
+    /// (`Demon Lord (Dagon) ~ Breath Weapon`) from the 73-row cascade the
+    /// PI screen created (the row's OWN declaration governs per
+    /// `decisions.md §19b`, so it ships owner-less rather than dropped).
     #[test]
-    fn the_orphan_rows_are_not_records() {
+    fn the_previously_excluded_orphans_now_ship_owner_less() {
         for line in [324u32, 325, 336, 338, 439, 1413, 1414, 1415, 1416] {
+            let ability = monster_abilities()
+                .iter()
+                .find(|a| a.source_line == line)
+                .unwrap_or_else(|| {
+                    panic!(
+                        "b4_abilities_race.lst:{line} ships for shape measurement \
+                         (decisions.md §20)"
+                    )
+                });
             assert!(
-                !monster_abilities().iter().any(|a| a.source_line == line),
-                "b4_abilities_race.lst:{line} is owned by no SHIPPED monster row of this book \
-                 and must not ship"
+                ability.owners.is_empty(),
+                "{} was expected owner-less; no shipped monster row of this book claims it",
+                ability.key
             );
         }
     }
 
-    /// Every shipped ability of this book is reached by the namespaced-prefix
+    /// Every OWNED ability of this book is reached by the namespaced-prefix
     /// link rather than by a monster row naming it — EXCEPT the 34 named
     /// below, added by `SD31-W21-MONSTER-001`'s `CATEGORY:Internal` bundle-row
     /// hop. Bundle-owned abilities are Core Essentials' generic "Universal
@@ -309,6 +356,12 @@ mod tests {
     /// (it would `panic!` on the unwrap, not fail an assertion). This still
     /// holds for the `row-named 0 / prefix 543` population the classifier
     /// originally reported; only the hop's own additions are excepted.
+    ///
+    /// **Scoped to OWNED rows by `decisions.md §20`.** An owner-less row has
+    /// no owner to check the namespaced prefix against by construction, and
+    /// several of the 187 (e.g. `Immunity to Dismissal`) carry no `" ~ "`
+    /// namespace at all either — the same shape the bundle exceptions above
+    /// already carve out, just for a different reason.
     #[test]
     fn every_shipped_ability_is_reached_by_its_namespaced_key() {
         const BUNDLE_OWNED_EXCEPTIONS: &[&str] = &[
@@ -347,7 +400,7 @@ mod tests {
             "Unnatural Aura",
             "Water Walk ~ Constant",
         ];
-        for ability in monster_abilities() {
+        for ability in monster_abilities().iter().filter(|a| !a.owners.is_empty()) {
             if BUNDLE_OWNED_EXCEPTIONS.contains(&ability.key) {
                 assert!(
                     !ability.owners.is_empty(),
@@ -510,7 +563,16 @@ mod companion_tests {
         // by `Ratling`/`Familiar (Ratling)`) -- confirmed identical byte-for-
         // byte against the pinned oracle before excepting it here, not
         // assumed from the shared name alone.
-        const CROSS_FAMILY_DUPLICATE_EXCEPTIONS: &[&str] = &["Read Magic ~ Constant"];
+        // `Grab ~ Medium` added `decisions.md §20` no_record-to-zero wave 2
+        // follow-on: the identical shape `Read Magic ~ Constant` documents,
+        // confirmed byte-for-byte identical between `b4_abilities_races_ce.lst`
+        // (this book's monster side, owned by no monster row of this book --
+        // ships owner-less) and the companion side (owned by
+        // `Companion (Weasel (Giant))`) before excepting it here, not assumed
+        // from the shared name alone. Reached only once this cycle's
+        // orphan-ship widening let the monster-side row through at all.
+        const CROSS_FAMILY_DUPLICATE_EXCEPTIONS: &[&str] =
+            &["Read Magic ~ Constant", "Grab ~ Medium"];
         for ability in companion_abilities() {
             if CROSS_FAMILY_DUPLICATE_EXCEPTIONS.contains(&ability.key) {
                 continue;

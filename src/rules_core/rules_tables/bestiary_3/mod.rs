@@ -222,7 +222,15 @@ mod tests {
         // owned row remains excluded and named on stderr (`Adlet ~
         // Spell-Like Abilities`, bare `TYPE:SpellLike` with no facet
         // segment at all).
-        assert_eq!(monster_abilities().len(), 409);
+        // 409 owned + 266 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 675. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 409);
+        assert_eq!(monster_abilities().len(), 675);
     }
 
     /// The first book in the lane to lose NO monster row: no `NAMEISPI:YES`, no
@@ -238,17 +246,46 @@ mod tests {
         );
     }
 
-    /// Every transcribed ability row is owned by a monster row of this book.
-    /// The book has orphans; the point of this test is that none of them got in.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// An owner-less ability row no longer forbids shipping: an un-ingested
+    /// row's shape cannot be measured, so the 266 rows no monster row of this
+    /// book claims now SHIP with `owners: &[]`, and this test's job changes
+    /// from "forbid an empty owner list" to "pin the EXACT set of records
+    /// that carry one". `list_monster_catalog` never walks these directly
+    /// (only a monster's own `ability_keys`), so shipping them does not
+    /// surface a stub; each key is pinned separately, by name, in
+    /// `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+    /// `("bestiary_3", "monster_abilities")` as a proven non-reach, not a
+    /// silent claim of reachability.
     #[test]
-    fn no_shipped_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            266,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py bestiary_3` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0xf294_251a_43b5_b6ae,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
     }
 
     /// Every owner named by a shipped ability is itself a shipped monster.
@@ -283,15 +320,39 @@ mod tests {
     /// 397 from this list — all 9 now ship, owned via the `CATEGORY:Internal`
     /// bundle-row hop (see the module header and
     /// `every_shipped_ability_is_reached_by_its_namespaced_key` below).
+    /// **Superseded `decisions.md §20` for three of the four.** `304`,
+    /// `1150`, and `1448` now ship owner-less (shape measurable,
+    /// reachability not claimed) instead of being excluded — each is one of
+    /// the 266 pinned by `every_owner_less_ability_is_a_named_and_pinned_
+    /// non_reach` above. `1663` (`Jiang-Shi Vampire`) stays excluded for an
+    /// UNRELATED, pre-existing reason: its `DESC:` shape is multi-valued and
+    /// `parse_desc` still refuses it (`scripts/transcribe_monster_tables.py
+    /// bestiary_3`'s own stderr names it under the multi-`DESC:` screen, not
+    /// the orphan one) — the orphan-ship mechanism only widens WHAT the
+    /// orphan screen keeps, never what an unrelated screen already drops.
     #[test]
-    fn the_remaining_orphan_rows_are_not_records() {
-        for line in [304u32, 1150, 1448, 1663] {
+    fn the_previously_excluded_orphans_now_ship_owner_less() {
+        for line in [304u32, 1150, 1448] {
+            let ability = monster_abilities()
+                .iter()
+                .find(|a| a.source_line == line)
+                .unwrap_or_else(|| {
+                    panic!(
+                        "b3_abilities_race.lst:{line} ships for shape measurement \
+                         (decisions.md §20)"
+                    )
+                });
             assert!(
-                !monster_abilities().iter().any(|a| a.source_line == line),
-                "b3_abilities_race.lst:{line} is owned by no monster row of this book and must \
-                 not ship"
+                ability.owners.is_empty(),
+                "{} was expected owner-less; no monster row of this book claims it",
+                ability.key
             );
         }
+        assert!(
+            !monster_abilities().iter().any(|a| a.source_line == 1663),
+            "b3_abilities_race.lst:1663 (Jiang-Shi Vampire) is excluded by the multi-DESC: \
+             screen, unrelated to the orphan mechanism, and must still not ship"
+        );
     }
 
     /// Every shipped ability of this book is reached by the namespaced-prefix
@@ -317,9 +378,15 @@ mod tests {
     /// 42 entries and counting — the un-scalable pattern `decisions.md §16`
     /// warns against. Resolving through `monster.name` instead is the fix
     /// for the shape itself, not one more name added to a list.
+    ///
+    /// **Scoped to OWNED rows by `decisions.md §20`.** An owner-less row
+    /// (no monster row of this book claims it) has no owner to check the
+    /// namespaced prefix against by construction — that is the whole point
+    /// of shipping it owner-less rather than dropping it — so this property
+    /// only applies where an owner exists at all.
     #[test]
     fn every_shipped_ability_is_reached_by_its_namespaced_key() {
-        for ability in monster_abilities() {
+        for ability in monster_abilities().iter().filter(|a| !a.owners.is_empty()) {
             let (prefix, _) = ability
                 .key
                 .split_once(" ~ ")

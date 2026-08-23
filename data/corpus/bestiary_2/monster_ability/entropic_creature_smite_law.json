@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Entropic Creature ~ Smite Law",
+    "delivery": "Supernatural",
+    "description": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against lawful foes; smite persists until target is dead or the entropic creature rests.",
+    "description_variables": [
+      "SmiteLawTimes",
+      "SmiteLawAttackBonus",
+      "SmiteLawDamageBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:entropic_creature_smite_law",
+    "name": "Smite Law",
+    "owners": [],
+    "source_page": "p.292",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1967,
+    "record_key": "Entropic Creature ~ Smite Law"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

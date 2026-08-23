@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Accursed Creature ~ Cursed",
+    "delivery": "Supernatural",
+    "description": "The creature is under a particular curse. Natural attacks cause bestow curse (DC %1, CL %2) on a successful hit (this can inflict any effect of bestow curse or spread the creature's personal curse)",
+    "description_variables": [
+      "10+HD/2+CHA",
+      "HD"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:accursed_creature_cursed",
+    "name": "Cursed",
+    "owners": [],
+    "source_page": "p.248",
+    "traits": [
+      "AccursedCreature"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 243,
+    "record_key": "Accursed Creature ~ Cursed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

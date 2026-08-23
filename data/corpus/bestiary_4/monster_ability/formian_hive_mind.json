@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Formian ~ Hive Mind",
+    "delivery": "Extraordinary",
+    "description": "Formians share a telepathic bond with other members of their hive that enhances their hive mates' perception. As long as a formian is within telepathic range of at least one hive mate, it gains a +4 racial bonus on initiative checks and Perception checks. If at least one formian disbelieves an illusion, all formians within its telepathic range are also considered to disbelieve that illusion. If one formian is aware of combatants, all other hive mates within the range of its telepathy are also aware of those combatants.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:formian_hive_mind",
+    "name": "Hive Mind",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 128,
+    "record_key": "Formian ~ Hive Mind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

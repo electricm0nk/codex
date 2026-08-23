@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Possessed Creature ~ Two Minds",
+    "delivery": "Supernatural",
+    "description": "After failing a save against a mind-affecting effect, a possessed creature can reroll the save, but the spirit takes control if the second save succeeds. A possessed creature always acts on the surprise round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:possessed_creature_two_minds",
+    "name": "Two Minds",
+    "owners": [],
+    "source_page": "p.250",
+    "traits": [
+      "PossessedCreature"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 318,
+    "record_key": "Possessed Creature ~ Two Minds"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

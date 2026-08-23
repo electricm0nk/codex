@@ -5651,3 +5651,62 @@ already computed — nothing here was ambiguous enough to stop on.
 - **What remains:** none — this was the last two `§24` PI-name-blocked populations named in the
   dispatch brief. Campaign `no_record` (2,664) is now dominated by `monster_ability` (967), `feat`
   (682), `spell` (339) — none of which are PI-name-blocked; a future cycle's scope, not this one's.
+
+## 2026-08-23 — `monster_ability` owner-less-ingest, 8 remaining books (`decisions.md §20`, T9-onboarding wave 2 follow-on)
+
+Applied the IDENTICAL generic mechanism the prior `t9-monster-ability-owner-less-ingest` cycle built
+(`scripts/transcribe_monster_tables.py`'s orphan pass ships an owner-less row with `owners: &[]` for
+shape measurement instead of dropping it) to the 8 remaining registered books with any real orphan
+population: `bestiary_2` (+85), `bestiary_3` (+266), `bestiary_4` (+187), `horror_adventures` (+56),
+`inner_sea_bestiary` (+28), `inner_sea_gods` (+2), `inner_sea_world_guide` (+13), `ultimate_psionics`
+(+64) — 701 records, zero mechanism code changes. `bonus_bestiary`/`monster_codex`/
+`book_of_the_damned_volume_1`/`_2` re-confirmed already fully closed (0 remaining orphans each),
+untouched.
+
+**One real, generic gap found and fixed**: `gen_book_cache bestiary_3`/`bestiary_4` both refused —
+one orphan row per book cites a `.lst` file physically living under `core_essentials`'s own per-race
+subdirectory (`vishkanya_abilities_race.lst`, `wyrwood_abilities_race.lst`), reachable via the SAME
+recursive `core_essentials` fallback the pre-existing `ce_abilities_race.lst` entries already use, but
+never registered in either book's `MonsterBookSpec.abilities_lsts`. Widened both (4 lines, generic
+infra). `bestiary_3` also cites `ce_abilities_race.lst` (added alongside).
+
+`no_record`: bundle total 3,263 → 2,563 (-700, one pre-existing corpus-key collision, same shape as
+the prior cycle's own 179-not-180 discrepancy); `monster_ability` 967 → 267.
+
+**Reachability, proven and pinned, not claimed** (`decisions.md §20`'s own separation): each book's
+`mod.rs` gained `every_owner_less_ability_is_a_named_and_pinned_non_reach` (count + digest,
+RED→GREEN proven against a real compiled table, mirroring `bestiary`'s own T9 test).
+`apps/desktop/src-tauri/src/reach_gate.rs` gained a matching `UNREACHED_RECORD_FINDINGS`/
+`OPEN_FINDINGS` pair per book (701 exact keys, read from the regenerated corpus JSON), and the 3 books
+with an explicit per-record reach test (`bestiary_2`/`bestiary_3`/`inner_sea_world_guide`) now assert
+`Reach::NotSurfaced` naming exactly the owner-less count instead of `Surfaced`. `monster_chassis.rs`'s
+corpus-wide facet-triple pin moved 2836 → 3537 (+701, additions-only, verified); `monster_catalog.rs`'s
+corpus-wide owner-less-count pin moved 180 → 881 (+701).
+
+**Two pre-existing, unrelated test gaps caught by this cycle's own regen** (not new defects, both
+scoped/excepted with the reason recorded): `bestiary_3`'s namespaced-key reach test iterated
+owner-less rows that by construction have no owner to check against (scoped to owned rows only, one
+line unchanged: `b3_abilities_race.lst:1663` correctly stays excluded for an unrelated multi-`DESC:`
+reason); `bestiary_4`'s companion/monster disjointness test found `Grab ~ Medium` shipped identically
+on both sides of a Core Essentials generic template (byte-identical description confirmed before
+excepting it, the same shape `Read Magic ~ Constant` already documents in that book's own
+`CROSS_FAMILY_DUPLICATE_EXCEPTIONS`).
+
+`reach_gate::tests::*` (desktop suite): before this cycle, 20 passed/11 failed. 3 real fixes (the
+three per-book `Surfaced`→`NotSurfaced` updates above) plus 8 confirmed pre-existing by content — none
+of their failure detail ever names `monster_abilities` or any of this cycle's 8 books; the failures are
+all `companions`/`classes`/`equipment`/`feats` gaps across dozens of OTHER books plus a large
+pre-existing `CORPUS_KIND_NAMES` registration gap for other kinds (`ability`/`domain`/`skill`/`class`/
+`power`/etc.) other lanes are actively landing. After: 23 passed/8 failed (all 8 pre-existing).
+`corpus_ingest_diagnostic::*` 15/15, `monster_catalog::*` 26/26 after the pin update.
+`pi_sweep_rules_tables`: 10 hits, 10 baseline, 0 new, CLEAN.
+
+- **Status:** complete (partial application of the overall `monster_ability` `no_record==0` goal;
+  card 11's shared row stays `in-progress`).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-monster-ability-owner-less-ingest-remaining-books_cycle-1_cycle_receipt.md`.
+- **What remains:** the 267 residual `monster_ability` `no_record` units across these 8 books are real
+  per-record/per-facet engineering (multi-`DESC:` parse refusals, `TYPE:`-facet-vocabulary gaps, and
+  correctly-excluded PI rows) — not this mechanism's remaining reach. `monster` kind (28 units)
+  untouched, owned by a sibling lane.
+- Commit: (this cycle's commit — see push output).

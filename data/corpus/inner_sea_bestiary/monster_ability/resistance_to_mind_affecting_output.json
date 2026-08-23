@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "data": {
+    "corpus_key": "Resistance to Mind-Affecting ~ Output",
+    "delivery": "Extraordinary",
+    "description": "You may add %1 points to any saving throw to resist Mind-Affecting effects.",
+    "description_variables": [
+      "MindAffectingResistanceBonus"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:resistance_to_mind_affecting_output",
+    "name": "Resistance to Mind-Affecting ~ Output",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "Resistance"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 442,
+    "record_key": "Resistance to Mind-Affecting ~ Output"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

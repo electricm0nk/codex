@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Fungal Creature ~ Poisonous Blood",
+    "delivery": "Extraordinary",
+    "description": "A fungal creature's blood and flesh are ingested poisons. Any creature that makes a bite attack against a fungal creature, swallows one whole, or otherwise ingests part of one must succeed at a Fortitude save or be afflicted by the poison. A fungal creature can drain its own blood to procure an ingested poison. However, its blood has a distinctive and largely unwelcome smell and taste, so most intelligent creatures would refuse to eat food tainted with it unless the taste was thoroughly disguised (which requires a successful DC 15 Profession [cook] check). The fungal creature must deal at least 1 point of damage to itself to get a full dose of poison, and the drawn blood (or amputated flesh) retains its poisonous nature for only 24 hours unless additional living fungal blood is mixed into it.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fungal_creature_poisonous_blood",
+    "name": "Poisonous Blood",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 726,
+    "record_key": "Fungal Creature ~ Poisonous Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

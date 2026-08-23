@@ -2329,8 +2329,31 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_3",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_3",
         races_lsts: &["b3_races.lst"],
-        abilities_lsts: &["b3_abilities_race.lst"],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        // `vishkanya_abilities_race.lst` added `decisions.md §20`
+        // no_record-to-zero wave 2 follow-on: one owner-less
+        // `monster_ability` row (`Vishkanya ~ Toxic ~ Vishkanya Venom`,
+        // `docs/work-inventory.json`'s own `book: "bestiary_3"` re-
+        // attribution) physically lives under
+        // `core_essentials/races/vishkanya/vishkanya_abilities_race.lst`
+        // (that race's own `_race.pcc` loads it, not any `bestiary_3.pcc`
+        // line -- confirmed by `grep -rl vishkanya_abilities_race
+        // **/*.pcc`), reached via the SAME core_essentials fallback
+        // `ce_abilities_race.lst`/`b4_abilities_races_ce.lst` already use
+        // (`load_corpus_file_rel_with_fallback`'s recursive walk finds it
+        // under the subdirectory once the basename is registered here).
+        // Never registered until this cycle because no prior transcription
+        // reached this row -- `transcribe_monster_tables.py::
+        // resolve_book_file` already resolved it (Python's fallback walk is
+        // also recursive), so only this generator's citation allow-list was
+        // stale.
+        // `ce_abilities_race.lst` added the same cycle, same cause: another
+        // owner-less row (`Asura ~ Save Bonus` and siblings, the `Traits
+        // Output ~ <Kind>` rows this module's own header names) physically
+        // lives under `core_essentials`'s own directory, the identical
+        // shape `bestiary`/`bestiary_2`/`bestiary_4`'s entries already
+        // register for the same file.
+        abilities_lsts: &["b3_abilities_race.lst", "vishkanya_abilities_race.lst", "ce_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt. `vishkanya_abilities_race.lst`'s own provenance is `core_essentials`'s -- verified identical (same PCGen `_race.pcc` OGL declaration governs it).",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-006",
     },
@@ -2354,7 +2377,18 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         // found 42 newly-reachable rows citing this file, and this generator
         // refuses (rather than silently drops) any citation to a file not
         // named here.
-        abilities_lsts: &["b4_abilities_race.lst", "b4_abilities_races_ce.lst"],
+        // `ce_abilities_race.lst`/`wyrwood_abilities_race.lst` added
+        // `decisions.md §20` no_record-to-zero wave 2 follow-on: owner-less
+        // rows physically living under `core_essentials`'s own directory
+        // (the `Traits Output ~ <Kind>` rows and `Wyrwood ~ Construct
+        // Traits`), the identical shape `bestiary_3`'s matching entry adds
+        // this same cycle, reached via the same core_essentials fallback.
+        abilities_lsts: &[
+            "b4_abilities_race.lst",
+            "b4_abilities_races_ce.lst",
+            "ce_abilities_race.lst",
+            "wyrwood_abilities_race.lst",
+        ],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt. `b4_abilities_races_ce.lst` is loaded by the SAME `_bestiary_4.pcc`/`_bestiary_4_for_players.pcc` (line 59, `ABILITY:` token, no gate) so the same OGL declaration governs it.",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section; 14 monster rows additionally declare NAMEISPI:YES per-record and are dropped by the screen",
         classified_by_cycle: "SD29-E5-F2-007",

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "data": {
+    "corpus_key": "Clockwork Goliath ~ Cannon",
+    "delivery": "Extraordinary",
+    "description": "One of a goliath's arms ends in a cannon. The goliath may use this as one of its four slam attacks, or it can use it to fire cannonballs. A cannon has a range increment of 100 feet, and deals 6d6 points of bludgeoning and piercing damage on a hit with a ?4 critical modifier. A clockwork goliath's cannon can hold up to 12 cannonballs-reloading a single cannonball is a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_goliath_cannon",
+    "name": "Cannon",
+    "owners": [],
+    "source_page": "p.54",
+    "traits": [
+      "ClockworkGoliathRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 567,
+    "record_key": "Clockwork Goliath ~ Cannon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

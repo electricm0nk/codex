@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:09:34Z",
+  "data": {
+    "corpus_key": "Clockwork ~ Swift Reactions",
+    "delivery": "Extraordinary",
+    "description": "Clockwork constructs generally react much more swiftly than other constructs. They gain Improved Initiative and Lightning Reflexes as bonus feats, and gain a +2 dodge bonus to AC.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_swift_reactions",
+    "name": "Swift Reactions",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2324,
+    "record_key": "Clockwork ~ Swift Reactions"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

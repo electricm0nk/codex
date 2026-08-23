@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Moonbound Werewolf ~ Moonbound (New Moon)",
+    "delivery": null,
+    "description": "A moonbound werewolf in animal or hybrid form loses its damage reduction during a new moon. During this time, the moonbound werewolf also suffers -2 Strength and -2 Constitution in all forms, instead of the normal +2 bonuses. These changes decrease its CR by 1.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:moonbound_werewolf_moonbound_new_moon",
+    "name": "Moonbound (New Moon)",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "MoonboundWerewolf"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 315,
+    "record_key": "Moonbound Werewolf ~ Moonbound (New Moon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

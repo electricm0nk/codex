@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "data": {
+    "corpus_key": "Mana Wastes Mutant ~ Shattered Hide",
+    "delivery": null,
+    "description": "The mutant takes a -2 penalty to Intelligence, but gains a +2 racial bonus on Will saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_shattered_hide",
+    "name": "Shattered Mind",
+    "owners": [],
+    "source_page": "p.29",
+    "traits": [
+      "MutantDeformity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 210,
+    "record_key": "Mana Wastes Mutant ~ Shattered Hide"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

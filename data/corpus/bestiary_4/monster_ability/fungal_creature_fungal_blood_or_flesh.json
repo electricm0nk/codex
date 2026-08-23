@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "data": {
+    "corpus_key": "Fungal Creature ~ Fungal Blood or Flesh",
+    "delivery": "Extraordinary",
+    "description": "Poison-ingested; save Fort DC %1; frequency 1/minute for 6 minutes; effect 1 Str damage, 1 Dex damage, and nauseated for 1 minute; cure 2 saves.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fungal_creature_fungal_blood_or_flesh",
+    "name": "Fungal Blood or Flesh",
+    "owners": [],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 722,
+    "record_key": "Fungal Creature ~ Fungal Blood or Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

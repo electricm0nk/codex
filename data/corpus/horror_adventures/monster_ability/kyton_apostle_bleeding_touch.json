@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Kyton (Apostle) ~ Bleeding Touch",
+    "delivery": "Supernatural",
+    "description": "An apostle kyton that touches a creature deals 1 point of damage plus %1d6 points of bleed damage. If an apostle kyton attacks with natural or manufactured weapons, its weapons also deal this bleed damage.",
+    "description_variables": [
+      "HD/10"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:kyton_apostle_bleeding_touch",
+    "name": "Bleeding Touch",
+    "owners": [],
+    "source_page": "p.240",
+    "traits": [
+      "ApostleKyton"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 298,
+    "record_key": "Kyton (Apostle) ~ Bleeding Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

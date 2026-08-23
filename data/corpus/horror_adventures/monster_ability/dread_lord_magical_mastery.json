@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Dread Lord ~ Magical Mastery",
+    "delivery": "Supernatural",
+    "description": "The dread lord draws magical power from its domain. It treats its caster level as 2 higher for the purposes of spells and spell- like abilities it casts, and the saving throw DCs of such spells and spell-like abilities increase by 1.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:dread_lord_magical_mastery",
+    "name": "Magical Mastery",
+    "owners": [],
+    "source_page": "p.235",
+    "traits": [
+      "DreadLordSpecialPower"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 259,
+    "record_key": "Dread Lord ~ Magical Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

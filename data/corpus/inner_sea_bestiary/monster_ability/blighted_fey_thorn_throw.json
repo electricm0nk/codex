@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "data": {
+    "corpus_key": "Blighted Fey ~ Thorn Throw",
+    "delivery": "Extraordinary",
+    "description": "A Blighted Fey can shoot a fistful of needle-sharp thorns at a single target",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:blighted_fey_thorn_throw",
+    "name": "Thorn Throw",
+    "owners": [],
+    "source_page": "p.7",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 47,
+    "record_key": "Blighted Fey ~ Thorn Throw"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

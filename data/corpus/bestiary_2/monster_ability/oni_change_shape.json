@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Oni ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "You have the ability to assume the appearance of creatures similar in shape to your true form, but retain most of your own physical qualities.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:oni_change_shape",
+    "name": "Change Shape",
+    "owners": [],
+    "source_page": "p.221",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1838,
+    "record_key": "Oni ~ Change Shape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

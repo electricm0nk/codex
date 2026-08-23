@@ -122,20 +122,55 @@ mod tests {
     #[test]
     fn the_book_ships_nine_monsters_and_fourteen_linked_abilities() {
         assert_eq!(monsters().len(), 9);
-        assert_eq!(monster_abilities().len(), 14);
+        // 14 owned + 13 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 27. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 14);
+        assert_eq!(monster_abilities().len(), 27);
     }
 
-    /// Every transcribed ability row is owned by a monster row of this book.
-    /// The book has orphans; the point of this test is that none of them got in.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// The 13 rows no shipped monster row of this book claims now SHIP with
+    /// `owners: &[]`, and this test pins the EXACT set of records that carry
+    /// one. `list_monster_catalog` never walks these directly (only a
+    /// monster's own `ability_keys`), so shipping them does not surface a
+    /// stub; each key is pinned separately, by name, in `reach_gate.rs::
+    /// UNREACHED_RECORD_FINDINGS` under
+    /// `("inner_sea_world_guide", "monster_abilities")` as a proven
+    /// non-reach, not a silent claim of reachability.
     #[test]
-    fn no_shipped_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            13,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py inner_sea_world_guide` run, and update the \
+             matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x3cbe_09ea_f548_c83a,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
     }
 
     /// Every owner named by a shipped ability is itself a shipped monster.
@@ -190,20 +225,28 @@ mod tests {
         }
     }
 
-    /// The five template-owned orphan rows, pinned by line for the same reason
-    /// the block above is — three of the thirteen orphans are namespaced to a
-    /// PI-declared monster and carry its name in their own key.
-    ///
-    /// These five are the ones that are orphans against the WHOLE book rather
-    /// than as a consequence of the PI drops, so they are the ones a future
-    /// template surface would close.
+    /// **Superseded `decisions.md §20`.** The five template-owned rows now
+    /// ship owner-less (shape measurable, reachability not claimed) instead
+    /// of being excluded — a future template surface is what would give them
+    /// a real owner, not this transcriber. Each is one of the 13 pinned by
+    /// `every_owner_less_ability_is_a_named_and_pinned_non_reach` above.
     #[test]
-    fn the_five_template_owned_orphans_are_not_records() {
+    fn the_five_template_owned_rows_ship_owner_less() {
         for line in [86u32, 87, 96, 97, 98] {
+            let ability = monster_abilities()
+                .iter()
+                .find(|a| a.source_line == line)
+                .unwrap_or_else(|| {
+                    panic!(
+                        "iswg_abilities_race.lst:{line} ships for shape measurement \
+                         (decisions.md §20)"
+                    )
+                });
             assert!(
-                !monster_abilities().iter().any(|a| a.source_line == line),
-                "iswg_abilities_race.lst:{line} is owned by an iswg_templates.lst template, \
-                 not by any monster row of this book"
+                ability.owners.is_empty(),
+                "{} was expected owner-less; it is owned by an iswg_templates.lst template, \
+                 not by any monster row of this book",
+                ability.key
             );
         }
     }

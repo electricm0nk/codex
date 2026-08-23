@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "data": {
+    "corpus_key": "Trompe l'Oeil ~ Rejuvenation",
+    "delivery": "Supernatural",
+    "description": "When a trompe l'oeil is destroyed, it reforms 2d4 days later on its original canvas (see page 243). The only way to permanently destroy a trompe l'oeil is to destroy the original canvas before the creature reforms.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:trompe_l_oeil_rejuvenation",
+    "name": "Rejuvenation",
+    "owners": [],
+    "source_page": "p.242",
+    "traits": [
+      "TrompeLOeil"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 331,
+    "record_key": "Trompe l'Oeil ~ Rejuvenation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

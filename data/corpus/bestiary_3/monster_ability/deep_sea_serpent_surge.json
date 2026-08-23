@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "data": {
+    "corpus_key": "Deep Sea Serpent ~ Surge",
+    "delivery": "Extraordinary",
+    "description": "A deep sea serpent can surge forward as a full-round action at a speed of 400 feet. It must move in a straight line, but does not provoke attacks of opportunity while surging.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:deep_sea_serpent_surge",
+    "name": "Surge",
+    "owners": [],
+    "source_page": "p.240",
+    "traits": [
+      "DeepSeaSerpentRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1509,
+    "record_key": "Deep Sea Serpent ~ Surge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

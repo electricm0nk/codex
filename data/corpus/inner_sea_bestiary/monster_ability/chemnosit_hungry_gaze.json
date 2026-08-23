@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "data": {
+    "corpus_key": "Chemnosit ~ Hungry Gaze",
+    "delivery": "Supernatural",
+    "description": "3d6 nonlethal plus fatigue (Fort DC 30 negates). Affected creatures gain an overwhelming compulsion to eat flesh of creatures of its type (its own if none others available). Will DC 30 negates.[DC %1]",
+    "description_variables": [
+      "HungryGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:chemnosit_hungry_gaze",
+    "name": "Hungry Gaze",
+    "owners": [],
+    "source_page": "p.47",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 322,
+    "record_key": "Chemnosit ~ Hungry Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

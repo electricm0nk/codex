@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Ravener ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "A ravener keeps the breath weapon of the base creature - the save DC for this breath weapon is now Charisma-based.  In addition, a ravener's breath weapon bestows 2 negative levels on all creatures in the area.  A successful Reflex save halves the damage and reduces the energy drain to 1 level.  The save DC to remove these negative levels is equal to the ravener's breath weapon DC.  The ravener adds 1 hit point to its soul ward ability for each negative level bestowed in this way.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:ravener_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "source_page": "p.231",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1054,
+    "record_key": "Ravener ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

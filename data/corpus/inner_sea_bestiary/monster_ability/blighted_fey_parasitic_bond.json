@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "data": {
+    "corpus_key": "Blighted Fey ~ Parasitic Bond",
+    "delivery": "Supernatural",
+    "description": "Following a successful Thorn Throw attack, the target must make a DC %1 Fortitude save or be cursed. For 5 rounds, all hit point damage taken by the blighted fey is halved and the target takes the other half.",
+    "description_variables": [
+      "10+TL/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:blighted_fey_parasitic_bond",
+    "name": "Parasitic Bond",
+    "owners": [],
+    "source_page": "p.7",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 46,
+    "record_key": "Blighted Fey ~ Parasitic Bond"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

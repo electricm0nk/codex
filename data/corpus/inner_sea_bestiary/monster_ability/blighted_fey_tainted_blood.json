@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "data": {
+    "corpus_key": "Blighted Fey ~ Tainted Blood",
+    "delivery": "Extraordinary",
+    "description": "Any creature that successfully ingests all or part of a Blighted Fey must make a Fortitude save with a DC of %1 or take 1 point of Str damage and 1 point of Dex damage. 1 minute later, the creature must save again or be nauseated 1 min and take 1d6 Str damage and 1d6 Dex damage.",
+    "description_variables": [
+      "10+TL/2+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:blighted_fey_tainted_blood",
+    "name": "Tainted Blood",
+    "owners": [],
+    "source_page": "p.7",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 50,
+    "record_key": "Blighted Fey ~ Tainted Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

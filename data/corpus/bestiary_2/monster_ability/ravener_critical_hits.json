@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "data": {
+    "corpus_key": "Ravener ~ Critical Hits",
+    "delivery": "Supernatural",
+    "description": "Each natural attack threatens a critical hit on a 19 or 20.  Feats like Improved Critical can increase this range further.  If the ravener scores a critical hit with a natural weapon, the target gains 1 negative level.  The DC to remove this negative level is %1.  Whenever a creature gainst a negative level in this way, the ravener adds 5 points to its soul ward.",
+    "description_variables": [
+      "10+TL/2+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:ravener_critical_hits",
+    "name": "Critical Hits",
+    "owners": [],
+    "source_page": "p.231",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1058,
+    "record_key": "Ravener ~ Critical Hits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ]
+}
