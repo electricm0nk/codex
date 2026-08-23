@@ -2557,11 +2557,11 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "inner_sea_races",
         "race_traits",
-        "70 of Inner Sea Races' 71 ingested race-trait records reach a player through \
-         `list_alternate_racial_traits` and `resolve_race_alternate_selection`. ONE does not: \
-         `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`). Derived, not assumed: \
-         the row carries no `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no \
-         `!PREFACT`, and no other row in the book names it -- \
+        "88 of Inner Sea Races' 94 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection`. SIX do not. \
+         `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`): the row carries no \
+         `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no `!PREFACT`, and no \
+         other row in the book names it -- \
          `grep -o 'ABILITY:[^\\t]*Tribalistic Languages' isr_abilities_race.lst` returns nothing, \
          where the same grep for `Junk Tinker ~ Skilled` returns its granter and that row is \
          therefore `TraitRole::FlagGranted`. So `race_resolver::classify` leaves it \
@@ -2579,7 +2579,26 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          model human ethnicities as the `PREABILITY:1,CATEGORY=Background,TYPE.HumanEthnicity` \
          gate on `:210` implies. Both are new mechanisms, not missing wires. \
          Do NOT close this by deleting the record: it is real corpus content for a modelled \
-         race, and the same rule the `Oversized Goblin` entry above states applies here.",
+         race, and the same rule the `Oversized Goblin` entry above states applies here. \
+         \
+         Four more added 2026-08-22 (SD-32 card 11 T2b lane, re-running the book against the \
+         pinned oracle after `IN_SCOPE_RACES` grew past 82 with no regen -- see the \
+         count-pinning test's comment): `Mostly Human ~ Ifrit ~ Languages`, \
+         `~ Sylph ~ Languages`, `~ Undine ~ Languages` (already-open, unchanged by this lane) \
+         plus the newly-ingested `~ Suli ~ Languages` -- all four share one root cause, an \
+         unmodelled Geneiekin heritage: their common granter, \
+         `Geneiekin ~ Mostly Human.MOD` (`isr_abilities_race.lst:650-654`), carries a `TYPE:<Race> \
+         Racial Trait` component this project's `is_mod_row` guard correctly excludes from \
+         ingestion, so no selection can ever fire the `<Race>_ReplaceLanguages` flag these four \
+         rows are gated on. And `Suli ~ Trusted Mediator` (`:1266`, also newly ingested): unlike \
+         its structurally identical siblings `Ifrit ~ Brazen Flame`/`Oread ~ Isolated`/ \
+         `Sylph ~ Secretive` (each of which sets its own `FACT:<Race>_Replace...|True` pair), this \
+         row sets none at all -- a genuine upstream PCGen omission for Suli specifically, the \
+         same shape as `Human ~ Tribalistic Languages` above. \
+         REMEDY for the Geneiekin four: model the Geneiekin heritage the way Aasimar/Tiefling \
+         already are (`OPEN-ISSUES.md` row 18) -- a new mechanism, not a missing wire. REMEDY for \
+         `Suli ~ Trusted Mediator`: none available project-side; the upstream data itself omits \
+         the flag. Do NOT close any of the six by deleting the record.",
     ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
@@ -2827,16 +2846,37 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // exact same mechanism reaches Oread's row and only Oread's.
         // [This inference is backwards -- see the correction above.]
         //
-        // 79 of the book's 82 records reach a player; these three plus
-        // `Human ~ Tribalistic Languages` are the four that do not. The
-        // numeric pin itself is correct and needs no change -- the three
-        // records genuinely do not reach today, only the root-cause
-        // rationale was wrong.
+        // 79 of the book's 94 records reach a player; these five plus
+        // `Human ~ Tribalistic Languages` are the six that do not.
+        //
+        // `Mostly Human ~ Suli ~ Languages` added 2026-08-22 (SD-32 card 11
+        // T2b lane): its own row (`isr_abilities_race.lst:662`) was never
+        // ingested before this lane re-ran the book (the same stale-regen
+        // gap the count-pinning test above documents), and once ingested it
+        // is unreached for the identical reason as its Ifrit/Sylph/Undine
+        // siblings -- `isr_abilities_race.lst:654`'s `Geneiekin ~ Mostly
+        // Human.MOD` granter for Suli is the same unmodelled-Geneiekin-
+        // heritage shape, confirmed against the pinned oracle.
+        //
+        // `Suli ~ Trusted Mediator` added the same lane: its own row
+        // (`isr_abilities_race.lst:1266`) carries a self-exclusion
+        // `PREMULT` gate naming `Suli_ReplaceEnergyResistance`/
+        // `Suli_ReplaceVision`, and its DESC prose states "This racial
+        // trait replaces energy resistance and low-light vision" -- but
+        // unlike every structurally identical sibling row (`Ifrit ~ Brazen
+        // Flame`:823, `Oread ~ Isolated`:1010, `Sylph ~ Secretive`:1320,
+        // each of which sets its own matching `FACT:<Race>_Replace...
+        // |True` pair), this row sets **no** `FACT:` token at all. Verified
+        // against the pinned oracle: a genuine upstream PCGen data
+        // omission for Suli specifically, not a project-side parsing gap --
+        // the same shape as `Human ~ Tribalistic Languages` above.
         &[
             "Human ~ Tribalistic Languages",
             "Mostly Human ~ Ifrit ~ Languages",
+            "Mostly Human ~ Suli ~ Languages",
             "Mostly Human ~ Sylph ~ Languages",
             "Mostly Human ~ Undine ~ Languages",
+            "Suli ~ Trusted Mediator",
         ],
     ),
     // SD28-C4.8/§60/§63: all 406 archetype-swap records across 7 books (403 + 3 Slayer archetypes, SD31-E4-F1-001) --
@@ -3662,20 +3702,25 @@ mod tests {
         let ingested = corpus_record_keys("inner_sea_races", "race_trait");
         assert_eq!(
             ingested.len(),
-            82,
-            "ISR's 82 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
+            94,
+            "ISR's 94 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
              (SD-29 `decisions.md` 53): `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's \
              own declaration that the record NAME is Product Identity. A name cannot be \
              redacted, so the row is dropped at ingest rather than screened -- the same \
              ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows. \
-             71 -> 82 by SD-31 Epic 1-F2 (2026-08-15), Bestiary 2's 6-race batch."
+             71 -> 82 by SD-31 Epic 1-F2 (2026-08-15), Bestiary 2's 6-race batch. \
+             82 -> 94 by SD-32 card 11 T2b lane (2026-08-22): `IN_SCOPE_RACES` in \
+             `ingest_race_traits.rs` had grown to 34 races across three SD-31 waves but the \
+             book was never re-run after, so 10 already-in-scope races' real alternate-trait \
+             rows (Catfolk, Gillman, Kitsune, Nagaji, Ratfolk, Strix, Suli x2, Vanara, \
+             Vishkanya x2, Wayang = 12) sat un-transcribed on disk -- a stale regen, not new \
+             content or a new mechanism."
         );
 
-        // 79 of 82 reach. The shortfall is `Human ~ Tribalistic Languages`
-        // plus the three `Mostly Human ~ <Race> ~ Languages` rows
-        // `UNREACHED_RECORD_FINDINGS` names, pinned by key, both ways, so a
-        // FIFTH unreached record fails here and so does any of these four
-        // silently starting to reach.
+        // 79 of 94 reach. The shortfall is `Human ~ Tribalistic Languages`
+        // plus the five records `UNREACHED_RECORD_FINDINGS` names, pinned by
+        // key, both ways, so a SEVENTH unreached record fails here and so
+        // does any of these six silently starting to reach.
         match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {
             Reach::NotSurfaced { missing, .. } => {
                 let mut missing: Vec<&str> = missing.iter().map(String::as_str).collect();
@@ -3685,10 +3730,14 @@ mod tests {
                     vec![
                         "Human ~ Tribalistic Languages",
                         "Mostly Human ~ Ifrit ~ Languages",
+                        "Mostly Human ~ Suli ~ Languages",
                         "Mostly Human ~ Sylph ~ Languages",
                         "Mostly Human ~ Undine ~ Languages",
+                        "Suli ~ Trusted Mediator",
                     ],
-                    "exactly four ISR records are unreached, and they are the ones OPEN_FINDINGS names"
+                    "exactly six ISR records are unreached, and they are the ones OPEN_FINDINGS names \
+                     (`Mostly Human ~ Suli ~ Languages` and `Suli ~ Trusted Mediator` added \
+                     2026-08-22, SD-32 card 11)"
                 );
             }
             other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),

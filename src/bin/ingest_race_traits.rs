@@ -1973,11 +1973,32 @@ mod tests {
         // roster is unchanged this cycle. Re-derived on disk: `find
         // data/corpus/advanced_race_guide/race_trait -name '*.json' | wc -l`
         // -> 350.
+        // Inner Sea Races 82->94: SD-32 card 11 T2b lane (2026-08-22). This
+        // book's `IN_SCOPE_RACES` roster grew across three SD-31 waves
+        // (Bestiary 2 races at 24, ARG-native chassis at 30/34) but the
+        // book was never re-run after those widenings, so the 10 races
+        // (Catfolk, Gillman, Kitsune, Nagaji, Ratfolk, Strix, Suli, Vanara,
+        // Vishkanya, Wayang) that became in-scope sat un-transcribed --
+        // `docs/work-inventory.json`'s `race_trait_race_not_modelled`
+        // evidence mislabelled them as an unmodelled-race gap when the real
+        // defect was a stale regen. Simply re-running
+        // `cargo run --bin ingest_race_traits -- inner_sea_races` against
+        // the pinned oracle emits their real, already-in-scope alternate
+        // trait rows: Catfolk 1, Gillman 1, Kitsune 1, Nagaji 1, Ratfolk 1,
+        // Strix 1, Suli 2, Vanara 1, Vishkanya 2, Wayang 1 = 12. Re-derived
+        // on disk: `find data/corpus/inner_sea_races/race_trait -name
+        // '*.json' | wc -l` -> 94. (`Svirfneblin ~ Stalwart Watcher Output`
+        // remains correctly unwritten: its own row's `TYPE:Special Attack`
+        // never matches the `<Race> Racial Trait`/`Racial Default` suffix
+        // gate `parse_row` requires -- it is PCGen's internal
+        // `ABILITY:...|AUTOMATIC|...` companion token for the real trait
+        // `Stalwart Watcher`, already ingested, not a second player-facing
+        // object.)
         let expected: BTreeMap<&str, usize> =
             [
                 ("advanced_race_guide", 414usize),
                 ("monster_codex", 5),
-                ("inner_sea_races", 82),
+                ("inner_sea_races", 94),
                 ("horror_adventures", 43),
             ]
                 .into_iter()
@@ -2040,7 +2061,7 @@ mod tests {
         }
         assert_eq!(
             total,
-            544,
+            556,
             "414 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
              from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
@@ -2050,7 +2071,8 @@ mod tests {
              alternate-trait content): 201 pre-existing + 24 for the first \
              6-race batch, SD-31-E6-F4-003, 2026-08-16, plus 11 for the second 4-race \
              follow-on batch, SD31-E6-F4-006, 2026-08-17) + \
-             5 Monster Codex + 82 Inner Sea Races + \
+             5 Monster Codex + 94 Inner Sea Races (SD-32 card 11 T2b, 82->94: a stale \
+             regen, not new content -- see the per-book table's comment above) + \
              43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
              2026-08-15). Advanced Player's Guide was investigated (SD-31 Epic 6-F4,
