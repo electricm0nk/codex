@@ -158,19 +158,52 @@ PIN_FILE = os.path.join(REPO_ROOT, "scripts", "pcgen-oracle-pin.env")
 # which lands no commit and logs no entry -- is still measured against
 # the last COMMITTED baseline, and fails it.
 #
-# Current baseline (repin 2, 2026-08-23): no_record 10530, population
-# 25055, evidence commit `d904eceb6bda813f5a6d48a815a2b4df80d604bd` (card
-# 15's real-producer landing of `Kind::Skill`, 149 units, all no_record
-# because skill content has never been ingested into `data/corpus` under
-# any kind -- decisions.md §12b's own predicted shape, not a regression).
-# Repin 1 (2026-08-22, `965278926`) established the invariant itself at
-# no_record 10419 / population 24914. Future cycles landing the remaining
-# 7 new kinds (ability, template, deity, power, domain, language, kit)
-# must each add their own provenance entry and repin these constants in
-# the SAME commit that lands the kind -- see `no_record_budget_provenance
-# .jsonl` and `read_budget_provenance()` below.
-NO_RECORD_BUDGET_COUNT = 10530
-NO_RECORD_BUDGET_POPULATION = 25055
+# Current baseline (repin 3, 2026-08-23): no_record 13968, population
+# 28490, evidence commit `8e98424eb56a66ee2ba38d7ec4e2bc2e5379fbe6` (card
+# 15's generic-enumeration landing of Kind::Template/Deity/Power/Domain/
+# Language through the data-table producer, decisions.md §17 item 1;
+# 3,447 new-kind units, all no_record for the same structural reason as
+# repin 2's Kind::Skill). Repin 2 (2026-08-23, `d904eceb6`) landed
+# no_record 10530 / population 25055. Repin 1 (2026-08-22, `965278926`)
+# established the invariant itself at no_record 10419 / population 24914.
+#
+# `departed_covered_count` (new field, repin 3 on): the strict "no_record
+# delta never exceeds population delta" check (BudgetProvenanceTest) does
+# not by itself account for the population's other legitimate direction of
+# movement -- units that finish (leave the not-done population entirely)
+# between repins. A unit that was `matched`/`no_formula_tokens` and gets
+# wired to completion shrinks `population` without shrinking `no_record`,
+# which can make `no_record`'s delta exceed `population`'s delta even
+# though nothing drained INTO no_record. Verified for repin 3, not assumed:
+# every id in the repin-2-committed ledger absent from the repin-3 ledger
+# was checked against the current inventory; 864 reclassified from
+# `race_trait` to `monster_ability` (decisions.md §16's T2b classifier fix,
+# commit `6ae4a364b1e42ace9e25df047a2de70bdf4c4948`, net zero on this
+# check -- they left no_record and arrived no_record) and 11 were wired to
+# a done-family status (`grounded`/`text-complete`/`literal-verified`) by
+# unrelated concurrent work; of those 11, 10 were `no_formula_tokens` (not
+# no_record) at the time they left. `departed_covered_count` records that
+# 10 -- units that left the tracked population while NOT no_record -- so
+# the invariant can tell "population shrank because covered work finished"
+# from "population shrank/stayed flat while no_record grew," which is what
+# it exists to catch. Re-derive: compare `id` sets between the previously
+# committed `artifacts/gate-1-shape-closure/ledger.json` and a fresh
+# `shape_ledger.py` run; for ids present in the old set and absent from the
+# new set, look each up in the current `docs/work-inventory.json` -- those
+# still present (by id) left via a status change (count only the ones
+# whose OLD `join_status` was not `no_record`); those absent entirely were
+# reclassified (kind changed, so the id changed) and net to zero by
+# construction (an old no_record row leaving is arithmetically identical
+# to no_record row arriving under a new kind/id, so reclassification alone
+# can never move this check).
+#
+# Future cycles landing the remaining 3 new kinds (ability, kit is not a
+# real kind -- see the `generic-enumeration_cycle_receipt.md` -- so really
+# just `ability`) must each add their own provenance entry and repin these
+# constants in the SAME commit that lands the kind -- see
+# `no_record_budget_provenance.jsonl` and `read_budget_provenance()` below.
+NO_RECORD_BUDGET_COUNT = 13968
+NO_RECORD_BUDGET_POPULATION = 28490
 
 BUDGET_PROVENANCE_PATH = os.path.join(
     REPO_ROOT,

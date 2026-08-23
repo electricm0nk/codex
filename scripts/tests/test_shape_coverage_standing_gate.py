@@ -309,19 +309,51 @@ class BudgetProvenanceTest(unittest.TestCase):
 
     def test_no_record_delta_never_exceeds_population_delta(self):
         """The budget cannot widen faster than real content was added --
-        only as fast. A repin where no_record grew MORE than the total
-        population grew would mean units vanished from matched/
-        no_formula_tokens into no_record, which is a regression signal,
-        not legitimate enumeration, and must not be absorbed by a repin."""
+        only as fast, MODULO units that legitimately finished and left the
+        not-done population between repins (`departed_covered_count`, repin
+        3 on -- see that field's derivation in
+        `shape_coverage_standing_gate.py`'s constant comment). A completed
+        unit that was matched/no_formula_tokens shrinks `population`
+        without shrinking `no_record`, which is a real and desired outcome,
+        not a regression -- so it is credited back before the check runs.
+        A repin where no_record grew MORE than population grew PLUS that
+        credit would mean units vanished from matched/no_formula_tokens
+        INTO no_record while still counted, which is the actual regression
+        signal, and must not be absorbed by a repin. `departed_covered_count`
+        defaults to 0 for entries that predate the field (repins 1-2, pure
+        clean growth, no departures to credit)."""
         entries = G.read_budget_provenance()
         for prev, cur in zip(entries, entries[1:]):
             pop_delta = cur["population"] - prev["population"]
             nr_delta = cur["no_record_count"] - prev["no_record_count"]
+            departed_covered = cur.get("departed_covered_count", 0)
             self.assertLessEqual(
                 nr_delta,
-                pop_delta,
-                f"repin {cur.get('repin')}: no_record grew ({nr_delta}) more than population ({pop_delta})",
+                pop_delta + departed_covered,
+                f"repin {cur.get('repin')}: no_record grew ({nr_delta}) more than "
+                f"population ({pop_delta}) plus credited departures ({departed_covered})",
             )
+
+    def test_departed_covered_count_does_not_excuse_a_real_drain(self):
+        """A repin cannot claim an arbitrarily large `departed_covered_count`
+        to launder an actual regression: this reconstructs the check with a
+        synthetic entry pair where no_record grows well beyond what even a
+        generous departure credit would explain, and confirms it still
+        fails. Guards against the fix above becoming a rubber stamp in the
+        other direction."""
+        entries = [
+            {"population": 1000, "no_record_count": 100},
+            {"population": 1010, "no_record_count": 300, "departed_covered_count": 5},
+        ]
+        prev, cur = entries[0], entries[1]
+        pop_delta = cur["population"] - prev["population"]
+        nr_delta = cur["no_record_count"] - prev["no_record_count"]
+        departed_covered = cur.get("departed_covered_count", 0)
+        self.assertGreater(
+            nr_delta,
+            pop_delta + departed_covered,
+            "synthetic drain must exceed pop_delta + departed_covered for this test to be meaningful",
+        )
 
     def test_every_evidence_commit_is_real_and_reachable(self):
         entries = G.read_budget_provenance()
