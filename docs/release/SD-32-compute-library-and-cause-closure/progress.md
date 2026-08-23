@@ -763,6 +763,61 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   reaches Epic 1's 3,201-unit ceiling and naming honestly what fraction needs a different consumer
   shape.
 
+### Cycle epic-2-t7-t8/1 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T7+T8 — T7 closed corpus-wide, T8 prepared
+
+- **Card ID:** `epic-2-cause-closure` (one of six concurrent lanes; this lane's scope is T7/T8
+  only — see `decisions.md §10` for why the row is not marked `complete` from a single lane).
+- **Commit SHA:** `caaef7762`.
+- **Files touched:** `src/rules_core/pilot_compute/class_feature_grant_consumer.rs`,
+  `docs/retro/events/epic-2-t7-t8.jsonl` (new), `kanban.md` (card 11 row, appended), this file.
+  `scripts/observer/pf1e_dashboard_producer.py` **not touched** (T8, see below).
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001, "T8/T7 (16 units
+  together) close opportunistically."
+- **Status:** T7 **complete**. T8 **prepared, not applied** — operator ruling needed. Card 11
+  overall stays `in-progress` (do not read this cycle as closing the whole row).
+- **Summary:** **T7 (D12, shallow single-hop archetype-grant traversal) closed corpus-wide.**
+  Re-derived the population independently (script in the cycle receipt): the live risk is 1
+  uncorroborated `(class, key)` pair — `gunslinger, Gunslinger ~ Gun Training` — not the 4 named
+  by `defects.md` D12; the other 3 (`Cleric ~ Channel Energy`, `Druid ~ Wild Shape`, `Paladin ~
+  Smite Evil`) were already double-protected by `class_feature_grant_consumer.rs`'s own
+  `ANTI_FABRICATION_GATE_EXCLUDED_CLASSES` list, an existing, unrelated guard D12's own analysis
+  did not account for (logged as a `scripts/retro.py correction`). Root cause traced to the actual
+  corpus row (`ultimate_combat/uc_abilities_class.lst:1970`, a `CATEGORY:Internal` optional-rule
+  row embedding the grant, invisible to the single-hop `granted_via_archetype` check). Fix:
+  `resolvable_grants()` now refuses any bare-`PRECLASS:`-gated pair with no `mod_row_*`
+  corroboration — structural closure, not level-mismatch luck, and it closes all four named
+  pairs (the 3 already-protected ones stay protected for a real reason now, not an accident).
+  Zero player-visible value change (the refused fact was already suppressed downstream by a
+  dedicated hand-wired chassis function plus the module's own duplicate-slug guard). RED→GREEN
+  proven live: added the test against pre-fix code (fails), implemented the fix (passes), then
+  mutated the fix back to a no-op and re-ran — failed for the intended reason, reverted, green
+  again. Full workspace suite: `cargo test --lib` **2365 passed, 0 failed, 13 ignored** (was 2364
+  before this cycle's one new test — 0 regressions). One pre-existing pinned-count test
+  (`the_live_scale_of_this_waves_widening_is_measured_and_pinned`) moved `137 -> 136` by design,
+  documented inline at the point it moved, per that test's own "report them, don't silently
+  update" instruction.
+
+  **T8 (D13, 12 units, `wiring_class`-vs-`status` classifier blind spot) — prepared, NOT applied.**
+  Re-derived the population independently against live `docs/work-inventory.json`: exactly 12
+  `core_rulebook` `class_feature` units (`wiring_class=='display' and status=='grounded'`), matching
+  D13's own named examples and count exactly — no correction needed here. Root cause: the
+  classifier's `no_magnitude_token` reason never considers that `grounded` status is itself real
+  evidence the unit is `computed`-shaped, and `doneness_verdict()`'s own `display` branch comment
+  names the missing instrument verbatim ("checks the full token closure GE-01 defines, which does
+  not exist yet"). **This cycle does not implement the fix**: the fix site,
+  `scripts/observer/pf1e_dashboard_producer.py`, is named by `technical-design.md`'s own "What
+  this bundle does not touch" section as a read-only SD-30 Epic 0 surface. The exact diff (a
+  named, corpus-grounded, re-derivable 12-id allowlist reclassifying `display`→`computed` at
+  tally-time, zero change to `doneness_verdict()` itself) is written out in full in the cycle
+  receipt, clearly labelled PROPOSED. Logged as a `scripts/retro.py deferral` naming the precise
+  ruling needed: grant SD-32 (or a named successor bundle) write scope to
+  `scripts/observer/pf1e_dashboard_producer.py` for this one classifier fix. Full detail:
+  `artifacts/gate-3-closure-invariant/epic-2-t7-t8_cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** T7 needs no further work. T8's diff is ready to apply verbatim the moment
+  the named write-scope ruling lands. Card 11's remaining lanes (T2a+T12, T2b, T9, T4, and a
+  consolidation cycle once every lane reports) are other lanes' scope, not this one's.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
