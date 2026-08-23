@@ -382,3 +382,53 @@ and the census's 28,037-plus-27,847. The 24,914-vs-38,391 gap is legitimate and 
 (the ledger's population is *not-done* units; 13,477 are done). It must nonetheless be **stated**
 wherever a total is quoted, with its command — no bundle document may quote a bare total again
 without naming which population it is.
+
+## Decision 13 — Card 11's five open sub-populations are closed by doing the work (operator ruling 2026-08-22)
+
+**Status:** Operator-pinned. Answers the ruling request filed under `progress.md` `## Open blockers`
+by the reclosure-epilogue correction cycle (`e47f641b9`), which correctly refused to rule on it
+itself per `decisions.md §10` item 2.
+
+### What was asked
+
+SD-32's continuation run closed T1, T3, T5, T7, T8, T4-L8, and T2a's structural cause, and left
+five sub-populations open. Two lanes (T2b, T9) filed explicit "ruling needed" requests; a
+consolidation cycle answered them on its own authority; the Opus adversarial verifier caught that
+(`NOT_READY`, finding 3) and the reclosure cycle reverted it and escalated properly.
+
+| Shape | Open units | What it actually is |
+|---|---:|---|
+| T2b | 2,472 | Named cause **disproven** — the compound-key matcher only runs on already-ingested records and none of these were ever ingested. Real cause: 1,754 in books never registered in `race_catalog.rs`'s `RACE_CORPUS_BOOKS`, 718 in registered books never transcribed from the pinned oracle. |
+| T9 | 2,712 | Per-record onboarding backlog across `spell`/`companion`/`feat`/`monster_ability`/`equipment`/`monster`. Same shape as T2b: the records exist in the oracle and were never ingested. |
+| T12 | 2,453 | `class_feature`s belonging to classes the engine does not model. ~47 are suspected false positives (archetype features attributed to a phantom PCGen "class") and must be confirmed, not assumed. |
+| T2a residual | ~2,775 | Records carrying a category label (`Domain Power`, `Wild Talent`, `Ki Power`, …) rather than a class name. 4,936 records were already corrected at the cause this run. |
+| T4-L9 | 471 | Needs a **feat-held** reachability gate; today's gate is class-held. |
+
+### The ruling
+
+**All five are closed by doing the work.** None moves to `forward-scope-register.md`. Card 11
+reaches `complete` only when every one of these five is genuinely closed by class.
+
+> *"do the work on in all cases as suggested. If you want to do measurements first, i support this.
+> No matter what though, i want the work done"*
+
+**Measurement is explicitly authorised as a first step, and does not substitute for the work.** The
+cost on this repo is per-book and per-file, not per-record (`docs/retro/` E13 calibration), so the
+book count — not the ~10,800 unit count — determines the real size. A measurement cycle that banks
+zero units but produces a real, re-derivable book/file census is a legitimate closed cycle
+(standing lesson 6). It is a **precursor to** the work, never a report **instead of** it.
+
+### Consequences
+
+1. **A disproven cause is not a closed shape.** T2b's and T9's lanes did real forensic work and
+   correctly disproved their *named* causes — that finding stands and is valuable. But
+   AT-32-E2-001 requires each shape closed corpus-wide, and 2,472 and 2,712 units respectively are
+   still open. Reclassifying them as "a separate book-onboarding project" is moving work.
+2. **T12 is not closed by T2a's fix.** Its population is literally unchanged at 2,453; the
+   `data.class` correction improved data quality without touching T12's own defect (the class is
+   unmodelled). A relabelled shape is not a closed shape (`decisions.md §1a`).
+3. **T4-L9 blocks card 11 exactly as a whole card would** (`decisions.md §10` item 4) — a card at
+   `complete` with a named, uncleared sub-population is the half-deferral defect card 12 was
+   reopened for, reproduced inside card 11.
+4. **Card 15's own acceptance bar is unchanged** (`§12b`): the single committed reconciliation
+   command, and every unit in the reconciled total carrying a family.
