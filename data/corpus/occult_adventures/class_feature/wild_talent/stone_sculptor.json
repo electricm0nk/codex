@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Stone Sculptor",
     "name": "Stone Sculptor",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element earth; Type utility (Sp); Level 5; Burn 0 You can sculpt earth into any shape, as the spell stone shape.",
     "raw_tokens": [
       {

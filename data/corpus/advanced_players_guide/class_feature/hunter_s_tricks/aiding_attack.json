@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Aiding Attack",
     "name": "Aiding Attack",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can use this trick as a free action when he hits a creature with an attack. The next ally who makes an attack against the target creature before the start of the ranger's next turn gains a +2 circumstance bonus on that attack roll.",
     "raw_tokens": [
       {

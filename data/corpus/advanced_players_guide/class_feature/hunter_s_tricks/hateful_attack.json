@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Hateful Attack",
     "name": "Hateful Attack",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can use this trick as a free action when he makes an attack against one of his favored enemies. The ranger doubles the threat range of his weapon for this attack. This does not stack with other abilities that increase a weapon's threat range.",
     "raw_tokens": [
       {

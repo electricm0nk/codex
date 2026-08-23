@@ -3247,3 +3247,75 @@ totals (38,540/41,987).
   Samsaran/`IN_SCOPE_RACES` scope question and the 6 external-variable DESC-arg cases are
   named, not this cycle's to close.
 - Receipt: `artifacts/gate-3-closure-invariant/epic-2-interpreter-race-trait-wiring_cycle-1_cycle_receipt.md`.
+
+## Cycle — Gate 3 / Card 11, T2a-residual alias-tier batch (2026-08-23)
+
+- **Scope:** card 11's T2a-residual sub-population (`decisions.md §13`), sized by
+  `artifacts/gate-3-closure-invariant/card11-t2a-residual-census-census.md` at 2,640 units /
+  547 labels / 18 books / 12 cycles. Re-derived the 2,640 total before trusting it
+  (`python3 scripts/sd32-t2a-residual-census.py` — confirmed).
+- **The bottleneck, widened per `decisions.md §17`:** `POOL_TO_DISPATCHED_CLASS` only resolves a
+  label whose own text shares a suffix/prefix with its target class ("Rage Power" -> "Barbarian").
+  Zero of the 547 residual labels matched it. Added a sixth resolution tier,
+  `CATEGORY_LABEL_ALIASES` / `category_label_alias_owner`
+  (`src/rules_core/cache_gen/class_feature.rs`), keyed on exact label text with no suffix fuzzing,
+  each entry verified by reading EVERY one of that label's corpus records' `TYPE:`/`PRE*:`/
+  `BONUS`/`ABILITY` tokens (not a sample) — the same discipline `CLASS_FEATURE_POOLS`'s own 27
+  entries were built through (`decisions.md §3`).
+- **Closed: 814 of 2,640 units (30.8%), 21 labels** — Wild Talent 128->Kineticist, Refined
+  Education 94->Rogue, Ki Power 80->Monk, Master of Many Styles 53->Monk, Implement School Focus
+  Power 48->Occultist, Pack Lord 40->Druid, Adaptation 39->Ranger, Blessings 37->Warpriest,
+  Favored Enemy Bonus 37->Ranger, Infiltrator 31->Ranger, Wildcat 28->Monk, Hunter's Tricks
+  26->Ranger, Packmaster 20->Hunter, Packmaster Follower 20->Hunter, Beastmaster 20->Ranger,
+  Beastmaster Follower 20->Ranger, Maneuver Master 20->Monk, Wildblooded 20->Sorcerer, Favored
+  Terrain Bonus 18->Ranger, Terrain Mastery 18->Ranger, Terrain Dominance 17->Ranger. Full
+  per-label evidence table in the cycle receipt.
+- **Two flagged hazards verified and deliberately left unmapped, reported not deferred:**
+  - `Domain Power` (172 units) — 158/172 records' DESC names no class at all; `PRE:`/`TYPE:`
+    tokens are generic across every domain-access class (Cleric, Inquisitor's Inquisition,
+    Warpriest's Blessing-domain hybrid, Paladin's Sacred Servant). No per-record signal exists in
+    this generator's inputs to disambiguate. Forcing a single-class mapping would be the exact
+    anti-gaming failure `decisions.md §1a` names (a relabelled shape, not a closed one). Pinned by
+    `category_label_alias_owner_refuses_the_known_multi_owner_and_not_class_owned_labels` so a
+    future edit can't silently reintroduce it. **Closing this needs either a source beyond
+    `TYPE:`/`PRE*:` tokens (this generator doesn't read one today) or an operator ruling on
+    whether "shared across domain-access classes" is an acceptable disposition — escalating this
+    for the operator/next Gate-3-owning cycle, not silently dropping it.**
+  - `Demonic Obedience` (42 units) — verified NOT class-owned at all (every `PRE:` token names a
+    demon lord, never a class); same standing test pins the exclusion.
+- **Consumer-conflict audit re-run** (`grep -rn 'data\["class"\]\|data\.get("class")\|\.class ==\|data\.class'`):
+  same 4 `data.class` readers the T2a+T12 cycle and the census both found — `class_feature_pool_
+  catalog.rs` (already fixed, reads `key`-split), `class_feature_descriptions.rs`,
+  `class_feature_grant_consumer.rs`, `class_feature_feat_bridge.rs` — all three treat `data.class`
+  as the real owning class and only benefit from a more accurate value. **No new
+  consumer-conflict hazard.**
+- **Regeneration:** `cargo run --locked --bin gen_cache_class_feature` (repo-local pinned oracle,
+  `PCGEN_ORACLE_SHA` `7f818006e371188e5717fd18d74d18a420747fc6`) — 12,384 records, 21 books.
+  12,382 clean (`ingested_at`/`class` only, field-by-field diff checked against pre-image); 2
+  files diverged in other fields too — the SAME pre-existing citation-line-drift pair the T2a+T12
+  cycle already logged as an incident, unrelated to this cycle — both reverted to HEAD.
+  `corpus_literal_sweep`: `26538 records examined ... 0 findings, CLEAN`.
+- **RED→GREEN proven:** mutated the new tier's `.or_else(|| category_label_alias_owner(...))`
+  line to `.or_else(|| None::<String>)`; `generate_writes_the_alias_owner_for_a_text_free_
+  category_label` failed `left: Some("Ki Power")  right: Some("Monk")` — failed for the intended
+  reason. Reverted; green again.
+- **Suites:** `cargo test --locked --lib cache_gen::class_feature::` 32/32 (9 new); `cargo test
+  --locked --lib` 2,402/2,402 pass, 0 failed, 13 ignored; `cargo test --locked --manifest-path
+  apps/desktop/src-tauri/Cargo.toml` (separate cargo workspace) 518/518 pass, 0 failed.
+- **Dual-audit (this cycle's own diff, `git diff --unified=0 HEAD -- src/rules_core/cache_gen/
+  class_feature.rs`):** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+- **Pinned-count sweep:** no test or script outside this bundle's own docs pins the exact
+  5,678/4,284/2,640 population figures as an assertion; this cycle's 814-unit shift leaves no
+  other file's hardcoded count red. Flagged for the next Gate-3-owning cycle: this batch may move
+  `shape_ledger.py`'s F-family counts and Gate 3's `no_record` budget — **budget constants
+  intentionally not touched this cycle**; re-derive with `scripts/shape_ledger.py` /
+  `scripts/verify.sh --only gate3` before trusting either figure.
+- **Kanban:** row 11 stays `in-progress` (814/2,640 T2a-residual units closed this batch; T2b/T9/
+  T12/T4-L9 and the remaining 1,612 T2a-residual units stay open, untouched). Row 15 untouched,
+  stays `in-progress`.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** continue `CATEGORY_LABEL_ALIASES` verification through the remaining ~525
+  labels (census's per-book table names where they live — `card11-t2a-residual-census-census.md`),
+  or escalate `Domain Power`'s multi-owner disposition to the operator if a work lane wants it
+  resolved before row 11 can close.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t2a-residual-alias-tier_cycle-1_cycle_receipt.md`.

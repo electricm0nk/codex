@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Infiltrator ~ Ooze",
     "name": "Ooze",
-    "class": "Infiltrator",
+    "class": "Ranger",
     "description": "acid resistance 10, Great Fortitude, Iron Will, Skill Focus (choose Climb, Escape Artist, or Perception).",
     "raw_tokens": [
       {

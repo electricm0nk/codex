@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Terrain Dominance ~ Desert",
     "name": "Terrain Dominance (Desert)",
-    "class": "Terrain Dominance",
+    "class": "Ranger",
     "description": "The horizon walker gains fire resistance 10 and immunity to fatigue.",
     "raw_tokens": [
       {

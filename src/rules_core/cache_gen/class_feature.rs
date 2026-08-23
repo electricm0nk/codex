@@ -681,6 +681,84 @@ fn owner_text_matches(text: &str, class: &str) -> bool {
         || text_lower.ends_with(&format!(" {class_lower}"))
 }
 
+// ---------------------------------------------------------------------
+// SD-32 card 11, T2a-residual cycle: a fifth resolution tier, ALIAS text
+// that names neither a dispatched class ([`pool_catalog_owner`],
+// [`type_facet_dispatched_owner`]) nor a `TYPE:`/`type_facet` string that
+// literally contains the owning class's own name
+// ([`corpus_class_owner`], [`type_facet_corpus_owner`]) -- e.g. "Ki Power"
+// names no class at all in its own text, but every one of its 80 corpus
+// records carries `PRE: 1,Monk=4`. `POOL_TO_DISPATCHED_CLASS` cannot
+// widen to cover this: it is a suffix/prefix TEXT matcher, and there is no
+// text relationship between "Ki Power" and "Monk" to match against.
+//
+// Each entry below was verified the same way `CLASS_FEATURE_POOLS`' own 27
+// entries were: reading every one of the label's corpus records' `TYPE:`,
+// `PRE*:`, `BONUS`, and `ABILITY` tokens (not a sample) and confirming
+// they name exactly one class, with no cross-book or cross-class
+// collision (`artifacts/gate-3-closure-invariant/card11-t2a-residual-
+// alias-verification.md` carries the per-label evidence and re-derive
+// commands). Unlike [`POOL_TO_DISPATCHED_CLASS`], the target may be a
+// real corpus-declared class the engine does not yet dispatch
+// (`"Kineticist"`, `"Occultist"`) -- this closes T2a-residual for those
+// records without claiming T12's engine gap is also closed.
+//
+// A label is deliberately ABSENT from this table when the verification
+// found it is NOT single-owner (`"Domain Power"`: `DomainLawLVL`-shaped
+// `PRE:` tokens and its own DESC text are shared across every class with
+// domain access -- Cleric, Inquisitor's Inquisition, Warpriest's
+// Blessing-domain hybrid, Paladin's Sacred Servant archetype -- with no
+// per-record token that says which one; forcing it to one class the way
+// `"Rage Power" -> "Barbarian"` works would be the exact anti-gaming
+// failure `decisions.md §1a` rules out, a relabelled shape, not a closed
+// one) or NOT class-owned at all (`"Demonic Obedience"`: every `PRE:`
+// token names a demon lord, never a class -- a deity-obedience feat line,
+// structurally outside any class chassis). Both are reported open, with
+// this reasoning, in the cycle receipt rather than silently mapped to
+// shrink the count.
+// ---------------------------------------------------------------------
+
+/// Verified label -> real owning class, for category labels whose own
+/// text names no class at all (see the section comment above). Applied
+/// only via exact match on `group` (the key's `" ~ "`-split prefix) --
+/// no suffix/prefix fuzzing, unlike [`POOL_TO_DISPATCHED_CLASS`], because
+/// there is no shared text to fuzz.
+const CATEGORY_LABEL_ALIASES: &[(&str, &str)] = &[
+    ("Ki Power", "Monk"),
+    ("Master of Many Styles", "Monk"),
+    ("Maneuver Master", "Monk"),
+    ("Wildcat", "Monk"),
+    ("Pack Lord", "Druid"),
+    ("Adaptation", "Ranger"),
+    ("Favored Enemy Bonus", "Ranger"),
+    ("Favored Terrain Bonus", "Ranger"),
+    ("Terrain Mastery", "Ranger"),
+    ("Terrain Dominance", "Ranger"),
+    ("Infiltrator", "Ranger"),
+    ("Hunter's Tricks", "Ranger"),
+    ("Beastmaster", "Ranger"),
+    ("Beastmaster Follower", "Ranger"),
+    ("Packmaster", "Hunter"),
+    ("Packmaster Follower", "Hunter"),
+    ("Wildblooded", "Sorcerer"),
+    ("Refined Education", "Rogue"),
+    ("Blessings", "Warpriest"),
+    ("Wild Talent", "Kineticist"),
+    ("Implement School Focus Power", "Occultist"),
+];
+
+/// Resolves `group` against [`CATEGORY_LABEL_ALIASES`] by exact match,
+/// then maps the verified target class name through `corpus_class_names`
+/// (so the returned string is always the corpus's own natural-case
+/// spelling, dispatched or not) -- `None` if the target class is not
+/// itself corpus-declared (defensive; every entry above was verified
+/// against a real corpus-declared class at construction time) or the
+/// group has no alias entry at all.
+fn category_label_alias_owner(group: &str, corpus_class_names: &BTreeMap<String, String>) -> Option<String> {
+    let (_, target) = CATEGORY_LABEL_ALIASES.iter().find(|(label, _)| *label == group)?;
+    corpus_class_names.get(&target.to_lowercase()).cloned()
+}
+
 /// Redacts the `DESC` token in `raw_tokens` in place whenever `description`
 /// classified as PI-redacted (declared `DESCISPI:Yes` OR blacklist-detected
 /// via [`pi_screening::classify_field`]) -- otherwise `data.raw_tokens`
@@ -793,9 +871,15 @@ pub fn generate(
             // tried first against the 34 DISPATCHED classes (closes true
             // T2a plumbing) and then against the full corpus-declared
             // roster (closes the T2a/T12 overlap: a genuinely-undispatched
-            // class's own name, not a category label). The raw key-prefix
+            // class's own name, not a category label). The T2a-residual
+            // cycle adds a sixth tier, [`category_label_alias_owner`], for
+            // labels whose own text names no class at all (`"Ki Power"` ->
+            // `"Monk"` via its `PRE:` token, not via any text match) -- see
+            // the section comment above [`CATEGORY_LABEL_ALIASES`] for why
+            // it is a verified per-label table, not a text fuzzer, and for
+            // which labels were deliberately excluded. The raw key-prefix
             // split is the last-resort fallback for whatever none of the
-            // five tiers above resolves. See the module section comment
+            // six tiers above resolves. See the module section comment
             // above `POOL_TO_DISPATCHED_CLASS` for the full argument.
             let group = key_owner.as_deref().unwrap_or(&unit.key);
             let class = true_class
@@ -804,6 +888,7 @@ pub fn generate(
                 .or_else(|| pool_catalog_owner(group).map(str::to_string))
                 .or_else(|| type_facet_dispatched_owner(unit.type_facet.as_deref()))
                 .or_else(|| corpus_class_owner(group, corpus_class_names))
+                .or_else(|| category_label_alias_owner(group, corpus_class_names))
                 .or_else(|| type_facet_corpus_owner(unit.type_facet.as_deref(), corpus_class_names))
                 .or_else(|| key_owner.clone());
 
@@ -1230,6 +1315,53 @@ mod tests {
         assert_eq!(corpus_class_owner("Domain Power", &corpus_class_names), None);
     }
 
+    /// `"Ki Power"` names no class in its own text at all (unlike
+    /// `"Rage Power"`, whose suffix IS the pool-catalog's own registered
+    /// word) -- only [`CATEGORY_LABEL_ALIASES`]' verified table resolves
+    /// it, to a corpus-declared class ("Monk") that need not be dispatched
+    /// for the lookup itself to succeed.
+    #[test]
+    fn category_label_alias_owner_resolves_a_verified_text_free_label() {
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("monk".to_string(), "Monk".to_string());
+        assert_eq!(category_label_alias_owner("Ki Power", &corpus_class_names), Some("Monk".to_string()));
+    }
+
+    /// The alias table's target may itself be a genuinely-undispatched
+    /// corpus-declared class ("Kineticist") -- proving this tier closes
+    /// T2a-residual for such a label without claiming T12's engine gap is
+    /// also closed (the class stays unmodelled; only `data.class` becomes
+    /// honest).
+    #[test]
+    fn category_label_alias_owner_resolves_to_an_undispatched_corpus_declared_class() {
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("kineticist".to_string(), "Kineticist".to_string());
+        assert_eq!(category_label_alias_owner("Wild Talent", &corpus_class_names), Some("Kineticist".to_string()));
+    }
+
+    #[test]
+    fn category_label_alias_owner_returns_none_for_an_unregistered_group() {
+        let corpus_class_names = BTreeMap::new();
+        assert_eq!(category_label_alias_owner("Refined Education", &corpus_class_names), None);
+    }
+
+    /// `"Domain Power"` is deliberately ABSENT from [`CATEGORY_LABEL_ALIASES`]
+    /// -- the section comment above the table names why (multi-owner, no
+    /// per-record signal). This test pins the absence so a future edit
+    /// cannot silently re-introduce the anti-gaming failure the census
+    /// flagged without a reviewer noticing the assertion break.
+    #[test]
+    fn category_label_alias_owner_refuses_the_known_multi_owner_and_not_class_owned_labels() {
+        let corpus_class_names = BTreeMap::new();
+        for label in ["Domain Power", "Demonic Obedience"] {
+            assert_eq!(
+                category_label_alias_owner(label, &corpus_class_names),
+                None,
+                "{label} must stay unmapped -- see CATEGORY_LABEL_ALIASES's section comment"
+            );
+        }
+    }
+
     #[test]
     fn corpus_class_names_from_inventory_json_reads_every_class_kind_unit() {
         let json = serde_json::json!({
@@ -1347,6 +1479,64 @@ mod tests {
             json["data"]["class"].as_str(),
             Some("Vigilante"),
             "generate() must ship the corpus-declared undispatched owner, not the category label \"Vigilante Talent\": {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// End-to-end: `"Ki Power"` names no class in its own text at all --
+    /// neither the pool catalog's suffix match nor a `type_facet`/`TYPE:`
+    /// text match can reach "Monk" from it. Only
+    /// [`category_label_alias_owner`]'s verified table (SD-32 card 11,
+    /// T2a-residual cycle) resolves it. Mutating `generate`'s
+    /// `.or_else(|| category_label_alias_owner(...))` line out turns this
+    /// red.
+    #[test]
+    fn generate_writes_the_alias_owner_for_a_text_free_category_label() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-alias-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/ultimate_magic");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("um_abilities_class.lst"),
+            "Wholeness of Body\t\tKEY:Ki Power ~ Wholeness of Body\t\tCATEGORY:Special Ability\tDESC:You heal yourself.\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "ultimate_magic".to_string(),
+            source_file: "um_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Ki Power ~ Wholeness of Body".to_string(),
+            name: "Wholeness of Body".to_string(),
+            type_facet: None,
+        }];
+
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("monk".to_string(), "Monk".to_string());
+
+        generate(
+            &corpus_root,
+            &grants_root,
+            &out_dir,
+            "2026-08-23T00:00:00Z",
+            &units,
+            &corpus_class_names,
+        )
+        .expect("generate must succeed against a well-formed fixture");
+
+        let written = std::fs::read_to_string(out_dir.join("ultimate_magic/class_feature/ki_power/wholeness_of_body.json"))
+            .expect("generate must still write to the key-owner-keyed path");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        assert_eq!(
+            json["data"]["class"].as_str(),
+            Some("Monk"),
+            "generate() must ship the verified alias owner, not the category label \"Ki Power\": {written}"
         );
 
         std::fs::remove_dir_all(&tmp).ok();

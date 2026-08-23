@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wildblooded ~ Linnorm",
     "name": "Linnorm",
-    "class": "Wildblooded",
+    "class": "Sorcerer",
     "description": "Your draconic heritage stems from a mighty, primordial linnorm rather than from the more common, somewhat civilized dragons.",
     "raw_tokens": [
       {

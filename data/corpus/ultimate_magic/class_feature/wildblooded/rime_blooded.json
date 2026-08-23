@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wildblooded ~ Rime-Blooded",
     "name": "Rime-Blooded",
-    "class": "Wildblooded",
+    "class": "Sorcerer",
     "description": "The wintry origin of your magic flows like ice water in your veins.",
     "raw_tokens": [
       {

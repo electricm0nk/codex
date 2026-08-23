@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Hobbling Attack",
     "name": "Hobbling Attack",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can use this trick as a free action when he hits with an attack. The target of the attack's land speed is reduced by 1/2 for 1d4 rounds.",
     "raw_tokens": [
       {

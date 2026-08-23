@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Terrain Dominance ~ Jungle",
     "name": "Terrain Dominance (Jungle)",
-    "class": "Terrain Dominance",
+    "class": "Ranger",
     "description": "The horizon walker gains charm monster as a spell-like ability a number of times per day equal to 3 + the character's Wisdom modifier (caster level equal to the character's level). This charm only affects animals, magical beasts, and creatures primarily found in the jungle.",
     "raw_tokens": [
       {

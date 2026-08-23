@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Infiltrator ~ Outsider (Lawful)",
     "name": "Outsider (Lawful)",
-    "class": "Infiltrator",
+    "class": "Ranger",
     "description": "darkvision 60 ft., energy resistance 5 (choose one type of energy from acid, cold, electricity, or fire), Great Fortitude, Iron Will, Lightning Reflexes",
     "raw_tokens": [
       {

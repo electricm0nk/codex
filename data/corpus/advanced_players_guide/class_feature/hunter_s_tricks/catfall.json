@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Catfall",
     "name": "Catfall",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can use this trick as an immediate action when he falls 20 or more feet, ignoring the first 20 feet of the fall when calculating the falling damage. If the ranger takes no damage from the fall, he does not fall prone.",
     "raw_tokens": [
       {

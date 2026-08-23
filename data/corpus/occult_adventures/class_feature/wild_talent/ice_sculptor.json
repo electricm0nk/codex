@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Ice Sculptor",
     "name": "Ice Sculptor",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element water; Type utility (Sp); Level 4; Burn 0 You can sculpt ice and snow into new shapes, as the spell stone shape but affecting ice and snow instead of stone.",
     "raw_tokens": [
       {

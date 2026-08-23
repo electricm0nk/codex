@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Infiltrator ~ Construct",
     "name": "Construct",
-    "class": "Infiltrator",
+    "class": "Ranger",
     "description": "darkvision 60 ft., Great Fortitude, Lightning Reflexes, low-light vision.",
     "raw_tokens": [
       {

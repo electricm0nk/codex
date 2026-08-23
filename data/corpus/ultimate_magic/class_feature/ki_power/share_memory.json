@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Share Memory",
     "name": "Share Memory",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 0 ki points to use share memory as a spell-like ability (caster level %1).|classlevel(\"Monk\")",
     "raw_tokens": [
       {

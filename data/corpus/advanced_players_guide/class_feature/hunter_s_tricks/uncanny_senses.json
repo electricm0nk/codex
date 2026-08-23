@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Uncanny Senses",
     "name": "Uncanny Senses",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "As an immediate action, the ranger gains a +10 insight bonus on Perception checks for 1 round.",
     "raw_tokens": [
       {

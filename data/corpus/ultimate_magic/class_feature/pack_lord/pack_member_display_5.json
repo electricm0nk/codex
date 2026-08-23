@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Pack Lord ~ Pack Member 5 Display",
     "name": "Pack Member Display 5",
-    "class": "Pack Lord",
+    "class": "Druid",
     "description": "You have %1 levels in pack member 5.|PackMember5LVL",
     "raw_tokens": [
       {

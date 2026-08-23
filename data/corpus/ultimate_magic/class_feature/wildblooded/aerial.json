@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wildblooded ~ Aerial",
     "name": "Aerial",
-    "class": "Wildblooded",
+    "class": "Sorcerer",
     "description": "Your magic is more focused on the power of air and rain than on lightning and thunder.",
     "raw_tokens": [
       {

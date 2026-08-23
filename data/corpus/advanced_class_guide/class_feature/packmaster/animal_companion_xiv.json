@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Packmaster ~ Animal Companion 14",
     "name": "Animal Companion / XIV",
-    "class": "Packmaster",
+    "class": "Hunter",
     "description": "Total Levels Assigned to Companion %1|AnimalCompanionLVLN",
     "raw_tokens": [
       {

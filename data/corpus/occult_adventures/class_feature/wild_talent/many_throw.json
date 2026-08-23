@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Many Throw",
     "name": "Many Throw",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element aether; Type form infusion; Level 8; Burn 4",
     "raw_tokens": [
       {

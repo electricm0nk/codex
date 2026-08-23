@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Timeless Body",
     "name": "Timeless Body",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 0 ki points to use the monk ability timeless body.",
     "raw_tokens": [
       {

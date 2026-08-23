@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Tiring Critical",
     "name": "Tiring Critical",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 3 ki points as a free action on your turn to have Tiring Critical until the beginning of your next turn.",
     "raw_tokens": [
       {

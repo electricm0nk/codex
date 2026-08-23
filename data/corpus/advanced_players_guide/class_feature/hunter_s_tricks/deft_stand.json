@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Deft Stand",
     "name": "Deft Stand",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can spend a move action to stand up without provoking attacks of opportunity.",
     "raw_tokens": [
       {

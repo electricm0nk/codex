@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Deny Death",
     "name": "Deny Death",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 0 ki points as a free action on your turn, or an immediate action, to have Deny Death until the beginning of your next turn.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Infiltrator ~ Animal",
     "name": "Animal",
-    "class": "Infiltrator",
+    "class": "Ranger",
     "description": "climb 15 ft., darkvision 60 ft., Great Fortitude, Lightning Reflexes, low-light vision, natural armor (+2), swim 15 ft.",
     "raw_tokens": [
       {

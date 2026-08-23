@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Tongue of the Sun and Moon",
     "name": "Tongue of the Sun and Moon",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 0 ki points to use the monk ability tongue of the sun and moon.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Greater Feint",
     "name": "Greater Feint",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 2 ki points as a free action on your turn to have Greater Feint until the beginning of your next turn.",
     "raw_tokens": [
       {

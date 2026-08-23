@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Vengeance Strike",
     "name": "Vengeance Strike",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can use this trick as an immediate action when an enemy adjacent to him hits an ally with a melee or ranged attack. The ranger can make a single melee attack at his highest base attack bonus against the creature who attacked his ally.",
     "raw_tokens": [
       {

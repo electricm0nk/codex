@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Beastmaster ~ Animal Companion 3",
     "name": "Animal Companion / III",
-    "class": "Beastmaster",
+    "class": "Ranger",
     "description": "Total Levels Assigned to Companion %1|AnimalCompanionLVLC",
     "raw_tokens": [
       {

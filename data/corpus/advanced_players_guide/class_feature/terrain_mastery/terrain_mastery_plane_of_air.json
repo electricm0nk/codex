@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Terrain Mastery ~ Plane (Air)",
     "name": "Terrain Mastery (Plane of Air)",
-    "class": "Terrain Mastery",
+    "class": "Ranger",
     "description": "The horizon walker gains a +4 competence bonus on Fly checks and +1 competence bonus on all attack and damage rolls against flying creatures. He gains the ability to breathe air if he cannot already do so.",
     "raw_tokens": [
       {

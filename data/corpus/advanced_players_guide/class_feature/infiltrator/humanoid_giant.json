@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Infiltrator ~ Humanoid (Giant)",
     "name": "Humanoid (Giant)",
-    "class": "Infiltrator",
+    "class": "Ranger",
     "description": "low-light vision, Lunge, natural armor +2, resist energy 10 (choose cold, electricity, or fire), Throw Anything.",
     "raw_tokens": [
       {

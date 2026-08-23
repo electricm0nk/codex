@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Earth Climb",
     "name": "Earth Climb",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element earth; Type utility (Su); Level 2; Burn 0 You use your connection to earth to meld slightly into stone and earthen surfaces, granting you a climb speed equal to your base land speed when climbing such surfaces.",
     "raw_tokens": [
       {

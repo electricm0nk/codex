@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Skilled Kineticist (Greater)",
     "name": "Skilled Kineticist, Greater",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element universal; Type utility (Su); Level 2; Burn -",
     "raw_tokens": [
       {

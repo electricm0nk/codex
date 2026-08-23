@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Ki Power ~ Blood Crow Strike",
     "name": "Blood Crow Strike",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 2 ki points to use blood crow strike as a spell-like ability (caster level %1).|classlevel(\"Monk\")",
     "raw_tokens": [
       {

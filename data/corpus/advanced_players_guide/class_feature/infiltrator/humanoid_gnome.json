@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Infiltrator ~ Humanoid (Gnome)",
     "name": "Humanoid (Gnome)",
-    "class": "Infiltrator",
+    "class": "Ranger",
     "description": "defensive training, gnome magic, hatred, illusion resistance, keen senses, low-light vision, obsessive, weapon familiarity.",
     "raw_tokens": [
       {

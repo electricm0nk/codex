@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Quick Climb",
     "name": "Quick Climb",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can climb at his full speed as a move action without penalty.",
     "raw_tokens": [
       {

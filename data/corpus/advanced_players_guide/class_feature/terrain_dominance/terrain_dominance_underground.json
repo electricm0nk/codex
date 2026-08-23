@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Terrain Dominance ~ Underground",
     "name": "Terrain Dominance (Underground)",
-    "class": "Terrain Dominance",
+    "class": "Ranger",
     "description": "The horizon walker gains darkvision with a range of 60 feet. If he already has darkvision 60 feet, its range extends by 60 feet.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wildblooded ~ Sanguine",
     "name": "Sanguine",
-    "class": "Wildblooded",
+    "class": "Sorcerer",
     "description": "The power of undeath can derive from cold blood as well as hard bone.",
     "raw_tokens": [
       {

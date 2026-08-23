@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Water Manipulator",
     "name": "Water Manipulator",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element water; Type utility (Sp); Level 3; Burn 0",
     "raw_tokens": [
       {

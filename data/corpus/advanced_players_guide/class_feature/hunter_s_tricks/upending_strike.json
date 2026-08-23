@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Hunter's Tricks ~ Upending Strike",
     "name": "Upending Strike",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "The ranger can use this trick as a free action just before he makes a melee attack. If the attack hits, he may make a free trip combat maneuver against the target.",
     "raw_tokens": [
       {

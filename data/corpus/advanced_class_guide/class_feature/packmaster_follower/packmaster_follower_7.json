@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Packmaster Follower ~ 7",
     "name": "Packmaster Follower ~ 7",
-    "class": "Packmaster Follower",
+    "class": "Hunter",
     "description": null,
     "raw_tokens": [
       {

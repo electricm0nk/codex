@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wildcat ~ Overrun Training 3",
     "name": "Overrun Training",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "You have had additional training in the Overrun combat maneuver. You gain a +%1 bonus on combat maneuver checks when attempting this combat maneuver and a +%1 bonus to your CMD when defending against this maneuver.|WildcatOverrunBonus",
     "raw_tokens": [
       {

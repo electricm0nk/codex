@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wild Talent ~ Torrent",
     "name": "Torrent",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air, fire, or water; Type form infusion; Level 3; Burn 2 Associated Blasts air, blizzard, blue flame, charged water, fire, magma, mud, plasma, sandstorm, steam, thunderstorm, water Saving Throw Reflex half A torrent of energy buffets or burns all foes in a 30-foot line, dealing half your normal amount of blast damage (or full damage for energy blasts). The saving throw DC is Dexterity-based.",
     "raw_tokens": [
       {

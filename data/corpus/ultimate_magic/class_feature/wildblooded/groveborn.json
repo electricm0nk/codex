@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T01:00:36Z",
+  "ingested_at": "2026-08-23T06:38:28Z",
   "data": {
     "key": "Wildblooded ~ Groveborn",
     "name": "Groveborn",
-    "class": "Wildblooded",
+    "class": "Sorcerer",
     "description": "Some plant magic is more green, while some is more brown, like hardwood.",
     "raw_tokens": [
       {
