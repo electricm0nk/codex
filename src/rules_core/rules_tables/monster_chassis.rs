@@ -980,7 +980,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3704,
+            3706,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -1008,10 +1008,18 @@ mod tests {
              the original 8 unregistered zero-monster books, `mythic_adventures` (+21, all 21 \
              orphan candidates shipped, 0 refused) — structurally additive only, reached \
              entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm, \
-             no new generator code."
+             no new generator code. 3704 -> 3706 (`decisions.md §22`/round 6, +2): two \
+             `type_segments` upstream-data corrections -- a comma-delimiter row \
+             (`bestiary`'s `Spectre ~ Create Spawn`, `TYPE:SpecialAttack,Supernatural`) and a \
+             misspelled facet segment (`bestiary_2`'s `Tick Swarm ~ Cling`, \
+             `TYPE:SpecialAttck.Extraordinary`) each now resolve a real, already-modelled \
+             facet (`SpecialAttack`) instead of raising `UnmodelledFacet` -- structurally \
+             additive only: no existing `MonsterBook` entry's other rows changed, confirmed by \
+             `git status --porcelain` showing exactly the 2 new `??` corpus files plus the 2 \
+             regenerated `monster_data.rs` files, zero deletions."
         );
         assert_eq!(
-            digest, 0xd732_c20e_c4c2_a946,
+            digest, 0x38f4_aedd_6de1_caf3,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \

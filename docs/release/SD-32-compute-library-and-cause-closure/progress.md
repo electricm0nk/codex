@@ -6995,3 +6995,57 @@ diff-header filenames only, confirmed zero content-line hits).
 - Retro: `docs/retro/events/t9-onboarding.jsonl` — one `correction`, one `incident`.
 - **What remains:** the discovered `inner_sea_combat`/`feat` leak (a future cycle's to fix).
 - Commit: (this cycle's commit — see push output).
+
+## Cycle: `t9-monster-ability-per-record-refusal-groups-round6` (2026-08-23)
+
+Card 11, T9, `monster_ability`'s 100 `no_record` units. Round 5's own receipt said the cheap
+zero-monster-book-registration mechanism was exhausted (all 8 originally-unregistered books now
+registered) and the residual is real per-record engineering. This cycle worked that residual by
+**refusal reason** (this brief's own `§17` grouping instruction), not by book.
+
+**Re-derived, not trusted** (`§17a`): re-ran `python3 scripts/shape_ledger.py --inventory
+docs/work-inventory.json` (100 confirmed) and `python3 scripts/transcribe_monster_tables.py <book>`
+for each of the 10 in-scope books, cross-referencing every `no_record` unit's slug against the
+transcriber's own three named refusal-stderr lists:
+
+| Group | Units |
+|---|---:|
+| Multi-`DESC:` parse refusals | 56 |
+| `TYPE:`-facet-vocabulary gaps | 24 |
+| PI-declared exclusions | 15 |
+| (out of scope) `occult_adventures` | 5 |
+| **Total** | **100** |
+
+`occult_adventures`'s 5 re-confirmed out of scope (negated `PRECAMPAIGN` gate, unchanged since
+rounds 3/4/5).
+
+**Closed 2 units**, both via a **generic** fix, not per-object work: `decisions.md §22` (upstream
+data bugs resolved, not perpetuated) applied to two confirmed PCGen data defects found live within
+the `TYPE:`-facet-gap group — `bestiary`'s `Spectre ~ Create Spawn` (`TYPE:SpecialAttack,Supernatural`,
+a comma where every other row uses `.`) and `bestiary_2`'s `Tick Swarm ~ Cling`
+(`TYPE:SpecialAttck.Extraordinary`, a missing `a`). Both are the exact shape `decisions.md §22`
+already named without a fix landed ("2 corpus typos and a comma-delimiter anomaly"). Fixed in
+`transcribe_monster_tables.py::type_segments` — comma treated as an additional segment separator,
+plus a small named exact-match typo-fold table — with a negative-control test proving a genuinely
+unmodelled book-specific `TYPE:` string (`Unfettered Eidolon Stat Selection`) is unaffected. TDD
+RED→GREEN (6 new tests), both records regenerated end-to-end (`gen_book_cache -- beastiary` /
+`-- bestiary_2`), the corpus-wide no-reclassification pin in `monster_chassis.rs` re-derived from a
+live failing run (3704→3706 records, digest `0xd732c20ec4c2a946`→`0x38f4aedd6de1caf3`), and two
+`reach_gate.rs` pins plus one `corpus_ingest_diagnostic.rs` pin this cycle's own diff moved were
+updated inline (the latter file's own two *pre-existing* red tests — a sibling lane's named
+territory — left untouched, unchanged 13/2 split).
+
+`monster_ability` `no_record`: 100 → **98**. Bundle-wide: 227 → **225**.
+
+Remaining 98 named for the next cycle: 56 multi-`DESC:` (a `PREVAREQ`/`PREVARGT`-gated shape
+`parse_desc`'s own docstring already isolates), 22 `TYPE:`-facet-gap (mostly genuine book-specific
+labels needing a per-record policy call, plus a delivery-only-default question needing an operator
+ruling — not invented here per `§1a`), and 15 PI-declared (13 name-PI — `Spawn of Rovagug`/`Daughter
+of Urgathoa`, both terms confirmed on `pi_screening.rs`'s blacklist — closing via `codex_neutral_name`
+already imported by the sibling PI-name lane, not re-implemented; 2 description-only PI — `Thyrlien`/
+`Grim White Stag`, names clean, `DESC:` prose mentions a blacklisted deity — closing via the
+already-existing `DESCISPI:YES` redact-and-ship path, extended to a term-list-hit trigger).
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-monster-ability-per-record-refusal-groups-round6_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit — see push output).

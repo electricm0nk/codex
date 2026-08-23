@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b2_races.lst` -- 314 monster rows
-//!   * `b2_abilities_race.lst` -- 526 monster-ability rows
+//!   * `b2_abilities_race.lst` -- 527 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 130 monster-ability rows
 //!
 //! 2 monster row(s) of this book are `<Base>.COPY=<Variant>`
@@ -5900,7 +5900,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Vermin:16"),
         source_page: Some("p.265"),
         natural_attacks: &[NaturalAttack { name: "Swarm", damage_dice: Some("4d6") }],
-        ability_keys: &["Blood Drain", "Bubonic Plague ~ Disease"],
+        ability_keys: &["Blood Drain", "Bubonic Plague ~ Disease", "Tick Swarm ~ Cling"],
         external_ability_refs: &["Distraction ~ Swarm", "No Combat Maneuvers", "Scent", "Swarm Traits"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -9 }, StatAdjustment { ability: "CHA", amount: -9 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 6 }],
         has_spell_like_abilities: false,
@@ -6411,7 +6411,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_2 monster-ability record (656 rows).
+/// Every bestiary_2 monster-ability record (657 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Achaierai ~ Black Cloud",
@@ -11825,8 +11825,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         key: "Seugathi ~ Detect Thoughts",
         name: "Detect Thoughts",
         facet: MonsterAbilityFacet::Sense,
-        delivery: None,
-        traits: &["Spelllike"],
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
         description: None,
         description_variables: &[],
         source_page: None,
@@ -12444,6 +12444,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Tick (Giant)"],
         source_file: "b2_abilities_race.lst",
         source_line: 1255,
+    },
+    MonsterAbilityRecord {
+        key: "Tick Swarm ~ Cling",
+        name: "Cling",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("If a creature leaves a tick swarm's square, the swarm takes 1d6 points of damage to reflect the loss of its numbers as several ticks cling to the victim.  A creature with ticks clinging to it takes swarm damage at the end of its turn each round.  As a full round action, the creature can remove the ticks with a DC %1 Reflex save.  At least 10 points of damage from any area effect destroys all clinging ticks."),
+        description_variables: &["TickSwarmClingDC"],
+        source_page: Some("p.265"),
+        owners: &["Tick Swarm"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 1259,
     },
     MonsterAbilityRecord {
         key: "Bubonic Plague ~ Disease",

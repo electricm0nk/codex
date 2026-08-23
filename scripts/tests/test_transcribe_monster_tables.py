@@ -430,5 +430,67 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
         self.assertEqual(content.count("MonsterAbilityRecord {"), 1)
 
 
+class TypeSegmentsUpstreamDivergenceCorrection(unittest.TestCase):
+    """`decisions.md §22` -- `type_segments` resolves two confirmed upstream
+    defects (a comma-delimiter row and two misspelled facet/delivery
+    segments) instead of perpetuating them. Real rows, transcribed verbatim
+    from the pinned oracle (`bestiary/b1_abilities_race.lst:1138`,
+    `bestiary_2/b2_abilities_race.lst:1259`,
+    `bestiary_2/b2_abilities_race.lst:851`)."""
+
+    def test_comma_delimiter_is_treated_as_a_segment_separator(self) -> None:
+        # `bestiary/b1_abilities_race.lst:1138` -- `Spectre ~ Create Spawn`.
+        row = [
+            "Create Spawn",
+            "KEY:Spectre ~ Create Spawn",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialAttack,Supernatural",
+        ]
+        self.assertEqual(tmt.type_segments(row), ["SpecialAttack", "Supernatural"])
+
+    def test_specialattck_typo_folds_to_specialattack(self) -> None:
+        # `bestiary_2/b2_abilities_race.lst:1259` -- `Tick Swarm ~ Cling`.
+        row = ["Cling", "KEY:Tick Swarm ~ Cling", "TYPE:SpecialAttck.Extraordinary"]
+        self.assertEqual(tmt.type_segments(row), ["SpecialAttack", "Extraordinary"])
+
+    def test_spelllike_typo_folds_to_spelllike_canonical_casing(self) -> None:
+        # `bestiary_2/b2_abilities_race.lst:851` -- `Mothman ~ Agent of Fate`.
+        row = ["Agent of Fate", "KEY:Mothman ~ Agent of Fate", "TYPE:Spelllike"]
+        self.assertEqual(tmt.type_segments(row), ["SpellLike"])
+
+    def test_a_genuinely_unmodelled_dotted_segment_is_unaffected(self) -> None:
+        """The corrections are a named, exact-match substitution -- not a
+        fuzzy heuristic. A real book-specific label that happens to differ
+        from the two typo'd strings must pass through unchanged and still
+        fail `parse_type`'s facet classification."""
+        row = ["Stat Selection", "KEY:Unfettered Eidolon ~ Str", "TYPE:Unfettered Eidolon Stat Selection"]
+        self.assertEqual(
+            tmt.type_segments(row), ["Unfettered Eidolon Stat Selection"]
+        )
+        with self.assertRaises(tmt.UnmodelledFacet):
+            tmt.parse_type(row)
+
+    def test_corrected_comma_row_now_resolves_a_real_facet(self) -> None:
+        """End-to-end through `parse_type`: the comma-delimiter row, once
+        split correctly, carries a facet (`SpecialAttack`) this chassis
+        already models -- it should no longer raise `UnmodelledFacet`."""
+        row = [
+            "Create Spawn",
+            "KEY:Spectre ~ Create Spawn",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialAttack,Supernatural",
+        ]
+        facet, delivery, traits = tmt.parse_type(row)
+        self.assertEqual(facet, "SpecialAttack")
+        self.assertEqual(delivery, "Supernatural")
+        self.assertEqual(traits, [])
+
+    def test_corrected_specialattck_row_now_resolves_a_real_facet(self) -> None:
+        row = ["Cling", "KEY:Tick Swarm ~ Cling", "TYPE:SpecialAttck.Extraordinary"]
+        facet, delivery, traits = tmt.parse_type(row)
+        self.assertEqual(facet, "SpecialAttack")
+        self.assertEqual(delivery, "Extraordinary")
+
+
 if __name__ == "__main__":
     unittest.main()

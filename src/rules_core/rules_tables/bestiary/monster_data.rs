@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b1_races.lst` -- 280 monster rows
-//!   * `b1_abilities_race.lst` -- 527 monster-ability rows
+//!   * `b1_abilities_race.lst` -- 528 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 182 monster-ability rows
 //!
 //! 4 monster row(s) of this book are `<Record>.MOD` OVERLAY
@@ -5269,7 +5269,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Undead:8"),
         source_page: Some("p.256"),
         natural_attacks: &[NaturalAttack { name: "Incorporeal touch", damage_dice: Some("1d8") }],
-        ability_keys: &["Channel Resistance", "Spectre ~ Resurrection Vulnerability", "Spectre ~ Sunlight Powerlessness", "Spectre ~ Unnatural Aura"],
+        ability_keys: &["Channel Resistance", "Spectre ~ Create Spawn", "Spectre ~ Resurrection Vulnerability", "Spectre ~ Sunlight Powerlessness", "Spectre ~ Unnatural Aura"],
         external_ability_refs: &["Flight Maneuverability"],
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "INT", amount: 4 }, StatAdjustment { ability: "CHA", amount: 4 }],
         has_spell_like_abilities: false,
@@ -5980,7 +5980,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary monster-ability record (709 rows).
+/// Every bestiary monster-ability record (710 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Aboleth ~ Mucus Cloud",
@@ -11367,9 +11367,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Rust Monster ~ Scent Metals",
         name: "Scent Metal",
-        facet: MonsterAbilityFacet::Sense,
-        delivery: None,
-        traits: &["SpecialQuality,Extraordinary"],
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Sense"],
         description: Some("This ability functions much the same as the scent ability, except that the range is 90 feet and the rust monster can only use it to sense metal objects (including creatures wearing or carrying metal objects)."),
         description_variables: &[],
         source_page: Some("p.238"),
@@ -11638,6 +11638,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 1134,
     },
     MonsterAbilityRecord {
+        key: "Spectre ~ Create Spawn",
+        name: "Create Spawn",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Any humanoids slain by a spectre become spectres themselves in 1d4 rounds. Spawn so created are less powerful than typical spectres, and suffer a -2 penalty on all d20 rolls and checks, receive -2 hp per HD, and only drain one level on a touch. Spawn are under the command of the spectre that created them and remain enslaved until its death, at which point they lose their spawn penalties and become full-fledged and free-willed spectres. They do not possess any of the abilities they had in life."),
+        description_variables: &[],
+        source_page: Some("p.256"),
+        owners: &["Spectre"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1138,
+    },
+    MonsterAbilityRecord {
         key: "Spectre ~ Resurrection Vulnerability",
         name: "Resurrection Vulnerability",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -11693,8 +11706,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         key: "Gynosphinx ~ Symbol of Fear",
         name: "Symbol of Fear",
         facet: MonsterAbilityFacet::SpecialQuality,
-        delivery: None,
-        traits: &["Spelllike"],
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
         description: Some("May cast Symbol of Fear (DC 20) once per week. Symbol will last for 1 week maximum."),
         description_variables: &[],
         source_page: Some("p.257"),
@@ -11706,8 +11719,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         key: "Gynosphinx ~ Symbol of Pain",
         name: "Symbol of Pain",
         facet: MonsterAbilityFacet::SpecialQuality,
-        delivery: None,
-        traits: &["Spelllike"],
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
         description: Some("May cast Symbol of Pain (DC 19) once per week. Symbol will last for 1 week maximum."),
         description_variables: &[],
         source_page: Some("p.257"),
@@ -11719,8 +11732,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         key: "Gynosphinx ~ Symbol of Persuasion",
         name: "Symbol of Persuasion",
         facet: MonsterAbilityFacet::SpecialQuality,
-        delivery: None,
-        traits: &["Spelllike"],
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
         description: Some("May cast Symbol of Persuasion (DC 20) once per week. Symbol will last for 1 week maximum."),
         description_variables: &[],
         source_page: Some("p.257"),
@@ -11732,8 +11745,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         key: "Gynosphinx ~ Symbol of Sleep",
         name: "Symbol of Sleep",
         facet: MonsterAbilityFacet::SpecialQuality,
-        delivery: None,
-        traits: &["Spelllike"],
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
         description: Some("May cast Symbol of Sleep (DC 19) once per week. Symbol will last for 1 week maximum."),
         description_variables: &[],
         source_page: Some("p.257"),
@@ -11745,8 +11758,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         key: "Gynosphinx ~ Symbol of Stunning",
         name: "Symbol of Stunning",
         facet: MonsterAbilityFacet::SpecialQuality,
-        delivery: None,
-        traits: &["Spelllike"],
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
         description: Some("May cast Symbol of Stunning (DC 21) once per week. Symbol will last for 1 week maximum."),
         description_variables: &[],
         source_page: Some("p.257"),

@@ -1056,12 +1056,58 @@ def type_segments(row: list[str]) -> list[str]:
     before this existed — not a vocabulary gap, a parsing bug, found and
     fixed by the T9 `MonsterAbilityFacet`-widening cycle while deriving the
     real refusal population (`decisions.md §17a`: re-derive, don't trust).
+
+    **`decisions.md §22` — two upstream shapes, inherited and resolved here,
+    not perpetuated.** Re-derived live against the round-6 refusal
+    population (`no_record` monster_ability round 6), previously named only
+    as "2 corpus typos and a comma-delimiter anomaly" with no fix landed:
+
+    1. **Comma-delimiter anomaly** — `bestiary`'s `b1_abilities_race.lst:1138`
+       (`Spectre ~ Create Spawn`) states `TYPE:SpecialAttack,Supernatural`:
+       PCGen's own delimiter is `.`, and every other row in every book this
+       script has ever read uses it; this single row uses `,` instead. Two
+       facet-bearing rows cannot both be right about the delimiter their own
+       shared vocabulary uses, so this is exactly `§22`'s "two rows that
+       cannot both be right" — Codex resolves it by treating `,` as an
+       additional segment separator, corpus-wide, rather than mirroring the
+       one row's typo.
+    2. **Misspelled facet/delivery segments** — `bestiary_2`'s
+       `b2_abilities_race.lst:1259` (`Tick Swarm ~ Cling`) states
+       `TYPE:SpecialAttck.Extraordinary` (missing the `a`), and
+       `b2_abilities_race.lst:851` (`Mothman ~ Agent of Fate`) states
+       `TYPE:Spelllike` (missing the capital `L`) where every other book's
+       equivalent field reads `SpellLike`. Both are single-row spelling
+       defects in the oracle's own data, corrected here by an explicit,
+       named substitution table (`_TYPE_SEGMENT_TYPO_FOLDS` below) — never a
+       fuzzy/heuristic match, so no *other* segment can ever be silently
+       "corrected" into a different vocabulary word.
+
+    Both corrections are applied only inside this function, before facet/
+    delivery classification, so `parse_type`'s own vocabulary
+    (`FACETS`/`DELIVERIES`) never has to special-case either shape.
     """
     segments: list[str] = []
     for field in row:
         if field.startswith("TYPE:"):
-            segments.extend(s for s in field[len("TYPE:") :].split(".") if s)
+            for raw in field[len("TYPE:") :].split("."):
+                for part in raw.split(","):
+                    part = _TYPE_SEGMENT_TYPO_FOLDS.get(part, part)
+                    if part:
+                        segments.append(part)
     return segments
+
+
+# `decisions.md §22` — named, single-row corrections for confirmed upstream
+# spelling defects (never a fuzzy match). Adding an entry here is a
+# licensing/correctness-relevant divergence from the oracle's own bytes:
+# name the exact row it was found on in a comment, the way the two entries
+# below do.
+_TYPE_SEGMENT_TYPO_FOLDS: dict[str, str] = {
+    # `bestiary_2/b2_abilities_race.lst:1259` (`Tick Swarm ~ Cling`).
+    "SpecialAttck": "SpecialAttack",
+    # `bestiary_2/b2_abilities_race.lst:851` (`Mothman ~ Agent of Fate`).
+    "Spelllike": "SpellLike",
+}
 
 
 class UnmodelledFacet(Exception):

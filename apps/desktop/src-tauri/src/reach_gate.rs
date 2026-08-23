@@ -6237,12 +6237,16 @@ mod tests {
         // follow-on, +85 owner-less rows -- shape measurable, reachability
         // NOT claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS`
         // under this same key).
-        assert_eq!(abilities.len(), 656, "every row on disk for this book/kind");
+        // 656 -> 657 (`decisions.md §22`/round 6, +1): `Tick Swarm ~ Cling`
+        // now ingests (a misspelled `TYPE:SpecialAttck` facet segment this
+        // book's own parser previously refused). It is OWNED (by
+        // `Tick Swarm`), so it joins `owned_abilities`, not `owner_less`.
+        assert_eq!(abilities.len(), 657, "every row on disk for this book/kind");
         let owner_less = recorded_unreached(&Family::new("bestiary_2", "monster_abilities"));
         assert_eq!(owner_less.len(), 85, "the owner-less rows this cycle's mechanism shipped");
         let owned_abilities: BTreeSet<String> =
             abilities.difference(&owner_less).cloned().collect();
-        assert_eq!(owned_abilities.len(), 571, "the owned (reachable) rows on disk");
+        assert_eq!(owned_abilities.len(), 572, "the owned (reachable) rows on disk");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -6561,8 +6565,13 @@ mod tests {
         // nothing to be un-fixed from. Re-checked after the real regen, via
         // this very test failing `NotSurfaced` naming all 180: they do not
         // reach. `decisions.md §17a`'s own lesson, paid twice in one cycle.)
+        // 709 -> 710 (`decisions.md §22`/round 6, +1): `Spectre ~ Create Spawn`
+        // now ingests (a comma-delimiter `TYPE:` row this book's own parser
+        // previously refused). It is OWNED (by `Spectre`), so it joins the
+        // 529-strong reaching set, not the 180 named non-reaches below —
+        // `missing.len()` is unchanged.
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 709, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 710, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {

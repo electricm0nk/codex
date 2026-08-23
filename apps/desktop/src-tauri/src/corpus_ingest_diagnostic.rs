@@ -1536,7 +1536,10 @@ mod tests {
         // `decisions.md §20` (no_record-to-zero wave 2): 529 -> 709 (+180),
         // owner-less rows (no monster row of this book claims them) now
         // ship for shape measurement rather than being dropped as orphans.
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 709);
+        // `decisions.md §22`/round 6: 709 -> 710 (+1), `Spectre ~ Create
+        // Spawn` now ingests (a comma-delimiter `TYPE:` row this book's own
+        // parser previously refused) -- owned, so it joins the reaching set.
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 710);
     }
 
     #[test]
