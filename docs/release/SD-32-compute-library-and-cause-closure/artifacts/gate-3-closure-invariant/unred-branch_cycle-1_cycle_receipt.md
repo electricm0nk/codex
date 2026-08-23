@@ -96,11 +96,41 @@ confirmed at pin `7f818006e371188e5717fd18d74d18a420747fc6` before any figure wa
 
 ## Other red found (not fixed, out of scope, named per dispatch brief)
 
-None found beyond what the dispatch brief already named. `site-dashboard-check` was not re-run in
-this cycle (declared known-failing from unrelated dashboard-JSON population staleness in the
-dispatch brief; confirmed out of this cycle's scope, not re-derived here to avoid duplicating a
-finding already on record). No other suite in the four run above (`--lib`, the target test file,
-the desktop crate, `--only reach`) reported any failure.
+`site-dashboard-check` was not re-run in this cycle (declared known-failing from unrelated
+dashboard-JSON population staleness in the dispatch brief; confirmed out of this cycle's scope,
+not re-derived here to avoid duplicating a finding already on record). No other suite in the four
+run above (`--lib`, the target test file, the desktop crate, `--only reach`) reported any failure
+**at the point those runs were taken** (against tip `df771142c8`, before this cycle's own commit).
+
+**New red discovered after this cycle's fetch+rebase, before push, from a concurrent lane's
+commit landed on `origin/tranche/12` in between — named, not fixed, per this cycle's own scope
+boundary (`refine_kind`/`Kind` machinery is a concurrent lane's territory):**
+
+```
+cargo test --locked --test v06_work_inventory --no-fail-fast
+FAILED: ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status
+  up_powers.lst must land in files_not_enumerated -- mapping it to Spell is deliberately deferred
+  to Epic 9. Saw: ["up_abilities.lst", "up_abilities_apg.lst", "up_abilities_uc.lst",
+  "up_abilities_um.lst", "up_abilitycategories.lst", "up_abilitycategories_apg.lst",
+  "up_abilitycategories_uc.lst", "up_biosettings.lst", "up_companionmods.lst",
+  "up_companionmods_apg.lst", "up_kits.lst", "up_kits_apg.lst", "up_profs_armor.lst",
+  "up_profs_shield.lst", "up_profs_weapon.lst"]
+```
+
+**Provenance:** `git fetch origin tranche/12 && git rebase origin/tranche/12` (this cycle's own
+§5 push protocol, run after this cycle's own fix was committed) pulled in two commits that landed
+on `origin/tranche/12` while this cycle was in progress: `45c6190de` (T9 PI review sign-off,
+docs-only) and `8e98424eb` ("feat(sd32): generic enumeration -- 5 new kinds landed via data table,
+not per-cycle hand-editing (decisions.md §17)", card 15's generic-enumeration lane -- the same
+concurrent lane this cycle's own dispatch brief named as owning `refine_kind`/`Kind` and warned not
+to collide with). `git diff 8e98424eb..HEAD -- src/bin/v06_work_inventory.rs` is empty -- this
+cycle's own commit touches none of that file, so the new failure is `8e98424eb`'s alone, not
+introduced by this cycle. `up_powers.lst` presumably now classifies into a kind the new
+`SIMPLE_FILENAME_KINDS` data table enumerates (likely `Power`, per that commit's own message)
+rather than staying `files_not_enumerated`, which this pinned test still expects deferred to
+Epic 9. **This cycle does not fix it** -- it is squarely the classifier/`Kind`-machinery territory
+this cycle's dispatch brief reserved for the concurrent lane. Escalated here by name, with the
+exact failing assertion and the commit that caused it, per Blocker Discipline disposition 2.
 
 ## Retro logging
 
