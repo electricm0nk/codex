@@ -1,6 +1,105 @@
 {
   "entries": [
     {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Astral Repair",
+      "min_level": 1,
+      "name": "Astral Repair",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 32,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Damage Reduction",
+      "min_level": 1,
+      "name": "Damage Reduction",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 34,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Form Astral Suit",
+      "min_level": 1,
+      "name": "Form Astral Suit",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 33,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Craftsman",
+      "min_level": 2,
+      "name": "Craftsman",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 35,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Invigorating Suit",
+      "min_level": 3,
+      "name": "Invigorating Suit",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 37,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Reconfigure",
+      "min_level": 3,
+      "name": "Reconfigure",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 36,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Augment Suit",
+      "min_level": 4,
+      "name": "Augment Suit",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 38,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Cannibalize Suit",
+      "min_level": 12,
+      "name": "Cannibalize Suit",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 40,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "aegis",
+      "description": "",
+      "key": "Aegis ~ Perfect Merger",
+      "min_level": 20,
+      "name": "Perfect Merger",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 41,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
       "class_id": "antipaladin",
       "description": "You surrounds your hand with a fiendish flame, causing terrible wounds to open on those you touch. You can use this ability %1 times per day. As a touch attack, you can cause %2d6 points of damage. Using this ability is a standard action that does not provoke attacks of opportunity. Alternatively, you can use this power to heal undead creatures, restoring %2d6 hit points. This ability is modified by any feat, spell, or effect that specifically works with the lay on hands paladin class feature.|LayOnHandsTimes|LayOnHandsDice",
       "key": "Antipaladin ~ Touch of Corruption",
@@ -8,6 +107,7 @@
       "name": "Touch of Corruption",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 79,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -18,6 +118,7 @@
       "name": "Unholy Resilience",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 80,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -28,6 +129,7 @@
       "name": "Aura of Cowardice",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 81,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -38,6 +140,7 @@
       "name": "Cruelty",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 82,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -48,6 +151,7 @@
       "name": "Plague Bringer",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 83,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -58,6 +162,7 @@
       "name": "Channel Negative Energy",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 84,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -68,6 +173,7 @@
       "name": "Fiendish Boon",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 85,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -78,6 +184,7 @@
       "name": "Aura of Despair",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 86,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -88,6 +195,7 @@
       "name": "Aura of Vengeance",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 87,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -98,6 +206,7 @@
       "name": "Aura of Sin",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 88,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -108,6 +217,7 @@
       "name": "Aura of Depravity",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 89,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -118,6 +228,238 @@
       "name": "Unholy Champion",
       "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
       "source_line": 90,
+      "source_shape": "mod_ability",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Altered Defense",
+      "min_level": 1,
+      "name": "Altered Defense",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 84,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Disrupt Pattern",
+      "min_level": 1,
+      "name": "Disrupt Pattern",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 85,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Pattern Designs",
+      "min_level": 1,
+      "name": "Pattern Designs",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 86,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Trapmaker",
+      "min_level": 1,
+      "name": "Trapmaker",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 89,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Hidden Pattern",
+      "min_level": 2,
+      "name": "Hidden Pattern",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 90,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Enhanced Disruption",
+      "min_level": 3,
+      "name": "Enhanced Disruption",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 92,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Evasion",
+      "min_level": 3,
+      "name": "Evasion",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 93,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Rapid Defense",
+      "min_level": 4,
+      "name": "Rapid Defense",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 94,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Swift Trapper",
+      "min_level": 6,
+      "name": "Swift Trapper",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 95,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Hide in Plain Sight",
+      "min_level": 10,
+      "name": "Hide in Plain Sight",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 96,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Enduring Defense",
+      "min_level": 14,
+      "name": "Enduring Defense",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 97,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "cryptic",
+      "description": "",
+      "key": "Cryptic ~ Unchanging Pattern",
+      "min_level": 18,
+      "name": "Unchanging Pattern",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 98,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Devastating Touch",
+      "min_level": 1,
+      "name": "Devastating Touch",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 145,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Fearsome Insight",
+      "min_level": 1,
+      "name": "Fearsome Insight",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 144,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Terror",
+      "min_level": 2,
+      "name": "Terror",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 146,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Aura of Fear",
+      "min_level": 3,
+      "name": "Aura of Fear",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 147,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Channel Terror",
+      "min_level": 3,
+      "name": "Channel Terror",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 148,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Immersed in Fear",
+      "min_level": 7,
+      "name": "Immersed in Fear",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 150,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Shadow Twin",
+      "min_level": 11,
+      "name": "Shadow Twin",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 152,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Twin Fear",
+      "min_level": 11,
+      "name": "Twin Fear",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 153,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "",
+      "key": "Dread ~ Fear Incarnate",
+      "min_level": 20,
+      "name": "Fear Incarnate",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 159,
+      "source_shape": "class_level_table",
       "text_only": false
     },
     {
@@ -128,6 +470,7 @@
       "name": "Arcane Pool",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 10,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -138,6 +481,7 @@
       "name": "Armor Proficiency",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 9,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -148,6 +492,7 @@
       "name": "Cantrips",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 12,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -158,6 +503,7 @@
       "name": "Spell Combat",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 11,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -168,6 +514,7 @@
       "name": "Spellstrike",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 13,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -178,6 +525,7 @@
       "name": "Magus Arcana",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 14,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -188,6 +536,7 @@
       "name": "Spell Recall",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 15,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -198,6 +547,7 @@
       "name": "Bonus Feats",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 16,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -208,6 +558,7 @@
       "name": "Knowledge Pool",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 17,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -218,6 +569,7 @@
       "name": "Improved Spell Combat",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 18,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -228,6 +580,7 @@
       "name": "Fighter Training",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 19,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -238,6 +591,7 @@
       "name": "Improved Spell Recall",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 20,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -248,6 +602,7 @@
       "name": "Greater Spell Combat",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 21,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -258,6 +613,7 @@
       "name": "Counterstrike",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 22,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -268,6 +624,7 @@
       "name": "Greater Spell Access",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 23,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -278,7 +635,547 @@
       "name": "True Magus",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 24,
+      "source_shape": "mod_ability",
       "text_only": true
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Wind Reader",
+      "min_level": 1,
+      "name": "Wind Reader",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 203,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Evade Arrows",
+      "min_level": 2,
+      "name": "Evade Arrows",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 206,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Favored Weapon",
+      "min_level": 2,
+      "name": "Favored Weapon",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 205,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Cover Fire",
+      "min_level": 4,
+      "name": "Cover Fire",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 207,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Disengage",
+      "min_level": 7,
+      "name": "Disengage",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 208,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Defensive Shot",
+      "min_level": 13,
+      "name": "Defensive Shot",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 209,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "marksman",
+      "description": "",
+      "key": "Marksman ~ Ranged Specialist",
+      "min_level": 19,
+      "name": "Ranged Specialist",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 210,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Psionic Proficiency",
+      "min_level": 1,
+      "name": "Psionic Proficiency",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 322,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Warrior's Path",
+      "min_level": 1,
+      "name": "Warrior's Path",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 320,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Martial Power",
+      "min_level": 6,
+      "name": "Martial Power",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 325,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Secondary Path",
+      "min_level": 9,
+      "name": "Secondary Path",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 327,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Twisting Path",
+      "min_level": 12,
+      "name": "Twisting Path",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 329,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Pathweaving",
+      "min_level": 15,
+      "name": "Pathweaving",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 331,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "",
+      "key": "Psychic Warrior ~ Eternal Warrior",
+      "min_level": 20,
+      "name": "Eternal Warrior",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 334,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter's bonus language options include Sylvan, the language of woodland creatures, and Aklo, the tongue spoken by certain sinister fey or otherworldly denizens of reaches of the wild rarely explored by humanity. These choices are in addition to the bonus languages available to the character because of her race. A shifter speaks Druidic, a secret language known only to druids and shifters, which she learns upon becoming a 1st-level shifter. Druidic is a free language for a shifter; that is, she knows it in addition to her regular allotment of languages, and it doesn't take up a language slot. Shifters are forbidden to teach this language to non-druids or non-shifters.",
+      "key": "Shifter ~ Bonus Languages",
+      "min_level": 1,
+      "name": "Bonus Languages",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 18,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "",
+      "key": "Shifter ~ Class Skills",
+      "min_level": 1,
+      "name": "Class Skills",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 16,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "At 1st level, a shifter gains her first aspect-a category of animal to which her body and soul have become supernaturally attuned. She can shift into her aspect's minor form for %1 minutes per day. The duration need not be consecutive but must be spent in 1-minute increments. Shifting into a minor form is a swift action, while ending the effect is a free action that can be taken only on the shifter's turn. Until a shifter gains the chimeric aspect class feature, she can assume only one minor form at a time. Shifting to a new aspect (or aspects, in the case of chimeric aspects or greater chimeric aspects) ends all minor forms currently manifested. The minor forms of aspects are not polymorph effects, and the shifter does not lose the benefits of a minor form while affected by polymorph effects. As the shifter gains levels, she gains more aspects.|ShifterAspectMinutes",
+      "key": "Shifter ~ Shifter Aspect",
+      "min_level": 1,
+      "name": "Shifter Aspect",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 19,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "shifter",
+      "description": "At will, a shifter in her natural form can extend her claws as a swift action to use as a weapon. This magical transformation is fueled as much by the shifter's faith in the natural world as it is by inborn talent. The claws on each hand can be used as a primary natural attack, dealing 1d%1 points of piercing and slashing damage. If she uses one of her claw attacks in concert with a weapon held in the other hand, the claw acts as a secondary natural attack instead.|ShifterClawDamage",
+      "key": "Shifter ~ Shifter Claws",
+      "min_level": 1,
+      "name": "Shifter Claws",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 20,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter is proficient with the following weapons: club, dagger, dart, quarterstaff, scimitar, scythe, sickle, shortspear, sling, and spear. She is also proficient with the natural attacks (claw, bite, and so forth) from the shifter claws class feature and of forms she assumes with wild shape. Shifters are proficient with light and medium armor but are prohibited from wearing metal armor. A shifter can wear wooden armor that has been altered by the ironwood spell so that it functions as if it were steel. Shifters are proficient with shields (except tower shields) but must use only those crafted from wood. A shifter who wears prohibited armor or uses a prohibited shield is unable to use her shifter aspect, shifter claws, wild shape, and other shifter supernatural or spell-like abilities while doing so and for 24 hours thereafter.",
+      "key": "Shifter ~ Weapon and Armor Proficiencies",
+      "min_level": 1,
+      "name": "Weapon and Armor Proficiencies",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 17,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter can improve the attitude of an animal. This ability functions as a Diplomacy check to improve the attitude of a person (Core Rulebook p93). The shifter rolls 1d20 and adds her shifter level and Charisma modifier to determine the wild empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. To use wild empathy, the shifter and the animal must be within 30 feet of one another and under normal conditions. Generally, influencing an animal in this way takes 1 minute but, as with influencing people, it might take more or less time. The shifter can also use this ability to influence a magical beast with an Intelligence score of 1 or 2, but she takes a -4 penalty on the check.",
+      "key": "Shifter ~ Wild Empathy",
+      "min_level": 1,
+      "name": "Wild Empathy",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 21,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "When unarmored, not using a shield, unencumbered, and conscious, the shifter adds %1 to her AC and CMD. If she is wearing nonmetal armor or using a nonmetal shield, she instead adds %2 to her AC.|ShifterACWisBonus|ShifterACWisBonus/2",
+      "key": "Shifter ~ Defensive Instinct",
+      "min_level": 2,
+      "name": "Defensive Instinct",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 22,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter adds +%1 as a bonus on Survival checks to follow tracks.|TrackBonus",
+      "key": "Shifter ~ Track",
+      "min_level": 2,
+      "name": "Track",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 23,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter can move through any sort of undergrowth (such as briars, natural thorns, overgrown areas, and similar terrain) at her normal speed and without taking damage or suffering any other impairment. Briars, thorns, and overgrown areas that are enchanted or magically manipulated to impede motion still affect the shifter.",
+      "key": "Shifter ~ Woodland Stride",
+      "min_level": 3,
+      "name": "Woodland Stride",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 24,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter gains the ability to turn herself into the major form of one of her aspects and back again. This ability functions as beast shape II, except as noted here. The shifter can turn into the major form of only one of her aspects at a time. Using wild shape to change to a major form or back is a standard action that doesn't provoke attacks of opportunity. Often a particular aspect's major form grants abilities beyond the normal effect of beast shape II. Each major form details the abilities the shifter gains with that major form and at what level; she gains these instead of the form abilities from beast shape II, but she still gains beast shape II abilities that are size dependent. A shifter loses her ability to speak while in animal form because she is limited to the sounds that a normal, untrained animal of that form can make, but she can communicate with other animals of the same general grouping as her form. She can also communicate in nonverbal ways with allies. A shifters can take feats and other abilities that require wild shape; for the purpose of qualifying for prerequisites, her effective druid level is equal to her shifter level. A shifter can use wild shape for %1 hours each day. It need not be consecutive but must be spent in 1 hour increments. For abilities that function based on 'uses of wild shape,' each hour of wild shape counts as a use.|ShifterWildshapeCount",
+      "key": "Shifter ~ Wild Shape",
+      "min_level": 4,
+      "name": "Wild Shape",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 25,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter leaves no trail in natural surroundings and cannot be tracked. She can choose to leave a trail if she so desires.",
+      "key": "Shifter ~ Trackless Step",
+      "min_level": 5,
+      "name": "Trackless Step",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 26,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter gains the ability to make several ferocious attacks with the same natural weapon. Instead of attacking with all her natural weapons, the shifter can choose a single natural weapon and make a full attack with that natural weapon, gaining a second iterative attack at a -5 as if it was a manufactured weapon. When she does so, all her other natural attacks count as secondary attacks and don't benefit from shifter's claws. At 11th level, she gains a third iterative attack at a -10 and at 16th level, she gains a fourth iterative attack at -15.",
+      "key": "Shifter ~ Shifter's Fury",
+      "min_level": 6,
+      "name": "Shifter's Fury",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 27,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "When a shifter uses her shifter aspect ability to take on a minor form, she can choose two aspects and assume the minor form of each aspect.",
+      "key": "Shifter ~ Chimeric Aspect",
+      "min_level": 9,
+      "name": "Chimeric Aspect",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 28,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "When a shifter uses her shifter aspect ability to take on a minor form, she can choose up to three aspects and assume the minor form of each aspect.",
+      "key": "Shifter ~ Greater Chimeric Aspect",
+      "min_level": 14,
+      "name": "Greater Chimeric Aspect",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 29,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "You have the ability to change your appearance at will, as if using the Alter Self spell, but only while in your normal form.",
+      "key": "Shifter ~ A Thousand Faces",
+      "min_level": 18,
+      "name": "A Thousand Faces",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 30,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "",
+      "key": "Shifter ~ Timeless Body",
+      "min_level": 18,
+      "name": "Timeless Body",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 31,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "shifter",
+      "description": "A shifter gains access to a fifth aspect, and when she uses shifter's aspect, she can assume the minor forms of all her aspects and the shifter can use her major and minor forms at will.",
+      "key": "Shifter ~ Final Aspect",
+      "min_level": 20,
+      "name": "Final Aspect",
+      "source_file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+      "source_line": 32,
+      "source_shape": "class_level_table",
+      "text_only": true
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Enhanced Mind Blade",
+      "min_level": 1,
+      "name": "Enhanced Mind Blade",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 383,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Form Mind Blade",
+      "min_level": 1,
+      "name": "Form Mind Blade",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 379,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Shape Mind Blade",
+      "min_level": 1,
+      "name": "Shape Mind Blade",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 380,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Throw Mind Blade",
+      "min_level": 1,
+      "name": "Throw Mind Blade",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 381,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Psychic Strike",
+      "min_level": 3,
+      "name": "Psychic Strike",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 384,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Quick Draw",
+      "min_level": 5,
+      "name": "Quick Draw",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 385,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "soulknife",
+      "description": "",
+      "key": "Soulknife ~ Mind Blade Mastery",
+      "min_level": 20,
+      "name": "Mind Blade Mastery",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 386,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Collective",
+      "min_level": 1,
+      "name": "Collective",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 436,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Coordinated Strike",
+      "min_level": 1,
+      "name": "Coordinated Strike",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 437,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Spirit of Many",
+      "min_level": 2,
+      "name": "Spirit of Many",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 438,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Telepathy",
+      "min_level": 3,
+      "name": "Telepathy",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 439,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Strategy",
+      "min_level": 4,
+      "name": "Strategy",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 440,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Improved Share",
+      "min_level": 5,
+      "name": "Improved Share",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 441,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Coordinate",
+      "min_level": 6,
+      "name": "Coordinate",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 442,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Teamwork Feats",
+      "min_level": 6,
+      "name": "Teamwork Feats",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 443,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Echo Effect",
+      "min_level": 8,
+      "name": "Echo Effect",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 444,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Pooled Knowledge",
+      "min_level": 14,
+      "name": "Pooled Knowledge",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 445,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "tactician",
+      "description": "",
+      "key": "Tactician ~ Master Strategist",
+      "min_level": 20,
+      "name": "Master Strategist",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 448,
+      "source_shape": "class_level_table",
+      "text_only": false
     },
     {
       "class_id": "vigilante",
@@ -288,6 +1185,7 @@
       "name": "Class Skills",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 8,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -298,6 +1196,7 @@
       "name": "Dual Identity",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 10,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -308,6 +1207,7 @@
       "name": "Seamless Guise",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 11,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -318,6 +1218,7 @@
       "name": "Social Talent",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 12,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -328,6 +1229,7 @@
       "name": "Vigilante Specialization",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 13,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -338,6 +1240,7 @@
       "name": "Weapon and Armor Proficiencies",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 9,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -348,6 +1251,7 @@
       "name": "Vigilante Talent",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 14,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -358,6 +1262,7 @@
       "name": "Unshakable",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 15,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -368,6 +1273,7 @@
       "name": "Startling Appearance",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 16,
+      "source_shape": "mod_ability",
       "text_only": true
     },
     {
@@ -378,6 +1284,7 @@
       "name": "Frightening Appearance",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 17,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -388,6 +1295,7 @@
       "name": "Stunning Appearance",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 18,
+      "source_shape": "mod_ability",
       "text_only": false
     },
     {
@@ -398,7 +1306,184 @@
       "name": "Vengeance Strike",
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
       "source_line": 19,
+      "source_shape": "mod_ability",
       "text_only": true
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Collective",
+      "min_level": 1,
+      "name": "Collective",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 495,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Collective Healing",
+      "min_level": 1,
+      "name": "Collective Healing",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 496,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Medic Powers",
+      "min_level": 1,
+      "name": "Medic Powers",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 497,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Transfer Wounds",
+      "min_level": 1,
+      "name": "Transfer Wounds",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 498,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Health Sense",
+      "min_level": 2,
+      "name": "Health Sense",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 499,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Spirit of Many",
+      "min_level": 2,
+      "name": "Spirit of Many",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 500,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Steal Health",
+      "min_level": 3,
+      "name": "Steal Health",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 501,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Telepathy",
+      "min_level": 3,
+      "name": "Telepathy",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 502,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Request Aid",
+      "min_level": 5,
+      "name": "Request Aid",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 503,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "vitalist",
+      "description": "",
+      "key": "Vitalist ~ Steal Life",
+      "min_level": 14,
+      "name": "Steal Life",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 504,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "",
+      "key": "Wilder ~ Psychic Enervation",
+      "min_level": 1,
+      "name": "Psychic Enervation",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 532,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "",
+      "key": "Wilder ~ Surge Blast",
+      "min_level": 1,
+      "name": "Surge Blast",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 533,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "",
+      "key": "Wilder ~ Wild Surge",
+      "min_level": 1,
+      "name": "Wild Surge",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 534,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "",
+      "key": "Wilder ~ Elude Attack",
+      "min_level": 2,
+      "name": "Elude Attack",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 535,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "",
+      "key": "Wilder ~ Surging Euphoria",
+      "min_level": 4,
+      "name": "Surging Euphoria",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 536,
+      "source_shape": "class_level_table",
+      "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "",
+      "key": "Wilder ~ Perfect Surge",
+      "min_level": 20,
+      "name": "Perfect Surge",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 538,
+      "source_shape": "class_level_table",
+      "text_only": false
     }
   ]
 }

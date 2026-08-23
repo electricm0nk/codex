@@ -7,15 +7,20 @@
 //! # Population and its own honest boundary
 //!
 //! `scripts/census_untabled_base_class_feature_roster.py` (this fixture's
-//! own re-derive command) extracts every corpus row shaped
-//! `CATEGORY=Class|<ClassName>.MOD` `ABILITY:...|<ClassName> ~ <Feature>|
-//! ...PREVARGTEQ:<Var>_CFP_Level,<N>...` — PCGen's own generic
-//! "own-named-group, automatically granted, level-gated" class-feature shape
-//! — for the 20-class `untabled_base_class_chassis` registry. **Not every
-//! registered class uses this shape**: this run found data for
-//! `antipaladin`/`magus`/`vigilante` only (40 records); the other 17 grant
-//! their own-named features through a different progression convention this
-//! script does not parse (confirmed absent, not merely unchecked — see the
+//! own re-derive command) extracts every corpus row matching either of two
+//! generic PCGen "own-named-group, automatically granted, level-gated"
+//! class-feature shapes — a `CATEGORY=Class|<ClassName>.MOD` virtual
+//! ability (shape 1) or a `CLASS:<ClassName>` level-table row whose own
+//! leading column states the level (shape 2, added when closing the T12
+//! attribution gap) — for the 20-class `untabled_base_class_chassis`
+//! registry. **Not every registered class uses either shape**: this run
+//! found data for 13 of the 20 (`antipaladin`, `magus`, `vigilante` via
+//! shape 1; `aegis`, `cryptic`, `dread`, `marksman`, `psychic_warrior`,
+//! `shifter`, `soulknife`, `tactician`, `vitalist`, `wilder` via shape 2;
+//! 135 records total). The other 7 (`kineticist`, `medium`, `mesmerist`,
+//! `occultist`, `psion`, `psychic`, `spiritualist`) grant their own-named
+//! features through a still-different progression convention neither
+//! script parses (confirmed absent, not merely unchecked — see the
 //! script's own `--summary` output). A class absent from this fixture is
 //! honestly absent, not silently assumed complete; [`roster_for`] returns an
 //! empty slice for it and no caller may treat that as "nothing to grant."
@@ -125,12 +130,14 @@ mod tests {
 
     #[test]
     fn a_class_the_census_script_found_no_mod_shaped_data_for_is_honestly_empty() {
-        // Cryptic is registered in `untabled_base_class_chassis` but this
-        // fixture's own re-derive found no `.MOD`-shaped own-named grant for
-        // it -- confirmed absent, not merely unchecked (this module's own
-        // doc comment). A future fixture regeneration that adds Cryptic data
-        // would need this test updated deliberately, not silently pass.
-        assert!(roster_for("cryptic").is_empty());
+        // Cryptic was this test's original example but is now covered by
+        // shape 2 (`CLASS:` level-table row) -- Psion is registered in
+        // `untabled_base_class_chassis` and this fixture's own re-derive
+        // found no shape-1 or shape-2 own-named grant for it -- confirmed
+        // absent, not merely unchecked (this module's own doc comment). A
+        // future fixture regeneration that adds Psion data would need this
+        // test updated deliberately, not silently pass.
+        assert!(roster_for("psion").is_empty());
     }
 
     /// Fixture-checked against bytes this module never reads: the oracle's
@@ -149,5 +156,23 @@ mod tests {
         assert_eq!(row.min_level, 2);
         assert_eq!(row.source_line, 79);
         assert!(row.source_file.ends_with("apg_abilities_globalvar.lst"));
+    }
+
+    /// Same discipline, shape 2: the oracle's own
+    /// `pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst`
+    /// line 84 is a `CLASS:Cryptic` level-table row whose own leading
+    /// tab-field is the literal level number `1`, carrying
+    /// `ABILITY:Cryptic Class Feature|AUTOMATIC|Cryptic ~ Altered Defense`.
+    /// Hand-transcribed from the corpus text this cycle's own probe read.
+    #[test]
+    fn cryptic_altered_defense_matches_the_oracle_s_shape_2_level_1_grant() {
+        let rows = roster_for("cryptic");
+        let row = rows
+            .iter()
+            .find(|r| r.key == "Cryptic ~ Altered Defense")
+            .expect("Altered Defense must be in the fixture");
+        assert_eq!(row.min_level, 1);
+        assert_eq!(row.source_line, 84);
+        assert!(row.source_file.ends_with("up_classes.lst"));
     }
 }

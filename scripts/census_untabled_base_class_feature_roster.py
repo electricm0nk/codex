@@ -8,13 +8,30 @@ across every class").
 
 # Method, mechanical, not curated
 
-PCGen grants a base class's own-named class features through a
-`CATEGORY=Class|<ClassName>.MOD` line: one `ABILITY:<Category>|AUTOMATIC|
-<ClassName> ~ <Feature>|...` field per feature, each gated by a
-`PREVARGTEQ:<Var>,<N>` clause naming the minimum class level. This is the
-SAME shape across every class that uses it -- no class-specific parsing is
-written here; one regex extracts `(class, feature_key, min_level)` for
-whichever classes' source files use this shape.
+Two generic PCGen shapes grant a base class's own-named class features, both
+extracted here with no per-class branching:
+
+* **Shape 1 (`.MOD` virtual ability).** A `CATEGORY=Class|<ClassName>.MOD`
+  line: one `ABILITY:<Category>|AUTOMATIC|<ClassName> ~ <Feature>|...` field
+  per feature, gated by a `PREVARGTEQ:<Var>_CFP_Level,<N>` clause naming the
+  minimum class level.
+* **Shape 2 (`CLASS:` level-table row).** A row of the class's own `CLASS:
+  <ClassName>` level table -- the row's first tab-separated field is the
+  level number itself (PCGen's own table convention) -- carrying an
+  `ABILITY:<ClassName> Class Feature|AUTOMATIC|<ClassName> ~ <Feature>` field.
+  No `.MOD` marker is present; the level comes from the row's own leading
+  column, not a `PREVARGTEQ` clause. Found by re-deriving the T12 attribution
+  gap (`decisions.md` card 11): the 17 chassis-registered classes shape 1
+  found no data for turned out to use this shape instead, confirmed for 10
+  of them (`aegis`, `cryptic`, `dread`, `marksman`, `psychic_warrior`,
+  `shifter`, `soulknife`, `tactician`, `vitalist`, `wilder`) -- see the
+  `--summary` output for the remaining honest gap.
+
+Both shapes are matched by the literal substring
+`ABILITY:<ClassName> Class Feature|AUTOMATIC|<ClassName> ~ ` (or, for shape 1,
+by the co-occurring `CATEGORY=Class|<ClassName>.MOD` marker) -- no
+class-specific parsing, one mechanical pass per shape, reused across every
+class either shape covers.
 
 Restricted (deliberately) to records whose own key's group segment is the
 class's OWN display name (`"<ClassName> ~ <Feature>"`) -- the same
@@ -126,13 +143,26 @@ def main() -> None:
         class_id = meta["class_id"]
         rows: list[dict] = []
         seen_keys: set[str] = set()
+        shape2_marker = f"ABILITY:{display_name} Class Feature|AUTOMATIC|{display_name} ~ "
         for path in lst_files:
             with open(path, encoding="utf-8", errors="replace") as f:
                 lines = f.readlines()
             for lineno, line in enumerate(lines, 1):
-                if f"CATEGORY=Class|{display_name}.MOD" not in line:
+                is_shape1 = f"CATEGORY=Class|{display_name}.MOD" in line
+                is_shape2 = shape2_marker in line
+                if not is_shape1 and not is_shape2:
                     continue
-                for field in line.split("\t"):
+                fields = line.split("\t")
+                # Shape 2's level comes from the row's own leading tab field
+                # (PCGen's `CLASS:` level-table convention), not a
+                # PREVARGTEQ clause -- only meaningful when that shape is in
+                # play and the field actually parses as an integer.
+                shape2_level = None
+                if is_shape2:
+                    first = fields[0].strip()
+                    if first.isdigit():
+                        shape2_level = int(first)
+                for field in fields:
                     if not field.startswith("ABILITY:"):
                         continue
                     parts = field.split("|")
@@ -143,10 +173,18 @@ def main() -> None:
                         continue  # own-named group only; pool grants excluded
                     if key in seen_keys:
                         continue
-                    level_match = LEVEL_RE.search(field)
-                    if not level_match:
+                    min_level = None
+                    shape = None
+                    if is_shape1:
+                        level_match = LEVEL_RE.search(field)
+                        if level_match:
+                            min_level = int(level_match.group(1))
+                            shape = "mod_ability"
+                    if min_level is None and is_shape2 and shape2_level is not None:
+                        min_level = shape2_level
+                        shape = "class_level_table"
+                    if min_level is None:
                         continue  # no reliably-parsed level -- skip, don't guess
-                    min_level = int(level_match.group(1))
                     seen_keys.add(key)
                     desc = descriptions.get(key, {})
                     rel_path = os.path.relpath(path, oracle_root)
@@ -160,6 +198,7 @@ def main() -> None:
                             "min_level": min_level,
                             "source_file": rel_path,
                             "source_line": lineno,
+                            "source_shape": shape,
                         }
                     )
         if rows:

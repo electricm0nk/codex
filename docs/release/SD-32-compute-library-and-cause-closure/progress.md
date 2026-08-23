@@ -4104,3 +4104,85 @@ left untouched.
   needing a per-record read rather than a blanket vocabulary entry. `feat`/`equipment`/`companion`/
   `monster` kinds untouched, as the prior cycle left them.
 - Commit: (recorded after push).
+
+## Cycle epic-2-t12-attribution-gap-shape2 (2026-08-23)
+
+Dispatch brief: close T12's attribution gap (chassis emits generic `class_chassis.*` ids with no
+class-name segment; decide (a) chassis emits attributable ids vs (b) classify() learns to attribute
+generics). **§17a re-derivation found the brief stale on two axes before writing any code**: it cited
+only one prior T12 cycle (`t12-modelled-class-books`) as zero-closing, but a THIRD, already-committed
+cycle (`t12-roster-mechanism`, commit `9838c344d`, already on `origin/tranche/12` at this dispatch's
+base) had already closed 15 units via a third option neither (a) nor (b) named — a brand-new, purely
+additive class-attributed id namespace (`class_feature.untabled.<class>.corpus_record.<slug>`) that
+bypasses both named options' blast radius entirely. And T12's own live population had collapsed from
+the brief's cited 2,397 to **1,009** (75 real unmodelled classes, 98 false positives — re-derived via
+`python3 scripts/census_t12_class_feature.py`), driven by the earlier `modelled_class_books()` fix,
+untouched by this cycle.
+
+**This cycle's real job**, correctly re-scoped: the existing roster mechanism covered only 3 of the
+20 chassis-registered classes (PCGen's `CATEGORY=Class|<X>.MOD` shape). Investigated the "different
+progression convention" the prior receipt named but did not identify, found it (a `CLASS:<ClassName>`
+level-table row whose own leading tab-field is the level number, carrying `ABILITY:<ClassName> Class
+Feature|AUTOMATIC|<ClassName> ~ <Feature>`), confirmed it as a second generic shape (one substring
+match, one leading-field parse, no per-class branching), and extended
+`scripts/census_untabled_base_class_feature_roster.py` to extract both shapes in one pass.
+
+**Coverage**: 10 more of the 17 previously-uncovered classes (`aegis`, `cryptic`, `dread`,
+`marksman`, `psychic_warrior`, `shifter`, `soulknife`, `tactician`, `vitalist`, `wilder`) — 95 new
+records, fixture grew 40→135 records across 13/20 classes. The prior 3 classes' own 40 rows are
+byte-identical to the pre-cycle commit (confirmed by diff). **7 classes remain at zero under both
+shapes** (`kineticist`, `medium`, `mesmerist`, `occultist`, `psion`, `psychic`, `spiritualist`),
+confirmed absent by direct scan, named as next-cycle scope.
+
+**Live re-derive, fixture-checked, not fabricated (`decisions.md §16`)**: of 236 own-named units
+under the 10 newly-covered classes, **40 reach `text-complete`** (Aegis 2, Cryptic 6, Dread 3,
+Marksman 2, Psychic Warrior 4, Shifter 10, Soulknife 3, Tactician 5, Vitalist 4, Wilder 1) via the
+same zero-magnitude promotion rule `decisions.md §7` already grants the PU roster; 0 promoted to
+`grounded` (same STRICT-check exclusion, unmodified by this cycle); 55 remain honestly `not-ingested`
+as genuinely magnitude-bearing (need real per-feature compute functions, not attempted this cycle);
+141 fall outside this fixture's scope. None of the 40 were ever counted in the
+`class_feature_of_unmodelled_corpus_class` (T12) population — confirmed by registry-membership check
+— so this is real, additional closure on top of T12's own separate, untouched population, not a
+re-count of it.
+
+**RED → GREEN, real**: mutated the census script's shape-2 detection off, regenerated the fixture
+(reproduced the exact pre-cycle 40-record/3-class state, byte-identical to the pre-cycle commit's
+fixture via `diff`), 3 new tests failed for the intended reason (roster/fixture genuinely empty for
+the mutated case), reverted, re-ran GREEN.
+
+**Suites**: `cargo test --locked --lib untabled_base_class_feature_roster` 10/10 (was 7, +3 new).
+`cargo test --locked --bin v06_work_inventory` 335/335 (unchanged — this cycle touches no code in
+that binary). `cargo test --locked --lib` (full, foregrounded and awaited): **2,412 passed, 1 failed,
+13 ignored**. The one failure (`feat_prereqs::prerequisite_tests::a_starting_fighter_keeps_a_real_
+catalog_and_every_denial_states_why`, `left: 755, right: 701`) is **pre-existing**: this cycle's own
+diff touches only 4 files (none in the feat subsystem); the prior commit on this branch (`fb4f28dad`,
+T9 feat/equipment lane) grew the feat catalog by design and evidently left this pinned-count
+assertion red. Not caused by, and not fixed by, this cycle (different subsystem, out of scope per
+AGENTS.md rule 3 "do not expand scope") — flagged per the branch's own "left red three times"
+standing caution, not silently absorbed.
+
+**Dual audit** (own diff, `src/rules_core/pilot_compute/mod.rs`
+`src/rules_core/pilot_compute/untabled_base_class_feature_roster.rs`
+`scripts/census_untabled_base_class_feature_roster.py`): `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+**A stray, unauthored `docs/work-inventory.json` modification appeared in `git status` mid-cycle**
+(871 changed lines, `generated_at`/worktree-path fields only, referencing neither this worktree nor
+any command this cycle ran with `--stdout-only`) — provenance could not be established (this
+binary's own `--stdout-only` guard returns before any write; no test this cycle ran touches that
+file). Discarded via `git checkout -- docs/work-inventory.json` before committing, per "git status
+before every git write" discipline; not investigated further as out of this cycle's scope, but
+worth a look if a sibling lane reports an unexplained inventory diff.
+
+Gate 3's `no_record`/`not_ingested` budget: unaffected (measurement only, `docs/work-inventory.json`
+not written by this cycle, budget constants untouched).
+
+- **Status:** complete (this lane's own bounded scope; T12 is one of card 11's five open sub-shapes
+  and this cycle does not close it in full — row 11 stays `in-progress`).
+- **Kanban:** row 11 prepended (T12 shape-2 entry); rows 11, 15 left `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t12-attribution-gap-shape2_cycle-1_cycle_receipt.md`.
+- **What remains:** 7 classes need a third progression-shape investigation
+  (`kineticist`/`medium`/`mesmerist`/`occultist`/`psion`/`psychic`/`spiritualist`); 80 total
+  magnitude-bearing records (25 prior + 55 this cycle) across the 13 covered classes need real
+  per-feature compute functions, named not attempted; the original brief's "11-large/82-small" split
+  no longer describes the corpus and must be re-derived before reuse in a future dispatch.
+- Commit: (recorded after push).

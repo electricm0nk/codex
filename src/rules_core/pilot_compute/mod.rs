@@ -47398,18 +47398,53 @@ mod untabled_base_class_feature_roster_wiring_tests {
         );
     }
 
-    /// A registry class the roster fixture has NO data for (Cryptic) must
+    /// Shape-2 (`CLASS:` level-table row) coverage, proven end-to-end the
+    /// same way shape 1's Antipaladin tests are proven above: Cryptic has
+    /// NO shape-1 (`.MOD`) data at all -- every one of its rows comes from
+    /// the level-table convention added when closing the T12 attribution
+    /// gap. A level-1 Cryptic must carry Altered Defense (min_level 1) but
+    /// not Hidden Pattern (min_level 2); a level-2 Cryptic gains it.
+    #[test]
+    fn cryptic_level_1_reaches_altered_defense_via_shape_2_but_not_the_level_2_gated_feature() {
+        let mut input = antipaladin_input(1);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.cryptic.corpus_record.altered_defense".to_owned()),
+            "level-1 Cryptic must carry the shape-2 Altered Defense roster id; got: {ids:?}"
+        );
+        assert!(
+            !ids.contains(&"class_feature.untabled.cryptic.corpus_record.hidden_pattern".to_owned()),
+            "level-1 Cryptic must not yet carry the level-2-gated Hidden Pattern; got: {ids:?}"
+        );
+    }
+
+    #[test]
+    fn cryptic_level_2_gains_the_level_2_gated_shape_2_feature() {
+        let mut input = antipaladin_input(2);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.cryptic.corpus_record.hidden_pattern".to_owned()),
+            "level-2 Cryptic must carry Hidden Pattern; got: {ids:?}"
+        );
+    }
+
+    /// A registry class the roster fixture has NO data for (Psion -- Cryptic
+    /// was this test's original example but is now covered by shape 2) must
     /// emit zero `class_feature.untabled.*` ids -- confirms the mechanism
     /// never fabricates a row for a class it has no corpus evidence for.
     #[test]
     fn a_class_with_no_roster_data_emits_no_untabled_class_feature_ids() {
         let mut input = antipaladin_input(20);
-        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        input.chosen.class_levels[0].class_id = "class:psion".to_owned();
         let computation = compute_pilot_base_chassis(&input);
         let ids = explanation_ids(&computation);
         assert!(
-            ids.iter().all(|id| !id.starts_with("class_feature.untabled.cryptic.")),
-            "cryptic has no roster fixture data; must emit none: {ids:?}"
+            ids.iter().all(|id| !id.starts_with("class_feature.untabled.psion.")),
+            "psion has no roster fixture data; must emit none: {ids:?}"
         );
     }
 }
