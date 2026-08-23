@@ -5670,8 +5670,11 @@ recursive `core_essentials` fallback the pre-existing `ce_abilities_race.lst` en
 never registered in either book's `MonsterBookSpec.abilities_lsts`. Widened both (4 lines, generic
 infra). `bestiary_3` also cites `ce_abilities_race.lst` (added alongside).
 
-`no_record`: bundle total 3,263 → 2,563 (-700, one pre-existing corpus-key collision, same shape as
-the prior cycle's own 179-not-180 discrepancy); `monster_ability` 967 → 267.
+`no_record`: `monster_ability` 967 → 267 (-700, one pre-existing corpus-key collision, same shape as
+the prior cycle's own 179-not-180 discrepancy). Bundle total re-derived at tip AFTER rebasing onto
+sibling `feat`/`spell` closures (`2a79ec478`/`a4636b471`, `feat` 682→0, `spell` 339→285): 2,413 → 1,713
+(`deity` 459, `spell` 285, `monster_ability` 267, `companion` 217, `equipment_modifier` 175,
+`equipment` 170, `class_feature` 140).
 
 **Reachability, proven and pinned, not claimed** (`decisions.md §20`'s own separation): each book's
 `mod.rs` gained `every_owner_less_ability_is_a_named_and_pinned_non_reach` (count + digest,

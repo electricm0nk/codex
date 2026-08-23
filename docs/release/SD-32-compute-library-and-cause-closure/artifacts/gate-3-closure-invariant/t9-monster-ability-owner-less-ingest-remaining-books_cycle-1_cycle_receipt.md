@@ -199,6 +199,14 @@ corpus-key collision in the ledger's join, the identical shape the
 `bestiary` cycle's own 179-not-180 discrepancy documents; not a defect this
 cycle introduced or needs to chase.)
 
+**Re-derived again after rebasing onto `origin/tranche/12`**, which had
+landed two sibling `no_record` closures in the interim (`2a79ec478`: `feat`
+682→0; `a4636b471`: `spell` 339→285, bundle total 2,413 post-rebase-base):
+bundle total 2,413 → 1,713 (deity 459, spell 285, `monster_ability` 267,
+companion 217, equipment_modifier 175, equipment 170, class_feature 140) —
+`monster_ability`'s own 267 is unchanged by the rebase, confirming this
+cycle's delta is independent of the sibling lanes' work.
+
 **No unit was reclassified out of `monster_ability` into another kind** —
 this is a genuine ingestion closure, not the shape `decisions.md §16` warns
 against. All other kinds' `no_record` figures are byte-identical to the
