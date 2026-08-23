@@ -1,5 +1,5 @@
 {
-  "population": 36015,
+  "population": 36039,
   "rows": [
     {
       "id": "advanced_class_guide:class:ex_warpriest",
@@ -96931,6 +96931,13 @@
       "join_status": "matched"
     },
     {
+      "id": "core_rulebook:class_feature:adept_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "core_rulebook:class_feature:air_domain",
       "kind": "class_feature",
       "book": "core_rulebook",
@@ -97302,6 +97309,13 @@
       "join_status": "matched"
     },
     {
+      "id": "core_rulebook:class_feature:aristocrat_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "core_rulebook:class_feature:armor_prof_heavy",
       "kind": "class_feature",
       "book": "core_rulebook",
@@ -97477,7 +97491,14 @@
       "join_status": "matched"
     },
     {
-      "id": "core_rulebook:class_feature:barbarian_class",
+      "id": "core_rulebook:class_feature:barbarian_class__11dd5e53bae01305",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
+      "id": "core_rulebook:class_feature:barbarian_class__d7fdbff333ee8aaf",
       "kind": "class_feature",
       "book": "core_rulebook",
       "family": "F0",
@@ -97554,7 +97575,7 @@
       "join_status": "matched"
     },
     {
-      "id": "core_rulebook:class_feature:bard_class",
+      "id": "core_rulebook:class_feature:bard_class__8ed30ecefeca32ae",
       "kind": "class_feature",
       "book": "core_rulebook",
       "family": "F0",
@@ -97601,6 +97622,13 @@
       "book": "core_rulebook",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "core_rulebook:class_feature:bard_class__cbc80724848276a8",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:bard_lore_master",
@@ -97967,7 +97995,7 @@
       "join_status": "matched"
     },
     {
-      "id": "core_rulebook:class_feature:cleric_class",
+      "id": "core_rulebook:class_feature:cleric_class__41bcf1052a2075a9",
       "kind": "class_feature",
       "book": "core_rulebook",
       "family": "F0",
@@ -98163,6 +98191,13 @@
       "join_status": "matched"
     },
     {
+      "id": "core_rulebook:class_feature:cleric_class__73d4c97ff8bc8b4b",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "core_rulebook:class_feature:cleric_domains",
       "kind": "class_feature",
       "book": "core_rulebook",
@@ -98203,6 +98238,13 @@
       "book": "core_rulebook",
       "family": "F2",
       "join_status": "matched"
+    },
+    {
+      "id": "core_rulebook:class_feature:commoner_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:community_domain",
@@ -99745,6 +99787,13 @@
       "join_status": "matched"
     },
     {
+      "id": "core_rulebook:class_feature:druid_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "core_rulebook:class_feature:druid_nature_bond",
       "kind": "class_feature",
       "book": "core_rulebook",
@@ -100191,6 +100240,13 @@
       "book": "core_rulebook",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "core_rulebook:class_feature:expert_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:favored_class_bonus_hit_point",
@@ -100884,6 +100940,13 @@
       "book": "core_rulebook",
       "family": "F2",
       "join_status": "matched"
+    },
+    {
+      "id": "core_rulebook:class_feature:fighter_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:fighter_weapon_training",
@@ -102020,6 +102083,13 @@
       "join_status": "matched"
     },
     {
+      "id": "core_rulebook:class_feature:monk_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "core_rulebook:class_feature:monk_diamond_soul",
       "kind": "class_feature",
       "book": "core_rulebook",
@@ -102347,6 +102417,13 @@
       "book": "core_rulebook",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "core_rulebook:class_feature:paladin_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:paladin_detect_evil",
@@ -102825,6 +102902,13 @@
       "join_status": "matched"
     },
     {
+      "id": "core_rulebook:class_feature:ranger_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "core_rulebook:class_feature:ranger_combat_style_feat",
       "kind": "class_feature",
       "book": "core_rulebook",
@@ -103026,6 +103110,13 @@
       "book": "core_rulebook",
       "family": "F1",
       "join_status": "matched"
+    },
+    {
+      "id": "core_rulebook:class_feature:rogue_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:rogue_evasion",
@@ -105401,7 +105492,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "core_rulebook:class_feature:sorcerer_class",
+      "id": "core_rulebook:class_feature:sorcerer_class__71a46e3d3c4fd698",
       "kind": "class_feature",
       "book": "core_rulebook",
       "family": "F0",
@@ -105595,6 +105686,13 @@
       "book": "core_rulebook",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "core_rulebook:class_feature:sorcerer_class__911af4bcf1f0498e",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:sorcerer_class_skills",
@@ -105994,6 +106092,13 @@
       "book": "core_rulebook",
       "family": "F2",
       "join_status": "matched"
+    },
+    {
+      "id": "core_rulebook:class_feature:warrior_class",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:water_domain",
@@ -106647,7 +106752,7 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "core_rulebook:class_feature:wizard_class",
+      "id": "core_rulebook:class_feature:wizard_class__6a15d3a27ec1573e",
       "kind": "class_feature",
       "book": "core_rulebook",
       "family": "F0",
@@ -106694,6 +106799,13 @@
       "book": "core_rulebook",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+      "kind": "class_feature",
+      "book": "core_rulebook",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "core_rulebook:class_feature:wizard_class_skills",
@@ -164677,6 +164789,13 @@
       "join_status": "no_formula_tokens"
     },
     {
+      "id": "occult_adventures:class_feature:kineticist_class",
+      "kind": "class_feature",
+      "book": "occult_adventures",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "occult_adventures:class_feature:kineticist_class_skills",
       "kind": "class_feature",
       "book": "occult_adventures",
@@ -165319,6 +165438,13 @@
       "book": "occult_adventures",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "occult_adventures:class_feature:medium_class",
+      "kind": "class_feature",
+      "book": "occult_adventures",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "occult_adventures:class_feature:medium_champion_seance_boon",
@@ -165979,6 +166105,13 @@
       "join_status": "no_formula_tokens"
     },
     {
+      "id": "occult_adventures:class_feature:mesmerist_class",
+      "kind": "class_feature",
+      "book": "occult_adventures",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "occult_adventures:class_feature:mesmerist_class_skills",
       "kind": "class_feature",
       "book": "occult_adventures",
@@ -166502,6 +166635,13 @@
       "book": "occult_adventures",
       "family": "F2",
       "join_status": "matched"
+    },
+    {
+      "id": "occult_adventures:class_feature:occultist_class",
+      "kind": "class_feature",
+      "book": "occult_adventures",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "occult_adventures:class_feature:occultist_class_skills",
@@ -167778,6 +167918,13 @@
       "join_status": "matched"
     },
     {
+      "id": "occult_adventures:class_feature:psychic_class",
+      "kind": "class_feature",
+      "book": "occult_adventures",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "occult_adventures:class_feature:psychic_class_skills",
       "kind": "class_feature",
       "book": "occult_adventures",
@@ -168490,6 +168637,13 @@
       "book": "occult_adventures",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "occult_adventures:class_feature:spiritualist_class",
+      "kind": "class_feature",
+      "book": "occult_adventures",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "occult_adventures:class_feature:spiritualist_call_spirit",
@@ -202440,6 +202594,13 @@
       "book": "ultimate_intrigue",
       "family": "F2",
       "join_status": "matched"
+    },
+    {
+      "id": "ultimate_intrigue:class_feature:vigilante_special_ability",
+      "kind": "class_feature",
+      "book": "ultimate_intrigue",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "ultimate_intrigue:class_feature:vigilante_stunning_appearance",
@@ -247130,6 +247291,13 @@
       "join_status": "no_formula_tokens"
     },
     {
+      "id": "ultimate_wilderness:class_feature:shifter_class",
+      "kind": "class_feature",
+      "book": "ultimate_wilderness",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "ultimate_wilderness:class_feature:shifter_chimeric_aspect",
       "kind": "class_feature",
       "book": "ultimate_wilderness",
@@ -252111,7 +252279,7 @@
     "F0": {
       "label": "No formula content (no DEFINE/BONUS token found for this unit)",
       "proof_width": "Covers a unit whose (book, source_file, source_line) join finds either no corpus record, or a corpus record whose data.raw_tokens carries no DEFINE/BONUS-prefixed key. Does not distinguish 'this unit genuinely has no computable magnitude' (a race description, a pure-text feat) from 'the join failed to find the record it should have' -- the `join_status` field on each ledger row (`no_record` vs `no_formula_tokens`) is what a reviewer checks to tell those apart; F0's own count does not.",
-      "count": 31213
+      "count": 31237
     },
     "F2": {
       "label": "Per-level scaling (<Class>LVL bare or arithmetic)",
@@ -252167,7 +252335,7 @@
   "unclassified_count": 0,
   "unclassified": [],
   "join_status_counts": {
-    "no_record": 21497,
+    "no_record": 21521,
     "matched": 4802,
     "no_formula_tokens": 9716
   }

@@ -3684,3 +3684,68 @@ this sign-off is read more broadly than T9's own four amendments + two ruled que
   population first) scoped to the already-`clear` 20-book set, prove it fixture-checks against the
   pinned oracle and passes `corpus_literal_sweep`, then repeat per remaining kind.
 - Receipt: `artifacts/gate-3-closure-invariant/epic-2-t9-onboarding_cycle-1_cycle_receipt.md`.
+
+## Cycle card-15-duplicate-identity — census-scope-closure / `decisions.md §12b`, `duplicate_identity` collision rescue
+
+- **Card ID:** `census-scope-closure` (kanban card 15). **Status stays `in-progress`.**
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **§17a re-derivation:** the prior cycle's 180/158/22 residual split reproduced exactly before
+  touching anything.
+- **What landed:** `disambiguate_class_feature_fallback_collisions`
+  (`src/bin/v06_work_inventory.rs`, new fn + `BookEnumeration::class_feature_categories`) — for a
+  `Kind::ClassFeature` row with no `KEY:` field, `CATEGORY:` disambiguates two genuinely distinct
+  records sharing a bare display name. Validated corpus-wide: 64 fallback-key collision groups,
+  0 byte-identical-content, `CATEGORY:` disambiguates all 64 cleanly (`TYPE:` alone fails 40/64).
+- **A major correction found mid-cycle, before landing anything on trust.** The dispatch brief's
+  own worked example (`advanced_class_guide`'s "Aberrant Bloodline" 4-way) is the SAME shape as a
+  **pre-existing, operator-confirmed 33-id allowlist** (`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`,
+  SD-31 `decisions.md` Decision 17) of bare `class_feature` rows already proven, case by case, to
+  be a duplicate-chooser-picker row beside its own real feature, not a second object — and
+  Decision 17's own text explicitly forbids building a live adjacency filter to auto-detect more
+  of them ("a generic same-name-adjacent-line rule would silently sweep in any FUTURE same-shaped
+  collision no human reviewed"). Confirmed live: `ultimate_magic:class_feature:accursed_bloodline`
+  (`um_abilities_class.lst:566`) is already on that allowlist; its fallback-key sibling at line
+  2070 (`CATEGORY:Crossblooded Bloodline`) is the IDENTICAL Sorcerer feature reachable through a
+  second archetype prerequisite gate, not a distinct object. **Consequence:** every fallback
+  collision group whose members ALL carry a `TYPE:` facet ending in `"Choice"` is EXCLUDED from
+  this cycle's rescue (39 of the 64 validated groups, including the brief's own flagship example)
+  — left untouched, reported as a hand-review population for the next cycle, same disposition as
+  `CATEGORY:Internal`. Only the confirmed-safe 25 groups (`TYPE:FavoredClass` tracker rows
+  colliding with an unrelated `TYPE:Class` chassis-selector row, one pair per class — e.g.
+  `core_rulebook`'s `Barbarian`, lines 68/98) are rescued.
+- **Population, before and after, both directions proved:** `class_feature` 18,032 → 18,056
+  (+24), every other kind byte-identical. 0 physical locations lost, 24 gained, 0 duplicate ids,
+  0 duplicate physical locations. 5 ids renamed (`unit_id`'s existing slug-collision suffix
+  mechanism), each confirmed still present at its unchanged physical location. **Full `status`
+  distribution diffed — every verification stamp preserved exactly** (`literal-verified`
+  6,506 → 6,506, `fixture-verified` 1,741 → 1,741, `grounded`/`text-complete`/
+  `deferred-with-reason`/`ingested-magnitude`/`not-started`/`unknown` all unchanged; only
+  `not-ingested` grew by exactly +24). `apply_duplicate_chooser_removal`'s own drift guard
+  (`std::process::exit(1)` if its removed-33 count ever drifts) did NOT fire across the regen —
+  mechanical confirmation the `*Choice` exclusion actually kept this fix out of the risky
+  population, not merely a documented intention.
+- **Residual re-derived:** 156 non-internal (was 180, −24), 134 still collide (was 158), 22
+  unexplained (unchanged — same rows, not investigated this cycle). Total pinned-cause residual:
+  **183** (was 207 — the pre-existing, unaffected 27 internal-collision-losers unchanged).
+  `scripts/card15_reconcile.py` re-run: `equals_total_this_run: True`, `remaining_undisposed: 0`,
+  18,992 total.
+- **Gate 3** still FAIL (unchanged verdict, `decisions.md §14`'s already-reopened tension).
+  Population 36,015 → 36,039 (+24). Budget constants NOT modified.
+  `artifacts/gate-1-shape-closure/ledger.json` regenerated for consistency.
+- **Tests:** `cargo test --locked --bin v06_work_inventory` → 335/335 (was 329, +6 net new).
+  Sweep of `tests/`, `src/`, `scripts/`, `apps/` for pinned counts: only
+  `scripts/card15_reconcile.py` (updated this cycle) and this file (append-only narrative)
+  matched.
+- **Status:** complete (cycle), `in-progress` (kanban card 15 — 134 still-colliding residual rows
+  need the SAME per-case hand review SD-31 Decision 17 did, and 22 genuinely-unpinned rows are
+  still not investigated).
+- **Kanban:** row 15 stays `in-progress`, appended with this cycle's full narrative.
+- **Next-cycle plan:** (1) the 134 still-colliding residual rows (39 `*Choice`-typed fallback
+  groups + 16 keyed-collision groups) need the SAME per-case hand review Decision 17 did — not a
+  smarter automatic heuristic, which Decision 17's own text forbids — determine row pair by row
+  pair whether the colliding sibling is a picker beside its own real feature (add to the allowlist)
+  or a genuinely distinct feature (rescue via this cycle's own mechanism, once reviewed); (2) the
+  22 genuinely-unpinned rows — pin the cause or report precisely what remains unknown, not folded
+  into the collision fix on assumption.
+- Receipt: `artifacts/gate-0-census-closure/15-duplicate-identity_cycle_receipt.md`. Fix +
+  correction memo: `artifacts/gate-0-census-closure/15-card-15-duplicate-identity-memo.md`.

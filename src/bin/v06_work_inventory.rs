@@ -924,6 +924,13 @@ struct BookEnumeration {
     /// `.MOD` target names seen in this book, kept so `mod_only_rescue` can
     /// run after the whole corpus is known. See [`ModTarget`].
     mod_targets: Vec<ModTarget>,
+    /// `(source_file, source_line) -> CATEGORY:` value for every enumerated
+    /// `Kind::ClassFeature` row, kept so `disambiguate_class_feature_fallback_collisions`
+    /// can look a colliding unit's category back up without widening
+    /// [`CorpusUnit`] itself (`decisions.md §12b`, card 15's
+    /// `duplicate_identity` cause-pin cycle). Populated only for
+    /// `Kind::ClassFeature`; empty for every other kind.
+    class_feature_categories: BTreeMap<(String, usize), Option<String>>,
 }
 
 /// Tokenise one `.lst` line into its tab fields with surrounding whitespace
@@ -2642,6 +2649,310 @@ fn is_core_essentials_residual(book: &str) -> bool {
 /// this pass exists for the shape `Kind::Template` proved real, and applies
 /// unconditionally to every kind so the next one that hits it needs no code
 /// change either. Returns the number of restatements dropped.
+/// `decisions.md §12b` (card 15's `duplicate_identity` cause-pin cycle,
+/// `15-card-15-internal-duplicate-identity-memo.md`): a `Kind::ClassFeature`
+/// row with no `KEY:` field falls back to its bare display name as its
+/// corpus identity (the `key` assignment in `enumerate_file`, just above
+/// this fn's call site). That fallback is too weak when two genuinely
+/// distinct records share a display name -- e.g. two different CLASSES each
+/// with their own "Barbarian"-named `TYPE:FavoredClass` tracker row and
+/// their own unrelated `TYPE:Class` chassis-selector row in the same file.
+/// `duplicate_identity`'s later per-book filter (this fn's caller) would
+/// otherwise keep only the first and silently drop the rest.
+///
+/// # Why `CATEGORY:` and not `TYPE:`, for the population this fn actually
+/// touches
+///
+/// Re-derived against the pinned oracle over every fallback-key
+/// `class_feature` collision group in the corpus (`row_dependent_class_feature`
+/// files, non-`CATEGORY:Internal` rows, no `KEY:` field): 64 groups, 164
+/// rows. `CATEGORY:` disambiguates all 64 cleanly (0 collisions across
+/// distinct-content siblings, `PCGEN_CORPUS_ROOT=<oracle>/data python3
+/// docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-0-census-closure/15-card-15-duplicate-identity-key-validation.py`);
+/// `TYPE:` alone fails on 40/64. Of those 64, **39 groups' members all carry
+/// a `TYPE:` facet ending in `"Choice"`** (`SorcererBloodlineChoice`,
+/// `BloodragerBloodlineChoice`, ...) -- excluded below; see "The `*Choice`
+/// exclusion" for why. The remaining 25 (`TYPE:FavoredClass` paired with an
+/// unrelated `TYPE:Class`/no-type row, one pair per class -- e.g. `Barbarian`
+/// in `core_rulebook`: line 68 is the class's Favored Class Bonus tracker,
+/// line 98 is its unrelated chassis-selector row) are genuinely distinct
+/// content, hand-verified, and ARE rescued by this fn.
+///
+/// # The `*Choice` exclusion -- a real correction mid-cycle, not a
+/// hypothetical
+///
+/// The cycle's OWN first worked example -- `advanced_class_guide`'s four
+/// `TYPE:SorcererBloodlineChoice`-family "Aberrant Bloodline" rows, one per
+/// class -- looked like the textbook case this fn should rescue. Testing it
+/// against the real corpus surfaced `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`
+/// below: a **pre-existing, operator-confirmed, 33-id allowlist** (SD-31
+/// `decisions.md` Decision 17) of bare `class_feature` rows already proven,
+/// case by case, to be a PICKER option beside its own real feature row (a
+/// `CHOOSE:`-pool idiom: `cr_abilities_class.lst:2333` `KEY:Sorcerer
+/// Bloodline ~ Aberrant` -- the feature -- beside `:2334` `Aberrant
+/// Bloodline` -- the picker), not a second distinct object. Tracing one of
+/// this fn's own early candidates (`ultimate_magic:class_feature:
+/// accursed_bloodline`, `um_abilities_class.lst:566`, `TYPE:
+/// SorcererBloodlineChoice`) confirmed it is already ON that list, and the
+/// fallback-key SIBLING this fn would have rescued
+/// (`um_abilities_class.lst:2070`, `CATEGORY:Crossblooded Bloodline`) is the
+/// SAME underlying Sorcerer feature reachable through a second archetype
+/// gate (`ABILITY:...|Sorcerer Bloodline ~ Accursed`, the identical target
+/// line 566 references) -- the identical duplicate-chooser shape, just not
+/// yet on the hand-reviewed list. `Decision 17`'s own text is explicit that
+/// this is deliberate: *"A bounded, evidenced list rather than a live
+/// adjacency filter, on purpose: a generic 'same name, adjacent line' rule
+/// would silently sweep in any FUTURE same-shaped collision no human
+/// reviewed."* Building a smarter live heuristic here would be exactly the
+/// thing that sentence forbids. So: **every fallback-key collision group
+/// whose members ALL carry a `TYPE:` facet ending in `"Choice"` is left
+/// untouched by this fn** (same as `CATEGORY:Internal`, below) -- neither
+/// rescued nor claimed distinct, reported instead as an open population for
+/// the SAME hand-review Decision 17 already did. That excludes this cycle's
+/// own `advanced_class_guide` "Aberrant Bloodline" flagship example too --
+/// it may well be genuinely distinct (different classes, different
+/// `DEFINE:`/`BONUS:` variable prefixes per row), but "may well be" is
+/// exactly the standard `decisions.md §1a` and Decision 17 both refuse to
+/// ship on.
+///
+/// # Why the scope is otherwise this narrow
+///
+/// * **Only `Kind::ClassFeature`.** This card's own scope; widening to every
+///   kind is unvalidated for this cycle and a separate risk this cycle does
+///   not take.
+/// * **Only rows with NO declared `KEY:` field** (`u.key == u.name`, the
+///   exact fallback signature the enumeration site produces). A row that
+///   DOES carry an explicit `KEY:` and still collides (e.g. two PFS-legal
+///   variants sharing one author-declared `KEY:`, ~16 groups/32 rows in the
+///   corpus) is a corpus-author-declared identity choice, not the fallback
+///   weakness this fix targets -- re-validated: applying `CATEGORY:` to
+///   THOSE groups fails to disambiguate 10/16 of them (siblings sharing both
+///   `KEY:` and `CATEGORY:`, differing only in `TYPE:` or file), so leaving
+///   them on today's collapse-to-first behaviour is the correct, conservative
+///   call for this cycle.
+/// * **`CATEGORY:Internal` never opens a new bucket.** An Internal-tagged
+///   row is PCGen's own bookkeeping/tracker convention (`is_internal_category`'s
+///   domain), not a second player-facing object; giving it its own
+///   disambiguated identity would manufacture a duplicate rather than
+///   rescue one. Its key is left untouched, so it competes for the SAME
+///   identity as any non-Internal sibling exactly as `duplicate_identity`
+///   already does -- byte-for-byte the behaviour this cycle's sibling
+///   `is_internal_category` narrowing already produces for the
+///   `Disable Device Class Skill` collision (`15-internal_cycle_receipt.md`
+///   §3), unaffected by this fn.
+///
+/// # The tie-break rule
+///
+/// The FIRST row in file-iteration order for a given (book, key) keeps its
+/// bare key -- id stability, mirroring [`unit_id`]'s own rule: "non-colliding
+/// units keep the id they have always had". A LATER row whose `CATEGORY:`
+/// has not yet been seen for this key gets a disambiguated key
+/// (`"<key> ~ <category>"`), so the filter below keeps it as a distinct
+/// unit. A LATER row whose category HAS already been seen collapses to that
+/// bucket's key exactly as before (a true restatement).
+fn disambiguate_class_feature_fallback_collisions(
+    units: Vec<CorpusUnit>,
+    categories: &BTreeMap<(String, usize), Option<String>>,
+) -> Vec<CorpusUnit> {
+    let mut assigned: BTreeMap<String, BTreeMap<Option<String>, String>> = BTreeMap::new();
+    units
+        .into_iter()
+        .map(|mut u| {
+            if u.kind != Kind::ClassFeature || u.key != u.name {
+                return u;
+            }
+            let category = categories
+                .get(&(u.provenance.file.clone(), u.provenance.line))
+                .cloned()
+                .flatten();
+            if category.as_deref() == Some("Internal") {
+                return u;
+            }
+            // The `*Choice` exclusion -- see this fn's own doc comment. A
+            // `TYPE:` facet ending in `"Choice"` (`SorcererBloodlineChoice`,
+            // `BloodragerBloodlineChoice`, ...) is the shape `decisions.md`
+            // Decision 17 (SD-31) already proved is sometimes a picker beside
+            // its own real feature row, not a second object -- and its own
+            // text explicitly forbids a live adjacency filter here. Left
+            // untouched (same as `CATEGORY:Internal`): reported as an open
+            // population for hand review, never auto-rescued.
+            if u.type_facet.as_deref().is_some_and(|t| t.ends_with("Choice")) {
+                return u;
+            }
+            let group = assigned.entry(u.key.clone()).or_default();
+            if group.is_empty() {
+                group.insert(category, u.key.clone());
+                return u;
+            }
+            if let Some(existing) = group.get(&category) {
+                u.key = existing.clone();
+                return u;
+            }
+            let disambiguated = format!("{} ~ {}", u.key, category.as_deref().unwrap_or("Uncategorized"));
+            group.insert(category, disambiguated.clone());
+            u.key = disambiguated;
+            u
+        })
+        .collect()
+}
+
+#[cfg(test)]
+mod disambiguate_class_feature_fallback_collisions_tests {
+    use super::*;
+
+    fn class_feature_unit(file: &str, line: usize, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: "advanced_class_guide".to_string(),
+            source_book: "advanced_class_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: name.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The `Barbarian` shape (`core_rulebook cr_abilities_class.lst:68`/
+    /// `:98`, this fn's own doc comment): four bare-display-name rows, four
+    /// distinct `CATEGORY:` values, `type_facet: None` (not the excluded
+    /// `*Choice` shape). All four must survive with distinct keys -- this is
+    /// the RED this fix closes (without it, three of four are silently
+    /// dropped by `duplicate_identity`'s later filter). NOT the
+    /// `advanced_class_guide` "Aberrant Bloodline" case this fn's doc
+    /// comment explains is deliberately excluded -- see
+    /// `choice_typed_collision_is_left_untouched` below for that shape.
+    #[test]
+    fn four_way_category_collision_rescues_all_four() {
+        let units = vec![
+            class_feature_unit("acg_abilities_class.lst", 566, "Aberrant Bloodline"),
+            class_feature_unit("acg_abilities_class.lst", 2412, "Aberrant Bloodline"),
+            class_feature_unit("acg_abilities_class.lst", 2754, "Aberrant Bloodline"),
+        ];
+        let mut categories = BTreeMap::new();
+        categories.insert(
+            ("acg_abilities_class.lst".to_string(), 566),
+            Some("Arcanist Bloodline Development".to_string()),
+        );
+        categories.insert(
+            ("acg_abilities_class.lst".to_string(), 2412),
+            Some("Blood Arcanist Bloodline".to_string()),
+        );
+        categories.insert(
+            ("acg_abilities_class.lst".to_string(), 2754),
+            Some("Crossblooded Rager Bloodline".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        let keys: BTreeSet<String> = out.iter().map(|u| u.key.clone()).collect();
+        assert_eq!(keys.len(), 3, "{keys:?}");
+        assert!(keys.contains("Aberrant Bloodline"), "the first keeps its bare key: {keys:?}");
+    }
+
+    /// Two rows, same bare name, same `CATEGORY:` (a true restatement, the
+    /// `Disable Device Class Skill` shape minus its Internal sibling): both
+    /// keep the SAME bare key, so `duplicate_identity`'s filter still
+    /// collapses them to one -- this fix must not stop that collapse.
+    #[test]
+    fn same_category_collision_is_left_to_collapse_normally() {
+        let units = vec![
+            class_feature_unit("up_abilities_class.lst", 100, "Same Category Twice"),
+            class_feature_unit("up_abilities_class.lst", 200, "Same Category Twice"),
+        ];
+        let mut categories = BTreeMap::new();
+        categories.insert(
+            ("up_abilities_class.lst".to_string(), 100),
+            Some("Special Ability".to_string()),
+        );
+        categories.insert(
+            ("up_abilities_class.lst".to_string(), 200),
+            Some("Special Ability".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        assert!(out.iter().all(|u| u.key == "Same Category Twice"));
+    }
+
+    /// `CATEGORY:Internal` never opens a new bucket -- an Internal-tagged
+    /// row keeps competing for the bare key against its non-Internal
+    /// sibling exactly as `duplicate_identity` already handled it.
+    #[test]
+    fn internal_category_sibling_never_gets_disambiguated() {
+        let units = vec![
+            class_feature_unit("up_abilities_class.lst", 186, "Disable Device Class Skill"),
+            class_feature_unit("up_abilities_class.lst", 468, "Disable Device Class Skill"),
+        ];
+        let mut categories = BTreeMap::new();
+        categories.insert(("up_abilities_class.lst".to_string(), 186), Some("Internal".to_string()));
+        categories.insert(
+            ("up_abilities_class.lst".to_string(), 468),
+            Some("Special Ability".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        assert!(out.iter().all(|u| u.key == "Disable Device Class Skill"), "{out:?}");
+    }
+
+    /// The real, corpus-confirmed shape this fn's own doc comment (`The
+    /// *Choice exclusion`) describes: `um_abilities_class.lst:566` (plain
+    /// Sorcerer, `CATEGORY:Sorcerer Bloodline`) and `:2070` (Crossblooded
+    /// Sorcerer archetype, `CATEGORY:Crossblooded Bloodline`), both
+    /// `TYPE:SorcererBloodlineChoice`, both referencing the SAME real
+    /// feature (`ultimate_magic:class_feature:sorcerer_bloodline_accursed`)
+    /// through different prerequisite gates -- the identical shape
+    /// `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` already proves is a picker,
+    /// not a second object, for line 566's own book-mates elsewhere in the
+    /// corpus. Neither key may change: rescuing this pair would manufacture
+    /// exactly the double-count Decision 17 (SD-31) exists to prevent.
+    #[test]
+    fn choice_typed_collision_is_left_untouched() {
+        let mut plain_sorcerer = class_feature_unit("um_abilities_class.lst", 566, "Accursed Bloodline");
+        plain_sorcerer.type_facet = Some("SorcererBloodlineChoice".to_string());
+        let mut crossblooded_sorcerer =
+            class_feature_unit("um_abilities_class.lst", 2070, "Accursed Bloodline");
+        crossblooded_sorcerer.type_facet = Some("SorcererBloodlineChoice".to_string());
+        let units = vec![plain_sorcerer, crossblooded_sorcerer];
+        let mut categories = BTreeMap::new();
+        categories.insert(
+            ("um_abilities_class.lst".to_string(), 566),
+            Some("Sorcerer Bloodline".to_string()),
+        );
+        categories.insert(
+            ("um_abilities_class.lst".to_string(), 2070),
+            Some("Crossblooded Bloodline".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        assert!(out.iter().all(|u| u.key == "Accursed Bloodline"), "{out:?}");
+    }
+
+    /// A row that already carries an explicit `KEY:` field (so `u.key !=
+    /// u.name`) is untouched even when its category would otherwise
+    /// disambiguate it -- out of this fix's scope by construction.
+    #[test]
+    fn declared_key_row_is_never_touched() {
+        let mut u = class_feature_unit("x.lst", 1, "Same Name");
+        u.key = "Explicit Declared Key".to_string();
+        let mut categories = BTreeMap::new();
+        categories.insert(("x.lst".to_string(), 1), Some("Special Ability".to_string()));
+        let out = disambiguate_class_feature_fallback_collisions(vec![u], &categories);
+        assert_eq!(out[0].key, "Explicit Declared Key");
+    }
+
+    /// A non-`ClassFeature` kind is never touched, even if it happens to
+    /// share a (file, line) key with a class_feature category entry from a
+    /// different book's map (never happens in practice -- each book's
+    /// categories map is scoped per-book -- but the kind guard is the real
+    /// safety net regardless).
+    #[test]
+    fn non_class_feature_kind_is_never_touched() {
+        let mut u = class_feature_unit("x.lst", 1, "Some Feat");
+        u.kind = Kind::Feat;
+        let mut categories = BTreeMap::new();
+        categories.insert(("x.lst".to_string(), 1), Some("Special Ability".to_string()));
+        let out = disambiguate_class_feature_fallback_collisions(vec![u], &categories);
+        assert_eq!(out[0].key, "Some Feat");
+    }
+}
+
 fn drop_core_essentials_native_restatements(
     enumerations: &mut BTreeMap<String, BookEnumeration>,
 ) -> usize {
@@ -3120,6 +3431,13 @@ fn enumerate_file(
         } else {
             effective_book
         };
+
+        if record_kind == Kind::ClassFeature {
+            out.class_feature_categories.insert(
+                (rel.clone(), line_number),
+                token_value(&fields, "CATEGORY:").map(|c| c.to_string()),
+            );
+        }
 
         out.units.push(CorpusUnit {
             book: attributed_book.to_string(),
@@ -9757,10 +10075,24 @@ fn main() {
     // identity are ONE unit. Applied per book+kind, keyed on the corpus
     // identity (KEY: when present, else display name) -- never on the display
     // name alone, which is what collided 18 archetype-qualified spells.
+    //
+    // `decisions.md §12b` (card 15's cause-pin cycle,
+    // `15-card-15-internal-duplicate-identity-memo.md`): for `Kind::ClassFeature`
+    // specifically, the fallback identity (no `KEY:` field, so the bare
+    // display name) is too weak -- 158 of the 179/180-row residual are
+    // genuinely distinct records sharing one display name (the four-way
+    // `Aberrant Bloodline` collision, one per class). `disambiguate_class_feature_fallback_collisions`
+    // runs first and rewrites a LATER colliding row's key to carry its
+    // `CATEGORY:` facet when that facet was not already seen for this key,
+    // so the filter below keeps it as a distinct unit instead of dropping
+    // it. See that function's own doc comment for why the scope is this
+    // narrow (fallback-key-only, `CATEGORY:Internal` excluded).
     for enumeration in enumerations.values_mut() {
         let mut seen: BTreeSet<(Kind, String)> = BTreeSet::new();
         let mut duplicates = 0usize;
         let units = std::mem::take(&mut enumeration.units);
+        let categories = std::mem::take(&mut enumeration.class_feature_categories);
+        let units = disambiguate_class_feature_fallback_collisions(units, &categories);
         enumeration.units = units
             .into_iter()
             .filter(|u| {
