@@ -703,3 +703,61 @@ wrong approach.
 the bottleneck.** SD-31's six zero-yield lanes and SD-32's T2b wave 1 are the same error, and the
 common signature is a brief that forbids the change the units actually need. A lane that returns
 "blocked, needs chassis work" three times over is reporting a scoping defect, not a content problem.
+
+## Decision 18 — Per-record review of T9's 1,344 uncertain units before any further PI sign-off (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. Answers the question posed by the T9 PI exposure audit
+(`artifacts/gate-3-closure-invariant/t9-pi-exposure-audit.md` §9). Second ruling in this chain:
+`decisions.md §15` ordered the audit; this one acts on its result.
+
+### What the audit established
+
+All 2,712 T9 units classified against the DRAFT `docs/governance/ogl-pi-blacklist.md`:
+
+| Bucket | Units | Share |
+|---|---:|---:|
+| Blocked — clearly Product Identity | 261 | 9.6% |
+| Clear — safe under the draft | 1,107 | 40.8% |
+| **Uncertain — the draft cannot resolve it** | **1,344** | **49.6%** |
+
+Signing off the draft as-is would have unblocked only 40.8% and left half of T9 in a bucket the
+document cannot decide either way.
+
+### The ruling
+
+> **Operator: option 2 — per-record review of the 1,344 uncertain units before any further sign-off.**
+
+The blacklist stays `DRAFT` / `pending_operator_sign_off`. The review **proposes**; it does not amend
+the blacklist and does not transcribe anything.
+
+### What the review must resolve
+
+Two of the audit's three recorded gaps are the direct cause of most of the uncertainty and must be
+answered by the review's output:
+
+1. **`companion` and `monster_ability` have no §2.3 field entry at all** — 443 and 359 units
+   respectively, **802 units, 59.7% of the whole uncertain bucket**. The draft's per-record-judgment
+   table names only `SpellCacheData` / `EquipmentCacheData` / `FeatTableEntry.description` /
+   `RaceTraitEntry.detail`. Note that `companion` shows **0 blocked** — that is not "companion is
+   safe", it is "no rule exists for companion".
+2. **The 57-term scan is exact-substring, with no case-folding and no OCR normalization.** The
+   blacklist's own §4 records a real incident (`Cayden CaiLean`, `lrori`) where two records shipped
+   **un-redacted** because of exactly this, caught later by adversarial review rather than by the
+   scan. The `clear` bucket of 1,107 inherits that limitation, so the review's remit includes
+   re-checking `clear`, not only `uncertain`.
+
+The third gap — `.MOD`/`.COPY` rows classified by their own line without tracing a referenced
+target's PI status — is a smaller population but the same shape of hole, and gets an answer too.
+
+### Standing constraints, unchanged
+
+- **`decisions.md §15`'s rule stays in force for every shape, not only T9:** a cycle reaching a
+  suspected Product Identity record stops on that record, lands everything else, and reports it by
+  name. Never transcribe, never silently skip — a silent skip looks like completed work and leaves
+  no trace that an agent made a licensing decision.
+- The blacklist's own DRAFT banner governs the review: *"treat every classification below as a
+  starting hypothesis, not a verified legal fact. When a real field's content doesn't obviously fit
+  a bucket, stop and ask the operator rather than guessing."* A residual "still cannot decide"
+  bucket is therefore a **legitimate and expected** output. Forcing 1,344 records into blocked/clear
+  to produce a tidy number would be the worst available outcome.
+- T9's onboarding stays paused until the operator acts on the review.
