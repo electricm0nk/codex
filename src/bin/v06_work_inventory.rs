@@ -187,6 +187,35 @@ enum Kind {
     /// `artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md`
     /// §7a for the full corpus proof.
     Skill,
+    /// SD-32 `decisions.md §17` — landed through [`SIMPLE_FILENAME_KINDS`],
+    /// the same generic path `Skill` proved: a `*_templates.lst` row (PCGen
+    /// mechanical/administrative templates — Ghost, Celestial Creature,
+    /// Bonus Language grants). 2,343 units, 0 `.COPY=` derivations, all
+    /// disposition (A). See `15-card-15-other-kinds-memo.md` §1.
+    Template,
+    /// `*_deities.lst` — a deity record (name, domain list, favored
+    /// weapon, alignment). 460 units, 97.8% F0 (pure reference facts,
+    /// no `DEFINE`/`BONUS`). Distinct from `class_feature`'s
+    /// domain-*power* records — see `15-card-15-other-kinds-memo.md` §2.
+    Deity,
+    /// Psionic powers (`up_powers.lst`, Dreamscarred Press *Ultimate
+    /// Psionics* only) — structurally `spell`-shaped but filed under a
+    /// distinct LST naming convention `file_kind`'s `_spells` check never
+    /// matches. 421 units, 100% F0. See `15-card-15-other-kinds-memo.md` §3.
+    Power,
+    /// `*_domains.lst` — the domain HEADER record (name, granted-power
+    /// `ABILITY:` reference, `DEFINE:Domain<X>LVL|0` declarations,
+    /// `SPELLLEVEL:DOMAIN|...` list). Distinct from the domain's own
+    /// granted-power `class_feature` row, already counted elsewhere — see
+    /// `15-card-15-other-kinds-memo.md` §4 for the by-record (not by-name)
+    /// proof they do not overlap. 183 units.
+    Domain,
+    /// `*_languages.lst` — a playable/spoken language definition. 143
+    /// units, 100% F0 (text-only, no `DEFINE`/`BONUS`) — a zero-magnitude
+    /// object is still an object, same ruling already applied to
+    /// zero-magnitude class features. See `15-card-15-other-kinds-memo.md`
+    /// §5.
+    Language,
 }
 
 impl Kind {
@@ -204,6 +233,11 @@ impl Kind {
             Kind::MonsterAbility => "monster_ability",
             Kind::Companion => "companion",
             Kind::Skill => "skill",
+            Kind::Template => "template",
+            Kind::Deity => "deity",
+            Kind::Power => "power",
+            Kind::Domain => "domain",
+            Kind::Language => "language",
         }
     }
 
@@ -222,6 +256,11 @@ impl Kind {
         Kind::MonsterAbility,
         Kind::Companion,
         Kind::Skill,
+        Kind::Template,
+        Kind::Deity,
+        Kind::Power,
+        Kind::Domain,
+        Kind::Language,
     ];
 }
 
@@ -283,14 +322,38 @@ fn file_kind(basename: &str) -> Option<Kind> {
     if basename.contains("_equip") {
         return Some(Kind::Equipment);
     }
-    // SD-32 card 15 (`decisions.md §12b`): checked after every other branch
-    // above so a coincidental `_skills` substring inside an already-handled
-    // shape never wins first -- verified against the pinned oracle that no
-    // `_classes`/`_feats`/`_equip*`/`_abilities_*` basename also contains
-    // `_skills` (`find "$PCGEN_CORPUS_ROOT/pathfinder" -iname '*_skills.lst'`
-    // -- every hit is a dedicated `*_skills.lst` file).
-    if basename.contains("_skills") {
-        return Some(Kind::Skill);
+    // SD-32 `decisions.md §17`: every remaining kind this walker recognises
+    // needs nothing beyond "this filename substring means this kind" -- no
+    // row-content carve-out, no book-attribution logic, no duplicate-identity
+    // handling distinct from the rest of the pipeline's already-kind-agnostic
+    // machinery (`refine_kind`'s `other => other` arm, `has_classifying_token`'s
+    // `_ => true` arm, `holds_key_inner`'s `_ => false` arm all already treat
+    // an unlisted kind safely with zero new code). So a kind of THIS shape --
+    // proven filename-only in `15-card-15-other-kinds-memo.md`, same as
+    // `Kind::Skill` was -- is ADDED AS DATA, one row here plus the `Kind::`
+    // variant and its one `classify()` arm (`not_ingested(...)`, itself
+    // required by Rust's exhaustive match, not by any per-kind special-casing
+    // in this file). This is the mechanism `decisions.md §17` asked for:
+    // adding the next kind of this shape costs a table row, not a tour of
+    // `enumerate_file`. Order matters exactly the way it does in
+    // `scripts/census_independent.py::_classify_kind_by_filename` (whose own
+    // ordering this table is kept in lock-step with, per `decisions.md §12b`'s
+    // "the two must agree" bar) -- `_templates` before `_language`, because
+    // `*_templates_language_*.lst` (the racial-bonus-language template files)
+    // must resolve to `Template`, not `Language`; verified against the pinned
+    // oracle that no other pair in this table collides on the same basename.
+    const SIMPLE_FILENAME_KINDS: &[(&str, Kind)] = &[
+        ("_templates", Kind::Template),
+        ("_deities", Kind::Deity),
+        ("_domains", Kind::Domain),
+        ("_powers", Kind::Power),
+        ("_languages", Kind::Language),
+        ("_skills", Kind::Skill),
+    ];
+    for (token, kind) in SIMPLE_FILENAME_KINDS {
+        if basename.contains(token) {
+            return Some(*kind);
+        }
     }
     None
 }
@@ -327,6 +390,41 @@ mod file_kind_skill_tests {
         assert_eq!(file_kind("cr_classes.lst"), Some(Kind::Class));
         assert_eq!(file_kind("cr_feats.lst"), Some(Kind::Feat));
         assert_eq!(file_kind("cr_races.lst"), Some(Kind::Race));
+    }
+
+    /// SD-32 `decisions.md §17`: the five kinds landed through
+    /// `SIMPLE_FILENAME_KINDS` alongside `Skill` -- one representative
+    /// basename per kind, from the pinned oracle
+    /// (`15-card-15-other-kinds-memo.md` §1-5).
+    #[test]
+    fn simple_filename_kinds_resolve_correctly() {
+        assert_eq!(file_kind("aasimar_templates.lst"), Some(Kind::Template));
+        assert_eq!(file_kind("cr_deities.lst"), Some(Kind::Deity));
+        assert_eq!(file_kind("cr_domains.lst"), Some(Kind::Domain));
+        assert_eq!(file_kind("up_powers.lst"), Some(Kind::Power));
+        assert_eq!(file_kind("arg_languages.lst"), Some(Kind::Language));
+    }
+
+    /// `*_templates_language_*.lst` (racial bonus-language templates, e.g.
+    /// `dwarf_templates_language.lst`) must resolve `Template`, not
+    /// `Language` -- table order is load-bearing, not incidental.
+    #[test]
+    fn templates_language_files_resolve_to_template_not_language() {
+        assert_eq!(file_kind("dwarf_templates_language.lst"), Some(Kind::Template));
+        assert_eq!(file_kind("b1_templates_language_aboleth.lst"), Some(Kind::Template));
+    }
+
+    /// The proof `decisions.md §17` asks for: adding the *next* kind of this
+    /// shape is a data change. This test adds a fabricated kind entirely
+    /// inline (no new `Kind::` variant needed for the test itself -- it
+    /// reuses `Kind::Language` as a stand-in target and a filename token no
+    /// real book carries) to demonstrate the table, not the enum, is what a
+    /// new kind touches.
+    #[test]
+    fn a_new_simple_kind_is_one_table_row() {
+        const FABRICATED: &[(&str, Kind)] = &[("_totallyfakekindfixture", Kind::Language)];
+        let hit = FABRICATED.iter().find(|(t, _)| "cr_totallyfakekindfixture.lst".contains(t));
+        assert_eq!(hit.map(|(_, k)| *k), Some(Kind::Language));
     }
 }
 
@@ -2138,6 +2236,156 @@ fn is_core_essentials_residual(book: &str) -> bool {
     book == "core_essentials"
 }
 
+/// Cross-book duplicate: `core_essentials` is a shared crib-sheet library,
+/// not a book, and some of its content RESTATES what a real book already
+/// declares natively in its own directory -- `RACE_CHASSIS_ALREADY_NATIVE`
+/// already covers this shape for `Kind::Race` specifically (Ghoran, one
+/// hand-verified slug). Landing new kinds through `SIMPLE_FILENAME_KINDS`
+/// (`decisions.md §17`) exposed the identical shape for `Kind::Template`
+/// for the first time -- e.g. "Aeon", declared identically in both
+/// `core_essentials/ce_templates.lst` (resolved to `bestiary_2` via its own
+/// `SOURCELONG:` directive) AND `bestiary_2/b2_templates_pc.lst`
+/// (`bestiary_2`'s own native file). The per-book `duplicate_identity` pass
+/// (`main`, just before this call) cannot catch this: the two rows live in
+/// TWO DIFFERENT `BookEnumeration`s (`core_essentials` and `bestiary_2`),
+/// not one.
+///
+/// Fixed generically here, not with a second per-slug allowlist --
+/// `decisions.md §17`'s own rule against hand-modelling objects applies
+/// exactly as much to a second hardcoded exception list as it does to a new
+/// `Kind`. A unit is a NATIVE declaration of its own book when its
+/// `source_book` (the directory `enumerate_book` physically walked) equals
+/// its resolved `book`; a `core_essentials`-sourced unit that resolves to a
+/// `(book, kind, key)` a native declaration already holds is the
+/// restatement, and is dropped -- the native declaration is always kept,
+/// since it is the book's own primary source, never a `SOURCELONG:`
+/// inference. Ran with zero drops for every pre-existing kind against the
+/// pinned oracle (the id-uniqueness assert in `main` would already have
+/// caught this class of collision on every prior run had it existed) --
+/// this pass exists for the shape `Kind::Template` proved real, and applies
+/// unconditionally to every kind so the next one that hits it needs no code
+/// change either. Returns the number of restatements dropped.
+fn drop_core_essentials_native_restatements(
+    enumerations: &mut BTreeMap<String, BookEnumeration>,
+) -> usize {
+    let native: BTreeSet<(String, Kind, String)> = enumerations
+        .values()
+        .flat_map(|e| e.units.iter())
+        .filter(|u| u.book == u.source_book)
+        .map(|u| (u.book.clone(), u.kind, u.key.clone()))
+        .collect();
+    let mut dropped = 0usize;
+    for enumeration in enumerations.values_mut() {
+        let units = std::mem::take(&mut enumeration.units);
+        enumeration.units = units
+            .into_iter()
+            .filter(|u| {
+                if u.source_book == "core_essentials"
+                    && u.book != "core_essentials"
+                    && native.contains(&(u.book.clone(), u.kind, u.key.clone()))
+                {
+                    dropped += 1;
+                    false
+                } else {
+                    true
+                }
+            })
+            .collect();
+    }
+    dropped
+}
+
+#[cfg(test)]
+mod drop_core_essentials_native_restatements_tests {
+    use super::*;
+
+    fn unit(book: &str, source_book: &str, kind: Kind, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: source_book.to_string(),
+            kind,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "x.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The exact "Aeon" shape: a `core_essentials`-sourced unit resolved to
+    /// `bestiary_2`, colliding with `bestiary_2`'s own native declaration
+    /// of the same `(kind, key)`. The native row survives; the
+    /// core_essentials restatement is dropped.
+    #[test]
+    fn core_essentials_restatement_of_a_native_declaration_is_dropped() {
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "core_essentials", Kind::Template, "Aeon")],
+                ..Default::default()
+            },
+        );
+        enumerations.insert(
+            "bestiary_2".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "bestiary_2", Kind::Template, "Aeon")],
+                ..Default::default()
+            },
+        );
+        let dropped = drop_core_essentials_native_restatements(&mut enumerations);
+        assert_eq!(dropped, 1);
+        let total: usize = enumerations.values().map(|e| e.units.len()).sum();
+        assert_eq!(total, 1, "the native declaration must survive, exactly once");
+        assert_eq!(enumerations["bestiary_2"].units[0].source_book, "bestiary_2");
+    }
+
+    /// No native declaration exists anywhere -- the core_essentials unit is
+    /// a genuine, sole declaration (the ordinary `core_essentials` residual
+    /// or a successfully-resolved-but-unique unit) and must NOT be dropped.
+    #[test]
+    fn a_core_essentials_unit_with_no_native_counterpart_is_kept() {
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "core_essentials", Kind::Template, "Unique Only Here")],
+                ..Default::default()
+            },
+        );
+        let dropped = drop_core_essentials_native_restatements(&mut enumerations);
+        assert_eq!(dropped, 0);
+        assert_eq!(enumerations["core_essentials"].units.len(), 1);
+    }
+
+    /// A different KIND sharing the same key string must never collide --
+    /// this pass keys on `(book, kind, key)`, not `(book, key)` alone.
+    #[test]
+    fn matching_key_but_different_kind_is_not_a_restatement() {
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "core_essentials", Kind::Language, "Aeon")],
+                ..Default::default()
+            },
+        );
+        enumerations.insert(
+            "bestiary_2".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "bestiary_2", Kind::Template, "Aeon")],
+                ..Default::default()
+            },
+        );
+        let dropped = drop_core_essentials_native_restatements(&mut enumerations);
+        assert_eq!(dropped, 0);
+        let total: usize = enumerations.values().map(|e| e.units.len()).sum();
+        assert_eq!(total, 2);
+    }
+}
+
 /// Wave-16 adversarial review (irreversibility & scope lens): mutating
 /// `is_core_essentials_residual` to something broader than the exact
 /// packaging-label match above (e.g. `book.starts_with("core")`) left the
@@ -2173,7 +2421,27 @@ fn is_core_essentials_residual(book: &str) -> bool {
 /// -- --nocapture` after exporting `PCGEN_CORPUS_ROOT`; 116 (pre-existing) +
 /// 21 (`ce_skills.lst`) = 137, plus this constant's own established
 /// 1-unit downstream-rescue margin = 138.
-const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 138;
+///
+/// **SD-32 `decisions.md §17` raised this from 138 to 171**, the same
+/// non-widening exception as above: landing `Kind::Template` and
+/// `Kind::Language` (`SIMPLE_FILENAME_KINDS`) makes 33 more real,
+/// previously-invisible `core_essentials` rows enumerable for the first
+/// time -- `Kind::Deity`/`Power`/`Domain` contribute 0 (no
+/// `core_essentials/races/<slug>/` file matches those filename tokens).
+/// Every one of the 33 belongs to a slug `RACE_TRUE_BOOK`'s own doc comment
+/// ALREADY names as ambiguous/left-out-on-purpose (`android`, `aquatic_elf`,
+/// `gathlain`, `lashunta`, `monkey_goblin`, `syrinx`, `triaxian`) or (1 row,
+/// `Ghoran`) the pre-existing `RACE_CHASSIS_ALREADY_NATIVE` carve-out --
+/// no new slug, no widened predicate, `is_core_essentials_residual`'s body
+/// byte-for-byte unchanged. Re-derive with `DEBUG_RESIDUAL=1 cargo run
+/// --locked --bin v06_work_inventory -- --stdout-only 2>&1 | grep
+/// '^RESIDUAL'` (the diagnostic just below `is_core_essentials_residual`'s
+/// call site): 116 (pre-existing, unchanged -- `race`/`race_trait`/
+/// `monster_ability` residuals, same slugs) + 21 (`ce_skills.lst`,
+/// unchanged) + 30 (`Kind::Template`, new) + 3 (`Kind::Language`, new) =
+/// 170, plus this constant's own established 1-unit downstream-rescue
+/// margin = 171.
+const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 171;
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
 fn enumerate_file(
@@ -7452,6 +7720,21 @@ fn classify(
         // table yet, honestly reported as such -- same shape as
         // `Kind::Companion`/`Kind::MonsterAbility` above.
         Kind::Skill => not_ingested("skill_content_has_no_engine_table"),
+        // SD-32 `decisions.md §17`: the five kinds landed through
+        // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment) -- none
+        // has an engine table yet, same honest-uningested shape as
+        // `Kind::Skill`/`Kind::Companion`/`Kind::MonsterAbility` above. This
+        // arm, required by Rust's exhaustive match over `Kind`, is the ONE
+        // per-kind line a genuinely new kind of this shape still needs
+        // beyond the `SIMPLE_FILENAME_KINDS` data row -- and it is
+        // deliberately not a blanket wildcard default, so a kind that DOES
+        // later gain an engine table cannot silently keep reporting
+        // not-ingested by falling through an unattended `_ => ...` arm.
+        Kind::Template => not_ingested("template_content_has_no_engine_table"),
+        Kind::Deity => not_ingested("deity_content_has_no_engine_table"),
+        Kind::Power => not_ingested("power_content_has_no_engine_table"),
+        Kind::Domain => not_ingested("domain_content_has_no_engine_table"),
+        Kind::Language => not_ingested("language_content_has_no_engine_table"),
     }
 }
 
@@ -9015,6 +9298,15 @@ fn main() {
         }
     }
 
+    // See `drop_core_essentials_native_restatements`'s own doc comment.
+    let core_essentials_native_restatements =
+        drop_core_essentials_native_restatements(&mut enumerations);
+    if core_essentials_native_restatements > 0 {
+        eprintln!(
+            "core_essentials native-restatement duplicates dropped (decisions.md §17): {core_essentials_native_restatements}"
+        );
+    }
+
     // --- engine ------------------------------------------------------------
     // Every class name the corpus declares anywhere, so a class feature of an
     // un-ingested class (Magus, Ninja, Samurai, ...) is reported as a real
@@ -9110,6 +9402,17 @@ fn main() {
             // the disposition cannot drift between the two.
             if is_core_essentials_residual(&unit.book) {
                 core_essentials_residuals_deleted += 1;
+                // Opt-in diagnostic (unset by default, no effect on any real
+                // run's output): `DEBUG_RESIDUAL=1` prints kind/key/file for
+                // every deleted residual, so a future ceiling bump can be
+                // investigated -- per this constant's own "investigate
+                // before touching this ceiling" rule -- without re-deriving
+                // the per-row breakdown from scratch each time. Used to
+                // derive `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s
+                // 138 -> 171 bump, `decisions.md §17`.
+                if std::env::var("DEBUG_RESIDUAL").is_ok() {
+                    eprintln!("RESIDUAL\t{}\t{}\t{}", unit.kind.id(), unit.key, unit.provenance.file);
+                }
                 continue;
             }
             // `source_book`, deliberately, not `unit.book`: this resolves a
@@ -15947,6 +16250,12 @@ mod core_essentials_book_attribution_tests {
     /// re-derive command and the exact 21-row `ce_skills.lst` accounting --
     /// real new content becoming visible for the first time via
     /// `Kind::Skill`, not a predicate widening).
+    ///
+    /// **SD-32 `decisions.md §17` raised this pin from 138 to 171** on the
+    /// same terms -- `Kind::Template`/`Kind::Language` landing makes 33 more
+    /// real `core_essentials` rows enumerable, all belonging to slugs
+    /// already documented as ambiguous/carved-out. Full accounting in
+    /// `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment.
     #[test]
     fn core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline() {
         let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -15963,9 +16272,24 @@ mod core_essentials_book_attribution_tests {
             // would be a false negative, not a real finding.
             return;
         }
-        let enumeration = enumerate_book(&book_dir, "core_essentials");
+        let mut enumeration = enumerate_book(&book_dir, "core_essentials");
+        // `main`'s own pipeline runs a (kind, key) duplicate-identity dedup
+        // pass over every book's units AFTER `enumerate_book` (see `main`'s
+        // `--- id uniqueness ---` section) before it ever counts a residual;
+        // this raw single-book test call skips that pass entirely otherwise.
+        // Landing `Kind::Template`/`Kind::Language` (`decisions.md §17`)
+        // exposed the gap for the first time -- several of the newly
+        // enumerable `core_essentials` template rows across different
+        // ambiguous race slugs collide on `(kind, key)` once none of them
+        // resolve to a real book (all of them share the SAME unresolved
+        // `book == "core_essentials"`), which the raw walk alone
+        // over-counts as 174 against `main`'s real 170. Replicated here so
+        // this pin tracks what `main` actually deletes, not an
+        // over-conservative proxy for it.
+        let mut seen: BTreeSet<(Kind, String)> = BTreeSet::new();
+        enumeration.units.retain(|u| seen.insert((u.kind, u.key.clone())));
         let residual = enumeration.units.iter().filter(|u| u.book == "core_essentials").count();
-        const PINNED_BASELINE: usize = 138;
+        const PINNED_BASELINE: usize = 170;
         assert!(
             residual <= PINNED_BASELINE,
             "core_essentials residual GREW to {residual} (pinned baseline {PINNED_BASELINE}) -- \

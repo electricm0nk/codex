@@ -48,18 +48,32 @@ measured; re-derive live with the command at the top of this file — they have 
 `census_independent.py`'s `ADDED_KINDS` tuple (kept separate from `TEN_KINDS` so AT-32-G0-002's own
 "ten kinds" text stays a truthful description of what it originally named). Each addition needs a
 matching `Kind::*` variant in `src/bin/v06_work_inventory.rs` so the walker and the inventory agree
-(§12b's own acceptance bar) — landed incrementally, one kind per cycle, per
-`workflow-instruction.md`'s "decompose by kind, land incrementally" instruction.
+(§12b's own acceptance bar).
+
+**`decisions.md §17` (2026-08-23) replaced "one kind per cycle" with a generic mechanism.** A kind
+whose only rule is "this filename substring means this kind" — every kind below — is a data row in
+`file_kind`'s `SIMPLE_FILENAME_KINDS` table (`v06_work_inventory.rs`) plus a matching entry in
+`_classify_kind_by_filename` here, not a tour of `enumerate_file`/`refine_kind`/duplicate-identity
+handling. `skill` proved the mechanism (card 15); `template`/`deity`/`power`/`domain`/`language`
+landed together through the same path, in one cycle, once the mechanism existed. See
+`SIMPLE_FILENAME_KINDS`'s own doc comment for exactly what a kind of this shape still requires (one
+`Kind::` enum variant, one table row, one `classify()` arm — all three are *data or a one-line
+exhaustive-match arm*, never a new code path).
 
 | Kind | Filename rule | Census raw count | Landed in inventory | Cycle |
 |---|---|---:|---:|---|
-| `skill` | filename contains `skill` | 170 | 149 (21 `core_essentials/ce_skills.lst` rows correctly deleted by the pre-existing `decisions.md §16` core_essentials-residual guard — real population growth, not a predicate widening; see `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment, raised 117→138) | `card-15-enumerate` |
+| `skill` | filename contains `_skills` | 170 | 149 (21 `core_essentials/ce_skills.lst` rows correctly deleted by the pre-existing `decisions.md §16` core_essentials-residual guard — real population growth, not a predicate widening; see `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment, raised 117→138) | `card-15-enumerate` |
+| `template` | filename contains `_templates` | 2,343 | see re-derive command below (core_essentials residual guard raised again, 138→171, for real `_templates`/`_languages` content — see next section) | `generic-enumeration` |
+| `deity` | filename contains `_deities` | 460 | 460 (no core_essentials residual — no `core_essentials/races/<slug>/*_deities.lst` file exists) | `generic-enumeration` |
+| `power` | filename contains `_powers` (Ultimate Psionics only) | 421 | 421 | `generic-enumeration` |
+| `domain` | filename contains `_domains` | 183 | 183 | `generic-enumeration` |
+| `language` | filename contains `_languages` | 143 | see re-derive command below | `generic-enumeration` |
 
-**Consequence, remediated by the `gate3-budget-repair` cycle:** landing `skill`'s 149 real units
-raised Gate 3's (`scripts/shape_coverage_standing_gate.py`) `no_record` population share from
-10,419/24,914 to **10,530/25,055** (re-derive: `python3 scripts/shape_ledger.py --inventory
-docs/work-inventory.json --corpus-root data/corpus --output /tmp/l.json && python3 -c "import
-json,collections; r=json.load(open('/tmp/l.json'))['rows']; print(collections.Counter(x
+**Consequence of landing `skill`, remediated by the `gate3-budget-repair` cycle:** landing
+`skill`'s 149 real units raised Gate 3's (`scripts/shape_coverage_standing_gate.py`) `no_record`
+population share from 10,419/24,914 to **10,530/25,055** (re-derive: `python3 scripts/shape_ledger.py
+--inventory docs/work-inventory.json --corpus-root data/corpus --output /tmp/l.json && python3 -c
+"import json,collections; r=json.load(open('/tmp/l.json'))['rows']; print(collections.Counter(x
 ['join_status'] for x in r))"`) — the `card-15-enumerate` cycle receipt's own quoted figure of
 10,560 does not reproduce and is corrected by `scripts/retro.py correction`
 (`docs/retro/events/gate3-budget-repair.jsonl`). None of `skill`'s rows have ever been ingested
@@ -68,9 +82,44 @@ remaining new-kind landing (`decisions.md §12b`), not a regression. The budget 
 widened from a pure shrink-only ratchet to an **evidence-gated repin**: the constants moved to
 10530/25055 together with a matching, committed, git-verifiable entry in
 `no_record_budget_provenance.jsonl` (evidence commit `d904eceb6bda813f5a6d48a815a2b4df80d604bd`,
-this exact cycle) — see `scripts/shape_coverage_standing_gate.py`'s module docstring and
+that cycle) — see `scripts/shape_coverage_standing_gate.py`'s module docstring and
 `BudgetProvenanceTest` for the full mechanism and its anti-gaming tests.
-`scripts/verify.sh --only shape-coverage-standing-gate` now PASSes again on the real population.
+
+`kit` (1 unit, `core_essentials/races/kitsune/kitsune_races.lst`) was **not** given a `Kind::Kit`
+variant — investigation found it was never real content at all. The census's own `"kit" in b`
+filename check false-positived on `kitsune_races.lst` (the race NAME "Kitsune" contains the
+substring "kit"), diverting one real `race`-kind row into `kind_unenumerable["kit"]`.
+`v06_work_inventory.rs`'s `file_kind` never had a "kit" branch and always resolved this file to
+`Kind::Race` — the reconciliation this section exists to keep (§12b's "the two must agree" bar)
+required *narrowing* the census's check to `"_kits" in b` (the real filename convention every
+genuine `*_kits.lst` file uses), not adding a kind. Every genuine `*_kits.lst`/`*_kits_race.lst`
+file uses PCGen's `STARTPACK:`-block format, whose rows all carry a `:` in their own first field and
+are therefore already skipped as directive lines by the row parser regardless of bucket — verified
+live, 48 real `_kits*.lst` files, 0 rows, under either the old or the new rule. Re-derive:
+`git log --oneline -1 -- scripts/census_independent.py` and the `_kits` narrowing's own commit.
+
+**Re-derive the current populations:**
+
+```bash
+export PCGEN_CORPUS_ROOT="$(git rev-parse --show-toplevel)/docs/release/SD-32-compute-library-and-cause-closure/artifacts/corpus/operator-supplied/pcgen/data"
+python3 scripts/census_independent.py --pcgen-root "$PCGEN_CORPUS_ROOT" \
+  --inventory docs/work-inventory.json \
+  --output /dev/stdout | python3 -c "import json,sys; print(json.load(sys.stdin)['counts_by_kind'])"
+jq '.totals.by_kind' docs/work-inventory.json
+```
+
+**Known consequence, not remediated this cycle:** landing `template`/`deity`/`power`/`domain`/
+`language`'s real units raises Gate 3's (`scripts/shape_coverage_standing_gate.py`) `no_record`
+population share further, past the `gate3-budget-repair` cycle's own just-repinned 10,530/25,055 —
+none of these rows have ever been ingested into `data/corpus` under any kind, so `scripts/verify.sh
+--only shape-coverage-standing-gate` FAILs again (`no_record_budget_exceeded=True`,
+13,975/28,490 — re-derive: `python3 scripts/shape_coverage_standing_gate.py --inventory
+docs/work-inventory.json`). This is the gate correctly reporting real, previously-invisible
+uncovered content, not a defect in the enumeration, and not a regression of the repair cycle's own
+fix (the evidence-gated repin mechanism itself is untouched by this cycle) — it is the same
+structural shape `decisions.md §14`/the `gate3-budget-repair` cycle both already named: every
+new-kind landing that outpaces ingestion moves this number, by design, until a kind gets an engine
+table or the budget is repinned again with fresh evidence. Not this cycle's to fix or paper over.
 
 ## Kind-unenumerable — named and counted, not pretended to be zero (AT-32-G0-002)
 

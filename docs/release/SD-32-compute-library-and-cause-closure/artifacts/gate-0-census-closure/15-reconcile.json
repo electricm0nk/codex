@@ -1,39 +1,44 @@
 {
   "populations": {
     "census_tracked_kind_population": {
-      "value": 28207,
+      "value": 31758,
       "command": "python3 scripts/census_independent.py --pcgen-root $PCGEN_CORPUS_ROOT --inventory docs/work-inventory.json --output <path>; sum(counts_by_kind.values())"
     },
     "census_kind_unenumerable_population": {
-      "value": 27668,
+      "value": 24117,
       "command": "same run; total_kind_unenumerable_units"
     },
     "inventory_all_units_population": {
-      "value": 38540,
+      "value": 41987,
       "command": "len(json.load(open('docs/work-inventory.json'))['units'])",
       "by_kind": {
         "class": 185,
         "class_feature": 15439,
-        "race_trait": 3504,
+        "race_trait": 2640,
         "feat": 2610,
         "spell": 2843,
         "equipment": 6227,
         "equipment_modifier": 1580,
+        "template": 2248,
+        "domain": 183,
         "companion": 1696,
         "race": 95,
-        "monster_ability": 2942,
+        "monster_ability": 3806,
+        "language": 136,
         "monster": 1270,
-        "skill": 149
+        "skill": 149,
+        "deity": 459,
+        "power": 421
       }
     },
     "ledger_not_done_population": {
-      "value": 25055,
+      "value": 28490,
       "command": "scripts/shape_ledger.py (coverage_ledger.not_done_population -> shape_ledger.build_ledger)",
       "unclassified_count": 0,
       "families": {
-        "F0": 20254,
+        "F0": 23688,
         "F2": 1490,
-        "F1": 1790,
+        "F1": 1791,
         "F10": 3,
         "F4": 570,
         "F3": 303,
@@ -47,15 +52,17 @@
   },
   "relationship": "The three populations are legitimately different (decisions.md \u00a712c), not forced equal: census_tracked_kind_population + census_kind_unenumerable_population is the FULL corpus walk (every row the walker can see); inventory_all_units_population is everything v06_work_inventory.rs currently enumerates (a subset of the census's tracked-kind population plus units the census's coarser filename rules miss or split differently); ledger_not_done_population is the inventory's not-done subset only. This cycle's job was to shrink census_kind_unenumerable_population by disposing every one of its units (A) or (B) -- see disposition_status.",
   "disposition_status_of_kind_unenumerable": {
-    "total_this_run": 27668,
+    "total_this_run": 24117,
     "removed_from_total_across_all_card_15_cycles": {
       "ce__sizes_lst": 9,
       "skill_this_cycle": 170,
-      "note": "27,847 (pre-any-card-15-cycle) - 9 (ce__sizes.lst, non_object_file) - 170 (skill moved to a real kind, Kind::Skill, this cycle) = 27,668 (total_this_run, above). The CATEGORY:Internal reroute (originally 2,614, narrowed to 40 by adjudication) never leaves total_this_run at all -- it only moves bucket (class_feature <-> ability_category:Internal), so it does not appear in this subtraction."
+      "other_kinds_generic_enumeration_cycle": 3550,
+      "kit_filename_collision_fixed": 1,
+      "note": "27,847 (pre-any-card-15-cycle) - 9 (ce__sizes.lst, non_object_file) - 170 (skill moved to a real kind, Kind::Skill) - 3,550 (template/deity/power/domain/language moved to real kinds, generic-enumeration cycle, decisions.md \u00a717) - 1 (kit, census filename false-positive on kitsune_races.lst fixed, folded into the existing race count) = 24,117 (total_this_run, above). The CATEGORY:Internal reroute (originally 2,614, narrowed to 40 by adjudication) never leaves total_this_run at all -- it only moves bucket (class_feature <-> ability_category:Internal), so it does not appear in this subtraction."
     },
     "b_disposed_applied": {
       "total_still_counted_in_total_this_run": 40,
-      "total_removed_from_total_this_run": 9,
+      "total_removed_from_total_this_run": 10,
       "detail": {
         "class_feature_category_internal_bare_marker_reroute": {
           "units": 40,
@@ -68,6 +75,12 @@
           "still_counted_in_total_this_run": false,
           "proof": "artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md \u00a77b (src/rules_core/size.rs SizeCategory, 9 variants, byte-identical)",
           "applied_in": "scripts/census_independent.py NON_OBJECT_FILENAME_TOKENS"
+        },
+        "kit_filename_collision_fixed": {
+          "units": 1,
+          "still_counted_in_total_this_run": false,
+          "proof": "decisions.md \u00a717 -- census's own \"kit\" in b filename check false-positived on kitsune_races.lst (the race NAME \"Kitsune\" contains the substring \"kit\"), diverting one real race-kind row into kind_unenumerable[\"kit\"]. src/bin/v06_work_inventory.rs's file_kind never had a \"kit\" branch and always resolved this file to Kind::Race -- narrowed census's check to \"_kits\" in b (the real filename convention every genuine *_kits.lst file uses) to match. Not a new kind: no genuine *_kits.lst file contributes any row under either the old or the new rule (PCGen's STARTPACK: block format has no row whose own first field lacks a ':').",
+          "applied_in": "scripts/census_independent.py _classify_kind_by_filename"
         }
       }
     },
@@ -87,11 +100,20 @@
           "memo": "15-card-15-other-kinds-memo.md \u00a77a; landed via Kind::Skill this cycle (card-15-enumerate)",
           "note": "moved OUT of census's kind_unenumerable entirely -- does not count toward total_this_run below",
           "counts_toward_total_this_run": false
+        },
+        "other_kinds_landed_this_cycle": {
+          "units": 3550,
+          "census_raw_count": 3550,
+          "core_essentials_residual_deleted": "template/language only -- 30 + 3 = 33 rows, part of the 138 -> 171 CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING raise",
+          "cross_book_duplicates_dropped": "19 -- core_essentials-sourced template rows restating a book's own native declaration (e.g. \"Aeon\" in both core_essentials/ce_templates.lst and bestiary_2/b2_templates_pc.lst); see drop_core_essentials_native_restatements in src/bin/v06_work_inventory.rs, decisions.md \u00a717",
+          "memo": "15-card-15-other-kinds-memo.md \u00a71-5; landed via Kind::Template/Deity/Power/Domain/Language this cycle (generic-enumeration, decisions.md \u00a717) through SIMPLE_FILENAME_KINDS -- the generic mechanism, not one Kind per cycle",
+          "note": "moved OUT of census's kind_unenumerable entirely -- does not count toward total_this_run below. `kit` (1 unit) is NOT among these: investigation found it was a census filename false-positive on kitsune_races.lst, not real content -- see disposed_b_applied.kit_filename_collision_fixed.",
+          "counts_toward_total_this_run": false
         }
       }
     },
     "a_identified_not_yet_integrated": {
-      "total": 11412,
+      "total": 7861,
       "detail": {
         "class_feature_residual_original": {
           "units": 179,
@@ -107,19 +129,6 @@
           "units": 5108,
           "memo": "15-card-15-ability-category-memo.md",
           "why_not_applied": "requires a new Kind::Ability variant across src/bin/v06_work_inventory.rs (enum, file_kind, enumerate_file, refine_kind, duplicate-identity handling) -- too large a surface to land safely in this cycle's remaining budget"
-        },
-        "other_kinds_disposition_a": {
-          "units": 3551,
-          "memo": "15-card-15-other-kinds-memo.md \u00a71-6",
-          "buckets": {
-            "template_row": 2343,
-            "deity": 460,
-            "power": 421,
-            "domain": 183,
-            "language": 143,
-            "kit": 1
-          },
-          "why_not_applied": "each is a new Kind variant, same surface-area concern as ability_category above"
         }
       }
     },
@@ -139,10 +148,10 @@
       "code_fix_applied": "census_independent.py's reroute now excludes only the 40 provably-bare rows (`_row_is_bare_internal_marker`); the 203 proven facets stay counted as class_feature (under-exclude, not over-exclude) -- see `class_feature_internal_adjudicated_pending` above for the enumeration status of the 2,574 that stay counted"
     },
     "arithmetic_check": {
-      "disposed_b_still_counted_plus_already_tracked_plus_pending_a_plus_pending_b": 27668,
+      "disposed_b_still_counted_plus_already_tracked_plus_pending_a_plus_pending_b": 24117,
       "equals_total_this_run": true,
       "remaining_undisposed": 0,
-      "note": "every unit in total_this_run (27,668) is accounted for by exactly one row above: 40 (Internal bare-marker reroute, disposed B, still counted -- moved into ability_category:Internal) + 15,438 (class_feature, already tracked) + 179 (class_feature residual, original, pending A) + 2,574 (class_feature Internal-adjudicated, pending A) + 5,108 (ability pending-A) + 3,551 (other-kinds pending-A) + 778 (ability_category pending-B) = 27,668."
+      "note": "every unit in total_this_run (24,117) is accounted for by exactly one row above: 40 (Internal bare-marker reroute, disposed B, still counted -- moved into ability_category:Internal) + 15,438 (class_feature, already tracked) + 179 (class_feature residual, original, pending A) + 2,574 (class_feature Internal-adjudicated, pending A) + 5,108 (ability pending-A) + 778 (ability_category pending-B) = 24,117. `skill` (149), `template`/`deity`/`power`/`domain`/`language` (3,550, landed this cycle via generic-enumeration) and `kit` (1, disposed B -- census filename collision fixed, not real content) are NOT in this sum: all three moved OUT of kind_unenumerable entirely (see already_tracked_a and disposed_b_applied's own `counts_toward_total_this_run`/`still_counted_in_total_this_run` flags) -- the 27,668 -> 24,117 drop across this cycle IS that movement. `ability` (5,108) is the only remaining disposition-(A) new-kind bucket -- landing it needs a per-row A/B split first (15-card-15-ability-category-memo.md), not the filename-only mechanism this cycle used."
     }
   },
   "gate_3_standing_gate_still_passes": null

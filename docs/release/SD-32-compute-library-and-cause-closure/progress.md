@@ -2986,3 +2986,87 @@ verdicts (each lane owned a disjoint kind set).
   slot (bootstrapped fresh this cycle from empty, confirmed on-pin
   `7f818006e371188e5717fd18d74d18a420747fc6` before trusting any figure).
 - **Deliverable:** `artifacts/gate-3-closure-invariant/t9-pi-signoff-package.md`.
+
+### Cycle generic-enumeration — Gate 0 / Card 15 `census-scope-closure`, `decisions.md §17` item 1 — enumeration made generic, 5 more kinds landed
+
+- **Card ID:** `census-scope-closure` (card 15).
+- **Base:** `PIN=fe2f8082b860153ac47a217615ecdb9890febaaa`; footgun 1 fired (fresh worktree landed
+  on a stray `site-publish` merge), `git reset --hard` applied, then rebased onto
+  `origin/tranche/12` HEAD `6ae4a364b` — no further rebase needed.
+- **Mandate:** the operator correction in `decisions.md §17` — stop landing one `Kind::` per
+  cycle by hand-editing `enumerate_file`/`refine_kind`/duplicate-identity handling; make
+  `v06_work_inventory.rs` enumerate every kind the census already finds, driven by data.
+- **Files touched:** `src/bin/v06_work_inventory.rs` (`SIMPLE_FILENAME_KINDS` data table +
+  `Kind::Template`/`Deity`/`Power`/`Domain`/`Language`; new
+  `drop_core_essentials_native_restatements` function + 3 tests;
+  `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` 138→171; pinned-baseline test fixed + 138→170;
+  opt-in `DEBUG_RESIDUAL` diagnostic; 5 new `file_kind` tests), `scripts/census_independent.py`
+  (`ADDED_KINDS` extended; 5 kinds moved `kind_unenumerable`→`kind`; `"kit"`→`"_kits"` narrowing),
+  `scripts/tests/test_census_independent.py` (3 new tests), `scripts/card15_reconcile.py`
+  (retired stale pending entries), `docs/work-inventory.json` (regenerated through the real
+  producer, fresh sweep/fixture reports, no `--allow-stamp-loss`),
+  `artifacts/gate-0-census-closure/diff.json` and `15-reconcile.json` (regenerated),
+  `artifacts/gate-0-census-closure/object-definition-rules.md` (rewritten section).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
+- **Wired-integration audit result:** `OK_NO_TOKENS`
+- **Acceptance criterion:** `decisions.md §17` item 1 — make `v06_work_inventory.rs` enumerate
+  every kind the census already finds, driven by the walker's own object-definition rules;
+  adding a kind must not cost a cycle.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** the mechanism (item 1) is complete and proven — a new simple kind now costs one
+  enum variant, one table row, one `classify()` arm. Card 15 as a whole stays `in-progress`:
+  `ability` (5,108), `class_feature` residual (179+2,574), `ability_category` (778 B) remain.
+- **Summary:** Read both sides of the reconciliation bar first — `census_independent.py`'s
+  `_classify_kind_by_filename` was already a flat substring if-chain; `v06_work_inventory.rs`'s
+  `file_kind()` was too. The actual cost of `Kind::Skill` (prior cycle) was never `file_kind()`
+  itself; tracing `refine_kind`/`has_classifying_token`/`holds_key_inner`/`classify()` confirmed
+  they are already kind-agnostic by construction (`other => other` / `_ => true` / `_ => false`
+  default arms). Built `SIMPLE_FILENAME_KINDS`, landed `template`/`deity`/`power`/`domain`/
+  `language` through it in this ONE cycle (3,550 census raw, 3,447 real inventory units).
+  Investigated `kit` (1 unit) rather than adding a sixth Kind: proved it was a census filename
+  false-positive (`"kit" in "kitsune_races.lst"`) misdirecting one real `race` row, not a new
+  content type — narrowed the check instead of writing a table for it, per `decisions.md §17`
+  item 4. **Real defect found live, not hidden:** landing `Kind::Template` against the pinned
+  oracle tripped the pre-existing `unit id uniqueness violated` guard — 19 `core_essentials`
+  template rows restate a book's own NATIVE declaration (e.g. "Aeon" in both
+  `ce_templates.lst`, SOURCELONG-resolved to `bestiary_2`, and `bestiary_2/b2_templates_pc.lst`
+  itself). Fixed generically (`drop_core_essentials_native_restatements`), not with a second
+  per-slug allowlist next to the existing `RACE_CHASSIS_ALREADY_NATIVE` one — verified zero
+  drops for every pre-existing kind, confirming this was a real, previously-undetectable
+  defect `Kind::Template` exposed, not a regression. Raised
+  `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` 138→171 following the `Kind::Skill` precedent
+  exactly, investigated with a kept opt-in `DEBUG_RESIDUAL=1` diagnostic rather than guessed —
+  all 33 new residual rows belong to slugs `RACE_TRUE_BOOK`'s own doc comment already documents
+  as ambiguous. Also fixed the paired pinned-baseline test's own methodology gap (it measured a
+  raw walk that skipped `main`'s cross-book dedup pass, diverging 174 vs. 170 for the first time
+  once real duplicates existed — now replicates the dedup, pin corrected to 170).
+  **Regenerated `docs/work-inventory.json` through the real producer**, fresh
+  `corpus_literal_sweep`/`derived_evaluator_fixture_check` reports, the guarded no-`--allow-
+  stamp-loss` path: `totals.units` 38,540→41,987 (+3,447), every pre-existing kind
+  byte-identical, 0 units removed, 0 stamps lost (diffed by id). `scripts/card15_reconcile.py`
+  updated and re-run: `remaining_undisposed: 0`, arithmetic reconciles exactly
+  (`total_kind_unenumerable_units` 27,668→24,117). Shape ledger re-run with ZERO code change:
+  population 24,914→28,490, `unclassified_count: 0` — confirms `shape_ledger.classify_unit` is
+  genuinely kind-agnostic. Gate 3's standing gate still FAILs (`no_record` 10,419/24,914→
+  13,975/28,490) — `decisions.md §14`'s already-reopened, already-escalated tension; not this
+  cycle's to fix, not worked around.
+- **Suites:** `cargo test --locked --bin v06_work_inventory` 314/314 (was 311); `cargo test
+  --locked --lib` 2,388/2,388 (unchanged); `cargo test --locked --bins` all green, 0 `FAILED`
+  grepped across the full run; desktop crate (separate cargo workspace, own `CARGO_TARGET_DIR`)
+  `cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml` 517/517; `python3 -m
+  unittest scripts.tests.test_census_independent` 20/20 (was 17).
+- **Discovery forwards:** none new (the cross-book duplicate defect and the pinned-baseline
+  test gap are both fixed in-cycle, not forwarded).
+- **§17 standing control:** widened this cycle's own scope once — rather than stopping at "the
+  mechanism exists," used it to land the five kinds it enables in the same cycle, because an
+  unused generic mechanism is the same zero-yield shape §17 named. Did NOT attempt `ability`
+  (5,108): it needs a per-row A/B disposition test, a genuinely different shape from a filename
+  rule — forcing it through this cycle's mechanism would be the "hand-model a table" failure
+  `decisions.md §17` item 4 forbids, evidenced by the existing ability-category memo's own
+  per-row classifier, not asserted.
+- **Next-cycle plan:** (1) `ability` — port the ability-category lane's per-row content/gateway
+  classifier into `census_independent.py`'s production `row_dependent` branch, then land
+  `Kind::Ability` for the A-disposed rows; (2) `class_feature` residual — narrow
+  `v06_work_inventory.rs`'s `is_internal_category` trap the same way `census_independent.py`'s
+  own `row_dependent_class_feature` branch already was; (3) re-run `card15_reconcile.py` after
+  each; card 15 reaches `complete` when `total_kind_unenumerable_units` reaches 0.

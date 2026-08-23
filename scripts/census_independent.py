@@ -164,6 +164,16 @@ TEN_KINDS = (
 # `ALL_KINDS` below is the walker's own live list.
 ADDED_KINDS = (
     "skill",  # 170 units, 10 `*_skills.lst` files -- `15-card-15-other-kinds-memo.md` §7a.
+    # SD-32 `decisions.md §17`: landed together, through the same generic
+    # `SIMPLE_FILENAME_KINDS` mechanism `src/bin/v06_work_inventory.rs`'s
+    # `file_kind()` uses for `skill` -- a filename-substring rule with no
+    # row-content carve-out, book-attribution logic, or duplicate-identity
+    # handling. `15-card-15-other-kinds-memo.md` §1-5 is the per-kind proof.
+    "template",  # 2,343 units, `*_templates.lst` -- memo §1.
+    "deity",  # 460 units, `*_deities.lst` -- memo §2.
+    "power",  # 421 units, `up_powers.lst` (Ultimate Psionics only) -- memo §3.
+    "domain",  # 183 units, `*_domains.lst` (the domain HEADER record) -- memo §4.
+    "language",  # 143 units, `*_languages.lst`, 100% text-only (F0) -- memo §5.
 )
 
 ALL_KINDS = TEN_KINDS + ADDED_KINDS
@@ -314,8 +324,16 @@ def _classify_kind_by_filename(basename: str, book_id: str):
         if token in b:
             return ("non_object_file", basename)
 
+    # SD-32 `decisions.md §17`: moved from `kind_unenumerable["template_row"]`
+    # to a tracked kind once `Kind::Template` landed in the Rust producer
+    # (`src/bin/v06_work_inventory.rs`'s `SIMPLE_FILENAME_KINDS`), so the
+    # walker and this census agree per `decisions.md §12b`'s acceptance bar
+    # -- same move `skill` made below. Renamed `template_row` -> `template`:
+    # the `_row` suffix only ever distinguished the untracked-bucket name
+    # from a hypothetical future kind; there is no longer a distinction to
+    # make. See `15-card-15-other-kinds-memo.md` §1.
     if "template" in b:
-        return ("kind_unenumerable", "template_row")
+        return ("kind", "template")
 
     if "companion" in b:
         return ("kind", "companion")
@@ -358,16 +376,37 @@ def _classify_kind_by_filename(basename: str, book_id: str):
     if "class" in b:
         return ("kind", "class")
 
-    if "kit" in b:
+    # SD-32 `decisions.md §17`: was `"kit" in b`, which false-positived on
+    # `kitsune_races.lst` -- "Kitsune" the race NAME contains the substring
+    # "kit", so the entire file (real `race`-kind content) was wrongly
+    # bucketed here ahead of the `race` check below. Narrowed to `_kits`
+    # (the real filename convention every genuine kit file uses --
+    # `cr_kits.lst`, `b1_kits_race.lst`, ...) so `kitsune_races.lst` now
+    # falls through to the `race` branch, matching what
+    # `src/bin/v06_work_inventory.rs`'s `file_kind` already did all along
+    # (it never had a "kit" branch at all -- `decisions.md §12b`'s "the two
+    # must agree" bar). No genuine kit-file content is lost: every
+    # `*_kits.lst` file uses PCGen's `STARTPACK:`-block format, whose rows
+    # all carry a `:` in their own first field and are therefore already
+    # skipped as directive lines by `_parse_lst_rows` -- verified live,
+    # every real `_kits.lst`/`_kits_race.lst`/`_kits_companion.lst` file in
+    # scope contributes 0 rows under either the old or the new rule; only
+    # the misclassified `kitsune_races.lst` row (1 unit) moves, from
+    # `kind_unenumerable["kit"]` to `kind["race"]` where it always belonged.
+    if "_kits" in b:
         return ("kind_unenumerable", "kit")
+    # SD-32 `decisions.md §17`: same generic-path move as `template` above --
+    # `language`/`deity`/`domain`/`power` become tracked kinds once their
+    # `Kind::` variants land in `SIMPLE_FILENAME_KINDS`. See
+    # `15-card-15-other-kinds-memo.md` §2-5.
     if "language" in b:
-        return ("kind_unenumerable", "language")
+        return ("kind", "language")
     if "deit" in b:
-        return ("kind_unenumerable", "deity")
+        return ("kind", "deity")
     if "domain" in b:
-        return ("kind_unenumerable", "domain")
+        return ("kind", "domain")
     if "power" in b:
-        return ("kind_unenumerable", "power")
+        return ("kind", "power")
 
     if "race" in b:
         if book_id in MONSTER_BOOK_IDS and "_pc" not in b:

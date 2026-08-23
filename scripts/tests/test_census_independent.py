@@ -320,6 +320,71 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
             self.assertEqual(counts["counts_by_kind"].get("skill"), 1)
             self.assertNotIn("unclassified:cr_skills.lst", counts["kind_unenumerable"])
 
+    def test_simple_added_kinds_count_as_kinds_not_kind_unenumerable(self):
+        # SD-32 `decisions.md §17`: `template`/`deity`/`power`/`domain`/
+        # `language` moved from `kind_unenumerable` to tracked kinds
+        # together, through the same generic mechanism `skill` proved --
+        # see `15-card-15-other-kinds-memo.md` §1-5.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(os.path.join(root, book, "cr_templates.lst"), "Ghost\tVISIBLE:NO\n")
+            _touch(os.path.join(root, book, "cr_deities.lst"), "Abadar\tDOMAINS:Law\n")
+            _touch(os.path.join(root, book, "cr_domains.lst"), "Air\tABILITY:1|AUTOMATIC|Lightning Arc\n")
+            _touch(os.path.join(root, book, "up_powers.lst"), "Mind Thrust\tSCHOOL:Telepathy\n")
+            _touch(os.path.join(root, book, "cr_languages.lst"), "Common\tTYPE:Spoken.Written\n")
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            for kind in ("template", "deity", "domain", "power", "language"):
+                self.assertEqual(counts["counts_by_kind"].get(kind), 1, kind)
+            self.assertEqual(counts["kind_unenumerable"].get("template_row"), None)
+            self.assertEqual(counts["kind_unenumerable"].get("deity"), None)
+            self.assertEqual(counts["kind_unenumerable"].get("domain"), None)
+            self.assertEqual(counts["kind_unenumerable"].get("power"), None)
+            self.assertEqual(counts["kind_unenumerable"].get("language"), None)
+
+    def test_kitsune_races_file_no_longer_misclassified_as_kit(self):
+        # SD-32 `decisions.md §17`: `"kit" in b` false-positived on
+        # `kitsune_races.lst` (the race NAME "Kitsune" contains "kit").
+        # Narrowed to `_kits` so real `race`-kind content is not diverted --
+        # matches `src/bin/v06_work_inventory.rs`'s `file_kind`, which never
+        # had a "kit" branch and always resolved this file to `Kind::Race`.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_essentials"
+            _touch(os.path.join(root, book, "core_essentials.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "kitsune_races.lst"),
+                "Kitsune\tFAVCLASS:Any\tTYPE:Humanoid\n",
+            )
+            bd = CI.BookDir(book, "core_essentials", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["counts_by_kind"].get("race"), 1)
+            self.assertNotIn("kit", counts["kind_unenumerable"])
+
+    def test_real_kits_file_still_reroutes_and_produces_zero_rows(self):
+        # A file that genuinely matches `_kits` (not a name-collision) still
+        # reroutes to the `kit` bucket -- proving the narrowing did not just
+        # delete the check. Real `*_kits.lst` content uses PCGen's
+        # `STARTPACK:`-block format (every row's own first field carries a
+        # `:` before any tab), so `_parse_lst_rows` already skips every row
+        # as a directive line regardless of which bucket the file lands in --
+        # 0 rows counted either way, verified against the pinned oracle
+        # (48 real `*_kits*.lst` files, 0 rows total).
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_kits.lst"),
+                "STARTPACK:A Test\tTYPE:Default\nSTAT:INT=0\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["kind_unenumerable"].get("kit"), None)
+            self.assertNotIn("race", counts["counts_by_kind"])
+
     def test_non_object_files_are_skipped_not_miscounted(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = os.path.join(tmp, "pathfinder")

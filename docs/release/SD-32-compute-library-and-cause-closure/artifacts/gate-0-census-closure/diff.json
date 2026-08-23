@@ -3,29 +3,35 @@
   "counts_by_book_kind": {
     "advanced_class_guide": {
       "class": 285,
+      "domain": 10,
       "equipment": 221,
       "equipment_modifier": 96,
       "feat": 134,
       "race_trait": 190,
-      "spell": 144
+      "spell": 144,
+      "template": 22
     },
     "advanced_players_guide": {
       "class": 265,
       "companion": 237,
+      "domain": 71,
       "equipment": 337,
       "equipment_modifier": 37,
       "feat": 185,
       "race_trait": 176,
-      "spell": 282
+      "spell": 282,
+      "template": 38
     },
     "advanced_race_guide": {
       "companion": 34,
       "equipment": 188,
       "equipment_modifier": 29,
       "feat": 236,
+      "language": 2,
       "race": 1,
       "race_trait": 979,
-      "spell": 95
+      "spell": 95,
+      "template": 47
     },
     "adventurers_guide": {
       "class": 271,
@@ -33,7 +39,8 @@
       "equipment_modifier": 1,
       "feat": 80,
       "race": 2,
-      "spell": 49
+      "spell": 49,
+      "template": 10
     },
     "beginner_box": {
       "equipment": 19
@@ -42,38 +49,50 @@
       "class": 6,
       "companion": 59,
       "equipment": 4,
+      "language": 10,
       "monster": 329,
-      "monster_ability": 620
+      "monster_ability": 620,
+      "template": 73
     },
     "bestiary_2": {
       "equipment": 14,
+      "language": 4,
       "monster": 337,
       "monster_ability": 632,
-      "skill": 1
+      "skill": 1,
+      "template": 74
     },
     "bestiary_3": {
       "companion": 40,
       "equipment": 8,
       "equipment_modifier": 4,
+      "language": 21,
       "monster": 276,
-      "monster_ability": 1066
+      "monster_ability": 1066,
+      "template": 26
     },
     "bestiary_4": {
       "companion": 102,
+      "domain": 3,
       "equipment": 7,
       "equipment_modifier": 1,
+      "language": 22,
       "monster": 220,
       "monster_ability": 1104,
       "skill": 1,
-      "spell": 58
+      "spell": 58,
+      "template": 140
     },
     "bestiary_5": {
       "companion": 70,
+      "language": 3,
       "monster_ability": 119,
       "race": 6
     },
     "bestiary_6": {
       "companion": 26,
+      "deity": 22,
+      "domain": 11,
       "feat": 1,
       "monster_ability": 13,
       "spell": 2
@@ -92,50 +111,63 @@
     },
     "book_of_the_damned_volume_2": {
       "class": 11,
+      "deity": 48,
       "equipment": 6,
       "feat": 1,
       "race": 4,
       "race_trait": 18,
-      "spell": 12
+      "spell": 12,
+      "template": 52
     },
     "core_essentials": {
       "class": 23,
       "equipment": 3,
       "feat": 15,
-      "race": 135,
+      "language": 22,
+      "race": 136,
       "race_trait": 2332,
       "skill": 21,
-      "spell": 111
+      "spell": 111,
+      "template": 1293
     },
     "core_rulebook": {
       "class": 273,
       "companion": 200,
+      "deity": 21,
+      "domain": 34,
       "equipment": 2319,
       "equipment_modifier": 676,
       "feat": 195,
+      "language": 22,
       "race_trait": 131,
       "skill": 110,
-      "spell": 674
+      "spell": 674,
+      "template": 240
     },
     "horror_adventures": {
       "companion": 2,
+      "domain": 4,
       "equipment": 115,
       "equipment_modifier": 2,
       "feat": 61,
+      "language": 2,
       "race": 4,
       "race_trait": 206,
-      "spell": 72
+      "spell": 72,
+      "template": 28
     },
     "inner_sea_bestiary": {
       "monster": 40,
       "monster_ability": 194,
-      "skill": 4
+      "skill": 4,
+      "template": 4
     },
     "inner_sea_combat": {
       "class": 23,
       "companion": 10,
       "equipment": 53,
-      "feat": 31
+      "feat": 31,
+      "template": 1
     },
     "inner_sea_faiths": {
       "feat": 1,
@@ -143,11 +175,14 @@
     },
     "inner_sea_gods": {
       "class": 33,
+      "deity": 297,
+      "domain": 21,
       "equipment": 150,
       "feat": 86,
       "race": 39,
       "race_trait": 228,
-      "spell": 96
+      "spell": 96,
+      "template": 3
     },
     "inner_sea_intrigue": {
       "class": 36,
@@ -155,7 +190,8 @@
       "equipment": 39,
       "equipment_modifier": 3,
       "feat": 6,
-      "spell": 26
+      "spell": 26,
+      "template": 6
     },
     "inner_sea_magic": {
       "class": 40,
@@ -163,35 +199,44 @@
       "equipment_modifier": 64,
       "feat": 7,
       "skill": 1,
-      "spell": 39
+      "spell": 39,
+      "template": 3
     },
     "inner_sea_races": {
       "equipment": 72,
       "feat": 50,
+      "language": 4,
       "race_trait": 122,
-      "spell": 33
+      "spell": 33,
+      "template": 9
     },
     "inner_sea_taverns": {
       "feat": 9
     },
     "inner_sea_temples": {
       "equipment": 43,
+      "language": 1,
       "spell": 21
     },
     "inner_sea_world_guide": {
       "class": 66,
+      "deity": 63,
+      "domain": 6,
       "equipment": 47,
       "equipment_modifier": 6,
       "feat": 39,
+      "language": 17,
       "race": 14,
       "race_trait": 30,
-      "spell": 22
+      "spell": 22,
+      "template": 77
     },
     "monster_codex": {
       "companion": 15,
       "equipment": 45,
       "equipment_modifier": 4,
       "feat": 32,
+      "language": 2,
       "monster": 2,
       "monster_ability": 19,
       "spell": 24
@@ -201,21 +246,25 @@
       "equipment_modifier": 145,
       "feat": 376,
       "race_trait": 190,
-      "spell": 281
+      "spell": 281,
+      "template": 15
     },
     "occult_adventures": {
       "class": 126,
       "equipment": 119,
       "feat": 71,
+      "language": 1,
       "race": 5,
       "race_trait": 130,
-      "spell": 145
+      "spell": 145,
+      "template": 4
     },
     "pathfinder_unchained": {
       "equipment_modifier": 42,
       "feat": 17,
       "race_trait": 229,
-      "skill": 24
+      "skill": 24,
+      "template": 12
     },
     "ultimate_campaign": {
       "feat": 23
@@ -227,13 +276,15 @@
       "feat": 270,
       "race_trait": 4,
       "skill": 2,
-      "spell": 147
+      "spell": 147,
+      "template": 7
     },
     "ultimate_equipment": {
       "equipment": 1390,
       "equipment_modifier": 190,
       "skill": 1,
-      "spell": 1
+      "spell": 1,
+      "template": 4
     },
     "ultimate_intrigue": {
       "class": 41,
@@ -242,64 +293,85 @@
       "equipment_modifier": 14,
       "feat": 107,
       "race_trait": 17,
-      "spell": 101
+      "spell": 101,
+      "template": 4
     },
     "ultimate_magic": {
       "class": 74,
       "companion": 172,
+      "domain": 13,
       "equipment": 43,
       "feat": 157,
       "race_trait": 17,
-      "spell": 272
+      "spell": 272,
+      "template": 23
     },
     "ultimate_psionics": {
       "class": 753,
       "companion": 4,
+      "domain": 4,
       "equipment": 326,
       "equipment_modifier": 226,
       "feat": 222,
+      "language": 5,
+      "power": 421,
       "race": 24,
       "race_trait": 438,
-      "skill": 5
+      "skill": 5,
+      "template": 104
     },
     "ultimate_wilderness": {
       "class": 18,
       "companion": 646,
+      "deity": 9,
+      "domain": 6,
       "equipment": 124,
       "equipment_modifier": 3,
       "feat": 136,
+      "language": 5,
       "race": 2,
       "race_trait": 163,
-      "spell": 61
+      "spell": 61,
+      "template": 24
     }
   },
   "counts_by_kind": {
     "class": 2377,
     "companion": 1676,
+    "deity": 460,
+    "domain": 183,
     "equipment": 6197,
     "equipment_modifier": 1582,
     "feat": 2548,
+    "language": 143,
     "monster": 1218,
     "monster_ability": 3784,
-    "race": 241,
+    "power": 421,
+    "race": 242,
     "race_trait": 5637,
     "skill": 170,
-    "spell": 2777
+    "spell": 2777,
+    "template": 2343
   },
   "discovered_book_dirs": 186,
   "excluded_book_dirs": 148,
   "files_by_kind_example": {
     "class": "paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
     "companion": "paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "deity": "paizo/roleplaying_game/bestiary_6/b6_deities.lst",
+    "domain": "paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
     "equipment": "paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
     "equipment_modifier": "paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
     "feat": "paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "language": "paizo/roleplaying_game/advanced_race_guide/arg_languages.lst",
     "monster": "paizo/roleplaying_game/bestiary/b1_races.lst",
     "monster_ability": "paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "power": "dreamscarred_press/ultimate_psionics/up_powers.lst",
     "race": "paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
     "race_trait": "paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
     "skill": "paizo/roleplaying_game/bestiary_2/b2_skills.lst",
-    "spell": "paizo/roleplaying_game/advanced_class_guide/acg_spells.lst"
+    "spell": "paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "template": "paizo/roleplaying_game/advanced_class_guide/acg_templates.lst"
   },
   "forget_directive": 0,
   "in_scope_book_dirs": 38,
@@ -330,13 +402,7 @@
     "ability_category:Spell-Like Ability": 165,
     "ability_category:UNKNOWN": 15,
     "ability_category:Words of Power": 369,
-    "class_feature": 18191,
-    "deity": 460,
-    "domain": 183,
-    "kit": 1,
-    "language": 143,
-    "power": 421,
-    "template_row": 2343
+    "class_feature": 18191
   },
   "kind_unenumerable_by_book": {
     "advanced_class_guide": {
@@ -346,73 +412,50 @@
       "ability_category:Internal": 18,
       "ability_category:Raging Blood Feat Bloodline": 10,
       "ability_category:Special Ability": 87,
-      "class_feature": 2729,
-      "domain": 10,
-      "template_row": 22
+      "class_feature": 2729
     },
     "advanced_players_guide": {
       "ability_category:Class": 15,
       "ability_category:Internal": 61,
       "ability_category:Special Ability": 139,
       "ability_category:Spell-Like Ability": 18,
-      "class_feature": 2339,
-      "domain": 71,
-      "template_row": 38
+      "class_feature": 2339
     },
     "advanced_race_guide": {
       "ability_category:Builder": 24,
       "ability_category:Internal": 84,
       "ability_category:Racial Traits": 27,
       "ability_category:Special Ability": 251,
-      "class_feature": 719,
-      "language": 2,
-      "template_row": 47
+      "class_feature": 719
     },
     "adventurers_guide": {
       "ability_category:Archetype": 2,
       "ability_category:Internal": 29,
       "ability_category:Special Ability": 108,
-      "class_feature": 755,
-      "template_row": 10
+      "class_feature": 755
     },
     "bestiary": {
-      "ability_category:Afflictions": 1,
-      "language": 10,
-      "template_row": 73
+      "ability_category:Afflictions": 1
     },
     "bestiary_2": {
-      "ability_category:Internal": 2,
-      "language": 4,
-      "template_row": 74
+      "ability_category:Internal": 2
     },
     "bestiary_3": {
       "ability_category:Internal": 15,
-      "ability_category:Special Ability": 30,
-      "language": 21,
-      "template_row": 26
+      "ability_category:Special Ability": 30
     },
     "bestiary_4": {
-      "class_feature": 6,
-      "domain": 3,
-      "language": 22,
-      "template_row": 140
-    },
-    "bestiary_5": {
-      "language": 3
+      "class_feature": 6
     },
     "bestiary_6": {
-      "class_feature": 22,
-      "deity": 22,
-      "domain": 11
+      "class_feature": 22
     },
     "book_of_the_damned_volume_1": {
       "class_feature": 10
     },
     "book_of_the_damned_volume_2": {
       "ability_category:Special Ability": 2,
-      "class_feature": 212,
-      "deity": 48,
-      "template_row": 52
+      "class_feature": 212
     },
     "core_essentials": {
       "ability_category:Ability Focus": 271,
@@ -420,10 +463,7 @@
       "ability_category:Racial Size": 9,
       "ability_category:Racial Traits": 1,
       "ability_category:Save Bonus": 58,
-      "ability_category:Special Ability": 35,
-      "kit": 1,
-      "language": 22,
-      "template_row": 1293
+      "ability_category:Special Ability": 35
     },
     "core_rulebook": {
       "ability_category:Afflictions": 48,
@@ -436,26 +476,15 @@
       "ability_category:Natural Attack": 1,
       "ability_category:Special Ability": 123,
       "ability_category:Spell-Like Ability": 142,
-      "class_feature": 1549,
-      "deity": 21,
-      "domain": 34,
-      "language": 22,
-      "template_row": 240
+      "class_feature": 1549
     },
     "horror_adventures": {
       "ability_category:Internal": 19,
       "ability_category:Special Ability": 546,
-      "class_feature": 430,
-      "domain": 4,
-      "language": 2,
-      "template_row": 28
-    },
-    "inner_sea_bestiary": {
-      "template_row": 4
+      "class_feature": 430
     },
     "inner_sea_combat": {
-      "class_feature": 315,
-      "template_row": 1
+      "class_feature": 315
     },
     "inner_sea_faiths": {
       "ability_category:Internal": 47,
@@ -464,65 +493,46 @@
     "inner_sea_gods": {
       "ability_category:Aligned Class": 52,
       "ability_category:Internal": 74,
-      "ability_category:Special Ability": 383,
-      "deity": 297,
-      "domain": 21,
-      "template_row": 3
+      "ability_category:Special Ability": 383
     },
     "inner_sea_intrigue": {
       "ability_category:Internal": 1,
-      "class_feature": 184,
-      "template_row": 6
+      "class_feature": 184
     },
     "inner_sea_magic": {
       "ability_category:Special Ability": 152,
-      "class_feature": 224,
-      "template_row": 3
+      "class_feature": 224
     },
     "inner_sea_races": {
       "ability_category:Background": 8,
-      "ability_category:Special Ability": 96,
-      "language": 4,
-      "template_row": 9
+      "ability_category:Special Ability": 96
     },
     "inner_sea_taverns": {
       "class_feature": 11
     },
-    "inner_sea_temples": {
-      "language": 1
-    },
     "inner_sea_world_guide": {
       "ability_category:Background": 64,
-      "class_feature": 176,
-      "deity": 63,
-      "domain": 6,
-      "language": 17,
-      "template_row": 77
+      "class_feature": 176
     },
     "monster_codex": {
       "ability_category:Spell-Like Ability": 1,
-      "class_feature": 76,
-      "language": 2
+      "class_feature": 76
     },
     "mythic_adventures": {
       "ability_category:Ability Focus": 1,
       "ability_category:Internal": 19,
       "ability_category:Mythic Weapon Training": 16,
       "ability_category:Path Dabbling": 128,
-      "ability_category:Special Ability": 384,
-      "template_row": 15
+      "ability_category:Special Ability": 384
     },
     "occult_adventures": {
       "ability_category:Internal": 1,
-      "class_feature": 1037,
-      "language": 1,
-      "template_row": 4
+      "class_feature": 1037
     },
     "pathfinder_unchained": {
       "ability_category:Internal": 1,
       "ability_category:Special Ability": 364,
-      "class_feature": 602,
-      "template_row": 12
+      "class_feature": 602
     },
     "ultimate_campaign": {
       "ability_category:Internal": 3,
@@ -533,18 +543,15 @@
       "ability_category:Class": 3,
       "ability_category:Internal": 7,
       "ability_category:Spell-Like Ability": 1,
-      "class_feature": 1538,
-      "template_row": 7
+      "class_feature": 1538
     },
     "ultimate_equipment": {
       "ability_category:Equipment": 1,
       "ability_category:Internal": 7,
-      "ability_category:Special Ability": 40,
-      "template_row": 4
+      "ability_category:Special Ability": 40
     },
     "ultimate_intrigue": {
-      "class_feature": 934,
-      "template_row": 4
+      "class_feature": 934
     },
     "ultimate_magic": {
       "ability_category:Afflictions": 19,
@@ -555,28 +562,18 @@
       "ability_category:Special Ability": 17,
       "ability_category:Spell-Like Ability": 3,
       "ability_category:Words of Power": 369,
-      "class_feature": 1800,
-      "domain": 13,
-      "template_row": 23
+      "class_feature": 1800
     },
     "ultimate_psionics": {
       "ability_category:Afflictions": 2,
       "ability_category:Archetype": 10,
       "ability_category:Internal": 43,
       "ability_category:Special Ability": 270,
-      "class_feature": 1573,
-      "domain": 4,
-      "language": 5,
-      "power": 421,
-      "template_row": 104
+      "class_feature": 1573
     },
     "ultimate_wilderness": {
       "ability_category:Internal": 2,
-      "class_feature": 950,
-      "deity": 9,
-      "domain": 6,
-      "language": 5,
-      "template_row": 24
+      "class_feature": 950
     }
   },
   "mod_continuation": 23555,
@@ -836,8 +833,8 @@
     "dreamscarred_press/ultimate_psionics/up_profs_shield.lst",
     "dreamscarred_press/ultimate_psionics/up_profs_weapon.lst"
   ],
-  "total_counted_units": 28207,
-  "total_kind_unenumerable_units": 27668,
+  "total_counted_units": 31758,
+  "total_kind_unenumerable_units": 24117,
   "unexplained": 0,
   "unexplained_directories": []
 }

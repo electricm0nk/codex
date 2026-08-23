@@ -114,6 +114,21 @@ def main(argv: list[str] | None = None) -> int:
             "(src/rules_core/size.rs SizeCategory, 9 variants, byte-identical)",
             "applied_in": "scripts/census_independent.py NON_OBJECT_FILENAME_TOKENS",
         },
+        "kit_filename_collision_fixed": {
+            "units": 1,
+            "still_counted_in_total_this_run": False,
+            "proof": "decisions.md §17 -- census's own \"kit\" in b filename check "
+            "false-positived on kitsune_races.lst (the race NAME \"Kitsune\" "
+            "contains the substring \"kit\"), diverting one real race-kind row "
+            "into kind_unenumerable[\"kit\"]. src/bin/v06_work_inventory.rs's "
+            "file_kind never had a \"kit\" branch and always resolved this file "
+            "to Kind::Race -- narrowed census's check to \"_kits\" in b (the "
+            "real filename convention every genuine *_kits.lst file uses) to "
+            "match. Not a new kind: no genuine *_kits.lst file contributes any "
+            "row under either the old or the new rule (PCGen's STARTPACK: "
+            "block format has no row whose own first field lacks a ':').",
+            "applied_in": "scripts/census_independent.py _classify_kind_by_filename",
+        },
     }
     disposed_b_still_counted_total = sum(
         v["units"] for v in disposed_b_applied.values() if v["still_counted_in_total_this_run"]
@@ -155,20 +170,6 @@ def main(argv: list[str] | None = None) -> int:
             "refine_kind, duplicate-identity handling) -- too large a surface "
             "to land safely in this cycle's remaining budget",
         },
-        "other_kinds_disposition_a": {
-            "units": 3551,
-            "memo": "15-card-15-other-kinds-memo.md §1-6",
-            "buckets": {
-                "template_row": 2343,
-                "deity": 460,
-                "power": 421,
-                "domain": 183,
-                "language": 143,
-                "kit": 1,
-            },
-            "why_not_applied": "each is a new Kind variant, same surface-area "
-            "concern as ability_category above",
-        },
     }
     # (A) already applied: the 15,438 class_feature rows the census walk
     # agrees with docs/work-inventory.json on (physical book/source_file/
@@ -205,6 +206,33 @@ def main(argv: list[str] | None = None) -> int:
             "Kind::Skill this cycle (card-15-enumerate)",
             "note": "moved OUT of census's kind_unenumerable entirely -- "
             "does not count toward total_this_run below",
+            "counts_toward_total_this_run": False,
+        },
+        "other_kinds_landed_this_cycle": {
+            "units": 3550,
+            "census_raw_count": 3550,
+            "core_essentials_residual_deleted": (
+                "template/language only -- 30 + 3 = 33 rows, part of the "
+                "138 -> 171 CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING raise"
+            ),
+            "cross_book_duplicates_dropped": (
+                "19 -- core_essentials-sourced template rows restating a "
+                "book's own native declaration (e.g. \"Aeon\" in both "
+                "core_essentials/ce_templates.lst and "
+                "bestiary_2/b2_templates_pc.lst); see "
+                "drop_core_essentials_native_restatements in "
+                "src/bin/v06_work_inventory.rs, decisions.md §17"
+            ),
+            "memo": "15-card-15-other-kinds-memo.md §1-5; landed via "
+            "Kind::Template/Deity/Power/Domain/Language this cycle "
+            "(generic-enumeration, decisions.md §17) through "
+            "SIMPLE_FILENAME_KINDS -- the generic mechanism, not one Kind "
+            "per cycle",
+            "note": "moved OUT of census's kind_unenumerable entirely -- "
+            "does not count toward total_this_run below. `kit` (1 unit) is "
+            "NOT among these: investigation found it was a census filename "
+            "false-positive on kitsune_races.lst, not real content -- see "
+            "disposed_b_applied.kit_filename_collision_fixed.",
             "counts_toward_total_this_run": False,
         },
     }
@@ -304,9 +332,15 @@ def main(argv: list[str] | None = None) -> int:
             "removed_from_total_across_all_card_15_cycles": {
                 "ce__sizes_lst": 9,
                 "skill_this_cycle": 170,
+                "other_kinds_generic_enumeration_cycle": 3550,
+                "kit_filename_collision_fixed": 1,
                 "note": "27,847 (pre-any-card-15-cycle) - 9 (ce__sizes.lst, "
                 "non_object_file) - 170 (skill moved to a real kind, "
-                "Kind::Skill, this cycle) = 27,668 (total_this_run, above). "
+                "Kind::Skill) - 3,550 (template/deity/power/domain/language "
+                "moved to real kinds, generic-enumeration cycle, "
+                "decisions.md §17) - 1 (kit, census filename false-positive "
+                "on kitsune_races.lst fixed, folded into the existing race "
+                "count) = 24,117 (total_this_run, above). "
                 "The CATEGORY:Internal reroute (originally 2,614, narrowed "
                 "to 40 by adjudication) never leaves total_this_run at all "
                 "-- it only moves bucket (class_feature <-> "
@@ -339,14 +373,26 @@ def main(argv: list[str] | None = None) -> int:
                 "disposed_b_still_counted_plus_already_tracked_plus_pending_a_plus_pending_b": accounted_total,
                 "equals_total_this_run": accounted_total == census_unenumerable_total,
                 "remaining_undisposed": remaining_undisposed,
-                "note": "every unit in total_this_run (27,668) is accounted "
+                "note": "every unit in total_this_run (24,117) is accounted "
                 "for by exactly one row above: 40 (Internal bare-marker "
                 "reroute, disposed B, still counted -- moved into "
                 "ability_category:Internal) + 15,438 (class_feature, "
                 "already tracked) + 179 (class_feature residual, original, "
                 "pending A) + 2,574 (class_feature Internal-adjudicated, "
-                "pending A) + 5,108 (ability pending-A) + 3,551 (other-kinds "
-                "pending-A) + 778 (ability_category pending-B) = 27,668.",
+                "pending A) + 5,108 (ability pending-A) + 778 "
+                "(ability_category pending-B) = 24,117. `skill` (149), "
+                "`template`/`deity`/`power`/`domain`/`language` (3,550, "
+                "landed this cycle via generic-enumeration) and `kit` (1, "
+                "disposed B -- census filename collision fixed, not real "
+                "content) are NOT in this sum: all three moved OUT of "
+                "kind_unenumerable entirely (see already_tracked_a and "
+                "disposed_b_applied's own `counts_toward_total_this_run`/"
+                "`still_counted_in_total_this_run` flags) -- the "
+                "27,668 -> 24,117 drop across this cycle IS that movement. "
+                "`ability` (5,108) is the only remaining disposition-(A) "
+                "new-kind bucket -- landing it needs a per-row A/B split "
+                "first (15-card-15-ability-category-memo.md), not the "
+                "filename-only mechanism this cycle used.",
             },
         },
         "gate_3_standing_gate_still_passes": None,  # filled by caller/report consumer
