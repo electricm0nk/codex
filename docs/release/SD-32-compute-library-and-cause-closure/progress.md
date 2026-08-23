@@ -4363,3 +4363,111 @@ by the next cycle that touches it).
   `equipment_modifier`/`class`/`monster`/`race`, 17,306 units combined) are out of this cycle's
   assigned scope.
 - Commit: (recorded after push).
+
+## Cycle epic-2-t9-monster-companion-race-no-record (2026-08-23) — Card 11, T9 — `no_record` reduction for `monster_ability`/`companion`/`monster`/`race`
+
+Dispatch scope: `monster_ability` 1,210, `companion` 773, `monster` 141, `race` 59, against
+`decisions.md §20`'s `16300bde7` baseline. Re-derived fresh at this cycle's own base (`d26996388`)
+before doing anything (`decisions.md §17a`) — matched exactly.
+
+**Real fix landed**: `scripts/shape_ledger.py`'s `build_corpus_index` derives its book set from
+`docs/work-inventory.json`'s own `book` field (`"bestiary"`, no trailing `a`) and walked
+`data/corpus/bestiary/` literally. `data/corpus/`'s directory for this book carries the historical
+`"beastiary"` spelling — already documented as deliberate in two other places
+(`scripts/transcribe_monster_tables.py`'s `CROSS_TABLE_MONSTER_RECORDS = {"bestiary": "beastiary"}`,
+`src/bin/gen_book_cache.rs`'s `corpus_book: "beastiary"`). 1,105 real records live under
+`data/corpus/beastiary/`; only 3 stray ones sit under the literally-spelled `bestiary/` directory
+the ledger was walking, so every `"bestiary"`-book inventory unit reported `no_record` regardless of
+whether its record actually existed. **Fixed** with a `BOOK_CORPUS_DIR_ALIASES = {"bestiary":
+"beastiary"}` lookup: `build_corpus_index` walks the aliased directory but still indexes results
+under the inventory's own book spelling, so `classify_unit`'s join (which reads a unit's own `book`
+field) needed no change.
+
+**RED → GREEN, real**: new `test_bestiary_book_walks_the_beastiary_corpus_directory` reproduces the
+live defect with a record at the real `(book="bestiary", "ce_abilities_race.lst", 1280)` shape.
+Failed for the intended reason before the fix (`AssertionError: ('bestiary', 'ce_abilities_race.lst',
+1280) not found in {}`), GREEN after.
+
+**Also regenerated `docs/work-inventory.json`**, per the workflow-instruction near-miss warning: two
+prior committed cycles (`7072f323e` +190, `43c3e4bde` +442) each recorded their addition as "not
+reflected in the checked-in inventory until a future regen." Built
+`corpus_literal_sweep --json-out`/`derived_evaluator_fixture_check --json-out` reports first, set
+both `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT`, ran `v06_work_inventory` WITHOUT
+`--allow-stamp-loss`, diffed the full status distribution before/after — `literal-verified` (6506)
+and `fixture-verified` (1741) both **unchanged**, no stamp loss, the exact near-miss shape checked
+and clean.
+
+**Net, this cycle's own delta** (re-derived immediately before push, at this cycle's own commit):
+
+```
+$ python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/l.json
+no_record            20572  (was 20889, -317 overall)
+```
+
+| kind | before | after | delta |
+|---|---:|---:|---:|
+| `monster_ability` | 1210 | 1146 | -64 |
+| `companion` | 773 | 769 | -4 |
+| `monster` | 141 | 28 | **-113** |
+| `race` | 59 | 59 | 0 |
+
+```
+$ python3 -m unittest scripts.tests.test_shape_ledger -v          # 30 passed, 0 failed (was 29/1)
+$ python3 -m unittest discover -s scripts/tests -p "test_*.py"    # 421 passed, 0 failed, 1 skipped
+$ scripts/verify.sh --only shape-coverage-standing-gate
+PASS (population=35418 unclassified=0 no_record=20572 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+```
+Dual audit on own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. Budget constants (`NO_RECORD_BUDGET_COUNT`/
+`POPULATION`) left untouched. A concurrent sibling cycle (`71a6f3746`,
+`card15-simple-filename-kinds-ingest`) landed a further -3,124 on rebase; post-rebase
+`shape-coverage-standing-gate` reads `no_record=18512` — my scope's own per-kind figures above are
+unaffected (disjoint kinds, re-confirmed after rebase).
+
+**`monster`'s -113** is mostly the alias fix; the remaining non-bestiary population was already
+independently traced and closed at zero real gap by a sibling `t9-onboarding` cycle (read from its
+own retro log before duplicating: `.MOD`/`.COPY=` deltas and one negated-`PRECAMPAIGN` gate, per
+`docs/retro/events/t9-onboarding.jsonl` corrections at `29f3bca6d`/`fb4f28dad`).
+
+**`companion`'s remaining 769, traced but not built this cycle**: `python3
+scripts/classify_companion_rows.py <all 9 no_record books>` (all 9 already registered in
+`companion_chassis::COMPANION_BOOKS` — no unregistered-book gap for `companion`) shows **730 of 769**
+are the tool's own `ORPHAN` disposition. Grouped by `KEY` prefix, the top shapes (`Evolution` 212,
+`Temp Evolution` 118, `Animal Companion Feat` 64, `Animal Trick` 53, `Imp Companion Trick` 23,
+`Companion Archetype` 16, `Familiar Archetype` 14, …) are **one shape, not many**: every one is
+granted through `BONUS:ABILITYPOOL|<PoolName>|<Count>`, a 7th ownership shape none of
+`classify_companion_rows.py`'s six existing shapes (row-named/prerace/prefix/relay/granted/`.COPY=`)
+resolve. Traced one concretely (`advanced_players_guide:companion:evolution_ability_increase_cha`,
+`apg_abilities_companion.lst:121`, real formula content — `magnitude_token_count: 3`, not flavour
+text): its pool is granted by a `CATEGORY:Internal` row (`Standard Eidolon`,
+`apg_abilities_companion.lst:50`) — itself not an inventory unit, a two-hop relay like the tool's own
+documented "Shape 6" case — and the pool's own name (`"Eidolon Evolution"`) is **not** the ability
+`KEY` prefix (`"Evolution"`): the pool→prefix correspondence is not a clean rule. Generalising it
+wrong across all 730 orphans risks manufacturing false ownership claims (`decisions.md §1a`/`§3`),
+worse than leaving them named — **not attempted**, needs its own dedicated, adversarially-verified
+cycle tracing at least 3 more pool names before generalising, per `decisions.md §16`'s caution
+(already applied correctly once by the `monster_ability` facet-widening cycle).
+
+**`monster`'s remaining 28**: unique named creatures (Demon Lords, Empyreal Lords, Great Old Ones,
+Kaiju, `Star-Spawn of Cthulhu`) in `bestiary_4`/`inner_sea_bestiary`/`inner_sea_world_guide`/
+`occult_adventures` — several match the PCGen-declaration inconsistency `decisions.md §19b` already
+names (`Cthulhu` declared `NAMEISPI:YES` as a spell but not as a monster). Flagged for a per-record
+PI screen against the signed-off `ogl-pi-blacklist.md` before any transcription attempt; not touched
+this cycle (§15 — nothing was believed-PI and transcribed, but nothing was screened either, so
+neither cleared nor blocked).
+
+**`race`'s 59**: not investigated this cycle — none of its books matched `"bestiary"`/`"beastiary"`,
+so neither fix moved it. Next cycle's first move should be the same per-book orphan/gate breakdown
+this cycle ran for `companion`/`monster`.
+
+**§15**: read-only measurement and one join-key fix this cycle — no record was transcribed, so
+nothing was stopped on. The `monster` names above are flagged, not touched.
+
+- **Status:** complete (real, verified `no_record` reduction landed; large remaining populations in
+  `companion`/`monster`/`race` named by exact shape, not rounded into "done").
+- **Kanban:** row 11 prepended (this T9 entry); rows 11, 15 left `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t9-monster-companion-race-no-record_cycle-1_cycle_receipt.md`.
+- **What remains:** (1) `race`'s 59 — per-book classify-and-group pass. (2) `companion`'s
+  `BONUS:ABILITYPOOL` shape (~730 units) — trace ≥3 more pool-name→`KEY`-prefix mappings before
+  generalising a rule. (3) `monster`'s remaining 28 unique-named creatures — PI-screen each by name
+  first. `monster_ability`'s prior-cycle-named 86 units untouched, `feat`/`equipment` untouched.
+- Commit: (recorded after push).
