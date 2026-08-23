@@ -650,6 +650,76 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   the same dry-run method; (4) build `transcribe_spell_tables.py`/`transcribe_feat_tables.py`/
   `transcribe_equipment_tables.py` before attempting those three kinds blind.
 
+### Cycle T2b — Epic 2 / Card 11 `epic-2-cause-closure` (T2b lane: named cause proven not operative, zero banked, ruling requested)
+
+- **Card ID:** `epic-2-cause-closure` (T2b lane, one of six concurrent lanes on this row per the
+  dispatch that also produced this run — `decisions.md §10` requires the row itself to stay off
+  `complete` until every lane lands and a consolidation cycle checks all six).
+- **Commit SHA:** `7cca29798` (pre-rebase; landed on `tranche/12` via rebase+push, see
+  `git log --oneline -- src/bin/v06_work_inventory.rs` for the rebased SHA).
+- **Files touched:** `src/bin/v06_work_inventory.rs` (new helper
+  `ingested_race_trait_source_coordinates` + new standing regression test
+  `race_trait_grounding_tests::the_t2b_residual_population_is_never_ingested_not_a_matcher_miss`),
+  `docs/retro/events/epic-2-t2b.jsonl` (new — 1 correction), `kanban.md` (card 11 lane note
+  appended), this file.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`. **Wired-integration audit result:**
+  `OK_NO_TOKENS` (both re-run on the final diff, see this cycle's own receipt).
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001, this lane's scope is
+  T2b only: "Race-trait compound-key matcher, ~2,472 units."
+- **Status:** measurement/re-scoping cycle, zero units banked — a legitimate closed cycle per
+  standing lesson 6 (a real, re-derivable count and a proven-not-operative cause, not a guess).
+- **Notes:** Re-derived T2b's population from the committed `docs/work-inventory.json` (clean at
+  HEAD, no regen needed): **2,472**, matching `epic-breakdown.md` exactly — no correction to the
+  population size. Investigated the named cause (`modelled_race_of_race_trait()`'s compound-key
+  matching) and found it **already fixed** by SD-31 wave 20 (prefix-anchored matching) and
+  superseded by SD-29 `decisions.md §43.5`'s PRIMARY race-corpus-load probe. Cross-referenced
+  every ingested `data/corpus/*/race_trait/**/*.json` record's own `source.path`/`source.line`
+  provenance against the 2,472 residual units' coordinates: **zero overlap** — none of the 2,472
+  were ever ingested into `data/corpus` at all, so the matcher (which only ever runs against an
+  already-ingested record) never gets a chance to misjudge any of them. Logged
+  `scripts/retro.py correction` against `epic-breakdown.md`'s T2b framing.
+
+  The real, measured cause: **1,754 of 2,472 (71%)** sit in books never registered in
+  `race_catalog.rs`'s `RACE_CORPUS_BOOKS` list at all (`bestiary_3`, `bestiary_4`,
+  `ultimate_psionics`, `pathfinder_unchained`, `mythic_adventures`, `occult_adventures`,
+  `ultimate_wilderness`, `inner_sea_world_guide`, `inner_sea_gods`, `ultimate_combat/intrigue/
+  magic`, `book_of_the_damned_volume_1/2`) — a book-onboarding-for-race-content gap. The
+  remaining **718** are in registered books but never transcribed from the pinned oracle's raw
+  `.lst` rows (sampled: category-header rows with no race named, correctly excluded by design;
+  and `"Adopted Race ~ <RaceName>"` selector rows naming real non-CRB races — Fetchling, Grippli,
+  Ifrit, Oread, Sylph, Undine, Dhampir — that `ingest_races.rs`'s flat standard-trait loop never
+  captures, an ingestion-tooling gap). Neither cause is closeable as "fix the matcher"; both are
+  multi-hundred/thousand-unit content-ingestion projects, structurally the same shape as T9's own
+  separately-measured 2,651-unit backlog, and closing even a subset (e.g. just the ~44 `Adopted
+  Race` rows) would violate `decisions.md §1a/§3`'s anti-gaming bar (an easy-subset instance-close,
+  not a class-close, proving no coverage of the other 2,428 units).
+
+  Added a standing regression test (`ingested_race_trait_source_coordinates` +
+  `the_t2b_residual_population_is_never_ingested_not_a_matcher_miss`) pinning three hand-verified
+  samples as never-ingested — RED→GREEN proved (inverted assertion, failed for the intended
+  reason, reverted, re-ran green). `race_trait_grounding_tests` module: 29/29 pass (up from 28).
+  Full breakdown, every command, and the pre-existing unrelated
+  `rule_set_mapping_tests::uncompiled_books_stay_none` failure discovered (not caused by, not
+  fixed by, this cycle — Epic 4/Gate 0 territory, `inner_sea_temples` compiled by a concurrent
+  lane without this test updated): `artifacts/gate-3-closure-invariant/
+  epic-2-cause-closure_cycle-2_epic-2-t2b_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card (the book-onboarding-shaped residual is named,
+  counted, and handed to the ruling below rather than silently re-scoped by this lane).
+- **Ruling needed:** T2b's named cause is proven fixed and fully non-operative corpus-wide (this
+  cycle's own evidence). Two options for whoever runs the consolidation cycle: (a) accept T2b as
+  CLOSED at 0-units-fixed with the residual 2,472 reclassified out of T2b into a new
+  book-onboarding-shaped scope (adjacent to, but likely not folded into, T9's own 2,651), or
+  (b) authorize a dedicated multi-cycle ingestion effort under card 11/T2b's own name sized like
+  T9's, if the population must literally close under this card's name. Not filed under this
+  file's `## Open blockers` — per `decisions.md §10` that section is a request for an operator
+  ruling, not a disposition, and this note already states the finding and both concrete options
+  directly for the consolidation cycle to act on.
+- **Next-cycle plan:** per whichever ruling above is taken — either T2b needs no further lane
+  cycle (option a), or the next cycle registers the 13 unregistered books in `RACE_CORPUS_BOOKS`
+  (checking each has real race content worth loading first) and extends `ingest_races.rs`/
+  `ingest_race_traits.rs` for the `Adopted Race` selector mechanism and any other systematic gap
+  found, fixture-checking every emitted record against the pinned oracle (option b).
+
 ### Cycle 003 — Epics 1-3 / Card 12 `epic-3-class-reachability` (entry-requirement gating mechanism landed; 18-untabled-classes deferred)
 
 - **Card ID:** `epic-3-class-reachability`
