@@ -84,6 +84,7 @@ from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
     canonicalize,
     normalized_term_hit,
 )
+from shape_ledger import BOOK_CORPUS_DIR_ALIASES  # noqa: E402
 
 REDACTED_PI_MARKER = "[redacted PI]"
 
@@ -122,6 +123,40 @@ def compose_source_path(file_path: str, pcgen_root: str) -> str:
             "with a system segment such as 'pathfinder'"
         )
     return rel
+
+
+def row_identity(raw_line: str) -> str:
+    """The row's real identifying string for citation matching.
+
+    PCGen's LST format lets a row declare an explicit `KEY:` token that
+    OVERRIDES the leading (display-name) column as the row's actual lookup
+    key -- the identical convention `src/bin/ingest_races.rs`'s
+    `row.first("KEY")`, `src/bin/ingest_race_traits.rs`'s `.find(|f| f.key
+    == "KEY")`, and `scripts/derive_monster_ability_save_dc_fixtures.py`'s
+    `token(fields, "KEY") or fields[0]` all already honour. Without this, a
+    row like `ma_templates.lst:15` ("Has Swim Speed  KEY:Swimming Master ~
+    Has Swim  ...") citation-mismatches forever: the inventory's own
+    `corpus_key` ("Swimming Master ~ Has Swim") is the row's declared KEY,
+    not its leading display name. Falls back to the leading field when no
+    `KEY:` token is present (most rows)."""
+    for field in raw_line.split("\t"):
+        field = field.strip()
+        if field.upper().startswith("KEY:"):
+            return field.split(":", 1)[1].strip()
+    return raw_line.split("\t", 1)[0].strip()
+
+
+def resolve_out_dir(out_root: str, book: str, kind: str) -> str:
+    """`shape_ledger.py`'s reader joins a `book`-named unit against the
+    `BOOK_CORPUS_DIR_ALIASES`-aliased corpus directory (e.g. `bestiary`
+    reads from `data/corpus/beastiary/`, historical spelling) -- the writer
+    must honour the same alias or every record it writes under the
+    unaliased directory is invisible to the join and reports `no_record`
+    forever (decisions.md §20's "search for an existing ingest path"
+    footgun 1, re-confirmed live: 1,050 `template` + 14 `language` `bestiary`
+    units written to `data/corpus/bestiary/` instead of
+    `data/corpus/beastiary/`)."""
+    return os.path.join(out_root, BOOK_CORPUS_DIR_ALIASES.get(book, book), kind)
 
 
 def slugify(name: str) -> str:
@@ -267,7 +302,7 @@ def main(argv: list[str] | None = None) -> int:
         if raw_line is None:
             stats[f"{kind}:no_line"] += 1
             continue
-        identity = raw_line.split("\t", 1)[0].strip()
+        identity = row_identity(raw_line)
         # `v06_work_inventory.rs` composes some kinds' `corpus_key` as
         # "<group header> ~ <row identity>" (grouping context prepended,
         # same convention already shipped e.g. `data/corpus/.../
@@ -340,7 +375,7 @@ def main(argv: list[str] | None = None) -> int:
             slug = f"{slug}_{line_no}"
         seen.add(slug)
 
-        out_dir = os.path.join(args.out_root, book, kind)
+        out_dir = resolve_out_dir(args.out_root, book, kind)
         out_path = os.path.join(out_dir, f"{slug}.json")
         if not args.dry_run:
             os.makedirs(out_dir, exist_ok=True)

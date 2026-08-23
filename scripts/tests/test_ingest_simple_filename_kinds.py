@@ -13,6 +13,7 @@ import unittest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import ingest_simple_filename_kinds as isfk  # noqa: E402
+from shape_ledger import BOOK_CORPUS_DIR_ALIASES  # noqa: E402
 
 
 class ParseRowTests(unittest.TestCase):
@@ -102,6 +103,48 @@ class ComposeSourcePathTests(unittest.TestCase):
         self.assertEqual(
             isfk.compose_source_path(file_path, root),
             "pathfinder/dreamscarred_press/dsp_book/dsp_x.lst",
+        )
+
+
+class RowIdentityTests(unittest.TestCase):
+    """A `KEY:` token, when present, overrides the leading display-name
+    column as the row's real identifying string -- the convention
+    `ingest_races.rs`/`ingest_race_traits.rs`/
+    `derive_monster_ability_save_dc_fixtures.py` already honour."""
+
+    def test_key_token_overrides_leading_column_when_present(self):
+        row = "Has Swim Speed\tKEY:Swimming Master ~ Has Swim\tVISIBLE:NO"
+        self.assertEqual(isfk.row_identity(row), "Swimming Master ~ Has Swim")
+
+    def test_falls_back_to_leading_column_when_no_key_token(self):
+        row = "Acrobatics\tKEYSTAT:Dex\tTYPE:Physical"
+        self.assertEqual(isfk.row_identity(row), "Acrobatics")
+
+    def test_key_token_beats_a_similarly_named_keystat_token(self):
+        # KEYSTAT: must never be mistaken for KEY: (startswith("KEY:") guards this).
+        row = "Fallback Name\tKEYSTAT:Dex"
+        self.assertEqual(isfk.row_identity(row), "Fallback Name")
+
+
+class OutputDirAliasTests(unittest.TestCase):
+    """`shape_ledger.py`'s reader joins a unit's `book` against the aliased
+    corpus directory (e.g. `bestiary` -> `data/corpus/beastiary/`). The
+    writer's `out_dir` computation must apply the identical alias, or every
+    record it writes under the unaliased directory is invisible to the join
+    forever (decisions.md §20 footgun 1, re-confirmed: 1,051 bestiary
+    template/language units)."""
+
+    def test_out_dir_book_segment_matches_shape_ledger_alias_for_bestiary(self):
+        self.assertEqual(BOOK_CORPUS_DIR_ALIASES.get("bestiary", "bestiary"), "beastiary")
+        self.assertEqual(
+            isfk.resolve_out_dir("data/corpus", "bestiary", "template"),
+            os.path.join("data/corpus", "beastiary", "template"),
+        )
+
+    def test_out_dir_book_segment_is_unchanged_for_a_non_aliased_book(self):
+        self.assertEqual(
+            isfk.resolve_out_dir("data/corpus", "core_rulebook", "template"),
+            os.path.join("data/corpus", "core_rulebook", "template"),
         )
 
 
