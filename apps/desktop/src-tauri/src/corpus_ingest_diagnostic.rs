@@ -1557,7 +1557,12 @@ mod tests {
         // Attack` (`TYPE:Internal`, no facet/delivery) now ships with a
         // provisional `SpecialQuality` facet default instead of being
         // dropped -- owned (Morlock claims it), so it joins the reaching set.
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 711);
+        // `decisions.md §27b` round 9: 711 -> 733 (+22), the multi-DESC:
+        // parse-refusal group closes via `parse_desc`'s new generalised
+        // sixth branch -- 21 real `no_record` units plus `Lycanthrope ~
+        // Change Shape` (already `text-complete` by inventory evidence
+        // alone, same shape as round 8's `Bunyip ~ Blood Rage`).
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 733);
     }
 
     #[test]

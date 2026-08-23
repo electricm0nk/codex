@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T10:26:03Z",
   "data": {
     "corpus_key": "Asurendra ~ Curse of False Wisdom",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "bestiary_3:monster:asura_asurendra"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Claw-contact; save Will DC 31; frequency 1 day; effect 1d6 Wis drain."
+      },
+      {
+        "key": "KEY",
+        "value": "Asurendra ~ Curse of False Wisdom"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "TYPE",
+        "value": "AsurendraRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.24",
     "traits": [
       "AsurendraRacialAbility"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 401,
-    "record_key": "Asurendra ~ Curse of False Wisdom"
-  },
+  "ingested_at": "2026-08-23T10:26:03Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 401,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Asurendra ~ Curse of False Wisdom",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

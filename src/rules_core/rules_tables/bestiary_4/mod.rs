@@ -201,24 +201,32 @@ mod tests {
         // 619 owned + 187 owner-less (`decisions.md §20`, no_record-to-zero
         // wave 2 follow-on) = 806. The owner-less count is pinned separately
         // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 619/806 -> 619/813 (`decisions.md §27b` round 9, +7 total, all
+        // owner-less): the multi-DESC: parse-refusal group closes via
+        // `parse_desc`'s new generalised sixth branch -- the 7 `Traits
+        // Output ~ <Kind>` rows (`&nl;`-marker continuation shape) are
+        // shared reference-library text no single stat block in this book
+        // owns; `owned` is UNCHANGED, all 7 land in the owner-less pin
+        // below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
         assert_eq!(owned, 619);
-        assert_eq!(monster_abilities().len(), 806);
+        assert_eq!(monster_abilities().len(), 813);
     }
 
-    /// The shipped total, pinned directly. 749 -> 783 -> 825 -> 1012 (+187,
-    /// same cause as the test above); re-derive with `python3 scripts/
-    /// classify_monster_ability_rows.py bestiary_4` (whose own "remaining"/
-    /// "reachable remainder" framing answers a different, inventory-status-
-    /// relative question and is no longer the live source for this number)
-    /// or `scripts/scan_monster_ability_bundle_rows.py bestiary_4` rather
-    /// than re-deriving by hand.
+    /// The shipped total, pinned directly. 749 -> 783 -> 825 -> 1012 -> 1019
+    /// (+7, `decisions.md §27b` round 9, same cause as the test above);
+    /// re-derive with `python3 scripts/classify_monster_ability_rows.py
+    /// bestiary_4` (whose own "remaining"/"reachable remainder" framing
+    /// answers a different, inventory-status-relative question and is no
+    /// longer the live source for this number) or `scripts/
+    /// scan_monster_ability_bundle_rows.py bestiary_4` rather than
+    /// re-deriving by hand.
     #[test]
     fn the_shipped_total_is_the_books_real_measured_count() {
-        assert_eq!(monsters().len() + monster_abilities().len(), 1012);
+        assert_eq!(monsters().len() + monster_abilities().len(), 1019);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
@@ -244,9 +252,12 @@ mod tests {
             .collect();
         unowned.sort_unstable();
 
+        // 187 -> 194 (`decisions.md §27b` round 9, +7): the multi-DESC:
+        // parse-refusal group closes -- the 7 `Traits Output ~ <Kind>`
+        // rows, all owner-less, see the test above.
         assert_eq!(
             unowned.len(),
-            187,
+            194,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py bestiary_4` run, and update the matching \
@@ -257,9 +268,12 @@ mod tests {
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0x87ed_3d78_0aa9_ca92,
+            digest, 0x83aa_639e_6bcd_d167,
             "the owner-less key SET changed (same count, different members) — re-derive and \
-             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly. \
+             0x87ed3d78_0aa9ca92 -> 0x83aa639e_6bcdd167 (`decisions.md §27b` round 9): the \
+             set gains 7 new members (the 7 `Traits Output ~ <Kind>` rows), re-derived live \
+             from this test's own failing run, never guessed, per `decisions.md §17a`."
         );
     }
 

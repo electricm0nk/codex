@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T10:25:56Z",
   "data": {
     "corpus_key": "Quickwood ~ Oaksight",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:quickwood"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A quickwood may observe the area surrounding any oak tree within 360 feet as if using clairaudience/clairvoyance.  It can use this ability on any number of oak trees in the area.  Although the quickwood does not need line of silght to establish this link, if it does have line of sight to even a single oak tree, it cannot be flanked."
+      },
+      {
+        "key": "KEY",
+        "value": "Quickwood ~ Oaksight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Supernatural"
+      }
+    ],
     "source_page": "p.228",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1042,
-    "record_key": "Quickwood ~ Oaksight"
-  },
+  "ingested_at": "2026-08-23T10:25:56Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1042,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Quickwood ~ Oaksight",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

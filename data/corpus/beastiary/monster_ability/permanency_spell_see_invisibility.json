@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Permanency Spell / See Invisibility",
+    "delivery": null,
+    "description": "Self Only, (5,000GP), Caster Level %1. You can see any objects or beings that are invisible within your range of vision, as well as any that are ethereal, as if they were normally visible. Such creatures are visible to you as translucent shapes, allowing you easily to discern the difference between visible, invisible, and ethereal creatures. The spell does not reveal the method used to obtain invisibility. It does not reveal illusions or enable you to see through opaque objects. It does not reveal creatures who are simply hiding, concealed, or otherwise hard to see.",
+    "description_variables": [
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:permanency_spell_see_invisibility",
+    "name": "Permanency Spell / See Invisibility",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|PermanecySeeInvisibilityLVL|%LIST"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|10|11|12|13|14|15|16|17|18|19|20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PermanecySeeInvisibilityLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Self Only, (5,000GP), Caster Level %1.|%LIST"
+      },
+      {
+        "key": "DESC",
+        "value": "You can see any objects or beings that are invisible within your range of vision, as well as any that are ethereal, as if they were normally visible. Such creatures are visible to you as translucent shapes, allowing you easily to discern the difference between visible, invisible, and ethereal creatures. The spell does not reveal the method used to obtain invisibility. It does not reveal illusions or enable you to see through opaque objects. It does not reveal creatures who are simply hiding, concealed, or otherwise hard to see."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Permanency Spell|TIMES=ATWILL|CASTERLEVEL=PermanecySeeInvisibilityLVL|See Invisibility"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PermanencySpell"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PermanencySpell"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1608,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Permanency Spell / See Invisibility",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:spells"
+  ]
+}

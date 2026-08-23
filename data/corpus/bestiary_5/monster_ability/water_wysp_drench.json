@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:23:07Z",
   "data": {
     "corpus_key": "Water Wysp ~ Drench",
     "delivery": "Extraordinary",
@@ -11,21 +9,45 @@
     "key": "bestiary_5:monster_ability:water_wysp_drench",
     "name": "Drench",
     "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A water wysp's touch puts out Large or smaller nonmagical flames. The creature can dispel magical fire it touches as per dispel magic (caster level = the wysp's HD)."
+      },
+      {
+        "key": "KEY",
+        "value": "Water Wysp ~ Drench"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.WaterWyspRacialTrait"
+      }
+    ],
     "source_page": "p.283",
     "traits": [
       "WaterWyspRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
-    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c",
-    "line": 78,
-    "record_key": "Water Wysp ~ Drench"
-  },
+  "ingested_at": "2026-08-23T15:23:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 78,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Water Wysp ~ Drench",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",

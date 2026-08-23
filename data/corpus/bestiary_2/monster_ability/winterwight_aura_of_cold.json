@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T10:25:56Z",
   "data": {
     "corpus_key": "Winterwight ~ Aura of Cold",
     "delivery": "Supernatural",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:winterwight"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(10 ft.)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Winterwights are surrounded by a 10-foot radius of deathly chill.  Any creatures within this area during the winterwight's turn takes 2d10 points of cold damage.  All creatures of the cold subtype within this area (including the winterwight) are treated as having fast healing 10."
+      },
+      {
+        "key": "KEY",
+        "value": "Winterwight ~ Aura of Cold"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Cold"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
     "source_page": "p.283",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1366,
-    "record_key": "Winterwight ~ Aura of Cold"
-  },
+  "ingested_at": "2026-08-23T10:25:56Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1366,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Winterwight ~ Aura of Cold",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

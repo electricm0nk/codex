@@ -1,0 +1,95 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Kyton (Apostle) ~ Seductive Oration",
+    "delivery": "Supernatural",
+    "description": "An apostle kyton has a unique perspective due to her transition into her current form. As a full-round action that provokes attacks of opportunity, an apostle kyton can speak to the pleasures and wonders it experienced during its transformation. Any creature that listens to this speech for 1 continuous minute must succeed at a Will save (DC %1) or take %2d6 points of Wisdom damage. %3 sanity damage. A creature that succeeds at its save can't be affected by that apostle kyton's seductive oration ability for 24 hours. After failing the save to resist the apostle kyton's seductive oration, the target begins to question the definitions of morality, physicality, and life. Once per week, as long as the affected creature remains in communication with the apostle kyton, it must attempt a saving throw against seductive oration again or have its alignment shift one step toward lawful evil and take 1d6 additional points of Wisdom damage. %4 additional points of sanity damage. The save DC increases by 1 per consecutive week of contact with the apostle kyton. A successful save prevents the alignment shift. A creature can't take damage from seductive oration more than once per week, even if it encounters multiple apostle kytons. When the target's alignment completely shifts to lawful evil (or if the target is lawful evil when first seduced), the target must immediately succeed at a Will save (with the same DC as seductive oration, including any increases from extended contact) or gain a greater madness (see page 182). If the target is turned lawful evil, the greater madness it gains is in addition to any madness it might gain from the sanity damage itself. Creatures that are driven insane by an apostle kyton often eventually become broken souls (Bestiary 4 p24), but some rare individuals gain the shadowbound corruption (see page 34) or even transform into apostle kytons themselves.",
+    "description_variables": [
+      "10+HD/2+CHA",
+      "1+HD/8",
+      "CR/2",
+      "CR/2"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:kyton_apostle_seductive_oration",
+    "name": "Seductive Oration",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 additional points of sanity damage.|CR/2|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 sanity damage.|CR/2|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "%1d6 points of Wisdom damage.|1+HD/8|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6 additional points of Wisdom damage.|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that succeeds at its save can't be affected by that apostle kyton's seductive oration ability for 24 hours. After failing the save to resist the apostle kyton's seductive oration, the target begins to question the definitions of morality, physicality, and life. Once per week, as long as the affected creature remains in communication with the apostle kyton, it must attempt a saving throw against seductive oration again or have its alignment shift one step toward lawful evil and take"
+      },
+      {
+        "key": "DESC",
+        "value": "An apostle kyton has a unique perspective due to her transition into her current form. As a full-round action that provokes attacks of opportunity, an apostle kyton can speak to the pleasures and wonders it experienced during its transformation. Any creature that listens to this speech for 1 continuous minute must succeed at a Will save (DC %1) or take|10+HD/2+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures that are driven insane by an apostle kyton often eventually become broken souls (Bestiary 4 p24), but some rare individuals gain the shadowbound corruption (see page 34) or even transform into apostle kytons themselves."
+      },
+      {
+        "key": "DESC",
+        "value": "If the target is turned lawful evil, the greater madness it gains is in addition to any madness it might gain from the sanity damage itself.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "The save DC increases by 1 per consecutive week of contact with the apostle kyton. A successful save prevents the alignment shift. A creature can't take damage from seductive oration more than once per week, even if it encounters multiple apostle kytons. When the target's alignment completely shifts to lawful evil (or if the target is lawful evil when first seduced), the target must immediately succeed at a Will save (with the same DC as seductive oration, including any increases from extended contact) or gain a greater madness (see page 182)."
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton (Apostle) ~ Seductive Oration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.241"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.ApostleKyton"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.241",
+    "traits": [
+      "ApostleKyton"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 299,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Kyton (Apostle) ~ Seductive Oration",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

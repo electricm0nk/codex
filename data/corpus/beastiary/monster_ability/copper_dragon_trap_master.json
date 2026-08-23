@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Copper Dragon ~ Trap Master",
+    "delivery": "Extraordinary",
+    "description": "A juvenile or older copper dragon receives a +%1 bonus Craft (traps) and Perception checks made to locate a trap. Upon becoming a mature adult, he can also use Disable Device to disarm magic traps as if he had the rogue's Trapfinding class feature.",
+    "description_variables": [
+      "DragonAgeCategory"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:copper_dragon_trap_master",
+    "name": "Trap Master",
+    "owners": [
+      "beastiary:monster:dragon_copper"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+ %1|DragonAgeCategory"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Traps)|DragonAgeCategory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A juvenile or older copper dragon receives a +%1 bonus Craft (traps) and Perception checks made to locate a trap.|DragonAgeCategory"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon becoming a mature adult, he can also use Disable Device to disarm magic traps as if he had the rogue's Trapfinding class feature.|PREVARGTEQ:DragonAgeCategory,7"
+      },
+      {
+        "key": "KEY",
+        "value": "Copper Dragon ~ Trap Master"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.106",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 481,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Copper Dragon ~ Trap Master",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

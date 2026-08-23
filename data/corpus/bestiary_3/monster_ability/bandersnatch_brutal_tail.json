@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T10:26:03Z",
   "data": {
     "corpus_key": "Bandersnatch ~ Brutal Tail",
     "delivery": "Extraordinary",
@@ -13,21 +11,45 @@
     "owners": [
       "bestiary_3:monster:bandersnatch"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The quills and barbs on a bandersnatch's tail cause triple damage on a critical hit from its tail slap. A bandersnatch adds 1-1/2 times its strength bonus on attack rolls when using its tail slap."
+      },
+      {
+        "key": "KEY",
+        "value": "Bandersnatch ~ Brutal Tail"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "BandersnatchRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.32",
     "traits": [
       "BandersnatchRacialAbility"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 445,
-    "record_key": "Bandersnatch ~ Brutal Tail"
-  },
+  "ingested_at": "2026-08-23T10:26:03Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 445,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bandersnatch ~ Brutal Tail",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

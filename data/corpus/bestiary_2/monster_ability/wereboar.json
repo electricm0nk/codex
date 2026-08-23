@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:07:19Z",
   "data": {
     "corpus_key": "Wereboar",
     "delivery": null,
@@ -11,21 +9,57 @@
     "key": "bestiary_2:monster_ability:wereboar",
     "name": "Wereboar",
     "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalSize|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalSize|0"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE=LycanthropeType"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Natural Wereboar|Afflicted Wereboar"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropeKind"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "source_page": "p.182",
     "traits": [
       "LycanthropeKind"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 795,
-    "record_key": "Wereboar"
-  },
+  "ingested_at": "2026-08-23T14:07:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 795,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Wereboar",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

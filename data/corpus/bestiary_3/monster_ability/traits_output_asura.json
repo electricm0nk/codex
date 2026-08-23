@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Asura",
+    "delivery": "Extraordinary",
+    "description": "Immunity to curses, disease, and poison. &nl; Resistance to acid 10 and electricity 10. &nl; +2 racial bonus on saving throws against enchantment spells. &nl; Telepathy.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:traits_output_asura",
+    "name": "Asura Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; +2 racial bonus on saving throws against enchantment spells."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Resistance to acid 10 and electricity 10."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Telepathy."
+      },
+      {
+        "key": "DESC",
+        "value": "Immunity to curses, disease, and poison."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Asura"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2305,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Traits Output ~ Asura",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

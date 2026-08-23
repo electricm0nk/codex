@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b5_abilities_race_oa.lst` -- 9 monster-ability rows
-//!   * `b5_abilities_race.lst` -- 29 monster-ability rows
+//!   * `b5_abilities_race.lst` -- 30 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 1 monster-ability rows
 //!
 //! 40 further ability row(s) in this book are ORPHANS -- no monster
@@ -60,14 +60,6 @@
 //!   * `b5_abilities_race.lst:101`
 //!   * `b5_abilities_race.lst:102`
 //!   * `ce_abilities_race.lst:2439`
-//!
-//! 1 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `b5_abilities_race.lst:96` (Traits Output ~ Sahkil)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -75,7 +67,7 @@ use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, M
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
-/// Every bestiary_5 monster-ability record (39 rows).
+/// Every bestiary_5 monster-ability record (40 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Brain Mole ~ Brain Drain",
@@ -601,6 +593,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b5_abilities_race.lst",
         source_line: 85,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Sahkil",
+        name: "Sahkil Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Supernatural"],
+        description: Some("Sahkils count as having fewer Hit Dice (%1) for purposes of spells or effects that call outsiders, receive a +%2 bonus on Charisma checks to break free of planar binding spells and similar effects, and their SR counts as if it were 5 higher (%3) for the purpose of breaking free of planar binding spells and similar effects. &nl; Whenever a sahkil casts a spell or uses a spell-like ability or effect with the emotion or fear descriptors that allows a saving throw, the DC is increased by 2. &nl; All sahkils have a gaze attack that instills dread in those they look upon. This gaze attack has a range of 30 feet (though when a sahkil is on the Ethereal Plane, it functions against creatures on the Material Plane that can see ethereal creatures), and can be negated by a Will save-the exact effects caused by a particular sahkil's look of fear depend on the type of sahkil. This is a mind-affecting fear effect. &nl; Many sahkils can shift between the Ethereal Plane and the Material Plane as a move action. This ability is otherwise identical to ethereal jaunt (CL 15th). &nl; A sahkil's natural weapons, as well as any weapon it wields, are treated as though they had the ghost touch weapon special ability."),
+        description_variables: &["max(2,HD-4)", "HD/2", "SR+5"],
+        source_page: None,
+        owners: &[],
+        source_file: "b5_abilities_race.lst",
+        source_line: 96,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

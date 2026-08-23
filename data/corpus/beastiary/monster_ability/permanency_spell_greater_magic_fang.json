@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Permanency Spell / Greater Magic Fang",
+    "delivery": null,
+    "description": "(7,500GP), Caster Level %1. This spell functions like magic fang, except that the enhancement bonus on attack and damage rolls is +1 per four caster levels [maximum +5]. Alternatively, you may imbue all of the creature's natural weapons with a +1 enhancement bonus [regardless of your caster level].",
+    "description_variables": [
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:permanency_spell_greater_magic_fang",
+    "name": "Permanency Spell / Greater Magic Fang",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|PermanecyMagicFangGreaterLVL|%LIST"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPON|TOHIT,DAMAGE|MIN(floor(%LIST/4),5)|TYPE=Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|11|12|13|14|15|16|17|18|19|20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PermanecyMagicFangGreaterLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "(7,500GP), Caster Level %1.|%LIST"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like magic fang, except that the enhancement bonus on attack and damage rolls is +1 per four caster levels [maximum +5]. Alternatively, you may imbue all of the creature's natural weapons with a +1 enhancement bonus [regardless of your caster level]."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Permanency Spell|TIMES=ATWILL|CASTERLEVEL=PermanecyMagicFangGreaterLVL|Magic Fang (Greater)"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PermanencySpell"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PermanencySpell"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1613,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Permanency Spell / Greater Magic Fang",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

@@ -10,8 +10,8 @@
 //! Sources, with the line each record was read from carried per row:
 //!   * `b3_races.lst` -- 261 monster rows
 //!   * `vishkanya_abilities_race.lst` -- 1 monster-ability rows
-//!   * `b3_abilities_race.lst` -- 664 monster-ability rows
-//!   * `ce_abilities_race.lst` -- 21 monster-ability rows
+//!   * `b3_abilities_race.lst` -- 665 monster-ability rows
+//!   * `ce_abilities_race.lst` -- 30 monster-ability rows
 //!
 //! 286 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -307,23 +307,6 @@
 //!   * `ce_abilities_race.lst:2337`
 //!   * `ce_abilities_race.lst:2338`
 //!   * `ce_abilities_race.lst:2339`
-//!
-//! 10 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `b3_abilities_race.lst:1663` (Jiang-Shi Vampire)
-//!   * `ce_abilities_race.lst:2305` (Traits Output ~ Asura)
-//!   * `ce_abilities_race.lst:2306` (Traits Output ~ Behemoth)
-//!   * `ce_abilities_race.lst:2307` (Traits Output ~ Clockwork)
-//!   * `ce_abilities_race.lst:2308` (Traits Output ~ Demodand)
-//!   * `ce_abilities_race.lst:2309` (Traits Output ~ Div)
-//!   * `ce_abilities_race.lst:2310` (Traits Output ~ Kami)
-//!   * `ce_abilities_race.lst:2311` (Traits Output ~ Kyton)
-//!   * `ce_abilities_race.lst:2312` (Traits Output ~ Leshy)
-//!   * `ce_abilities_race.lst:2313` (Traits Output ~ Rakshasa)
 //!
 //! 11 ability row(s) ship with a `decisions.md §27`
 //! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
@@ -5569,7 +5552,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_3 monster-ability record (686 rows).
+/// Every bestiary_3 monster-ability record (696 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Vishkanya ~ Toxic ~ Vishkanya Venom",
@@ -15860,6 +15843,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Jiang-Shi Vampire",
+        name: "Jiang-Shi Vampire",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["JiangShiVampire"],
+        description: Some("Senses: A jiang-shi vampire gains darkvision 60 feet. It also gains the ability to sense the breathing of living creatures-a jiang-shi has blindsight to a range of 60 feet against creatures that breathe. A creature may hold its breath to prevent a jiang-shi from noticing it in this manner. &nl; Hit Dice: Change all racial Hit Dice to d8s. Class Hit Dice are unaffected. As undead, jiang-shis use their Charisma modifier to determine bonus hit points (instead of Constitution). &nl; Defensive Abilities: A jiang-shi gains channel resistance +4, DR 10/magic and slashing, and resistance to cold 20, in addition to all of the defensive abilities granted by the undead type. A jiang-shi also gains fast healing 5. In addition, all jiang-shis gain the following defensive ability. &nl; Weaknesses: Jiang-shis recoil from mirrors or the sound of handbells rung within 10 feet of them. Cooked rice, which to jiang-shis mocks the fundamental fact that they no longer eat food, shames them into recoiling as well. These things don't harm a jiang-shi vampire-they merely keep it at bay for a period of time. A recoiling jiang-shi vampire must stay at least 5 feet away from the object of its revulsion, and cannot touch or make melee attacks against a creature brandishing the object during that round. Holding a jiang-shi vampire at bay takes a standard action. After being held at bay for 1 round, a jiang-shi vampire can attempt to overcome its revulsion of the object and function normally each round it makes a DC 20 Will save at the start of its turn. &nl; Destroying a Jiang-Shi: If reduced to 0 hit points, a jiangshi vampire crumbles to dust but is not destroyed. It reforms in 1 minute with 1 hit point in the same space, or the nearest unoccupied space. Scattering the dust before the jiang-shi reforms destroys it permanently, as does mixing rice into the dust with a dose of holy water. Jiangshi vampires are also susceptible to wooden weapons carved from peach trees, as such weapons represent the unity of all elements and life to these creatures. A wooden weapon carved from a peach tree automatically bypasses a jiang-shi vampire's damage reduction. Additionally, any successful hit from such a weapon that reduces a jiang-shi to 0 hit points immediately destroys the creature. Although they normally retreat from daylight, jiang-shi vampires are not destroyed by sunlight like regular vampires and can move around during the day without harm. &nl; Speed: A jiang-shi moves only by hopping. This mode of movement is somewhat less swift than regular movement, and thus a jiang-shi's base speed is reduced by 10 feet from the base creature's speed, to a minimum of 10 feet. This unusual mode of movement allows the jiangshi to ignore the effects of difficult terrain on movement, and makes it impossible to trip. Other speeds (like fly or swim speeds) are not affected by this reduction. &nl; Melee: A jiang-shi gains a bite attack and 2 claw attacks if the base creature didn't have them. Damage for the bite attack depends on the jiang-shi's size, but its claw attacks do damage as a creature two size categories larger. For a Medium jiang-shi, a bite attack deals 1d6 points of damage and a claw attack deals 1d8 points of damage. A jiang-shi's claws are even more dangerous than this, though-see the \"brutal claws\" special attack below. A jiang-shi's natural weapons are treated as magic weapons for the purpose of overcoming damage reduction. &nl; Special Attacks: A jiang-shi gains several special attacks. Save DCs are equal to 10 + 1/2 the jiang-shi's Hit Dice + the jiang-shi's Charisma modifier unless otherwise noted. &nl; Ability Scores: Str +4, Dex +6, Int +2, Wis +4, Cha +2. As an undead creature, a jiang-shi has no Constitution score. &nl; Feats: Jiang-shis gain Alertness, Dodge, Mobility, Skill Focus (Acrobatics), and Spring Attack as bonus feats. &nl; Skills: Jiang-shis gain a +8 racial bonus on Acrobatics, Perception, and Stealth checks."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b3_abilities_race.lst",
+        source_line: 1663,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Vodyanoi ~ Suffocating Water",
         name: "Suffocating Water",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -16207,6 +16206,150 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b3_abilities_race.lst",
         source_line: 1725,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Asura",
+        name: "Asura Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Immunity to curses, disease, and poison. &nl; Resistance to acid 10 and electricity 10. &nl; +2 racial bonus on saving throws against enchantment spells. &nl; Telepathy."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2305,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Behemoth",
+        name: "Behemoth Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Regeneration (Ex) No form of attack can suppress a behemoth's regeneration-it regenerates even if disintegrated or slain by a death effect. If a behemoth fails a save against an effect that would kill it instantly, it rises from death 3 rounds later with 1 hit point if no further damage is dealt to its remains. It can be banished or otherwise transported away as a means to save a region, but the only way to truly kill a behemoth is to use miracle or wish to negate its regeneration (see below). &nl; Regeneration (Ex) No form of attack can suppress a behemoth's regeneration-it regenerates even if disintegrated or slain by a death effect. If a behemoth fails a save against an effect that would kill it instantly, it rises from death 3 rounds later with 1 hit point if no further damage is dealt to its remains. It can be banished or otherwise transported away as a means to save a region, but the only way to truly kill a behemoth is to use miracle or wish to negate its regeneration (see below)."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2306,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Clockwork",
+        name: "Clockwork Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Winding (Ex) Clockwork constructs must be wound with special keys in order to function. As a general rule, a fully wound clockwork can remain active for 1 day per Hit Die, but shorter or longer durations are possible. &nl; Vulnerability to Electricity: Clockwork constructs take 150%% as much damage as normal from electricity attacks. &nl; Swift Reactions (Ex) Clockwork constructs generally react much more swiftly than other constructs. They gain Improved Initiative and Lightning Reflexes as bonus feats, and gain a +2 dodge bonus to AC. &nl; Difficult to Create (Ex) The time and gp cost required to create a clockwork is 150%% of normal. Construction requirements in individual clockwork monster entries are already increased."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2307,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Demodand",
+        name: "Demodand Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Immunity to acid and poison. &nl; Resistance to fire 10 and cold 10. &nl; Faith-Stealing Strike (Su) When a demodand's natural attack or melee weapon damages a creature capable of casting divine spells, that creature must make a Will saving throw or be unable to cast any divine spells for 1 round. Once a creature makes this save, it is immune to further faith-stealing strikes from that particular demodand for 24 hours. The save DC is Charisma-based. &nl; Heretical Soul (Ex) All demodands gain a +4 bonus on saving throws against divine spells. In addition, any attempts to scry on a demodand using divine magic automatically fail. The caster can see the scryed area normally, but the demodand simply does not appear."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2308,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Div",
+        name: "Div Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Immunity to fire and poison. &nl; Resistance to acid 10 and electricity 10. &nl; See in Darkness (Su) Some divs can see perfectly in darkness of any kind, even that created by a deeper darkness spell. &nl; Telepathy."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2309,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Kami",
+        name: "Kami Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Immunity to bleed, mind-affecting effects, petrification, and polymorph effects. &nl; Resist acid 10, electricity 10, fire 10 &nl; Although they are native outsiders, kami do not eat, drink, or breathe. &nl; Telepathy. &nl; Fast Healing (Ex) As long as a kami is within 120 feet of its ward, it gains fast healing. The amount of fast healing it gains depends on the type of kami. &nl; Merge with Ward (Su) As a standard action, a kami can merge its body and mind with its ward. When merged, the kami can observe the surrounding region with its senses as if it were using its own body, as well as via any senses its ward might have. It has no control over its ward, nor can it communicate or otherwise take any action other than to emerge from its ward as a standard action. A kami must be adjacent to its ward to merge with or emerge from it. If its ward is a creature, plant, or object, the kami can emerge mounted on the creature provided the kami's body is at least one size category smaller than the creature. If its ward is a location, the kami may emerge at any point within that location. &nl; Ward (Su) A kami has a specific ward-a creature with a 2 or lower Intelligence (usually an animal or vermin), a plant (not a plant creature), an object, or a location. The type of ward is listed in parentheses in the kami's stat block. Several of a kami's abilities function only when it is either merged with its ward or within 120 feet of it. If a kami's ward is portable and travels with the kami to another plane, the kami does not gain the extraplanar subtype on that other plane as long as its ward remains within 120 feet. If a ward is destroyed while a kami is merged with it, the kami dies (no save). If a ward is destroyed while a kami is not merged with it, the kami loses its merge with ward ability and its fast healing, and becomes permanently sickened."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2310,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Kyton",
+        name: "Kyton Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Regeneration (Ex) The extent of a kyton's regeneration varies according to type, and can be neutralized by good weapons, good spells, and silver weapons. &nl; Immunity to cold. &nl; Unnerving Gaze (Su) All kytons have a gaze attack that manipulates the perceptions of those who look upon them. An unnerving gaze has a range of 30 feet, and can be negated by a Will save-the exact effects caused by a particular kyton's unnerving gaze depend on the type of kyton. All kytons are immune to the unnerving gazes of other kytons. Unnerving gaze is always a mind-affecting fear effect. The save DC is Charisma-based."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2311,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Leshy",
+        name: "Leshy Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Immunity to electricity and sonic. &nl; Spell-Like Abilities: All leshys have pass without trace as a constant spell-like ability (CL equal to twice the leshy's HD). &nl; Change Shape (Su) All leshys can transform into plants, with results similar to the tree shape spell. Unlike that spell, this ability only allows transformation into Small plants of the same type of growth the leshy is related to. In this form, the leshy appears as a particularly healthy specimen of that particular plant. A leshy can assume plant form or revert to its true form as a swift action. &nl; Plantspeech (Ex) All leshys can speak with plants as if subject to a continual speak with plants spell, but only with species they are related to. &nl; Verdant Burst (Su) When slain, a leshy explodes in a burst of fertile energies. All plant creatures within 30 feet of a slain leshy heal 1d8 points of damage plus 1 point per HD of the slain leshy, and plant life of the same type as the leshy itself quickly infests the area. If the terrain can support this type of plant, the undergrowth is dense enough to make the region into difficult terrain for 24 hours, after which the plant life diminishes to a normal level; otherwise, the plant life has no significant effect on movement and withers and dies within an hour."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2312,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Rakshasa",
+        name: "Rakshasa Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Change Shape (Su) All rakshasas have the ability to change shape into any humanoid, as if using alter self. &nl; Detect Thoughts (Su) A rakshasa can detect thoughts as per the spell of the same name. This effect functions at CL 18th. A rakshasa can suppress or resume this ability as a free action. When a rakshasa uses this ability, it always functions as if it had spent 3 rounds concentrating and thus gains the maximum amount of information possible. The Will save DC to resist this effect is equal to 10 + 1/2 the rakshasa's HD + the rakshasa's Charisma modifier."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2313,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

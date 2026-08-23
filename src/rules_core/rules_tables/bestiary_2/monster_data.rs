@@ -10,7 +10,7 @@
 //! Sources, with the line each record was read from carried per row:
 //!   * `b2_races.lst` -- 314 monster rows
 //!   * `b2_abilities_race.lst` -- 535 monster-ability rows
-//!   * `ce_abilities_race.lst` -- 130 monster-ability rows
+//!   * `ce_abilities_race.lst` -- 132 monster-ability rows
 //!
 //! 2 monster row(s) of this book are `<Base>.COPY=<Variant>`
 //! derived rows and are NOT transcribed. A copy row states a DELTA on another
@@ -115,15 +115,6 @@
 //!   * `ce_abilities_race.lst:2411`
 //!   * `ce_abilities_race.lst:2413`
 //!   * `ce_abilities_race.lst:2417`
-//!
-//! 2 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `ce_abilities_race.lst:1955` (Telepathy ~ Miles)
-//!   * `ce_abilities_race.lst:2043` (Voidworm ~ Change Shape)
 //!
 //! 8 ability row(s) ship with a `decisions.md §27`
 //! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
@@ -4855,7 +4846,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Ref/Will):3"),
         source_page: Some("p.217"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }, NaturalAttack { name: "Tail Slap", damage_dice: Some("1d3") }],
-        ability_keys: &["Detect Law ~ Constant", "Voidworm ~ Confusion"],
+        ability_keys: &["Detect Law ~ Constant", "Voidworm ~ Change Shape", "Voidworm ~ Confusion"],
         external_ability_refs: &["Can't Be Tripped", "Fast Healing", "Flight Maneuverability"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -4 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "INT", amount: -2 }, StatAdjustment { ability: "WIS", amount: -2 }, StatAdjustment { ability: "CHA", amount: 2 }],
         has_spell_like_abilities: true,
@@ -6255,7 +6246,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Ref):18"),
         source_page: Some("p.281"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("2d8") }, NaturalAttack { name: "Claw", damage_dice: Some("2d6") }],
-        ability_keys: &["Grab ~ Bite", "No Breath", "Regeneration ~ Fire", "Wendigo ~ Cold", "Wendigo ~ Dream Haunting", "Wendigo ~ Howl", "Wendigo ~ Rend", "Wendigo ~ Wendigo Psychosis", "Wendigo ~ Wind Walk"],
+        ability_keys: &["Grab ~ Bite", "No Breath", "Regeneration ~ Fire", "Telepathy ~ Miles", "Wendigo ~ Cold", "Wendigo ~ Dream Haunting", "Wendigo ~ Howl", "Wendigo ~ Rend", "Wendigo ~ Wendigo Psychosis", "Wendigo ~ Wind Walk"],
         external_ability_refs: &["Flight Maneuverability", "Immunity to Cold", "Immunity to Fear", "Vulnerability to Fire"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 18 }, StatAdjustment { ability: "DEX", amount: 18 }, StatAdjustment { ability: "CON", amount: 20 }, StatAdjustment { ability: "INT", amount: 16 }, StatAdjustment { ability: "WIS", amount: 10 }, StatAdjustment { ability: "CHA", amount: 14 }],
         has_spell_like_abilities: false,
@@ -6426,7 +6417,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_2 monster-ability record (665 rows).
+/// Every bestiary_2 monster-ability record (667 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Achaierai ~ Black Cloud",
@@ -15325,6 +15316,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Telepathy ~ Miles",
+        name: "Telepathy",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["Communicate"],
+        description: Some("You can mentally communicate with any other creature within %1 miles that has a language. You can mentally communicate with any other creature within %2 mile that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time. You can mentally communicate with any other creature within %3 miles that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time."),
+        description_variables: &["TelepathyMilesRange", "TelepathyMilesRange", "TelepathyMilesRange"],
+        source_page: Some("p.305"),
+        owners: &["Wendigo"],
+        source_file: "ce_abilities_race.lst",
+        source_line: 1955,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Telepathy ~ Touch",
         name: "Telepathy",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -15608,6 +15615,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Protean (Voidworm)"],
         source_file: "ce_abilities_race.lst",
         source_line: 2042,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Voidworm ~ Change Shape",
+        name: "Change Shape",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("You have the ability to assume the appearance of a type of creature, but retain most of your own physical qualities. You have the ability to assume the appearance of a specific type of creature, but retain most of your own physical qualities. You cannot change shape to a form more than one size category smaller or larger than your original form. This ability functions as a polymorph spell, but you do not adjust your ability scores (although you gain any other abilities of the creature you mimic)."),
+        description_variables: &[],
+        source_page: Some("p.217"),
+        owners: &["Protean (Voidworm)"],
+        source_file: "ce_abilities_race.lst",
+        source_line: 2043,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

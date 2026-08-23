@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Elemental ~ Unchained Eidolon LVL08",
+    "delivery": null,
+    "description": "At 8th level,  Air elemental eidolons gain the flight evolution (using magic) with a speed equal to their base speed.  Earth elemental eidolons gain the burrow evolution.  Fire elemental eidolons increase their base speed by 20 feet.  Water elemental eidolons gain the swim evolution twice, gaining a swim speed equal to their base speed + 20 feet. They also gain the gills evolution, which allows them to breathe underwater.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl08",
+    "name": "Eidolon Progession Lv.8",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": " Air elemental eidolons gain the flight evolution (using magic) with a speed equal to their base speed.|PREVAREQ:EidolonElementalAir,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Earth elemental eidolons gain the burrow evolution.|PREVAREQ:EidolonElementalEarth,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Fire elemental eidolons increase their base speed by 20 feet.|PREVAREQ:EidolonElementalFire,1"
+      },
+      {
+        "key": "DESC",
+        "value": " Water elemental eidolons gain the swim evolution twice, gaining a swim speed equal to their base speed + 20 feet. They also gain the gills evolution, which allows them to breathe underwater.|PREVAREQ:EidolonElementalWater,1"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level,"
+      },
+      {
+        "key": "KEY",
+        "value": "Elemental ~ Unchained Eidolon LVL08"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ElementalLVL8"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "ElementalLVL8"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 156,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Elemental ~ Unchained Eidolon LVL08",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Dread Lord ~ Master of the Four Winds",
+    "delivery": "SpellLike",
+    "description": "The dread lord can control the weather within its domain. It can use fog cloud and gust of wind as spell-like abilities each three times per day. It can use control weather as a spell-like ability once per day. It can use control winds as a spell-like ability once per day.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:dread_lord_master_of_the_four_winds",
+    "name": "Master of the Four Winds",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "It can use control weather as a spell-like ability once per day.|PREVARGTEQ:CR,5"
+      },
+      {
+        "key": "DESC",
+        "value": "It can use control winds as a spell-like ability once per day.|PREVARGTEQ:CR,8"
+      },
+      {
+        "key": "DESC",
+        "value": "The dread lord can control the weather within its domain. It can use fog cloud and gust of wind as spell-like abilities each three times per day."
+      },
+      {
+        "key": "KEY",
+        "value": "Dread Lord ~ Master of the Four Winds"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Control Weather|PREVARGTEQ:CR,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Control Winds,15+CHA|PREVARGTEQ:CR,8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Fog Cloud|Gust of Wind,12+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.DreadLordSpecialPower"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.235",
+    "traits": [
+      "DreadLordSpecialPower"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 260,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Dread Lord ~ Master of the Four Winds",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

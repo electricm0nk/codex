@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T10:25:56Z",
   "data": {
     "corpus_key": "Vemerak ~ Spore Cloud",
     "delivery": "Supernatural",
@@ -15,19 +13,47 @@
     "owners": [
       "bestiary_2:monster:vemerak"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A unique form of magic-resistant mold grows upon the body of a vemerak.  This mold is the source of the vemerak's spell resistance.  When the vemerak moves, the mold exudes a cloud of spores in a 30-foot radius that acts as a targeted greater dispel magic (CL %1) against the highest caster level magical effect the cloud touches as part of the vemerak's move that turn.|TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Vemerak ~ Spore Cloud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
     "source_page": "p.278",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1333,
-    "record_key": "Vemerak ~ Spore Cloud"
-  },
+  "ingested_at": "2026-08-23T10:25:56Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1333,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Vemerak ~ Spore Cloud",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",

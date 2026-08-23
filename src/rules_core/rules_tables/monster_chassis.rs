@@ -1007,7 +1007,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3749,
+            3806,
             // 3706 -> 3711 (`decisions.md §27b`, +5): `occult_adventures`
             // registered for the first time, all 5 rows owner-less.
             // 3711 -> 3726 (`decisions.md §24`/round 7, +15): the T9
@@ -1091,10 +1091,26 @@ mod tests {
              disposition for this book's 5 `monster_ability` units (a reachability finding \
              about a negated `PRECAMPAIGN` gate, not an ingest exemption). Structurally \
              additive only: no pre-existing `MonsterBook` entry was modified, only one new one \
-             (`occult_adventures`) appended, all 5 rows ship owner-less."
+             (`occult_adventures`) appended, all 5 rows ship owner-less. 3749 -> 3806 \
+             (`decisions.md §27b` round 9, +57): the last `monster_ability` `no_record` group \
+             closes -- the multi-`DESC:` `PRERULE`/`PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/ \
+             `PRERACE`/`PRETEMPLATE`/`PREABILITY`-gated parse-refusal shape, via `parse_desc`'s \
+             new generalised sixth branch (`_concat_desc_variants`), which concatenates every \
+             `DESC:` token's own verbatim text instead of guessing which one wins. 56 real \
+             `no_record` units plus 1 bonus (`bestiary`'s `Lycanthrope ~ Change Shape`, already \
+             counted `text-complete` by inventory evidence alone with no backing corpus record \
+             -- same shape as round 8's `Bunyip ~ Blood Rage`). Structurally additive only: \
+             every one of the 57 was previously ABSENT from the set entirely (raised \
+             `UnmodelledDesc` and was dropped, never shipped under a different facet), so no \
+             existing triple's facet/delivery value changed -- confirmed by `git diff --stat`'s \
+             8-book regeneration (`bestiary`, `bestiary_2`, `bestiary_3`, `bestiary_4`, \
+             `bestiary_5`, `horror_adventures`, `inner_sea_bestiary`, `pathfinder_unchained`) \
+             showing only new `MonsterAbilityRecord` blocks appended, zero removed, and by this \
+             test's own digest re-derivation below from the live failing run, never guessed, \
+             per `decisions.md §17a`."
         );
         assert_eq!(
-            digest, 0xfc51_2110_6900_558e,
+            digest, 0x8b2c_a909_f967_5cd5,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -1136,7 +1152,14 @@ mod tests {
              reclassification: every one of the 23 was previously ABSENT from the set entirely \
              (raised `UnmodelledFacet` and was dropped, never shipped under a different facet), \
              so no existing triple's facet/delivery value changed; re-derived live from this \
-             test's own failing run, never guessed, per `decisions.md §17a`."
+             test's own failing run, never guessed, per `decisions.md §17a`. \
+             0xfc5121106900558e -> 0x8b2ca909f9675cd5 (`decisions.md §27b` round 9): the digest \
+             moves because the sorted triple set gains 57 more members (the multi-`DESC:` \
+             `PREVAREQ`/`PREVARGT`-gated group closing via `parse_desc`'s new generalised sixth \
+             branch) — zero reclassification: every one of the 57 was previously ABSENT from \
+             the set entirely (raised `UnmodelledDesc` and was dropped, never shipped under a \
+             different facet), so no existing triple's facet/delivery value changed; re-derived \
+             live from this test's own failing run, never guessed, per `decisions.md §17a`."
         );
     }
 }

@@ -1,0 +1,99 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Energy Drain",
+    "delivery": "Supernatural",
+    "description": "You sap a living opponent's vital energy automatically when your melee or ranged attack hits. Each successful energy drain bestows %1 negative levels. If an attack that includes an energy drain scores a critical hit, it bestows twice the listed number of negative levels A draining creature gains 5 temporary hit points for each negative level it bestows on an opponent. These temporary hit points last for a maximum of 1 hour Negative levels remain until 24 hours have passed or until they are removed with a spell, such as restoration. If a negative level is not removed before 24 hours have passed, the affected creature must attempt a Fortitude save (DC %2). On a success, the negative level goes away with no harm to the creature. On a failure, the negative level becomes permanent. A separate saving throw is required for each negative level.",
+    "description_variables": [
+      "EnergyDrainLevels",
+      "EnergyDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:energy_drain",
+    "name": "Energy Drain",
+    "owners": [
+      "beastiary:monster:devourer",
+      "beastiary:monster:spectre",
+      "beastiary:monster:vampire_spawn",
+      "beastiary:monster:wight",
+      "beastiary:monster:wight_brute",
+      "beastiary:monster:wight_cairn",
+      "beastiary:monster:wight_frost"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Energy Drain"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 level, DC %2)|EnergyDrainLevels|EnergyDrainDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyDrainDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergyDrainDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Energy Drain)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyDrainDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyDrainLevels|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergyDrainNoHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A draining creature gains 5 temporary hit points for each negative level it bestows on an opponent. These temporary hit points last for a maximum of 1 hour|PREVAREQ:EnergyDrainNoHP,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Negative levels remain until 24 hours have passed or until they are removed with a spell, such as restoration. If a negative level is not removed before 24 hours have passed, the affected creature must attempt a Fortitude save (DC %1). On a success, the negative level goes away with no harm to the creature. On a failure, the negative level becomes permanent. A separate saving throw is required for each negative level.|EnergyDrainDC"
+      },
+      {
+        "key": "DESC",
+        "value": "You sap a living opponent's vital energy automatically when your melee or ranged attack hits. Each successful energy drain bestows %1 negative levels. If an attack that includes an energy drain scores a critical hit, it bestows twice the listed number of negative levels|EnergyDrainLevels"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.299",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1359,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Energy Drain",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

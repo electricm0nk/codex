@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:58:07Z",
   "data": {
     "corpus_key": "Angel ~ Truespeech",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "key": "beastiary:monster_ability:angel_truespeech",
     "name": "Truespeech",
     "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All angels can speak with any creature that has a language, as though using a tongues spell (caster level %1). This ability is always active.|TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Angel ~ Truespeech"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.310"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Communicate"
+      }
+    ],
     "source_page": "p.310",
     "traits": [
       "Communicate"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1763,
-    "record_key": "Angel ~ Truespeech"
-  },
+  "ingested_at": "2026-08-23T12:58:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1763,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Angel ~ Truespeech",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

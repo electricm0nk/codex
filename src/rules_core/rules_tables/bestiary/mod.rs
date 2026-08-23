@@ -237,7 +237,14 @@ mod tests {
         // Attack` (`TYPE:Internal`, no facet/delivery segment) now ships
         // with a PROVISIONAL `SpecialQuality` facet default instead of
         // being dropped -- `reason: type_internal_only_no_facet_no_delivery`.
-        assert_eq!(monster_abilities().len(), 711);
+        // 711 -> 733 (`decisions.md §27b` round 9, +22): the multi-`DESC:`
+        // `PREVAREQ`/`PREVARGT`-gated parse-refusal group closes via
+        // `parse_desc`'s new generalised sixth branch -- every token's own
+        // text ships, concatenated verbatim, rather than guessing which
+        // variant wins. 21 real `no_record` units plus `Lycanthrope ~
+        // Change Shape` (already `text-complete` by inventory evidence
+        // alone, same shape as round 8's `Bunyip ~ Blood Rage`).
+        assert_eq!(monster_abilities().len(), 733);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -294,7 +301,10 @@ mod tests {
         // 990 -> 991 (`decisions.md §27`/round 8, +1; see
         // `the_chassis_ships_the_books_complement`'s own comment on the
         // identical delta here).
-        assert_eq!(monsters().len() + monster_abilities().len(), 991);
+        // 991 -> 1013 (`decisions.md §27b` round 9, +22; see
+        // `the_chassis_ships_the_books_complement`'s own comment on the
+        // identical delta here).
+        assert_eq!(monsters().len() + monster_abilities().len(), 1013);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the
@@ -350,23 +360,32 @@ mod tests {
 
         assert_eq!(
             unowned.len(),
-            180,
+            197,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py bestiary` run, and update the matching \
-             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set. 180 -> 197 \
+             (`decisions.md §27b` round 9, +17): the multi-DESC: parse-refusal group closes; \
+             13 `Permanency Spell / *` rows, `Outsider`/`Swarm`/`Undead Traits Output`, and \
+             `Lycanthrope ~ Change Shape` (the round-8-shaped bonus unit, already \
+             `text-complete` by inventory evidence alone) are shared reference-library text no \
+             single stat block in this book owns, same shape as the existing 180."
         );
 
         let mut hasher = DefaultHasher::new();
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0x87d5_26f2_aaea_c3c6,
+            digest, 0x0bce_5246_54f6_6a5d,
             "the SET of owner-less keys moved even though the count held — a row gained or \
              lost its owner. This does not mean a defect on its own (an in-book monster row \
              could legitimately start/stop claiming one of these), but it means \
              `reach_gate.rs::UNREACHED_RECORD_FINDINGS`'s pinned key list for \
-             (\"bestiary1\", \"monster_abilities\") must move with it"
+             (\"bestiary1\", \"monster_abilities\") must move with it. 0x87d526f2aaeac3c6 -> \
+             0x0bce524654f66a5d (`decisions.md §27b` round 9): the set gains 17 new members \
+             (see the count assertion above), re-derived live from this test's own failing \
+             run, never guessed, per `decisions.md §17a`; `reach_gate.rs`'s matching entry \
+             gains the identical 17 keys."
         );
     }
 

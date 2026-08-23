@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:10:32Z",
   "data": {
     "corpus_key": "Psychopomp ~ Spirit Sense",
     "delivery": "Supernatural",
@@ -11,19 +9,43 @@
     "key": "inner_sea_bestiary:monster_ability:psychopomp_spirit_sense",
     "name": "Spirit Sense",
     "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychopomp notices, locates, and can distinguish between living and undead creatures within 6o feet, just as if it had the blindsight ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp ~ Spirit Sense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.38",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 263,
-    "record_key": "Psychopomp ~ Spirit Sense"
-  },
+  "ingested_at": "2026-08-23T14:10:32Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 263,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Psychopomp ~ Spirit Sense",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

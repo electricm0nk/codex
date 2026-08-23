@@ -1,0 +1,100 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Mana Wastes Mutant ~ Acidic Pustules",
+    "delivery": "Extraordinary",
+    "description": "The Mana Waste Mutant is covered in necrotic pustules that burst at the slightest touch. Any piercing or slashing damage causes all creatures adjacent to make a Reflex save (DC %1) or take  0 Acid damage. 1 Acid damage. 1d2 Acid damage. 1d3 Acid damage. 1d4 Acid damage. 1d6 Acid damage. 1d8 Acid damage. 2d6 Acid damage. 3d6 Acid damage.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_acidic_pustules",
+    "name": "Acidic Pustules",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "0 Acid damage.|PRESIZEEQ:F"
+      },
+      {
+        "key": "DESC",
+        "value": "1 Acid damage.|PRESIZEEQ:D"
+      },
+      {
+        "key": "DESC",
+        "value": "1d2 Acid damage.|PRESIZEEQ:T"
+      },
+      {
+        "key": "DESC",
+        "value": "1d3 Acid damage.|PRESIZEEQ:S"
+      },
+      {
+        "key": "DESC",
+        "value": "1d4 Acid damage.|PRESIZEEQ:M"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6 Acid damage.|PRESIZEEQ:L"
+      },
+      {
+        "key": "DESC",
+        "value": "1d8 Acid damage.|PRESIZEEQ:H"
+      },
+      {
+        "key": "DESC",
+        "value": "2d6 Acid damage.|PRESIZEEQ:G"
+      },
+      {
+        "key": "DESC",
+        "value": "3d6 Acid damage.|PRESIZEEQ:C"
+      },
+      {
+        "key": "DESC",
+        "value": "The Mana Waste Mutant is covered in necrotic pustules that burst at the slightest touch. Any piercing or slashing damage causes all creatures adjacent to make a Reflex save (DC %1) or take |10+HD/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Acidic Pustules"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mana Wastes Mutant ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.MutantSpecialAbility"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.29",
+    "traits": [
+      "MutantSpecialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 204,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Acidic Pustules",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

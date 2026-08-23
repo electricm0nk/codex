@@ -294,12 +294,15 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
     rows and produced ZERO other movement, even though 135/95 OTHER
     genuinely-owned ability rows in those same books parse cleanly.
 
-    `parse_desc` itself is UNCHANGED -- picking the right `DESC:` variant by
-    position is still refused, deliberately (`OPEN-ISSUES.md` row 157: that
-    would risk shipping subtly wrong player text). Only the BLAST RADIUS of
-    the refusal changes: the ambiguous row is dropped, named, and reported --
-    the same treatment a Product Identity or `.COPY=` row already gets -- and
-    every OTHER row this book owns still transcribes.
+    **Round 9 update (`decisions.md §27b`):** `parse_desc` no longer refuses
+    this fixture's shape at all -- `ConcatenatedDescClosesTheFinalRefusalGroupRound9`
+    above is the generalised sixth branch that resolves it, by concatenating
+    every `DESC:` token's own text rather than guessing which one wins. This
+    class now proves the SAME resilience property the drop-not-fatal fix
+    established still holds now that the row SHIPS instead of being dropped:
+    a row whose gate this shared table cannot resolve is not a crash, it is
+    real content, and every OTHER row this book owns still transcribes
+    alongside it.
 
     Hermetic: a synthetic `bonus_bestiary`-shaped corpus tree (one monster
     owning two abilities, one clean and one unmodelled) plus a synthetic
@@ -346,14 +349,17 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
         # Ability 1: TWO `DESC:` tokens, neither gated on `DisplayFullAbility`,
         # not a continuation (both carry a pipe), not a superset (texts do not
         # share a prefix), not variable-bearing (both carry a pipe entry) --
-        # the exact shape `parse_desc` refuses via `UnmodelledDesc`.
+        # the round-9 generalised sixth branch (`ConcatenatedDescClosesThe
+        # FinalRefusalGroupRound9`) concatenates both, verbatim, rather than
+        # guessing which one wins -- the second token's gate tests a fact
+        # about the OWNING MONSTER this shared table row cannot resolve.
         # Ability 2: one plain `DESC:`, parses cleanly.
         abilities = book_dir / "bb_abilities.lst"
         abilities.write_text(
             "Weird Ability\tKEY:Test Monster ~ Weird Ability\t"
             "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
-            "DESC:First incompatible text.|SomeGate:Foo\t"
-            "DESC:Second incompatible text.|OtherGate:Bar\tSOURCEPAGE:p.2\n"
+            "DESC:First incompatible text.|PREVARGTEQ:SomeGate,1\t"
+            "DESC:Second incompatible text.|PREVARGTEQ:OtherGate,1\tSOURCEPAGE:p.2\n"
             "Fine Ability\tKEY:Test Monster ~ Fine Ability\t"
             "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
             "DESC:A perfectly ordinary description.\tSOURCEPAGE:p.2\n"
@@ -406,28 +412,30 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
         tmt.PI_SCREEN_RS = self._old_pi_screen_rs
         tmt.PI_MARKER_RS = self._old_pi_marker_rs
 
-    def test_the_clean_sibling_ships_even_though_the_unmodelled_row_does_not(
+    def test_the_clean_sibling_ships_alongside_the_concatenated_row(
         self,
     ) -> None:
         content = tmt.transcribe("bonus_bestiary")
         self.assertIn('key: "Test Monster ~ Fine Ability"', content)
-        self.assertNotIn("Weird Ability", content.split("MONSTER_ABILITIES")[1])
+        self.assertIn('key: "Test Monster ~ Weird Ability"', content)
 
-    def test_the_unscreenable_row_is_named_in_the_header_not_silently_dropped(
+    def test_the_formerly_unscreenable_row_ships_with_both_texts_concatenated(
         self,
     ) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIn("bb_abilities.lst:1", content)
-        self.assertIn("Test Monster ~ Weird Ability", content)
+        self.assertIn('key: "Test Monster ~ Weird Ability"', content)
+        self.assertIn(
+            'description: Some("First incompatible text. Second incompatible text."),',
+            content,
+        )
 
-    def test_the_clean_ability_still_ships_if_the_unmodelled_one_is_seen_first(
+    def test_neither_ability_crashes_the_book_regardless_of_abilit_order(
         self,
     ) -> None:
-        """Order independence: the drop must not depend on which ability the
-        monster's `ABILITY:` token names first. Confirms the fix filters by
-        `corpus_key` membership in `unscreenable`, not by position."""
+        """Order independence: neither row's transcription depends on which
+        ability the monster's `ABILITY:` token names first, and both ship."""
         content = tmt.transcribe("bonus_bestiary")
-        self.assertEqual(content.count("MonsterAbilityRecord {"), 1)
+        self.assertEqual(content.count("MonsterAbilityRecord {"), 2)
 
 
 class TypeSegmentsUpstreamDivergenceCorrection(unittest.TestCase):
@@ -838,6 +846,158 @@ class ProvisionalFacetDefaultShipsInsteadOfDropping(unittest.TestCase):
         this test module alone) keeps working unchanged."""
         content = tmt.transcribe("bonus_bestiary")
         self.assertIsInstance(content, str)
+
+
+class ConcatenatedDescClosesTheFinalRefusalGroupRound9(unittest.TestCase):
+    """`decisions.md §27b` -- the generalised SIXTH `parse_desc` branch that
+    closes the last 56-unit `monster_ability` `no_record` group: multi-`DESC:`
+    rows gated on a comparison against the OWNING MONSTER's own state
+    (`PREVARGTEQ`/`PREVAREQ`/`PRESIZE*`/`PREHD`/`PRERACE`/`PRETEMPLATE`/
+    `PREABILITY`), which this shared ability-table row cannot resolve once
+    and for all -- round 6/7/8's own docstring named this exact gap. Every
+    row below is a REAL coordinate from the live refusal population
+    (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+    -> `monster_ability no_record 56`), transcribed verbatim as a literal
+    field list (never read live, matching every other test in this module),
+    so the exact texts below are round-9's own live corpus re-derivation.
+
+    Before this branch existed, every row below made `parse_desc` raise
+    `UnmodelledDesc` (confirmed live this cycle by running the un-fixed
+    `else` branch against each of these -- see round-9's own cycle receipt
+    for the full re-derivation)."""
+
+    def test_a_conditionally_appended_clause_ships_alongside_the_base_text(
+        self,
+    ) -> None:
+        # `bestiary/b1_abilities_race.lst:480` -- `Copper Dragon ~ Slow Aura`.
+        # Two `DESC:` tokens: the base text (ungated, two `%N` variables) and
+        # a second clause gated `PREVARGTEQ:DragonAgeCategory,12` -- a fact
+        # about the OWNING DRAGON's age category, not this shared row.
+        row = [
+            "TYPE:SpecialQuality.Supernatural.Aura",
+            "DEFINE:SlowAuraRange|0",
+            "BONUS:VAR|SlowAuraRange|5",
+            "DESC:An old or older copper dragon is surrounded by an aura of "
+            "slowness. All creatures within %1 feet of the dragon must make "
+            "a Will save (DC %2) or be affected as per slow for 1 round. A "
+            "copper dragon can suppress or activate this aura at will as a "
+            "free action.|SlowAuraRange|BreathWeaponDC",
+            "DESC:For great wyrm copper dragons, those opponents that fail "
+            "their saves are slowed for 1d4 rounds.|"
+            "PREVARGTEQ:DragonAgeCategory,12",
+        ]
+        description, variables = tmt.parse_desc(row)
+        self.assertEqual(variables, ["SlowAuraRange", "BreathWeaponDC"])
+        # Both sentences ship, verbatim, in the corpus's own order -- the
+        # base text's own `%1`/`%2` are untouched (nothing precedes them),
+        # and the gate token contributes text but no new variable.
+        self.assertIn("must make a Will save (DC %2) or be affected", description)
+        self.assertIn("slowed for 1d4 rounds.", description)
+        self.assertNotIn("PREVARGTEQ", description)
+
+    def test_percent_n_placeholders_renumber_across_token_boundaries(
+        self,
+    ) -> None:
+        # `bestiary/ce_abilities_race.lst:1516` -- `Stench`. Five `DESC:`
+        # tokens; four carry their OWN `%1`/`%2` naming DIFFERENT variables
+        # -- a naive concatenation would collide every token's own `%1`.
+        row = [
+            "TYPE:SpecialQuality.Extraordinary.Aura",
+            "DEFINE:StenchDC|0",
+            "DESC:You secrete an oily chemical. Fortitude save (DC %1) or be "
+            "sickened for |StenchDC",
+            "DESC:%1 rounds.|StenchDuration|PREVAREQ:StenchDice,0",
+            "DESC:%1d%2 rounds.|StenchDice|StenchDieSize|"
+            "PREVARGTEQ:StenchDieSize,1",
+            "DESC:%1d%2 minutes.|StenchDice|StenchDieSizeMinutes|"
+            "PREVARGTEQ:StenchDieSizeMinutes,1",
+            "DESC: Creatures that successfully save cannot be affected for "
+            "24 hours.",
+        ]
+        description, variables = tmt.parse_desc(row)
+        self.assertEqual(
+            variables,
+            [
+                "StenchDC",
+                "StenchDuration",
+                "StenchDice",
+                "StenchDieSize",
+                "StenchDice",
+                "StenchDieSizeMinutes",
+            ],
+        )
+        # Token 1's own `%1` is untouched (offset 0); token 2's own `%1`
+        # (its own first variable, `StenchDuration`) becomes global `%2`;
+        # token 3's `%1`/`%2` (`StenchDice`/`StenchDieSize`) become `%3`/
+        # `%4`; token 4's become `%5`/`%6` -- every renumbered `%N` marker
+        # still indexes the SAME variable name the corpus's own pipe entry
+        # declared, in the corpus's own order.
+        self.assertIn("(DC %1) or be sickened for", description)
+        self.assertIn("%2 rounds.", description)
+        self.assertIn("%3d%4 rounds.", description)
+        self.assertIn("%5d%6 minutes.", description)
+        self.assertIn("cannot be affected for 24 hours.", description)
+
+    def test_nl_marker_continuation_with_no_gate_at_all(self) -> None:
+        # `bestiary_3/ce_abilities_race.lst:2305` -- `Traits Output ~ Asura`.
+        # Four `DESC:` tokens, none gated, each after the first beginning
+        # with PCGen's OWN `&nl;` newline token rather than a plain leading
+        # space -- round 7's CONTINUATION shape only recognised the latter.
+        row = [
+            "TYPE:SpecialQuality.Extraordinary",
+            "DESC:Immunity to curses, disease, and poison.",
+            "DESC:&nl; Resistance to acid 10 and electricity 10.",
+            "DESC:&nl; +2 racial bonus on saving throws against enchantment "
+            "spells.",
+            "DESC:&nl; Telepathy.",
+        ]
+        description, variables = tmt.parse_desc(row)
+        self.assertEqual(variables, [])
+        self.assertEqual(
+            description,
+            "Immunity to curses, disease, and poison. &nl; Resistance to "
+            "acid 10 and electricity 10. &nl; +2 racial bonus on saving "
+            "throws against enchantment spells. &nl; Telepathy.",
+        )
+
+    def test_two_ungated_texts_with_no_shared_criterion_both_ship(self) -> None:
+        # `bestiary/ce_abilities_race.lst:1363` -- `Fast Healing`. Two
+        # `DESC:` tokens, both reference the SAME single variable, neither
+        # gated, and text 2 is not a literal superset of text 1 (they
+        # diverge mid-sentence) -- fits none of the earlier five branches.
+        row = [
+            "TYPE:SpecialQuality.Extraordinary.ModifyHP",
+            "DEFINE:FastHealingRate|0",
+            "DESC:You regain hit points at %1 hit points per round.|"
+            "FastHealingRate",
+            "DESC:You regain hit points at %1 per round. Fast healing does "
+            "not restore hit points lost from starvation, thirst, or "
+            "suffocation.|FastHealingRate",
+        ]
+        description, variables = tmt.parse_desc(row)
+        self.assertEqual(variables, ["FastHealingRate", "FastHealingRate"])
+        self.assertIn("hit points at %1 hit points per round.", description)
+        self.assertIn("hit points at %2 per round. Fast healing does not", description)
+
+    def test_mutually_exclusive_threshold_variants_all_ship(self) -> None:
+        # `inner_sea_bestiary/isb_abilities_race.lst:203` -- `Mana Wastes
+        # Mutant ~ Acid Resistance`. Two DESC tokens gated on complementary
+        # `PREVARLT`/`PREVARGTEQ` thresholds against the SAME variable --
+        # exactly one is true for any given mutant, but this shared row
+        # cannot know which, so both ship.
+        row = [
+            "TYPE:SpecialQuality.Supernatural.MutantSpecialAbility",
+            "DEFINE:MutantAcidResistance|0",
+            "BONUS:VAR|MutantAcidResistance|10",
+            "DESC:The Mana Waste Mutant gains Acid Resistance %1|"
+            "MutantAcidResistance|PREVARLT:MutantAcidResistance,30",
+            "DESC:The Mana Waste Mutant gains Immunity to Acid|"
+            "PREVARGTEQ:MutantAcidResistance,30",
+        ]
+        description, variables = tmt.parse_desc(row)
+        self.assertEqual(variables, ["MutantAcidResistance"])
+        self.assertIn("gains Acid Resistance %1", description)
+        self.assertIn("gains Immunity to Acid", description)
 
 
 if __name__ == "__main__":

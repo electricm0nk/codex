@@ -2853,8 +2853,8 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("ultimate_intrigue", "monster_abilities", "Gap: all 6 of Ultimate Intrigue's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("ultimate_magic", "monster_abilities", "Gap: all 13 of Ultimate Magic's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("bestiary_6", "monster_abilities", "Gap: all 16 of Bestiary 6's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
-    ("bestiary_5", "monster_abilities", "Gap: all 39 of Bestiary 5's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
-    ("pathfinder_unchained", "monster_abilities", "Gap: 69 of Pathfinder Unchained's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 4) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. A further 3 of the book's 72 orphan candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped this round, and NOT counted in this Gap figure (they stay `no_record`, not owner-less-shipped). Remedy: none needed for the 69 that ship -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("bestiary_5", "monster_abilities", "Gap: all 40 of Bestiary 5's `monster_ability` records (39 `decisions.md §20` no_record-to-zero round 3, +1 `decisions.md §27b` round 9 -- `Traits Output ~ Sahkil`, closed via `parse_desc`'s new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("pathfinder_unchained", "monster_abilities", "Gap: all 72 of Pathfinder Unchained's `monster_ability` records (69 `decisions.md §20` no_record-to-zero round 4, +3 `decisions.md §27b` round 9 -- `Elemental ~ Unchained Eidolon LVL01/08/20`, the multi-DESC: shape `parse_desc` used to refuse, closed via its new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-DESC: residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("occult_adventures", "monster_abilities", "Gap: all 5 of Occult Adventures's `monster_ability` records (`decisions.md §27b` — EVERYTHING, overturning four cycles' worth of \"correctly out of scope\" for a negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate this repo's campaign set fails, a REACHABILITY finding, not an ingest exemption) ship with `owners: &[]` -- no monster row in this generator's ownership pass claims any of the 5 by name (the two owning race rows reference them only via a CATEGORY:Internal umbrella row this generator does not resolve into per-record ownership: `Race Traits ~ Homunculus Companion` names 2 of the 3 Homunculus rows, `Poison` is not named at all; `Racial Traits ~ Kami (Shikigami)` grants by TYPE=, not by name), the identical shape every other zero-record-owner book in this registry already ships. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`/`§27b`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: a per-record trace of each umbrella row's own grant logic (named references plus TYPE= auto-grants) to determine real ownership, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
@@ -3650,6 +3650,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "beastiary:monster_ability:lich_fear_aura",
             "beastiary:monster_ability:lich_paralyzing_touch",
             "beastiary:monster_ability:lich_rejuvenation",
+            "beastiary:monster_ability:lycanthrope_change_shape",
             "beastiary:monster_ability:lycanthropic_empathy",
             "beastiary:monster_ability:magma_mephit_breath_weapon",
             "beastiary:monster_ability:magma_mephit_fast_healing",
@@ -3660,8 +3661,22 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "beastiary:monster_ability:natural_lycanthrope",
             "beastiary:monster_ability:ooze_mephit_breath_weapon",
             "beastiary:monster_ability:ooze_mephit_fast_healing",
+            "beastiary:monster_ability:outsider_traits_output",
             "beastiary:monster_ability:paralysis_ex",
             "beastiary:monster_ability:paralysis_su",
+            "beastiary:monster_ability:permanency_spell_arcane_sight",
+            "beastiary:monster_ability:permanency_spell_comprehend_languages",
+            "beastiary:monster_ability:permanency_spell_darkvision",
+            "beastiary:monster_ability:permanency_spell_detect_magic",
+            "beastiary:monster_ability:permanency_spell_enlarge_person",
+            "beastiary:monster_ability:permanency_spell_greater_magic_fang",
+            "beastiary:monster_ability:permanency_spell_magic_fang",
+            "beastiary:monster_ability:permanency_spell_read_magic",
+            "beastiary:monster_ability:permanency_spell_reduce_person",
+            "beastiary:monster_ability:permanency_spell_resistance",
+            "beastiary:monster_ability:permanency_spell_see_invisibility",
+            "beastiary:monster_ability:permanency_spell_telepathic_bond",
+            "beastiary:monster_ability:permanency_spell_tongues",
             "beastiary:monster_ability:plague_zombie_disease",
             "beastiary:monster_ability:poison_ex",
             "beastiary:monster_ability:poison_su",
@@ -3687,7 +3702,9 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "beastiary:monster_ability:steam_mephit_breath_weapon",
             "beastiary:monster_ability:steam_mephit_fast_healing",
             "beastiary:monster_ability:svirfneblin_hatred",
+            "beastiary:monster_ability:swarm_traits_output",
             "beastiary:monster_ability:telekinesis",
+            "beastiary:monster_ability:undead_traits_output",
             "beastiary:monster_ability:universal_monster_rule_breath_weapon",
             "beastiary:monster_ability:universal_monster_rule_burn",
             "beastiary:monster_ability:universal_monster_rule_change_shape",
@@ -3997,6 +4014,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:interlocutor_spell_like_abilities",
             "bestiary_3:monster_ability:interlocutor_surgical_strikes",
             "bestiary_3:monster_ability:interlocutor_unnerving_gaze",
+            "bestiary_3:monster_ability:jiang_shi_vampire",
             "bestiary_3:monster_ability:jinushigami_infused_quarterstaff",
             "bestiary_3:monster_ability:jinushigami_manipulate_terrain",
             "bestiary_3:monster_ability:jinushigami_spell_like_abilities",
@@ -4096,6 +4114,15 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_3:monster_ability:tor_linnorm_poison",
             "bestiary_3:monster_ability:toshigami_spell_like_abilities",
             "bestiary_3:monster_ability:toshigami_touch_of_ages",
+            "bestiary_3:monster_ability:traits_output_asura",
+            "bestiary_3:monster_ability:traits_output_behemoth",
+            "bestiary_3:monster_ability:traits_output_clockwork",
+            "bestiary_3:monster_ability:traits_output_demodand",
+            "bestiary_3:monster_ability:traits_output_div",
+            "bestiary_3:monster_ability:traits_output_kami",
+            "bestiary_3:monster_ability:traits_output_kyton",
+            "bestiary_3:monster_ability:traits_output_leshy",
+            "bestiary_3:monster_ability:traits_output_rakshasa",
             "bestiary_3:monster_ability:tripurasura_change_shape",
             "bestiary_3:monster_ability:tripurasura_elusive",
             "bestiary_3:monster_ability:tripurasura_poison",
@@ -4317,6 +4344,13 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_4:monster_ability:star_spawn_of_cthulhu_immortality",
             "bestiary_4:monster_ability:star_spawn_of_cthulhu_limited_starflight",
             "bestiary_4:monster_ability:star_spawn_of_cthulhu_overwhelming_mind",
+            "bestiary_4:monster_ability:traits_output_colossus",
+            "bestiary_4:monster_ability:traits_output_demon_lord",
+            "bestiary_4:monster_ability:traits_output_empyreal_lord",
+            "bestiary_4:monster_ability:traits_output_formian",
+            "bestiary_4:monster_ability:traits_output_great_old_one",
+            "bestiary_4:monster_ability:traits_output_kaiju",
+            "bestiary_4:monster_ability:traits_output_psychopomp",
             "bestiary_4:monster_ability:universal_monster_rule_darkvision_extraordinary",
             "bestiary_4:monster_ability:universal_monster_rule_darkvision_supernatural",
             "bestiary_4:monster_ability:vampire_nosferatu_blood_drain",
@@ -4358,13 +4392,19 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "horror_adventures:monster_ability:bestial_werewolf_feral_counter",
             "horror_adventures:monster_ability:cursed_lord_immortal_curse",
             "horror_adventures:monster_ability:cursed_lord_trapped",
+            "horror_adventures:monster_ability:dread_lord_all_seeing",
+            "horror_adventures:monster_ability:dread_lord_dream_dominion",
             "horror_adventures:monster_ability:dread_lord_fear_aura",
             "horror_adventures:monster_ability:dread_lord_landlocked",
             "horror_adventures:monster_ability:dread_lord_magical_mastery",
+            "horror_adventures:monster_ability:dread_lord_master_of_the_four_winds",
             "horror_adventures:monster_ability:dread_lord_one_with_the_land",
             "horror_adventures:monster_ability:dread_lord_physical_mastery",
+            "horror_adventures:monster_ability:dread_lord_plant_affinity",
+            "horror_adventures:monster_ability:dread_lord_unquestioned_ruler",
             "horror_adventures:monster_ability:familial_lich_familial_possession",
             "horror_adventures:monster_ability:hellbound_creature_contract_bound",
+            "horror_adventures:monster_ability:hellbound_creature_hellbound_summon",
             "horror_adventures:monster_ability:hive_blind",
             "horror_adventures:monster_ability:hive_corrosive_blood",
             "horror_adventures:monster_ability:hive_death_throes",
@@ -4378,6 +4418,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "horror_adventures:monster_ability:implacable_stalker_terrifying_inevitability",
             "horror_adventures:monster_ability:kyton_apostle_agonizing_prayer",
             "horror_adventures:monster_ability:kyton_apostle_bleeding_touch",
+            "horror_adventures:monster_ability:kyton_apostle_seductive_oration",
             "horror_adventures:monster_ability:kyton_apostle_shadow_traveler",
             "horror_adventures:monster_ability:kyton_apostle_spell_like_abilities",
             "horror_adventures:monster_ability:kyton_apostle_unnerving_gaze",
@@ -4394,6 +4435,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "horror_adventures:monster_ability:shadowbound_creature_regretful_gaze",
             "horror_adventures:monster_ability:shadowbound_creature_weaver_of_lies",
             "horror_adventures:monster_ability:traits_output_deep_one",
+            "horror_adventures:monster_ability:traits_output_hive",
             "horror_adventures:monster_ability:trompe_l_oeil_armor_class",
             "horror_adventures:monster_ability:trompe_l_oeil_attacks",
             "horror_adventures:monster_ability:trompe_l_oeil_autotelic",
@@ -4407,6 +4449,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "horror_adventures:monster_ability:unknown_assume_likeness",
             "horror_adventures:monster_ability:unknown_dream_movements",
             "horror_adventures:monster_ability:unknown_hallucinatory_camouflage",
+            "horror_adventures:monster_ability:unknown_psyche_erosion",
             "horror_adventures:monster_ability:unknown_spell_like_abilities",
             "horror_adventures:monster_ability:unknown_victimize",
         ],
@@ -4562,6 +4605,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_5:monster_ability:sahkil_spirit_touch",
             "bestiary_5:monster_ability:therizinosaurus_sprint",
             "bestiary_5:monster_ability:therizinosaurus_sweeping_strike",
+            "bestiary_5:monster_ability:traits_output_sahkil",
             "bestiary_5:monster_ability:troodon_easily_trained",
             "bestiary_5:monster_ability:universal_monster_rule_unnatural_aura",
             "bestiary_5:monster_ability:water_wysp_drench",
@@ -4639,9 +4683,12 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl12",
             "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl16",
             "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl01",
             "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl08",
             "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl12",
             "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl20",
             "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl01",
             "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl04",
             "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl08",
@@ -4783,9 +4830,12 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "inner_sea_bestiary:monster_ability:chemnosit_spines",
             "inner_sea_bestiary:monster_ability:immunity_to_bleed_effects",
             "inner_sea_bestiary:monster_ability:immunity_to_permanent_wounds",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_acid_resistance",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_acidic_pustules",
             "inner_sea_bestiary:monster_ability:mana_wastes_mutant_breath_weapon",
             "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_arm",
             "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_leg",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_disease",
             "inner_sea_bestiary:monster_ability:mana_wastes_mutant_increased_speed",
             "inner_sea_bestiary:monster_ability:mana_wastes_mutant_shattered_hide",
             "inner_sea_bestiary:monster_ability:mana_wastes_mutant_warped_mind",
@@ -6343,12 +6393,16 @@ mod tests {
         // default -- all 8 are namespaced `<Monster> ~ <Ability>` keys whose
         // owner resolves through the existing prefix pass, so all 8 join
         // `owned_abilities`, none `owner_less`.
-        assert_eq!(abilities.len(), 665, "every row on disk for this book/kind");
+        // 665 -> 667 (`decisions.md §27b` round 9, +2): `Telepathy ~ Miles`/
+        // `Voidworm ~ Change Shape` close via `parse_desc`'s new
+        // generalised sixth branch -- both resolve a real owner, so both
+        // join `owned_abilities`, none `owner_less`.
+        assert_eq!(abilities.len(), 667, "every row on disk for this book/kind");
         let owner_less = recorded_unreached(&Family::new("bestiary_2", "monster_abilities"));
         assert_eq!(owner_less.len(), 85, "the owner-less rows this cycle's mechanism shipped");
         let owned_abilities: BTreeSet<String> =
             abilities.difference(&owner_less).cloned().collect();
-        assert_eq!(owned_abilities.len(), 580, "the owned (reachable) rows on disk");
+        assert_eq!(owned_abilities.len(), 582, "the owned (reachable) rows on disk");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -6496,9 +6550,13 @@ mod tests {
         // owner-less (`Asurendra ~ None`, `Lunar/Royal/Water Naga ~
         // Spells`, `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`), added to
         // `UNREACHED_RECORD_FINDINGS` above.
-        assert_eq!(abilities.len(), 686, "every row on disk for this book/kind");
+        // 686 -> 696 (`decisions.md §27b` round 9, +10, all owner-less):
+        // the multi-DESC: parse-refusal group closes -- Jiang-Shi Vampire
+        // plus the 9 `Traits Output ~ <Kind>` rows, added to
+        // `UNREACHED_RECORD_FINDINGS` above.
+        assert_eq!(abilities.len(), 696, "every row on disk for this book/kind");
         let owner_less = recorded_unreached(&Family::new("bestiary_3", "monster_abilities"));
-        assert_eq!(owner_less.len(), 276, "the owner-less rows this cycle's mechanism shipped");
+        assert_eq!(owner_less.len(), 286, "the owner-less rows this cycle's mechanism shipped");
         let owned_abilities: BTreeSet<String> =
             abilities.difference(&owner_less).cloned().collect();
         assert_eq!(
@@ -6578,13 +6636,15 @@ mod tests {
         // this same key.
         // 266 -> 276 (`decisions.md §27`/round 8, +10; see this test's own
         // comment above).
+        // 276 -> 286 (`decisions.md §27b` round 9, +10, all owner-less; see
+        // this test's own comment above).
         match reach_of(&Family::new("bestiary_3", "monster_abilities"))
             .expect("a claim is declared")
         {
             Reach::NotSurfaced { missing, .. } => assert_eq!(
                 missing.len(),
-                276,
-                "expected exactly the 276 owner-less records to be the whole shortfall (the \
+                286,
+                "expected exactly the 286 owner-less records to be the whole shortfall (the \
                  other 410 all reach)"
             ),
             other => {
@@ -6685,19 +6745,23 @@ mod tests {
         // provisional `SpecialQuality` facet default. It is OWNED (by
         // `Morlock`), so it joins the reaching set too — `missing.len()` is
         // unchanged.
+        // 711 -> 733 (`decisions.md §27b` round 9, +22): the multi-DESC:
+        // parse-refusal group closes via `parse_desc`'s new generalised
+        // sixth branch -- 5 land OWNED (join the reaching set, `missing.len()`
+        // unchanged) and 17 land owner-less (join the shortfall below).
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 711, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 733, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
             Reach::NotSurfaced { missing, .. } => assert_eq!(
                 missing.len(),
-                180,
-                "expected exactly the 180 owner-less records to be the whole shortfall \
-                 (the other 529 all reach — `assess` reports the family NotSurfaced as a \
+                197,
+                "expected exactly the 197 owner-less records to be the whole shortfall \
+                 (the other 536 all reach — `assess` reports the family NotSurfaced as a \
                  whole the instant ANY record is missing, never a partial Surfaced)"
             ),
-            other => panic!("expected 180 named non-reaches (529 of 709 still reach), got {other:?}"),
+            other => panic!("expected 197 named non-reaches (536 of 733 still reach), got {other:?}"),
         }
     }
 

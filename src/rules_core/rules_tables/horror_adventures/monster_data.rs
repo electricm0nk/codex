@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `ha_races.lst` -- 3 monster rows
-//!   * `ha_abilities_race.lst` -- 62 monster-ability rows
+//!   * `ha_abilities_race.lst` -- 71 monster-ability rows
 //!
 //! 65 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -84,22 +84,6 @@
 //!   * `ha_abilities_race.lst:346`
 //!   * `ha_abilities_race.lst:347`
 //!   * `ha_abilities_race.lst:348`
-//!
-//! 9 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `ha_abilities_race.lst:207` (Traits Output ~ Hive)
-//!   * `ha_abilities_race.lst:256` (Dread Lord ~ All-Seeing)
-//!   * `ha_abilities_race.lst:257` (Dread Lord ~ Dream Dominion)
-//!   * `ha_abilities_race.lst:260` (Dread Lord ~ Master of the Four Winds)
-//!   * `ha_abilities_race.lst:262` (Dread Lord ~ Plant Affinity)
-//!   * `ha_abilities_race.lst:263` (Dread Lord ~ Unquestioned Ruler)
-//!   * `ha_abilities_race.lst:274` (Hellbound Creature ~ Hellbound Summon)
-//!   * `ha_abilities_race.lst:299` (Kyton (Apostle) ~ Seductive Oration)
-//!   * `ha_abilities_race.lst:337` (Unknown ~ Psyche Erosion)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -167,7 +151,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every horror_adventures monster-ability record (62 rows).
+/// Every horror_adventures monster-ability record (71 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Traits Output ~ Deep One",
@@ -181,6 +165,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 204,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Hive",
+        name: "Hive Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Immunity to acid. &nl; Blind - A hive creature is blind. It is immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight. Unlike other aberrations, a hive creature doesn't have darkvision. &nl; Blindsense 60 feet. &nl; Blindsight 10 feet. &nl; Corrosive Blood (Ex) A hive creature's blood is highly caustic. Every time the hive creature is damaged by a piercing or slashing weapon, the attacking creature takes acid damage according to the creature's size (or double damage if the attack is a critical hit). Using a reach weapon does not endanger the attacker in this way. If the hive creature has the swallow whole ability, it adds this damage to its swallow whole damage. - Medium or smaller 1d4 damage;Large 1d6 damage; Huge 1d8 damage; Gargantuan 2d6 damage; Colossal 2d8 damage. &nl; Death Throes (Ex) When a hive creature dies, it exudes a pool of its corrosive blood in the space it occupies. This pool deals 1d6 points of acid damage per Hit Die of the hive creature for 3 rounds to objects and creatures in those squares (Reflex half). This acid damages whatever surface it is on, and if it deals enough damage to destroy the surface, the acid falls down to any subsequent floor below and continues to deal damage. The save DC is Constitution-based. &nl; Heat Adaptability (Ex) Hive creatures are considered to always be under the effect of endure elements with regard to hot climates. &nl; Hive Mind (Ex) Hive creatures have no language of their own, instead communicating simple concepts via pheromone discharge and body language that other creatures with the hive subtype understand. This ability functions within line of sight. If one hive creature is able to act in the surprise round of combat, all other hive creatures in line of sight can also act, and a hive creature isn't flanked unless all hive creatures within line of sight are flanked. &nl; A hive creature doesn't need to eat, drink, or sleep."),
+        description_variables: &[],
+        source_page: Some("p.233"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 207,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -378,6 +378,38 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Dread Lord ~ All-Seeing",
+        name: "All-Seeing",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["DreadLordSpecialPower"],
+        description: Some("Nothing happens in the dread lord's realm without the dread lord becoming aware. It can use speak with animals, speak with plants, and stone tell as spell-like abilities each three times per day. It can use clairaudience/clairvoyance as a spell-like ability three times per day, and the spell's range extends to any place in its domain."),
+        description_variables: &[],
+        source_page: Some("p.234"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 256,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Dread Lord ~ Dream Dominion",
+        name: "Dream Dominion",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["DreadLordSpecialPower"],
+        description: Some("The dread lord has dominion over even the dreams of its subjects. It can use dream and nightmare as spell-like abilities, each once per day, but targeting only creatures within its domain. Once per week it can attempt to gain control of a creature whose dreams it affects in this way. If the target fails a secondary Will saving throw (DC %1), the dread lord enslaves it, as per dominate monster, in addition to the dream or nightmare spell-like ability's normal effects."),
+        description_variables: &["10+TL/2+CHA"],
+        source_page: Some("p.235"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 257,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Dread Lord ~ Fear Aura",
         name: "Fear Aura",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -410,6 +442,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Dread Lord ~ Master of the Four Winds",
+        name: "Master of the Four Winds",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["DreadLordSpecialPower"],
+        description: Some("The dread lord can control the weather within its domain. It can use fog cloud and gust of wind as spell-like abilities each three times per day. It can use control weather as a spell-like ability once per day. It can use control winds as a spell-like ability once per day."),
+        description_variables: &[],
+        source_page: Some("p.235"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 260,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Dread Lord ~ Physical Mastery",
         name: "Physical Mastery",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -421,6 +469,38 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 261,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Dread Lord ~ Plant Affinity",
+        name: "Plant Affinity",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["DreadLordSpecialPower"],
+        description: Some("The dread lord's control over its lands extends to the very plants. It can use entangle as a spell-like ability at will, and plant growth as a spell-like ability once per day. It can use tree stride as a spell-like ability at will. It can use liveoak as a spell-like ability once per day."),
+        description_variables: &[],
+        source_page: Some("p.235"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 262,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Dread Lord ~ Unquestioned Ruler",
+        name: "Unquestioned Ruler",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["DreadLordSpecialPower"],
+        description: Some("The dread lord's subjects naturally bend to its will. It can use charm animal, charm person, and detect thoughts as spell-like abilities at will. It can use dominate animal, dominate person, and mass suggestion as spell-like abilities three times per day."),
+        description_variables: &[],
+        source_page: Some("p.235"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 263,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -453,6 +533,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 273,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Hellbound Creature ~ Hellbound Summon",
+        name: "Hellbound Summon",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["HellboundCreature"],
+        description: Some("Once per day, the hellbound creature can summon one lemure one bearded devil or 1d3 lemures one erinyes, 1d3 bearded devils, or 1d4+1 lemures one bone devil, 1d3 erinyes, or 1d4+1 bearded devils one barbed devil, 1d3 bone devils, or 1d4+1 erinyes one ice devil, 1d3 barbed devils, or 1d4+1 bone devils with a 100%% chance of success."),
+        description_variables: &[],
+        source_page: Some("p.249"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 274,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -677,6 +773,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 298,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Kyton (Apostle) ~ Seductive Oration",
+        name: "Seductive Oration",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["ApostleKyton"],
+        description: Some("An apostle kyton has a unique perspective due to her transition into her current form. As a full-round action that provokes attacks of opportunity, an apostle kyton can speak to the pleasures and wonders it experienced during its transformation. Any creature that listens to this speech for 1 continuous minute must succeed at a Will save (DC %1) or take %2d6 points of Wisdom damage. %3 sanity damage. A creature that succeeds at its save can't be affected by that apostle kyton's seductive oration ability for 24 hours. After failing the save to resist the apostle kyton's seductive oration, the target begins to question the definitions of morality, physicality, and life. Once per week, as long as the affected creature remains in communication with the apostle kyton, it must attempt a saving throw against seductive oration again or have its alignment shift one step toward lawful evil and take 1d6 additional points of Wisdom damage. %4 additional points of sanity damage. The save DC increases by 1 per consecutive week of contact with the apostle kyton. A successful save prevents the alignment shift. A creature can't take damage from seductive oration more than once per week, even if it encounters multiple apostle kytons. When the target's alignment completely shifts to lawful evil (or if the target is lawful evil when first seduced), the target must immediately succeed at a Will save (with the same DC as seductive oration, including any increases from extended contact) or gain a greater madness (see page 182). If the target is turned lawful evil, the greater madness it gains is in addition to any madness it might gain from the sanity damage itself. Creatures that are driven insane by an apostle kyton often eventually become broken souls (Bestiary 4 p24), but some rare individuals gain the shadowbound corruption (see page 34) or even transform into apostle kytons themselves."),
+        description_variables: &["10+HD/2+CHA", "1+HD/8", "CR/2", "CR/2"],
+        source_page: Some("p.241"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 299,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -1013,6 +1125,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 334,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Unknown ~ Psyche Erosion",
+        name: "Psyche Erosion",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["UnknownTemplate"],
+        description: Some("Once per day, a target affected by an unknown's victimize ability that sees the unknown's true appearance must succeed at a Will save (DC %1) or take 1d6 points of Charisma damage. A successful save negates the Charisma 1d6 points of sanity damage. A successful save negates the sanity damage and also ends the unknown's victimize effect on that target. As long as a creature is the target of an unknown's victimize ability, it can't recover the damage from psyche erosion, even through magic. If the Charisma damage from psyche erosion is equal to the target's Charisma score, that creature doesn't recover ability score damage naturally even if it ceases being the target of victimize. If the sanity damage from psyche erosion is equal to the target's sanity score, that creature doesn't recover ability score damage naturally even if it ceases being the target of victimize.  Only magic can fully heal this damage. When its Charisma damage is equal to its Charisma score, When its sanity damage is equal to its sanity score, the target falls into a nightmare-filled catatonia where it continues to be followed by an unknown. This dream state lasts for 1d4 days, and at the end, the character awakes if its Charisma damage has been reduced to less than its Charisma score. sanity damage has been reduced to less than its sanity score. If not, the creature immediately loses all sense of self, becoming an unknown thrall. It replaces its Charisma score with the unknown's Charisma score, and no longer takes Charisma damage from exposure to the unknown. Over time, typically 1 to 2 weeks, the thrall becomes a new unknown, gaining this template. The unknown can share its senses with any of its thralls (even if it changes the target of its victimize ability), and as a full-round action, it can assume control of a thrall's body, as per possession (OA) . Typically, an unknown uses this ability to keep the thrall close by until it becomes an unknown. Unknowns often use thralls to lure new victims to its lair. Psyche erosion is a mind-affecting effect."),
+        description_variables: &["10+TL+CHA"],
+        source_page: Some("p.244"),
+        owners: &[],
+        source_file: "ha_abilities_race.lst",
+        source_line: 337,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

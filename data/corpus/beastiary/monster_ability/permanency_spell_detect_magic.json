@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Permanency Spell / Detect Magic",
+    "delivery": null,
+    "description": "Self Only, (2,500GP), Caster Level %1. You detect magical auras. The amount of information revealed depends on how long you study a particular area or subject. &nl;1st Round: Presence or absence of magical auras. &nl;2nd Round: Number of different magical auras and the power of the most potent aura. &nl;3rd Round: The strength and location of each aura. If the items or creatures bearing the auras are in line of sight, you can make Spellcraft skill checks to determine the school of magic involved in each. [Make one check per aura; DC 15 + spell level, or 15 + half caster level for a nonspell effect.] &nl;Magical areas, multiple types of magic, or strong local magical emanations may distort or conceal weaker auras. &nl;Aura Strength: An aura's power depends on a spell's functioning spell level or an item's caster level. If an aura falls into more than one category, detect magic indicates the stronger of the two. &nl;  &pipe;--------- Aura Power --------- &nl;Spell or Object &pipe;Faint &pipe;Moderate &pipe;Strong &pipe;Overwhelming &nl;Functioning spell [spell level] &pipe;3rd or lower &pipe;4th-6th &pipe;7th-9th &pipe;10th+ [deity-level] &nl;Magic item [caster level] &pipe;5th or lower &pipe;6th-11th &pipe;12th-20th &pipe;21st+ [artifact] &nl;Lingering Aura: A magical aura lingers after its original source dissipates [in the case of a spell] or is destroyed [in the case of a magic item]. If detect magic is cast and directed at such a location, the spell indicates an aura strength of dim [even weaker than a faint aura]. How long the aura lingers at this dim level depends on its original power: &nl;Original Strength &pipe;Duration of Lingering Aura &nl;Faint &pipe;1d6 rounds &nl;Moderate &pipe;1d6 minutes &nl;Strong &pipe;1d6x10 minutes &nl;Overwhelming &pipe;1d6 days &nl;Outsiders and elementals are not magical in themselves, but if they are summoned, the conjuration spell registers. &nl;Each round, you can turn to detect magic in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.",
+    "description_variables": [
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:permanency_spell_detect_magic",
+    "name": "Permanency Spell / Detect Magic",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|PermanecyDetectMagicLVL|%LIST"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|09|10|11|12|13|14|15|16|17|18|19|20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PermanecyDetectMagicLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Self Only, (2,500GP), Caster Level %1.|%LIST"
+      },
+      {
+        "key": "DESC",
+        "value": "You detect magical auras. The amount of information revealed depends on how long you study a particular area or subject. &nl;1st Round: Presence or absence of magical auras. &nl;2nd Round: Number of different magical auras and the power of the most potent aura. &nl;3rd Round: The strength and location of each aura. If the items or creatures bearing the auras are in line of sight, you can make Spellcraft skill checks to determine the school of magic involved in each. [Make one check per aura; DC 15 + spell level, or 15 + half caster level for a nonspell effect.] &nl;Magical areas, multiple types of magic, or strong local magical emanations may distort or conceal weaker auras. &nl;Aura Strength: An aura's power depends on a spell's functioning spell level or an item's caster level. If an aura falls into more than one category, detect magic indicates the stronger of the two. &nl;  &pipe;--------- Aura Power --------- &nl;Spell or Object &pipe;Faint &pipe;Moderate &pipe;Strong &pipe;Overwhelming &nl;Functioning spell [spell level] &pipe;3rd or lower &pipe;4th-6th &pipe;7th-9th &pipe;10th+ [deity-level] &nl;Magic item [caster level] &pipe;5th or lower &pipe;6th-11th &pipe;12th-20th &pipe;21st+ [artifact] &nl;Lingering Aura: A magical aura lingers after its original source dissipates [in the case of a spell] or is destroyed [in the case of a magic item]. If detect magic is cast and directed at such a location, the spell indicates an aura strength of dim [even weaker than a faint aura]. How long the aura lingers at this dim level depends on its original power: &nl;Original Strength &pipe;Duration of Lingering Aura &nl;Faint &pipe;1d6 rounds &nl;Moderate &pipe;1d6 minutes &nl;Strong &pipe;1d6x10 minutes &nl;Overwhelming &pipe;1d6 days &nl;Outsiders and elementals are not magical in themselves, but if they are summoned, the conjuration spell registers. &nl;Each round, you can turn to detect magic in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Permanency Spell|TIMES=ATWILL|CASTERLEVEL=PermanecyDetectMagicLVL|Detect Magic"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PermanencySpell"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PermanencySpell"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1606,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Permanency Spell / Detect Magic",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:spells"
+  ]
+}

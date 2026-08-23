@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Dread Lord ~ Dream Dominion",
+    "delivery": "Supernatural",
+    "description": "The dread lord has dominion over even the dreams of its subjects. It can use dream and nightmare as spell-like abilities, each once per day, but targeting only creatures within its domain. Once per week it can attempt to gain control of a creature whose dreams it affects in this way. If the target fails a secondary Will saving throw (DC %1), the dread lord enslaves it, as per dominate monster, in addition to the dream or nightmare spell-like ability's normal effects.",
+    "description_variables": [
+      "10+TL/2+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:dread_lord_dream_dominion",
+    "name": "Dream Dominion",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per week it can attempt to gain control of a creature whose dreams it affects in this way. If the target fails a secondary Will saving throw (DC %1), the dread lord enslaves it, as per dominate monster, in addition to the dream or nightmare spell-like ability's normal effects.|10+TL/2+CHA|PREVARGTEQ:CR,9"
+      },
+      {
+        "key": "DESC",
+        "value": "The dread lord has dominion over even the dreams of its subjects. It can use dream and nightmare as spell-like abilities, each once per day, but targeting only creatures within its domain."
+      },
+      {
+        "key": "KEY",
+        "value": "Dread Lord ~ Dream Dominion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Dream|Nightmare,15+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadLordSpecialPower"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.235",
+    "traits": [
+      "DreadLordSpecialPower"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 257,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Dread Lord ~ Dream Dominion",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ]
+}

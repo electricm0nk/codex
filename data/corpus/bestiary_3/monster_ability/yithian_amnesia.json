@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T10:26:03Z",
   "data": {
     "corpus_key": "Yithian ~ Amnesia",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "bestiary_3:monster:yithian"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a yithian can attempt to inflict amnesia on a target it is able to communicate telepathically with. A target can resist this attack with a DC 21 Will save. If the target fails its save, it takes a permanent -4 penalty on Will saving throws and all skill checks, and loses all memories save for those the yithian chooses to leave intact. This effect can be cured by heal or greater restoration. This is a mind-affecting insanity effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Yithian ~ Amnesia"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "TYPE",
+        "value": "YithianRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.286",
     "traits": [
       "YithianRacialAbility"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 1683,
-    "record_key": "Yithian ~ Amnesia"
-  },
+  "ingested_at": "2026-08-23T10:26:03Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1683,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Yithian ~ Amnesia",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

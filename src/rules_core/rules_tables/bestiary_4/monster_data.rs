@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b4_races.lst` -- 206 monster rows
-//!   * `b4_abilities_races_ce.lst` -- 76 monster-ability rows
+//!   * `b4_abilities_races_ce.lst` -- 83 monster-ability rows
 //!   * `wyrwood_abilities_race.lst` -- 1 monster-ability rows
 //!   * `b4_abilities_race.lst` -- 727 monster-ability rows
 //!   * `ce_abilities_race.lst` -- 2 monster-ability rows
@@ -315,20 +315,6 @@
 //!   * `b4_abilities_race.lst:1416`
 //!   * `ce_abilities_race.lst:2425`
 //!   * `ce_abilities_race.lst:2426`
-//!
-//! 7 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `b4_abilities_races_ce.lst:98` (Traits Output ~ Colossus)
-//!   * `b4_abilities_races_ce.lst:99` (Traits Output ~ Demon Lord)
-//!   * `b4_abilities_races_ce.lst:100` (Traits Output ~ Empyreal Lord)
-//!   * `b4_abilities_races_ce.lst:101` (Traits Output ~ Formian)
-//!   * `b4_abilities_races_ce.lst:102` (Traits Output ~ Great Old One)
-//!   * `b4_abilities_races_ce.lst:103` (Traits Output ~ Kaiju)
-//!   * `b4_abilities_races_ce.lst:104` (Traits Output ~ Psychopomp)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -4456,7 +4442,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_4 monster-ability record (806 rows).
+/// Every bestiary_4 monster-ability record (813 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Immunity to Calm Emotions",
@@ -5158,6 +5144,118 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Colossus (Flesh)"],
         source_file: "b4_abilities_races_ce.lst",
         source_line: 74,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Colossus",
+        name: "Colossus Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A colossus exudes a constant antimagic field, as the spell, with a radius equal to its reach. Typically, this field ignores specified schools of magic or spell descriptors. &nl; Colossi have the ability to transform themselves into some other shape. &nl; As a swift action, a colossus can expend one use of mythic power to cast or activate one of its spell-like abilities as a free action. &nl; When a colossus is in its normal form, as a swift action it can make a single melee attack at its highest base attack against a target three or more size categories smaller than the colossus and then attempt to grapple the target, pinning it. &nl; A colossus can be created only by a creator with a mythic tier or rank equal to or greater than that of the colossus it is attempting to create. &nl; A colossus can expend one use of mythic power as swift action to double its damage resistance for 1 round."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 98,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Demon Lord",
+        name: "Demon Lord Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Supernatural"],
+        description: Some("A demon lord who is slain can be instantly ressurected in his home realm once each year. &nl; A demon lord can activate his frightful presence as a free action. &nl; A demon lord grants spells to its followers and has a favored weapon as if it were a deity. &nl; A demon lord's natural weapons, as well as any weapons it wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction. &nl; Only epic and good damage, or damage from a creature of equal or greater power interrupts a demon lord's regeneration. &nl; Three times per day, a demon lord can summon any demon or combination of demons whose total combined CR is 20 or lower."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 99,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Empyreal Lord",
+        name: "Empyreal Lord Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Supernatural"],
+        description: Some("A empyreal lord grants spells to its followers and has a favored weapon as if it were a deity. &nl; Racial subtype energy resistances are increased to 30. &nl; An empyreal lord's natural weapons, as well as any weapons he or she wields, are treated as epic and good for the purpose of overcoming damage reduction (and possibly chaotic or lawful as appropriate). &nl; An empyreal lord can touch a willing creature and imbue it with magical healing power."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 100,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Formian",
+        name: "Formian Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Supernatural"],
+        description: Some("A formian possesses the darkvision 60 feet and blindsense 30 feet. &nl; Formians have telepathy 60 ft. &nl; When formians are within telepathic range of at least one other formian, they gain +4 on initiative and Perception checks and if one disbelieves an illusion, all within range do as well. &nl; Formian spellcasters cast spells as spell-like abilities. &nl; Formians have sonic resistance 10."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 101,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Great Old One",
+        name: "Great Old One Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Supernatural"],
+        description: Some("A Great Old One's natural weapons, as well as any weapon it wields, are treated as chaotic, epic, and mythic for the purpose of overcoming damage reduction. &nl; A Great Old One does not need to eat, drink, or breathe, nor does it age. A Great Old One that is slain does not truly die. &nl; Immunity to ability damage, ability drain, aging, cold, death effects, disease, energy drain, mind-affecting effects, paralysis, and petrification. &nl; Interacting directly with a Great Old One's thoughts (such as via detect thoughts or telepathy) forces a Will save to avoid being driven permanently insane. The save DC is %1. &nl; A Great Old One has mythic power (10/day, surge +1d12) and counts as a 10th-rank mythic creature. It can use any of its spell-like abilities as the mythic versions of those spells (if such exists). &nl; All Great Old Ones gain a +10 insight bonus on Initiative checks and to AC. &nl; A Great Old One's aura inflicts intense mental anguish and torment upon all creatures within 300 feet who can see and hear the Great Old One."),
+        description_variables: &["10+HD/2+CHA"],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 102,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Kaiju",
+        name: "Kaiju Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A kaiju's natural attacks count as epic and magic for the purpose of overcoming damage reduction. &nl; When a kaiju damages a Huge or smaller foe with one of its natural attacks, it can try to hurl the foe as part of that attack by attempting a combat maneuver check. &nl; A kaiju ignores most difficult terrain, but considers forests or settlements difficult terrain. Huge or smaller creature can move through any square occupied by a kaiju, or vice-versa. A kaiju can make attacks of opportunity only against foes that are Huge or larger, and can be flanked only by Huge or larger foes. &nl; A kaiju reattempts failed saving throws against any mind-affecting, paralysis, petrification, polymorph, or immobilizing effects  at the end of its turn to remove the effect. Once per year, if a kaiju takes an amount of damage that would normally kill it, the damage instead heals it of twice the amount of damage but leaves the kaiju disoriented and demoralized. The creature becomes nauseated and seeks only to return to its lair unless attacked."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 103,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Traits Output ~ Psychopomp",
+        name: "Psychopomp Traits",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Supernatural"],
+        description: Some("A psychopomp's natural weapons, as well as any weapon it wields, are treated as though they had the ghost touch weapon special ability. &nl; A psychopomp notices, locates, and can distinguish between living and undead creatures within 60 feet, just as if it had the blindsight ability. This sense does not allow it to detect objects, but it does allow it to notice living things that are not creatures (such as normal trees)."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "b4_abilities_races_ce.lst",
+        source_line: 104,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

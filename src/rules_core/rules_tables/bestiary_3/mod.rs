@@ -232,12 +232,19 @@ mod tests {
         // now shipping); +10 owner-less (`Asurendra ~ None`, `Lunar/Royal/
         // Water Naga ~ Spells`, `Unfettered Eidolon ~
         // Str/Dex/Con/Int/Wis/Cha`) — pinned separately below.
+        // 410/686 -> 410/696 (`decisions.md §27b` round 9, +10 total, all
+        // owner-less): the multi-DESC: parse-refusal group closes via
+        // `parse_desc`'s new generalised sixth branch -- Jiang-Shi Vampire
+        // plus the 9 `Traits Output ~ <Kind>` rows (`&nl;`-marker
+        // continuation shape) are shared reference-library text no single
+        // stat block in this book owns; `owned` is UNCHANGED, all 10 land
+        // in the owner-less pin below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
         assert_eq!(owned, 410);
-        assert_eq!(monster_abilities().len(), 686);
+        assert_eq!(monster_abilities().len(), 696);
     }
 
     /// The first book in the lane to lose NO monster row: no `NAMEISPI:YES`, no
@@ -282,9 +289,12 @@ mod tests {
         // (`Asurendra ~ None`, `Lunar/Royal/Water Naga ~ Spells`,
         // `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`); the 11th
         // (`Adlet ~ Spell-Like Abilities`) is owned, see the test above.
+        // 276 -> 286 (`decisions.md §27b` round 9, +10): the multi-DESC:
+        // parse-refusal group closes -- Jiang-Shi Vampire plus the 9
+        // `Traits Output ~ <Kind>` rows, all owner-less, see the test above.
         assert_eq!(
             unowned.len(),
-            276,
+            286,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py bestiary_3` run, and update the matching \
@@ -295,9 +305,13 @@ mod tests {
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0x01b4_2774_3381_b829,
+            digest, 0x9384_d1f9_b175_24c6,
             "the owner-less key SET changed (same count, different members) — re-derive and \
-             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly. \
+             0x01b42774_3381b829 -> 0x9384d1f9_b17524c6 (`decisions.md §27b` round 9): the \
+             set gains 10 new members (Jiang-Shi Vampire plus 9 `Traits Output ~ <Kind>` \
+             rows), re-derived live from this test's own failing run, never guessed, per \
+             `decisions.md §17a`."
         );
     }
 
@@ -361,10 +375,25 @@ mod tests {
                 ability.key
             );
         }
+        // **Round 9 update (`decisions.md §27b`):** `b3_abilities_race.lst:1663`
+        // (Jiang-Shi Vampire) used to be excluded by the multi-DESC: screen.
+        // `parse_desc`'s new generalised sixth branch (`_concat_desc_variants`)
+        // now resolves it -- an `&nl;`-marker continuation shape, same
+        // mechanism as `Traits Output ~ Asura` below -- so it SHIPS,
+        // owner-less (no monster row of this book claims it by name).
+        let jiang_shi = monster_abilities()
+            .iter()
+            .find(|a| a.source_line == 1663)
+            .unwrap_or_else(|| {
+                panic!(
+                    "b3_abilities_race.lst:1663 ships for shape measurement \
+                     (decisions.md §27b round 9)"
+                )
+            });
         assert!(
-            !monster_abilities().iter().any(|a| a.source_line == 1663),
-            "b3_abilities_race.lst:1663 (Jiang-Shi Vampire) is excluded by the multi-DESC: \
-             screen, unrelated to the orphan mechanism, and must still not ship"
+            jiang_shi.owners.is_empty(),
+            "{} was expected owner-less; no monster row of this book claims it",
+            jiang_shi.key
         );
     }
 

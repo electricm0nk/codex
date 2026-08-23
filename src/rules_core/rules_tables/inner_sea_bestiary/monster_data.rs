@@ -9,7 +9,7 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `isb_races.lst` -- 38 monster rows
-//!   * `isb_abilities_race.lst` -- 189 monster-ability rows
+//!   * `isb_abilities_race.lst` -- 192 monster-ability rows
 //!
 //! 2 monster row(s) and 0 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
@@ -100,16 +100,6 @@
 //!   * `isb_abilities_race.lst:437`
 //!   * `isb_abilities_race.lst:439`
 //!   * `isb_abilities_race.lst:442`
-//!
-//! 3 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `isb_abilities_race.lst:203` (Mana Wastes Mutant ~ Acid Resistance)
-//!   * `isb_abilities_race.lst:204` (Mana Wastes Mutant ~ Acidic Pustules)
-//!   * `isb_abilities_race.lst:206` (Mana Wastes Mutant ~ Disease)
 //!
 //! 2 ability row(s) ship with a `decisions.md §27`
 //! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
@@ -886,7 +876,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_bestiary monster-ability record (189 rows).
+/// Every inner_sea_bestiary monster-ability record (192 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Apostasy Wraith ~ Razmiri Aversion",
@@ -1929,6 +1919,38 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Acid Resistance",
+        name: "Acid Resistance",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["MutantSpecialAbility"],
+        description: Some("The Mana Waste Mutant gains Acid Resistance %1 The Mana Waste Mutant gains Immunity to Acid"),
+        description_variables: &["MutantAcidResistance"],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 203,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Acidic Pustules",
+        name: "Acidic Pustules",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["MutantSpecialAbility"],
+        description: Some("The Mana Waste Mutant is covered in necrotic pustules that burst at the slightest touch. Any piercing or slashing damage causes all creatures adjacent to make a Reflex save (DC %1) or take  0 Acid damage. 1 Acid damage. 1d2 Acid damage. 1d3 Acid damage. 1d4 Acid damage. 1d6 Acid damage. 1d8 Acid damage. 2d6 Acid damage. 3d6 Acid damage."),
+        description_variables: &["10+HD/2+CON"],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 204,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Mana Wastes Mutant ~ Breath Weapon",
         name: "Breath Weapon",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -1940,6 +1962,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "isb_abilities_race.lst",
         source_line: 205,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Mana Wastes Mutant ~ Disease",
+        name: "Disease",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["MutantSpecialAbility"],
+        description: Some("Mana Fever, Injury; Fort DC %1, onset 1d4 min, 1/day, cure 2 consecutive saves;  1d2 Con damage, 1d2 Cha drain. 1d3 Con Damage, 1d3 Cha drain. Anyone who lives with mana fever for a week straight without dying becomes immune to the disease, but also becomes a Mana Wastes mutant."),
+        description_variables: &["10+HD/2+CON"],
+        source_page: Some("p.29"),
+        owners: &[],
+        source_file: "isb_abilities_race.lst",
+        source_line: 206,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

@@ -143,12 +143,17 @@ mod tests {
         // `scripts/transcribe_monster_tables.py horror_adventures`'s own
         // stderr). The owner-less count is pinned separately below
         // (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 6/62 -> 6/71 (`decisions.md §27b` round 9, +9 total, all
+        // owner-less): the 9 previously-unparseable multi-DESC: rows this
+        // comment names above now resolve via `parse_desc`'s new
+        // generalised sixth branch -- `owned` is UNCHANGED, all 9 land in
+        // the owner-less pin below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
         assert_eq!(owned, 6);
-        assert_eq!(monster_abilities().len(), 62);
+        assert_eq!(monster_abilities().len(), 71);
     }
 
     /// The `ABILITY:Internal|AUTOMATIC|` bundle token, read for its ATTACK
@@ -240,9 +245,12 @@ mod tests {
             .collect();
         unowned.sort_unstable();
 
+        // 56 -> 65 (`decisions.md §27b` round 9, +9): the 9 previously-
+        // unparseable multi-DESC: rows close, all owner-less, see the test
+        // above.
         assert_eq!(
             unowned.len(),
-            56,
+            65,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py horror_adventures` run, and update the \
@@ -253,9 +261,13 @@ mod tests {
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0x4db7_998b_4652_eb60,
+            digest, 0x941a_2132_e655_2505,
             "the owner-less key SET changed (same count, different members) — re-derive and \
-             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly. \
+             0x4db7998b_4652eb60 -> 0x941a2132_e6552505 (`decisions.md §27b` round 9): the \
+             set gains 9 new members (the 9 previously-unparseable multi-DESC: rows), \
+             re-derived live from this test's own failing run, never guessed, per \
+             `decisions.md §17a`."
         );
     }
 

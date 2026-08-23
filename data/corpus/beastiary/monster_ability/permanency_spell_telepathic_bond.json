@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Permanency Spell / Telepathic Bond",
+    "delivery": null,
+    "description": "(12,500GP), Caster Level %1. You forge a telepathic bond among yourself and a number of willing creatures, each of which must have an Intelligence score of 3 or higher. Each creature included in the link is linked to all the others. The creatures can communicate telepathically through the bond regardless of language. No special power or influence is established as a result of the bond. Once the bond is formed, it works over any distance [although not from one plane to another]. If desired, you may leave yourself out of the telepathic bond forged. This decision must be made at the time of casting. Telepathic bond can be made permanent with a permanency spell, though it only bonds two creatures per casting of permanency.",
+    "description_variables": [
+      "%LIST"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:permanency_spell_telepathic_bond",
+    "name": "Permanency Spell / Telepathic Bond",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|PermanecyTelepathicBondLVL|%LIST"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|13|14|15|16|17|18|19|20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PermanecyTelepathicBondLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "(12,500GP), Caster Level %1.|%LIST"
+      },
+      {
+        "key": "DESC",
+        "value": "You forge a telepathic bond among yourself and a number of willing creatures, each of which must have an Intelligence score of 3 or higher. Each creature included in the link is linked to all the others. The creatures can communicate telepathically through the bond regardless of language. No special power or influence is established as a result of the bond. Once the bond is formed, it works over any distance [although not from one plane to another]. If desired, you may leave yourself out of the telepathic bond forged. This decision must be made at the time of casting. Telepathic bond can be made permanent with a permanency spell, though it only bonds two creatures per casting of permanency."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Permanency Spell|TIMES=ATWILL|CASTERLEVEL=PermanecyTelepathicBondLVL|Telepathic Bond"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PermanencySpell"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "PermanencySpell"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1616,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Permanency Spell / Telepathic Bond",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:spells"
+  ]
+}

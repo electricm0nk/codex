@@ -8,7 +8,7 @@
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `pu_abilities_race.lst` -- 69 monster-ability rows
+//!   * `pu_abilities_race.lst` -- 72 monster-ability rows
 //!
 //! 72 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -90,16 +90,6 @@
 //!   * `pu_abilities_race.lst:178`
 //!   * `pu_abilities_race.lst:179`
 //!   * `pu_abilities_race.lst:180`
-//!
-//! 3 further ability row(s) of this book ARE owned
-//! but are NOT transcribed: each carries several `DESC:` tokens under a gate
-//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a
-//! `BONUS:VAR`-set value), and picking one by position would risk shipping
-//! subtly wrong player-facing text. `not-ingested` is their honest status; widen
-//! `parse_desc` deliberately, hand-verified per row, to reach them:
-//!   * `pu_abilities_race.lst:154` (Elemental ~ Unchained Eidolon LVL01)
-//!   * `pu_abilities_race.lst:156` (Elemental ~ Unchained Eidolon LVL08)
-//!   * `pu_abilities_race.lst:159` (Elemental ~ Unchained Eidolon LVL20)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -107,7 +97,7 @@ use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, M
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
-/// Every pathfinder_unchained monster-ability record (69 rows).
+/// Every pathfinder_unchained monster-ability record (72 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Agathion ~ Unchained Eidolon LVL01",
@@ -878,6 +868,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         rename_coordinate: None,
     },
     MonsterAbilityRecord {
+        key: "Elemental ~ Unchained Eidolon LVL01",
+        name: "Eidolon Progession Lv.1",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["ElementalLVL1"],
+        description: Some("At 1st level, all elemental eidolons gain immunity to paralysis and sleep. In addition,  Air elemental eidolons gain the immunity (electricity) evolution.  Earth elemental eidolons gain the immunity (acid) evolution.  Fire elemental eidolons gain the immunity (fire) evolution.  Water elemental eidolons gain the immunity (cold) evolution."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "pu_abilities_race.lst",
+        source_line: 154,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
         key: "Elemental ~ Unchained Eidolon LVL04",
         name: "Eidolon Progession Lv.4",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -889,6 +895,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "pu_abilities_race.lst",
         source_line: 155,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Elemental ~ Unchained Eidolon LVL08",
+        name: "Eidolon Progession Lv.8",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["ElementalLVL8"],
+        description: Some("At 8th level,  Air elemental eidolons gain the flight evolution (using magic) with a speed equal to their base speed.  Earth elemental eidolons gain the burrow evolution.  Fire elemental eidolons increase their base speed by 20 feet.  Water elemental eidolons gain the swim evolution twice, gaining a swim speed equal to their base speed + 20 feet. They also gain the gills evolution, which allows them to breathe underwater."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "pu_abilities_race.lst",
+        source_line: 156,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,
@@ -921,6 +943,22 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "pu_abilities_race.lst",
         source_line: 158,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Elemental ~ Unchained Eidolon LVL20",
+        name: "Eidolon Progession Lv.20",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["ElementalLVL20"],
+        description: Some("At 20th level,  Air elemental eidolon gains the whirlwind ability (Bestiary 306), with a maximum height of 15 feet (30 feet for a Large air elemental) and dealing 1d6 points of damage (1d8 for a Large air elemental).  Earth elemental eidolons gain the earth mastery ability (Bestiary 122) and DR 5/-.  Fire elemental eidolons gain the energy attacks (fire) evolution and the burn ability (Bestiary 298).  Water elemental eidolons gain the drench and vortex abilities (Bestiary 126). The vortex ability works as the air elemental eidolon's whirlwind ability (except as noted in the vortex ability's description)."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "pu_abilities_race.lst",
+        source_line: 159,
         codex_generated_name: false,
         rename_reason: None,
         rename_coordinate: None,

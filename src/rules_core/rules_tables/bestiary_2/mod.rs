@@ -292,12 +292,19 @@ mod tests {
         // Abyssal Strike`, `Lamia Matriarch ~ Spells`, `Mothman ~ Agent of
         // Fate`, `Yrthak ~ Sonic Lance`), so all 8 land in `owned`, none in
         // the owner-less pin below.
+        // 580/665 -> 582/667 (`decisions.md §27b` round 9, +2 owned): the
+        // multi-DESC: `PREVAREQ`/`PREVARGT`-gated parse-refusal group closes
+        // via `parse_desc`'s new generalised sixth branch -- `Telepathy ~
+        // Miles` and `Voidworm ~ Change Shape` (`ce_abilities_race.lst:1955`/
+        // `:2043`, round 6's own named 2-row `bestiary_2` share) both
+        // resolve a real owner through the existing prefix pass, so both
+        // land in `owned`, none in the owner-less pin below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 580);
-        assert_eq!(monster_abilities().len(), 665);
+        assert_eq!(owned, 582);
+        assert_eq!(monster_abilities().len(), 667);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**

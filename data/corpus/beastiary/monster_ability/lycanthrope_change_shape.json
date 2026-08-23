@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Lycanthrope ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "All lycanthropes have three forms--a humanoid form, an animal form, and a hybrid form. Equipment does not meld with the new form between humanoid and hybrid form, but does between those forms and animal form,  a natural lycanthrope can shift to any of its three alternate forms as a move-equivalent action  an afflicted lycanthrope can assume animal or hybrid form as a full-round action by making a DC 15 Constitution check, or humanoid form as a full-round action by making a DC 20 Constitution check. On nights when the full moon is visible, an afflicted lycanthrope gains a +5 morale bonus to Constitution checks made to assume animal or hybrid form, but a -5 penalty to Constitution checks made to assume humanoid form. An afflicted lycanthrope reverts to its humanoid form automatically with the next sunrise, or after 8 hours of rest, whichever comes first  A slain lycanthrope reverts to its humanoid form, although it remains dead.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:lycanthrope_change_shape",
+    "name": "Change Shape",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": " A slain lycanthrope reverts to its humanoid form, although it remains dead."
+      },
+      {
+        "key": "DESC",
+        "value": " a natural lycanthrope can shift to any of its three alternate forms as a move-equivalent action|PREABILITY:1,CATEGORY=Special Ability,Natural Lycanthrope"
+      },
+      {
+        "key": "DESC",
+        "value": " an afflicted lycanthrope can assume animal or hybrid form as a full-round action by making a DC 15 Constitution check, or humanoid form as a full-round action by making a DC 20 Constitution check. On nights when the full moon is visible, an afflicted lycanthrope gains a +5 morale bonus to Constitution checks made to assume animal or hybrid form, but a -5 penalty to Constitution checks made to assume humanoid form. An afflicted lycanthrope reverts to its humanoid form automatically with the next sunrise, or after 8 hours of rest, whichever comes first|PREABILITY:1,CATEGORY=Special Ability,Afflicted Lycanthrope"
+      },
+      {
+        "key": "DESC",
+        "value": "All lycanthropes have three forms--a humanoid form, an animal form, and a hybrid form. Equipment does not meld with the new form between humanoid and hybrid form, but does between those forms and animal form,"
+      },
+      {
+        "key": "KEY",
+        "value": "Lycanthrope ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.196",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1346,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Lycanthrope ~ Change Shape",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

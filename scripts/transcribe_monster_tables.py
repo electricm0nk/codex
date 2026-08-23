@@ -947,6 +947,65 @@ class UnmodelledDesc(Exception):
     """
 
 
+def _concat_desc_variants(descs: list[str]) -> tuple[str, list[str]]:
+    """The generalised SIXTH `parse_desc` shape (`decisions.md §27b`, round
+    6/7/8's own docstring naming this exact gap): concatenate every `DESC:`
+    token's own text, verbatim, in the row's own order.
+
+    Every branch above this one resolves a row where the corpus states ONE
+    global criterion that picks a single winning token (the `DisplayFullAbility`
+    ruleset toggle, a literal-superset containment, or a lone token whose pipe
+    entries name this row's own `DEFINE:`d variables). The **56**-unit
+    `PRERULE`/`PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/`PRERACE`/`PRETEMPLATE`/
+    `PREABILITY`-gated group this branch closes is different: its gate tests a
+    property of the *owning monster instance* (its CR, HD, size, template,
+    race subtype, or a feat it has) -- a fact this per-ability-KEY table row,
+    shared verbatim across every monster that owns it, cannot resolve once and
+    for all. There is no single row-level "the" value to trace for these
+    gates (unlike a row's own unconditionally-set `BONUS:VAR`, which the
+    `PREVAREQ:EnergyDrainNoHP,0`-style rows below already resolve before ever
+    reaching here -- see `parse_type_or_provisional_default`'s sibling
+    resolution for the analogous `TYPE:` gap). Picking ONE variant here would
+    be exactly the guess `§1a` forbids; omitting the gated ones would silently
+    drop mechanics the way the original single-`DESC:`-only parser did.
+
+    So every token's text ships, concatenated in the corpus's own order --
+    the same "verbatim corpus text, corpus's own order, never a composition"
+    principle round 7's CONTINUATION shape already established, generalised
+    to also carry a token's own PRE-gate condition (dropped from the emitted
+    text -- gates are not player-facing prose) and its own `%N` variables
+    alongside the plain, ungated continuation case CONTINUATION already
+    covers. A single space joins adjacent tokens' text (the corpus supplies
+    every WORD; a plain ASCII space between two already-punctuated sentences
+    is formatting hygiene, not invented content -- the alternative, gluing
+    two sentences together with no separator at all, is the actual defect).
+
+    Each token's own `%N` placeholders are renumbered so a single, ordered,
+    GLOBAL `description_variables` list can back them: token 2's own `%1`
+    (which names token 2's own first pipe-declared variable, NOT token 1's)
+    becomes `%(N+1)` where `N` is the count of variables already collected
+    from every earlier token. This is pure bookkeeping -- the renumbered text
+    still names exactly the variables the corpus's own pipe entries declared,
+    in the corpus's own order, nothing added or guessed.
+    """
+    joined_parts: list[str] = []
+    global_vars: list[str] = []
+    for d in descs:
+        segments = d.split("|")
+        text = segments[0]
+        row_vars = [p for p in segments[1:] if p and not is_prerequisite(p)]
+        if row_vars:
+            offset = len(global_vars)
+            text = re.sub(
+                r"%(\d+)",
+                lambda m, _offset=offset: f"%{_offset + int(m.group(1))}",
+                text,
+            )
+            global_vars.extend(row_vars)
+        joined_parts.append(text)
+    return " ".join(joined_parts), global_vars
+
+
 def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     """The `DESC:` text a player should read, plus the variables its `%N` name.
 
@@ -1072,12 +1131,7 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
                     # Strength damage -- `decisions.md §46`'s loss again.
                     descs = piped
                 else:
-                    raise UnmodelledDesc(
-                        f"row carries {len(descs)} DESC: tokens, none gated on "
-                        f"{FULL_ABILITY_RULE}, no continuation, no superset and no single "
-                        "token bearing this row's own DEFINEd variables; the transcriber "
-                        f"refuses to pick one by position. Tokens: {descs!r}"
-                    )
+                    return _concat_desc_variants(descs)
         assert len(descs) == 1, "every branch above narrows to exactly one token"
     parts = descs[0].split("|")
     return parts[0], [p for p in parts[1:] if p and not is_prerequisite(p)]

@@ -119,12 +119,19 @@ mod tests {
         // Selection` (book-specific label), both namespaced `<Monster> ~
         // <Ability>` keys whose owner resolves through the existing prefix
         // pass, so both land in `owned`.
+        // 154/189 -> 154/192 (`decisions.md §27b` round 9, +3 total, all
+        // owner-less): the multi-DESC: parse-refusal group closes via
+        // `parse_desc`'s new generalised sixth branch -- the 3 `Mana Wastes
+        // Mutant ~ *` rows (mutually-exclusive `PREVARLT`/`PREVARGTEQ`/
+        // `PREHD`-gated variant text) are shared reference-library text no
+        // single stat block in this book owns; `owned` is UNCHANGED, all 3
+        // land in the owner-less pin below.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
         assert_eq!(owned, 154);
-        assert_eq!(monster_abilities().len(), 189);
+        assert_eq!(monster_abilities().len(), 192);
     }
 
     /// The shipped total is the classifier's `reachable remainder` **minus the
@@ -169,7 +176,10 @@ mod tests {
         // abilities`'s own comment). `owned` (190) is UNCHANGED.
         // 225 -> 227 (`decisions.md §27`/round 8, +2 owned; see this test's
         // own comment above).
-        assert_eq!(monsters().len() + monster_abilities().len(), 227);
+        // 227 -> 230 (`decisions.md §27b` round 9, +3 owner-less; see
+        // `the_book_ships_thirty_eight_monsters_and_one_hundred_fifty_two_
+        // abilities`'s own comment).
+        assert_eq!(monsters().len() + monster_abilities().len(), 230);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
@@ -196,23 +206,27 @@ mod tests {
 
         assert_eq!(
             unowned.len(),
-            35,
+            38,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py inner_sea_bestiary` run, and update the \
              matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set. \
              28 -> 35 (`decisions.md §24`/round 7, +7): the 7 name-PI ability rows now ship \
              under a neutral key instead of being dropped -- all 7 are orphans, so they join \
-             this set."
+             this set. 35 -> 38 (`decisions.md §27b` round 9, +3): the 3 `Mana Wastes Mutant \
+             ~ *` rows close, all owner-less, see the test above."
         );
 
         let mut hasher = DefaultHasher::new();
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0x0a4e_0e1f_6775_49cd,
+            digest, 0xcaea_9512_4391_abd0,
             "the owner-less key SET changed (same count, different members) — re-derive and \
-             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly. \
+             0x0a4e0e1f_677549cd -> 0xcaea9512_4391abd0 (`decisions.md §27b` round 9): the \
+             set gains 3 new members (the 3 `Mana Wastes Mutant ~ *` rows), re-derived live \
+             from this test's own failing run, never guessed, per `decisions.md §17a`."
         );
     }
 

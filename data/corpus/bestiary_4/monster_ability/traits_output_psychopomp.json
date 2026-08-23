@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Psychopomp",
+    "delivery": "Extraordinary",
+    "description": "A psychopomp's natural weapons, as well as any weapon it wields, are treated as though they had the ghost touch weapon special ability. &nl; A psychopomp notices, locates, and can distinguish between living and undead creatures within 60 feet, just as if it had the blindsight ability. This sense does not allow it to detect objects, but it does allow it to notice living things that are not creatures (such as normal trees).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_psychopomp",
+    "name": "Psychopomp Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A psychopomp notices, locates, and can distinguish between living and undead creatures within 60 feet, just as if it had the blindsight ability. This sense does not allow it to detect objects, but it does allow it to notice living things that are not creatures (such as normal trees)."
+      },
+      {
+        "key": "DESC",
+        "value": "A psychopomp's natural weapons, as well as any weapon it wields, are treated as though they had the ghost touch weapon special ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Psychopomp"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Psychopomp",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:10:22Z",
   "data": {
     "corpus_key": "Demon Lord (Pazuzu) ~ Profane Wishcraft",
     "delivery": "Supernatural",
@@ -11,19 +9,43 @@
     "key": "bestiary_4:monster_ability:demon_lord_pazuzu_profane_wishcraft",
     "name": "Profane Wishcraft",
     "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "KEY",
+        "value": "Demon Lord (Pazuzu) ~ Profane Wishcraft"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 457,
-    "record_key": "Demon Lord (Pazuzu) ~ Profane Wishcraft"
-  },
+  "ingested_at": "2026-08-23T14:10:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 457,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Demon Lord (Pazuzu) ~ Profane Wishcraft",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_expr",

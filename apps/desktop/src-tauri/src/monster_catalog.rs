@@ -1144,8 +1144,19 @@ mod tests {
         // Naga ~ Spells`, `Unfettered Eidolon ~
         // Str/Dex/Con/Int/Wis/Cha`). Re-derived: `python3
         // scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null`.
+        // 1076 -> 1126 (`decisions.md §27b` round 9, +50): the multi-DESC:
+        // `PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/`PRERACE`/`PRETEMPLATE`/
+        // `PREABILITY`-gated parse-refusal group closes via `parse_desc`'s
+        // new generalised sixth branch across 8 books -- `bestiary` +17,
+        // `bestiary_3` +10, `bestiary_4` +7, `horror_adventures` +9,
+        // `inner_sea_bestiary` +3, `bestiary_5` +1, `pathfinder_unchained`
+        // +3, all owner-less (shared reference-library text no single stat
+        // block owns); `bestiary_2`'s 2 closed units are both OWNED and do
+        // not move this count. Re-derived: `python3 scripts/shape_ledger.py
+        // --inventory docs/work-inventory.json` -- `monster_ability`
+        // `no_record` 56 -> 0.
         assert_eq!(
-            owner_less_records_held, 1076,
+            owner_less_records_held, 1126,
             "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
              from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
              update both this pin and `reach_gate.rs`'s matching entries"
