@@ -33,14 +33,18 @@
 //! * collapses `%%` to one `%` (lossless — nothing is looked up, nothing can
 //!   be lost);
 //! * substitutes `%N` when argument N is a plain integer literal;
-//! * **drops** `%N` when argument N is anything else — an expression this
-//!   engine cannot evaluate without the formula interpreter `decisions.md §24`
-//!   forbids — taking the `+`/`-` sign that introduced it with it, closing the
-//!   whitespace, and **reporting** the dropped argument rather than guessing a
-//!   value. This is the identical discipline
-//!   `ingest_race_traits::substitute_placeholders` already ships (its
-//!   `Halfling ~ Adaptable Luck` record reads "they only gain a bonus" for
-//!   exactly this reason);
+//! * **drops** `%N` when argument N is anything this module's own narrow
+//!   `<Name><+|-><integer>` offset shape (see [`resolve_desc_argument`]) does
+//!   not cover, taking the `+`/`-` sign that introduced it with it, closing
+//!   the whitespace, and **reporting** the dropped argument rather than
+//!   guessing a value. (`SD-27 decisions.md §24.1`'s formula-interpreter ban
+//!   this doc used to cite here was overturned by `SD-31 decisions.md`
+//!   Decision 20 on 2026-08-21, before this module's own `resolve_desc_
+//!   argument` was last touched — `Halfling ~ Adaptable Luck`, this doc's own
+//!   worked example, now resolves at ingest time too, via `race_trait_
+//!   formula_binding::resolve_same_row_formula`; this module's narrower
+//!   offset-only shape is unaffected and still correct for the population it
+//!   serves, but is no longer the *only* option the way this comment implied);
 //! * removes the `|`-delimited argument tail in all cases;
 //! * removes a trailing `|`-delimited **PCGen qualifier** (`PREABILITY:…`,
 //!   `!PRERULE:1,DisplayFullSpell`, …). A `DESC:` token may end in one or

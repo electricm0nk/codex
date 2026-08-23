@@ -60,12 +60,17 @@
 //! `src/bin/ingest_races.rs` already renders the Core Rulebook and Bestiary
 //! traits: gates are evaluated against the row's own `DEFINE:`/`BONUS:VAR`
 //! literals, `%N` is substituted from those literals, and `%%` collapses to
-//! one sign. An argument that is not a same-row literal — ARG has exactly one,
-//! `Halfling_AdaptableLuck_Bonus-1`, which is an *expression* and so
-//! unreadable without the formula interpreter `decisions.md §24` forbids — is
-//! **dropped and reported, never guessed**. [`leaked_pcgen_syntax`] is a
-//! production guard: any description still carrying PCGen syntax fails the run
-//! instead of reaching a screen.
+//! one sign. An argument that is a same-row *expression* over those literals
+//! — ARG has exactly one, `Halfling_AdaptableLuck_Bonus-1` — is resolved via
+//! `codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula`,
+//! which wires in `formula_interpreter::PcgenFormulaEvaluator`
+//! (`SD-31 decisions.md` Decision 20 overturned `SD-27 decisions.md §24.1`'s
+//! ban on 2026-08-21; SD-32's own `decisions.md §3` restates the fixture
+//! discipline that conditions it). An argument this cannot resolve — it names
+//! a variable the row never defines, or a token shape the interpreter does not
+//! recognise — is still **dropped and reported, never guessed**.
+//! [`leaked_pcgen_syntax`] is a production guard: any description still
+//! carrying PCGen syntax fails the run instead of reaching a screen.
 //!
 //! Run with `cargo run --bin ingest_race_traits` for every declared book, or
 //! `cargo run --bin ingest_race_traits -- monster_codex` for one.
@@ -90,6 +95,7 @@ use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
+use codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula;
 use codex::rules_core::race_resolver::ADOPTIVE_PARENTAGE_CATEGORY;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, Population, RaceTraitCacheData, RawBonusChain, RawToken,
@@ -557,13 +563,17 @@ fn prefact_flag(clause_value: &str) -> Option<String> {
 /// on the same row the variable is a constant written across two tokens:
 /// `Halfling ~ Adaptable Luck` carries `DEFINE:Halfling_AdaptableLuck_Bonus|0`
 /// and `BONUS:VAR|Halfling_AdaptableLuck_Bonus|2`, so the value is 2 and
-/// reading it is transcription, not evaluation. `decisions.md §24`'s ban
-/// on a formula interpreter is therefore not engaged.
+/// reading it is transcription, not evaluation. Where `<value>` is instead a
+/// formula over variables THIS row already resolved (none in the current
+/// in-scope corpus, but the shape is real elsewhere — see
+/// `race_trait_formula_binding`'s module doc), [`resolve_same_row_formula`]
+/// evaluates it via `formula_interpreter::PcgenFormulaEvaluator`.
 ///
-/// The instant any contribution stops being a same-row literal — a
-/// formula (`BONUS:VAR|X|OtherVar`), a conditional bonus (a trailing
-/// `PRE...` qualifier), or a base declared elsewhere in the corpus — the
-/// variable is marked unresolvable and **no value is guessed**.
+/// The instant any contribution stops being resolvable purely from this
+/// row's own tokens — a conditional bonus (a trailing `PRE...` qualifier), a
+/// formula naming a variable this row never defines, or a base declared
+/// elsewhere in the corpus — the variable is marked unresolvable and **no
+/// value is guessed**.
 fn same_row_vars(parsed: &[Field]) -> BTreeMap<String, Option<i64>> {
     let mut vars: BTreeMap<String, Option<i64>> = BTreeMap::new();
 
@@ -579,7 +589,7 @@ fn same_row_vars(parsed: &[Field]) -> BTreeMap<String, Option<i64>> {
         }
         let (Some(names), Some(amount)) = (quals.get(1), quals.get(2)) else { continue };
         let conditional = quals[3..].iter().any(|q| q.starts_with("PRE") || q.starts_with("!PRE"));
-        let amount = if conditional { None } else { amount.trim().parse::<i64>().ok() };
+        let amount = if conditional { None } else { resolve_same_row_formula(amount.trim(), &vars) };
         for name in names.split(',') {
             let name = name.trim().to_string();
             match vars.get_mut(&name) {
@@ -613,12 +623,14 @@ fn is_prerequisite_arg(arg: &str) -> bool {
 /// the row's own variable table, honouring a leading `!` as negation and
 /// requiring every pair to hold.
 ///
-/// This compares two same-row constants; it is not formula evaluation.
-/// Anything undecidable — an unknown comparison, a prerequisite kind this
-/// does not model, an operand defined elsewhere — is an `Err`, never a
-/// coin flip: a gate decides what the rules text *says* ("Three" vs a
-/// variable count), so guessing it would ship a false statement rather
-/// than merely an incomplete one.
+/// Each operand may be a same-row constant, a bare variable name, or (via
+/// [`resolve_same_row_formula`]) a formula over other same-row-resolved
+/// variables — it is not free-form formula evaluation against arbitrary
+/// character state. Anything undecidable — an unknown comparison, a
+/// prerequisite kind this does not model, an operand this row cannot
+/// resolve — is an `Err`, never a coin flip: a gate decides what the rules
+/// text *says* ("Three" vs a variable count), so guessing it would ship a
+/// false statement rather than merely an incomplete one.
 fn eval_prevar_gate(token: &str, vars: &BTreeMap<String, Option<i64>>) -> Result<bool, String> {
     let (negated, body) = match token.strip_prefix('!') {
         Some(rest) => (true, rest),
@@ -629,13 +641,8 @@ fn eval_prevar_gate(token: &str, vars: &BTreeMap<String, Option<i64>>) -> Result
 
     let operand = |raw: &str| -> Result<i64, String> {
         let raw = raw.trim();
-        if let Ok(n) = raw.parse::<i64>() {
-            return Ok(n);
-        }
-        vars.get(raw)
-            .copied()
-            .flatten()
-            .ok_or_else(|| format!("DESC gate {token:?}: {raw:?} is not a same-row literal"))
+        resolve_same_row_formula(raw, vars)
+            .ok_or_else(|| format!("DESC gate {token:?}: {raw:?} does not resolve from this row's own tokens"))
     };
 
     let parts: Vec<&str> = args.split(',').collect();
@@ -692,6 +699,11 @@ fn collapse_whitespace(text: &str) -> String {
 /// * `%N` is an **argument reference** into the segment's `|`-delimited
 ///   tail.
 ///
+/// An argument may be a bare literal, a bare same-row variable name, or (via
+/// [`resolve_same_row_formula`]) a formula over other same-row-resolved
+/// variables — `Halfling ~ Adaptable Luck`'s real `%2` argument,
+/// `Halfling_AdaptableLuck_Bonus-1`, is exactly this shape.
+///
 /// An unresolvable argument is **dropped, never guessed**: the
 /// placeholder goes, the `+`/`-` sign that introduced it goes with it,
 /// and the whitespace is closed up so the sentence still reads. The raw
@@ -717,10 +729,7 @@ fn substitute_placeholders(prose: &str, args: &[&str], vars: &BTreeMap<String, O
             && digit >= 1
         {
             let arg = args.get(digit as usize - 1).copied();
-            let value = arg.and_then(|name| {
-                let name = name.trim();
-                name.parse::<i64>().ok().or_else(|| vars.get(name).copied().flatten())
-            });
+            let value = arg.and_then(|name| resolve_same_row_formula(name.trim(), vars));
             match value {
                 Some(v) => out.push_str(&v.to_string()),
                 None => {
@@ -1920,9 +1929,10 @@ mod tests {
     /// except for a shortened first `DESC:` and the elided tab padding. It is
     /// the hardest row in the file: five `DESC:` segments, two of them gated
     /// on `PREVAR` comparisons over row-local variables, one `%N` argument
-    /// that resolves off same-row literals (`Halfling_AdaptableLuck_Bonus`
-    /// = `DEFINE 0` + `BONUS:VAR 2` = 2) and one that does **not**
-    /// (`Halfling_AdaptableLuck_Bonus-1` is an expression, not a literal).
+    /// that resolves off a bare same-row literal (`Halfling_AdaptableLuck_Bonus`
+    /// = `DEFINE 0` + `BONUS:VAR 2` = 2) and one that resolves off a same-row
+    /// *formula* over that literal (`Halfling_AdaptableLuck_Bonus-1` = 2-1 = 1,
+    /// via `resolve_same_row_formula`/`formula_interpreter::PcgenFormulaEvaluator`).
     const ADAPTABLE_LUCK: &str = concat!(
         "Adaptable Luck\t",
         "KEY:Halfling ~ Adaptable Luck\t",
@@ -1962,6 +1972,12 @@ mod tests {
     fn adaptable_luck_resolves_what_the_row_states_and_drops_only_what_it_does_not() {
         let row = parse_row(227, ADAPTABLE_LUCK).expect("row is a racial trait");
         let desc = row.description.expect("description");
+        // Hand-transcribed from the raw `.lst` bytes above, never read by the
+        // evaluator under test (`decisions.md §3` fixture discipline): base
+        // `Halfling_AdaptableLuck_Bonus` = `DEFINE 0` + `BONUS:VAR 2` = 2, so
+        // the row's real `%2` argument (`Halfling_AdaptableLuck_Bonus-1`)
+        // evaluates to 1 -- "a +1 bonus", not the truncated "a bonus" this
+        // binary shipped before the formula interpreter was wired in.
         assert_eq!(
             desc,
             concat!(
@@ -1969,7 +1985,7 @@ mod tests {
                 "Three times per day, a halfling can gain a +2 luck bonus on an ability check, ",
                 "attack roll, saving throw, or skill check. If halflings choose to use the ability ",
                 "before they make the roll or check, they gain the full +2 bonus; if they choose ",
-                "to do so afterward, they only gain a bonus. Using adaptive luck in this way is ",
+                "to do so afterward, they only gain a +1 bonus. Using adaptive luck in this way is ",
                 "not an action. This racial trait replaces halfling luck.",
             )
         );
@@ -1978,9 +1994,9 @@ mod tests {
         // "Three" segment (`Times <= 3`) is what survives.
         assert!(!desc.contains("Three 3 times"), "gates must not both fire: {desc:?}");
         assert_eq!(leaked_pcgen_syntax(&desc), None);
-        // The one argument that is an expression rather than a literal is
-        // reported, never guessed.
-        assert_eq!(row.unresolved_desc_args, vec!["Halfling_AdaptableLuck_Bonus-1"]);
+        // Both `%1` and `%2` now resolve (the second via the formula
+        // interpreter) -- nothing is left unresolved for this row.
+        assert_eq!(row.unresolved_desc_args, Vec::<String>::new());
     }
 
     #[test]

@@ -197,6 +197,12 @@ pub mod formula_interpreter_corpus_wide;
 /// the real multi-token `PREVARGTEQ` bonus-stack shape, not to wiring a consumer), so a private
 /// `mod` here would make its non-test API dead code.
 pub mod bonus_stack_reader;
+/// SD-32 — wires `formula_interpreter`/`PcgenFormulaEvaluator` into
+/// `src/bin/ingest_race_traits.rs` and `src/bin/ingest_races.rs`'s shared
+/// `same_row_vars`/`substitute_placeholders`/`eval_prevar_gate` shape (see its
+/// own module doc). `pub`: both binaries are separate compilation units, so
+/// this crate's own internals are not the only caller.
+pub mod race_trait_formula_binding;
 mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;

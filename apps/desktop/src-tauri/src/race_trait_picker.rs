@@ -2005,22 +2005,25 @@ mod tests {
                 }
             }
         }
-        // Exactly one, and it is the record the defect was reported against.
-        // Its stored prose is the ingest-time collapse of a row whose `%N`
-        // arguments the ingest could not finish, so it shipped reading "Three
-        // times per day… they only gain a bonus" with the magnitudes simply
-        // absent. Rendering restores them for every player, character or not.
+        // `Halfling ~ Adaptable Luck` was here until SD-32's card-11 T2b
+        // formula-interpreter wiring (2026-08-23,
+        // `race_trait_formula_binding::resolve_same_row_formula`):
+        // `ingest_race_traits.rs` now resolves the row's real `%2` argument
+        // (`Halfling_AdaptableLuck_Bonus-1`, a same-row formula, not a
+        // literal) the same way this module's own `render_trait_description`
+        // already did, so the two agree and the record no longer shows up as
+        // "differs from the ingest-time collapse". The remaining three carry
+        // a genuinely different shape: each one's unresolved `DESC:` argument
+        // names a variable this row never defines at all (`Nagaji_
+        // RacialCasterlevel`, `Suli_ElementalAssault_Duration`, `Undine_
+        // NereidFascination_Duration` all depend on cross-record/character
+        // state — total level, another class feature's own variable — not on
+        // an expression over this row's own literals), so no same-row formula
+        // evaluator, wired or not, can close them from ingested data alone.
         assert_eq!(
             changed,
             vec![
                 "Oversized Goblin",
-                "Halfling ~ Adaptable Luck",
-                // SD31-E6-F4-006 (2026-08-17): `Nagaji ~ Hypnotic Gaze`'s
-                // `DESC:` carries two args (`Nagaji_RacialCasterlevel` and
-                // `11+Nagaji_RacialCastingMod`) the ingest could not resolve
-                // to a same-row literal, the identical shape `Adaptable
-                // Luck`/`Nereid Fascination` already establish -- dropped at
-                // ingest time, restored by rendering.
                 "Nagaji ~ Hypnotic Gaze",
                 "Suli ~ Energy Strike",
                 "Undine ~ Nereid Fascination"

@@ -3197,3 +3197,53 @@ totals (38,540/41,987).
   `1787464765770-unred-powers-51a340`).
 - **Next-cycle plan:** none for this assertion. The memo §7 mechanism table (previous cycle's plan)
   is still the right next dispatch target for card 15's residual population.
+
+## Cycle: interpreter-race-trait-wiring (2026-08-23)
+
+- **Card:** row 11 (`epic-2-cause-closure`), scope: wire `formula_interpreter` into race-trait
+  ingestion (retry of a prior lane that ended its turn with zero commits/pushes; verified via
+  `git log`/retro events before this cycle started that nothing had landed).
+- **Base:** worktree started on a stray `site-publish` merge (`275581bf0`, footgun 1) —
+  `git reset --hard 07c88775d7f9fcacffef6d825807a81fed89d8d4`, re-verified; `git rebase
+  origin/tranche/12` was a no-op (already at that tip).
+- **Re-derived the population first:** dispatch brief cited 29 units; corpus-wide scan of both
+  ingest binaries' actual in-scope source files found exactly **1** unit genuinely blocked
+  *purely* on the missing formula evaluator (`Halfling ~ Adaptable Luck`'s `%2` `DESC:` arg).
+  The 29-unit ARG figure's real remaining blocker (per `card11-t2b-remeasure.md §6`, read before
+  building anything) is Samsaran not being in `IN_SCOPE_RACES` — a scope ruling, not the
+  interpreter. Retro correction logged
+  (`docs/retro/events/interpreter-race-trait-wiring.jsonl`).
+- **Wired, no second evaluator:** new `src/rules_core/pilot_compute/race_trait_formula_binding.rs`
+  binds `formula_interpreter::PcgenFormulaEvaluator` (unmodified) into both
+  `src/bin/ingest_race_traits.rs` and `src/bin/ingest_races.rs`'s shared
+  `same_row_vars`/`eval_prevar_gate`/`substitute_placeholders` shape; fixture-checked (7 new
+  tests, expected values hand-transcribed from the real `.lst` bytes, per `decisions.md §3`).
+  Also corrected a stale `decisions.md §24` doc claim in `src/rules_core/pcgen_desc.rs` (doc-only,
+  Decision 20 overturned that ban 2026-08-21).
+- **Closed:** the 1 real unit. Corpus regenerated through the guarded generator path only
+  (`cargo run --bin ingest_race_traits -- advanced_race_guide`; 307 files, 306 timestamp-only,
+  1 real content change — `halfling_adaptable_luck.json`'s description gains its real "+1").
+- **RED→GREEN proven twice, independently:** the row-parser test itself, and a sibling
+  consumer's own divergence-tracking test (`apps/desktop/src-tauri/src/race_trait_picker.rs`)
+  whose hardcoded "records that differ from the ingest-time collapse" list dropped `Halfling ~
+  Adaptable Luck` once ingest-time and live-render agreed — an independent confirmation the fix
+  is correct, from a component this cycle did not set out to touch.
+- **Confirmed, not assumed, the remainder is genuinely blocked on something else:** 6 other
+  in-scope unresolved `DESC:`/`BONUS:VAR` shapes all name a variable the row never itself
+  defines (`TL`, `CHA`, a cross-record class-feature variable) — a missing binding, not a
+  missing evaluator. No further units close from this wiring alone.
+- **Suites:** `cargo test --locked --bin ingest_race_traits` 16/16; `--bin ingest_races` 44/44;
+  `--lib rules_core::pilot_compute::` 862/862 (incl. new module); `--lib` 2397/2397 (13 ignored,
+  was 2390 — +7 new); desktop crate (separate cargo workspace) 518/518 (was 517 — +1, this
+  cycle's own updated assertion); `scripts/verify.sh --only reach` PASS (31);
+  `scripts/verify.sh --only preflight-oracle` PASS.
+- **Dual-audit (this cycle's own diff, base `07c88775d`):** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+- **Kanban:** row 11 stays `in-progress` (this sub-population is closed; T2b/T9/T12/T2a-residual/
+  T4-L9 remain open, untouched by this cycle). Row 15 untouched, stays `in-progress`.
+- **Discovery forwards:** none new.
+- **Next-cycle plan:** none from this cycle specifically — the interpreter is now generically
+  wired for both ingest binaries, so any future book/race widening that introduces a genuine
+  same-row formula shape resolves automatically without new plumbing. The still-open
+  Samsaran/`IN_SCOPE_RACES` scope question and the 6 external-variable DESC-arg cases are
+  named, not this cycle's to close.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-interpreter-race-trait-wiring_cycle-1_cycle_receipt.md`.
