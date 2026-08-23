@@ -6043,3 +6043,93 @@ largest book) and `equipment_modifier`'s 43 (still no lead) are the natural next
 `spell`'s residual 167 needs `advanced_players_guide`'s consumer trace, the prior cycle's own named
 `bestiary`/`bestiary_4`/`bestiary_6` remainder, and `raw_tokens` enrichment + reachability wiring
 for all ten now-config-driven-but-unwired books.
+
+## Cycle t9-monster-ability-owner-less-ingest-round3
+
+**`decisions.md §17a` re-derive found the prior `monster_ability` receipt's own "no further
+apply-the-mechanism-to-book-N cycles remain" claim stale.** `python3
+scripts/classify_monster_ability_rows.py` (no args) reports 171 orphan `monster_ability` rows
+across **8 zero-monster books never registered** in `scripts/transcribe_monster_tables.py`'s
+`BOOKS` dict at all — none of them among the 8 books the prior cycle had just finished, and the
+prior cycle never checked for other unregistered zero-monster books.
+
+This cycle registered **5 of the 8** — `ultimate_wilderness`, `ultimate_intrigue`,
+`ultimate_magic`, `bestiary_6`, `bestiary_5` — via the identical existing generic mechanism (no
+mechanism code change; one `BOOKS` entry, one `MonsterBookSpec`, one `MonsterBook` row, ~15 lines
+of `mod.rs` glue per book, per `decisions.md §17`'s cost model). The other 3
+(`pathfinder_unchained` 72, `advanced_race_guide` 1, `mythic_adventures` 21) need more surgery —
+named explicitly below, not built this cycle.
+
+Two citation gaps found and fixed the same way the prior cycle found its own (this generator
+refusing rather than guessing): `bestiary_6` and `bestiary_5` each needed one more
+`abilities_lsts` entry (`ce_abilities_race.lst`, `b5_abilities_race_oa.lst`) after
+`gen_book_cache` refused outright. `b5_abilities_race_oa.lst`'s own `.pcc` line carries a
+`PRECAMPAIGN:1,Occult Adventures` gate this repo does not satisfy (occult_adventures is not a
+registered book) — registered anyway because `docs/work-inventory.json`'s own census already
+attributes these 3 rows to `book: "bestiary_5"`, so this cycle ingests what Gate 0's census
+already scoped rather than re-litigating it (`decisions.md §22` divergence recorded in the
+generator's own comment, the receipt, and here).
+
+One real per-record shape found and left `no_record`, not forced through (`decisions.md §1a`):
+`bestiary_5`'s `Traits Output ~ Sahkil` (`b5_abilities_race.lst:96`) is a multi-`DESC:` shape
+`parse_desc` refuses rather than mistranscribes.
+
+**Bundle `no_record`, before → after this cycle** (re-derived post-rebase — the base already
+included a concurrent sibling's `spell` 285→167 landing, `3f8ddca7fd`, which this table credits to
+that cycle, not this one):
+
+| Kind | Before (post-rebase base) | After this cycle |
+|---|---:|---:|
+| `companion` | 217 | 217 (untouched — sibling lane's scope) |
+| `monster_ability` | 267 | **191** |
+| `equipment` | 170 | 170 (untouched — sibling lane's scope) |
+| `spell` | 167 | 167 (untouched — landed by `3f8ddca7fd` before this cycle rebased onto it) |
+| `equipment_modifier` | 43 | 43 (untouched — sibling lane's scope) |
+| **Bundle total** | **864** | **788** |
+
+`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` → bundle total 864 → 788
+(-76, exactly the 5 books' shipped-row count: 2+6+13+16+39). `monster_ability` 267 → 191.
+
+**Closure/reclassification/reachability, reported separately (`§16`):** 76 units closed (real
+ingest, `no_record` → `matched`/`no_formula_tokens`, `owners: &[]` since none of these books has
+a monster row to claim any ability). Zero reclassified — no unit changed `kind` this cycle.
+Reachability NOT claimed for any of the 76 — every key is pinned by name in `reach_gate.rs`'s
+`UNREACHED_RECORD_FINDINGS`, proven non-reaching via `monster_catalog.rs`'s corpus-wide
+owner-less-count pin (881 → 957).
+
+**Gate 3 standing budget** (constants NOT touched, per the dispatch brief): `python3
+scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.json` →
+`no_record budget: 788/35328 vs. baseline 21521/36028 -- exceeded: False` (a decrease in
+`no_record` only widens the passing margin, never threatens it).
+
+**Tests:** `cargo build --locked --lib` clean; the 5 new books' own `rules_core::rules_tables::*`
+suites (12+11+18+7+4 = 52 tests) pass; `monster_chassis::` (8 tests) passes; desktop
+`monster_catalog::` (26 tests, after the 5 new wire codes and the 957 pin) passes;
+`pi_sweep_rules_tables` clean for this cycle's own files (3 pre-existing UNBASELINED `Aldori` hits
+in `feat_gap_tables.rs`, a file this cycle never touched); desktop `reach_gate::` 23 passed / 8
+failed, same 8 test names and same pass/fail split as the pre-existing baseline the prior cycle's
+own receipt confirmed, re-verified by content: none of the 8 failures' detail names
+`monster_abilities` for any of the 5 new books.
+
+Receipt:
+`artifacts/gate-3-closure-invariant/t9-monster-ability-owner-less-ingest-round3_cycle-1_cycle_receipt.md`.
+Commit: `59b3dfb191` (pre-rebase), landed on `tranche/12` at `6d7fd2e081`.
+
+Kanban row 11 (`epic-2-cause-closure`) note prepended in the same cycle. Row 11 stays
+`in-progress`; row 15 untouched.
+
+Next-cycle plan, named by shape and count (`decisions.md §20`/`§1a` — no shape forced through):
+1. **`pathfinder_unchained` (72) and `advanced_race_guide` (1)** — same mechanism, but each needs
+   its hand-rolled `gen_pathfinder_unchained()`/`gen_advanced_race_guide()` in
+   `src/bin/gen_book_cache.rs` extended to also call `gen_monster_book` for a registered
+   `MonsterBookSpec`, since `main()`'s CLI dispatch already special-cases both book names to those
+   functions rather than the generic `monster_book_spec()` lookup path.
+2. **`mythic_adventures` (21)** — same mechanism, but its `rules_tables/mythic_adventures/`
+   module directory does not exist yet and needs scaffolding before the registration steps apply.
+3. **Real per-record/per-facet residual, ~92 units** across `bestiary` (23), `bestiary_3` (21),
+   `inner_sea_bestiary` (12), `bestiary_2` (10), `horror_adventures` (9), `bestiary_4` (7),
+   `inner_sea_gods` (6), `inner_sea_world_guide` (3), `bestiary_5` (1) — multi-`DESC:` parse
+   refusals, `TYPE:`-facet-vocabulary gaps, PI-declared rows correctly excluded per `§15`. Needs a
+   per-record read, not another registration cycle.
+4. `occult_adventures` (5) is correctly out of scope — its monster row's negated `PRECAMPAIGN`
+   gate is failed by this repo's own included-book set. Not a gap.

@@ -2,7 +2,7 @@
 
 - **Card ID:** 11 (`epic-2-cause-closure`, T9 sub-lane
   `t9-monster-ability-owner-less-ingest-round3`)
-- **Commit SHA:** (this cycle's commit — see push output)
+- **Commit SHA:** `6d7fd2e081` (pushed to `tranche/12`)
 - **Files touched:**
   - `scripts/transcribe_monster_tables.py` — `BOOKS` dict gains 5 new
     entries (`ultimate_wilderness`, `ultimate_intrigue`, `ultimate_magic`,
@@ -168,6 +168,14 @@ Per book: `ultimate_wilderness` 2→0, `ultimate_intrigue` 6→0,
 `bestiary_5` 40→1 (the parse-refused `Traits Output ~ Sahkil` above).
 2+6+13+16+(40-1) = 76, matching the ledger delta exactly.
 
+**Re-derived again after rebasing onto `origin/tranche/12`**, which had
+landed a sibling `spell` no_record closure in the interim (`3f8ddca7fd`:
+`spell` 285→167, bundle total post-rebase-base 864): bundle total
+864 → 788 (companion 217, `monster_ability` 191, equipment 170, spell 167,
+equipment_modifier 43) — `monster_ability`'s own 267→191 delta is
+unchanged by the rebase, confirming this cycle's -76 is independent of the
+sibling lane's work.
+
 **No unit was reclassified out of `monster_ability` into another kind** —
 this is a genuine ingestion closure. Every other kind's `no_record` figure
 is byte-identical to the pre-cycle ledger (this cycle touched no other
@@ -178,7 +186,7 @@ are untouched, per this cycle's brief:
 python3 scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.json
 ```
 ```
-no_record budget: 1038/35328 vs. baseline 21521/36028 -- exceeded: False
+no_record budget: 788/35328 vs. baseline 21521/36028 -- exceeded: False  (post-rebase re-derive)
 piles reconcile: True
 ```
 
