@@ -194,10 +194,22 @@ fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
 /// straight from `data/class_feature_grants/<book>/<class-slug>.json`
 /// (`cache_gen::class_feature_grants.rs`'s own output shape). `class` and
 /// `key` are the module's own resolved fields, never re-derived here.
+///
+/// `gate` (added for T7/D12, see [`resolvable_grants`]'s doc comment) is the
+/// row's own `"gate"` field verbatim (`"preclass"` / `"mod_row_gated"` /
+/// `"mod_row_ungated"`) -- `cache_gen::class_feature_grants.rs`'s own
+/// documented invariant (mirrored in this file's earlier doc comment) is
+/// that ONLY the bare-`PRECLASS:` resolution path can EVER be
+/// archetype-sourced, so this is the one signal this module can read,
+/// without re-parsing corpus text, to tell "a row this shallow, single-hop
+/// `granted_via_archetype` check could plausibly have missed" apart from
+/// "a row that structurally cannot be archetype-sourced at all".
+#[derive(Debug)]
 struct RawGrantFact {
     key: String,
     class: String,
     level: u8,
+    gate: String,
 }
 
 /// Reproduced from `v06_work_inventory.rs`'s own `CLASS_FEATURE_POOLS`
@@ -379,7 +391,8 @@ fn load_raw_grant_facts() -> Vec<RawGrantFact> {
                 if row["granted_via_archetype"].as_bool().unwrap_or(true) {
                     continue;
                 }
-                out.push(RawGrantFact { key: key.to_string(), class: class.to_string(), level });
+                let gate = row["gate"].as_str().unwrap_or("").to_string();
+                out.push(RawGrantFact { key: key.to_string(), class: class.to_string(), level, gate });
             }
         }
     }
@@ -387,27 +400,76 @@ fn load_raw_grant_facts() -> Vec<RawGrantFact> {
 }
 
 /// `(class.to_lowercase(), key)` -> the granted-at level, for every grant
-/// fact that resolves WITHOUT a cross-book disagreement. See this module's
-/// doc comment, section 1, for why disagreeing pairs are dropped rather than
-/// resolved by picking one side.
+/// fact that resolves WITHOUT a cross-book disagreement AND (T7/D12, below)
+/// is not a bare-`PRECLASS:`-only fact with no corroborating non-`PRECLASS:`
+/// fact for the same pair. See this module's doc comment, section 1, for why
+/// disagreeing pairs are dropped rather than resolved by picking one side.
+///
+/// **T7/D12 -- shallow, single-hop `granted_via_archetype` traversal
+/// (`docs/release/SD-31-corpus-closure-grind/todo/defects.md` D12).**
+/// `granted_via_archetype` (`load_raw_grant_facts`'s own filter, above) reads
+/// only the ONE row that carries the `ABILITY:` grant token's OWN `CATEGORY`
+/// field -- a single hop. It cannot see a grant token nested INSIDE another
+/// ability's definition row, where the archetype-ness lives one hop further
+/// out, on the CONTAINING row (confirmed live:
+/// `ultimate_combat/uc_abilities_class.lst:1970`'s "Guns Everywhere" optional
+/// -rule row, `CATEGORY:Internal`, embeds `ABILITY:...|Gunslinger ~ Gun
+/// Training|...|PRECLASS:1,Gunslinger=1` -- the embedded grant's own row
+/// context is never archetype-flagged because the row that OWNS the grant
+/// token is not itself the class's base definition; same shape at
+/// `ultimate_combat/uc_abilities_class.lst:584`'s Evangelist "Sermonic
+/// Performance" row for `Cleric ~ Channel Energy`, and
+/// `ultimate_intrigue/ui_abilities_class.lst:587`'s Paladin analogue).
+///
+/// This module's own documented invariant (mirrored from
+/// `cache_gen::class_feature_grants.rs`, this file's earlier doc comment,
+/// "Only the bare-`PRECLASS:` resolution path... can EVER be
+/// archetype-sourced") is the one lever available here without re-parsing
+/// corpus text: a `.MOD`-row-gated fact (`gate` = `mod_row_gated` /
+/// `mod_row_ungated`) can never be this shape, so it is always trusted at
+/// face value; a bare-`PRECLASS:`-gated fact (`gate` = `preclass`) is the
+/// ONLY shape this defect can hide in. Re-deriving the corpus census
+/// (`t7_census.py`, cited in the cycle receipt) over the live merged data
+/// found exactly one `(class, key)` pair, corpus-wide, whose SURVIVING
+/// (non-archetype-flagged) facts are ALL `gate == "preclass"` with no
+/// `mod_row_*` fact to corroborate them: `("gunslinger", "Gunslinger ~ Gun
+/// Training")`. The other three D12-named pairs (`Cleric ~ Channel Energy`,
+/// `Druid ~ Wild Shape`, `Paladin ~ Smite Evil`) already carry a genuine
+/// `mod_row_gated` base-class fact at a DIFFERENT level, so they were already
+/// refused by the cross-book-conflict rule above -- but only by that
+/// incidental level disagreement, not by anything that reads `gate` at all
+/// (defects.md D12's own finding). Refusing every uncorroborated
+/// bare-`PRECLASS:` pair closes the whole shape structurally: it no longer
+/// matters whether a future corpus edit happens to make the levels agree,
+/// because the missing `mod_row_*` corroboration is what is actually being
+/// checked now, not a level coincidence.
 fn resolvable_grants() -> &'static BTreeMap<(String, String), u8> {
     static TABLE: OnceLock<BTreeMap<(String, String), u8>> = OnceLock::new();
     TABLE.get_or_init(|| {
         let mut levels_seen: BTreeMap<(String, String), BTreeMap<u8, ()>> = BTreeMap::new();
+        let mut gates_seen: BTreeMap<(String, String), std::collections::BTreeSet<String>> =
+            BTreeMap::new();
         for fact in load_raw_grant_facts() {
             let pair = (fact.class.to_lowercase(), fact.key);
-            levels_seen.entry(pair).or_default().insert(fact.level, ());
+            levels_seen.entry(pair.clone()).or_default().insert(fact.level, ());
+            gates_seen.entry(pair).or_default().insert(fact.gate);
         }
         levels_seen
             .into_iter()
             .filter_map(|(pair, levels)| {
-                if levels.len() == 1 {
-                    levels.into_keys().next().map(|level| (pair, level))
-                } else {
+                if levels.len() != 1 {
                     // Cross-book conflict: refuse the whole pair rather than
                     // guess which book wins.
-                    None
+                    return None;
                 }
+                let gates = gates_seen.get(&pair).cloned().unwrap_or_default();
+                if gates.len() == 1 && gates.contains("preclass") {
+                    // T7/D12: a bare-PRECLASS:-only pair with no mod_row_*
+                    // corroboration -- refuse structurally rather than trust
+                    // the single-hop `granted_via_archetype` derivation.
+                    return None;
+                }
+                levels.into_keys().next().map(|level| (pair, level))
             })
             .collect()
     })
@@ -1002,6 +1064,45 @@ mod tests {
         }
     }
 
+    /// T7/D12 (`docs/release/SD-31-corpus-closure-grind/todo/defects.md` D12,
+    /// `docs/release/SD-32-compute-library-and-cause-closure` card 11):
+    /// `("gunslinger", "Gunslinger ~ Gun Training")` is the one live,
+    /// reproducible D12 pair with NO cross-book level conflict at all (the
+    /// other three named pairs are already caught by
+    /// `cross_book_conflicting_pairs_are_dropped_not_guessed` above) -- its
+    /// sole surviving fact comes from `ultimate_combat/uc_abilities_class.lst
+    /// :1970`'s `CATEGORY:Internal` "Guns Everywhere" optional-rule row,
+    /// embedding a `PRECLASS:1,Gunslinger=1`-gated grant for the SAME key a
+    /// vanilla Gunslinger already has via a genuinely separate, hand-wired
+    /// chassis function (`class_ultimate_combat.rs::
+    /// gunslinger_gun_training_count`) -- so the single-hop
+    /// `granted_via_archetype` check on this row alone (`CATEGORY:Internal`,
+    /// not `CATEGORY:Archetype`) cannot see that the grant is embedded, not a
+    /// genuine top-level base-class declaration. Mutating the `gates.len() ==
+    /// 1 && gates.contains("preclass")` refusal in `resolvable_grants` to a
+    /// no-op turns this red (confirmed live, see cycle receipt).
+    #[test]
+    fn a_bare_preclass_only_pair_with_no_mod_row_corroboration_is_refused() {
+        let raw = load_raw_grant_facts();
+        let gunslinger_facts: Vec<&RawGrantFact> =
+            raw.iter().filter(|f| f.class.eq_ignore_ascii_case("gunslinger") && f.key == "Gunslinger ~ Gun Training").collect();
+        assert!(
+            !gunslinger_facts.is_empty(),
+            "expected load_raw_grant_facts to carry at least one live Gunslinger ~ Gun Training \
+             fact, to prove this test has real input to refuse"
+        );
+        assert!(
+            gunslinger_facts.iter().all(|f| f.gate == "preclass"),
+            "expected every live Gunslinger ~ Gun Training fact to be bare-PRECLASS:-gated \
+             (no mod_row_* corroboration): {gunslinger_facts:?}"
+        );
+        let grants = resolvable_grants();
+        assert!(
+            !grants.contains_key(&("gunslinger".to_string(), "Gunslinger ~ Gun Training".to_string())),
+            "an uncorroborated bare-PRECLASS: pair must never resolve -- T7/D12 regression"
+        );
+    }
+
     #[test]
     fn a_slug_shared_by_two_distinct_keys_for_the_same_class_emits_neither() {
         // Originally reproduced a LIVE collision (many archetype books
@@ -1426,9 +1527,17 @@ mod tests {
         // them, never to make a test pass. If this assertion fails after touching
         // `resolve_pcgen_var_chain`/`resolved_description_for`, the new counts ARE the finding --
         // report them, don't silently update the pin without checking why they moved.
+        //
+        // `already_admitted` moved 137 -> 136 (T7/D12, SD-32 card 11): `resolvable_grants` now
+        // refuses `("gunslinger", "Gunslinger ~ Gun Training")`, an uncorroborated bare-PRECLASS:
+        // pair (see that function's own doc comment), so it no longer survives into
+        // `unambiguous_grants` at all. This is the intended effect of the fix, not a regression --
+        // the value was already suppressed downstream by `push_generic_class_feature_grant_records`'s
+        // own already-computed-slug guard (Gunslinger's real Gun Training magnitude is served by
+        // `class_ultimate_combat.rs`'s dedicated function), so no player-visible value changes.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (137, 15, 11, 14, 36),
+            (136, 15, 11, 14, 36),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \
