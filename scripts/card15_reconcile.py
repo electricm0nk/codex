@@ -183,57 +183,120 @@ def main(argv: list[str] | None = None) -> int:
         # enumerated `docs/work-inventory.json` rows -- moved to
         # `already_tracked_a` below.
         #
-        # SD-32 card 15-duplicate-identity: rescued 24 of the 180 non-internal
-        # residual rows (`disambiguate_class_feature_fallback_collisions`,
+        # SD-32 card 15-duplicate-identity (first cycle): rescued 24 of the
+        # 180 non-internal residual rows
+        # (`disambiguate_class_feature_fallback_collisions`,
         # `src/bin/v06_work_inventory.rs`) -- the confirmed-safe subset (a
         # bare `TYPE:FavoredClass` tracker row colliding with an unrelated
         # `TYPE:Class` chassis row, one pair per class, `CATEGORY:` genuinely
-        # distinguishes them). What remains pending: 156 non-internal
-        # residual rows (was 180) + the pre-existing 27
-        # newly-internal-turned-content rows that lose their OWN
+        # distinguishes them). SD-32 card 15-duplicate-identity-review (this
+        # cycle): per-case hand review of the remaining 156 non-internal
+        # residual, per `15-card-15-residual-group-review.py` (this
+        # directory) and `15-card-15-duplicate-identity-review-memo.md`.
+        # Rescued 4 keyed-collision rows
+        # (`disambiguate_class_feature_keyed_name_collisions`,
+        # `src/bin/v06_work_inventory.rs`) whose colliding sibling carries a
+        # DIFFERENT display name under the SAME author-declared `KEY:` --
+        # direct, non-inferred evidence of a corpus-author typo, not one
+        # identity (`Native Cunning ~ Grapple`/`Overrun`, `Vigilante Favored
+        # Maneuver ~ Bull Rush`/`Sunder`, `Green Faith Marshal ~ Panther
+        # Domain`/`Vulture Domain`, `Social Grace ~ Craft (Armor)`/`Craft
+        # (Baskets)`, found via a SEPARATE, previously-invisible
+        # CATEGORY:Internal-but-content-bearing keyed collision this cycle's
+        # own census re-derivation surfaced -- see the review memo's own
+        # note on why the original 16-group hand census missed it). The
+        # other 13 of the original 16 keyed groups (26 rows) share an
+        # IDENTICAL display name on both sides (PFS-variant override,
+        # hidden-tracker-beside-real-feature, or byte-identical restatement)
+        # -- correctly left on today's collapse-to-first behaviour, not
+        # rescued. All 39 `TYPE:*Choice`-suffixed fallback groups (74 rows)
+        # were reviewed and found to be the SAME Decision-17
+        # duplicate-chooser-picker shape by direct evidence (each group's
+        # members converge, in pairs, on an IDENTICAL `ABILITY:AUTOMATIC`
+        # grant target reached via a base-class gate and an archetype/
+        # feat-chain gate) -- named as allowlist candidates, not rescued;
+        # see `why_not_applied`. What remains pending: 153 non-internal
+        # residual rows (was 156, -3 non-internal rescues this cycle) + 26
+        # (was 27, -1: `Social Grace ~ Craft (Armor)`/`Craft (Baskets)`
+        # rescued via the SAME keyed-name-mismatch evidence, even though it
+        # carries `CATEGORY:Internal` -- it is content-bearing, not a bare
+        # marker, so `is_internal_category`'s existing narrowing already
+        # kept it in scope; this cycle's fix then disambiguated its
+        # colliding key) newly-internal-turned-content rows that lose their
+        # OWN
         # `duplicate_identity` race (unaffected by this cycle -- those rows
-        # carry `CATEGORY:Internal` and this cycle's fix deliberately never
-        # opens a new identity bucket for an Internal-tagged row). 183 total,
-        # all traced to the SAME cause: `v06_work_inventory.rs`'s corpus-wide
-        # (kind, key) `duplicate_identity` collapse, a different codepath
-        # from `is_internal_category`, `refine_kind`, or
+        # carry `CATEGORY:Internal` and neither disambiguation fn opens a
+        # new identity bucket for an Internal-tagged row -- note: 1 of the 4
+        # rescued rows this cycle, `Social Grace ~ Craft (Armor)`/`Craft
+        # (Baskets)`, DID carry `CATEGORY:Internal` but was NOT a bare
+        # marker -- `is_internal_category`'s own `Kind::ClassFeature`
+        # narrowing already keeps content-bearing Internal rows in scope, so
+        # this rescue is orthogonal to, not a widening of, that guard). 179
+        # total, all traced to the SAME cause: `v06_work_inventory.rs`'s
+        # corpus-wide (kind, key) `duplicate_identity` collapse, a different
+        # codepath from `is_internal_category`, `refine_kind`, or
         # `has_classifying_token`.
         "class_feature_residual_duplicate_identity": {
-            "units": 183,
+            "units": 179,
             "memo": "15-card-15-internal-duplicate-identity-memo.md (root-"
-            "cause pin) + 15-card-15-duplicate-identity-memo.md (this "
-            "cycle's fix + the *Choice-shape correction): 156 non-internal "
-            "residual (was 180, -24 rescued) + 27 newly-internal-turned-"
-            "content rows that lost their own duplicate_identity race "
-            "(unaffected by this cycle, 2,574 candidate - 2,547 landed, "
-            "pre-existing figure re-confirmed unchanged)",
-            "why_not_applied": "root cause IS pinned (134/156 of the "
-            "non-internal residual alone collide on (book, key) with "
-            "another class_feature row in the same book) but NOT rescued "
-            "this cycle for two independent reasons, by class: (1) 16 "
-            "groups/32 rows collide with a row that carries an explicit, "
-            "corpus-author-declared `KEY:` field (e.g. two PFS-legal "
-            "variants sharing one `KEY:`) -- a deliberate identity choice, "
-            "not the fallback weakness this fix targets; (2) 39 of the 64 "
-            "fallback-vs-fallback collision groups (including this card's "
-            "OWN original 'Aberrant Bloodline' worked example) share a "
-            "`TYPE:` facet ending in `\"Choice\"` -- the SAME shape SD-31 "
-            "`decisions.md` Decision 17 already proved is SOMETIMES a "
-            "picker option beside its own real feature row, not a second "
-            "object (33 ids on `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`, "
-            "`src/bin/v06_work_inventory.rs`), and whose own text explicitly "
-            "forbids a live adjacency filter here ('a generic same-name-"
-            "adjacent-line rule would silently sweep in any FUTURE same-"
-            "shaped collision no human reviewed'). Rescuing this population "
-            "without the SAME per-case hand review Decision 17 did would "
-            "risk manufacturing the exact double-count that guard exists to "
-            "prevent -- confirmed live: `ultimate_magic:class_feature:"
-            "accursed_bloodline` (`um_abilities_class.lst:566`) is already "
-            "on that allowlist, and its fallback-key sibling at line 2070 "
-            "(`CATEGORY:Crossblooded Bloodline`) is the IDENTICAL Sorcerer "
-            "feature reachable through a second archetype gate, not a "
-            "distinct object. Needs the same per-case hand review Decision "
-            "17 used, a real next cycle, not a quick follow-on.",
+            "cause pin) + 15-card-15-duplicate-identity-memo.md (first "
+            "rescue cycle, +24, the *Choice-shape correction) + "
+            "15-card-15-duplicate-identity-review-memo.md (this cycle, "
+            "per-case hand review, +4): 153 non-internal residual (was 156, "
+            "-3 non-internal rescues) + 26 (was 27, -1 rescued despite "
+            "carrying CATEGORY:Internal -- content-bearing, not a bare "
+            "marker) newly-internal-turned-content rows that lost their "
+            "own duplicate_identity race (unaffected balance, 2,574 "
+            "candidate - 2,547 landed - 1 rescued this cycle)",
+            "why_not_applied": "root cause IS pinned for 131/153 of the "
+            "remaining non-internal residual (collide on (book, key) with "
+            "another class_feature row in the same book), and EVERY "
+            "colliding group (55 groups: 39 Choice-typed fallback + 16 "
+            "keyed) was reviewed case by case this cycle, by reading real "
+            "corpus records -- but the surviving rows were NOT rescued for "
+            "two independent, evidenced reasons: (1) "
+            "13 of the original 16 keyed groups (26 rows) collide with a row sharing the "
+            "IDENTICAL display name under an explicit, corpus-author-"
+            "declared `KEY:` field (PFS-legal override, hidden-tracker-"
+            "beside-real-feature, or byte-identical restatement) -- a "
+            "deliberate single identity, re-confirmed this cycle by direct "
+            "content read, not the fallback weakness either fix targets; "
+            "(2) all 39 of the 39 fallback-vs-fallback `TYPE:*Choice`-typed "
+            "collision groups (including this card's OWN original "
+            "'Aberrant Bloodline' worked example) are the SAME shape SD-31 "
+            "`decisions.md` Decision 17 already proved is a picker option "
+            "beside its own real feature row, not a second object -- this "
+            "cycle traced EVERY group's `ABILITY:AUTOMATIC` grant target "
+            "and found each group's members converge in pairs on an "
+            "IDENTICAL target feature, reached via a base-class gate and a "
+            "second archetype/feat-chain gate (the exact "
+            "`ultimate_magic:accursed_bloodline` shape already confirmed on "
+            "`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`, "
+            "`src/bin/v06_work_inventory.rs`; 7 of the 39 groups' surviving "
+            "row -- all of `ultimate_magic`'s -- are ALREADY on that "
+            "33-id list). Decision 17's own text explicitly forbids a live "
+            "adjacency filter here ('a generic same-name-adjacent-line rule "
+            "would silently sweep in any FUTURE same-shaped collision no "
+            "human reviewed'), so this cycle named every group's evidence "
+            "in `15-card-15-duplicate-identity-review-memo.md` for an "
+            "operator ruling to fold into that allowlist, rather than "
+            "editing SD-31's operator-confirmed list itself or building an "
+            "automatic classifier. 22 rows remain genuinely re-confirmed as "
+            "having no (book,key) collision at all -- but ALL 22 are now "
+            "traced: 21 are rows ALREADY on the confirmed 33-id "
+            "`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` allowlist (10 "
+            "core_rulebook + 10 advanced_players_guide + 1 "
+            "adventurers_guide bloodline pickers), deliberately removed "
+            "post-construction by `apply_duplicate_chooser_removal` -- "
+            "correct, expected, not a defect; the 22nd "
+            "(`ultimate_psionics:class_feature:disable_device_class_skill`) "
+            "is the already-traced displacement from "
+            "`15-card-15-internal-duplicate-identity-memo.md` §3 (content "
+            "preserved under a new physical coordinate). No cause-pinning "
+            "gap remains in the 183-unit population; the residual is a "
+            "named, evidenced, per-case hand-review population awaiting an "
+            "operator ruling on the Decision-17-shaped allowlist addition, "
+            "not an unexplained defect.",
         },
     }
     # (A) already applied: the 15,438 class_feature rows the census walk
@@ -256,7 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     # `accounted_total` below to avoid double-subtracting it.
     already_tracked_a = {
         "class_feature_already_in_inventory": {
-            "units": 18008,
+            "units": 18012,
             "memo": "15-card-15-class-feature-memo.md §0/§5 (15,437 "
             "non-internal, was 15,438 before the card-15-internal cycle's "
             "own Disable-Device-Class-Skill displacement, "
@@ -265,12 +328,15 @@ def main(argv: list[str] | None = None) -> int:
             "15-internal (`is_internal_category` narrowed for "
             "Kind::ClassFeature the same way card 15-ability narrowed it "
             "for Kind::Ability) -- of the 2,574 that cycle's adjudication "
-            "memo identified as disposition (A)/(B-gateway-resolved), 27 "
-            "lost their own duplicate_identity race and are pending (see "
-            "pending_a below), not lost -- + 24 rescued this cycle "
-            "(card 15-duplicate-identity, "
-            "`disambiguate_class_feature_fallback_collisions`, the "
-            "confirmed-safe `TYPE:FavoredClass`-shaped subset).",
+            "memo identified as disposition (A)/(B-gateway-resolved), 26 "
+            "(was 27) lost their own duplicate_identity race and are "
+            "pending (see pending_a below), not lost -- + 24 rescued by "
+            "card 15-duplicate-identity "
+            "(`disambiguate_class_feature_fallback_collisions`, the "
+            "confirmed-safe `TYPE:FavoredClass`-shaped subset) + 4 rescued "
+            "by card 15-duplicate-identity-review, this cycle "
+            "(`disambiguate_class_feature_keyed_name_collisions`, the "
+            "differing-display-name-under-one-KEY subset).",
             "note": "already a real inventory unit under kind=class_feature; "
             "counted here only because census's bucket model has no "
             "class_feature 'kind' bucket to move it into",
@@ -496,17 +562,31 @@ def main(argv: list[str] | None = None) -> int:
                 "accounted for by exactly one row above: "
                 f"{ability_category_b_disposed_total} (ability_category_b_disposed, "
                 "live-derived, INCLUDES the 40-unit Internal bare-marker "
-                "reroute) + 18,008 (class_feature, already tracked -- SD-32 "
+                "reroute) + 18,012 (class_feature, already tracked -- SD-32 "
                 "card 15-internal raised this from 15,438; card "
                 "15-duplicate-identity raised it again from 17,984 with the "
-                "24-unit confirmed-safe rescue) + 183 "
+                "24-unit confirmed-safe rescue; card "
+                "15-duplicate-identity-review raised it again from 18,008 "
+                "with this cycle's 4-unit rescue) + 179 "
                 "(class_feature residual, cause pinned to "
                 "`duplicate_identity` by card 15-internal, narrowed from "
-                "207 to 183 by card 15-duplicate-identity's own 24-unit "
-                "rescue -- the remaining 39-of-64 fallback collision groups "
-                "and 16-of-16 keyed-collision groups deliberately NOT "
-                "rescued, see pending_a's own why_not_applied) = "
-                f"{ability_category_b_disposed_total + 18008 + 183}. "
+                "207 to 183 by card 15-duplicate-identity's 24-unit rescue, "
+                "then to 179 by card 15-duplicate-identity-review's 4-unit "
+                "rescue this cycle -- EVERY one of the 55 remaining "
+                "colliding groups (39 Choice-typed fallback + 16 keyed) was "
+                "reviewed case by case this cycle by reading real corpus "
+                "records: 4 rescued (3 from the 16-group census, sharing "
+                "genuinely different display names under one author-"
+                "declared KEY, + 1 previously-invisible CATEGORY:Internal-"
+                "but-content-bearing keyed collision the same census missed), "
+                "12 keyed groups left correctly collapsed (identical display "
+                "name both sides -- PFS override / hidden tracker / true "
+                "restatement), and all 39 Choice-typed groups found to be "
+                "Decision-17-shaped duplicate-chooser pickers by direct "
+                "ABILITY:AUTOMATIC-target evidence, named as allowlist "
+                "candidates for an operator ruling rather than rescued or "
+                "auto-classified -- see pending_a's own why_not_applied) = "
+                f"{ability_category_b_disposed_total + 18012 + 179}. "
                 "`skill` (149), `template`/`deity`/`power`/`domain`/"
                 "`language` (3,550, generic-enumeration cycle) `kit` (1, "
                 "disposed B) `ability` (4,824 real inventory units off a "
@@ -515,12 +595,15 @@ def main(argv: list[str] | None = None) -> int:
                 "kind_unenumerable entirely (see already_tracked_a and "
                 "disposed_b_applied's own `counts_toward_total_this_run`/"
                 "`still_counted_in_total_this_run` flags). Card 15's "
-                "remaining scope, narrowed by card 15-duplicate-identity: "
-                "the class_feature residual (183 units, cause pinned to "
-                "`duplicate_identity`, a per-case hand-review population -- "
-                "same shape as SD-31 Decision 17's 33-id chooser allowlist "
-                "-- for a real next cycle) is the only disposition-(A) "
-                "population still pending integration.",
+                "remaining scope, narrowed by card 15-duplicate-identity-"
+                "review: the class_feature residual (179 units, cause "
+                "pinned to `duplicate_identity`, fully reviewed case by "
+                "case -- an evidenced, named, per-case hand-review "
+                "population awaiting an operator ruling on the Decision-17 "
+                "allowlist addition, same shape as SD-31 Decision 17's "
+                "33-id chooser allowlist itself -- not an unexplained "
+                "defect) is the only disposition-(A) population still "
+                "pending integration.",
             },
         },
         "gate_3_standing_gate_still_passes": None,  # filled by caller/report consumer

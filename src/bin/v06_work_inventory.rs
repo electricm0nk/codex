@@ -3055,6 +3055,179 @@ fn disambiguate_class_feature_fallback_collisions(
         .collect()
 }
 
+/// SD-32 card 15 (this cycle, `decisions.md §12b`'s `duplicate_identity`
+/// closure): the companion to [`disambiguate_class_feature_fallback_collisions`]
+/// for the OTHER half of the 158-row collision population that fn's own doc
+/// comment named out of scope -- rows that DO carry an explicit `KEY:` field
+/// (`u.key != u.name`) and still collide with another `Kind::ClassFeature`
+/// row in the same book under that same author-declared key.
+///
+/// # Why a name-mismatch, not a content diff
+///
+/// Re-derived against the pinned oracle over all 16 such keyed collision
+/// groups (32 rows; `15-card-15-residual-group-review.py`, this directory):
+/// 13 of 16 pairs share the IDENTICAL display `name` on both rows (`Weapon
+/// Training (Firearms)` x4, `Domain Power` x4, `Monk Bonus Feat` x2,
+/// `Master Smith`/`Craft Magic Arms and Armor` PFS-variant pairs x2, `Hide in
+/// Plain Sight` x1) -- these are a corpus author DELIBERATELY reusing one
+/// identity: a PFS-legal file overriding its base declaration
+/// (`REMOVE:FEAT:`/`DESC:.CLEAR` present), a hidden `VISIBLE:NO` bookkeeping
+/// row beside its real sibling (the `CATEGORY:Internal` shape, just without
+/// the literal `CATEGORY:Internal` tag), or a genuine byte-identical
+/// restatement. None of those 13 is rescued: same identity by corpus-author
+/// design, and the existing collapse-to-first behaviour is correct for them
+/// (re-confirmed this cycle, not merely inherited).
+///
+/// The remaining 3 pairs (`advanced_race_guide`'s `Native Cunning ~ Grapple`/
+/// `Overrun`, `ultimate_intrigue`'s `Vigilante Favored Maneuver ~ Bull Rush`/
+/// `Sunder`, `ultimate_wilderness`'s `Green Faith Marshal ~ Panther Domain`/
+/// `Vulture Domain`) have DIFFERENT display names on the two colliding rows
+/// -- a Feral Child's CMD bonus against grapple vs. against overrun; a
+/// Vigilante's bonus feat for Bull Rush vs. for Sunder; a Green Faith
+/// Marshal's Panther Domain selection vs. Vulture Domain selection --
+/// distinct game mechanics that the corpus author evidently mistyped under
+/// one shared `KEY:` (each pair's second row's `KEY:` field literally
+/// restates the FIRST row's own domain/maneuver name instead of its own).
+/// The differing display name is direct, non-inferred evidence from the
+/// corpus author's own data that the colliding rows are not one identity --
+/// unlike the fallback-key population above, where colliding rows regularly
+/// share both name AND real distinctness (the `CATEGORY:`-driven `Barbarian`
+/// shape) or share name AND are the SAME feature (the `*Choice` shape), so
+/// name alone cannot arbitrate there. Here it can, because the KEY was
+/// author-declared specifically to be a stable identity independent of
+/// `CATEGORY:`/`TYPE:`, so two different names under the same declared KEY
+/// is itself the defect, not ambiguous evidence requiring judgment calls this
+/// fn would be making on its own authority.
+///
+/// # Scope, unchanged from the fallback fn's own narrowing
+///
+/// Only `Kind::ClassFeature`; only rows where `u.key != u.name` (the exact
+/// complement of the fallback fn's population, so the two fns never touch
+/// the same row). The FIRST row in file order for a given key keeps it
+/// unchanged; a LATER row whose name has not been seen for this key gets a
+/// disambiguated key (`"<key> ~ <name>"`); a later row repeating an
+/// already-seen name for this key collapses to that name's bucket exactly as
+/// today (a true restatement, unaffected).
+fn disambiguate_class_feature_keyed_name_collisions(units: Vec<CorpusUnit>) -> Vec<CorpusUnit> {
+    let mut assigned: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+    units
+        .into_iter()
+        .map(|mut u| {
+            if u.kind != Kind::ClassFeature || u.key == u.name {
+                return u;
+            }
+            let group = assigned.entry(u.key.clone()).or_default();
+            if group.is_empty() {
+                group.insert(u.name.clone(), u.key.clone());
+                return u;
+            }
+            if let Some(existing) = group.get(&u.name) {
+                u.key = existing.clone();
+                return u;
+            }
+            let disambiguated = format!("{} ~ {}", u.key, u.name);
+            group.insert(u.name.clone(), disambiguated.clone());
+            u.key = disambiguated;
+            u
+        })
+        .collect()
+}
+
+#[cfg(test)]
+mod disambiguate_class_feature_keyed_name_collisions_tests {
+    use super::*;
+
+    fn keyed_class_feature_unit(file: &str, line: usize, key: &str, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: "advanced_race_guide".to_string(),
+            source_book: "advanced_race_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The real `Native Cunning ~ Grapple`/`Overrun` shape
+    /// (`arg_abilities_class.lst:385`/`:386`): same author-declared `KEY:`,
+    /// different display names -- the differing name is the evidence both
+    /// survive with distinct keys. Without this fn, `duplicate_identity`
+    /// silently drops `Overrun`.
+    #[test]
+    fn differing_name_under_shared_key_rescues_both() {
+        let units = vec![
+            keyed_class_feature_unit("arg_abilities_class.lst", 385, "Native Cunning ~ Grapple", "Grapple"),
+            keyed_class_feature_unit("arg_abilities_class.lst", 386, "Native Cunning ~ Grapple", "Overrun"),
+        ];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        let keys: BTreeSet<String> = out.iter().map(|u| u.key.clone()).collect();
+        assert_eq!(keys.len(), 2, "{keys:?}");
+        assert!(keys.contains("Native Cunning ~ Grapple"), "the first keeps its bare key: {keys:?}");
+        assert!(keys.contains("Native Cunning ~ Grapple ~ Overrun"), "{keys:?}");
+    }
+
+    /// The real `Weapon Training (Firearms)` shape (`uc_abilities_class.lst:
+    /// 239`/`:1994`): same `KEY:`, same display name on both rows (only
+    /// `TYPE:`/`BONUS:`/`SOURCEPAGE:` differ) -- a true restatement under
+    /// this fn's own evidentiary bar. Must NOT be rescued: this fn must not
+    /// stop `duplicate_identity`'s collapse for same-name keyed pairs.
+    #[test]
+    fn same_name_under_shared_key_is_left_to_collapse_normally() {
+        let units = vec![
+            keyed_class_feature_unit(
+                "uc_abilities_class.lst",
+                239,
+                "Weapon Training 1 Firearms",
+                "Weapon Training (Firearms)",
+            ),
+            keyed_class_feature_unit(
+                "uc_abilities_class.lst",
+                1994,
+                "Weapon Training 1 Firearms",
+                "Weapon Training (Firearms)",
+            ),
+        ];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        assert!(out.iter().all(|u| u.key == "Weapon Training 1 Firearms"));
+    }
+
+    /// A row with NO declared `KEY:` (`u.key == u.name`, the OTHER fn's
+    /// population) is never touched by this fn -- the two fns' populations
+    /// are disjoint by construction.
+    #[test]
+    fn fallback_key_row_is_never_touched() {
+        let units = vec![keyed_class_feature_unit(
+            "acg_abilities_class.lst",
+            566,
+            "Aberrant Bloodline",
+            "Aberrant Bloodline",
+        )];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        assert_eq!(out[0].key, "Aberrant Bloodline");
+    }
+
+    /// A third row repeating an already-seen name for the same key collapses
+    /// to that name's bucket key, not a fresh disambiguation -- proves the
+    /// tie-break is per (key, name) bucket, not per row.
+    #[test]
+    fn repeated_name_for_same_key_collapses_to_existing_bucket() {
+        let units = vec![
+            keyed_class_feature_unit("x.lst", 1, "Shared Key", "A"),
+            keyed_class_feature_unit("x.lst", 2, "Shared Key", "B"),
+            keyed_class_feature_unit("x.lst", 3, "Shared Key", "B"),
+        ];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        let keys: Vec<String> = out.iter().map(|u| u.key.clone()).collect();
+        assert_eq!(keys[0], "Shared Key");
+        assert_eq!(keys[1], "Shared Key ~ B");
+        assert_eq!(keys[2], "Shared Key ~ B");
+    }
+}
+
 #[cfg(test)]
 mod disambiguate_class_feature_fallback_collisions_tests {
     use super::*;
@@ -10370,6 +10543,7 @@ fn main() {
         let units = std::mem::take(&mut enumeration.units);
         let categories = std::mem::take(&mut enumeration.class_feature_categories);
         let units = disambiguate_class_feature_fallback_collisions(units, &categories);
+        let units = disambiguate_class_feature_keyed_name_collisions(units);
         enumeration.units = units
             .into_iter()
             .filter(|u| {

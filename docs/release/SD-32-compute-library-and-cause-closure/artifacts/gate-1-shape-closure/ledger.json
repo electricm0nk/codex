@@ -1,5 +1,5 @@
 {
-  "population": 36028,
+  "population": 35422,
   "rows": [
     {
       "id": "advanced_class_guide:class:ex_warpriest",
@@ -45551,6 +45551,13 @@
       "join_status": "matched"
     },
     {
+      "id": "advanced_race_guide:class_feature:native_cunning_grapple_overrun",
+      "kind": "class_feature",
+      "book": "advanced_race_guide",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "advanced_race_guide:class_feature:native_cunning_reposition",
       "kind": "class_feature",
       "book": "advanced_race_guide",
@@ -65823,13 +65830,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary:monster_ability:rust_monster_scent_metals",
-      "kind": "monster_ability",
-      "book": "bestiary",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary:monster_ability:salt_mephit_breath_weapon",
       "kind": "monster_ability",
       "book": "bestiary",
@@ -65942,42 +65942,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary:monster_ability:treant_animate_trees",
-      "kind": "monster_ability",
-      "book": "bestiary",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary:monster_ability:treant_double_damage",
-      "kind": "monster_ability",
-      "book": "bestiary",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary:monster_ability:treant_treespeech",
-      "kind": "monster_ability",
-      "book": "bestiary",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary:monster_ability:undead_traits_output",
-      "kind": "monster_ability",
-      "book": "bestiary",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary:monster_ability:unicorn_magic_circle_against_evil",
-      "kind": "monster_ability",
-      "book": "bestiary",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary:monster_ability:unicorn_magical_strike",
       "kind": "monster_ability",
       "book": "bestiary",
       "family": "F0",
@@ -76477,27 +76442,6 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:akata_deaf",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:akata_vulnerable_to_salt_water",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:amphisbaena_split",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:arcane_sight_constant",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -76512,21 +76456,7 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "bestiary_2:monster_ability:attic_whisperer_aura_of_sobs",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:aurumvorax_rake",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:banshee_hear_heartbeat",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -76561,18 +76491,11 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:bodak_vulnerability_to_sunlight",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:brine_dragon_painful_strikes",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:bythos_cold",
@@ -76589,13 +76512,6 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:carnivorous_blob_reactive_strike",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:carnivorous_blob_split",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -76604,13 +76520,6 @@
     },
     {
       "id": "bestiary_2:monster_ability:cave_scorpion_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:chaos_beast_resistant_to_transformation",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -76642,14 +76551,14 @@
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:cloud_dragon_cloud_form",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:cold_draconal_breath_weapon",
@@ -76673,13 +76582,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:crysmal_crystal_sense",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:crysmal_shard_spike",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -76695,20 +76597,6 @@
     },
     {
       "id": "bestiary_2:monster_ability:denizen_of_leng_planar_fast_healing",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:denizen_of_leng_unusual_anatomy",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:destrachan_protection_from_sonics",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -76813,13 +76701,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:dragon_horse_know_alignment",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:emotion_aura_courage_fear",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -76897,25 +76778,11 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:forlarren_remorse",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:freedom_of_movement_constant",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F1",
       "join_status": "matched"
-    },
-    {
-      "id": "bestiary_2:monster_ability:fungal_crawler_plant_defenses",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
     },
     {
       "id": "bestiary_2:monster_ability:giant_centipede_companion_poison",
@@ -76988,13 +76855,6 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:hellcat_invisible_in_light",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:hide_from_undead_constant",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77030,13 +76890,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:howler_quill_defense",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:inevitable_constructed",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77051,28 +76904,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:jabberwock_fear_of_vorpal_weapons",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:juju_zombie_immunity_to_magic_missile",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:jyoti_divine_aversion",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:jyoti_positive_energy_affinity",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -77121,13 +76953,6 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:lurker_in_light_blend_with_light",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:mage_armor_constant",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77146,7 +76971,7 @@
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:magma_elemental_lava_puddle",
@@ -77154,20 +76979,6 @@
       "book": "bestiary_2",
       "family": "F0",
       "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "bestiary_2:monster_ability:magma_ooze_vulnerability_to_water",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:mandragora_vulnerable_to_supernatural_darkness",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
     },
     {
       "id": "bestiary_2:monster_ability:marut_fists_of_lightning_and_thunder",
@@ -77184,20 +76995,6 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:mihstu_susceptible_to_cold",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:mihstu_wind_defense",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:monadic_deva_solid_blow",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77206,13 +77003,6 @@
     },
     {
       "id": "bestiary_2:monster_ability:mothman_agent_of_fate",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:mu_spore_grasping_tendrils",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -77231,27 +77021,6 @@
       "book": "bestiary_2",
       "family": "F0",
       "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "bestiary_2:monster_ability:nereid_beguiling_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:nereid_shawl",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:nereid_transparency",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
     },
     {
       "id": "bestiary_2:monster_ability:nereid_unearthly_grace",
@@ -77492,56 +77261,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:poltergeist_rejuvenation",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:protean_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:quickling_natural_invisibility",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:quickling_slow_susceptibility",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:quickling_supernatural_speed",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:quickwood_fear_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:quickwood_oaksight",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:quickwood_spell_absorption",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -77576,13 +77296,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:redcap_irreligious",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:regeneration_chaotic",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77611,18 +77324,11 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "bestiary_2:monster_ability:revenant_self_loathing",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:revenant_sense_murderer",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:rune_giant_runes",
@@ -77639,41 +77345,6 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:sandman_sleep_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:sard_death_throes",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:sard_electrical_jolt",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:sceaduinar_entropic_flesh",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:sceaduinar_void_child",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:see_invisibility_constant",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77681,25 +77352,18 @@
       "join_status": "matched"
     },
     {
-      "id": "bestiary_2:monster_ability:seugathi_aura_of_madness",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:seugathi_detect_thoughts",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:shantak_slippery",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:shillelagh_constant",
@@ -77707,13 +77371,6 @@
       "book": "bestiary_2",
       "family": "F1",
       "join_status": "matched"
-    },
-    {
-      "id": "bestiary_2:monster_ability:shining_child_blinding_light",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
     },
     {
       "id": "bestiary_2:monster_ability:shining_child_radiant_armor",
@@ -77728,13 +77385,6 @@
       "book": "bestiary_2",
       "family": "F0",
       "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "bestiary_2:monster_ability:soulbound_doll_susceptible_to_mind_affecting_effects",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
     },
     {
       "id": "bestiary_2:monster_ability:sound_mimicry",
@@ -77773,34 +77423,6 @@
     },
     {
       "id": "bestiary_2:monster_ability:telepathy_miles",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:tenebrous_worm_bristles",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:thoqqua_molten_body",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:thunderbird_storm_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:thunderbird_stormsight",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -77846,14 +77468,14 @@
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:umbral_dragon_shadow_breath",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:unholy_aura_constant",
@@ -77905,13 +77527,6 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "bestiary_2:monster_ability:vampiric_mist_sense_blood",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:vemerak_constrict",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -77930,14 +77545,7 @@
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:viper_vine_cold_lethargy",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:voidworm_change_shape",
@@ -77951,14 +77559,7 @@
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:water_orm_elusive",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_2:monster_ability:water_walk_constant",
@@ -78003,27 +77604,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_2:monster_ability:winterwight_aura_of_cold",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:witchfire_witchflame",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:witchwyrd_absorb_force",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_2:monster_ability:worm_that_walks_discorporate",
       "kind": "monster_ability",
       "book": "bestiary_2",
@@ -78039,13 +77619,6 @@
     },
     {
       "id": "bestiary_2:monster_ability:worm_that_walks_tenacious",
-      "kind": "monster_ability",
-      "book": "bestiary_2",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_2:monster_ability:yrthak_blind",
       "kind": "monster_ability",
       "book": "bestiary_2",
       "family": "F0",
@@ -81024,7 +80597,7 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:adlet_shaman",
@@ -81157,7 +80730,7 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:androsphinx_roar",
@@ -81216,13 +80789,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:asurendra_curse_of_false_wisdom",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:asurendra_death",
       "kind": "monster_ability",
       "book": "bestiary_3",
@@ -81231,13 +80797,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:asurendra_none",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:asurendra_poison",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -81265,200 +80824,32 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:asurendra_spirit_blades",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:atomie_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:azruverda_acid_spit",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:azruverda_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:azruverda_vermin_master",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baku_dream_claws",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baku_dream_eating",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baku_mental_drain",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:baku_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_bounding_charge",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_brutal_tail",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_gaze",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_lash_out",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_pain",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_planar_acclimation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_quick_recovery",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_quill_defense",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_quills",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_rake",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_relentless_tracker",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bandersnatch_rend",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baregara_devouring_grapple",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baregara_monstrous_challenge",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baregara_one_armed_hold",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:baregara_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baykok_devour_soul",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baykok_dread_howl",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:baykok_infused_arrows",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:behemoth_ruinous",
@@ -81482,67 +80873,25 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:berbalang_projection",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:berbalang_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bhuta_blood_drain",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bhuta_cold_iron_weakness",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:bhuta_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bogeyman_deepest_fear",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:bogeyman_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bogeyman_striking_fear",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:bogeyman_terrible_rejuvenation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:bone_golem_bone_prison",
@@ -81559,32 +80908,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:brain_ooze_neural_pulse",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:brain_ooze_prescience",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:brain_ooze_psychic_noise",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:brain_ooze_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:brass_golem_brass_falchion",
@@ -81678,161 +81006,28 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:carnivorous_crystal_brittle",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:carnivorous_crystal_crystallize",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:carnivorous_crystal_razor_sharp",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:carnivorous_crystal_split",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:carnivorous_crystal_subsonic_hum",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:caryatid_column_immunity_to_magic",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:caryatid_column_shatter_weapons",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:caryatid_column_statue",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:caulborn_consume_thoughts",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:caulborn_cooperative_scrying",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:caulborn_hive_mind",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:caulborn_psychic_deflection",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:caulborn_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:caulborn_thoughtsense",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:cave_giant_axe_wielder",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cecaelia_ink_cloud",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cecaelia_tentacle_sense",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ceratioidi_dual_mind",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ceratioidi_lure",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ceratioidi_primitive_amphibian",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cerberi_cerberus_s_jaws",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cerberi_soul_scent",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cerebric_fungus_otherworldly_mind",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -81843,28 +81038,14 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cerebric_fungus_star_shriek",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:cerebric_fungus_touch_of_madness",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cerebric_fungus_unsettling_appearance",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:clockwork_goliath_cannon",
@@ -81979,32 +81160,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:cold_rider_icewalking",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cold_rider_implements_of_ice",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:cold_rider_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:cold_rider_susceptible_to_shatter",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:coloxus_droning_wings",
@@ -82126,41 +81286,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:death_s_head_jellyfish_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:deathtrap_ooze_acid",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:deathtrap_ooze_trap_form",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:deathweb_infestation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:deathweb_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:deep_sea_serpent_elusive",
       "kind": "monster_ability",
       "book": "bestiary_3",
@@ -82186,63 +81311,14 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_greater_bestow_curse",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_immunity_to_magic",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_rejuvenation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:demilich_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_telekinetic_storm",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_torpor",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_unholy_grace",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:demilich_vorpal_susceptibility",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:demodand_faith_stealing_strike",
@@ -82253,27 +81329,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:demodand_heretical_soul",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:derhii_aerial_charge",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:derhii_booming_voice",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:derhii_knockdown",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -82322,70 +81377,21 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:dire_corby_leap",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:disenchanter_disenchant",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:disenchanter_power_spray",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:disenchanter_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:disenchanter_vulnerable_to_dispel_magic",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:div_see_in_darkness",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:dragonne_roar",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:dybbuk_malevolence",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:dybbuk_pain_touch",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:dybbuk_possess_object",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -82396,21 +81402,7 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ecorche_seize_skin",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ecorche_wear_skin",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:emperor_kirin",
@@ -82469,53 +81461,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:faun_panpipes",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:faun_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:festrog_charging_trip",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:festrog_diseased_pustules",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:festrog_feed",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:festrog_four_footed_run",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:fey_giant_toad_poison_skin",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:fire_yai_fiery_missile",
@@ -82554,97 +81504,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:fjord_linnorm_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flail_snail_mucus",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flail_snail_retraction",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flail_snail_slime_rope",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flail_snail_suction",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flail_snail_warp_magic",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flumph_acid_injection",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:flumph_stench_spray",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:forest_dragon_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:forest_dragon_destructive_crush",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:forest_dragon_elemental_breath",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:forest_dragon_sound_imitation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:forest_dragon_stony_death",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:forest_dragon_woodland_stride",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -82693,55 +81552,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:garden_ooze_acid",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:garden_ooze_camouflage",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:garden_ooze_stink",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:garuda_hatred",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:garuda_spells",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:garuda_swooping_pounce",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:garuda_talon_or_wing",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:ghawwas_boiling_sea",
       "kind": "monster_ability",
       "book": "bestiary_3",
@@ -82770,42 +81580,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:ghorazagh_bloodsense",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ghorazagh_bloodspray",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ghorazagh_chemical_communication",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:ghost_scorpion_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ghul_cursed_claws",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:ghul_genie_kin",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -82896,81 +81671,18 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:girtablilu_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:girtablilu_scorpion_empathy",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:girtablilu_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:globster_create_spawn",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:globster_decompose",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:globster_nausea",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:goblin_snake_goblin_breath",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:goblin_snake_snake_empathy",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:gorynych_breath_weapon",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:gorynych_multi_headed",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:gorynych_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:gourd_leshy_ensnare",
@@ -83001,151 +81713,25 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:graveknight_channel_destruction",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_defensive_abilities",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_devastating_blast",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_phantom_mount",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_rejuvenation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_sacrilegious_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_special_attacks",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graveknight_undead_mastery",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graven_guardian_faith_bound",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:graven_guardian_magic_weapon",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:graven_guardian_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:grodair_death_flood",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:grodair_muddy_field",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:grodair_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:grodair_water_blast",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:grootslang_aquatic_elusion",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:grootslang_impaling_bite",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:grootslang_thunderous_stomp",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:guecubu_broken_ground",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:guecubu_misfortune",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:guecubu_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:hekatonkheires_hands_of_war",
@@ -83183,70 +81769,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:hellwasp_swarm_inhabit",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hellwasp_swarm_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:hieracosphinx_shriek",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hodag_spiked_tail",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hodag_toss",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hodag_trackless",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hollow_serpent_channel_negative_energy",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hollow_serpent_desiccation_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hollow_serpent_life_draining_coils",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hollow_serpent_lifesense",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -83257,84 +81780,21 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hollow_serpent_swift_strike",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:huecuva_aura_of_faithlessness",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:huecuva_disease",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:huecuva_false_humanity",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:humbaba_prismatic_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:humbaba_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hungry_fog_bewitching_brume",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hungry_fog_enveloping_mists",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hungry_fog_gaseous",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:hungry_fog_negative_energy_affinity",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:hungry_fog_vulnerable_to_wind",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:ice_yai_icy_missile",
@@ -83358,18 +81818,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:iku_turso_disease",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:iku_turso_light_lure",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:incubus_pain_redoubled",
@@ -83401,34 +81854,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:interlocutor_unnerving_gaze",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jackalwere_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jackalwere_jackal_empathy",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jackalwere_sleep_gaze",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jackalwere_weapon_intuition",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -83470,39 +81895,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:jorogumo_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:jorogumo_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jorogumo_spider_empathy",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jorogumo_spider_legs",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jorogumo_swift_shapechanger",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:jotund_troll_all_seeing_attacks",
@@ -83520,34 +81917,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:jotund_troll_multiple_minds",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jubjub_bird_adaptive_defense",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jubjub_bird_deadly_bite",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jubjub_bird_planar_acclimation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:jubjub_bird_shriek",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -83575,20 +81944,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:kamadan_breath_weapon",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:kamadan_snakes",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:kami_fast_healing",
       "kind": "monster_ability",
       "book": "bestiary_3",
@@ -83610,32 +81965,18 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:kappa_head_bowl",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:kech_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:kirin_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:kirin_spells",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:kodama_distracting_gaze",
@@ -83646,20 +81987,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:kodama_spell_like_abilities",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:kongamato_piercing_beak",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:kongamato_wailing_dive",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -83691,14 +82018,7 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:lammasu_spells",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:leaf_leshy_glide",
@@ -83726,14 +82046,14 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:legion_archon_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:leshy_change_shape",
@@ -83764,32 +82084,18 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:lukwata_damage_reduction",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:lukwata_digest_magic",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:lukwata_dispelling_bite",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:lukwata_eldritch_encrustation",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:lunar_naga_hypnosis",
@@ -83813,46 +82119,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:maftet_paired_weapons",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:maftet_raptor_dive",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:maftet_runic_tattoos",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:maftet_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:magmin_heated_flesh",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:magmin_searing_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:maharaja_extra_initiative",
@@ -83869,25 +82140,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:manananggal_separate",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:manananggal_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:manananggal_vulnerable_to_light_blades",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:marai_confusion",
@@ -83915,49 +82172,14 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:mobogo_swamp_stride",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:mobogo_tongue",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:mobogo_vile_croak",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:moon_beast_rend",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:moon_beast_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:moon_beast_wisdom_drain",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:moss_troll_fear_of_fire",
@@ -83978,140 +82200,42 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:myceloid_spell_like_ability",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:myceloid_spore_cloud",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:myceloid_spore_domination",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nephilim_crushing_blow",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nephilim_mortal_challenge",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nephilim_soul_of_sorrow",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:nixie_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nixie_wild_empathy",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:norn_fated",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:norn_shears",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:norn_shift_fate",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:norn_snip_thread",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:norn_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nuckelavee_breath_weapon",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nuckelavee_disease",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:nuckelavee_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nue_cloud_form",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:nue_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:nue_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:ogre_spider_poison",
@@ -84142,158 +82266,32 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:pale_stranger_pistols",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:pale_stranger_stranger_s_luck",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:pale_stranger_stranger_s_shot",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:peri_flame_jump",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:peri_smoke_sight",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:peri_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:peri_whirlwind_dance",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:phantom_fungus_phantom_flesh",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:plasma_ooze_engulf",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:plasma_ooze_magnetic_pulse",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:plasma_ooze_plasma_ray",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:plasma_ooze_split",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:popobala_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:popobala_harvester_of_sorrow",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:popobala_horrid_haunting",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:popobala_popobala_fever",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:popobala_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:porcupine_quills",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:pukwudgie_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:pukwudgie_quills",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:pukwudgie_spawn_undead",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:pukwudgie_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:rajadhiraja",
@@ -84387,95 +82385,18 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:rusalka_beckoning_call",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:rusalka_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:rusalka_staggering_touch",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:rusalka_tresses",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sabosan_dust_cloud",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sabosan_fell_shriek",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sagari_baleful_whinny",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sagari_flight",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sagari_lashing_strike",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sargassum_fiend_grab",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:sargassum_fiend_mirage",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sasquatch_pungency",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sasquatch_woodland_stride",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:schir_disease",
@@ -84492,46 +82413,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:sea_bonze_dooming_gaze",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sea_dragon_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sea_dragon_sea_strider",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sea_dragon_tidal_wave",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sea_dragon_torrent_breath",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:sea_dragon_unfettered_swimmer",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:seaweed_leshy_air_cyst",
@@ -84576,60 +82462,25 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:shadow_mastiff_bay",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:shadow_mastiff_shadow_blend",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:shae_cold",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:shae_lesser_shadow_evocation",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:shae_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:shaggy_demodand_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:shedu_prescience",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:shedu_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:shikigami_improvised_weapon_mastery",
@@ -84646,18 +82497,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:shinigami_destroy_soul",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:shinigami_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:shipwrecker_crab_powerful_claws",
@@ -84688,186 +82532,25 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:simurgh_aura_of_peace",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:simurgh_banishing_swipe",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:simurgh_glaring_ray",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:simurgh_radiant_feathers",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:simurgh_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:siyokoy_stunning_shock",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:siyokoy_swim_by_attack",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:skunk_musk",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sky_dragon_borne_aloft",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sky_dragon_celestial_emissary",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sky_dragon_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sky_dragon_cloud_sight",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sky_dragon_grounding_breath",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sky_dragon_primal_lightning",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sleipnir_breath_weapon",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:sleipnir_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sovereign_dragon_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sovereign_dragon_dogmatic_discordance",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sovereign_dragon_golden_armor",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sovereign_dragon_master_counterspelling",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:sovereign_dragon_violent_retort",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:spider_eater_implant",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:spider_eater_poison",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:spider_eater_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:stymphalidies_glare",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:stymphalidies_wing_razors",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:taiga_linnorm_breath_weapon",
@@ -84898,25 +82581,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:tanuki_sake_affinity",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:tanuki_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:taotieh_swallow_whole",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:tataka_martial_artist",
@@ -84934,13 +82603,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:tataka_spells",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tatzlwyrm_poison_gasp",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -84979,14 +82641,7 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:terra_cotta_soldier_rank_fighting",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:thalassic_behemoth_spell_like_abilities",
@@ -85095,27 +82750,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:thunder_behemoth_swallow_whole",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tojanida_ink_cloud",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tophet_conductive",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tophet_swallow_whole",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -85255,102 +82889,32 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:trollhound_disease",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:tupilaq_scrimshaw_magic",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tupilaq_seek_target",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tupilaq_shearing_jaws",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:tupilaq_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tzitzimitl_eclipse",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tzitzimitl_eye_beam",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:tzitzimitl_light_to_dark",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:tzitzimitl_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:underworld_dragon_adamantine_claws",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:underworld_dragon_change_shape",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:underworld_dragon_lava_eruption",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:underworld_dragon_smoke_vision",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:underworld_dragon_underworld_burrower",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:unfettered_eidolon_cha",
@@ -85420,28 +82984,14 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:valkyrie_choose_the_slain",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:valkyrie_holy_zeal",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:valkyrie_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:vishkanya_toxic_vishkanya_venom",
@@ -85455,14 +83005,7 @@
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:vodyanoi_suffocating_water",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:void_yai_commanding_voice",
@@ -85494,13 +83037,6 @@
     },
     {
       "id": "bestiary_3:monster_ability:void_yai_void_trap",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:voonith_blood_freezing_howl",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
@@ -85563,74 +83099,18 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:yithian_amnesia",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yithian_deadly_pincers",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yithian_mind_swap",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yithian_scholar",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:yithian_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yuki_onna_chilling_touch",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yuki_onna_fascinating_gaze",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yuki_onna_snow_dependency",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_3:monster_ability:yuki_onna_snowstorm",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:yuki_onna_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:monster_ability:zuishin_healing_arrow",
@@ -85654,18 +83134,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "bestiary_3:monster_ability:zuvembie_corpse_call",
-      "kind": "monster_ability",
-      "book": "bestiary_3",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_3:monster_ability:zuvembie_spell_like_abilities",
       "kind": "monster_ability",
       "book": "bestiary_3",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_3:companion:augur_spell_like_abilities",
@@ -88220,14 +85693,14 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:detect_undead_constant",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:devil_host_noxious_breath",
@@ -88577,7 +86050,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:fachen_fear",
@@ -88591,7 +86064,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:flea_mammoth_disease",
@@ -88717,7 +86190,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:fungal_creature_create_spawn",
@@ -88794,7 +86267,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:grab_medium",
@@ -88997,7 +86470,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:grendel_frightful_presence",
@@ -89011,7 +86484,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:hide_in_plain_sight",
@@ -89060,231 +86533,133 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_bloody",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_broken_bonds",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_chaotic_attacks",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_confusion",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_deeper_darkness",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_destructive_aura",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_doubles",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_evil_attacks",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_flaming_burst",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_friendly_pack",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_friendship",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_good_attacks",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_grandeur",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_guardian",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_hedge",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_inspirational",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_lawful_attacks",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_lifesapper",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_lucky",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_powerful_allies",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_repair",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_resistant",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_rest_eternal",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_resurgence",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:juggernaut_rune_carved",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_sunstrike",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_surge",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_tremorsense",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_unstoppable",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_vigorous",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_weathermaker",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:juggernaut_whirlwind",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:kaiju_agyra_blinding_flash",
@@ -89480,7 +86855,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:manitou_positive_energy_aura",
@@ -89609,27 +86984,6 @@
       "join_status": "no_formula_tokens"
     },
     {
-      "id": "bestiary_4:monster_ability:oma_capsize",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:oma_carrier",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:oma_starflight",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "bestiary_4:monster_ability:owb_curse_of_darkness",
       "kind": "monster_ability",
       "book": "bestiary_4",
@@ -89683,7 +87037,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:protection_from_good_constant",
@@ -89697,7 +87051,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:psychopomp_yamaraj_breath_weapon",
@@ -89732,7 +87086,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:regeneration_deific_or_mythic",
@@ -89753,21 +87107,21 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:regeneration_negative_energy",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:regeneration_unarmed_strikes_or_natural_weapons",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:resistance_to_negative_energy_output",
@@ -89858,7 +87212,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:spawn_of_yog_sothoth_devastation",
@@ -89970,7 +87324,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:vampire_nosferatu_blood_drain",
@@ -90040,7 +87394,7 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:werebat",
@@ -90096,42 +87450,28 @@
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:yaoguai_grab_and_constrict",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:yaoguai_poison",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:yaoguai_pounce_and_rake",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "bestiary_4:monster_ability:yaoguai_quills",
-      "kind": "monster_ability",
-      "book": "bestiary_4",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:monster_ability:yaoguai_trample",
       "kind": "monster_ability",
       "book": "bestiary_4",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "bestiary_4:companion:companion_dinosaur_diplodocus_tail_lash",
@@ -132477,34 +129817,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_combat:feat:awe_inspiring_smash",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:black_powder_spectacle",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:cannon_master",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:casterbane_shot",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_combat:feat:duelist_of_the_roaring_falls",
       "kind": "feat",
       "book": "inner_sea_combat",
@@ -132512,49 +129824,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_combat:feat:duelist_of_the_shrouded_lake",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:falling_water_gambit",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:grand_duchy_familiarity",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:masterful_flourish",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_combat:feat:monstrous_mount",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:monstrous_mount_mastery",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:ostentatious_weakness",
       "kind": "feat",
       "book": "inner_sea_combat",
       "family": "F0",
@@ -132569,48 +129839,6 @@
     },
     {
       "id": "inner_sea_combat:feat:redirected_shot",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:savage_surge",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:spectacular_exit",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:thrilling_vengeance",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:unblinking_flame_feint",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:unblinking_flame_fist",
-      "kind": "feat",
-      "book": "inner_sea_combat",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_combat:feat:unfolding_wind_rush",
       "kind": "feat",
       "book": "inner_sea_combat",
       "family": "F0",
@@ -134507,63 +131735,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:arcane_insight",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:aura_of_succumbing",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:beacon_of_hope",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:believable_veils",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:bestow_hope",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:blessed_hammer",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:bloodletting",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:bloody_sabres",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:bloody_vengeance",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134577,56 +131749,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:breaker_of_barriers",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:bullseye_shot",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:butterfly_s_sting",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:channel_discord",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:channel_endurance",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:channel_hate",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:channel_viciousness",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:charge_of_the_righteous",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134647,49 +131770,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:courage_in_a_bottle",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:cruelty",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:curse_of_vengeance",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:deific_obedience",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:destroy_identity",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:devilish_pride",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:diabolical_negotiator",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134710,49 +131791,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:divine_barrier",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:divine_dignity",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:divine_expression",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:dreamed_secrets",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:drunken_brawler",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:eerie_sense",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:elemental_vigor",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134766,35 +131805,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:fearsome_finish",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:fey_friend",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:flagellant",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:forceful_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:glorious_heat",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134815,63 +131826,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:heroic_interposition",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:hunter_of_dahak",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:intrepid_rescuer",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:ironbound_master",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:ki_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:liberation_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:magical_epiphany",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:master_of_knowledge",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:measured_response",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134885,63 +131840,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:messenger_of_fate",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:nightmare_scars",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:nimble_natural_summons",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:oath_of_the_unbound",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:ordered_mind",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:perfect_casting",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:persuasive_performer",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:poisoner_s_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:potion_glutton",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -134962,20 +131861,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:reject_poison",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:riptide_attack",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:savior_s_arrow",
       "kind": "feat",
       "book": "inner_sea_gods",
@@ -134990,55 +131875,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:shadow_dodge",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:shatter_resolve",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:siphon_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:spear_dancer",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:spiked_destroyer",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:squash_flat",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:steady_engagement",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:steelskin_channel",
       "kind": "feat",
       "book": "inner_sea_gods",
@@ -135046,56 +131882,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "inner_sea_gods:feat:stone_read",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:stone_strider",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:sun_striker",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:thicket_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:to_the_last",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:torch_bearer",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:feat:trailblazing_channel",
-      "kind": "feat",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "inner_sea_gods:feat:undermining_exploit",
       "kind": "feat",
       "book": "inner_sea_gods",
       "family": "F0",
@@ -136058,49 +132845,49 @@
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:adoration_spirit_unearthly_grace",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:ahmuuth_animated_shield",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:first_blade_ironsense",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:first_blade_powerful_blows_slam",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:first_blade_regeneration",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:first_blade_swarm_form",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:grim_white_stag_bugle",
@@ -136114,21 +132901,21 @@
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:grim_white_stag_languages",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:grim_white_stag_lay_on_hands",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:hand_of_the_inheritor_lay_on_hands",
@@ -136156,14 +132943,14 @@
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:lampadarius_strength_damage",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:mother_s_maw_channel_negative_energy",
@@ -136177,7 +132964,7 @@
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:mother_s_maw_swallow_whole",
@@ -136187,18 +132974,11 @@
       "join_status": "matched"
     },
     {
-      "id": "inner_sea_gods:monster_ability:orsheval_truespeech",
-      "kind": "monster_ability",
-      "book": "inner_sea_gods",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "inner_sea_gods:monster_ability:skein_steward_constant_spells",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:spawn_of_rovagug_hibernation",
@@ -136226,7 +133006,7 @@
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:thais_armor_of_valor",
@@ -136240,14 +133020,14 @@
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:thalachos_uncanny_dodge",
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "inner_sea_gods:monster_ability:the_old_man_monk_abilities",
@@ -200755,6 +197535,13 @@
       "join_status": "no_record"
     },
     {
+      "id": "ultimate_intrigue:class_feature:social_grace_craft_armor_craft_baskets",
+      "kind": "class_feature",
+      "book": "ultimate_intrigue",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "ultimate_intrigue:class_feature:social_grace_craft_blacksmithing",
       "kind": "class_feature",
       "book": "ultimate_intrigue",
@@ -201943,6 +198730,13 @@
       "book": "ultimate_intrigue",
       "family": "F0",
       "join_status": "no_formula_tokens"
+    },
+    {
+      "id": "ultimate_intrigue:class_feature:vigilante_favored_maneuver_bull_rush_favored_maneuver_sunder",
+      "kind": "class_feature",
+      "book": "ultimate_intrigue",
+      "family": "F0",
+      "join_status": "no_record"
     },
     {
       "id": "ultimate_intrigue:class_feature:vigilante_favored_maneuver_dirty_trick",
@@ -222602,13 +219396,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:aegis_invigorating_suit",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:aegis_master_craftsman",
       "kind": "class_feature",
       "book": "ultimate_psionics",
@@ -222638,13 +219425,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:aegis_obese",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:aegis_perfect_merger",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -224779,21 +221559,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:cryptic_enduring_defense",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:cryptic_enhanced_disruption",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:cryptic_evasion",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -224807,28 +221573,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:cryptic_hide_in_plain_sight",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:cryptic_insights",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:cryptic_pattern_designs",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:cryptic_rapid_defense",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -224843,13 +221588,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:cryptic_supreme_insight",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:cryptic_swift_trapper",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -225220,13 +221958,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:dread_channel_terror",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:dread_devastating_touch",
       "kind": "class_feature",
       "book": "ultimate_psionics",
@@ -225242,13 +221973,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:dread_fearsome_insight",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:dread_immersed_in_fear",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -225277,13 +222001,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:dread_terror",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:dread_twin_fear",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -226880,20 +223597,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:marksman_cover_fire",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:marksman_defensive_shot",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:marksman_disengage",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -229511,35 +226214,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:psychic_warrior_martial_power",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:psychic_warrior_pathweaving",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:psychic_warrior_psionic_proficiency",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:psychic_warrior_secondary_path",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:psychic_warrior_twisting_path",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -230680,13 +227355,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:soulknife_mind_blade_mastery",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:soulknife_power_attack",
       "kind": "class_feature",
       "book": "ultimate_psionics",
@@ -230702,20 +227370,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:soulknife_quick_draw",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:soulknife_shape_mind_blade",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:soulknife_throw_mind_blade",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -231114,21 +227768,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:tactician_coordinate",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:tactician_coordinated_strike",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:tactician_echo_effect",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -231149,20 +227789,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:tactician_pooled_knowledge",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:tactician_spirit_of_many",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:tactician_strategy",
       "kind": "class_feature",
       "book": "ultimate_psionics",
@@ -231171,13 +227797,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:tactician_teamwork_feats",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:tactician_telepathy",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -232136,13 +228755,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:vitalist_collective_healing",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:vitalist_health_sense",
       "kind": "class_feature",
       "book": "ultimate_psionics",
@@ -232150,21 +228762,7 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:class_feature:vitalist_medic_powers",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:class_feature:vitalist_request_aid",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:vitalist_spirit_of_many",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -232179,13 +228777,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:vitalist_steal_life",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:vitalist_telepathy",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -232739,13 +229330,6 @@
     },
     {
       "id": "ultimate_psionics:class_feature:wilder_improved_surge_bond",
-      "kind": "class_feature",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:class_feature:wilder_perfect_surge",
       "kind": "class_feature",
       "book": "ultimate_psionics",
       "family": "F0",
@@ -235559,389 +232143,18 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:monster_ability:blue_goblinoid_camouflage",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_keen_senses",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_kinslayer",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_leadership",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_mindbender",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_pariah",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_psionic_prodigy",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_repletion",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_self_reliant",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_stealthy",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:blue_weapon_familiarity",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_atavistic_link",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_chitin",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_compound_eyes",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_crafter",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_excavator",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_gendered",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_hive_mind",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:dromite_hive_soldier",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:monster_ability:dromite_scent",
       "kind": "monster_ability",
       "book": "ultimate_psionics",
       "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_psionics:monster_ability:elan_aberrant_nature",
       "kind": "monster_ability",
       "book": "ultimate_psionics",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_blue",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_dromite",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_duergar",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_dwarf",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_elf",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_gnome",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_half_elf",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_half_giant",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_half_orc",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_halfling",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_human",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_maenad",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_ophiduan",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_failed_transformation_xeph",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_haughty",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_reconstruction",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_repletion",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_resilience",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_resistance",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_smooth_talker",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_blue",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_dromite",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_duergar",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_dwarf",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_elf",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_gnome",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_half_elf",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_half_giant",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_half_orc",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_halfling",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_human",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_maenad",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_ophiduan",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:elan_strong_blooded_xeph",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_psionics:monster_ability:energy_touch_acid",
@@ -235972,139 +232185,6 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:monster_ability:forgeborn_crystal_skin",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_fearless",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_memory_matrix",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_natural_armor",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_oreheart",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_quickened_steps",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_second_skin",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_slow_and_steady",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_source_crystal",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:forgeborn_strange_mind",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_cold_acclimated",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_fire_acclimated",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_flame_of_freedom",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_giant_blood",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_juggernaut",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_liberty_or_death",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_powerful_build",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_psionic_resonance",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:half_giant_survivor",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:monster_ability:horror_devastating_touch",
       "kind": "monster_ability",
       "book": "ultimate_psionics",
@@ -236119,214 +232199,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_psionics:monster_ability:maenad_born_to_lead",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_crystal_resonance",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_crystallized_skin",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_inner_rage",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_natural_sailor",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_ordered_rage",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_outburst",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_shore_bound",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_sonic_affinity",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_tempestuous_temper",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:maenad_weapon_familiarity",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_empathic_persuasion",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_feral_erliss",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_gift_of_tongues",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_master_of_deception",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_resilient_symbiote",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_symbiote_sensitivity",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_symbiotic_resistance",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_symbiotic_sentry",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_symbiotic_surge",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:noral_unbonded",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_deformed",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_metabolist",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_poison_resistant",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_poisonous_flesh",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_scaled_hide",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_scholar",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
       "id": "ultimate_psionics:monster_ability:ophiduan_serpent_s_bite",
       "kind": "monster_ability",
       "book": "ultimate_psionics",
       "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_slippery_hide",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:ophiduan_weapon_familiarity",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
+      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_psionics:monster_ability:psicrystal_power_resistance",
@@ -236341,62 +232218,6 @@
       "book": "ultimate_psionics",
       "family": "F9",
       "join_status": "matched"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_bladeborn",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_burst",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_call_blade",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_explorer",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_innate_resistance",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_quick_craftsman",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_troubadour",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_psionics:monster_ability:xeph_windweaver",
-      "kind": "monster_ability",
-      "book": "ultimate_psionics",
-      "family": "F0",
-      "join_status": "no_record"
     },
     {
       "id": "ultimate_psionics:skill:autohypnosis",
@@ -244631,6 +240452,13 @@
       "join_status": "no_record"
     },
     {
+      "id": "ultimate_wilderness:class_feature:green_faith_marshal_panther_domain_vulture",
+      "kind": "class_feature",
+      "book": "ultimate_wilderness",
+      "family": "F0",
+      "join_status": "no_record"
+    },
+    {
       "id": "ultimate_wilderness:class_feature:green_faith_marshal_plains_domain",
       "kind": "class_feature",
       "book": "ultimate_wilderness",
@@ -247200,32 +243028,11 @@
       "join_status": "no_record"
     },
     {
-      "id": "ultimate_wilderness:class_feature:shifter_a_thousand_faces",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_bonus_languages",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "ultimate_wilderness:class_feature:shifter_class",
       "kind": "class_feature",
       "book": "ultimate_wilderness",
       "family": "F0",
       "join_status": "no_record"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_chimeric_aspect",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_wilderness:class_feature:shifter_class_skills",
@@ -247242,20 +243049,6 @@
       "join_status": "matched"
     },
     {
-      "id": "ultimate_wilderness:class_feature:shifter_final_aspect",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_greater_chimeric_aspect",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "ultimate_wilderness:class_feature:shifter_shifter_aspect",
       "kind": "class_feature",
       "book": "ultimate_wilderness",
@@ -247268,13 +243061,6 @@
       "book": "ultimate_wilderness",
       "family": "F1",
       "join_status": "matched"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_shifter_s_fury",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_wilderness:class_feature:shifter_timeless_body",
@@ -247291,39 +243077,11 @@
       "join_status": "matched"
     },
     {
-      "id": "ultimate_wilderness:class_feature:shifter_trackless_step",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_weapon_and_armor_proficiencies",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_wild_empathy",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
-    },
-    {
       "id": "ultimate_wilderness:class_feature:shifter_wild_shape",
       "kind": "class_feature",
       "book": "ultimate_wilderness",
       "family": "F2",
       "join_status": "matched"
-    },
-    {
-      "id": "ultimate_wilderness:class_feature:shifter_woodland_stride",
-      "kind": "class_feature",
-      "book": "ultimate_wilderness",
-      "family": "F0",
-      "join_status": "no_formula_tokens"
     },
     {
       "id": "ultimate_wilderness:class_feature:skald_archetype_bacchanal",
@@ -252202,7 +247960,7 @@
     "F0": {
       "label": "No formula content (no DEFINE/BONUS token found for this unit)",
       "proof_width": "Covers a unit whose (book, source_file, source_line) join finds either no corpus record, or a corpus record whose data.raw_tokens carries no DEFINE/BONUS-prefixed key. Does not distinguish 'this unit genuinely has no computable magnitude' (a race description, a pure-text feat) from 'the join failed to find the record it should have' -- the `join_status` field on each ledger row (`no_record` vs `no_formula_tokens`) is what a reviewer checks to tell those apart; F0's own count does not.",
-      "count": 31226
+      "count": 30620
     },
     "F2": {
       "label": "Per-level scaling (<Class>LVL bare or arithmetic)",
@@ -252258,8 +248016,8 @@
   "unclassified_count": 0,
   "unclassified": [],
   "join_status_counts": {
-    "no_record": 21521,
+    "no_record": 20778,
     "matched": 4802,
-    "no_formula_tokens": 9705
+    "no_formula_tokens": 9842
   }
 }

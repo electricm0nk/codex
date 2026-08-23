@@ -4727,3 +4727,63 @@ Receipt: `artifacts/gate-1-shape-closure/003_class_feature_no_record_closure_cyc
 Remaining bundle-wide `no_record` (15,425, 17 other kinds) is sibling-cycle scope per `decisions.md
 §20`'s per-kind table.
 - Commit: 649c072ae.
+
+
+## Cycle: card-15-duplicate-identity-review (2026-08-23)
+
+**Per-case hand review of the 183-unit `duplicate_identity` residual, the population the prior
+cycle deliberately deferred.** Landed `disambiguate_class_feature_keyed_name_collisions`
+(`src/bin/v06_work_inventory.rs`, new fn + 4 tests): for a keyed `class_feature` collision, a
+DIFFERING display name under one shared `KEY:` is direct evidence of a corpus-author typo, not one
+identity — rescued 4 units (`Native Cunning ~ Grapple`/`Overrun`, `Vigilante Favored Maneuver ~
+Bull Rush`/`Sunder`, `Green Faith Marshal ~ Panther Domain`/`Vulture Domain`, and a 4th the real
+fix itself surfaced, `Social Grace ~ Craft (Armor)`/`Craft (Baskets)`, previously invisible to this
+memo's own hand census). The other 12 of the 16 keyed groups (24 rows) share an identical display
+name both sides — correctly left collapsed (PFS override / hidden tracker / true restatement).
+
+**All 39 `TYPE:*Choice`-typed fallback groups (113 rows) reviewed and found Decision-17-shaped —
+none rescued.** New evidence worksheet `15-card-15-residual-group-review.py` traces every group
+member's `ABILITY:AUTOMATIC` grant target: every group's members converge, in pairs, on an
+identical real-feature target reached via a base-class gate and a second archetype/feat-chain gate
+— the SAME duplicate-chooser-picker shape SD-31 `decisions.md` Decision 17 already confirmed (all
+7 of `ultimate_magic`'s groups' surviving rows are already on
+`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`). Named for an operator ruling (74 candidate ids); this
+cycle does not edit that allowlist or SD-31's `decisions.md`.
+
+**class_feature grew 18,056 → 18,060 (+4).** Both directions proved by physical-location diff (0
+lost, 4 gained, 0 duplicate ids). `git diff --stat HEAD -- src/bin/v06_work_inventory.rs`: 174
+insertions, 0 deletions — proves this cycle's own diff cannot be responsible for anything beyond
+those 4 units. **Full `status` distribution diffed**: `literal-verified` and `fixture-verified`
+both preserved exactly (no stamp loss); the other five buckets shifted substantially
+(`not-ingested` −793, `grounded`/`text-complete`/`ingested-magnitude`/`unknown` all up) — proved,
+via the 0-deletion diff, to be pre-existing staleness between the checked-in
+`docs/work-inventory.json` and a fresh regen at the SAME commit (the pin never moved this cycle),
+not this cycle's own effect. Flagged, not silently absorbed.
+
+**The 22 genuinely-unpinned residual rows, traced this cycle, all fully explained:** 21 are rows
+already on `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`, correctly, deliberately removed
+post-construction by `apply_duplicate_chooser_removal` — not a defect the census-based residual
+predicate can see. The 22nd is the already-traced `disable_device_class_skill` displacement. No
+cause-pinning gap remains anywhere in the 183-unit population.
+
+**Residual: 183 → 179** (153 non-internal + 26 internal-collision-losers).
+`scripts/card15_reconcile.py` updated and re-run: `equals_total_this_run: True`,
+`remaining_undisposed: 0`, 18,992 total (invariant — the already-tracked/pending-A split moved
+18,008/183 → 18,012/179, sum unchanged). Gate 3's standing gate now **PASSES**
+(`no_record` 20,778/35,422 vs. baseline 21,521/36,028, not exceeded) — a side effect of the
+pre-existing staleness resolving via this cycle's required regen, not this cycle's own fix.
+
+Suites: `cargo test --locked --bin v06_work_inventory` → 339/339 (was 335, +4). Dual audit on this
+cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+- **Status:** in-progress — the population is fully reviewed and evidenced, not zero. Escalated
+  per `decisions.md §10`: exact question in the review memo's own closing section (whether the
+  74 Decision-17-shaped ids should be added to `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`).
+- **Kanban:** row 15 entry appended, stays `in-progress`.
+- Receipt: `artifacts/gate-0-census-closure/15-duplicate-identity-review_cycle_receipt.md`.
+- Review memo: `artifacts/gate-0-census-closure/15-card-15-duplicate-identity-review-memo.md`.
+- **What remains:** operator ruling on the 74-id allowlist addition; re-derive the keyed-collision
+  census using `is_internal_category`'s own narrowed test (the Social Grace discovery suggests the
+  true population is larger than 16 groups); reallocate the 22 fully-explained rows from
+  `pending_a` to `disposed_b` in `scripts/card15_reconcile.py`'s bucket structure.
+- Commit: (recorded after push).
