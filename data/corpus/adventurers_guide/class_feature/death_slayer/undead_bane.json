@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Death Slayer ~ Undead Bane",
     "name": "Undead Bane",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "One sawtooth sabre a death slayer wields functions as a bane weapon against undead creatures as long as the death slayer wields the weapon.",
     "raw_tokens": [
       {

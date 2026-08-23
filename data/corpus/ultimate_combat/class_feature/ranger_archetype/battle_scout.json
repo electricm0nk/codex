@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Archetype ~ Battle Scout",
     "name": "Battle Scout",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Armies need clean water, safe routes, and intelligence about their enemies. Though regular outdoorsmen might suffice in many cases, some large forces look to battle scouts to keep the body of their troops safe and prepared for the terrain and whatever dangers that terrain hides.",
     "raw_tokens": [
       {

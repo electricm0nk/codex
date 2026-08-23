@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Oath against Undeath",
     "name": "Oath against Undeath",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "You vow to restore the natural state of death to any animate corpse you encounter, and destroy the undead energy in the process.",
     "raw_tokens": [
       {

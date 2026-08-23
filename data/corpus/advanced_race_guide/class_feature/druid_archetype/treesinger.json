@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Druid Archetype ~ Treesinger",
     "name": "Treesinger",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "Elves live far longer than other common races, and a single elf may see whole empires rise and fall. Given the impermanence of the cultures around them, it's small wonder that some elves turn to the timeless growth of nature for solace, finding allies among the great trees themselves, and even leading the forest's plants into combat.",
     "raw_tokens": [
       {

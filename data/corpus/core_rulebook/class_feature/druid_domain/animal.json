@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Druid Domain ~ Animal",
     "name": "Animal",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
     "raw_tokens": [
       {

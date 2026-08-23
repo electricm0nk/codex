@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Animal Focus ~ Wolf",
     "name": "Wolf",
-    "class": "Hunter Animal Focus",
+    "class": "Hunter",
     "description": "Get scent with range of %1 feet|HunterAnimalFocusWolfScent",
     "raw_tokens": [
       {

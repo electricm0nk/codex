@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bogborn Alchemist ~ Toxic Skin",
     "name": "Toxic Skin",
-    "class": "Bogborn Alchemist",
+    "class": "Alchemist",
     "description": "A bogborn alchemist can select the toxic skin grippli racial trait in place of an alchemical discovery.",
     "raw_tokens": [
       {

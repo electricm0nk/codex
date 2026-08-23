@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Season Witch ~ Summer Witch",
     "name": "Summer Witch",
-    "class": "Season Witch",
+    "class": "Witch",
     "description": "A summer witch has dominion over growth, the harvest, and toil. The save DCs of her spells that deal fire damage increase by 1.",
     "raw_tokens": [
       {

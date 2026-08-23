@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Faith Hunter ~ Sworn Enemy ~ LE",
     "name": "Sworn Enemy (Lawful Evil)",
-    "class": "Faith Hunter",
+    "class": "Hunter",
     "description": "All lawful evil creatures are your sworn enemy.",
     "raw_tokens": [
       {

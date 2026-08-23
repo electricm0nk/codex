@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Watersinger",
     "name": "Watersinger",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "The watersinger's song reaches from the depths of his soul into the elemental waters from which life first sprang. His voice commands water, bending and shaping it to his desire.",
     "raw_tokens": [
       {

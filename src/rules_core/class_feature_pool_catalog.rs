@@ -92,9 +92,14 @@ use serde_json::Value;
 
 use crate::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 
-/// Corpus `data.class` values this catalog recognises as an option-pool
-/// group rather than a real engine-modelled class. See the module doc for
-/// why the list is only these two entries today.
+/// Corpus `key` group-prefix (`key.split(" ~ ").next()`) values this
+/// catalog recognises as an option-pool group rather than a real
+/// engine-modelled class. See the module doc for why the list is only
+/// these two entries today. **SD-32 card 11 correction:** this used to be
+/// matched against `data.class` -- now matched against the key's own group
+/// text directly, since `data.class` was fixed to carry the TRUE owning
+/// class (`cache_gen::class_feature::generate`'s T2a closure), not the
+/// pool label these two literal strings name.
 pub const REGISTERED_POOL_GROUPS: &[&str] = &["Rogue Talent", "Rage Power"];
 
 /// `raw_tokens` keys that carry a real, player-facing engine effect --
@@ -254,8 +259,9 @@ fn raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw: &str) -> 
 pub struct PoolCatalogEntry {
     /// The corpus book directory this record was read from.
     pub book: String,
-    /// The registered pool group this record belongs to (`data.class`,
-    /// verbatim — e.g. `"Rogue Talent"`).
+    /// The registered pool group this record belongs to (the corpus `key`'s
+    /// own `" ~ "`-split group prefix — e.g. `"Rogue Talent"`; SD-32 card 11:
+    /// no longer `data.class`, which now carries the TRUE owning class).
     pub pool_group: String,
     /// The corpus `KEY:` token verbatim (e.g. `"Rogue Talent ~ Ledge
     /// Walker"`).
@@ -373,12 +379,24 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             let Ok(text) = std::fs::read_to_string(&file) else { continue };
             let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
             let data = &doc["data"];
-            let (Some(key), Some(name), Some(class)) =
-                (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
-            else {
+            let (Some(key), Some(name)) = (data["key"].as_str(), data["name"].as_str()) else {
                 continue;
             };
-            if !REGISTERED_POOL_GROUPS.contains(&class) {
+            // SD-32 card 11 (`epic-2-cause-closure`, T2a/T12 combined
+            // cycle): the pool group this catalog needs is the corpus
+            // key's own `" ~ "`-split prefix, NOT `data.class` -- those two
+            // used to be interchangeable only because of the exact bug T2a
+            // names (`cache_gen::class_feature::generate` used to derive
+            // `class` FROM this same key-prefix text whenever no grant fact
+            // resolved it). Now that `generate` ships the TRUE owning class
+            // in `data.class` (e.g. `"Rogue"`, not `"Rogue Talent"`) so
+            // `class_feature_descriptions.rs`'s consumer can join it against
+            // a real `ExplanationDto.id`, this module's own filter must read
+            // the group text directly from `key` instead -- `key` is
+            // untouched by that fix, so `"Rogue Talent ~ Ledge Walker"` still
+            // splits to `"Rogue Talent"` exactly as before.
+            let group = key.split(" ~ ").next().unwrap_or(key);
+            if !REGISTERED_POOL_GROUPS.contains(&group) {
                 continue;
             }
             if CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS.contains(&key) {
@@ -422,7 +440,7 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             let clean_name = name.trim_end_matches('*').trim().to_string();
             out.push(PoolCatalogEntry {
                 book: book.clone(),
-                pool_group: class.to_string(),
+                pool_group: group.to_string(),
                 key: key.to_string(),
                 name: clean_name,
                 description: rendered.text,

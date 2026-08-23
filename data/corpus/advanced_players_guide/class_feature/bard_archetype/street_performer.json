@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Street Performer",
     "name": "Street Performer",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Whether acrobat, troubadour, or thespian, the street performer mixes with the masses, singing for his supper.",
     "raw_tokens": [
       {

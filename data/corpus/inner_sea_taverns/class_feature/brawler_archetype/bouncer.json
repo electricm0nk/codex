@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Brawler Archetype ~ Bouncer",
     "name": "Bouncer",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "Some taverns employ bouncers to keep out undesirables or for when their customers get too rowdy.",
     "raw_tokens": [
       {

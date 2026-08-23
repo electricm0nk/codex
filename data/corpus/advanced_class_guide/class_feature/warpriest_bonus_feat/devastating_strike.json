@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Devastating Strike",
     "name": "Devastating Strike",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Pitting all of your strength and resolve against your enemy, you deliver a strike that is impossible to ignore.",
     "raw_tokens": [
       {

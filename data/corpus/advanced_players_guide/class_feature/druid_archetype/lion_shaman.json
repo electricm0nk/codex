@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Druid Archetype ~ Lion Shaman",
     "name": "Lion Shaman",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "A shaman with this totem calls upon the proud lion, imposing and majestic, the mighty leader of deadly hunters.",
     "raw_tokens": [
       {

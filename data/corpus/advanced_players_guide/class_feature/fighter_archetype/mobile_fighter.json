@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Fighter Archetype ~ Mobile Fighter",
     "name": "Mobile Fighter",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "Where some fighters focus on strength and raw power, the mobile fighter relies on swiftness and mobility, gliding across the battlefield like a steel whirlwind and leaving destruction in his wake.",
     "raw_tokens": [
       {

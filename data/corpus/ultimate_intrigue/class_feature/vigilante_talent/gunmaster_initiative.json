@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Gunmaster Initiative",
     "name": "Gunmaster Initiative",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The gunmaster gains a +2 bonus on initiative checks. Furthermore, if he has the Quick Draw feat, his hands are free and unrestrained, and the firearm is not hidden, he can draw a single firearm as part of the initiative check.",
     "raw_tokens": [
       {

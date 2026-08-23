@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bloodrager Archetype ~ Metamagic Rager",
     "name": "Metamagic Rager",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "While metamagic is difficult for many bloodragers to utilize, a talented few are able to channel their bloodrage in ways that push their spells to impressive ends.",
     "raw_tokens": [
       {

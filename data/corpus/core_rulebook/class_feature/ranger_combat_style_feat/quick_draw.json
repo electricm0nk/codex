@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Combat Style Feat ~ Quick Draw",
     "name": "Quick Draw",
-    "class": "Ranger Combat Style Feat",
+    "class": "Ranger",
     "description": "You can draw weapons faster than most.",
     "raw_tokens": [
       {

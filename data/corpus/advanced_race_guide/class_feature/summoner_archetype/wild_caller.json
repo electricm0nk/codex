@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Summoner Archetype ~ Wild Caller",
     "name": "Wild Caller",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "Often a half-elf 's ties to nature and elven heritage are so strong that they can dramatically affect the nature of his summonings. The wild caller calls eidolons that take more natural and savage forms and summons from nature rather than the Great Beyond.",
     "raw_tokens": [
       {

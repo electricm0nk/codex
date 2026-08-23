@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Fighter Archetype ~ Lore Warden ~ AG",
     "name": "Lore Warden",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

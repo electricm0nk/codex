@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Vortex Spells",
     "name": "Vortex Spells",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "Whenever the shaman confirms a critical hit against an opponent with a spell, the target is staggered for",
     "raw_tokens": [
       {

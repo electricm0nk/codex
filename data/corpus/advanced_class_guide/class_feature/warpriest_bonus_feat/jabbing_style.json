@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Jabbing Style",
     "name": "Jabbing Style",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "A cluster of quick strikes deals more damage than a single roundhouse swing.",
     "raw_tokens": [
       {

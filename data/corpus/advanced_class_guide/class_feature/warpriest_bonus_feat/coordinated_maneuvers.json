@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Coordinated Maneuvers",
     "name": "Coordinated Maneuvers",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You are skilled at working with your allies to perform dangerous combat maneuvers.",
     "raw_tokens": [
       {

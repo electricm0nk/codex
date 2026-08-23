@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Charm Domain",
     "name": "Charm",
-    "class": null,
+    "class": "Cleric",
     "description": "You can baffle and befuddle foes with a touch or a smile, and your beauty and grace are divine.",
     "raw_tokens": [
       {

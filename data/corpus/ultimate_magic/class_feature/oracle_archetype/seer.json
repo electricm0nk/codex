@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oracle Archetype ~ Seer",
     "name": "Seer",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "While all oracles possess some ability at divination, the seer is a true prophet, able to see things as they really are, or will be.",
     "raw_tokens": [
       {

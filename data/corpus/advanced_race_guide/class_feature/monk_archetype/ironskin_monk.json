@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Ironskin Monk",
     "name": "Ironskin Monk",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "Through discipline and training, an ironskin monk hardens his body to withstand punishing blows. Though slow on his feet, his calloused hands and feet can shatter stone and stagger foes.",
     "raw_tokens": [
       {

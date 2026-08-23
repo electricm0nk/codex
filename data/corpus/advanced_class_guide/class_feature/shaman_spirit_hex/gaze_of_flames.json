@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Gaze of Flames",
     "name": "Gaze of Flames",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman sees through fire, fog, and smoke without penalty as long as there is enough light to otherwise allow her to see normally.",
     "raw_tokens": [
       {

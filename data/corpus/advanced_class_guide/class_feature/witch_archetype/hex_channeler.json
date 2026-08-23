@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Witch Archetype ~ Hex Channeler",
     "name": "Hex Channeler",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "A hex channeler is a witch who devotes herself to either life-healing the wounded and destroying the undead-or death, slaying the living and aiding undead.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Luck Domain ~ Good Fortune",
     "name": "Good Fortune",
-    "class": "Luck Domain",
+    "class": "Cleric",
     "description": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1 times per day.|GoodFortuneTimes",
     "raw_tokens": [
       {

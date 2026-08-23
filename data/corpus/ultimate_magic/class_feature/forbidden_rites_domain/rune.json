@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Forbidden Rites Domain ~ Rune Domain",
     "name": "Rune",
-    "class": "Forbidden Rites Domain",
+    "class": "Cleric",
     "description": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat.",
     "raw_tokens": [
       {

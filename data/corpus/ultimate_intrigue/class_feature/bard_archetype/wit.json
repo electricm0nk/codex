@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Wit",
     "name": "Wit",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "The wit is a master of clever repartee and verbal dueling, moving through noble courts like a fish through water.",
     "raw_tokens": [
       {

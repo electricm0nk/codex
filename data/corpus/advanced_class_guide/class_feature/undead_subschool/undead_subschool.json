@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Undead Savant Subschool",
     "name": "Undead Subschool",
-    "class": null,
+    "class": "Undead",
     "description": "You have chosen to specialize in necromancy spells of the undead subschool.",
     "raw_tokens": [
       {

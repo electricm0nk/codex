@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Verdant Bloodrager Bloodline ~ Nature's Thorns",
     "name": "Nature's Thorns",
-    "class": "Verdant Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Creatures that hit you in melee (other than those using manufactured reach weapons) take 4d6 points of piercing damage. A creature takes this damage only on its first successful attack against you in a combat round, and not on subsequent attacks in that round.",
     "raw_tokens": [
       {

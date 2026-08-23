@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Scalykind Domain ~ Serpent Companion",
     "name": "Serpent Companion",
-    "class": "Scalykind Domain",
+    "class": "Cleric",
     "description": "You gain the service of an animal companion.",
     "raw_tokens": [
       {

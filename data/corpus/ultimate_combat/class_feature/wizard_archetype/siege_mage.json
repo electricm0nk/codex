@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Wizard Archetype ~ Siege Mage",
     "name": "Siege Mage",
-    "class": "Wizard Archetype",
+    "class": "Wizard",
     "description": "The siege mage combines his arcane mastery with a supernatural link to siege engines.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Trap Spotter",
     "name": "Trap Spotter",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "Whenever you come within %1 feet of a trap, you receive an immediate Perception skill check to notice the trap. This check should be made in secret by the GM.|TrapSpotterDistance",
     "raw_tokens": [
       {

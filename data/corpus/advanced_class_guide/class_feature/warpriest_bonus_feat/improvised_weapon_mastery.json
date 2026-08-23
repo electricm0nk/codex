@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Improvised Weapon Mastery",
     "name": "Improvised Weapon Mastery",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can turn nearly any object into a deadly weapon, from a razor sharp chair leg to a sack of flour.",
     "raw_tokens": [
       {

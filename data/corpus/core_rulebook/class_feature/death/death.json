@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Death Domain",
     "name": "Death",
-    "class": null,
+    "class": "Cleric",
     "description": "You can cause the living to bleed at a touch, and find comfort in the presence of the dead.",
     "raw_tokens": [
       {

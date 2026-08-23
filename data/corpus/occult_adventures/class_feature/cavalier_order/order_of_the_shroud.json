@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cavalier Order ~ Order Of The Shroud",
     "name": "Order Of The Shroud",
-    "class": "Cavalier Order",
+    "class": "Cavalier",
     "description": "Cavaliers of this order seek out and destroy undead and those who harbor or create them. They scour old crypts, graveyards, and battlefields to bring eternal rest.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Killing Flourish",
     "name": "Killing Flourish",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "When you reduce your target to below 0 hit points with a melee attack, as a swift action you can attempt an Intimidate check to demoralize all foes within 30 feet who can see your attack.",
     "raw_tokens": [
       {

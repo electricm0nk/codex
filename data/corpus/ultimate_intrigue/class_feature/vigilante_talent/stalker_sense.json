@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Stalker Sense",
     "name": "Stalker Sense",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante has a sense for danger. He always acts on the surprise round.",
     "raw_tokens": [
       {

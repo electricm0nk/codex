@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Holy Tactician",
     "name": "Holy Tactician",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "The holy tactician inspires her allies on the field of battle. Her place is at their side against overwhelming odds, and her guidance brings out their true potential.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Animal Focus ~ Raccoon",
     "name": "Raccoon",
-    "class": "Hunter Animal Focus",
+    "class": "Hunter",
     "description": "Get +%1 competence bonus on Sleight of Hand checks.|HunterAnimalFocusRaccoonBonus",
     "raw_tokens": [
       {

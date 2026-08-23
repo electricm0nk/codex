@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oracle Archetype ~ Spirit Guide",
     "name": "Spirit Guide",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "Through her exploration of the universe's mysteries, a spirit guide opens connections to the spirit world and forms bonds with the entities that inhabit it.",
     "raw_tokens": [
       {

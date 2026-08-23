@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Savage Display",
     "name": "Savage Display",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "With your victory and a roar, you push yourself on with increased savagery.",
     "raw_tokens": [
       {

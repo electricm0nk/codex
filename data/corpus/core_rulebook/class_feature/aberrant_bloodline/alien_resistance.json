@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Aberrant Bloodline ~ Alien Resistance",
     "name": "Alien Resistance",
-    "class": "Aberrant Bloodline",
+    "class": "Sorcerer",
     "description": "You gain spell resistance %1.|Sorcerer_AlienResistance_SR",
     "raw_tokens": [
       {

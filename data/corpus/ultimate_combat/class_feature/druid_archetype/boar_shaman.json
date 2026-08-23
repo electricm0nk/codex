@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Druid Archetype ~ Boar Shaman",
     "name": "Boar Shaman",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "A boar shaman chooses the stolid and ferocious boar as her totem. Content to be left alone, she becomes one of the most dangerous creatures of the wild when provoked.",
     "raw_tokens": [
       {

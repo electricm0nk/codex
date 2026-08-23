@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oracle Archetype ~ Shigenjo",
     "name": "Shigenjo",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "The shigenjo walks the path of enlightenment and transcendence by seeking oneness with the celestial spirits. In doing so, she unlocks the martial potential of her own spiritual power.",
     "raw_tokens": [
       {

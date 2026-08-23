@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Forbidden Rites Domain ~ Chaos Domain",
     "name": "Chaos",
-    "class": "Forbidden Rites Domain",
+    "class": "Cleric",
     "description": "Your touch infuses life and weapons with chaos, and you revel in all things anarchic.",
     "raw_tokens": [
       {

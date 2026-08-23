@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Talent ~ Deadly Sneak",
     "name": "Deadly Sneak**",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "Whenever a rogue with this talent uses the powerful sneak rogue talent, she treats all 1s and 2s on the sneak attack damage dice as 3s. A rogue must have the powerful sneak rogue talent before choosing this talent.",
     "raw_tokens": [
       {

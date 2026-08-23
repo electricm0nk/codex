@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Inquisitor Archetype ~ Kinslayer",
     "name": "Kinslayer",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Appalled and guilt-ridden by the horrific circumstances of her birth, a kinslayer dedicates herself to eradicating the very creatures whose blood flows within her veins. She spends her life hunting and slaying those vampiric monsters for whom humans have become prey.",
     "raw_tokens": [
       {

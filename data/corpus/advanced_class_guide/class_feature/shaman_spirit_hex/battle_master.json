@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Battle Master",
     "name": "Battle Master",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman makes an extra attack of opportunity each round. This ability stacks with the attacks of opportunity granted by the Combat Reflexes feat.",
     "raw_tokens": [
       {

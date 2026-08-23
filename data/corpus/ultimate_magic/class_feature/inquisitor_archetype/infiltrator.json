@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Inquisitor Archetype ~ Infiltrator",
     "name": "Infiltrator",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "This inquisitor uses guile and deception to blend in among the enemies of the faith rather than confronting them head-on.",
     "raw_tokens": [
       {

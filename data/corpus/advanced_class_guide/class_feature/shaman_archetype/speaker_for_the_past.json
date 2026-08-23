@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Archetype ~ Speaker for the Past",
     "name": "Speaker for the Past",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "A speaker for the past is a shaman who specifically serves as the voice for spirits from her people's history. A speaker for the past is often an advocate of the ancestors of a specific group, the voice of experience, and a powerful resource that allows the past to aid the present.",
     "raw_tokens": [
       {

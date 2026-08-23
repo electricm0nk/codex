@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Snatch Arrows",
     "name": "Snatch Arrows",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Instead of knocking an arrow or ranged attack aside, you can catch it in mid-flight.",
     "raw_tokens": [
       {

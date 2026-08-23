@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Psychic Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Psychic Bloodline",
+    "class": "Sorcerer",
     "description": "Your sorcerer spells and spell-like abilities count as psychic instead of arcane. You use thought and emotion components instead of verbal and somatic components when casting your spells.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Tyrant Totem",
     "name": "Tyrant Totem",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian can begin a grapple as a free action against any creature she hits with her bite attack.",
     "raw_tokens": [
       {

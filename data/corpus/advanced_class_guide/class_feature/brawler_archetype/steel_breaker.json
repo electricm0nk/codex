@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Brawler Archetype ~ Steel-Breaker",
     "name": "Steel-Breaker",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "The steel-breaker studies destruction and practices it as an art form. She knows every defense has a breaking point, and can shatter those defenses with carefully planned strikes.",
     "raw_tokens": [
       {

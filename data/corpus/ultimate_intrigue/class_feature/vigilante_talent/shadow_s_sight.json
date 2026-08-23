@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Shadow's Sight",
     "name": "Shadow's Sight",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante gains low-light vision and darkvision 60 feet. If he already had darkvision, its range increases by 30 feet.",
     "raw_tokens": [
       {

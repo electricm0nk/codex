@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Celestial Bloodline ~ Celestial Resistances",
     "name": "Celestial Resistances",
-    "class": "Celestial Bloodline",
+    "class": "Sorcerer",
     "description": "You gain resist acid %1 and resist cold %1.|Sorcerer_CelestialCelestialResistances_ResistanceBonus",
     "raw_tokens": [
       {

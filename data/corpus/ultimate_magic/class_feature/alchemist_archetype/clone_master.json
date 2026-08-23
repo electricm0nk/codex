@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Clone Master",
     "name": "Clone Master",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Clone masters practice duplicating existing creatures in order to better understand how to create new life.",
     "raw_tokens": [
       {

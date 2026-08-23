@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Druid Archetype ~ Undine Adept",
     "name": "Undine Adept",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "An undine adept dedicates herself to preserving the knowledge of the first undines and ensuring her people's ancient connections to the natural world remain undisturbed. They serve as the keepers of the roots of the undine people and as their protectors.",
     "raw_tokens": [
       {

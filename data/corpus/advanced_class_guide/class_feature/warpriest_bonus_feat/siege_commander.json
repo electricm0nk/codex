@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Siege Commander",
     "name": "Siege Commander",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Under your leadership, the time required to assemble and move a siege engine is greatly reduced.",
     "raw_tokens": [
       {

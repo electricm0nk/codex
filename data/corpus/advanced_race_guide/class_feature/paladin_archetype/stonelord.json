@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Stonelord",
     "name": "Stonelord",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "A stonelord is a devoted sentinel of dwarven enclaves, drawing the power of the earth and ancient stone to protect her people.",
     "raw_tokens": [
       {

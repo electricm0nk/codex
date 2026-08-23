@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Archetype ~ Sacred Fist",
     "name": "Sacred Fist",
-    "class": "Warpriest Archetype",
+    "class": "Warpriest",
     "description": "Unlike many warpriests, sacred fists leave behind armor and shield and instead rely on their fists and whatever protection their deity bestows on them.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Draconic",
     "name": "Draconic Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "At some point in your family's history, a dragon interbred with your bloodline, and now its ancient power flows through your veins.|PREVAREQ:Sorcerer_Draconic_Description,0",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Crossbow Mastery",
     "name": "Crossbow Mastery",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can load crossbows with blinding speed and even fire them in melee with little fear of reprisal.",
     "raw_tokens": [
       {

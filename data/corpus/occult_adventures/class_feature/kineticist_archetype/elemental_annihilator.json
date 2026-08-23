@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Kineticist Archetype ~ Elemental Annihilator",
     "name": "Elemental Annihilator",
-    "class": "Kineticist Archetype",
+    "class": "Kineticist",
     "description": "For some kineticists, nothing in life is as sweet as destruction and pain. Elemental annihilators pursue only uses of their powers that harm others.",
     "raw_tokens": [
       {

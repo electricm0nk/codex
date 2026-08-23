@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Flowing Monk",
     "name": "Flowing Monk",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The flowing monk is the wind and the river. He knows how the world flows, and forces his enemies to flow with it. Even the most powerful stone breaks under the graceful and persistent pressure of wind and water.",
     "raw_tokens": [
       {

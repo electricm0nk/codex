@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Knowledge Domain",
     "name": "Knowledge",
-    "class": null,
+    "class": "Cleric",
     "description": "You are a scholar and a sage of legends. In addition, you treat all Knowledge skills as class skills.",
     "raw_tokens": [
       {

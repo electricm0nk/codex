@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Witch Archetype ~ Mountain Witch",
     "name": "Mountain Witch",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "Mountains can be sanctuaries for witches hunted by society. Here they form bonds with the spirits of the lofty reaches.",
     "raw_tokens": [
       {

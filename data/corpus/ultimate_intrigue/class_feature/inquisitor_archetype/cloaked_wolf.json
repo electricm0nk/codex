@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Inquisitor Archetype ~ Cloaked Wolf",
     "name": "Cloaked Wolf",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Some inquisitors are adept at appearing harmless until they throw off their unassuming facades and take their enemies by surprise.",
     "raw_tokens": [
       {

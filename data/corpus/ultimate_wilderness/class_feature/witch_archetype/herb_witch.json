@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Witch Archetype ~ Herb Witch",
     "name": "Herb Witch",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "Some witches dedicate their lives to the mastery of herb lore. Herb witches brew foul-tasting medicines, sweet poisons, and other concoctions from the untamed plants of the wild.",
     "raw_tokens": [
       {

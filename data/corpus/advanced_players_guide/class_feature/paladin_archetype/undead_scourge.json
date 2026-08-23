@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Undead Scourge",
     "name": "Undead Scourge",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Undead are an abomination in the eyes of the just and righteous. It is no surprise then that there are some paladins that dedicate themselves to wiping these unholy terrors from the world. The following are the class features of the undead scourge.",
     "raw_tokens": [
       {

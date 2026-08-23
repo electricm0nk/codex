@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Opportunist",
     "name": "Opportunist",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "You can make an attack of opportunity against an opponent who has just been struck for damage in melee by another character.",
     "raw_tokens": [
       {

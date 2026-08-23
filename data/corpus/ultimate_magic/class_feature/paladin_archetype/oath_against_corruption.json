@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Oath against Corruption",
     "name": "Oath against Corruption",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "When you take this oath, you become a hunter of aberrations, protecting the common people from these bizarre threats.",
     "raw_tokens": [
       {

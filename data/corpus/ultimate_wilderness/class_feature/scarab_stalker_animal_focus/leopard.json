@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Scarab Stalker Animal Focus ~ Leopard",
     "name": "Leopard",
-    "class": "Scarab Stalker Animal Focus",
+    "class": "Hunter",
     "description": "Get +%1 competence bonus on Escape Artist checks.|HunterAnimalFocusLeopardBonus",
     "raw_tokens": [
       {

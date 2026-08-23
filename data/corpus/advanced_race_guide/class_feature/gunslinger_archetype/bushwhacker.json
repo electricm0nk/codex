@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Gunslinger Archetype ~ Bushwhacker",
     "name": "Bushwhacker",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "The bushwhacker specializes in the art of the ambush. For her, gunplay works best when it comes from a concealed position and is directed against a target that falls with the very first volley and is dead before the smoke clears. A bushwhacker has the following class features.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Witch Grand Hex ~ Life Giver",
     "name": "Grand Hex - Life Giver",
-    "class": "Witch Grand Hex",
+    "class": "Witch",
     "description": "DC %1 |WitchHexDC_LifeGiver",
     "raw_tokens": [
       {

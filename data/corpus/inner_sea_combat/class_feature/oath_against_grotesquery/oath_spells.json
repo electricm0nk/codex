@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oath against Grotesquery ~ Oath Spells",
     "name": "Oath Spells",
-    "class": "Oath against Grotesquery",
+    "class": "Paladin",
     "description": "1st-sanctuary; 2nd-make whole; 3rd-banish seeming; 4th-true form.",
     "raw_tokens": [
       {

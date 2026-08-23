@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Archetype ~ Possessed Shaman",
     "name": "Possessed Shaman",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "For a possessed shaman, merely communing with the spirit world is insufficient. Instead, she invites the spirits to share her body, granting them the chance to experience corporeal existence. In return, they grant her their skills and protect her from otherworldly influence.",
     "raw_tokens": [
       {

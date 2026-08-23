@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Archetype ~ Spirit Warden",
     "name": "Spirit Warden",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "Not all spirits deserve reverence and respect. Some are twisted and despicable. It's a spirit warden's duty to end these spirits' existence.",
     "raw_tokens": [
       {

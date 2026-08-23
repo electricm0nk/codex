@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Oath of Vengeance",
     "name": "Oath of Vengeance",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "You are always on the hunt for those who have perpetrated evil, and are the instrument of Heaven's most definitive and implacable judgment.",
     "raw_tokens": [
       {

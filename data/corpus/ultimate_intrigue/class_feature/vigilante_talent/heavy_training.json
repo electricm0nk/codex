@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Heavy Training",
     "name": "Heavy Training",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante gains Heavy Armor Proficiency as a bonus feat, if he does not have that feat already. The armor skin vigilante talent also applies to heavy armor.",
     "raw_tokens": [
       {

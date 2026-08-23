@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Wild Shape",
     "name": "Shaman Wild Shape",
-    "class": null,
+    "class": "Shaman",
     "description": "You can change shape %1 time / day for up to %2 hours|ShamanWildShapeTimes|ShamanWildShapeDuration|PREVAREQ:ShamanWildShapeProgression,1",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Archetype ~ Deep Walker",
     "name": "Deep Walker",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Some rangers devote their lives to the woods, becoming hunters, protectors, and wilderness guides among its diverse terrain types. The deep walker is instead a master of the strange terrain of the deep earth, exploring its caverns and caves, becoming a master of the dark corridors most surface dwellers fear to explore-and perhaps the reason they fear to explore them.",
     "raw_tokens": [
       {

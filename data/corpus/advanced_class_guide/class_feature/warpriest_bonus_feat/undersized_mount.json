@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Undersized Mount",
     "name": "Undersized Mount",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can ride a mount of your own size category, although encumbrance or other factors might limit how you can use this ability.",
     "raw_tokens": [
       {

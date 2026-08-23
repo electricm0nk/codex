@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Sandman",
     "name": "Sandman",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Combining performance with stealth, trickery, and guile, the sandman uses cleverness to keep others off-balance.",
     "raw_tokens": [
       {

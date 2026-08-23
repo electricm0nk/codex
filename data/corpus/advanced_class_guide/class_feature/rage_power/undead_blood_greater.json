@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Undead Blood (Greater)",
     "name": "Undead Blood, Greater",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian gains cold resistance 10, as well as DR 10/- against nonlethal damage.",
     "raw_tokens": [
       {

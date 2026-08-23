@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Mindchemist",
     "name": "Mindchemist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "While most alchemists use mutagens to boost their physical ability at the cost of mental ability, some use alchemy for the opposite purpose-to boost the power of the mind and memory. A mindchemist can reach incredible levels of mental acuity, but suffers lingering debilitating effects to his physique.",
     "raw_tokens": [
       {

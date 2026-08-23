@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Inspired Blade",
     "name": "Inspired Blade",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "An inspired blade is both a force of personality and a sage of swordplay dedicated to the perfection of combat with the rapier. They use the science and geometry with swordplay to beautiful and deadly effect.",
     "raw_tokens": [
       {

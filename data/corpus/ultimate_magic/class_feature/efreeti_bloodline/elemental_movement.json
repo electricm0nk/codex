@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Efreeti Bloodline ~ Elemental Movement",
     "name": "Elemental Movement",
-    "class": "Efreeti Bloodline",
+    "class": "Sorcerer",
     "description": "Your base speed increases by +30 feet.",
     "raw_tokens": [
       {

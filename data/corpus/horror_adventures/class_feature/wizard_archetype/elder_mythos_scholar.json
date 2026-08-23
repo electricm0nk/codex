@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Wizard Archetype ~ Elder Mythos Scholar",
     "name": "Elder Mythos Scholar",
-    "class": "Wizard Archetype",
+    "class": "Wizard",
     "description": "Elder Mythos scholars risk their sanity to seek knowledge of alien and awful entities from beyond the stars.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Stunning Fist",
     "name": "Stunning Fist",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You know just where to strike to temporarily stun a foe. %1/day (DC %2)|StunningFistAttack|StunningFistDC",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Valor Domain ~ Touch of Resolve",
     "name": "Touch of Resolve",
-    "class": "Valor Domain",
+    "class": "Cleric",
     "description": "You may use remove fear on a single creature %1 times per day.|DomainValorTimes",
     "raw_tokens": [
       {

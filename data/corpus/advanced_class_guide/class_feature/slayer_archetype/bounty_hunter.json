@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Archetype ~ Bounty Hunter",
     "name": "Bounty Hunter",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Whether tasked with bringing in wanted criminals or paid to drag debtors back to their loan sharks, bounty hunters are valued for their ability to capture targets alive.",
     "raw_tokens": [
       {

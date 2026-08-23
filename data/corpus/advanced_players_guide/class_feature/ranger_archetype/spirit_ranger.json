@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Archetype ~ Spirit Ranger",
     "name": "Spirit Ranger",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Some rangers nurture a connection with the spirits that reside in all things. By communing with these spirits, the spirit ranger can gain glimpses of things to come.",
     "raw_tokens": [
       {

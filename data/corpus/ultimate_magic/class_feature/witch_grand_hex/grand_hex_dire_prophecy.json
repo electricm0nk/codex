@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Witch Grand Hex ~ Dire Prophecy",
     "name": "Grand Hex - Dire Prophecy",
-    "class": "Witch Grand Hex",
+    "class": "Witch",
     "description": "DC %1 |WitchHexDC_DireProphecy",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Brawler Archetype ~ Snakebite Striker",
     "name": "Snakebite Striker",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "With her lightning quickness and guile, a snakebite striker keeps her foes' attention focused on her, because any one of her feints might be an actual attack. By giving up some of a brawler's versatility, she increases her damage potential and exposes opponents to deadly and unexpected strikes.",
     "raw_tokens": [
       {

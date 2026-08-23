@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Barbarian Archetype ~ Mounted Fury",
     "name": "Mounted Fury",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Many barbarian tribes are masters of the horse, teaching their members how to ride from a young age. As a result, barbarians from such tribes are even more terrifying when mounted, using their steeds' speed and strength to great advantage.",
     "raw_tokens": [
       {

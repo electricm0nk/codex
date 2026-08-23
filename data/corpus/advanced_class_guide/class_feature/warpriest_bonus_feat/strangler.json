@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Strangler",
     "name": "Strangler",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Throttling the life out of enemies is second nature to you.",
     "raw_tokens": [
       {

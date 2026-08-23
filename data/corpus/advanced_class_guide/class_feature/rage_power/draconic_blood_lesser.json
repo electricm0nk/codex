@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Draconic Blood (Lesser)",
     "name": "Draconic Blood, Lesser",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian gains two claw attacks. These attacks are considered primary attacks and are made at the barbarian's full base attack bonus. They deal 1d6 points of slashing damage for Medium creatures (1d4 if Small) plus her Strength modifier.",
     "raw_tokens": [
       {

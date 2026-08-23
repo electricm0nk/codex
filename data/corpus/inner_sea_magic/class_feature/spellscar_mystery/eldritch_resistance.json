@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Spellscar Mystery ~ Eldritch Resistance",
     "name": "Eldritch Resistance",
-    "class": "Spellscar Mystery",
+    "class": "Oracle",
     "description": "You gain resistance %1 to acid, cold, electricity, fire, and sonic.|EldritchResistance",
     "raw_tokens": [
       {

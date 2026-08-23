@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Evasive",
     "name": "Evasive",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante is hard to catch with area attacks.",
     "raw_tokens": [
       {

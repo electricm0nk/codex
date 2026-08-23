@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Metal Mystery ~ Dance of the Blades",
     "name": "Dance of the Blades",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "Your base speed increases by 10 feet.",
     "raw_tokens": [
       {

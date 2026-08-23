@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ancestor Mystery ~ Wisdom of the Ancestors",
     "name": "Wisdom of the Ancestors",
-    "class": "Ancestor Mystery",
+    "class": "Oracle",
     "description": "You can enter a trance in which you commune with the spirits of your ancestors.",
     "raw_tokens": [
       {

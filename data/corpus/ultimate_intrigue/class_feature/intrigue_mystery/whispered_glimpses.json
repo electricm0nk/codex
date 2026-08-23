@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Intrigue Mystery ~ Whispered Glimpses",
     "name": "Whispered Glimpses",
-    "class": "Intrigue Mystery",
+    "class": "Oracle",
     "description": "The whispers of intrigue sing to you with glimpses of insight into others' presence and motives, granting you greater awareness than your own senses could manage. You can add your Charisma modifier instead of your Wisdom bonus on Perception and Sense Motive checks.",
     "raw_tokens": [
       {

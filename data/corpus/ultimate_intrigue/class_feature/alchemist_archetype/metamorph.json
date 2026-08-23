@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Metamorph",
     "name": "Metamorph",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Metamorphs eschew traditional alchemy, focusing on internal chemistry and the transfiguration of living forms.",
     "raw_tokens": [
       {

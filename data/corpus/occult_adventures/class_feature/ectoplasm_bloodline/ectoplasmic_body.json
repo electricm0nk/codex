@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ectoplasm Bloodline ~ Ectoplasmic Body",
     "name": "Ectoplasmic Body",
-    "class": "Ectoplasm Bloodline",
+    "class": "Sorcerer",
     "description": "You are more ectoplasm than flesh. You become immune to sneak attacks and critical hits and gain DR 5/slashing.",
     "raw_tokens": [
       {

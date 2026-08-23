@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Disengaging Flourish",
     "name": "Disengaging Flourish",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Distracting your opponents gives you the opportunity to make a swift retreat.",
     "raw_tokens": [
       {

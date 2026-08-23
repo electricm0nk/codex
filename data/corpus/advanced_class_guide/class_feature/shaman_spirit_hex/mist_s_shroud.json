@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Mist's Shroud",
     "name": "Mist's Shroud",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman touches a willing creature (including herself) and enshrouds that creature in mist. This grants the creature concealment as the blur spell. The mist dissipates after it causes",
     "raw_tokens": [
       {

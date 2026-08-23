@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Martial Artist",
     "name": "Martial Artist",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The martial artist pursues a mastery of pure martial arts without the monastic traditions. He is a master of form, but lacks the ability to harness his ki.",
     "raw_tokens": [
       {

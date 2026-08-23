@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Flying Blade",
     "name": "Flying Blade",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "While most swashbucklers prefer their battles up close, others prefer dealing death from a distance.",
     "raw_tokens": [
       {

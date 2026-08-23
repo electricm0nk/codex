@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Aberrant Bloodline ~ Unusual Anatomy",
     "name": "Unusual Anatomy",
-    "class": "Aberrant Bloodline",
+    "class": "Sorcerer",
     "description": "Your anatomy changes, giving you a %1%% chance to ignore any critical hit or sneak attack scored against you, treating it as a normal hit instead.|Sorcerer_UnusualAnatomy_PercentChance",
     "raw_tokens": [
       {

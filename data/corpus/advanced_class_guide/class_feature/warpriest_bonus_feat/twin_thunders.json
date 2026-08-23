@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Twin Thunders",
     "name": "Twin Thunders",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "When you fight giants, your powerful blows combine with skills learned from generations of your people to quickly even the odds.",
     "raw_tokens": [
       {

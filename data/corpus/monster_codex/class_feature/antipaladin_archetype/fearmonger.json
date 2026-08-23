@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Antipaladin Archetype ~ Fearmonger",
     "name": "Fearmonger",
-    "class": "Antipaladin Archetype",
+    "class": "Antipaladin",
     "description": "The fearmonger wants to do more than cause pain, misery, and confusion. He wishes to spread fear among his foes and infect entire populations with it.",
     "raw_tokens": [
       {

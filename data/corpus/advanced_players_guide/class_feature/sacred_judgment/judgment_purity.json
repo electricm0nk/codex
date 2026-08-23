@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sacred Judgment ~ Purity",
     "name": "Judgment / Purity",
-    "class": "Sacred Judgment",
+    "class": "Inquisitor",
     "description": "The inquisitor is protected from the vile taint of her foes, gaining a +%1 sacred bonus on all saving throws.|1+InqJudgePurityLVL/5",
     "raw_tokens": [
       {

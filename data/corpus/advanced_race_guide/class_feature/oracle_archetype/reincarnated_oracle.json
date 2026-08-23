@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oracle Archetype ~ Reincarnated Oracle",
     "name": "Reincarnated Oracle",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "A reincarnated oracle draws her knowledge and power from the experiences of her previous lives. Her memories guide her through a spiritual ascension leading the way to her ultimate incarnation.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Archetype ~ Witch Doctor",
     "name": "Witch Doctor",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "The witch doctor is a healer who specializes in afflictions of the soul. Often misunderstood, she protects her tribe with healing powers, powerful defensive magic, and her own divine \"witchcraft.\"",
     "raw_tokens": [
       {

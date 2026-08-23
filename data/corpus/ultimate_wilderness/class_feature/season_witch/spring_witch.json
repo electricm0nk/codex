@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Season Witch ~ Spring Witch",
     "name": "Spring Witch",
-    "class": "Season Witch",
+    "class": "Witch",
     "description": "A spring witch has dominion over the renewing spirit of life and youth. The save DCs of her spells that deal electricity damage increase by 1.",
     "raw_tokens": [
       {

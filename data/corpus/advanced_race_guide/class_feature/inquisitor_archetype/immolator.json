@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Inquisitor Archetype ~ Immolator",
     "name": "Immolator",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "The immolator puts her pyromaniacal urges to work in the service of a deity. She brings burning retribution down upon the enemies of her faith, consigning their souls to the sacrificial flames. An immolator has the following class features.",
     "raw_tokens": [
       {

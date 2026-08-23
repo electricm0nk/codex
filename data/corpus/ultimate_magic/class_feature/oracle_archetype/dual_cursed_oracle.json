@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oracle Archetype ~ Dual-Cursed Oracle",
     "name": "Dual-Cursed Oracle",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "Though doubly-inflicted with supernatural or physical hindrances, a dual-cursed oracle can manipulate fortune and gains greater insight into her mystery.",
     "raw_tokens": [
       {

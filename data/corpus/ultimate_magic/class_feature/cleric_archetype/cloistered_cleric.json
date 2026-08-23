@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cleric Archetype ~ Cloistered Cleric",
     "name": "Cloistered Cleric",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "Cloistered clerics typically live in a temple and rarely interact with the outside world. They are bookish and well learned in the lore of the faith, paying less attention to its magical and martial aspects. A cloistered cleric has the following class features.",
     "raw_tokens": [
       {

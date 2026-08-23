@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Hungry Ghost Monk",
     "name": "Hungry Ghost Monk",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The hungry ghost monk looks to spirits that prey upon the living as models of perfection. He sees the life energy of the universe as a resource to be manipulated, even stealing it from other creatures. It is through this constant influx of energy that the hungry ghost monk reaches his ultimate goal: power-personal, pure, and simple. A hungry ghost monk has the following class features.",
     "raw_tokens": [
       {

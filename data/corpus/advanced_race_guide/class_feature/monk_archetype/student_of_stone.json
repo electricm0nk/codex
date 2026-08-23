@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Student of Stone",
     "name": "Student of Stone",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "By following the path of the stone, students of stone give up much of monks' mobility in favor of sheer resilience.",
     "raw_tokens": [
       {

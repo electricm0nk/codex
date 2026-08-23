@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Seize the Moment",
     "name": "Seize the Moment",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You and your allies are poised to pounce whenever one of you scores a telling blow.",
     "raw_tokens": [
       {

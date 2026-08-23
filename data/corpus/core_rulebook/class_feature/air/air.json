@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Air Domain",
     "name": "Air",
-    "class": null,
+    "class": "Cleric",
     "description": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage.",
     "raw_tokens": [
       {

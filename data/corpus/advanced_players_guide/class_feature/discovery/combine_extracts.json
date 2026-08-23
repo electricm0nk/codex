@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Discovery ~ Combine Extracts",
     "name": "Combine Extracts",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "When the alchemist creates an extract, he can place two formulae into one extract. When the extract is consumed, both formulae take effect. This extract has a level two levels higher than the highest-level formulae placed in the extract.",
     "raw_tokens": [
       {

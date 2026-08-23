@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Imprisonment Domain ~ Divine Prison",
     "name": "Divine Prison",
-    "class": "Imprisonment Domain",
+    "class": "Cleric",
     "description": "Once per day upon making a successful melee attack, you can affect your target with hold monster (Will DC %1 negates).|DivinePrisonDC",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Talent ~ Surprise Attack",
     "name": "Surprise Attack",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "During the surprise round, opponents are always considered flat-footed to you, even if they have acted.",
     "raw_tokens": [
       {

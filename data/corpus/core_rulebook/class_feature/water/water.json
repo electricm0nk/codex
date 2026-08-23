@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sorcerer Elemental Bloodline (Water)",
     "name": "Water",
-    "class": null,
+    "class": "Sorcerer",
     "description": "One of the four elements infuses your being, and you can draw upon its power in times of need. At first level, you must select one of the four elements: air, earth, fire, or water. This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your element. Water is associate with the Cold energy type and the swim movement type (Swim 60 feet).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ Occultist",
     "name": "Occultist",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Not all arcanists peer inward to discern the deepest secrets of magic. Some look outward, connecting with extraplanar creatures and bartering for secrets, power, and favor.",
     "raw_tokens": [
       {

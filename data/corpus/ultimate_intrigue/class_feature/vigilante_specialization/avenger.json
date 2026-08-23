@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Specialization ~ Avenger",
     "name": "Avenger",
-    "class": "Vigilante Specialization",
+    "class": "Vigilante",
     "description": "An avenger has a base attack bonus equal to his vigilante level. He adds this value to any other base attack bonus gained from other classes or racial Hit Dice as normal.",
     "raw_tokens": [
       {

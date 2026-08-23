@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Arcane Armor Training",
     "name": "Arcane Armor Training",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You have learned how to cast spells while wearing armor.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Metal Mystery ~ Skill at Arms",
     "name": "Skill at Arms",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "You gain proficiency in all martial weapons and heavy armor.",
     "raw_tokens": [
       {

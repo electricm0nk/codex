@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Oath against Chaos ~ Oath Spells",
     "name": "Oath Spells",
-    "class": "Oath against Chaos",
+    "class": "Paladin",
     "description": "1st-command; 2nd-calm emotions; 3rd-suggestion; 4th-order's wrath.",
     "raw_tokens": [
       {

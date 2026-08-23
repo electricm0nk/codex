@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Summoner Archetype ~ Evolutionist",
     "name": "Evolutionist",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "An evolutionist possesses greater power over his eidolon's form, and is able to evolve his eidolon and its abilities to meet any challenge or face any threat as it comes up, seemingly on a whim.",
     "raw_tokens": [
       {

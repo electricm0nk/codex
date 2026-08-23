@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Enfilading Fire",
     "name": "Enfilading Fire",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Your ranged attacks take advantage of the flanking maneuvers of allies.",
     "raw_tokens": [
       {

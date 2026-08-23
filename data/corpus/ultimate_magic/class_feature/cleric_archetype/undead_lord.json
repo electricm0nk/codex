@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cleric Archetype ~ Undead Lord",
     "name": "Undead Lord",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "An undead lord is a cleric focused on using necromancy to control undead. Her flock is the walking dead and her choir the keening spirits of the damned. This unliving congregation is the manifestation of her unceasing love affair with death.",
     "raw_tokens": [
       {

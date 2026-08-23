@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Investigator Archetype ~ Cipher",
     "name": "Cipher",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "A cipher is a student of nonexistence. He trains himself to remain undetected and ignored in order to conduct his investigations without opposition or bothersome questions. By staying unseen, a cipher can follow and observe his quarry; being overlooked in a crowd suits him just fine.",
     "raw_tokens": [
       {

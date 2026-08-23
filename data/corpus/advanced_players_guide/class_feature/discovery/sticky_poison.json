@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Discovery ~ Sticky Poison",
     "name": "Sticky Poison",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "Any poison the alchemist creates is sticky - when the alchemist applies it to a weapon, the weapon remains poisoned for a number of strikes equal to the alchemist's Intelligence modifier.",
     "raw_tokens": [
       {

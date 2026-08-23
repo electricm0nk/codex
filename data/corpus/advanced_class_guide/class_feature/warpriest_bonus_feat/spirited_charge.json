@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Spirited Charge",
     "name": "Spirited Charge",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Your mounted charge deals a tremendous amount of damage.",
     "raw_tokens": [
       {

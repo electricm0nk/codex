@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Sure Footing",
     "name": "Sure Footing",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "The slayer gains a +5 bonus on Acrobatics checks to move on narrow surfaces and loose or uneven ground.",
     "raw_tokens": [
       {

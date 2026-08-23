@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Deadly Range",
     "name": "Deadly Range",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "A slayer with this talent increases the range at which he can deal sneak attack damage by 10 feet. This talent can be taken multiple times.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ninja Trick ~ Invisible Blade",
     "name": "Invisible Blade",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "Whenever a ninja uses the vanishing trick ninja trick, she is treated as if she were under the effects of greater invisibility. The ninja must have the vanishing trick ninja trick before selecting this ninja trick.",
     "raw_tokens": [
       {

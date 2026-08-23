@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Summoner Archetype ~ Leshy Caller",
     "name": "Leshy Caller",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "A leshy caller summons creatures from the First World and forges a bond with a leshy eidolon.",
     "raw_tokens": [
       {

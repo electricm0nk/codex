@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Waves",
     "name": "Waves (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: hydraulic push (1st), slipstream (2nd), water breathing (3rd), wall of ice (4th), geyser (5th), fluid form (6th), vortex (7th), seamantle (8th), tsunami (9th)",
     "raw_tokens": [
       {

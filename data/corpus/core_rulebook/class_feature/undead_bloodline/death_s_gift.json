@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Undead Bloodline ~ Death's Gift",
     "name": "Death's Gift",
-    "class": "Undead Bloodline",
+    "class": "Sorcerer",
     "description": "You gain resist cold %1 and DR %2/-- against nonlethal damage.|Sorcerer_UndeadDeathsGift_ResistanceBonus|Sorcerer_UndeadDeathsGift_DR",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Exotic Weapon Proficiency",
     "name": "Exotic Weapon Proficiency",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You understand how to use your chosen exotic weapon in combat, and can utilize any special tricks or qualities that exotic weapon might allow.",
     "raw_tokens": [
       {

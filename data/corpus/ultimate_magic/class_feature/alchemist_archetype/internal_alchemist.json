@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Internal Alchemist",
     "name": "Internal Alchemist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "An internal alchemist studies medicine, diet, and the living body to purify the self in the hope of gaining immortality by means of alchemical concoctions and controlling vital energy. Internal alchemists develop unusual physical abilities from heightened knowledge of how their bodies work.",
     "raw_tokens": [
       {

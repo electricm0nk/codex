@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Investigator Archetype ~ Empiricist",
     "name": "Empiricist",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "Champions of deductive reasoning and logical insight, empiricists put their faith in facts, data, confirmed observations, and consistently repeatable experiments- these things are their currency of truth.",
     "raw_tokens": [
       {

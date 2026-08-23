@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Improved Two-Weapon Feint",
     "name": "Improved Two-Weapon Feint",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Your primary weapon keeps a foe off balance, allowing you to slip your off-hand weapon past his defenses.",
     "raw_tokens": [
       {

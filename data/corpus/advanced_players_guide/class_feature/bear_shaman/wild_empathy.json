@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bear Shaman ~ Wild Empathy",
     "name": "Wild Empathy",
-    "class": "Bear Shaman",
+    "class": "Shaman",
     "description": "A bear shaman can use wild empathy with bears and wolverines as a full-round action with a +4 bonus.",
     "raw_tokens": [
       {

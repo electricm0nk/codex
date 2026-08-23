@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Empyreal Knight",
     "name": "Empyreal Knight",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "The empyreal knight dedicates her life to serving the celestial beings that guide mortals in their struggle toward the light.",
     "raw_tokens": [
       {

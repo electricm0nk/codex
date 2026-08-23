@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Hard to Fool",
     "name": "Hard to Fool",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "%1 times per day, a slayer with this talent can roll two dice while making a Sense Motive check, and take the better result. She must choose to use this talent before making the Sense Motive check.|SlayerHardtoFoolTimes",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Horticulturist",
     "name": "Horticulturist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "A horticulturist spends his time cultivating plants and plant creatures, allowing him to experiment with strange and wondrous herbal concoctions.",
     "raw_tokens": [
       {

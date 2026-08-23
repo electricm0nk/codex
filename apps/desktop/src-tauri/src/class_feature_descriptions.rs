@@ -324,12 +324,25 @@ mod tests {
         // unresolved `%1` and is no longer served by this catalog -- see
         // `a_description_whose_percent_n_argument_has_no_character_context_
         // to_resolve_it_is_not_served`, below).
+        //
+        // **SD-32 card 11 (`epic-2-cause-closure`, T2a/T12 combined cycle)
+        // correction:** `class_slug` used to assert `"aberrant_bloodline"`
+        // -- the group-prefix category label, exactly T2a's own shape
+        // ("`data.class` read from the wrong place"). `cache_gen::class_
+        // feature::generate`'s pool-catalog fallback now resolves this
+        // record's real owner (Aberrant is a Sorcerer bloodline; the
+        // `Bloodline` -> `Sorcerer` pool entry), so the live corpus now
+        // ships `data.class: "Sorcerer"` for this exact record -- which is
+        // what lets `classSlug` actually join a real `class_feature.sorcerer.*`
+        // `ExplanationDto.id` on the character sheet instead of a slug no
+        // explanation id can ever match. This assertion is updated to the
+        // now-correct value, not loosened.
         let aberrant_form = descriptions
             .iter()
             .find(|d| d.book == "core_rulebook" && d.key == "Aberrant Bloodline ~ Aberrant Form");
         let record = aberrant_form
             .expect("core_rulebook's real Aberrant Bloodline ~ Aberrant Form record must be in the catalog");
-        assert_eq!(record.class_slug, "aberrant_bloodline");
+        assert_eq!(record.class_slug, "sorcerer");
         assert_eq!(record.feature_slug, "aberrant_form");
         assert!(record.description.starts_with("Your body becomes truly unnatural."));
         assert!(!record.description.contains('|'), "the pipe-arg tail must never leak into prose");

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Kineticist Primary Element ~ Air",
     "name": "Air",
-    "class": "Kineticist Primary Element",
+    "class": "Kineticist",
     "description": "Kineticists who focus on the element of air are called aerokineticists. Aerokineticists often control air flow or electricity, specializing in mobility and ranged combat.",
     "raw_tokens": [
       {

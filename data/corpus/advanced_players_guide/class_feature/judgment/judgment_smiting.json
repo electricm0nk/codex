@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Judgment ~ Smiting",
     "name": "Judgment / Smiting",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "This judgment bathes the inquisitor's weapons in a divine light. The inquisitor's weapons count as magic for the purposes of bypassing damage reduction.",
     "raw_tokens": [
       {

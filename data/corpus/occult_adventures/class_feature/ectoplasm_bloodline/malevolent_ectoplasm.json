@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ectoplasm Bloodline ~ Malevolent Ectoplasm",
     "name": "Malevolent Ectoplasm",
-    "class": "Ectoplasm Bloodline",
+    "class": "Sorcerer",
     "description": "Your ectoplasmic tendrils can lash out at creatures around you. Treat this as a black tentacles effect centered on your position, but the tentacles can also grapple ethereal and incorporeal creatures, and they do not affect you (though they still affect your allies). You can use this ability %1 rounds per day. These rounds need not be consecutive.|Sorcerer_EctoplasmMalevolentEctoplasm_Duration",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon",
     "name": "Qinggong Monk (Tongue of the Sun and Moon)",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "Swap Tongue of the Sun and Moon for a ki power.",
     "raw_tokens": [
       {

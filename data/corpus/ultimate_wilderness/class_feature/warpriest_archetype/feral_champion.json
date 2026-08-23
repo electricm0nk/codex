@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Archetype ~ Feral Champion",
     "name": "Feral Champion",
-    "class": "Warpriest Archetype",
+    "class": "Warpriest",
     "description": "When a warpriest devotes himself to a god of the natural world, he is sometimes blessed with supernatural powers that allow him to evoke animalistic power and fury.",
     "raw_tokens": [
       {

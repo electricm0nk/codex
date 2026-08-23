@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Profane Judgment ~ Purity",
     "name": "Judgment / Purity",
-    "class": "Profane Judgment",
+    "class": "Inquisitor",
     "description": "The inquisitor is protected from the exalted taint of her foes, gaining a +%1 profane bonus on all saving throws.|1+InqJudgePurityLVL/5",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Undead",
     "name": "Undead Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "The foul corruption of undeath courses though your veins. Somewhere in the past, death became infused with your lineage, which bestows frightening power when your bloodrage.|PREVAREQ:Bloodrager_Undead_Description,0",
     "raw_tokens": [
       {

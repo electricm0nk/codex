@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Bleeding Attack",
     "name": "Bleeding Attack*",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "You can cause living opponents to bleed when hitting them with a sneak attack.",
     "raw_tokens": [
       {

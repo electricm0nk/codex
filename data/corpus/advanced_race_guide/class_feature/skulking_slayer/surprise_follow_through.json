@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Skulking Slayer ~ Surprise Follow-Through",
     "name": "Surprise Follow-Through",
-    "class": "Skulking Slayer",
+    "class": "Slayer",
     "description": "A skulking slayer can take the Surprise Follow-Through feat in place of a Rogue Talent",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Antipaladin Archetype ~ Alternate Alignment",
     "name": "Antipaladin Alternate Alignment",
-    "class": "Antipaladin Archetype",
+    "class": "Antipaladin",
     "description": "This option allows you to change your alignment to qualify for antipaladin archetypes that are not necessarily Chaotic Evil.",
     "raw_tokens": [
       {

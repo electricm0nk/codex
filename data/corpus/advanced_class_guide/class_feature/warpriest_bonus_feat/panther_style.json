@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Panther Style",
     "name": "Panther Style",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can strike back at enemies who attack you when you move.",
     "raw_tokens": [
       {

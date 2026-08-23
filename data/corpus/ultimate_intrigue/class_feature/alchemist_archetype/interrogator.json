@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Interrogator",
     "name": "Interrogator",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "An interrogator extracts vital information from reluctant individuals using alchemical and traditional methods.",
     "raw_tokens": [
       {

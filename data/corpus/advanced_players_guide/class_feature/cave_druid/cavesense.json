@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cave Druid ~ Cavesense",
     "name": "Cavesense",
-    "class": "Cave Druid",
+    "class": "Druid",
     "description": "A underground druid adds Knowledge (dungeoneering) rather than Knowledge (geography) as a class skill and gains a +2 bonus on Knowledge (dungeoneering) and Survival skill checks. This ability replaces the nature sense ability.",
     "raw_tokens": [
       {

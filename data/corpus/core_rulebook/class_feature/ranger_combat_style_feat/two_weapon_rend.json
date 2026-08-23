@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Combat Style Feat ~ Two-Weapon Rend",
     "name": "Two-Weapon Rend",
-    "class": "Ranger Combat Style Feat",
+    "class": "Ranger",
     "description": "Striking with both your weapons simultaneously, you can use them to deliver devastating wounds.",
     "raw_tokens": [
       {

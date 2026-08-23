@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Outer Rifts Mystery ~ Wings of Terror",
     "name": "Wings of Terror",
-    "class": "Outer Rifts Mystery",
+    "class": "Oracle",
     "description": "You can manifest a pair of enormous, batlike demon wings that grant you a fly speed of",
     "raw_tokens": [
       {

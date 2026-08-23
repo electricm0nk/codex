@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Life Mystery ~ Enhanced Cures",
     "name": "Enhanced Cures",
-    "class": "Life Mystery",
+    "class": "Oracle",
     "description": "Whenever you cast a cure spell, the maximum number of hit points healed is based on your oracle level, not the limit based on the spell. For example, casting cure light wounds heals 1d8+%1 hit points instead of the normal 1d8+5 maximum.|OracleEnhancedCuresMaxHP",
     "raw_tokens": [
       {

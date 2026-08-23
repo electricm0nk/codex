@@ -162,6 +162,14 @@ pub struct ClassFeatureSourceUnit {
     pub source_line: u32,
     pub key: String,
     pub name: String,
+    /// The unit's `type_facet` field (PCGen's dot-delimited `TYPE:` token,
+    /// e.g. `"Barbarian Class Feature.Skald Class Feature.Rage Power..."`),
+    /// when `v06_work_inventory.rs`'s own enumeration recorded one. Read
+    /// only by [`type_facet_dispatched_owner`] / [`type_facet_corpus_owner`]
+    /// (SD-32 card 11, T2a/T12 combined cycle) as a second and fourth
+    /// fallback in [`generate`]'s class-derivation chain -- never affects
+    /// which line is read or where the record is written.
+    pub type_facet: Option<String>,
 }
 
 /// Parses `units_from_inventory_json`'s input: every `kind == "class_feature"`
@@ -191,13 +199,44 @@ pub fn units_from_inventory_json(json_text: &str) -> Result<Vec<ClassFeatureSour
         let Some(source_line) = unit.get("source_line").and_then(Value::as_u64) else { continue };
         let Some(key) = unit.get("corpus_key").and_then(Value::as_str) else { continue };
         let Some(name) = unit.get("name").and_then(Value::as_str) else { continue };
+        let type_facet = unit.get("type_facet").and_then(Value::as_str).map(str::to_string);
         out.push(ClassFeatureSourceUnit {
             book: book.to_string(),
             source_file: source_file.to_string(),
             source_line: source_line as u32,
             key: key.to_string(),
             name: name.to_string(),
+            type_facet,
         });
+    }
+    Ok(out)
+}
+
+/// Every `kind == "class"` unit's `name`, keyed by its lowercase form
+/// mapped to the corpus's own natural-case spelling (`"vigilante"` ->
+/// `"Vigilante"`) -- the SAME population `v06_work_inventory.rs`'s
+/// `corpus_class_names` fact builds (its own doc comment: "Every class
+/// name the corpus declares anywhere, so a class feature of an
+/// un-ingested class ... is reported as a real `not-ingested` gap rather
+/// than as an unclassifiable mystery"), read here from the same
+/// already-committed `docs/work-inventory.json` rather than re-walking
+/// raw PCGen `*_class.lst` files a second time (SD-32 card 11, T2a/T12
+/// combined cycle -- see [`generate`]'s own doc comment for why this
+/// population matters to `data.class`, not just to the census).
+pub fn corpus_class_names_from_inventory_json(json_text: &str) -> Result<BTreeMap<String, String>, String> {
+    let doc: Value = serde_json::from_str(json_text).map_err(|e| format!("invalid inventory JSON: {e}"))?;
+    let units = doc
+        .get("units")
+        .and_then(Value::as_array)
+        .ok_or_else(|| "inventory JSON has no top-level `units` array".to_string())?;
+    let mut out = BTreeMap::new();
+    for unit in units {
+        if unit.get("kind").and_then(Value::as_str) != Some("class") {
+            continue;
+        }
+        if let Some(name) = unit.get("name").and_then(Value::as_str) {
+            out.insert(name.to_lowercase(), name.to_string());
+        }
     }
     Ok(out)
 }
@@ -422,6 +461,226 @@ fn true_class_by_key(grants_root: &Path, book: &str) -> BTreeMap<String, String>
     resolved
 }
 
+// ---------------------------------------------------------------------
+// SD-32 card 11 (`epic-2-cause-closure`, T2a/T12 combined cycle):
+// two further class-derivation fallbacks, tried after `true_class_by_key`
+// (grant facts) and before the raw key-prefix guess.
+//
+// `true_class_by_key` alone leaves `data.class` at the naive key-prefix
+// split for any key with no grant fact -- which is exactly wrong whenever
+// that prefix is a category-label OPTION POOL ("Rage Power", "Domain",
+// "Mystery", ...) rather than a class's own name: T2a's own name for this
+// shape ("`data.class` read from the wrong place"). `MEASURE-TWICE.md`
+// (`docs/release/SD-31-corpus-closure-grind/artifacts/`) measured 8,243
+// such records; this cycle's own re-derivation (cycle receipt) found the
+// corpus-wide non-dispatched population had already shrunk to 5,678 by the
+// time this cycle ran (the wave-22/23 `true_class_by_key` fix landing in
+// between), and that within that 5,678, two ALREADY-PROVEN mechanisms
+// `v06_work_inventory.rs`'s own `Kind::ClassFeature` classify arm already
+// trusts for the SAME question (which real class does this option-pool
+// record belong to?) resolve the true class name for a further ~2,964 of
+// them without guessing:
+//
+// 1. [`pool_catalog_owner`] -- the registered option-pool table
+//    (`CLASS_FEATURE_POOLS` in `v06_work_inventory.rs`), reproduced here
+//    per this package's disjoint-file-touch convention (module doc
+//    comment). Resolves a category label like "Rage Power" to its real
+//    DISPATCHED owner ("Barbarian") -- true T2a plumbing, closed at the
+//    cause.
+// 2. [`type_facet_dispatched_owner`] -- the corpus's own `TYPE:` token
+//    frequently spells the owning class out literally as a
+//    `"<Class> Class Feature(s)"` taxonomy segment even when the group
+//    prefix does not name it; also reproduced from
+//    `v06_work_inventory.rs`'s `class_feature_type_facet_owner_candidates`.
+//
+// A THIRD and FOURTH tier below extend both mechanisms to match against
+// the full **corpus-declared** class roster ([`corpus_class_names_from_
+// inventory_json`]), not only the 34 dispatched ones -- this is what
+// closes the T2a/T12 OVERLAP correctly: a record whose true class is
+// "Vigilante" (corpus-declared, engine-undispatched) now ships
+// `data.class: "Vigilante"` instead of the category label "Vigilante
+// Talent", which is honest either way this record's true class is later
+// modelled or not, and stops it from being counted as an unexplained
+// mystery. See [`generate`]'s own resolution-order comment for how all
+// four combine with `true_class_by_key` and the raw fallback.
+// ---------------------------------------------------------------------
+
+/// Mirrors `v06_work_inventory.rs::CLASS_FEATURE_POOLS` exactly (registered
+/// group word, real owning class, Title-Case as `data.class` itself is
+/// written) -- reproduced locally per this package's disjoint-file-touch
+/// convention. Cross-checked for drift by
+/// `dispatched_class_title_names_len_matches_the_real_34_class_roster`.
+const POOL_TO_DISPATCHED_CLASS: &[(&str, &str)] = &[
+    ("Rage Power", "Barbarian"),
+    ("Unchained Rage Power", "Unchained Barbarian"),
+    ("Discovery", "Alchemist"),
+    ("Grand Discovery", "Alchemist"),
+    ("Rogue Talent", "Rogue"),
+    ("Advanced Talents", "Rogue"),
+    ("Hex", "Witch"),
+    ("Revelation", "Oracle"),
+    ("Mercy", "Paladin"),
+    ("Investigator Talent", "Investigator"),
+    ("Slayer Talent", "Slayer"),
+    ("Judgment", "Inquisitor"),
+    ("Inquisition", "Inquisitor"),
+    ("Blessing", "Warpriest"),
+    ("Evolution", "Summoner"),
+    ("Bloodline", "Sorcerer"),
+    ("Bloodrager Bloodline", "Bloodrager"),
+    ("Domain", "Cleric"),
+    ("Order", "Cavalier"),
+    ("Mystery", "Oracle"),
+    ("Curse", "Oracle"),
+    ("Spirit", "Shaman"),
+    ("Animal Focus", "Hunter"),
+    ("Favored Enemy", "Ranger"),
+    ("Favored Terrain", "Ranger"),
+    ("Versatile Performance", "Bard"),
+    ("Arcane School", "Wizard"),
+    ("Focused Arcane School", "Wizard"),
+];
+
+/// Mirrors `v06_work_inventory.rs::CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES`
+/// -- groups whose textual shape satisfies the suffix rule below but whose
+/// own corpus row proves they belong elsewhere (that file's own doc
+/// comment on each row is the citation; reproduced verbatim here).
+const POOL_FALSE_SUFFIX_MATCHES: &[&str] = &[
+    "Heretical Revelation",
+    "Shifter's Blessing",
+    "Spider's Blessing",
+    "Zevgavizeb's Blessing",
+    "Totem Spirit",
+    "Inspired Discovery",
+    "Mutation Warrior Discovery",
+    "Merciful Healer Mercy",
+    "Take Inquisition",
+];
+
+/// Mirrors `v06_work_inventory.rs::CLASS_FEATURE_POOL_SLOT_QUALIFIERS`.
+const POOL_SLOT_QUALIFIERS: &[&str] = &["wandering", "secondary", "major", "grand", "advanced", "unchained"];
+
+/// The 34-class dispatched roster's Title-Case display spellings, used only
+/// for [`pool_catalog_owner`]'s cross-class-collision guard and
+/// [`type_facet_dispatched_owner`]'s match set. Count cross-checked against
+/// the real enums by `dispatched_class_title_names_len_matches_the_real_34_class_roster`
+/// rather than trusted as a hand-typed list on its own.
+const DISPATCHED_CLASS_TITLE_NAMES: &[&str] = &[
+    "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Wizard",
+    "Arcanist", "Bloodrager", "Brawler", "Hunter", "Investigator", "Shaman", "Skald", "Slayer", "Swashbuckler",
+    "Warpriest", "Alchemist", "Cavalier", "Inquisitor", "Oracle", "Summoner", "Witch", "Gunslinger", "Ninja",
+    "Samurai", "Unchained Barbarian", "Unchained Monk", "Unchained Rogue", "Unchained Summoner",
+];
+
+/// Mirrors `v06_work_inventory.rs::class_feature_pool_group_matches` exactly
+/// (same three guards, same doc-comment reasoning), operating on Title-Case
+/// text instead of the engine's own lowercase/underscored class ids.
+fn pool_group_matches(registered: &str, owner: &str, group: &str) -> bool {
+    if group == registered {
+        return true;
+    }
+    let Some(prefix) = group.strip_suffix(&format!(" {registered}")) else {
+        return false;
+    };
+    if prefix.is_empty() {
+        return true;
+    }
+    if POOL_FALSE_SUFFIX_MATCHES.contains(&group) {
+        return false;
+    }
+    prefix.split_whitespace().all(|token| {
+        let normalized = token.trim_end_matches("'s").trim_end_matches('\'').to_ascii_lowercase();
+        if POOL_SLOT_QUALIFIERS.contains(&normalized.as_str()) {
+            return false;
+        }
+        let is_another_dispatched_class = DISPATCHED_CLASS_TITLE_NAMES
+            .iter()
+            .any(|c| c.eq_ignore_ascii_case(&normalized) && !c.eq_ignore_ascii_case(owner));
+        !is_another_dispatched_class
+    })
+}
+
+/// Resolves `group` (the key's own `" ~ "`-split prefix) against
+/// [`POOL_TO_DISPATCHED_CLASS`], returning the real DISPATCHED owner's
+/// Title-Case name when it matches -- `None` otherwise. Pure lookup, no
+/// filesystem access.
+fn pool_catalog_owner(group: &str) -> Option<&'static str> {
+    POOL_TO_DISPATCHED_CLASS
+        .iter()
+        .find(|(registered, owner)| pool_group_matches(registered, owner, group))
+        .map(|(_, owner)| *owner)
+}
+
+/// Mirrors `v06_work_inventory.rs::class_feature_type_facet_owner_candidates`:
+/// every `"<Name> Class Feature(s)"` taxonomy segment a dot-delimited
+/// `type_facet` string carries, in order.
+fn type_facet_owner_candidates(type_facet: Option<&str>) -> Vec<String> {
+    const MARKERS: [&str; 2] = [" Class Features", " Class Feature"];
+    let Some(type_facet) = type_facet else {
+        return Vec::new();
+    };
+    type_facet
+        .split('.')
+        .filter_map(|segment| {
+            let segment = segment.trim();
+            MARKERS.iter().find_map(|marker| segment.strip_suffix(marker))
+        })
+        .map(|name| name.trim().to_string())
+        .filter(|name| !name.is_empty())
+        .collect()
+}
+
+/// Resolves `type_facet`'s own class-name candidates against the 34
+/// dispatched classes, returning the first that matches (exact or
+/// whole-word prefix/suffix, matching `v06_work_inventory.rs::class_feature_
+/// owner`'s own comparison shape).
+fn type_facet_dispatched_owner(type_facet: Option<&str>) -> Option<String> {
+    type_facet_owner_candidates(type_facet).into_iter().find_map(|candidate| {
+        DISPATCHED_CLASS_TITLE_NAMES
+            .iter()
+            .find(|class| owner_text_matches(&candidate, class))
+            .map(|class| class.to_string())
+    })
+}
+
+/// Resolves `group` against the full corpus-declared class roster
+/// (`corpus_class_names`, lowercase key -> natural-case value) -- the T2a/
+/// T12 overlap fix: a record whose true owner is a real, corpus-declared
+/// class the engine does not model (e.g. "Vigilante") gets that class's own
+/// name instead of a category label, honestly, without claiming the class
+/// is modelled.
+fn corpus_class_owner(group: &str, corpus_class_names: &BTreeMap<String, String>) -> Option<String> {
+    let group_lower = group.to_lowercase();
+    corpus_class_names
+        .iter()
+        .filter(|(lower, _)| owner_text_matches(&group_lower, lower))
+        .max_by_key(|(lower, _)| lower.len())
+        .map(|(_, natural)| natural.clone())
+}
+
+/// Same as [`corpus_class_owner`] but tried against `type_facet`'s own
+/// candidate names instead of the key's group prefix.
+fn type_facet_corpus_owner(
+    type_facet: Option<&str>,
+    corpus_class_names: &BTreeMap<String, String>,
+) -> Option<String> {
+    type_facet_owner_candidates(type_facet)
+        .into_iter()
+        .find_map(|candidate| corpus_class_owner(&candidate, corpus_class_names))
+}
+
+/// Whole-word exact/prefix/suffix match, case-insensitive -- the same
+/// comparison shape `v06_work_inventory.rs::class_feature_owner` uses
+/// (`group == class`, `group.starts_with("{class} ")`,
+/// `group.ends_with(" {class}")`), reproduced here for Title-Case text.
+fn owner_text_matches(text: &str, class: &str) -> bool {
+    let text_lower = text.to_lowercase();
+    let class_lower = class.to_lowercase();
+    text_lower == class_lower
+        || text_lower.starts_with(&format!("{class_lower} "))
+        || text_lower.ends_with(&format!(" {class_lower}"))
+}
+
 /// Redacts the `DESC` token in `raw_tokens` in place whenever `description`
 /// classified as PI-redacted (declared `DESCISPI:Yes` OR blacklist-detected
 /// via [`pi_screening::classify_field`]) -- otherwise `data.raw_tokens`
@@ -452,6 +711,7 @@ pub fn generate(
     out_dir: &Path,
     ingested_at: &str,
     units: &[ClassFeatureSourceUnit],
+    corpus_class_names: &BTreeMap<String, String>,
 ) -> Result<GenerationReport, GenerationError> {
     let mut report = GenerationReport::default();
     let dir_by_book: BTreeMap<&str, &str> =
@@ -525,12 +785,27 @@ pub fn generate(
             // this cycle found is wrong whenever the key's owner segment is
             // an archetype name rather than the real class.
             let key_owner = unit.key.split_once(" ~ ").map(|(owner, _)| owner.to_string());
-            // `true_class` (wave 22's grant-fact ground truth, this cycle's
-            // own fix -- `OPEN-ISSUES.md` row 334's closing note) wins when
-            // it resolves this key; the key-prefix split is only a fallback
-            // for the population the grant data does not yet cover. See
-            // module doc comment / `true_class_by_key`.
-            let class = true_class.get(&unit.key).cloned().or_else(|| key_owner.clone());
+            // `true_class` (wave 22's grant-fact ground truth) wins first.
+            // SD-32 card 11 (T2a/T12 combined cycle) adds two more
+            // resolution tiers BEFORE the raw key-prefix guess -- the pool
+            // catalog (real, tested option-pool -> dispatched-class table)
+            // and the `type_facet` "<Class> Class Feature" marker, each
+            // tried first against the 34 DISPATCHED classes (closes true
+            // T2a plumbing) and then against the full corpus-declared
+            // roster (closes the T2a/T12 overlap: a genuinely-undispatched
+            // class's own name, not a category label). The raw key-prefix
+            // split is the last-resort fallback for whatever none of the
+            // five tiers above resolves. See the module section comment
+            // above `POOL_TO_DISPATCHED_CLASS` for the full argument.
+            let group = key_owner.as_deref().unwrap_or(&unit.key);
+            let class = true_class
+                .get(&unit.key)
+                .cloned()
+                .or_else(|| pool_catalog_owner(group).map(str::to_string))
+                .or_else(|| type_facet_dispatched_owner(unit.type_facet.as_deref()))
+                .or_else(|| corpus_class_owner(group, corpus_class_names))
+                .or_else(|| type_facet_corpus_owner(unit.type_facet.as_deref(), corpus_class_names))
+                .or_else(|| key_owner.clone());
 
             let record = CacheRecord {
                 population: Population::InScope,
@@ -846,10 +1121,18 @@ mod tests {
             source_line: 1,
             key: "Sigilus ~ Inscribe Rune".to_string(),
             name: "Inscribe Rune".to_string(),
+            type_facet: None,
         }];
 
-        let report =
-            generate(&corpus_root, &grants_root, &out_dir, "2026-08-20T00:00:00Z", &units).expect("generate must succeed against a well-formed fixture");
+        let report = generate(
+            &corpus_root,
+            &grants_root,
+            &out_dir,
+            "2026-08-20T00:00:00Z",
+            &units,
+            &BTreeMap::new(),
+        )
+        .expect("generate must succeed against a well-formed fixture");
         assert_eq!(report.written, 1, "the one fixture unit must be written exactly once");
 
         // Directory placement stays keyed on the key's own owner segment
@@ -862,6 +1145,208 @@ mod tests {
             json["data"]["class"].as_str(),
             Some("Magus"),
             "generate() must ship the grant-fact-corrected class, not the key-prefix guess (\"Sigilus\"): {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    // ------------------------------------------------------------------
+    // SD-32 card 11 (`epic-2-cause-closure`, T2a/T12 combined cycle):
+    // the pool-catalog / type-facet / corpus-class fallbacks.
+    // ------------------------------------------------------------------
+
+    /// Drift guard: [`DISPATCHED_CLASS_TITLE_NAMES`] is a hand-typed const,
+    /// not derived from the real enums (cache_gen's own disjoint-file-touch
+    /// convention forbids importing `v06_work_inventory.rs`'s `bin`-only
+    /// logic) -- this pins its count against the same five real enums
+    /// `modelled_class_books()` iterates, so an enum roster change that
+    /// forgets to update this list fails loudly here instead of silently
+    /// mis-resolving `data.class`.
+    #[test]
+    fn dispatched_class_title_names_len_matches_the_real_34_class_roster() {
+        use crate::rules_core::rules_tables::acg::AcgClassId;
+        use crate::rules_core::rules_tables::apg::ApgClassId;
+        use crate::rules_core::rules_tables::crb::class_tables::ClassId;
+        use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
+        use crate::rules_core::rules_tables::ultimate_combat::UcClassId;
+        let real_total =
+            ClassId::ALL.len() + ApgClassId::ALL.len() + AcgClassId::ALL.len() + UcClassId::ALL.len() + PuClassId::ALL.len();
+        assert_eq!(DISPATCHED_CLASS_TITLE_NAMES.len(), real_total);
+        assert_eq!(real_total, 34);
+    }
+
+    #[test]
+    fn pool_catalog_owner_resolves_a_registered_category_label_to_its_real_dispatched_class() {
+        assert_eq!(pool_catalog_owner("Rage Power"), Some("Barbarian"));
+        assert_eq!(pool_catalog_owner("Domain"), Some("Cleric"));
+        assert_eq!(pool_catalog_owner("Battle Mystery"), Some("Oracle"));
+    }
+
+    #[test]
+    fn pool_catalog_owner_refuses_a_cross_class_collision() {
+        // "Druid Domain" belongs to Druid's own PREABILITY-gated variant,
+        // never Cleric's Domain pool -- the same guard
+        // `v06_work_inventory.rs::class_feature_pool_group_matches` enforces.
+        assert_eq!(pool_catalog_owner("Druid Domain"), None);
+    }
+
+    #[test]
+    fn pool_catalog_owner_refuses_a_verified_false_suffix_match() {
+        assert_eq!(pool_catalog_owner("Shifter's Blessing"), None);
+    }
+
+    #[test]
+    fn pool_catalog_owner_returns_none_for_an_unregistered_group() {
+        assert_eq!(pool_catalog_owner("Wild Talent"), None);
+    }
+
+    #[test]
+    fn type_facet_dispatched_owner_reads_the_class_feature_marker() {
+        assert_eq!(
+            type_facet_dispatched_owner(Some("Barbarian Class Feature.Skald Class Feature.RagePower")),
+            Some("Barbarian".to_string())
+        );
+    }
+
+    #[test]
+    fn type_facet_dispatched_owner_returns_none_with_no_marker() {
+        assert_eq!(type_facet_dispatched_owner(Some("SpecialQuality.KiPower")), None);
+    }
+
+    #[test]
+    fn corpus_class_owner_resolves_a_genuinely_undispatched_real_class() {
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("vigilante".to_string(), "Vigilante".to_string());
+        assert_eq!(
+            corpus_class_owner("Vigilante Talent", &corpus_class_names),
+            Some("Vigilante".to_string())
+        );
+    }
+
+    #[test]
+    fn corpus_class_owner_returns_none_when_the_group_names_no_corpus_class() {
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("vigilante".to_string(), "Vigilante".to_string());
+        assert_eq!(corpus_class_owner("Domain Power", &corpus_class_names), None);
+    }
+
+    #[test]
+    fn corpus_class_names_from_inventory_json_reads_every_class_kind_unit() {
+        let json = serde_json::json!({
+            "units": [
+                {"kind": "class", "name": "Vigilante"},
+                {"kind": "class", "name": "Magus"},
+                {"kind": "class_feature", "name": "Sneak Attack"},
+            ]
+        })
+        .to_string();
+        let names = corpus_class_names_from_inventory_json(&json).unwrap();
+        assert_eq!(names.get("vigilante").map(String::as_str), Some("Vigilante"));
+        assert_eq!(names.get("magus").map(String::as_str), Some("Magus"));
+        assert_eq!(names.len(), 2, "the class_feature unit must not be counted as a class");
+    }
+
+    /// End-to-end: a pool-catalog category label ("Rage Power ~ ...") with
+    /// NO grant fact must still ship the real dispatched owner
+    /// ("Barbarian"), not the raw key-prefix guess ("Rage Power") --
+    /// exactly T2a's own shape. Mutating `generate`'s
+    /// `.or_else(|| pool_catalog_owner(group)...)` line out turns this red.
+    #[test]
+    fn generate_writes_the_pool_catalog_owner_for_an_unregistered_grant_key() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-pool-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("cr_abilities_class.lst"),
+            "Ferocity\t\tKEY:Rage Power ~ Ferocity\t\tCATEGORY:Special Ability\tDESC:You fight through wounds.\n",
+        )
+        .unwrap();
+        // Deliberately no grant file for `core_rulebook` -- exercises the
+        // pool-catalog fallback, not `true_class_by_key`.
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "core_rulebook".to_string(),
+            source_file: "cr_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Rage Power ~ Ferocity".to_string(),
+            name: "Ferocity".to_string(),
+            type_facet: None,
+        }];
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-20T00:00:00Z", &units, &BTreeMap::new())
+            .expect("generate must succeed against a well-formed fixture");
+
+        let written = std::fs::read_to_string(out_dir.join("core_rulebook/class_feature/rage_power/ferocity.json"))
+            .expect("generate must still write to the key-owner-keyed path");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        assert_eq!(
+            json["data"]["class"].as_str(),
+            Some("Barbarian"),
+            "generate() must ship the pool-catalog-resolved class, not the raw label \"Rage Power\": {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// End-to-end: a category label whose true owner is a real,
+    /// corpus-declared but UNDISPATCHED class ("Vigilante Talent" ->
+    /// "Vigilante") must ship that class's own name, not the category
+    /// label -- the T2a/T12 overlap fix. Proves `generate`'s
+    /// `corpus_class_names` parameter is actually wired, not merely
+    /// accepted.
+    #[test]
+    fn generate_writes_the_corpus_declared_undispatched_owner_for_the_t2a_t12_overlap() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-corpusclass-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/campaign_setting/inner_sea_intrigue");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("isi_abilities_class.lst"),
+            "Coax Information\t\tKEY:Vigilante Talent ~ Coax Information\t\tCATEGORY:Special Ability\tDESC:You coax secrets.\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "inner_sea_intrigue".to_string(),
+            source_file: "isi_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Vigilante Talent ~ Coax Information".to_string(),
+            name: "Coax Information".to_string(),
+            type_facet: None,
+        }];
+
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("vigilante".to_string(), "Vigilante".to_string());
+
+        generate(
+            &corpus_root,
+            &grants_root,
+            &out_dir,
+            "2026-08-20T00:00:00Z",
+            &units,
+            &corpus_class_names,
+        )
+        .expect("generate must succeed against a well-formed fixture");
+
+        let written =
+            std::fs::read_to_string(out_dir.join("inner_sea_intrigue/class_feature/vigilante_talent/coax_information.json"))
+                .expect("generate must still write to the key-owner-keyed path");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        assert_eq!(
+            json["data"]["class"].as_str(),
+            Some("Vigilante"),
+            "generate() must ship the corpus-declared undispatched owner, not the category label \"Vigilante Talent\": {written}"
         );
 
         std::fs::remove_dir_all(&tmp).ok();

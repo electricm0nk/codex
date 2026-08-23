@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Counter Reflexes",
     "name": "Counter Reflexes",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Opponents with the Mobility feat do not gain the dodge bonus granted by that feat when they provoke attacks of opportunity by moving out of or within your threatened area.",
     "raw_tokens": [
       {

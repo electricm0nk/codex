@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Master Siege Engineer",
     "name": "Master Siege Engineer",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You are significantly faster at loading a siege engine, as well as a better shot.",
     "raw_tokens": [
       {

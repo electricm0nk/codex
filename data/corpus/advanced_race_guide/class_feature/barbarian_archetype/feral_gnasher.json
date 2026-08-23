@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Barbarian Archetype ~ Feral Gnasher",
     "name": "Feral Gnasher",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Feral gnashers grow up in the wild, either raised by animals or scraping by on their own, and soon learn to fend for themselves. These barbarians often utilize pieced-together armor and fight with their sharp teeth and whatever improvised weapons are within reach.",
     "raw_tokens": [
       {

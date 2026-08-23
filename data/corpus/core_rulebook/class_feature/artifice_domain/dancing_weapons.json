@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Artifice Domain ~ Dancing Weapons",
     "name": "Dancing Weapons",
-    "class": "Artifice Domain",
+    "class": "Cleric",
     "description": "You can give a weapon toched the Dancing special weapon quality for 4 rounds. You can use this ability %1 times per day.|DancingWeaponTimes",
     "raw_tokens": [
       {

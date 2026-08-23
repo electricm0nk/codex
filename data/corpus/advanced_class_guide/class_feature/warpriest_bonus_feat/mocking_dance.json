@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Mocking Dance",
     "name": "Mocking Dance",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You do a little dance that mocks your foe and entertains the crowd.",
     "raw_tokens": [
       {

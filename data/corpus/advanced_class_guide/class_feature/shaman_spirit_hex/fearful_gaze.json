@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Fearful Gaze",
     "name": "Fearful Gaze",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "With a single shout, the shaman causes one target creature within 30 feet to become",
     "raw_tokens": [
       {

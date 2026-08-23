@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcane Bloodline ~ School Power",
     "name": "School Power",
-    "class": "Arcane Bloodline",
+    "class": "Sorcerer",
     "description": "Pick one school of magic. The DC for any spells you cast from that school increases by +2. This bonus stacks with the bonus granted by Spell Focus.",
     "raw_tokens": [
       {

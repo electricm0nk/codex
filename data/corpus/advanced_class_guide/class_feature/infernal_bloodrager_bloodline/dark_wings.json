@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Infernal Bloodrager Bloodline ~ Dark Wings",
     "name": "Dark Wings",
-    "class": "Infernal Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You can choose to grow batlike wings when you bloodrage.",
     "raw_tokens": [
       {

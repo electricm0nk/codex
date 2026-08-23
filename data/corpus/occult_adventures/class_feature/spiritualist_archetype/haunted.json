@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Spiritualist Archetype ~ Haunted",
     "name": "Haunted",
-    "class": "Spiritualist Archetype",
+    "class": "Spiritualist",
     "description": "The haunted are a dangerous breed of spellcasters bound to temperamental and unpredictable phantoms that leech power from their spiritualists.",
     "raw_tokens": [
       {

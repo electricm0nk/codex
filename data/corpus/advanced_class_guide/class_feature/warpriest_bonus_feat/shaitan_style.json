@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Shaitan Style",
     "name": "Shaitan Style",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You strike with the caustic forces from within the earth.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bloodrager Archetype ~ Steelblood",
     "name": "Steelblood",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "Most bloodragers prefer light armor, but some learn the secret of using heavy armors. These steelbloods plod around the battlefield inspiring fear and delivering carnage from within a steel shell.",
     "raw_tokens": [
       {

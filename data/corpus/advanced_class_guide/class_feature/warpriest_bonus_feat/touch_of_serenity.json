@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Touch of Serenity",
     "name": "Touch of Serenity",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "With a single touch you can reduce the threat of even the most savage of foes.",
     "raw_tokens": [
       {

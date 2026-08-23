@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cavalier Archetype ~ Green Knight",
     "name": "Green Knight",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Some knights serve nature itself and can be found protecting unspoiled natural places or serving fey beings.",
     "raw_tokens": [
       {

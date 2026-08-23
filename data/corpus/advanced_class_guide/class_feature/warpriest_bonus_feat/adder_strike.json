@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Adder Strike",
     "name": "Adder Strike",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can quickly apply poison to gloved hands, protected feet, or other protected body parts, delivering the poison with your unarmed strikes.",
     "raw_tokens": [
       {

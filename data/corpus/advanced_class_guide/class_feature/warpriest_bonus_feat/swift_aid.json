@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Swift Aid",
     "name": "Swift Aid",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "With a quick but harmless swipe, you can aid an ally's assault.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Archetype ~ Kitsune Trickster",
     "name": "Kitsune Trickster",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "The kitsune trickster combines her sharpened wit with minor arcane powers of charm and persuasion. She uses her talents to spin convincing lies, riddles, and stories.",
     "raw_tokens": [
       {

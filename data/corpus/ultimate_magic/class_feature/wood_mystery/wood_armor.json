@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Wood Mystery ~ Wood Armor",
     "name": "Wood Armor",
-    "class": "Wood Mystery",
+    "class": "Oracle",
     "description": "You can conjure wooden armor around yourself, which grants you a +%1 armor bonus.|WoodArmorBonus",
     "raw_tokens": [
       {

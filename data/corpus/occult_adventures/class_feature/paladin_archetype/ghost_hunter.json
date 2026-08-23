@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Ghost Hunter",
     "name": "Ghost Hunter",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Ghost hunters devote their lives to eliminating malevolent spirits and putting them to rest.",
     "raw_tokens": [
       {

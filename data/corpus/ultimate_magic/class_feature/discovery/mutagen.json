@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Discovery ~ Mutagen",
     "name": "Mutagen",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain the mutagen class ability, as described in the Advanced Player's Guide.",
     "raw_tokens": [
       {

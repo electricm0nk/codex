@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Daring Infiltrator",
     "name": "Daring Infiltrator",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "Not known for their flashy entrances or for standing out in a crowd, a daring infiltrator uses stealth, disguise, and ruthless guile to pursue her goals. Some of these swashbucklers work to undermine evil organizations, while others are master thieves or mysterious assassins.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Mouser",
     "name": "Mouser",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "In the hands of a trained warrior, a well-sharpened blade is deadly regardless of size. A mouser moves in close, using her size and skill as an advantage.",
     "raw_tokens": [
       {

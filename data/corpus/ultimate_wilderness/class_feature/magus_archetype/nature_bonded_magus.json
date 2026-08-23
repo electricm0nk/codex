@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Magus Archetype ~ Nature-Bonded Magus",
     "name": "Nature-Bonded Magus",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "A nature-bonded magus synergizes arcane magic and the divine magic traditions of druids into a deadly synthesis.",
     "raw_tokens": [
       {

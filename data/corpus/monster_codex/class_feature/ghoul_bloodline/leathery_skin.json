@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ghoul Bloodline ~ Leathery Skin",
     "name": "Leathery Skin",
-    "class": "Ghoul Bloodline",
+    "class": "Sorcerer",
     "description": "You gain cold resistance %1 and a +%2 natural armor bonus to AC.|Sorcerer_GhoulLeatherySkin_ResistanceBonus|Sorcerer_GhoulLeatherySkin_NaturalArmorBonus",
     "raw_tokens": [
       {

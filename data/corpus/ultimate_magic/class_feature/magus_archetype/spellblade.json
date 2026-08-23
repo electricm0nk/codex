@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Magus Archetype ~ Spellblade",
     "name": "Spellblade",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "A spellblade magus can manifest a ghostly blade of force that can be used as an off-hand weapon.",
     "raw_tokens": [
       {

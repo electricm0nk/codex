@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Archetype ~ Dune Rider",
     "name": "Dune Rider",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Mounted harriers, saboteurs, and skirmishers, dune riders can disrupt even the most organized opposition.",
     "raw_tokens": [
       {

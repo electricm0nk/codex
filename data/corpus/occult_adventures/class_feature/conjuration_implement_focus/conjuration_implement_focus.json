@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Occultist Conjuration Implement Focus",
     "name": "Conjuration Implement Focus",
-    "class": null,
+    "class": "Occultist",
     "description": "Resonant power: +1 conjuration duration caster level per 2 points of mental focus invested (max +%1).|OccultistLVL",
     "raw_tokens": [
       {

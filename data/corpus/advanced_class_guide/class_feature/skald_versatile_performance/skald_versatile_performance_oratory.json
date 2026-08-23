@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Skald Versatile Performance ~ Oratory",
     "name": "Skald Versatile Performance (Oratory)",
-    "class": "Skald Versatile Performance",
+    "class": "Skald",
     "description": "You may use your Perform (Oratory) skill instead of Diplomacy and Sense Motive.",
     "raw_tokens": [
       {

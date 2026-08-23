@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shifter Aspect ~ Snake ~ Minor",
     "name": "Minor Aspect of the Snake",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "You gain a +%1 bonus on attack rolls when making attacks of opportunity and a +%1 dodge bonus to your AC against attacks of opportunity.|SnakeAspectAoOBonus",
     "raw_tokens": [
       {

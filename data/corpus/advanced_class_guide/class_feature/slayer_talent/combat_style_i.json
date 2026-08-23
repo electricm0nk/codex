@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Combat Style I",
     "name": "Combat Style I",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "The slayer selects a ranger combat style and gains a combat feat from the first feat list of that style. He can choose feats from his selected combat style, even if he does not have the normal prerequisites.",
     "raw_tokens": [
       {

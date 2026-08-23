@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Medium Wizard Spell 2",
     "name": "Medium Wizard Spell 2",
-    "class": null,
+    "class": "Medium",
     "description": "You have chosen %1 as your bonus 2nd-level spell known.|LIST",
     "raw_tokens": [
       {

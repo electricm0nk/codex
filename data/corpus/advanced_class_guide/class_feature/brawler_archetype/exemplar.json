@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Brawler Archetype ~ Exemplar",
     "name": "Exemplar",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "A versatile soldier who inspires her companions with her fighting prowess, an exemplar is at home on the front lines of battles anywhere.",
     "raw_tokens": [
       {

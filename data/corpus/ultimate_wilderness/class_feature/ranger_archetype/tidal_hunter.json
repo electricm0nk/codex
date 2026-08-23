@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Archetype ~ Tidal Hunter",
     "name": "Tidal Hunter",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "The tidal hunter draws strength from the fish and other wildlife of the deep.",
     "raw_tokens": [
       {

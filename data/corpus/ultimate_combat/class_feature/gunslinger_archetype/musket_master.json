@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Gunslinger Archetype ~ Musket Master",
     "name": "Musket Master",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "Pistols and other one-handed firearms are often easy to conceal and faster to load than other firearms, and do suff icient damage for most situations. But some gunslingers want a little more firepower and range. These are the musket masters; the best of these gunslingers can reload a musket with dazzling speed, potentially putting even their pistol-wielding brethren to shame.",
     "raw_tokens": [
       {

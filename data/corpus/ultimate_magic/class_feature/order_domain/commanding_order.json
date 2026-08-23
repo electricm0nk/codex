@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Order Domain ~ Commanding Order",
     "name": "Commanding Order",
-    "class": "Order Domain",
+    "class": "Cleric",
     "description": "You can use greater command (DC %2), except it only affects a single target.  You can use this ability %1 times per day.|DomainOrderTimes|CommandingOrderDC",
     "raw_tokens": [
       {

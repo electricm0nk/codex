@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ Eldritch Font",
     "name": "Eldritch Font",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "For some arcanists, the power bubbling up from within is nearly too much to contain. They become adept at shaping this magical energy without needing to bind it up in spells.",
     "raw_tokens": [
       {

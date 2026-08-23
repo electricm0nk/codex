@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Phantom Thief Talent ~ Skill Focus",
     "name": "Skill Focus",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "You gain Skill Focus as a bonus feat.",
     "raw_tokens": [
       {

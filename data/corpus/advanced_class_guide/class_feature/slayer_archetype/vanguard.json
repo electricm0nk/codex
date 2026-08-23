@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Archetype ~ Vanguard",
     "name": "Vanguard",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Vanguards are battlefield commanders who focus on the brutality of combat and lead their allies to bloody victory. Quick to react to danger, a vanguard is a valuable scout, capable officer, and skilled tactician.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Trample",
     "name": "Trample",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "While mounted, you can ride down opponents and thrample them under your mount.",
     "raw_tokens": [
       {

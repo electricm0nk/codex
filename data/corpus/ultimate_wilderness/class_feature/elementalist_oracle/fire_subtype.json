@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Elementalist Oracle ~ Fire Subtype",
     "name": "Fire Subtype",
-    "class": "Elementalist Oracle",
+    "class": "Oracle",
     "description": "You gain the fire subtype, immunity to fire, and vulnerability to cold.",
     "raw_tokens": [
       {

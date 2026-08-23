@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Law Domain",
     "name": "Law",
-    "class": null,
+    "class": "Cleric",
     "description": "You follow a strict and ordered code of laws, and in so doing, achieve enlightenment.",
     "raw_tokens": [
       {

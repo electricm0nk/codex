@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ White Mage",
     "name": "White Mage",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "A white mage is an arcanist touched by a divine power and gifted with the ability to heal others.",
     "raw_tokens": [
       {

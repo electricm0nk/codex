@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Barbarian Archetype ~ Armored Hulk",
     "name": "Armored Hulk",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Some barbarians disdain the hides and leather used as armor by most of their kin. Instead they master the heaviest of armors, even those created by more civilized people, to gain greater protection and stability in battle.",
     "raw_tokens": [
       {

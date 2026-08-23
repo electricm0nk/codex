@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Talent ~ Survivalist",
     "name": "Survivalist",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent adds Heal and Survival to her list of class skills.",
     "raw_tokens": [
       {

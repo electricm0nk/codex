@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Mysterious Avenger",
     "name": "Mysterious Avenger",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "While some swashbucklers fight for queen and country, and others for coin, glory, or just the enhancement of their own reputations, the mysterious avenger fights directly for a cause. Instead of gaining personal glory for her heroic deeds, she keeps her identity hidden in order to fight for those who cannot fight for themselves.",
     "raw_tokens": [
       {

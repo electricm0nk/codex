@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Improved Whip Mastery",
     "name": "Improved Whip Mastery",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You are able to entangle opponents with the coils of your whip.",
     "raw_tokens": [
       {

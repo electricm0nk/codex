@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Dark Tapestry Mystery ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Dark Tapestry Mystery",
+    "class": "Oracle",
     "description": "You become a truly alien and unnatural creature. You gain damage reduction 5/- and immunity to acid, critical hits, and sneak attacks. Once per day, you can cast shapechange as a spell-like ability without requiring a material component.",
     "raw_tokens": [
       {

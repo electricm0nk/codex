@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Combat Style Feat ~ Greater Two-Weapon Fighting",
     "name": "Greater Two-Weapon Fighting",
-    "class": "Ranger Combat Style Feat",
+    "class": "Ranger",
     "description": "You are incredibly skilled at fighting with two weapons at the same time.",
     "raw_tokens": [
       {

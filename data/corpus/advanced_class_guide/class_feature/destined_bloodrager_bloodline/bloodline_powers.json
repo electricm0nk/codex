@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Destined Bloodrager Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Destined Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Your future greatness grants you the might to strike your enemies in awe-inspiring ways.",
     "raw_tokens": [
       {

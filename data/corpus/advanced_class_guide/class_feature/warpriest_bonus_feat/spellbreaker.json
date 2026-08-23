@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Spellbreaker",
     "name": "Spellbreaker",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can strike at enemy spellcasters who fail to cast defensively when you threaten them.",
     "raw_tokens": [
       {

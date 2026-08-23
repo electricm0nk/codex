@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Shield Specialization",
     "name": "Shield Specialization",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You have mastered the use of one type of shield.",
     "raw_tokens": [
       {

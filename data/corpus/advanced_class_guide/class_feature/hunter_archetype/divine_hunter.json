@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Archetype ~ Divine Hunter",
     "name": "Divine Hunter",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "While most hunters heed the call of nature and fight to protect its bounty, some are inspired to serve a higher power. These divine hunters use faith to aid them in their struggles, and their faith infuses their animal companions, making these companions champions of their deities.",
     "raw_tokens": [
       {

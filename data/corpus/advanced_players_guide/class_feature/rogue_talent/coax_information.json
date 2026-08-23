@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Talent ~ Coax Information",
     "name": "Coax Information",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent can use Bluff or Diplomacy in place of Intimidate to force an opponent to act friendly toward her.",
     "raw_tokens": [
       {

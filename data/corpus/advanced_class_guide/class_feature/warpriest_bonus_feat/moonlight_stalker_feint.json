@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Moonlight Stalker Feint",
     "name": "Moonlight Stalker Feint",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You strike through the shadows so quickly that your opponent can barely react to your attacks.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cavalier Order ~ Order of the Beast",
     "name": "Order of the Beast (ACG)",
-    "class": "Cavalier Order",
+    "class": "Cavalier",
     "description": "A cavalier who belongs to this order serves nature in all its forms. These cavaliers believe that animals make the most loyal companions, and keep close to woodland creatures.",
     "raw_tokens": [
       {

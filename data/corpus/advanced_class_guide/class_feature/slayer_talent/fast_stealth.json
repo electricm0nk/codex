@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Fast Stealth",
     "name": "Fast Stealth",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "This ability allows you to move at full speed using Stealth without penalty.",
     "raw_tokens": [
       {

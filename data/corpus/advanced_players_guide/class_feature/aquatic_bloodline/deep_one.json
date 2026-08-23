@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Aquatic Bloodline ~ Deep One",
     "name": "Deep One",
-    "class": "Aquatic Bloodline",
+    "class": "Sorcerer",
     "description": "You gain blindsense 60 feet and your body is covered with fine, slippery scales granting DR 10/piercing, resist cold 20, and continuous freedom of movement. Underwater, you gain evasion and blindsight 120 feet, and you are immune to pressure damage from deep water.",
     "raw_tokens": [
       {

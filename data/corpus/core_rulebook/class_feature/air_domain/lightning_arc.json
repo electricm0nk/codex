@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Air Domain ~ Lightning Arc",
     "name": "Lightning Arc",
-    "class": "Air Domain",
+    "class": "Cleric",
     "description": "As a standard action you can unleash an arc of electricity targeting any foe within 30 feet as a ranged touch attack. This arc of electricity deals 1d6 points of electricity damage. You can use this ability %1 times per day.|LightningArcTimes|PREVARLT:DomainAirLVL,2",
     "raw_tokens": [
       {

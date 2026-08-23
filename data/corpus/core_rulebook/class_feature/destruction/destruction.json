@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Destruction Domain",
     "name": "Destruction",
-    "class": null,
+    "class": "Cleric",
     "description": "You revel in ruin and devastation, and can deliver particularly destructive attacks.",
     "raw_tokens": [
       {

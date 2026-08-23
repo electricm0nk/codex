@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Feral Combat Training",
     "name": "Feral Combat Training",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You were taught a style of martial arts that relies on the natural weapons from your racial ability or class feature.",
     "raw_tokens": [
       {

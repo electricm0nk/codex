@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sorcerer Archetype ~ Eldritch Scrapper",
     "name": "Eldritch Scrapper",
-    "class": "Sorcerer Archetype",
+    "class": "Sorcerer",
     "description": "An eldritch scrapper is usually spoiling for a fight, looking to prove that she's just as tough as a martial character. A veteran of many brawls against opponents who were suspicious of her manifesting magic, an eldritch scrapper has a thick skin and a fighting style that blends weapons with spells.",
     "raw_tokens": [
       {

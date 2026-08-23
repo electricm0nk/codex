@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Trap ~ Fire Trap",
     "name": "Fire Trap",
-    "class": "Ranger Trap",
+    "class": "Ranger",
     "description": "The trap explodes in flames, dealing 1d6+%1 points of fire damage to the triggering creature (Reflex negates). If it is an extraordinary trap, the ranger must use an explosive material such as alchemist's fire when setting the trap.|FireTrapBonusDamage",
     "raw_tokens": [
       {

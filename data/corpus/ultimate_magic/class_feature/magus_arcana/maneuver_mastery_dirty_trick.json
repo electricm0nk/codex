@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Magus Arcana ~ Maneuver Mastery Dirty Trick",
     "name": "Maneuver Mastery (Dirty Trick)",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You have mastered the dirty trick combat maneuver. Whenever you attempt a dirty trick combat maneuver, you use your magus level in place of your base attack bonus (in addition to any base attack bonus gained from other classes).",
     "raw_tokens": [
       {

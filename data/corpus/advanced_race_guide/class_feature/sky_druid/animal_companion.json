@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sky Druid ~ Animal Companion",
     "name": "Animal Companion",
-    "class": "Sky Druid",
+    "class": "Druid",
     "description": "A sky druid who chooses an animal companion must select one with a fly speed.",
     "raw_tokens": [
       {

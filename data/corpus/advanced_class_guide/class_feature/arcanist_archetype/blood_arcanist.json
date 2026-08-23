@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ Blood Arcanist",
     "name": "Blood Arcanist",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Though most arcanists possess only a rudimentary innate arcane gift, the blood arcanist has the full power of a bloodline to draw upon.",
     "raw_tokens": [
       {

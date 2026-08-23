@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Elemental",
     "name": "Elemental Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "The power of the elements resides in you, and at times you can hardly control its fury.  This influence comes either from an elemental outsider in your family history or from a moment when you or your ancestors were exposed to powerful elemental forces.|PREVAREQ:Bloodrager_Elemental_Description,0",
     "raw_tokens": [
       {

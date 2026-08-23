@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Discovery ~ Underwater Demolition",
     "name": "Underwater Demolition",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist gains the ability to throw bombs underwater (normally, thrown weapons cannot be used underwater), including throwing from the air into the water. If the bomb travels through water, the range increment is reduced to 5 feet.",
     "raw_tokens": [
       {

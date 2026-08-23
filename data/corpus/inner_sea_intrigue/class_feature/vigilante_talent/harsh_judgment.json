@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Harsh Judgment",
     "name": "Harsh Judgment",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "A vigilante with this talent can pronounce judgment upon his foes as a swift action as per the inquisitor class feature (Advanced Player's Guide 38). He can choose from among the following inquisitor judgments: destruction, piercing, purity, and smiting. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. When the vigilante uses this ability, he must select one type of judgment to make. As a swift action, he can change this judgment to another type. For the purpose of determining the bonuses provided by this ability, the vigilante's level stacks with levels in any other classes that grant judgment or harsh judgment. The vigilante can use this ability %1/day. Only a vigilante with the zealot archetype (Ultimate Intrigue 62) can select this talent.|min(7,(VigilanteTalentLVL+2)/3)",
     "raw_tokens": [
       {

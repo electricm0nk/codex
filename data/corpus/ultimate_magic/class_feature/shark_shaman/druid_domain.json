@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shark Shaman ~ Druid Domain",
     "name": "Druid Domain",
-    "class": "Shark Shaman",
+    "class": "Shaman",
     "description": "If you choose an animal companion, you must select a shark. If you choose a domain, you must choose from the Animal, Death, War, and Water domains.",
     "raw_tokens": [
       {

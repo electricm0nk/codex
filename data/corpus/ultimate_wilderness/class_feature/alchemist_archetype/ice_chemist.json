@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Ice Chemist",
     "name": "Ice Chemist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Reclusive alchemists who dwell in the highest mountains or on the frozen tundra devote their skills to mastering the cold.",
     "raw_tokens": [
       {

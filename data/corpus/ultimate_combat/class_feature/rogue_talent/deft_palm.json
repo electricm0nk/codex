@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Talent ~ Deft Palm",
     "name": "Deft Palm",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent can make a Sleight of Hand check to conceal a weapon while holding it in plain sight, even while she is being observed.",
     "raw_tokens": [
       {

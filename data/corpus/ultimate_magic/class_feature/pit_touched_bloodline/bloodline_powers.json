@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Pit-Touched Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Pit-Touched Bloodline",
+    "class": "Sorcerer",
     "description": "The crushing weight of evil has given you the strength to endure.",
     "raw_tokens": [
       {

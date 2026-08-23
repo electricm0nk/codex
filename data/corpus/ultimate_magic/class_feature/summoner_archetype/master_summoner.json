@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Summoner Archetype ~ Master Summoner",
     "name": "Master Summoner",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "A master summoner sacrifices the power of his eidolon in favor of summoning a plethora of otherworldly creatures to aid him.",
     "raw_tokens": [
       {

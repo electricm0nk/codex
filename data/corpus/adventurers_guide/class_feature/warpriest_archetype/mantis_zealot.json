@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Archetype ~ Mantis Zealot",
     "name": "Mantis Zealot",
-    "class": "Warpriest Archetype",
+    "class": "Warpriest",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

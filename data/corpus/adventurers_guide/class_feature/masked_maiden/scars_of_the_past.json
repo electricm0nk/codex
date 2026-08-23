@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Masked Maiden ~ Scars of the Past",
     "name": "Scars of the Past",
-    "class": "Masked Maiden",
+    "class": "Vigilante",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

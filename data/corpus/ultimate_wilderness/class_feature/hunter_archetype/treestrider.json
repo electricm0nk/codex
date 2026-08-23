@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Archetype ~ Treestrider",
     "name": "Treestrider",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "Some hunters are masters of the wild. Whether raised by apes or having some other link with simian creatures, these hunters glide through the wilderness with ease.",
     "raw_tokens": [
       {

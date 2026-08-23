@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shifter Aspect ~ Frog ~ Minor",
     "name": "Minor Aspect of the Frog",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "You gain a +%1 competence bonus on Acrobatics checks when jumping and on Swim checks.|FrogAspectSkillBonuses",
     "raw_tokens": [
       {

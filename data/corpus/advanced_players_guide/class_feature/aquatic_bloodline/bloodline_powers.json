@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Aquatic Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Aquatic Bloodline",
+    "class": "Sorcerer",
     "description": "Your seaborn magical talents awaken changes in you, both mystical and physical, as you develop your powers.",
     "raw_tokens": [
       {

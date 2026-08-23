@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Shadow Puppeteer",
     "name": "Shadow Puppeteer",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "A shadow puppeteer invokes amazing and terrifying shadow puppet shows, producing supernatural effects by creating and manipulating shadow.",
     "raw_tokens": [
       {

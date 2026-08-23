@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Occultist Illusion Implement Focus",
     "name": "Illusion Implement Focus",
-    "class": null,
+    "class": "Occultist",
     "description": "Resonant power: as a standard action, gain a 5%% concealment miss chance per point of mental focus invested (max %1%%) until the next attack.|min(5*floor(1+OccultistLVL/2),50)",
     "raw_tokens": [
       {

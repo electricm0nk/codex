@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Stone",
     "name": "Stone (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: magic stone (1st), stone call (2nd), meld into stone (3rd), wall of stone (4th), stoneskin (5th), stone tell (6th), statue (7th), repel metal or stone (8th), clashing rocks (9th)",
     "raw_tokens": [
       {

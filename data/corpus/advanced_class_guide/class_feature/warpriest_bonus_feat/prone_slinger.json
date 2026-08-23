@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Prone Slinger",
     "name": "Prone Slinger",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Your sideways sling release allows you to launch bullets and stones even while prone.",
     "raw_tokens": [
       {

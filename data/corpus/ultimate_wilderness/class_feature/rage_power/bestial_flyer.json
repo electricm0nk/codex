@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Bestial Flyer",
     "name": "Bestial Flyer",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian's fly speed increases by 10 feet and her maneuverability improves by one category.",
     "raw_tokens": [
       {

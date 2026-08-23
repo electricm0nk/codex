@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Frog Domain ~ Webfoot",
     "name": "Webfoot",
-    "class": "Frog Domain",
+    "class": "Cleric",
     "description": "You gain the amphibious special quality and a swim speed equal to your land speed.|PREVARLT:DomainFrogLVL,12",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Spellscar Mystery ~ Spell Resistance",
     "name": "Spell Resistance",
-    "class": "Spellscar Mystery",
+    "class": "Oracle",
     "description": "You gain SR equal to %1.|SpellscarSpellResistance",
     "raw_tokens": [
       {

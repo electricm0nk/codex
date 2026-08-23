@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Ward of Stone",
     "name": "Ward of Stone",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman touches a willing creature (including herself) and grants a ward of stone. The next",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ancestor Mystery ~ Sacred Council",
     "name": "Sacred Council",
-    "class": "Ancestor Mystery",
+    "class": "Oracle",
     "description": "As a move action, you can call upon your ancestors to provide council. This advice grants you a +2 bonus on any one d20 roll. This effect lasts for 1 round. You can use this ability %1/day.|SacredCouncilTimes",
     "raw_tokens": [
       {

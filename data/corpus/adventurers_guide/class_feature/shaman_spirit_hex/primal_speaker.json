@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Primal Speaker",
     "name": "Primal Speaker",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman can speak with mammoths and any other megafauna or elephant creatures as if she were under the effects of speak with animals.",
     "raw_tokens": [
       {

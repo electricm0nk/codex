@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Opening Volley",
     "name": "Opening Volley",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Your ranged assault leaves your foe disoriented and vulnerable to your melee attack.",
     "raw_tokens": [
       {

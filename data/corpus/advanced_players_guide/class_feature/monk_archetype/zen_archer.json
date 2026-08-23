@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Zen Archer",
     "name": "Zen Archer",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "Some monks seek to become one with another weapon entirely-the bow. The zen archer takes a weapon most other monks eschew and seeks perfection in the pull of a taut bowstring, the flex of a bow's limbs, and the flight of an arrow fired true.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Starsoul Bloodline ~ Minute Meteors",
     "name": "Minute Meteors",
-    "class": "Starsoul Bloodline",
+    "class": "Sorcerer",
     "description": "You can summon a rain of tiny meteorites as a standard action to fall in a 5-foot column, 30 feet high, with a range of 30 feet. The meteors inflict 1d4",
     "raw_tokens": [
       {

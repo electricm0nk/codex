@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Vow Monk",
     "name": "Vows",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "You can take vows to increase your ki pool.",
     "raw_tokens": [
       {

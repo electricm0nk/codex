@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Draconic",
     "name": "Draconic Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "At some point in your family's history, a dragon interbred with your bloodline. Now, its ancient power fuels your bloodrage.|PREVAREQ:Bloodrager_Draconic_Description,0",
     "raw_tokens": [
       {

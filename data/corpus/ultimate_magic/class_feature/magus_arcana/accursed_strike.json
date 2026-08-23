@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Magus Arcana ~ Accursed Strike",
     "name": "Accursed Strike",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "If you can cast bestow curse, major curse, or any spell with the curse descriptor, you can deliver these prepared spells using the spellstrike ability, even if the spells are not touch attack spells.",
     "raw_tokens": [
       {

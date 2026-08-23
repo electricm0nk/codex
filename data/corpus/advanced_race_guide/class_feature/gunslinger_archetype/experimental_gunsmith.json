@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Gunslinger Archetype ~ Experimental Gunsmith",
     "name": "Experimental Gunsmith",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "The Experimental Gunsmith is obsessed with creating the ultimate firearm, and is willing to take risks to work the kinks out of her design.",
     "raw_tokens": [
       {

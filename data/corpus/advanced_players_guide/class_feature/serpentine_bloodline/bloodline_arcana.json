@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Serpentine Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Serpentine Bloodline",
+    "class": "Sorcerer",
     "description": "Your powers of compulsion can affect even bestial creatures. Whenever you cast a mind-affecting or language-dependent spell, it affects animals, magical beasts, and monstrous humanoids as if they were humanoids who understood your language.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Season Witch ~ Winter Witch",
     "name": "Winter Witch",
-    "class": "Season Witch",
+    "class": "Witch",
     "description": "A winter witch has dominion over hearth and home. The save DCs of her spells that deal cold damage increase by 1.",
     "raw_tokens": [
       {

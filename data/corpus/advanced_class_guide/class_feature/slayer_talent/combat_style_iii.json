@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Combat Style III",
     "name": "Combat Style III",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "The slayer gains another combat style bonus feat and can add the 10th level bonus feats to the list.",
     "raw_tokens": [
       {

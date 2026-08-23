@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Torture Domain ~ Torturer's Presence",
     "name": "Torturer's Presence",
-    "class": "Torture Domain",
+    "class": "Cleric",
     "description": "You gain a +2 bonus when using the Intimidate skill.  This is in addition to your bonus for Stern Gaze.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Oath of Charity",
     "name": "Oath of Charity",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "You dedicate your life to protecting those who can't protect themselves and giving to those who are in need.",
     "raw_tokens": [
       {

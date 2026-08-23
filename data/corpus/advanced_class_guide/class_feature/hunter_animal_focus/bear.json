@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Animal Focus ~ Bear",
     "name": "Bear",
-    "class": "Hunter Animal Focus",
+    "class": "Hunter",
     "description": "Get +%1 enhancement bonus to constitution|HunterAnimalFocusBearBonus",
     "raw_tokens": [
       {

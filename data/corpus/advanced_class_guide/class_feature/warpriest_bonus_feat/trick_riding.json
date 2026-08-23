@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Trick Riding",
     "name": "Trick Riding",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You are not only skilled at controlling a horse in combat; you can make it look like art.",
     "raw_tokens": [
       {

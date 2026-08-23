@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Heavens Mystery ~ Guiding Star",
     "name": "Guiding Star",
-    "class": "Heavens Mystery",
+    "class": "Oracle",
     "description": "Whenever you can see the open sky at night, you can determine your precise location. When the night sky is visible to you, you may also add your Charisma modifier to your Wisdom modifier on all Wisdom-based checks. In addition, once per night while outdoors, you can cast one spell as if it were modified by the Empower Spell, Extend Spell, Silent Spell, or Still spell feat without increasing the spell's casting time or level.",
     "raw_tokens": [
       {

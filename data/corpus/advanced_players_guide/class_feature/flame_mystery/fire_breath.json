@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Flame Mystery ~ Fire Breath",
     "name": "Fire Breath",
-    "class": "Flame Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can unleash a 15-foot cone of flame from your mouth. This flame deals %1d4 points of fire damage. A Reflex save halves this damage. You can use this ability %2 times per day. The save DC is Charisma-based.|classlevel(\"Oracle\")|1+(classlevel(\"Oracle\")/5)",
     "raw_tokens": [
       {

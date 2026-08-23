@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Archetype ~ Avalancher",
     "name": "Avalancher",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Avalanchers attack from overhead cliffs and mesas like a landslide of arrows and blades.",
     "raw_tokens": [
       {

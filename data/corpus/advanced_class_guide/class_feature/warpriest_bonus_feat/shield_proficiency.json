@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Shield Proficiency",
     "name": "Shield Proficiency",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You are trained in how to properly use a shield.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Occultist Evocation Implement Focus",
     "name": "Evocation Implement Focus",
-    "class": null,
+    "class": "Occultist",
     "description": "Resonant power: +1 evocation spell or focus power damage per 2 points of mental focus invested (max +%1).|1+OccultistLVL/2",
     "raw_tokens": [
       {

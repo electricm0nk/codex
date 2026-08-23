@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Speaker for the Past Time Mystery ~ Temporal Celerity",
     "name": "Temporal Celerity",
-    "class": "Speaker for the Past Time Mystery",
+    "class": "Oracle",
     "description": "Whenever you roll for initiative, you can roll twice and take either result.|!PRECLASS:1,Shaman=7",
     "raw_tokens": [
       {

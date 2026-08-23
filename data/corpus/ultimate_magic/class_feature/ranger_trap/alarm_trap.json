@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Trap ~ Alarm Trap",
     "name": "Alarm Trap",
-    "class": "Ranger Trap",
+    "class": "Ranger",
     "description": "When the trap is triggered, it also creates a momentary loud noise equivalent to the audible alarm version of alarm.",
     "raw_tokens": [
       {

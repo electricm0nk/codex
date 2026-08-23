@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Inquisitor Domain ~ Feather Subdomain",
     "name": "Feather Subdomain",
-    "class": "Inquisitor Domain",
+    "class": "Inquisitor",
     "description": "Add Fly to your list of class skills. In addition, whenever you cast a spell that grants you a fly speed, your maneuverability increases by one step (up to perfect).",
     "raw_tokens": [
       {

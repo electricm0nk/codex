@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Investigator Archetype ~ Infiltrator",
     "name": "Infiltrator",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "An infiltrator specializes in investigating or disrupting groups from within. He uses his specialized set of skills and alchemical abilities to morph into the shape of the people or creatures whose company he's infiltrating, or even specific individuals.",
     "raw_tokens": [
       {

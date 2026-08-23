@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Magus Archetype ~ Elemental Knight",
     "name": "Elemental Knight",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "Elemental knights are born with elemental energies surging through their blood and discover the secret of reconciling and focusing this primal power into the arcane.",
     "raw_tokens": [
       {

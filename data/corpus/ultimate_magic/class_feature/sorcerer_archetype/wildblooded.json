@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sorcerer Archetype ~ Wildblooded",
     "name": "Wildblooded",
-    "class": "Sorcerer Archetype",
+    "class": "Sorcerer",
     "description": "A wildblooded sorcerer has a mutated version of a more common bloodline, with one arcana and at least one bloodline power that are different from those of an unmutated bloodline.",
     "raw_tokens": [
       {

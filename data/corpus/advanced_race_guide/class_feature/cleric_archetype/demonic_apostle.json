@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cleric Archetype ~ Demonic Apostle",
     "name": "Demonic Apostle",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "In order to survive, the drow threw in their lot with demon lords. Thus, demon worship is common among the drow, and so are ranks of demonic apostles, who gain magical insight from their dark lords and crush their chaotic masters' enemies by channeling demonic energy.",
     "raw_tokens": [
       {

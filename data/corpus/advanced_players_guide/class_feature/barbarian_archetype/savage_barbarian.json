@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Barbarian Archetype ~ Savage Barbarian",
     "name": "Savage Barbarian",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Some barbarians are truly savage, having little training in modern arms. These savage barbarians learn to avoid blows and toughen up their skin.",
     "raw_tokens": [
       {

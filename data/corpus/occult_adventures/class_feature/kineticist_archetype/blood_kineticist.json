@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Kineticist Archetype ~ Blood Kineticist",
     "name": "Blood Kineticist",
-    "class": "Kineticist Archetype",
+    "class": "Kineticist",
     "description": "To a blood kineticist, the water in a creature's blood is just like any other sort, and she uses that knowledge to brutal ends.",
     "raw_tokens": [
       {

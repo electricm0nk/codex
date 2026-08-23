@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Trickery Domain",
     "name": "Trickery",
-    "class": null,
+    "class": "Cleric",
     "description": "You are a master of illusions and deceptions. Bluff, Disguise, and Stealth are class skills.",
     "raw_tokens": [
       {

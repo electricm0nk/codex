@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cavalier Archetype ~ Saurian Champion",
     "name": "Saurian Champion",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "These primeval cavaliers idolize dinosaurs as apex predators and value them as powerful, oversized mounts.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Marid Coldsnap",
     "name": "Marid Coldsnap",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can summon a torrent of water to blast your enemies, chilling them to the bone.",
     "raw_tokens": [
       {

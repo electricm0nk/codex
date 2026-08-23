@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Plant Master Plant Focus ~ Brambles",
     "name": "Brambles",
-    "class": "Plant Master Plant Focus",
+    "class": "Plant",
     "description": "When hit by an unarmed strike or natural attack, the attacker takes %1 point of piercing damage.|PlantFocusBramblesBonus",
     "raw_tokens": [
       {

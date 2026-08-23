@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Antipaladin Archetype ~ Seal-Breaker",
     "name": "Seal-Breaker",
-    "class": "Antipaladin Archetype",
+    "class": "Antipaladin",
     "description": "Seal-breakers are dedicated to the Whispering Tyrant and have tasked themselves with finding and destroying the seals that bind him within Gallowspire. Their ties to the Whispering Tyrant give them power over undead creatures and other dark forces.",
     "raw_tokens": [
       {

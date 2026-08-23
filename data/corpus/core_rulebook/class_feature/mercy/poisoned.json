@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Mercy ~ Poisoned",
     "name": "Poisoned",
-    "class": "Mercy",
+    "class": "Paladin",
     "description": "Whenever you use Lay on Hands to heal damage to one target, the ability also acts as Neutralize Poison with a caster level of %1.|MercyLVL",
     "raw_tokens": [
       {

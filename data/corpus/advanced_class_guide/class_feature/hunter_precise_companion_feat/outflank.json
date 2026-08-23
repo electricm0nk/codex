@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Precise Companion Feat ~ Outflank",
     "name": "Outflank",
-    "class": "Hunter Precise Companion Feat",
+    "class": "Hunter",
     "description": "You recieve Outflank as a bonus feat.",
     "raw_tokens": [
       {

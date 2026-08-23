@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Hurling",
     "name": "Hurling",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "As lesser hurling, but the barbarian can increase the range increment to 20 feet or increase the size of a hurled object by one size category.",
     "raw_tokens": [
       {

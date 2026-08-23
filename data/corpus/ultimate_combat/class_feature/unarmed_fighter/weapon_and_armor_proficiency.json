@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Unarmed Fighter ~ Weapon And Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Unarmed Fighter",
+    "class": "Fighter",
     "description": "An unarmed fighter is not proficient with medium armor, heavy armor, or shields. An unarmed fighter is proficient with all monk weapons, including exotic monk weapons.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Archetype ~ Urban Ranger",
     "name": "Urban Ranger",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "For the urban ranger, the streets and sewers of the city are just as dangerous as the barren wastelands or the deep forests.",
     "raw_tokens": [
       {

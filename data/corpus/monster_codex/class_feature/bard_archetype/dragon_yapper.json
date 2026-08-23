@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Dragon Yapper",
     "name": "Dragon Yapper",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Kobolds' yammering songs distract opponents in combat, hindering their ability to attack.",
     "raw_tokens": [
       {

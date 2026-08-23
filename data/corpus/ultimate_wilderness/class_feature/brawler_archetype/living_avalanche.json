@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Brawler Archetype ~ Living Avalanche",
     "name": "Living Avalanche",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "When a living avalanche is on the move, no one can stand in her way.",
     "raw_tokens": [
       {

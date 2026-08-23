@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Swamp Domain ~ Reed Hunter",
     "name": "Reed Hunter",
-    "class": "Swamp Domain",
+    "class": "Cleric",
     "description": "You gain blindsense 30 feet with respect to concealment and cover from fog, vegetation, or water.|PREVARLT:DomainSwampLVL,12",
     "raw_tokens": [
       {

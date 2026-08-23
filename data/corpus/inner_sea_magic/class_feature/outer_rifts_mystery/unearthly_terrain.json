@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Outer Rifts Mystery ~ Unearthly Terrain",
     "name": "Unearthly Terrain",
-    "class": "Outer Rifts Mystery",
+    "class": "Oracle",
     "description": "You can twist the material world into the harsh, jagged edges and uneven angles of the outer planes. As a standard action, you can turn one 20-foot square into difficult terrain for %1 rounds. You may use this ability %2 times per day.|UnearthlyTerrainDuration|UnearthlyTerrainTimes",
     "raw_tokens": [
       {

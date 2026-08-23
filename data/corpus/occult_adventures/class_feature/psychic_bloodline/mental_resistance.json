@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Psychic Bloodline ~ Mental Resistance",
     "name": "Mental Resistance",
-    "class": "Psychic Bloodline",
+    "class": "Sorcerer",
     "description": "Your mind blocks attempts to assail it. You gain a +%1 bonus on saving throws against mind-affecting effects.|Sorcerer_PsychicMentalResistance_SaveBonus",
     "raw_tokens": [
       {

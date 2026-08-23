@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bloodrager Archetype ~ Blood Conduit",
     "name": "Blood Conduit",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "Blood conduits learn to channel their arcane might directly through their flesh, without the need for mystical words or gestures.",
     "raw_tokens": [
       {

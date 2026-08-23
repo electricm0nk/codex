@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Sacred Judgment ~ Protection",
     "name": "Judgment / Protection",
-    "class": "Sacred Judgment",
+    "class": "Inquisitor",
     "description": "The inquisitor is surrounded by a protective aura, granting a +%1 sacred bonus to Armor Class.|1+InqJudgeProtectionLVL/5",
     "raw_tokens": [
       {

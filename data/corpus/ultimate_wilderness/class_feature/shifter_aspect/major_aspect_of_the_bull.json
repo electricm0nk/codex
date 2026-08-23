@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shifter Aspect ~ Bull ~ Major",
     "name": "Major Aspect of the Bull",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a Large bull (see Cattle on page 179). While in this form, you gain low-light vision, scent, and a gore attack (%1d8 damage) with powerful charge (+1d8 on your gore attack), and a 40 foot base speed.|BullAspectGoreDamageDice",
     "raw_tokens": [
       {

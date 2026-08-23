@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Slayer Talent ~ Swift Poison",
     "name": "Swift Poison",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "A slayer with this talent can apply poison to a weapon as a move action, instead of a standard action.",
     "raw_tokens": [
       {

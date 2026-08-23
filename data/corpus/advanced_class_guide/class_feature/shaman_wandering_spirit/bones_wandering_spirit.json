@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Bones",
     "name": "Bones (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: cause fear (1st), false life (2nd), animate dead (3rd), fear (4th), slay living (5th), circle of death (6th), control undead (7th), horrid wilting (8th), wail of the banshee (9th)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Qinggong Monk Quivering Palm",
     "name": "Qinggong Monk (Quivering Palm)",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "Swap Quivering Palm for a ki power.",
     "raw_tokens": [
       {

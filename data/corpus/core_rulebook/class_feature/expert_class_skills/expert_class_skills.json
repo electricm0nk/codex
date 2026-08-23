@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Expert Class Skills",
     "name": "Expert Class Skills",
-    "class": null,
+    "class": "Expert",
     "description": null,
     "raw_tokens": [
       {

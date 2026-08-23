@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Archetype ~ Visionary",
     "name": "Visionary",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "The visionary is a master at divination, drawing upon her intimate relationship with the spirit world to ferret out all manner of secrets and insights about the world around her and beyond.",
     "raw_tokens": [
       {

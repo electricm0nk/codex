@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Good Domain",
     "name": "Good",
-    "class": null,
+    "class": "Cleric",
     "description": "You have pledged your life and soul to goodness and purity.",
     "raw_tokens": [
       {

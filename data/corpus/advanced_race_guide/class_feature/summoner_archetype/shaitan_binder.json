@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Summoner Archetype ~ Shaitan Binder",
     "name": "Shaitan Binder",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "Shaitan binders call upon a reflection of their genie ancestors to serve as their eidolons. A shaitan binder has the following class features.",
     "raw_tokens": [
       {

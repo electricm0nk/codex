@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Investigator Archetype ~ Profiler",
     "name": "Profiler",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "Profilers understand the human psyche to an intense degree, allowing them to predict the criminals they hunt.",
     "raw_tokens": [
       {

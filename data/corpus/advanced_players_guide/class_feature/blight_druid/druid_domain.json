@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Blight Druid ~ Druid Domain",
     "name": "Druid Domain",
-    "class": "Blight Druid",
+    "class": "Druid",
     "description": "Blight Druid may select from the Darkness, Death, and Destruction domains in addition to those normally available.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Season Witch ~ Autumn Witch",
     "name": "Autumn Witch",
-    "class": "Season Witch",
+    "class": "Witch",
     "description": "An autumn witch has dominion over the provision of the land and the passing of life. The save DCs of her spells that deal acid damage increase by 1.",
     "raw_tokens": [
       {

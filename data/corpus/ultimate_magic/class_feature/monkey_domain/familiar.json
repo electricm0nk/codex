@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monkey Domain ~ Familiar",
     "name": "Familiar",
-    "class": "Monkey Domain",
+    "class": "Cleric",
     "description": "You gain a monkey familiar (see page 82 of the Core Rulebook). Your effective wizard level for this ability is equal to your druid level. Your druid level stacks with levels from other classes that grant familiars when determining the powers of your familiar.",
     "raw_tokens": [
       {

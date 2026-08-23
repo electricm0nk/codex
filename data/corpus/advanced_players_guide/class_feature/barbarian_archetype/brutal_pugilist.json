@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Barbarian Archetype ~ Brutal Pugilist",
     "name": "Brutal Pugilist",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Some barbarians focus on using their bare hands to tear their opponents limb from limb. These brutal pugilists also learn a great deal about various combat maneuvers, using them to cripple or crush their foes.",
     "raw_tokens": [
       {

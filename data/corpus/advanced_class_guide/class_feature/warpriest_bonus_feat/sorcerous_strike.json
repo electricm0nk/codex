@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Sorcerous Strike",
     "name": "Sorcerous Strike",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "The power flowing through your veins also flows through your unarmed strike.",
     "raw_tokens": [
       {

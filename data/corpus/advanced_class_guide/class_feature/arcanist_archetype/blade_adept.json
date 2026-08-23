@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ Blade Adept",
     "name": "Blade Adept",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "A small number of arcanists learn to use blades as part of their spellcasting and in combat. While these blade adepts are not as capable with a sword as a true master duelist, their combination of swordplay and arcane power makes them quite deadly.",
     "raw_tokens": [
       {

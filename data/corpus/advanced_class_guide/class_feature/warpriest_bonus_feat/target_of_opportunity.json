@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Target of Opportunity",
     "name": "Target of Opportunity",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You and your allies pelt your enemies with a deadly barrage of missiles.",
     "raw_tokens": [
       {

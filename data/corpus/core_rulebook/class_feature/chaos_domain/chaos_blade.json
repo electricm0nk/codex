@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Chaos Domain ~ Chaos Blade",
     "name": "Chaos Blade",
-    "class": "Chaos Domain",
+    "class": "Cleric",
     "description": "You can give a weapon tocuhed the Anarchic special weapon quality for %1 rounds. You can use this ability %2 times per day.|DomainChaosLVL/2|ChaosBladeTimes",
     "raw_tokens": [
       {

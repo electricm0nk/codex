@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Strength Domain",
     "name": "Strength",
-    "class": null,
+    "class": "Cleric",
     "description": "In strength and brawn there is truth - your faith gives you incredible might and power.",
     "raw_tokens": [
       {

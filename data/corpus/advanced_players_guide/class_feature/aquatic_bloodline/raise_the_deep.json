@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Aquatic Bloodline ~ Raise the Deep",
     "name": "Raise the Deep",
-    "class": "Aquatic Bloodline",
+    "class": "Sorcerer",
     "description": "You raise water as per control water, but no water need be present.",
     "raw_tokens": [
       {

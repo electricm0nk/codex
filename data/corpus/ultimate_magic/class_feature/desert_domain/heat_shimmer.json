@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Desert Domain ~ Heat Shimmer",
     "name": "Heat Shimmer",
-    "class": "Desert Domain",
+    "class": "Cleric",
     "description": "As a free action, you can surround yourself with heat distortion that acts like the blur spell.  Creatures that strike you in melee while you're using this ability are dazzled for 1 round (Fortitude %2 negates).  You may use this ability for %1 rounds per day.  These rounds need not be consecutive.|DomainDesertTimes|DomainDesertDC",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Jabbing Dancer",
     "name": "Jabbing Dancer",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You've learned to bend and shift your body to avoid attacks and reposition yourself advantageously.",
     "raw_tokens": [
       {

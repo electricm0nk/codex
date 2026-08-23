@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Gunslinger Archetype ~ Gun Scavenger",
     "name": "Gun Scavenger",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "Although Alkenstar is the center of firearm production and innovation in the Inner Sea, the crack of flint and tang of gun smoke is enough to inspire enthusiasts elsewhere to try their hand at making their own guns using intuition instead of blueprints. A gun scavenger collects scraps, spare parts, and other components that might-if modified properly-give her firearm an extra edge.",
     "raw_tokens": [
       {

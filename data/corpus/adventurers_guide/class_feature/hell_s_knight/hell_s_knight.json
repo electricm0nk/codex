@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hell's Knight ~ HK",
     "name": "Hell's Knight",
-    "class": "Hell's Knight",
+    "class": "Hellknight",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Archivist",
     "name": "Archivist",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Some bards greatly prefer academic pursuits to the drama (and sometimes melodrama) of their artistic brethren.",
     "raw_tokens": [
       {

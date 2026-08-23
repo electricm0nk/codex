@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Tranquil Guardian",
     "name": "Tranquil Guardian",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "A tranquil guardian is a missionary of peace and tranquility, a soothing voice of succor in a violent and dangerous world.",
     "raw_tokens": [
       {

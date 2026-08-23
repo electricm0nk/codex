@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Elementalist Oracle ~ Earth Subtype",
     "name": "Earth Subtype",
-    "class": "Elementalist Oracle",
+    "class": "Oracle",
     "description": "You gain the earth subtype and tremorsense with a range of 30 feet.",
     "raw_tokens": [
       {

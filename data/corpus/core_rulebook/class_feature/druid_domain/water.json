@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Druid Domain ~ Water",
     "name": "Water",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": "You can manipulate water and mist and ice, conjure creatures of water, and resist cold.",
     "raw_tokens": [
       {

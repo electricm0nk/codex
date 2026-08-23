@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ Elemental Master",
     "name": "Elemental Master",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Arcanists with an affinity for elemental forces sometimes focus on one and display its power in everything they do.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Djinni Bloodline ~ Whirlwind",
     "name": "Whirlwind",
-    "class": "Djinni Bloodline",
+    "class": "Sorcerer",
     "description": "You gain the ability to turn into a 10-foot-high whirlwind once per day %1 rounds.",
     "raw_tokens": [
       {

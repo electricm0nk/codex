@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Clustered Shots",
     "name": "Clustered Shots",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You take a moment to carefully aim your shots, causing them all to strike nearly the same spot.",
     "raw_tokens": [
       {

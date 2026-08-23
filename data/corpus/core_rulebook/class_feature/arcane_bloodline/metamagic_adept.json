@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcane Bloodline ~ Metamagic Adept",
     "name": "Metamagic Adept",
-    "class": "Arcane Bloodline",
+    "class": "Sorcerer",
     "description": "You can apply any one metamagic feat you know to a spell you are about to cast without increasing the casting time. You must still expend a higher-level spell slot to cast this spell. You can use this ability %1 times per day.|Sorcerer_ArcaneMetamagicAdept_Times",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ranger Combat Style Feat ~ Improved Precise Shot",
     "name": "Improved Precise Shot",
-    "class": "Ranger Combat Style Feat",
+    "class": "Ranger",
     "description": "Your ranged attacks ignore anything but total concealment and cover.",
     "raw_tokens": [
       {

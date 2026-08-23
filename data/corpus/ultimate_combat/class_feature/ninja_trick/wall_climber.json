@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ninja Trick ~ Wall Climber",
     "name": "Wall Climber",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "A ninja with this ability gains a climb speed of 20 feet, but only on vertical surfaces. This ability cannot be used to scale perfectly smooth surfaces or to climb on the underside of horizontal surfaces.",
     "raw_tokens": [
       {

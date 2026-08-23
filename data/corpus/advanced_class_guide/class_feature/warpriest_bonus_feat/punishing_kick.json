@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Punishing Kick",
     "name": "Punishing Kick",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Your kicks are so powerful you use them to push or knock back.",
     "raw_tokens": [
       {

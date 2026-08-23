@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Alchemist Archetype ~ Chirurgeon",
     "name": "Chirurgeon",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "An alchemist who studies anatomy and uses this knowledge to heal is a chirurgeon.",
     "raw_tokens": [
       {

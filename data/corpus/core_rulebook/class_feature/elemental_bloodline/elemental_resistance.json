@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Elemental Bloodline ~ Elemental Resistance",
     "name": "Elemental Resistance",
-    "class": "Elemental Bloodline",
+    "class": "Sorcerer",
     "description": "You gain energy resistance %1 against|Sorcerer_ElementalElementalResistance_ResistanceBonus",
     "raw_tokens": [
       {

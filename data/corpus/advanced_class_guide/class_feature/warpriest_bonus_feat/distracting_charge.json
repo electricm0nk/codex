@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Distracting Charge",
     "name": "Distracting Charge",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "When your ally with this feat uses the charge action and hits, you gain a +2 bonus on your next attack roll against the target of that charge. This bonus must be used before your ally's next turn, or it is lost.",
     "raw_tokens": [
       {

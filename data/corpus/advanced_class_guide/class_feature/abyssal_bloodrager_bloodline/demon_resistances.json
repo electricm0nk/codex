@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Abyssal Bloodrager Bloodline ~ Demon Resistances",
     "name": "Demon Resistances",
-    "class": "Abyssal Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You gain Resistance %1 to acid, cold and fire.|Bloodrager_Abyssal_DemonResistances_ResistBonus",
     "raw_tokens": [
       {

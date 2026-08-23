@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Vigilante Talent ~ Favored Maneuver",
     "name": "Favored Maneuver",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante selects one type of combat maneuver to be a favored maneuver. He gains the Improved feat corresponding to that combat maneuver (if one exists). He gains a +2 circumstance bonus on combat maneuver checks with that combat maneuver against a foe that is unaware of the vigilante's presence at the start of his combat maneuver. A vigilante can select this talent more than once. Each time, it applies to a different combat maneuver.",
     "raw_tokens": [
       {

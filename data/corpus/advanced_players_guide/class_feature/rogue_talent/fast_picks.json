@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rogue Talent ~ Fast Picks",
     "name": "Fast Picks",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent can use the Disable Device skill to attempt to open a lock as a standard action instead of a full-round action.",
     "raw_tokens": [
       {

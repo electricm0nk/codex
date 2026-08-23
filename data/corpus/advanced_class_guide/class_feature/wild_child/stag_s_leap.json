@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Wild Child ~ Stag's Leap",
     "name": "Stag's Leap",
-    "class": "Wild Child",
+    "class": "Brawler",
     "description": "As a free action, the wild child can attempt a running jump without moving 10 feet before the jump.",
     "raw_tokens": [
       {

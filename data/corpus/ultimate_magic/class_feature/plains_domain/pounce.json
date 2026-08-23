@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Plains Domain ~ Pounce",
     "name": "Pounce",
-    "class": "Plains Domain",
+    "class": "Cleric",
     "description": "You may use the pounce special attack (see page 302 of the Bestiary) %1/day.|PounceTimes",
     "raw_tokens": [
       {

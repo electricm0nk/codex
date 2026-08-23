@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Hunter Archetype ~ Chameleon Adept",
     "name": "Chameleon Adept",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "Some hunters are masters of blending into every situation, even making their companions appear humanoid for brief periods of time.",
     "raw_tokens": [
       {

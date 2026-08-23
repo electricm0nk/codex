@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Brawler Archetype ~ Verdant Grappler",
     "name": "Verdant Grappler",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "By accepting spirits of nature into her soul, a verdant grappler can entangle her foes with tangled undergrowth.",
     "raw_tokens": [
       {

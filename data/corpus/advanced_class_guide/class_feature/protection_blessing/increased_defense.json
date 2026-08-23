@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Protection Blessing ~ Increased Defense",
     "name": "Increased Defense",
-    "class": "Protection Blessing",
+    "class": "Warpriest",
     "description": "You can gain a +%1 sacred bonus on saving throws and a +%1 sacred bonus to AC for 1 minute.|1+min(WarpriestLVL>20,2,WarpriestLVL/10)",
     "raw_tokens": [
       {

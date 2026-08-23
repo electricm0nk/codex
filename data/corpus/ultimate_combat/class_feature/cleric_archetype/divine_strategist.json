@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Cleric Archetype ~ Divine Strategist",
     "name": "Divine Strategist",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "The divine strategist leads the armies of the faithful, not from the front lines but through her clever strategy and tactical acumen.",
     "raw_tokens": [
       {

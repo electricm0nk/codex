@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Galtan Agitator ~ Ready for Betrayal",
     "name": "Ready for Betrayal",
-    "class": "Galtan Agitator",
+    "class": "Rogue",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

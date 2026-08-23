@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Knowledge Blessing ~ Lore Keeper",
     "name": "Lore Keeper",
-    "class": "Knowledge Blessing",
+    "class": "Warpriest",
     "description": "You can touch a creature to learn about its abilities and weaknesses. With a successful touch attack, you gain information as if your result on the appropriate Knowledge skill check were equal to %1.|15+WarpriestLVL+WIS",
     "raw_tokens": [
       {

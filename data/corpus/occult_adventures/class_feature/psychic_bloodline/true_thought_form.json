@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Psychic Bloodline ~ True Thought-Form",
     "name": "True Thought-Form",
-    "class": "Psychic Bloodline",
+    "class": "Sorcerer",
     "description": "You can shed the restrictions of the flesh and become a thought-form--a being that exists independently of its substance. Whenever a creature would kill you, you can attempt to use mind swap against that creature as an immediate action just before dying.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Ninja Trick ~ Feather Fall",
     "name": "Feather Fall",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "As an immediate action, the ninja can slow her descent as if using feather fall. This ability uses her ninja level as the caster level. Each use of this ability uses up 1 ki point.",
     "raw_tokens": [
       {

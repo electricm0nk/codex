@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shifter Archetype ~ Weretouched",
     "name": "Weretouched",
-    "class": "Shifter Archetype",
+    "class": "Shifter",
     "description": "Weretouched shifters are scions of lycanthropic forces, whether hereditary or supernaturally imposed. They can assume both animal and hybrid forms, as a lycanthrope does.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Bashing Finish",
     "name": "Bashing Finish",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You follow a powerful blow from your weapon with an opportunistic bash from your shield.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Swift Foot",
     "name": "Swift Foot",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You gain a +%1-foot enhancement bonus to your speed. This increase is always active while you are raging.|5*SwiftFootCount",
     "raw_tokens": [
       {

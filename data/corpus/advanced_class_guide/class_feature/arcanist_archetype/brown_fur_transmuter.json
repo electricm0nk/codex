@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Arcanist Archetype ~ Brown-Fur Transmuter",
     "name": "Brown-Fur Transmuter",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Frequently called \"brown-furs,\" these transmutationfocused arcanists are known for transforming themselves into animals. What few realize is that these specialized arcanists excel at turning themselves-and others-into all kinds of creatures.",
     "raw_tokens": [
       {

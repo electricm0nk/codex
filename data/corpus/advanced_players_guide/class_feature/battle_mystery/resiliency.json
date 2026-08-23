@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Battle Mystery ~ Resiliency",
     "name": "Resiliency",
-    "class": "Battle Mystery",
+    "class": "Oracle",
     "description": "You are not disabled or staggered if you are reduced to 0 hit points.",
     "raw_tokens": [
       {

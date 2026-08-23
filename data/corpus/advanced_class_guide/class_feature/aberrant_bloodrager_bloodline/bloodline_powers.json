@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Aberrant Bloodrager Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Aberrant Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "While bloodraging, you gain the abilities and immunities of some aberrations, but show signs of your tainted heritage.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Bard Archetype ~ Detective",
     "name": "Detective",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Piecing together clues and catching the guilty with sheer cleverness, the detective is skilled at divining the truth.",
     "raw_tokens": [
       {

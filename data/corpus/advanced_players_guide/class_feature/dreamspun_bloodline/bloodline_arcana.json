@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Dreamspun Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Dreamspun Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you target a single creature with a spell, you gain an insight bonus equal to half the spell's level (minimum +1) for 1 round to your AC and saving throws against any spell or attack made by that creature.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Stone Stability",
     "name": "Stone Stability",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman receives a +4 bonus to her CMD when resisting bull rush or trip attempts as long as she is standing on the ground.",
     "raw_tokens": [
       {

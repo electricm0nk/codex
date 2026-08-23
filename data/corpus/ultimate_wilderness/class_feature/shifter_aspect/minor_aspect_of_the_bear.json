@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shifter Aspect ~ Bear ~ Minor",
     "name": "Minor Aspect of the Bear",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "You gain a +%1 enhancement bonus to your Constitution score.|BearAspectConBonus",
     "raw_tokens": [
       {

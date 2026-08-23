@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Groveborn Bloodline ~ Lush Summoning",
     "name": "Lush Summoning",
-    "class": "Groveborn Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you summon creatures with a conjuration (summoning) spell, you can decide that they appear green and leafy. The natural armor bonus of such creatures is increased by +2, and they gain a +4 bonus on saves against paralysis, poison, polymorph, sleep, and stunning. This bloodline power replaces photosynthesis.",
     "raw_tokens": [
       {

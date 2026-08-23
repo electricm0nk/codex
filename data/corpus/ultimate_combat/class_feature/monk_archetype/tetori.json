@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Monk Archetype ~ Tetori",
     "name": "Tetori",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The style of the tetori is that of the majestic wrestler-a warrior with a dizzying array of grabs, holds, and locks with which to bewilder and incapacitate his foes.",
     "raw_tokens": [
       {

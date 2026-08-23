@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Discovery ~ Awakened Intellect",
     "name": "Awakened Intellect",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist's constant exposure to strange chemicals has expanded his mind. His Intelligence score permanently increases by 2 points.",
     "raw_tokens": [
       {

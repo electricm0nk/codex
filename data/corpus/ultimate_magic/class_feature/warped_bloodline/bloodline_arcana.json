@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warped Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Warped Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you cast a spell of the polymorph subschool, one target of your choice may receive one random effect from the Warped Polymorph Benefits table (Ultimate Magic 73). This bonus lasts as long as the polymorph effect on the target.",
     "raw_tokens": [
       {

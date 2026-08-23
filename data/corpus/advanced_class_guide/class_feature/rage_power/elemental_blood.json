@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Rage Power ~ Elemental Blood",
     "name": "Elemental Blood",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging the barbarian gains energy resistance 10 against the energy type chosen when she took lesser elemental blood.",
     "raw_tokens": [
       {

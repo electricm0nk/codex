@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Boar Shred",
     "name": "Boar Shred",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "The wounds you inf lict with your unarmed strikes bleed, giving you renewed vigor.",
     "raw_tokens": [
       {

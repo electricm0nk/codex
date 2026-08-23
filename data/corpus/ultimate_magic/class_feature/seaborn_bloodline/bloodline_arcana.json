@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Seaborn Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Seaborn Bloodline",
+    "class": "Sorcerer",
     "description": "When you are in a body of water large enough to float in, your effective caster level is increased by 1.",
     "raw_tokens": [
       {

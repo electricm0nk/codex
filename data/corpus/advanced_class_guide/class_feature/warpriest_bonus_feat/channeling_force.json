@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Channeling Force",
     "name": "Channeling Force",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You distill your channeled energy into a sheen of force that surrounds your weapon for a limited time.",
     "raw_tokens": [
       {

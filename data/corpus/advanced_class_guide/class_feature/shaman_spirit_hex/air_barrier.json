@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Air Barrier",
     "name": "Air Barrier",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman creates an invisible shell of air that grants her a +%1 armor bonus to AC.|ShamanAirBarrierBonus",
     "raw_tokens": [
       {

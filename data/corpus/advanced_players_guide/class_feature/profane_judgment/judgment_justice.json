@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Profane Judgment ~ Justice",
     "name": "Judgment / Justice",
-    "class": "Profane Judgment",
+    "class": "Inquisitor",
     "description": "This judgment spurs the inquisitor to seek justice, granting a +%1 profane bonus on all attack rolls.|1+InqJudgeJusticeLVL/5",
     "raw_tokens": [
       {

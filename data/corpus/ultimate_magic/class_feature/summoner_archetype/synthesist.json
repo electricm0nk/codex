@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Summoner Archetype ~ Synthesist",
     "name": "Synthesist",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "Instead of two creatures, the synthesist is a fusion of the summoner and eidolon into a single being.",
     "raw_tokens": [
       {

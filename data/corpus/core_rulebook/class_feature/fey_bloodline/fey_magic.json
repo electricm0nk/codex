@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Fey Bloodline ~ Fey Magic",
     "name": "Fey Magic",
-    "class": "Fey Bloodline",
+    "class": "Sorcerer",
     "description": "You may reroll any caster level check made to overcome spell resistance. You must decide to use this ability before the results are revealed by the GM. You must take the second result, even if it is worse. You can use this ability at will.",
     "raw_tokens": [
       {

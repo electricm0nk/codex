@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Death Slayer ~ Infuse Sabre",
     "name": "Infuse Sabre",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "Once|PREVARLT:DeathSlayerLVL,7",
     "raw_tokens": [
       {

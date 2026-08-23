@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T01:00:36Z",
   "data": {
     "key": "Paladin Archetype ~ Knight Of The Sepulcher",
     "name": "Knight of the Sepulcher",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Not content with the antipaladin's mere corruption of the soul, the knight of the sepulcher sacrifices mortality along with morality. The knight of the sepulcher archetype is available only to the antipaladin alternate class.",
     "raw_tokens": [
       {
