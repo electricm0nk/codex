@@ -880,3 +880,78 @@ program's own proof of that. A token added without a stated reason is a defect, 
    name. Never transcribe, never silently skip.
 3. T9's real disposition is re-derived after 19a-19c are applied. The pre-ruling figures (266
    blocked / 1,988 clear / 1,319 undecidable) are superseded and must not be quoted as final.
+
+## Decision 20 — `no_record` must reach ZERO. The budget is a ratchet, not a finish line (operator correction 2026-08-23)
+
+**Status:** Operator correction of the orchestrating session. Corrects how `§14`'s Gate 3 budget has
+been read since repin 1.
+
+### What the operator said
+
+> *"definition of done says we need to have every shape measured. if it isn't ingested, the shape
+> cant be measured. it sounds to me like you have 20k items to ingest before you can you then need
+> to measure those shapes. sd-32 needs to keep running until it reaches 100% the definition of done.
+> please dont make me keep reminding you of that requirement"*
+
+Correct, and the orchestrating session had been reporting "budget not exceeded" as if it were green.
+
+### The chain that makes this dispositive
+
+1. **`no_record` means the object was never ingested.** `scripts/shape_ledger.py` joins each
+   inventory unit to `data/corpus/**/*.json` on `(book, source_basename, source_line)`. Three
+   outcomes: `matched` (record found, carries `DEFINE:`/`BONUS:` tokens), `no_formula_tokens`
+   (record found, genuinely no formula — a race description, a flavour feat), and **`no_record`
+   (no record found at all)**. Only the third is a gap in our work rather than a fact about the object.
+2. **An un-ingested object's shape cannot be measured.** There is nothing to classify. It is parked
+   in family F0 by default, which is not a measurement.
+3. **Gate 1's Definition of Done is that every unit's shape is measured.** So every `no_record` unit
+   is an unmet Gate 1 criterion, whatever the budget says.
+
+**Therefore: Gate 3's closure condition is `no_record == 0`, not "budget not exceeded."**
+
+### What the budget actually is
+
+The evidence-gated `NO_RECORD_BUDGET_COUNT`/`POPULATION` mechanism (`§14`, repins 1-4) stays — it
+does a real job, catching drift and forcing every rise to carry committed evidence. But it is a
+**transitional ratchet measuring progress toward zero**, not a terminal state. A passing budget with
+a non-zero `no_record` means *"the backlog did not get worse"*, never *"the backlog is closed."*
+
+**No cycle, receipt, or closure scan may report Gate 3 as met while `no_record` is non-zero.**
+
+### The real remaining work — 20,889 objects, 18 kinds
+
+Re-derived at `16300bde7` against the pinned oracle
+(`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`, then count rows with
+`join_status == "no_record"`):
+
+| Kind | Units | | Kind | Units |
+|---|---:|---|---|---:|
+| `class_feature` | 5,604 | | `deity` | 459 |
+| `ability` | 4,824 | | `power` | 421 |
+| `template` | 2,248 | | `equipment` | 313 |
+| `race_trait` | 1,913 | | `equipment_modifier` | 237 |
+| `monster_ability` | 1,210 | | `domain` | 183 |
+| `feat` | 1,202 | | `class` | 157 |
+| `spell` | 860 | | `skill` | 149 |
+| `companion` | 773 | | `monster` | 141 |
+| | | | `language` | 136 |
+| | | | `race` | 59 |
+
+**Enumeration was half the job.** Card 15 made these objects *visible*; ingesting them is what makes
+their shapes measurable. Treating card 15 as nearly complete because `remaining_undisposed: 0` was
+the same error in a different place — that figure means every unit has a *disposition*, not that
+every unit has been *ingested*.
+
+### The standing instruction
+
+**SD-32 runs until 100% of the Definition of Done.** The orchestrating session does not stop to ask
+whether to continue, does not report a wave's completion as a stopping point, and does not treat a
+passing budget or a green suite as closure. `decisions.md §10` already states the Definition of Done;
+this decision states that reaching it is unconditional and that the operator should not have to
+restate it.
+
+The cost model is unchanged from `§17`: **per-mechanism, not per-object.** The `monster_ability`
+cycle ingested 190 records by finding an existing config-driven pipeline rather than building one,
+and the facet widening then landed 442 more by extending a vocabulary. Twenty thousand objects is
+not twenty thousand cycles — it is however many distinct ingest mechanisms these eighteen kinds need,
+and several already exist.
