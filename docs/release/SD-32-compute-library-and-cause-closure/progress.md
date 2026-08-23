@@ -7434,4 +7434,81 @@ Card 11 / row 11 stays `in-progress`.
 
 Full receipt:
 `artifacts/gate-3-closure-invariant/epic-2-t12-class-feature-shapes_cycle-3_cycle_receipt.md`.
+## Cycle: t9-onboarding-class-feature-pi-and-rescreen (2026-08-23)
+
+**Card 11 (`epic-2-cause-closure`).** Re-derived the contested `class_feature`
+PI-leak count against both prior figures (a sibling receipt's 31; the
+orchestrator's own 43/71), per `decisions.md §17a`. TRUE population, full
+recursive `data.*` scan against the current 61-term blacklist: `class_feature`
+43 records/71 field-hits (round 1, word-bounded scan) plus 20 more
+`class_feature` files (30 field-hits total across 21 files, 1 out of
+`class_feature` scope) once the STRONG (OCR-normalized + concatenated-
+identifier) scan was actually run for real, corpus-wide (round 2). Two
+`scripts/retro.py correction`s logged for the two prior figures, plus a
+third for this cycle's own first-draft instrument (it initially called the
+weaker scan).
+
+**Root cause, two defects, both closed for `class_feature`:**
+
+1. `cache_gen::class_feature.rs::generate()` never screened `data.key`/
+   `data.class` against the blacklist at all (only `name`/`description`/
+   `raw_tokens`) — the fourth confirmed instance of "screens one field, not
+   every shipped field" in this generator family (`raw_tokens` here and
+   `feat_gap.rs`'s `prerequisites` were the prior two). Fixed by widening
+   `name_is_pi` to cover a `key`/`class` blacklist hit — routing such a
+   record through the SAME `§24` neutral-rename path a name-PI record
+   already takes — and independently redacting `data.class` to the marker
+   when it alone carries PI. A directory-placement bug was found and fixed
+   mid-cycle: redacting `class` before the existing directory-naming logic
+   read it moved the leak from the JSON body into the FILE PATH (a literal
+   PI-named folder) instead of closing it. A third, related defect was
+   also found and closed: `description`'s own screen
+   (`pi_screening::classify_field`) uses a bare-substring match with no OCR
+   fold, disagreeing with `raw_tokens`' stronger, OCR-normalized scan on
+   the identical source text — one record shipped an OCR-glitched
+   spelling variant raw in `data.description` while the same text was
+   already correctly redacted in `data.raw_tokens`.
+2. No generator can re-screen an already-shipped record when the
+   blacklist grows. `class_feature.rs`'s writer is unconditional (unlike
+   `feat_gap.rs`/`equipment_gap.rs`'s no-clobber `write_json`), so a full
+   regen touches all ~18,000 records at once — proven destructive in a dry
+   run (17,903 timestamp-only rewrites, reverted before commit, never
+   pushed). Closed with a new `gen_cache_class_feature --coordinates
+   <file>` mode — this generator's own version of the `--remediate` shape
+   `scripts/ingest_generic_kind.py` already established — that re-screens
+   ONLY a named coordinate list, leaving the other ~18,000 records
+   untouched.
+
+**Closure:** 61 real `class_feature` leaks (40 round 1 + 20 round 2 + 1
+found alongside round 2) regenerated through the guarded, scoped path.
+`git status --porcelain -- data/corpus` confirmed exactly the 121 expected
+lines (60 `D` + 60 new + 1 `M`) before commit — zero unexpected touches. A
+targeted recursive re-scan of all 61 changed files: 0 leaks. 4 new TDD
+tests in `class_feature.rs`, 49/49 green, each RED→GREEN proven live by
+temporarily neutering the specific new guard.
+
+**CHECK C — the gap made impossible to reopen.** New
+`declared_pi_shipping_audit::audit_blacklist_term_hits` re-screens every
+`data.*` string of every shipped record against the CURRENT blacklist on
+every run, regardless of which generator wrote the record or when —
+generator-agnostic and field-name-agnostic by design, so it catches both
+defect shapes above (and any future recurrence) without per-kind logic.
+Already wired into `scripts/verify.sh`'s existing `pi-sweep` stage. A real
+corpus-wide run of this new check (not just its own fixtures) is what
+surfaced round 2's 21-file finding — live proof it earns its place beyond
+its own test suite. 5 new unit tests, 19/19 green; a coordinate-scoped
+false-positive exemption (3 files, unchanged from the sibling `feat`-lane's
+own finding, comment cites `decisions.md §26`); RED→GREEN proven via its
+own fixtures.
+
+**Discovery forwards, named by coordinate, not fixed (sibling/unclaimed
+territory), all now permanently caught by CHECK C regardless of who
+closes them:** `equipment` 1 record, `race_trait` 1 record, `template` 3
+records, `spell` 1 record. `cache_gen::acg.rs`/`apg.rs`/`beastiary1.rs`
+never screen their equipment/spell `name` field against the blacklist at
+all — zero live impact today (confirmed corpus-wide), but the same
+architectural gap shape; CHECK C guards it too, going forward.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-onboarding-class-feature-pi-and-rescreen_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).

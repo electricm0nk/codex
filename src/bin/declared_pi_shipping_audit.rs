@@ -198,6 +198,107 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
     violations
 }
 
+/// SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen (`decisions.md
+/// §19`/`§26`): the two coordinates below are CONFIRMED, verified false
+/// positives of the OCR-fold canonicalization — the blacklisted place name
+/// "Galt" folds `l`→`i` to "gait", which collides with the ordinary English
+/// word "gait" ("Steady Gait", "Seadog's Gait", "...his gait more
+/// deliberate..."). Confirmed by direct canonicalization
+/// (`pi_scrub.canonicalize("Galt") == pi_scrub.canonicalize("gait")`) and by
+/// reading each record's real, non-Golarion-referencing prose — named by the
+/// `feat`-lane PI-leak receipt (`sd32-pi-leak-screening-path-inner-sea-
+/// combat-feat_cycle-1_cycle_receipt.md`) and re-confirmed by this cycle's
+/// own corpus-wide re-derivation. This is a coordinate-scoped exemption on
+/// CHECK C only — narrower than a term-wide fold change (which is `§26`'s
+/// own open, not-yet-closed territory) — so a genuine future leak on ANY
+/// OTHER record is still caught. Never widen this list without the SAME
+/// direct-canonicalization + real-prose proof these three already have.
+const KNOWN_OCR_FOLD_FALSE_POSITIVES: &[&str] = &[
+    "advanced_players_guide/class_feature/shifter_s_blessing/form_of_the_cat.json",
+    "advanced_race_guide/class_feature/buccaneer/seadog_s_gait.json",
+    "horror_adventures/class_feature/dreadnought/steady_gait.json",
+];
+
+/// Every string reachable under `value` (dicts/lists walked recursively),
+/// paired with a dotted field-path for reporting — mirrors
+/// `scripts/sd32_t9_corpus_wide_pi_rescan.py::iter_strings` exactly, so the
+/// Rust gate and the Python re-derivation this cycle ran agree on what
+/// "every shipped field" means.
+fn iter_strings<'a>(value: &'a Value, path: String, out: &mut Vec<(String, &'a str)>) {
+    match value {
+        Value::String(s) => out.push((path, s.as_str())),
+        Value::Object(map) => {
+            for (k, v) in map {
+                let child_path = if path.is_empty() { k.clone() } else { format!("{path}.{k}") };
+                iter_strings(v, child_path, out);
+            }
+        }
+        Value::Array(items) => {
+            for (i, v) in items.iter().enumerate() {
+                iter_strings(v, format!("{path}[{i}]"), out);
+            }
+        }
+        _ => {}
+    }
+}
+
+/// CHECK C: every string reachable under EVERY shipped record's `data`
+/// object — not only `name`/`description` — re-scanned against the CURRENT
+/// 61-term blacklist (`pi_screening::blacklist_term_hit_including_concatenated`,
+/// the same word-bounded, OCR-normalized, concatenated-identifier scan
+/// `pi_scrub.py`/`scrub_name_pi_tokens` already use), regardless of which
+/// generator wrote the record or when.
+///
+/// **Why this check exists, generically, rather than per-kind:** two
+/// independent defects were found live corpus-wide this cycle
+/// (`decisions.md §17a` re-derivation): (a) several generators screen only
+/// a chosen subset of fields (`name`/`description`) and never screen others
+/// they also ship verbatim (`raw_tokens`, `prerequisites`, and — the defect
+/// this cycle's own fix in `cache_gen::class_feature.rs` closes — `key`/
+/// `class`); (b) EVERY generator's `write_json` is no-clobber, so a record
+/// written before a blacklist term existed is NEVER re-screened once that
+/// term is added — `ogl-pi-blacklist.md` has been amended at least four
+/// times in this bundle. This check does not care which defect produced a
+/// leak or which generator owns the record: it re-derives PI-safety from
+/// the CURRENT blacklist against the CURRENT shipped bytes, corpus-wide,
+/// every time it runs — so a defect of either shape re-opening (a new
+/// generator gap, or a future blacklist amendment left unapplied) fails
+/// this gate rather than shipping silently. A value already equal to the
+/// redaction marker is not a leak (it IS the marker) and is skipped.
+fn audit_blacklist_term_hits(data_corpus_root: &Path) -> Vec<Violation> {
+    let mut violations = Vec::new();
+    for path in find_json_files(data_corpus_root) {
+        let Ok(text) = fs::read_to_string(&path) else { continue };
+        let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+        let Some(data) = doc.get("data") else { continue };
+        let file_str = path.display().to_string();
+        let exempt = KNOWN_OCR_FOLD_FALSE_POSITIVES.iter().any(|suffix| file_str.ends_with(suffix));
+
+        let mut strings = Vec::new();
+        iter_strings(data, String::new(), &mut strings);
+        for (field_path, s) in strings {
+            if s.is_empty() || s == REDACTED_PI_MARKER {
+                continue;
+            }
+            if pi_screening::blacklist_term_hit_including_concatenated(s).is_some() {
+                if exempt {
+                    continue;
+                }
+                violations.push(Violation {
+                    file: file_str.clone(),
+                    reason: format!(
+                        "BLACKLIST-TERM-SHIPPED: data.{field_path} carries a live (non-redacted) blacklist \
+                         term hit — either a generator that never screens this field, or a record written \
+                         before this term was added to the blacklist and never re-screened since \
+                         (`decisions.md §19`'s amendments)"
+                    ),
+                });
+            }
+        }
+    }
+    violations
+}
+
 /// CHECK B: a `LICENSE.json` that opts in to
 /// `redaction_policy.declared_pi_reader_verified: true` must name writer
 /// source files that actually call the declared-PI reader — a structured,
@@ -273,6 +374,7 @@ fn main() {
 
     let mut violations = audit_shipped_records(&corpus_root, &data_corpus_root);
     violations.extend(audit_license_claims(&repo_root, &data_corpus_root));
+    violations.extend(audit_blacklist_term_hits(&data_corpus_root));
 
     if violations.is_empty() {
         println!("declared-pi-audit: CLEAN — no shipped record contradicts its own corpus row's PI declaration");
@@ -590,5 +692,103 @@ mod tests {
         );
         let violations = audit_license_claims(&s.root, &s.root.join("corpus"));
         assert!(violations.is_empty(), "an un-opted-in LICENSE.json must not be flagged: {violations:?}");
+    }
+
+    // --- CHECK C mutation proof: BLACKLIST-TERM-SHIPPED ------------------
+    // SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen: "make the
+    // gap impossible to reopen" -- a record predating a blacklist term (or
+    // written by a generator that never screened its field at all) fails
+    // this gate regardless of which of the two defect shapes produced it.
+
+    #[test]
+    fn a_key_field_carrying_a_live_blacklist_term_is_a_violation() {
+        // The exact shape this cycle found live: `data.key` (not `name` or
+        // `description`) carries the term, unredacted, unmarked.
+        let s = Scratch::new("blacklist_key_leak");
+        s.write(
+            "corpus/some_book/class_feature/x/x.json",
+            r#"{"data":{"key":"Lunatic's Gift ~ Lamashtu","name":"Lunatic's Gift","description":null},
+                "source":{"kind":"lst_token","path":"some_book/rows.lst","line":1,"record_key":"x"},
+                "license":"OGL","pi_field":null}"#,
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "{violations:?}");
+        assert!(violations[0].reason.contains("BLACKLIST-TERM-SHIPPED"));
+        assert!(violations[0].reason.contains("data.key"), "{violations:?}");
+    }
+
+    #[test]
+    fn a_prerequisites_or_raw_tokens_field_carrying_a_live_blacklist_term_is_a_violation() {
+        // The two ALREADY-FIXED generator gaps this bundle named
+        // (`feat_gap.rs`'s `prerequisites`, `class_feature.rs`'s
+        // `raw_tokens`) -- proves this generic, field-name-agnostic check
+        // would have caught either shape, not just the specific field this
+        // cycle's own fix targets.
+        let s = Scratch::new("blacklist_nested_leak");
+        s.write(
+            "corpus/some_book/feat/x.json",
+            r#"{"data":{"key":"x","name":"x","description":null,
+                "prerequisites":["PREFEAT:Devotee of Iomedae"]},
+                "source":{"kind":"lst_token","path":"some_book/rows.lst","line":1,"record_key":"x"},
+                "license":"OGL","pi_field":null}"#,
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "{violations:?}");
+        assert!(violations[0].reason.contains("data.prerequisites[0]"), "{violations:?}");
+    }
+
+    #[test]
+    fn a_redaction_marker_value_is_never_flagged() {
+        let s = Scratch::new("blacklist_marker_clean");
+        s.write(
+            "corpus/some_book/class_feature/x/x.json",
+            r#"{"data":{"key":"[redacted PI]","name":"x","description":"[redacted PI]"},
+                "source":{"kind":"lst_token","path":"some_book/rows.lst","line":1,"record_key":"x"},
+                "license":"PI-REDACTED","pi_field":"key,description"}"#,
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert!(violations.is_empty(), "the marker itself must never be flagged as a leak: {violations:?}");
+    }
+
+    #[test]
+    fn a_known_ocr_fold_false_positive_coordinate_is_exempted_but_only_that_exact_file() {
+        // decisions.md §26: "Galt" folds to "gait" and collides with the
+        // ordinary word -- the three NAMED coordinates are exempt, but an
+        // otherwise-identical leak at a DIFFERENT path must still be caught
+        // (the exemption is coordinate-scoped, never term-wide).
+        let s = Scratch::new("gait_exempt_scoped");
+        s.write(
+            "corpus/horror_adventures/class_feature/dreadnought/steady_gait.json",
+            r#"{"data":{"key":"Steady Gait","name":"Steady Gait","description":"His gait grows steadier."},
+                "source":{"kind":"lst_token","path":"horror_adventures/rows.lst","line":1,"record_key":"x"},
+                "license":"OGL","pi_field":null}"#,
+        );
+        s.write(
+            "corpus/some_other_book/class_feature/y/y.json",
+            r#"{"data":{"key":"y","name":"y","description":"A steady gait, unlike Galt's own turmoil."},
+                "source":{"kind":"lst_token","path":"some_other_book/rows.lst","line":1,"record_key":"y"},
+                "license":"OGL","pi_field":null}"#,
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "only the NON-exempt coordinate must be flagged: {violations:?}");
+        assert!(violations[0].file.ends_with("some_other_book/class_feature/y/y.json"), "{violations:?}");
+    }
+
+    #[test]
+    fn a_record_written_before_the_term_existed_is_still_caught_by_a_fresh_scan() {
+        // Simulates defect (b): a record on disk today, never touched
+        // since it was first written, whose content now matches the
+        // CURRENT (grown) blacklist -- this check has no concept of
+        // "when was this file written", so it catches it on every run,
+        // regardless of generator or write timestamp.
+        let s = Scratch::new("blacklist_predates_term");
+        s.write(
+            "corpus/adventurers_guide/class_feature/aldori_swordlord/x.json",
+            r#"{"data":{"key":"Combat Feat ~ Aldori Swordlord","name":"Combat Feat","description":null},
+                "source":{"kind":"lst_token","path":"adventurers_guide/rows.lst","line":1,"record_key":"x"},
+                "license":"OGL","pi_field":null,"ingested_at":"2020-01-01T00:00:00Z"}"#,
+        );
+        let violations = audit_blacklist_term_hits(&s.root.join("corpus"));
+        assert_eq!(violations.len(), 1, "{violations:?}");
     }
 }

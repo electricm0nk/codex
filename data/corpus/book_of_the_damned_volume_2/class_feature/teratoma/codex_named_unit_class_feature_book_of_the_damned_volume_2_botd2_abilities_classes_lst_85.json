@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T21:16:58Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_85)",
+    "name": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_85)",
+    "class": "Teratoma",
+    "description": "You gain a beneficial deformity that grants you a secondary natural attack and an additional ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a beneficial deformity that grants you a secondary natural attack and an additional ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 85,
+    "record_key": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_85)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "book_of_the_damned_volume_2:botd2_abilities_classes.lst:85"
+  }
+}

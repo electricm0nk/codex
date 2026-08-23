@@ -1336,6 +1336,41 @@ pub fn generate(
                 description.as_deref(),
                 declared.description,
             );
+            // SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen:
+            // `classify_optional_field_declared` screens `description`
+            // through `classify_field`'s BARE-SUBSTRING scan against the
+            // literal `PI_BLACKLIST_TERMS` list -- it never applies the
+            // word-bounded, OCR-normalized fold `pi_screening::
+            // blacklist_term_hit_including_concatenated`/`normalized_term_hit`
+            // apply. `redact_concatenated_blacklist_tokens` below already
+            // scrubs `raw_tokens`' own `DESC` entry with the STRONG scan, so
+            // an OCR-glitched term (e.g. the pinned oracle's own "Gorurn"
+            // for "Gorum", `inner_sea_combat:isc_abilities_class.lst:256` --
+            // found live, corpus-wide re-derivation this cycle) could ship
+            // `data.description` raw while `data.raw_tokens`' DESC entry
+            // was correctly redacted: the SAME text, screened by two
+            // differently-strong scans, disagreeing. Re-screens
+            // `stored_desc` with the STRONG scan and forces the marker if
+            // the weaker scan above missed it -- never weakens an existing
+            // redaction, only strengthens a miss.
+            let stored_desc = match &stored_desc {
+                Some(v) if v != crate::rules_core::shape_b_v1::REDACTED_PI_MARKER => {
+                    if pi_screening::blacklist_term_hit_including_concatenated(v).is_some() {
+                        license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                        pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                        if !pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "description")) {
+                            pi_field = Some(match pi_field.take() {
+                                Some(existing) => format!("{existing},description"),
+                                None => "description".to_string(),
+                            });
+                        }
+                        Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string())
+                    } else {
+                        stored_desc
+                    }
+                }
+                _ => stored_desc,
+            };
             // W19-INTEGRATE fix (adversarial review, OPEN-ISSUES.md row 63 follow-up):
             // `description`/`stored_desc` above is correctly PI-screened, but `tokens`
             // (below, shipped verbatim as `data.raw_tokens`) was NOT -- a declared
@@ -1430,6 +1465,75 @@ pub fn generate(
             // the section comment above [`scan_domain_power_owners`].
             let classes = domain_power_owning_classes(&unit.key, &domain_power_owners);
 
+            // SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen:
+            // `key`/`class` were NEVER screened against the blacklist except
+            // via the narrow guard at line ~1423, which only suppresses a
+            // leak into `class` for a row ALREADY flagged `name_is_pi` by
+            // its OWN `name`/declared-PI check above -- a `"<Feature Name>
+            // ~ <PI-owner>"`-shaped key (e.g. `"Lunatic's Gift ~ Lamashtu"`,
+            // `book_of_the_damned_volume_2`) has a perfectly clean `name`
+            // ("Lunatic's Gift") while its OWNER SEGMENT carries the
+            // Product Identity, so `name_is_pi` was false and `record_key`
+            // below shipped `unit.key` verbatim -- confirmed live,
+            // corpus-wide re-derivation (T9-onboarding cycle, `decisions.md
+            // §17a`): 43 `class_feature` records, 71 field-level hits, the
+            // large majority on `key`/`class`, not `name`/`description`.
+            // This is the fourth confirmed instance of "screens one field,
+            // not every shipped field" in this generator family (after
+            // `raw_tokens` here, `prerequisites` in `feat_gap.rs`, and the
+            // `class`-only guard this comment extends). Widening
+            // `name_is_pi` to also cover `key`/the FINAL resolved `class`
+            // (checked post-computation, so every one of the seven
+            // resolution tiers above is covered uniformly, not just the
+            // raw key-owner fallback) routes a key-PI or class-PI record
+            // through the SAME `§24` neutral-rename path a name-PI record
+            // already takes -- the record's own key/class IS its identity
+            // exactly as much as `name` is, so the identical treatment
+            // applies. Uses `blacklist_term_hit_including_concatenated`
+            // (word-bounded, OCR-normalized, PLUS the concatenated-
+            // identifier check), the same scan `scrub_name_pi_tokens`/the
+            // corpus-wide audit use -- not the weaker bare-substring
+            // `classify_field` the `name`-only check above uses, so this
+            // catches a concatenated-identifier key shape too.
+            let key_is_pi =
+                pi_screening::blacklist_term_hit_including_concatenated(&unit.key).is_some();
+            let class_is_pi = class
+                .as_deref()
+                .map(|c| pi_screening::blacklist_term_hit_including_concatenated(c).is_some())
+                .unwrap_or(false);
+            let name_is_pi = name_is_pi || key_is_pi || class_is_pi;
+
+            // The `key_is_pi`/`class_is_pi` widening above only decides
+            // whether the RECORD'S IDENTITY (`name`/`key`) gets routed
+            // through the `§24` rename path -- it does NOT, by itself,
+            // redact `data.class`'s own stored value. `class` is written
+            // verbatim (`class.clone()`, below) regardless of `name_is_pi`,
+            // so an ALREADY-name-PI-renamed record could still ship a
+            // PI-bearing `class` (found live: a `codex_named_unit_*` file
+            // whose `data.name`/`data.key` were correctly Codex-named but
+            // whose `data.class` still read `"Aldori Swordlord"` verbatim --
+            // the archetype name IS the very content `decisions.md §19a`
+            // amendment 3d added the term to protect). `class` is a
+            // secondary, derived field (not the record's own identity the
+            // way `name`/`key` are) -- like `description`, it is redacted
+            // to the marker in place, not renamed.
+            //
+            // The directory-placement logic below also reads `class` for a
+            // renamed record -- found live in this cycle's own dry run:
+            // redacting `class` here and reusing the SAME (now-redacted)
+            // value for directory placement put every PI-class-bearing
+            // renamed record under a literal `redacted_pi/` directory,
+            // still shipping the archetype's real name in the FILE PATH
+            // even though `data.class` itself was clean. The
+            // directory-placement code below is written to fall through to
+            // `record_name` whenever `class_is_pi`, so it never reads this
+            // redacted value at all -- see that guard's own comment.
+            let class = if class_is_pi {
+                Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string())
+            } else {
+                class
+            };
+
             // `decisions.md §24` -- ingest a name-PI unit under a
             // Codex-generated neutral name derived ONLY from
             // (kind, book, source_file, source_line)
@@ -1476,6 +1580,9 @@ pub fn generate(
                 redacted_fields.push("name");
                 if extra_redacted || concat_redacted {
                     redacted_fields.push("raw_tokens");
+                }
+                if class_is_pi {
+                    redacted_fields.push("class");
                 }
                 license = crate::rules_core::shape_b_v1::License::PiRedacted;
                 pi_field = Some(redacted_fields.join(","));
@@ -1550,8 +1657,16 @@ pub fn generate(
             // ordinary record keeps its unchanged `key_owner`-first
             // behaviour so this fix produces zero diff on anything not
             // itself renamed.
+            // SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen:
+            // when `class` ITSELF is the PI content (`class_is_pi`), it is
+            // now redacted to the marker in `data.class` (above) -- using
+            // that (or the ORIGINAL, unredacted `raw_class`) here would
+            // ship the archetype's real name in the FILE PATH instead of
+            // the JSON body, the same leak moved one level over. Falls
+            // through to the already-neutral `record_name`, exactly the
+            // existing `class: None` honest-gap path already does.
             let dir_name_source: &str = if codex_generated_name {
-                class.as_deref().unwrap_or(&record_name)
+                if class_is_pi { &record_name } else { class.as_deref().unwrap_or(&record_name) }
             } else {
                 key_owner.as_deref().unwrap_or(&unit.name)
             };
@@ -1862,6 +1977,217 @@ mod tests {
             !written.contains("Ordinary Feature"),
             "the original PI name must appear NOWHERE in the written file (§24b-2): {written}"
         );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen: a
+    /// `"<Feature Name> ~ <PI-owner>"`-shaped key can carry Product Identity
+    /// in its OWNER segment while `name` itself is perfectly clean (e.g.
+    /// `"Lunatic's Gift ~ Lamashtu"`, `book_of_the_damned_volume_2` --
+    /// found live, unredacted, on disk: `name_is_pi` only ever inspected
+    /// `unit.name`/the row's `NAMEISPI` declaration, never `unit.key`'s own
+    /// text or the resolved `class` value, so `record_key` shipped the raw
+    /// key -- deity name included -- verbatim). Proves the widened
+    /// `name_is_pi` (key/class blacklist check) routes this shape through
+    /// the SAME `§24` neutral-rename path a name-PI row already takes.
+    #[test]
+    fn generate_renames_a_row_whose_key_owner_segment_carries_pi_even_when_name_is_clean() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-key-owner-pi-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        // No NAMEISPI/DESCISPI declaration at all -- the leak is purely
+        // that the KEY's owner segment is a blacklisted deity name; `name`
+        // is ordinary, undeclared prose.
+        std::fs::write(
+            book_dir.join("botd2_abilities_classes.lst"),
+            "Lunatic's Gift\t\tCATEGORY:Special Ability|Lamashtu\tDESC:Some mechanical text.\n",
+        )
+        .unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "book_of_the_damned_volume_2".to_string(),
+            source_file: "botd2_abilities_classes.lst".to_string(),
+            source_line: 1,
+            key: "Lunatic's Gift ~ Lamashtu".to_string(),
+            name: "Lunatic's Gift".to_string(),
+            type_facet: None,
+        }];
+
+        let report = generate(
+            &corpus_root,
+            &grants_root,
+            &out_dir,
+            "2026-08-23T00:00:00Z",
+            &units,
+            &BTreeMap::new(),
+        )
+        .expect("generate must succeed against a well-formed fixture");
+
+        assert_eq!(report.written, 1);
+        assert_eq!(
+            report.name_pi_skipped, 1,
+            "a key-owner-segment PI hit must route through the SAME rename counter as a name-PI row"
+        );
+
+        let cf_dir = out_dir.join("book_of_the_damned_volume_2/class_feature");
+        let mut found: Option<String> = None;
+        for entry in walkdir(&cf_dir) {
+            if entry.extension().and_then(|e| e.to_str()) == Some("json") {
+                found = Some(std::fs::read_to_string(&entry).unwrap());
+            }
+        }
+        let written = found.expect("generate must write exactly one json file for the renamed unit");
+        let json: Value = serde_json::from_str(&written).unwrap();
+
+        assert_eq!(json["codex_generated_name"].as_bool(), Some(true));
+        assert!(
+            json["data"]["key"].as_str().unwrap().starts_with("Codex-Named Unit ("),
+            "data.key must carry the Codex-generated marker, not the raw owner-segmented key: {written}"
+        );
+        assert!(
+            !written.contains("Lamashtu"),
+            "the deity name must appear NOWHERE in the written file (§24b-2), including data.class: {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen: the
+    /// widened `name_is_pi` (previous test) only decides whether the
+    /// RECORD gets renamed -- it does not, by itself, redact `data.class`'s
+    /// own stored value, which is written verbatim regardless. Found live:
+    /// an already-renamed `codex_named_unit_*` record whose `data.class`
+    /// still read `"Aldori Swordlord"` unredacted, because `class` came
+    /// from the `corpus_class_owner` resolution tier (a REAL corpus-
+    /// declared class name lookup) which runs BEFORE, and is not gated by,
+    /// the `name_is_pi` guard the key-owner FALLBACK tier already had.
+    /// Proves `class` itself gets redacted to the marker whenever its
+    /// resolved value hits the blacklist, regardless of which of the seven
+    /// resolution tiers produced it.
+    #[test]
+    fn generate_redacts_a_class_field_resolved_from_a_real_corpus_class_name_that_is_itself_pi() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-class-field-pi-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/adventurers_guide");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        // `name` is ordinary, undeclared prose -- only the KEY's owner
+        // segment (the FIRST `~`-delimited segment, matching the real
+        // corpus shape: `"Aldori Swordlord ~ Quick Draw ~ Aldori Dueling
+        // Mastery"`, `adventurers_guide:ag_abilities_class.lst:17`) and the
+        // corpus-declared class name it resolves to carry the archetype's
+        // (blacklisted) name.
+        std::fs::write(
+            book_dir.join("ag_abilities_class.lst"),
+            "Combat Feat\t\tCATEGORY:Special Ability|Aldori Swordlord\tDESC:Some mechanical text.\n",
+        )
+        .unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "adventurers_guide".to_string(),
+            source_file: "ag_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Aldori Swordlord ~ Combat Feat".to_string(),
+            name: "Combat Feat".to_string(),
+            type_facet: None,
+        }];
+        let mut corpus_class_names = BTreeMap::new();
+        corpus_class_names.insert("aldori swordlord".to_string(), "Aldori Swordlord".to_string());
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-23T00:00:00Z", &units, &corpus_class_names)
+            .expect("generate must succeed against a well-formed fixture");
+
+        let cf_dir = out_dir.join("adventurers_guide/class_feature");
+        let mut found: Option<String> = None;
+        for entry in walkdir(&cf_dir) {
+            if entry.extension().and_then(|e| e.to_str()) == Some("json") {
+                found = Some(std::fs::read_to_string(&entry).unwrap());
+            }
+        }
+        let written = found.expect("generate must write exactly one json file for the record");
+        let json: Value = serde_json::from_str(&written).unwrap();
+
+        assert_eq!(
+            json["data"]["class"].as_str(),
+            Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER),
+            "data.class must be redacted to the marker, not the real archetype name: {written}"
+        );
+        assert!(
+            !written.contains("Aldori"),
+            "the archetype's (blacklisted) name must appear NOWHERE in the written file: {written}"
+        );
+        // The directory the file was found under (via `walkdir(&cf_dir)`
+        // above) must ALSO never carry the archetype's name -- moving the
+        // leak from `data.class` into the FILE PATH is the same defect.
+        assert!(
+            !cf_dir.join("aldori_swordlord").is_dir(),
+            "the record must not be written under a directory named after the PI archetype"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// SD-32 card 11, T9-onboarding-class-feature-pi-and-rescreen: found
+    /// live -- `data.description`'s own screen (`classify_field`'s bare
+    /// substring scan) missed an OCR-glitched blacklist term
+    /// ("Gorurn" for "Gorum") that `raw_tokens`' concatenated-token screen
+    /// (the STRONG, OCR-normalized scan) caught, so the SAME text shipped
+    /// redacted in `raw_tokens` but raw in `data.description`. Proves the
+    /// supplementary strong-scan check closes the gap.
+    #[test]
+    fn generate_redacts_a_description_carrying_an_ocr_glitched_blacklist_term_the_weak_scan_misses() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-desc-ocr-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/campaign_setting/inner_sea_combat");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("isc_abilities_class.lst"),
+            "Ranger Combat Style\t\tCATEGORY:Special Ability\tDESC:If a ranger selects Gorurn's style, he gains a bonus.\n",
+        )
+        .unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "inner_sea_combat".to_string(),
+            source_file: "isc_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Ranger Combat Style".to_string(),
+            name: "Ranger Combat Style".to_string(),
+            type_facet: None,
+        }];
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-23T00:00:00Z", &units, &BTreeMap::new())
+            .expect("generate must succeed against a well-formed fixture");
+
+        let cf_dir = out_dir.join("inner_sea_combat/class_feature");
+        let mut found: Option<String> = None;
+        for entry in walkdir(&cf_dir) {
+            if entry.extension().and_then(|e| e.to_str()) == Some("json") {
+                found = Some(std::fs::read_to_string(&entry).unwrap());
+            }
+        }
+        let written = found.expect("generate must write exactly one json file for the record");
+        let json: Value = serde_json::from_str(&written).unwrap();
+
+        assert_eq!(
+            json["data"]["description"].as_str(),
+            Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER),
+            "data.description must be redacted even though the weak bare-substring scan alone would miss \
+             the OCR-glitched spelling: {written}"
+        );
+        assert!(!written.contains("Gorurn"), "{written}");
 
         std::fs::remove_dir_all(&tmp).ok();
     }

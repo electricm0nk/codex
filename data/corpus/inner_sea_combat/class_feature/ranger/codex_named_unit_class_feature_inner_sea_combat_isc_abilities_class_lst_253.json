@@ -3,8 +3,8 @@
   "completeness": "full",
   "ingested_at": "2026-08-23T21:16:58Z",
   "data": {
-    "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_256)",
-    "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_256)",
+    "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_253)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_253)",
     "class": "Ranger",
     "description": "[redacted PI]",
     "raw_tokens": [
@@ -34,35 +34,35 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Cleave|1"
+        "value": "VAR|Ranger_Combat_Style_Feat_Catch_Off_Guard|1"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Bull_Rush|1"
+        "value": "VAR|Ranger_Combat_Style_Feat_Combat_Expertise|1"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Power_Attack|1"
+        "value": "VAR|Ranger_Combat_Style_Feat_Combat_Reflexes|1"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Shield_of_Swings|1"
+        "value": "VAR|Ranger_Combat_Style_Feat_Weapon_Finesse|1"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Cleaving_Finish|1|PREVARGTEQ:CombatStyleLVL,6"
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Disarm|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Vital_Strike|1|PREVARGTEQ:CombatStyleLVL,6"
+        "value": "VAR|Ranger_Combat_Style_Feat_Lunge|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Death_or_Glory|1|PREVARGTEQ:CombatStyleLVL,10"
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Critical_rapier|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Vital_Strike|1|PREVARGTEQ:CombatStyleLVL,10"
+        "value": "VAR|Ranger_Combat_Style_Feat_Disarming_Strike|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "SOURCEPAGE",
@@ -74,8 +74,8 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
     "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
-    "line": 256,
-    "record_key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_256)"
+    "line": 253,
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_253)"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
@@ -87,6 +87,6 @@
   "codex_generated_name": true,
   "rename": {
     "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_combat:isc_abilities_class.lst:256"
+    "coordinate": "inner_sea_combat:isc_abilities_class.lst:253"
   }
 }

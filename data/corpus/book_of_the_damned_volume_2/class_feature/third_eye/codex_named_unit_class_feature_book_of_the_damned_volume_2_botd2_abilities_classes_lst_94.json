@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T21:16:58Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_94)",
+    "name": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_94)",
+    "class": "Third Eye",
+    "description": "A third eye opens in your forehead. This eye grants you darkvision to a range of 60 feet (if you already have darkvision, it extends the range of your darkvision by 60 feet) and a +4 profane bonus on Perception checks. 3/day, you may use a gaze attack that lasts for 1 round: activating this gaze attack is a swift action. This gaze attack has a range of 30 feet, and drives those who fail to resist its effects with a Will save permanently insane, as per the spell insanity (save DC %1).|10+HD/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CheckList"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Darkvision"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Profane"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.6"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 94,
+    "record_key": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_94)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "book_of_the_damned_volume_2:botd2_abilities_classes.lst:94"
+  }
+}
