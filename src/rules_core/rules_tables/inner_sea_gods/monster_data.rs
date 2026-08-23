@@ -11,22 +11,34 @@
 //!   * `isg_races.lst` -- 36 monster rows
 //!   * `isg_races_b4.lst` -- 3 monster rows
 //!   * `isg_abilities_races_b4.lst` -- 16 monster-ability rows
-//!   * `isg_abilities_races.lst` -- 142 monster-ability rows
+//!   * `isg_abilities_races.lst` -- 147 monster-ability rows
 //!
-//! 0 monster row(s) and 5 ability row(s) of this
-//! book are Product Identity and are NOT transcribed -- either because the corpus
-//! row DECLARES it (`NAMEISPI:YES`, PCGen's own per-record marker) or because an
-//! emitted value carries a `pi_screening::PI_BLACKLIST_TERMS` term. Both land in
-//! the name or key, which is the one field redaction cannot touch. Reclassifying
-//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
+//! 3 ability row(s) of this book have their OWN name/key match
+//! a `pi_screening::PI_BLACKLIST_TERMS` term -- `decisions.md §24`'s "the name
+//! itself is PI" case. Each ships under a Codex-generated NEUTRAL name/key
+//! derived ONLY from `(kind, book, source_file, source_line)` -- never from the
+//! original name, not even transformed -- `scripts/codex_neutral_name.py`. Per
+//! `§24b`-4, the divergence record below stops at the coordinate and the reason;
+//! the original string is never written here:
+//!   * `isg_abilities_races.lst:43` -> Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43) (name_pi_blocked)
+//!   * `isg_abilities_races.lst:44` -> Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44) (name_pi_blocked)
+//!   * `isg_abilities_races.lst:45` -> Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45) (name_pi_blocked)
+//!
+//! 5 ability row(s) of this book carry Product Identity in
+//! their `description` field ONLY (declared `DESCISPI:YES`, or an undeclared
+//! `pi_screening::PI_BLACKLIST_TERMS` term found by scanning) -- `description`
+//! (and its `%N` variables) SHIP REDACTED to `shape_b_v1::REDACTED_PI_MARKER`
+//! rather than dropped, because a description (unlike a name) can be redacted
+//! and the record still works. Reclassifying is
+//! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
 //! decision, not a transcriber's:
-//!   * `isg_abilities_races.lst:43` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
-//!   * `isg_abilities_races.lst:44` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
-//!   * `isg_abilities_races.lst:45` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
-//!   * `isg_abilities_races.lst:146` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
-//!   * `isg_abilities_races.lst:155` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+//!   * `isg_abilities_races.lst:155` (Grim White Stag ~ Bugle)
+//!   * `isg_abilities_races.lst:43` (Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43))
+//!   * `isg_abilities_races.lst:44` (Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44))
+//!   * `isg_abilities_races.lst:45` (Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45))
+//!   * `isg_abilities_races.lst:146` (Thyrlien ~ Starlight Blast)
 //!
-//! 2 further ability row(s) in this book are ORPHANS -- no monster
+//! 5 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
 //! dropped (`decisions.md §20`: an un-ingested row's shape cannot be measured,
 //! and Gate 1's DoD needs every unit's shape measured). `list_monster_catalog`
@@ -36,6 +48,9 @@
 //! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
 //!   * `isg_abilities_races.lst:38`
 //!   * `isg_abilities_races.lst:39`
+//!   * `isg_abilities_races.lst:43`
+//!   * `isg_abilities_races.lst:44`
+//!   * `isg_abilities_races.lst:45`
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -292,7 +307,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Ref/Will):6"),
         source_page: Some("p.285"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }, NaturalAttack { name: "Wing", damage_dice: Some("1d4") }],
-        ability_keys: &["Thyrlien ~ Fast Healing", "Thyrlien ~ Poison", "Thyrlien ~ Change Shape", "Thyrlien ~ Poison Resistance", "Thyrlien ~ Detect Evil", "Thyrlien ~ Detect Magic"],
+        ability_keys: &["Thyrlien ~ Fast Healing", "Thyrlien ~ Poison", "Thyrlien ~ Starlight Blast", "Thyrlien ~ Change Shape", "Thyrlien ~ Poison Resistance", "Thyrlien ~ Detect Evil", "Thyrlien ~ Detect Magic"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -2 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: 4 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 2 }],
         has_spell_like_abilities: false,
@@ -312,7 +327,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Ref):18"),
         source_page: Some("p.286"),
         natural_attacks: &[NaturalAttack { name: "Gore", damage_dice: Some("4d6") }, NaturalAttack { name: "Hoof", damage_dice: Some("2d8") }],
-        ability_keys: &["Grim White Stag ~ Cascade of Spears", "Grim White Stag ~ Heroes' Feast", "Grim White Stag ~ Protective Aura", "Grim White Stag ~ Lay on Hands", "Grim White Stag ~ Detect Evil", "Grim White Stag ~ Languages", "Grim White Stag ~ Poison Resistance"],
+        ability_keys: &["Grim White Stag ~ Bugle", "Grim White Stag ~ Cascade of Spears", "Grim White Stag ~ Heroes' Feast", "Grim White Stag ~ Protective Aura", "Grim White Stag ~ Lay on Hands", "Grim White Stag ~ Detect Evil", "Grim White Stag ~ Languages", "Grim White Stag ~ Poison Resistance"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 28 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 14 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }],
         has_spell_like_abilities: false,
@@ -823,7 +838,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_gods monster-ability record (158 rows).
+/// Every inner_sea_gods monster-ability record (163 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "First Blade ~ Powerful Blows (Slam)",
@@ -837,6 +852,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 14,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "First Blade ~ Regeneration",
@@ -850,6 +868,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 15,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "First Blade ~ Bladed Slam",
@@ -863,6 +884,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 16,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "First Blade ~ Swarm Form",
@@ -876,6 +900,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 17,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "First Blade ~ Lord of Battle",
@@ -889,6 +916,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 19,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "First Blade ~ Rage Aura",
@@ -902,6 +932,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 20,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "First Blade ~ Ironsense",
@@ -915,6 +948,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The First Blade"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 21,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Skein Steward ~ Immunity to Possession",
@@ -928,6 +964,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Steward of the Skein"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 24,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Skein Steward ~ Fate Aura",
@@ -941,6 +980,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Steward of the Skein"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 25,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Skein Steward ~ Gaze",
@@ -954,6 +996,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Steward of the Skein"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 26,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Skein Steward ~ Change Shape",
@@ -967,6 +1012,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Steward of the Skein"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 27,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Skein Steward ~ Constant Spells",
@@ -980,6 +1028,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Steward of the Skein"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 28,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Skein Steward ~ Tugging Strands",
@@ -993,6 +1044,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Steward of the Skein"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 29,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ahmuuth ~ Animated Shield",
@@ -1006,6 +1060,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Psychopomp (Ahmuuth)"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 32,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ahmuuth ~ Death's Dagger",
@@ -1019,6 +1076,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Psychopomp (Ahmuuth)"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 33,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ahmuuth ~ Ectoplasmic Focus",
@@ -1032,6 +1092,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Psychopomp (Ahmuuth)"],
         source_file: "isg_abilities_races_b4.lst",
         source_line: 34,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Herald ~ Always Armed",
@@ -1045,6 +1108,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "isg_abilities_races.lst",
         source_line: 38,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Herald ~ Emissary",
@@ -1058,6 +1124,57 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "isg_abilities_races.lst",
         source_line: 39,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43)",
+        name: "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43)",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("[redacted PI]"),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "isg_abilities_races.lst",
+        source_line: 43,
+        codex_generated_name: true,
+        rename_reason: Some("name_pi_blocked"),
+        rename_coordinate: Some("inner_sea_gods:isg_abilities_races.lst:43"),
+    },
+    MonsterAbilityRecord {
+        key: "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
+        name: "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["ModifyHP"],
+        description: Some("[redacted PI]"),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "isg_abilities_races.lst",
+        source_line: 44,
+        codex_generated_name: true,
+        rename_reason: Some("name_pi_blocked"),
+        rename_coordinate: Some("inner_sea_gods:isg_abilities_races.lst:44"),
+    },
+    MonsterAbilityRecord {
+        key: "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
+        name: "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("[redacted PI]"),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "isg_abilities_races.lst",
+        source_line: 45,
+        codex_generated_name: true,
+        rename_reason: Some("name_pi_blocked"),
+        rename_coordinate: Some("inner_sea_gods:isg_abilities_races.lst:45"),
     },
     MonsterAbilityRecord {
         key: "Lawgiver ~ Immunity to Rust",
@@ -1071,6 +1188,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lawgiver"],
         source_file: "isg_abilities_races.lst",
         source_line: 88,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lawgiver ~ Freeze",
@@ -1084,6 +1204,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lawgiver"],
         source_file: "isg_abilities_races.lst",
         source_line: 89,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lawgiver ~ Change Shape",
@@ -1097,6 +1220,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lawgiver"],
         source_file: "isg_abilities_races.lst",
         source_line: 90,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Orsheval ~ Electric Hooves",
@@ -1110,6 +1236,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Orsheval"],
         source_file: "isg_abilities_races.lst",
         source_line: 93,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Orsheval ~ Glittering Radiance",
@@ -1123,6 +1252,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Orsheval"],
         source_file: "isg_abilities_races.lst",
         source_line: 94,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Orsheval ~ Truespeech",
@@ -1136,6 +1268,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Orsheval"],
         source_file: "isg_abilities_races.lst",
         source_line: 95,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Basileus ~ Gaze",
@@ -1149,6 +1284,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Basileus"],
         source_file: "isg_abilities_races.lst",
         source_line: 98,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Basileus ~ Terror Shape",
@@ -1162,6 +1300,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Basileus"],
         source_file: "isg_abilities_races.lst",
         source_line: 99,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Basileus ~ Veil of Forms",
@@ -1175,6 +1316,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Basileus"],
         source_file: "isg_abilities_races.lst",
         source_line: 100,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hesperian ~ Detect Good",
@@ -1188,6 +1332,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Accomplice)"],
         source_file: "isg_abilities_races.lst",
         source_line: 103,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hesperian ~ Change Shape",
@@ -1201,6 +1348,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Accomplice)"],
         source_file: "isg_abilities_races.lst",
         source_line: 104,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hesperian ~ Poison",
@@ -1214,6 +1364,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Accomplice)"],
         source_file: "isg_abilities_races.lst",
         source_line: 105,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Menotherian ~ Alluring Scent",
@@ -1227,6 +1380,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Menotherian"],
         source_file: "isg_abilities_races.lst",
         source_line: 108,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Menotherian ~ Implant",
@@ -1240,6 +1396,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Menotherian"],
         source_file: "isg_abilities_races.lst",
         source_line: 109,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Menotherian ~ Mind Control",
@@ -1253,6 +1412,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Menotherian"],
         source_file: "isg_abilities_races.lst",
         source_line: 110,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Menotherian ~ Poison",
@@ -1266,6 +1428,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Menotherian"],
         source_file: "isg_abilities_races.lst",
         source_line: 111,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Menotherian ~ Change Shape",
@@ -1279,6 +1444,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Menotherian"],
         source_file: "isg_abilities_races.lst",
         source_line: 112,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vendenopterix ~ Ability Drain",
@@ -1292,6 +1460,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Vendenopterix"],
         source_file: "isg_abilities_races.lst",
         source_line: 115,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vendenopterix ~ Poison",
@@ -1305,6 +1476,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Vendenopterix"],
         source_file: "isg_abilities_races.lst",
         source_line: 116,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vendenopterix ~ Swift Tracker",
@@ -1318,6 +1492,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Vendenopterix"],
         source_file: "isg_abilities_races.lst",
         source_line: 117,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vendenopterix ~ Change Shape",
@@ -1331,6 +1508,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Vendenopterix"],
         source_file: "isg_abilities_races.lst",
         source_line: 118,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vendenopterix ~ Enchantment Resistance",
@@ -1344,6 +1524,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Vendenopterix"],
         source_file: "isg_abilities_races.lst",
         source_line: 119,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thais ~ Armor of Valor",
@@ -1357,6 +1540,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Thais"],
         source_file: "isg_abilities_races.lst",
         source_line: 122,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thais ~ Aura of Bravery",
@@ -1370,6 +1556,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Thais"],
         source_file: "isg_abilities_races.lst",
         source_line: 123,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thais ~ Luck Domain",
@@ -1383,6 +1572,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Thais"],
         source_file: "isg_abilities_races.lst",
         source_line: 124,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thais ~ Penetrating Gaze",
@@ -1396,6 +1588,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Thais"],
         source_file: "isg_abilities_races.lst",
         source_line: 125,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thais ~ Change Shape",
@@ -1409,6 +1604,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Thais"],
         source_file: "isg_abilities_races.lst",
         source_line: 126,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ataxian ~ Possession",
@@ -1422,6 +1620,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ataxian"],
         source_file: "isg_abilities_races.lst",
         source_line: 129,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ataxian ~ Staggered",
@@ -1435,6 +1636,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ataxian"],
         source_file: "isg_abilities_races.lst",
         source_line: 130,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ataxian ~ Staggering Drunk",
@@ -1448,6 +1652,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ataxian"],
         source_file: "isg_abilities_races.lst",
         source_line: 131,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Ataxian ~ Ray",
@@ -1461,6 +1668,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ataxian"],
         source_file: "isg_abilities_races.lst",
         source_line: 132,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Night Monarch ~ No Breath",
@@ -1474,6 +1684,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Night Monarch"],
         source_file: "isg_abilities_races.lst",
         source_line: 135,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Night Monarch ~ Immunity to Cold",
@@ -1487,6 +1700,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Night Monarch"],
         source_file: "isg_abilities_races.lst",
         source_line: 136,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Night Monarch ~ Breath Weapon",
@@ -1500,6 +1716,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Night Monarch"],
         source_file: "isg_abilities_races.lst",
         source_line: 137,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Night Monarch ~ Poison Flesh",
@@ -1513,6 +1732,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Night Monarch"],
         source_file: "isg_abilities_races.lst",
         source_line: 138,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Night Monarch ~ Dream Dust",
@@ -1526,6 +1748,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Night Monarch"],
         source_file: "isg_abilities_races.lst",
         source_line: 139,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Night Monarch ~ Languages",
@@ -1539,6 +1764,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Night Monarch"],
         source_file: "isg_abilities_races.lst",
         source_line: 140,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thyrlien ~ Fast Healing",
@@ -1552,6 +1780,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Azata (Thyrlien)"],
         source_file: "isg_abilities_races.lst",
         source_line: 144,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thyrlien ~ Poison",
@@ -1565,6 +1796,25 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Azata (Thyrlien)"],
         source_file: "isg_abilities_races.lst",
         source_line: 145,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Thyrlien ~ Starlight Blast",
+        name: "Starlight Blast",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["AttackOption"],
+        description: Some("[redacted PI]"),
+        description_variables: &[],
+        source_page: None,
+        owners: &["Azata (Thyrlien)"],
+        source_file: "isg_abilities_races.lst",
+        source_line: 146,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thyrlien ~ Change Shape",
@@ -1578,6 +1828,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Azata (Thyrlien)"],
         source_file: "isg_abilities_races.lst",
         source_line: 147,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thyrlien ~ Poison Resistance",
@@ -1591,6 +1844,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Azata (Thyrlien)"],
         source_file: "isg_abilities_races.lst",
         source_line: 148,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thyrlien ~ Detect Evil",
@@ -1604,6 +1860,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Azata (Thyrlien)"],
         source_file: "isg_abilities_races.lst",
         source_line: 149,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thyrlien ~ Detect Magic",
@@ -1617,6 +1876,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Azata (Thyrlien)"],
         source_file: "isg_abilities_races.lst",
         source_line: 150,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Poison Resistance",
@@ -1630,6 +1892,25 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 154,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Grim White Stag ~ Bugle",
+        name: "Bugle",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("[redacted PI]"),
+        description_variables: &[],
+        source_page: None,
+        owners: &["The Grim White Stag"],
+        source_file: "isg_abilities_races.lst",
+        source_line: 155,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Cascade of Spears",
@@ -1643,6 +1924,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 156,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Heroes' Feast",
@@ -1656,6 +1940,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 157,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Protective Aura",
@@ -1669,6 +1956,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 158,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Lay on Hands",
@@ -1682,6 +1972,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 159,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Detect Evil",
@@ -1695,6 +1988,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 160,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grim White Stag ~ Languages",
@@ -1708,6 +2004,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grim White Stag"],
         source_file: "isg_abilities_races.lst",
         source_line: 161,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Stag Archon ~ Change Shape",
@@ -1721,6 +2020,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Archon (Stag)"],
         source_file: "isg_abilities_races.lst",
         source_line: 165,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Zentragt ~ Adamantine Attacks",
@@ -1734,6 +2036,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Zentragt"],
         source_file: "isg_abilities_races.lst",
         source_line: 168,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Zentragt ~ Eat Metal",
@@ -1747,6 +2052,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Zentragt"],
         source_file: "isg_abilities_races.lst",
         source_line: 169,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Personification of Fury ~ Water Mastery",
@@ -1760,6 +2068,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Personification of Fury"],
         source_file: "isg_abilities_races.lst",
         source_line: 172,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Personification of Fury ~ Change Shape",
@@ -1773,6 +2084,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Personification of Fury"],
         source_file: "isg_abilities_races.lst",
         source_line: 173,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Personification of Fury ~ Energy Ray",
@@ -1786,6 +2100,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Personification of Fury"],
         source_file: "isg_abilities_races.lst",
         source_line: 174,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Xocothian ~ Form of Sea and Sky",
@@ -1799,6 +2116,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Xocothian"],
         source_file: "isg_abilities_races.lst",
         source_line: 177,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Xocothian ~ Speak with Animals",
@@ -1812,6 +2132,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Xocothian"],
         source_file: "isg_abilities_races.lst",
         source_line: 179,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hand of the Inheritor ~ Lay on Hands",
@@ -1825,6 +2148,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hand of the Inheritor"],
         source_file: "isg_abilities_races.lst",
         source_line: 182,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hand of the Inheritor ~ Divine Trigger",
@@ -1838,6 +2164,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hand of the Inheritor"],
         source_file: "isg_abilities_races.lst",
         source_line: 183,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Iophanite Angel ~ Radiance",
@@ -1851,6 +2180,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Angel (Iophanite)"],
         source_file: "isg_abilities_races.lst",
         source_line: 186,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Iophanite Angel ~ Shield Form",
@@ -1864,6 +2196,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Angel (Iophanite)"],
         source_file: "isg_abilities_races.lst",
         source_line: 187,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Iophanite Angel ~ Protection from Evil",
@@ -1877,6 +2212,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Angel (Iophanite)"],
         source_file: "isg_abilities_races.lst",
         source_line: 188,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "The Old Man ~ Regeneration",
@@ -1890,6 +2228,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Old Man"],
         source_file: "isg_abilities_races.lst",
         source_line: 191,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "The Old Man ~ Monk Abilities",
@@ -1903,6 +2244,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Old Man"],
         source_file: "isg_abilities_races.lst",
         source_line: 192,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Pavbagha ~ Stunning Claw",
@@ -1916,6 +2260,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Pavbagha"],
         source_file: "isg_abilities_races.lst",
         source_line: 195,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Pavbagha ~ Fade",
@@ -1929,6 +2276,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Pavbagha"],
         source_file: "isg_abilities_races.lst",
         source_line: 196,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yethazmari ~ Breath Weapon",
@@ -1942,6 +2292,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yethazmari"],
         source_file: "isg_abilities_races.lst",
         source_line: 199,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yethazmari ~ Bay",
@@ -1955,6 +2308,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yethazmari"],
         source_file: "isg_abilities_races.lst",
         source_line: 200,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yethazmari ~ Poison Gout",
@@ -1968,6 +2324,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yethazmari"],
         source_file: "isg_abilities_races.lst",
         source_line: 201,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yethazmari ~ Soul Scream",
@@ -1981,6 +2340,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yethazmari"],
         source_file: "isg_abilities_races.lst",
         source_line: 202,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yethazmari ~ Poison",
@@ -1994,6 +2356,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yethazmari"],
         source_file: "isg_abilities_races.lst",
         source_line: 203,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Swaithe ~ Eyeless",
@@ -2007,6 +2372,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Swaithe)"],
         source_file: "isg_abilities_races.lst",
         source_line: 206,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Swaithe ~ Hexes",
@@ -2020,6 +2388,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Swaithe)"],
         source_file: "isg_abilities_races.lst",
         source_line: 207,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Swaithe ~ Witchcraft",
@@ -2033,6 +2404,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Swaithe)"],
         source_file: "isg_abilities_races.lst",
         source_line: 208,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Arcanotheign ~ Resistance to Divine Power",
@@ -2046,6 +2420,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Arcanotheign"],
         source_file: "isg_abilities_races.lst",
         source_line: 211,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Arcanotheign ~ Change Shape",
@@ -2059,6 +2436,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Arcanotheign"],
         source_file: "isg_abilities_races.lst",
         source_line: 212,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Arcanotheign ~ Eldritch Blast",
@@ -2072,6 +2452,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Arcanotheign"],
         source_file: "isg_abilities_races.lst",
         source_line: 213,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Arcanotheign ~ Energy Channel Aura",
@@ -2085,6 +2468,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Arcanotheign"],
         source_file: "isg_abilities_races.lst",
         source_line: 214,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Arcanotheign ~ Constant Spells",
@@ -2098,6 +2484,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Arcanotheign"],
         source_file: "isg_abilities_races.lst",
         source_line: 215,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Burleev ~ Frostfire Spirit",
@@ -2111,6 +2500,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Burleev"],
         source_file: "isg_abilities_races.lst",
         source_line: 218,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Stabbing Beast ~ Change Shape",
@@ -2124,6 +2516,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Stabbing Beast"],
         source_file: "isg_abilities_races.lst",
         source_line: 221,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Stabbing Beast ~ Murderer's Reward",
@@ -2137,6 +2532,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Stabbing Beast"],
         source_file: "isg_abilities_races.lst",
         source_line: 222,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Stabbing Beast ~ Poison",
@@ -2150,6 +2548,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Stabbing Beast"],
         source_file: "isg_abilities_races.lst",
         source_line: 223,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Stabbing Beast ~ Poison Stream",
@@ -2163,6 +2564,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Stabbing Beast"],
         source_file: "isg_abilities_races.lst",
         source_line: 224,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Stabbing Beast ~ Sudden Strike",
@@ -2176,6 +2580,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Stabbing Beast"],
         source_file: "isg_abilities_races.lst",
         source_line: 225,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Karumzek ~ Change Shape",
@@ -2189,6 +2596,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Karumzek"],
         source_file: "isg_abilities_races.lst",
         source_line: 228,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Karumzek ~ Deft Limbs",
@@ -2202,6 +2612,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Karumzek"],
         source_file: "isg_abilities_races.lst",
         source_line: 229,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Karumzek ~ Poison",
@@ -2215,6 +2628,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Karumzek"],
         source_file: "isg_abilities_races.lst",
         source_line: 230,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Karumzek ~ Sense Poison",
@@ -2228,6 +2644,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Karumzek"],
         source_file: "isg_abilities_races.lst",
         source_line: 231,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Karumzek ~ Negate Aroma",
@@ -2241,6 +2660,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Karumzek"],
         source_file: "isg_abilities_races.lst",
         source_line: 232,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thognorok ~ Acid Web",
@@ -2254,6 +2676,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Qlippoth (Thognorok)"],
         source_file: "isg_abilities_races.lst",
         source_line: 235,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thognorok ~ Horrific Appearance",
@@ -2267,6 +2692,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Qlippoth (Thognorok)"],
         source_file: "isg_abilities_races.lst",
         source_line: 236,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thognorok ~ Poison",
@@ -2280,6 +2708,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Qlippoth (Thognorok)"],
         source_file: "isg_abilities_races.lst",
         source_line: 237,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thalachos ~ Change Shape",
@@ -2293,6 +2724,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sunlord Thalachos"],
         source_file: "isg_abilities_races.lst",
         source_line: 240,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thalachos ~ Divine Trigger",
@@ -2306,6 +2740,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sunlord Thalachos"],
         source_file: "isg_abilities_races.lst",
         source_line: 241,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thalachos ~ Regeneration",
@@ -2319,6 +2756,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sunlord Thalachos"],
         source_file: "isg_abilities_races.lst",
         source_line: 242,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thalachos ~ Stun",
@@ -2332,6 +2772,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sunlord Thalachos"],
         source_file: "isg_abilities_races.lst",
         source_line: 243,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Thalachos ~ Uncanny Dodge",
@@ -2345,6 +2788,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sunlord Thalachos"],
         source_file: "isg_abilities_races.lst",
         source_line: 244,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yhohm ~ Holy Fire",
@@ -2358,6 +2804,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yhohm"],
         source_file: "isg_abilities_races.lst",
         source_line: 247,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yhohm ~ Self-Resurrection",
@@ -2371,6 +2820,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yhohm"],
         source_file: "isg_abilities_races.lst",
         source_line: 248,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Yhohm ~ Shroud of Flame",
@@ -2384,6 +2836,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Yhohm"],
         source_file: "isg_abilities_races.lst",
         source_line: 249,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Bardic Magic",
@@ -2397,6 +2852,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 252,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Bardic Performance",
@@ -2410,6 +2868,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 253,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Inspiration",
@@ -2423,6 +2884,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 254,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Stunning Ray",
@@ -2436,6 +2900,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 255,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Unearthly Grace",
@@ -2449,6 +2916,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 256,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Charming Aura",
@@ -2462,6 +2932,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 257,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Adoration Spirit ~ Change Shape",
@@ -2475,6 +2948,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Spirit of Adoration"],
         source_file: "isg_abilities_races.lst",
         source_line: 258,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dapsara ~ Bardic Performance",
@@ -2488,6 +2964,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dapsara"],
         source_file: "isg_abilities_races.lst",
         source_line: 261,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dapsara ~ Ghostly Arms",
@@ -2501,6 +2980,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dapsara"],
         source_file: "isg_abilities_races.lst",
         source_line: 262,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dapsara ~ Versatile Performance",
@@ -2514,6 +2996,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dapsara"],
         source_file: "isg_abilities_races.lst",
         source_line: 263,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dapsara ~ Weapon Proficiencies",
@@ -2527,6 +3012,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dapsara"],
         source_file: "isg_abilities_races.lst",
         source_line: 264,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dapsara ~ Change Shape",
@@ -2540,6 +3028,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dapsara"],
         source_file: "isg_abilities_races.lst",
         source_line: 265,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grand Defender ~ Ablative Adaptation",
@@ -2553,6 +3044,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grand Defender"],
         source_file: "isg_abilities_races.lst",
         source_line: 268,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grand Defender ~ Breath Weapon",
@@ -2566,6 +3060,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grand Defender"],
         source_file: "isg_abilities_races.lst",
         source_line: 269,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grand Defender ~ Defender's Shield",
@@ -2579,6 +3076,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grand Defender"],
         source_file: "isg_abilities_races.lst",
         source_line: 270,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Grand Defender ~ Hammer Storm",
@@ -2592,6 +3092,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Grand Defender"],
         source_file: "isg_abilities_races.lst",
         source_line: 271,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Chalkost ~ Breath Weapon",
@@ -2605,6 +3108,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Chalkost"],
         source_file: "isg_abilities_races.lst",
         source_line: 274,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Chalkost ~ Change Shape",
@@ -2618,6 +3124,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Chalkost"],
         source_file: "isg_abilities_races.lst",
         source_line: 275,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Chalkost ~ Dwarf Blood",
@@ -2631,6 +3140,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Chalkost"],
         source_file: "isg_abilities_races.lst",
         source_line: 276,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Chalkost ~ Shock Cestus",
@@ -2644,6 +3156,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Chalkost"],
         source_file: "isg_abilities_races.lst",
         source_line: 277,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Desecrate Aura",
@@ -2657,6 +3172,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 280,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Spell Deflection",
@@ -2670,6 +3188,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 281,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Devour Soul",
@@ -2683,6 +3204,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 282,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Deathless",
@@ -2696,6 +3220,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 283,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Breath Weapon",
@@ -2709,6 +3236,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 284,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Channel Negative Energy",
@@ -2722,6 +3252,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 285,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mother's Maw ~ Swallow Whole",
@@ -2735,6 +3268,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mother's Maw"],
         source_file: "isg_abilities_races.lst",
         source_line: 286,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Sarcovalt ~ Detach Head",
@@ -2748,6 +3284,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sarcovalt"],
         source_file: "isg_abilities_races.lst",
         source_line: 289,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Sarcovalt ~ Disease Swarm",
@@ -2761,6 +3300,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Sarcovalt"],
         source_file: "isg_abilities_races.lst",
         source_line: 290,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Prince in Chains ~ Chainstorm",
@@ -2774,6 +3316,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Prince in Chains"],
         source_file: "isg_abilities_races.lst",
         source_line: 293,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Prince in Chains ~ Exaction",
@@ -2787,6 +3332,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Prince in Chains"],
         source_file: "isg_abilities_races.lst",
         source_line: 294,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Prince in Chains ~ Howl of Despair",
@@ -2800,6 +3348,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Prince in Chains"],
         source_file: "isg_abilities_races.lst",
         source_line: 295,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Prince in Chains ~ Vicious Critical",
@@ -2813,6 +3364,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Prince in Chains"],
         source_file: "isg_abilities_races.lst",
         source_line: 296,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Prince in Chains ~ Unnerving Gaze",
@@ -2826,6 +3380,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["The Prince in Chains"],
         source_file: "isg_abilities_races.lst",
         source_line: 297,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lampadarius ~ Regeneration",
@@ -2839,6 +3396,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Kyton (Lampadarius)"],
         source_file: "isg_abilities_races.lst",
         source_line: 300,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lampadarius ~ Semi-Incorporeal",
@@ -2852,6 +3412,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Kyton (Lampadarius)"],
         source_file: "isg_abilities_races.lst",
         source_line: 301,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lampadarius ~ Strength Damage",
@@ -2865,6 +3428,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Kyton (Lampadarius)"],
         source_file: "isg_abilities_races.lst",
         source_line: 302,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lampadarius ~ Unnerving Gaze",
@@ -2878,5 +3444,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Kyton (Lampadarius)"],
         source_file: "isg_abilities_races.lst",
         source_line: 303,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

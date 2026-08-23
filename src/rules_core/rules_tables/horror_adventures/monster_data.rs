@@ -181,6 +181,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 204,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive ~ Blind",
@@ -194,6 +197,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 209,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive ~ Corrosive Blood",
@@ -207,6 +213,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 210,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive ~ Death Throes",
@@ -220,6 +229,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 211,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive ~ Heat Adaptability",
@@ -233,6 +245,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 212,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive ~ Hive Mind",
@@ -246,6 +261,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 213,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Accursed Creature ~ Cursed",
@@ -259,6 +277,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 243,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Bestial Werewolf ~ Change Shape",
@@ -272,6 +293,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 246,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Bestial Werewolf ~ Feral Counter",
@@ -285,6 +309,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 247,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dread Lord ~ Landlocked",
@@ -298,6 +325,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 251,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dread Lord ~ One with the Land",
@@ -311,6 +341,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 252,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Cursed Lord ~ Immortal Curse",
@@ -324,6 +357,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 253,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Cursed Lord ~ Trapped",
@@ -337,6 +373,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 254,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dread Lord ~ Fear Aura",
@@ -350,6 +389,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 258,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dread Lord ~ Magical Mastery",
@@ -363,6 +405,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 259,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dread Lord ~ Physical Mastery",
@@ -376,6 +421,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 261,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Familial Lich ~ Familial Possession",
@@ -389,6 +437,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 266,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hellbound Creature ~ Contract Bound",
@@ -402,6 +453,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 273,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive Larva Swarm ~ Infest",
@@ -415,6 +469,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hive Larva Swarm"],
         source_file: "ha_abilities_race.lst",
         source_line: 277,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive Larva Swarm ~ Poison",
@@ -428,6 +485,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hive Larva Swarm"],
         source_file: "ha_abilities_race.lst",
         source_line: 278,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive Queen ~ Egg Layer",
@@ -441,6 +501,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hive Queen"],
         source_file: "ha_abilities_race.lst",
         source_line: 281,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive Queen ~ Telepathy",
@@ -454,6 +517,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hive Queen"],
         source_file: "ha_abilities_race.lst",
         source_line: 282,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive Warrior ~ Acid Spit",
@@ -467,6 +533,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hive Warrior"],
         source_file: "ha_abilities_race.lst",
         source_line: 285,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Hive Warrior ~ Rending Mandibles",
@@ -480,6 +549,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Hive Warrior"],
         source_file: "ha_abilities_race.lst",
         source_line: 286,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Implacable Stalker ~ Sense Fear",
@@ -493,6 +565,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 289,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Implacable Stalker ~ Terrifying Inevitability",
@@ -506,6 +581,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 290,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Implacable Stalker ~ Fear Aura",
@@ -519,6 +597,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 291,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Implacable Stalker ~ Gory Display",
@@ -532,6 +613,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 292,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Implacable Stalker ~ Nightmare Resurrection",
@@ -545,6 +629,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 293,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Implacable Stalker ~ Right Behind You",
@@ -558,6 +645,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 294,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kyton (Apostle) ~ Agonizing Prayer",
@@ -571,6 +661,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 297,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kyton (Apostle) ~ Bleeding Touch",
@@ -584,6 +677,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 298,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kyton (Apostle) ~ Unnerving Gaze",
@@ -597,6 +693,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 300,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kyton (Apostle) ~ Spell-Like Abilities",
@@ -610,6 +709,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 301,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kyton (Apostle) ~ Shadow Traveler",
@@ -623,6 +725,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 302,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lich Creature ~ Touch Attack",
@@ -636,6 +741,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 305,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lycanthropic Creature ~ Change Shape",
@@ -649,6 +757,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 308,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Moonbound Werewolf ~ Moonbound",
@@ -662,6 +773,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 311,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Moonbound Werewolf ~ Moonbound (Full Moon)",
@@ -675,6 +789,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 312,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Moonbound Werewolf ~ Moonbound (Near Full Moon)",
@@ -688,6 +805,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 313,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Moonbound Werewolf ~ Moonbound (Other Moon)",
@@ -701,6 +821,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 314,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Moonbound Werewolf ~ Moonbound (New Moon)",
@@ -714,6 +837,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 315,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Possessed Creature ~ Two Minds",
@@ -727,6 +853,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 318,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Promethean Creature ~ Promethean Metabolism",
@@ -740,6 +869,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 321,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Shadowbound Creature ~ Weaver of Lies",
@@ -753,6 +885,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 324,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Shadowbound Creature ~ Regretful Gaze",
@@ -766,6 +901,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 325,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Shadowbound Creature ~ Refuge in Pain",
@@ -779,6 +917,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 326,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Trompe l'Oeil ~ Armor Class",
@@ -792,6 +933,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 329,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Trompe l'Oeil ~ Attacks",
@@ -805,6 +949,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 330,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Trompe l'Oeil ~ Rejuvenation",
@@ -818,6 +965,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 331,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Trompe l'Oeil ~ Skills",
@@ -831,6 +981,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 332,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Trompe l'Oeil ~ Autotelic",
@@ -844,6 +997,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 333,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Trompe l'Oeil ~ Enter Painting",
@@ -857,6 +1013,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 334,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Unknown ~ Victimize",
@@ -870,6 +1029,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 338,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Unknown ~ Spell-Like Abilities",
@@ -883,6 +1045,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 339,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Unknown ~ Assume Likeness",
@@ -896,6 +1061,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 340,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Unknown ~ Dream Movements",
@@ -909,6 +1077,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 341,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Unknown ~ Hallucinatory Camouflage",
@@ -922,6 +1093,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 342,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Undead Phantom ~ Cling of the Grave",
@@ -935,6 +1109,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 345,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Undead Phantom ~ Unnatural Aura",
@@ -948,6 +1125,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 346,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Undead Phantom ~ Channel Resistance",
@@ -961,6 +1141,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 347,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Undead Phantom ~ Lifedrinker",
@@ -974,5 +1157,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ha_abilities_race.lst",
         source_line: 348,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

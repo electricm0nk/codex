@@ -13783,6 +13783,9 @@ mod monster_ability_text_complete_rung_tests {
             owners: &[],
             source_file: "x.lst",
             source_line: 1,
+            codex_generated_name: false,
+            rename_reason: None,
+            rename_coordinate: None,
         };
         assert!(monster_ability_desc_leaks_unresolved_argument(&declared_var));
 

@@ -56,6 +56,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 5,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Coral Capuchin ~ Moisture Dependency",
@@ -69,6 +72,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 6,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Deinotherium ~ Sweep",
@@ -82,6 +88,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 9,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Devil Monkey ~ Puncture Armor",
@@ -95,6 +104,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 12,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Dunkleosteus ~ Gulp",
@@ -108,6 +120,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 15,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Elasmotherium ~ Impaling Horn",
@@ -121,6 +136,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 18,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kentrosaurus ~ Defensive Spikes",
@@ -134,6 +152,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 21,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Kentrosaurus ~ Impaling Strike",
@@ -147,6 +168,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 22,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mockingfey ~ Mock",
@@ -160,6 +184,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 25,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mockingfey ~ SLA",
@@ -173,6 +200,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 26,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Mokele-Mbembe ~ Whip Tail",
@@ -186,6 +216,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 29,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Quetzalcoatlus ~ Razor-Sharp Beak",
@@ -199,6 +232,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 32,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Giant Raven ~ Scavenger",
@@ -212,6 +248,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "b6_abilities_race.lst",
         source_line: 35,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Universal Monster Rule ~ Ferocity",
@@ -225,6 +264,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ce_abilities_race.lst",
         source_line: 2446,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Universal Monster Rule ~ Negative Energy Affinity",
@@ -238,6 +280,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ce_abilities_race.lst",
         source_line: 2447,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Universal Monster Rule ~ Scent",
@@ -251,5 +296,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &[],
         source_file: "ce_abilities_race.lst",
         source_line: 2448,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

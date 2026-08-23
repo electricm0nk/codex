@@ -1122,8 +1122,19 @@ mod tests {
         // 5 orphan candidates shipped, 0 refused. Re-derived: `python3
         // scripts/transcribe_monster_tables.py occult_adventures 2>&1
         // >/dev/null` prints exactly these 5 keys as owner-less.
+        // 1053 -> 1066 (`decisions.md §24`/round 7, +13): the T9
+        // name-PI/desc-PI `monster_ability` group closes. 13 ability rows
+        // whose own name/key matched the blacklist now ship under a
+        // Codex-generated neutral name/key instead of being dropped, and
+        // every one of the 13 is an orphan (`inner_sea_bestiary` +7,
+        // `inner_sea_gods` +3, `inner_sea_world_guide` +3). The 2
+        // description-only-PI rows this same group closes are OWNED, not
+        // owner-less, so they do not move this count. Re-derived: `python3
+        // scripts/shape_ledger.py --inventory docs/work-inventory.json` --
+        // `monster_ability` `no_record` 98 -> 83 (before merging this
+        // cycle with `§27b`'s own separate 5-unit closure).
         assert_eq!(
-            owner_less_records_held, 1053,
+            owner_less_records_held, 1066,
             "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
              from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
              update both this pin and `reach_gate.rs`'s matching entries"

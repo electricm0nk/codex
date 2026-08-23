@@ -275,12 +275,20 @@ mod tests {
         // wave 2 follow-on) = 656. The owner-less count is pinned separately
         // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`),
         // so this assertion is now over the OWNED subset only.
+        // 571/656 -> 572/657 (`decisions.md §22`/round 6, +1 owned): the
+        // `SpecialAttck` typo-fold resolved `Tick Swarm ~ Cling`'s facet for
+        // the first time -- this file's own pins were missed when round 6
+        // bumped the identical delta in `apps/desktop/src-tauri/src/
+        // reach_gate.rs`; re-derived here, not caused by this cycle's own
+        // diff (`git diff --stat` for `bestiary_2/monster_data.rs` shows
+        // zero deletions, only the 3 trailing `codex_generated_name`/
+        // `rename_*` fields appended per record).
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 571);
-        assert_eq!(monster_abilities().len(), 656);
+        assert_eq!(owned, 572);
+        assert_eq!(monster_abilities().len(), 657);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**

@@ -1446,7 +1446,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
                 block.key, block.source_file, spec.races_lsts
             )
         });
-        let line = verified_citation_line(races_file, block.source_line, block.name);
+        let line = verified_citation_line(races_file, block.source_line, block.name, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:monster:{}", slugify(block.key)),
             "corpus_key": block.key,
@@ -1516,7 +1516,12 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
                 ability.key, ability.source_file, spec.abilities_lsts
             )
         });
-        let line = verified_citation_line(abilities_file, ability.source_line, ability.name);
+        let line = verified_citation_line(
+            abilities_file,
+            ability.source_line,
+            ability.name,
+            ability.codex_generated_name,
+        );
         let data = serde_json::json!({
             "key": format!("{book_id}:monster_ability:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -1528,6 +1533,19 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "description_variables": ability.description_variables,
             "source_page": ability.source_page,
             "owners": ability.owners.iter().map(|o| format!("{book_id}:monster:{}", slugify(o))).collect::<Vec<_>>(),
+            // `decisions.md §24b`-3: "a field marks it as carrying a
+            // Codex-generated name". `§24b`-4: the divergence stops at the
+            // coordinate -- never the original string, which is why there
+            // is no field here that could carry it.
+            "codex_generated_name": ability.codex_generated_name,
+            "rename": if ability.codex_generated_name {
+                serde_json::json!({
+                    "reason": ability.rename_reason,
+                    "coordinate": ability.rename_coordinate,
+                })
+            } else {
+                serde_json::Value::Null
+            },
         });
         pi_hits.extend(monster_record_pi_hits(ability.key, &data.to_string()));
         let source = CorpusSource::LstToken {
@@ -1754,7 +1772,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
                 companion.key, companion.source_file, spec.races_lsts
             )
         });
-        let line = verified_citation_line(races_file, companion.source_line, companion.name);
+        let line = verified_citation_line(races_file, companion.source_line, companion.name, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:companion:{}", slugify(companion.key)),
             "corpus_key": companion.key,
@@ -1818,7 +1836,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
                 ability.key, ability.source_file, spec.abilities_lsts
             )
         });
-        let line = verified_citation_line(abilities_file, ability.source_line, ability.name);
+        let line = verified_citation_line(abilities_file, ability.source_line, ability.name, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:companion:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -2763,19 +2781,33 @@ fn monster_book_corpus_data_root(spec: &MonsterBookSpec) -> Option<PathBuf> {
 /// A citation nobody checked is the failure mode `v06_corpus_trap_report
 /// --audit` exists to catch after the fact; checking it here means the cache is
 /// never written with a stale line number in the first place.
-fn verified_citation_line(file: &CorpusFile, recorded: u32, display_name: &str) -> u32 {
+/// `codex_generated_name`: `true` when `display_name` is a Codex-minted
+/// neutral identity (`decisions.md §24`), not the printed name -- the row's
+/// own first column is still the ORIGINAL (possibly PI) name in that case,
+/// so the exact-match check below would fail by design and must be skipped.
+/// The line still has to EXIST (the `.get(idx)` bounds check below still
+/// runs unconditionally) -- a citation this generator cannot verify at all
+/// is not a citation, renamed or not.
+fn verified_citation_line(
+    file: &CorpusFile,
+    recorded: u32,
+    display_name: &str,
+    codex_generated_name: bool,
+) -> u32 {
     let idx = recorded as usize - 1;
     let line = file
         .lines
         .get(idx)
         .unwrap_or_else(|| panic!("{} has no line {recorded}", file.relative_path));
-    let first_col = line.split('\t').next().unwrap_or_default().trim();
-    assert_eq!(
-        first_col, display_name,
-        "{}:{recorded} names {first_col:?}, not {display_name:?} -- the table's recorded line is \
-         stale and must be re-transcribed, not papered over here",
-        file.relative_path
-    );
+    if !codex_generated_name {
+        let first_col = line.split('\t').next().unwrap_or_default().trim();
+        assert_eq!(
+            first_col, display_name,
+            "{}:{recorded} names {first_col:?}, not {display_name:?} -- the table's recorded \
+             line is stale and must be re-transcribed, not papered over here",
+            file.relative_path
+        );
+    }
     recorded
 }
 

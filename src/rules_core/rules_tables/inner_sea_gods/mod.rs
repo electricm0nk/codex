@@ -175,12 +175,24 @@ mod tests {
         // 156 owned + 2 owner-less (`decisions.md §20`, no_record-to-zero
         // wave 2 follow-on) = 158. The owner-less count is pinned separately
         // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 156 owned -> 158 owned (`decisions.md §24`/round 7, +2): two
+        // OWNED rows whose clean name/key had an undeclared blacklist hit
+        // confined to `DESC:` now ship with the description redacted
+        // instead of being dropped (`Grim White Stag ~ Bugle`,
+        // `Thyrlien ~ Starlight Blast` — clean names, the "2
+        // description-only PI" group T9 round 6 named). 2 owner-less -> 5
+        // owner-less (+3): three ability rows at
+        // `isg_abilities_races.lst:43/44/45`, whose own KEY namespace
+        // matched the blacklist, now ship under a Codex-generated neutral
+        // key instead of being dropped; all three are orphans here (no
+        // monster row of this book claims them), pinned below. 158 -> 163
+        // total (+2 owned +3 owner-less).
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
-        assert_eq!(owned, 156);
-        assert_eq!(monster_abilities().len(), 158);
+        assert_eq!(owned, 158);
+        assert_eq!(monster_abilities().len(), 163);
     }
 
     /// The three `support/` monster rows ship, and they are the reason this
@@ -281,19 +293,31 @@ mod tests {
 
         assert_eq!(
             unowned.len(),
-            2,
+            5,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py inner_sea_gods` run, and update the matching \
-             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set. 2 -> 5 \
+             (`decisions.md §24`/round 7, +3): three name-PI ability rows now ship under a \
+             neutral key instead of being dropped -- see `the_shipped_counts_are_the_reachable_\
+             ones`'s own comment."
         );
-        assert_eq!(unowned, vec!["Herald ~ Always Armed", "Herald ~ Emissary"]);
+        assert_eq!(
+            unowned,
+            vec![
+                "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43)",
+                "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
+                "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
+                "Herald ~ Always Armed",
+                "Herald ~ Emissary",
+            ]
+        );
 
         let mut hasher = DefaultHasher::new();
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0x7a3d_5f6f_8544_d9fc,
+            digest, 0x137d_2d8a_116e_9f2b,
             "the owner-less key SET changed (same count, different members) — re-derive and \
              update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
         );

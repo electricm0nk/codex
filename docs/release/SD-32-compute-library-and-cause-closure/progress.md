@@ -7040,11 +7040,16 @@ territory — left untouched, unchanged 13/2 split).
 Remaining 98 named for the next cycle: 56 multi-`DESC:` (a `PREVAREQ`/`PREVARGT`-gated shape
 `parse_desc`'s own docstring already isolates), 22 `TYPE:`-facet-gap (mostly genuine book-specific
 labels needing a per-record policy call, plus a delivery-only-default question needing an operator
-ruling — not invented here per `§1a`), and 15 PI-declared (13 name-PI — `Spawn of Rovagug`/`Daughter
-of Urgathoa`, both terms confirmed on `pi_screening.rs`'s blacklist — closing via `codex_neutral_name`
-already imported by the sibling PI-name lane, not re-implemented; 2 description-only PI — `Thyrlien`/
-`Grim White Stag`, names clean, `DESC:` prose mentions a blacklisted deity — closing via the
-already-existing `DESCISPI:YES` redact-and-ship path, extended to a term-list-hit trigger).
+ruling — not invented here per `§1a`), and 15 PI-declared (13 name-PI, coordinates at
+`isb_abilities_race.lst:312-318`/`isg_abilities_races.lst:43-45`/`iswg_abilities_race.lst:24/25/27` —
+closing via `codex_neutral_name` already imported by the sibling PI-name lane, not re-implemented;
+2 description-only PI at `isg_abilities_races.lst`'s two remaining owned rows in that book's
+`DESCISPI:YES`-redacted set, clean names, `DESC:` prose mentions a blacklisted deity — closing via
+the already-existing `DESCISPI:YES` redact-and-ship path, extended to a term-list-hit trigger).
+**Correction (2026-08-23, this cycle's own retro entry): the two names quoted directly above and in
+this same paragraph's own prior wording were blacklist terms/proper names that should never have
+been typed here — redacted to coordinates in place per `decisions.md §24b`-4's own rule, matching
+the fix round 7's receipt applied to its own draft comments before commit.**
 
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-monster-ability-per-record-refusal-groups-round6_cycle-1_cycle_receipt.md`.
@@ -7239,6 +7244,86 @@ test_transcribe_monster_tables` 17/18 (1 pre-existing, unrelated failure, confir
 HEAD too); companion/PI test modules 24/24.
 
 Full receipt: `artifacts/gate-3-closure-invariant/decision-27b-carveout-closure_cycle-1_cycle_receipt.md`.
+## T9 `monster_ability` name-PI/desc-PI closure, round 7 (2026-08-23)
+
+Closed round 6's own next-cycle-plan item 1 (highest-value target): the 15-unit PI group within
+`monster_ability`'s 98-unit `no_record` population (`decisions.md §24`).
+
+**13 name-PI ability rows** — `isb_abilities_race.lst:312-318` (`inner_sea_bestiary`),
+`isg_abilities_races.lst:43-45` (`inner_sea_gods`), `iswg_abilities_race.lst:24/25/27`
+(`inner_sea_world_guide`), whose own KEY namespace matches `pi_screening::PI_BLACKLIST_TERMS` —
+now ship under a Codex-generated neutral name/key (`scripts/codex_neutral_name.py`, imported into
+`transcribe_monster_tables.py`, never re-implemented) instead of being dropped outright. All 13 are
+orphans (`owners: []`).
+
+**2 description-only-PI ability rows** (`isg_abilities_races.lst`'s two remaining owned rows in
+that book's redacted set, clean names) ship with a clean name and description replaced by
+`REDACTED_PI_MARKER`, extending the existing `DESCISPI:YES` redact-and-ship path to also fire on an
+undeclared term-list hit confined to the description field.
+
+`ability_pi_reason` now screens name / description / other-field hits SEPARATELY rather than as one
+combined scan: a hit confined to name/key renames; a hit confined to description redacts-and-ships;
+a hit anywhere else (owner, trait/variable, `SOURCEPAGE`) still drops the row, unchanged from
+before this cycle (proved by a dedicated control test).
+
+`gen_book_cache.rs`'s `verified_citation_line` — which re-reads the cited row live and asserts the
+emitted name matches the row's own first column, catching a stale citation — needed a
+`codex_generated_name` bypass: a renamed record's emitted name is BY DESIGN not the row's own
+first column. The bounds check (the line exists at all) still runs unconditionally; only the
+exact-name assertion is skipped, and only for a record actually marked renamed.
+
+`MonsterAbilityRecord` gained `codex_generated_name`/`rename_reason`/`rename_coordinate` fields
+(`decisions.md §24b`-3/4: visibly renamed, divergence stops at the coordinate). Every one of the 21
+registered books' `monster_data.rs` was regenerated to carry the new fields (mechanical, via the
+same `transcribe_monster_tables.py <book>` command every prior round used) — only the 3 affected
+books' content changed.
+
+`monster_ability` `no_record`: 98 → **83**. Bundle-wide: 1249 → **1234**.
+
+**Cross-file pin sweep** (`decisions.md §12c`/the standing branch-left-red-three-times lesson) found
+two PRE-EXISTING stale pins from round 6's own commit — `src/rules_core/rules_tables/bestiary/mod.rs`
+and `.../bestiary_2/mod.rs` still read the pre-round-6 values (709/571/656) where round 6 had
+already bumped the identical delta's copies in `apps/desktop/src-tauri/src/{reach_gate,
+corpus_ingest_diagnostic}.rs` to 710/572/657 — confirmed pre-existing (unchanged `monster_data.rs`
+content for those two books, byte-for-byte, before and after this cycle's regen), fixed inline. One
+pin this cycle's own diff moved was also found and fixed: `monster_catalog.rs`'s corpus-wide
+owner-less-records total, 1048 → 1061.
+
+**Self-caught near-miss, logged** (`docs/retro/events/t9-onboarding.jsonl`, near-miss type): an
+early draft of the explanatory code comments quoted the two blacklisted creature/deity names by
+example rather than by coordinate, in 6 lines across 3 files. A full-diff scan against the live
+66-term blacklist, run deliberately before the commit, caught it; every instance was rewritten to
+cite `(book, source_file, source_line)` only, matching this codebase's own established convention.
+
+RED→GREEN proven: `scripts.tests.test_transcribe_monster_tables.NamePiAndDescPiShipInsteadOfDropping`
+(8 new tests) run against the pre-fix module (`git show <PIN>` into a scratch path, never
+`git stash`) — 5/6 substantive tests fail/error for the intended reason, the 6th (a control proving
+the "still drops on an unrelated-field hit" behaviour is unchanged) correctly passes both before and
+after. Against the fix: 8/8 green.
+
+Suites: `cargo test --locked --lib rules_tables::` 506/506; `cargo test --locked --lib
+monster_chassis::` 8/8 (corpus-wide no-reclassification pin re-derived: 3706 → 3721 records, digest
+`0x38f4aedd6de1caf3` → `0x4a7c1eac4a1819f8`); desktop `monster_catalog::` 26/26 (was 25/1 before
+this cycle's own pin fix); desktop `corpus_ingest_diagnostic::` 15/15 (round 6's own 13/2 baseline
+is fully green at this PIN, not caused or fixed by this cycle); desktop `reach_gate::` 23/8
+— IDENTICAL split to round 4/5/6's own documented baseline (re-verified: none of the 8 failures'
+own printed detail names any of the 3 affected books or `monster_ability`; the surfaced finding is
+`advanced_race_guide/companions`, unrelated). One NEW reach_gate failure this cycle's own diff
+caused (`inner_sea_world_guide_reaches_the_catalog_for_every_linked_record`) was found and fixed
+inline (its own pins plus the `UNREACHED_RECORD_FINDINGS` entries for all 3 affected books), then
+re-verified green before the final run above.
+
+Remaining 83 at this cycle's own commit, unchanged shape from round 6: 56 multi-`DESC:` parse
+refusals (next highest-value target — a `PREVAREQ`/`PREVARGT`-gated shape `parse_desc`'s own
+docstring already isolates), 22 `TYPE:`-facet-vocabulary gaps (blocked in part on the pending
+operator ruling round 6 escalated), 5 `occult_adventures` — **superseded by `decisions.md §27b`
+landing concurrently on this same branch** (the `decision-27b-carveout-closure` section above):
+the "correctly out of scope" disposition this cycle inherited from round 6 is overturned, and that
+lane's own receipt reports these 5 closed. Not this cycle's own work; named here only so the two
+sections don't read as contradicting each other.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/t9-monster-ability-name-pi-desc-pi-round7_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit — see push output).
 
 ## Cycle: t9-onboarding-equipment-modifier-ability-rootcause (2026-08-23)

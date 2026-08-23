@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:41:16Z",
+  "data": {
+    "codex_generated_name": true,
+    "corpus_key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)",
+    "delivery": "Supernatural",
+    "description": "Bubonic Plague: Great claw--injury; save Fort DC %1; onset immediate; frequency 1/day; effect 1d4 damage and target is fatigued; cure 2 consecutive saves.",
+    "description_variables": [
+      "DoUDiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:codex_named_unit_monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24",
+    "name": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)",
+    "owners": [],
+    "rename": {
+      "coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:24",
+      "reason": "name_pi_blocked"
+    },
+    "source_page": "p.310",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 24,
+    "record_key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

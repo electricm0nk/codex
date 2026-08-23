@@ -224,7 +224,16 @@ mod tests {
         // NOT claimed for the 180 — each is pinned by exact key in
         // `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
         // `("bestiary1", "monster_abilities")`.
-        assert_eq!(monster_abilities().len(), 709);
+        // 709 -> 710 (`decisions.md §22`/round 6, +1): the comma-delimiter
+        // `TYPE:` upstream correction resolved `Spectre ~ Create Spawn`'s
+        // facet for the first time -- this file's own pin was missed when
+        // round 6 bumped the identical delta in `apps/desktop/src-tauri/
+        // src/reach_gate.rs` and `corpus_ingest_diagnostic.rs`; re-derived
+        // here, not caused by this cycle's own diff (`git diff --stat` for
+        // `bestiary/monster_data.rs` shows zero deletions, only the 3
+        // trailing `codex_generated_name`/`rename_*` fields appended per
+        // record).
+        assert_eq!(monster_abilities().len(), 710);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -275,7 +284,10 @@ mod tests {
         // see `the_chassis_ships_the_books_complement`'s own comment).
         // 809 -> 989 (`decisions.md §20`, +180 owner-less abilities; see
         // `the_chassis_ships_the_books_complement`'s own comment).
-        assert_eq!(monsters().len() + monster_abilities().len(), 989);
+        // 989 -> 990 (`decisions.md §22`/round 6, +1; see
+        // `the_chassis_ships_the_books_complement`'s own comment on the
+        // identical, previously-unpinned delta here).
+        assert_eq!(monsters().len() + monster_abilities().len(), 990);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the

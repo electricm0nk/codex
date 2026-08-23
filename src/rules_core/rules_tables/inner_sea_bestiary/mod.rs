@@ -106,12 +106,18 @@ mod tests {
         // 152 owned + 28 owner-less (`decisions.md §20`, no_record-to-zero
         // wave 2 follow-on) = 180. The owner-less count is pinned separately
         // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 180 -> 187 (`decisions.md §24`/round 7, +7): 7 ability rows whose
+        // own name/key matched the Product Identity blacklist now ship
+        // under a Codex-generated neutral name/key instead of being dropped
+        // (see `the_product_identity_rows_are_not_records` below, renamed
+        // to reflect the new outcome). All 7 are orphans (`owned`
+        // unchanged) -- no monster row of this book claims them.
         let owned = monster_abilities()
             .iter()
             .filter(|a| !a.owners.is_empty())
             .count();
         assert_eq!(owned, 152);
-        assert_eq!(monster_abilities().len(), 180);
+        assert_eq!(monster_abilities().len(), 187);
     }
 
     /// The shipped total is the classifier's `reachable remainder` **minus the
@@ -142,7 +148,10 @@ mod tests {
         assert_eq!(monsters().len() + owned, 190);
         // 190 owned/reachable + 28 owner-less (`decisions.md §20`) = 218, the
         // book's real total shipped count.
-        assert_eq!(monsters().len() + monster_abilities().len(), 218);
+        // 218 -> 225 (`decisions.md §24`/round 7, +7 owner-less; see
+        // `the_book_ships_thirty_eight_monsters_and_one_hundred_fifty_two_
+        // abilities`'s own comment). `owned` (190) is UNCHANGED.
+        assert_eq!(monsters().len() + monster_abilities().len(), 225);
     }
 
     /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
@@ -169,18 +178,21 @@ mod tests {
 
         assert_eq!(
             unowned.len(),
-            28,
+            35,
             "the number of owner-less (unreachable-by-design) monster_ability records \
              changed — re-derive this pin from a real \
              `scripts/transcribe_monster_tables.py inner_sea_bestiary` run, and update the \
-             matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+             matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set. \
+             28 -> 35 (`decisions.md §24`/round 7, +7): the 7 name-PI ability rows now ship \
+             under a neutral key instead of being dropped -- all 7 are orphans, so they join \
+             this set."
         );
 
         let mut hasher = DefaultHasher::new();
         unowned.hash(&mut hasher);
         let digest = hasher.finish();
         assert_eq!(
-            digest, 0xfb2e_b118_c0c5_f992,
+            digest, 0x0a4e_0e1f_6775_49cd,
             "the owner-less key SET changed (same count, different members) — re-derive and \
              update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
         );
@@ -203,26 +215,54 @@ mod tests {
         }
     }
 
-    /// The Product Identity rows are not records, pinned by the corpus line
-    /// each one is rather than by name — naming them in source is what
-    /// `decisions.md §52.5` records turning a concurrent lane's `pi-sweep` red,
-    /// and `pi-sweep` does not read intent.
-    ///
-    /// Two monster lines and the seven ability lines whose namespace carries a
-    /// deity's proper name.
+    /// The two Product Identity MONSTER rows are still not records, pinned
+    /// by the corpus line each one is rather than by name — naming them in
+    /// source is what `decisions.md §52.5` records turning a concurrent
+    /// lane's `pi-sweep` red, and `pi-sweep` does not read intent. Their own
+    /// name/key carries a Product Identity term outside `§24`'s scope
+    /// (`§24` covers `ability`/`deity`/`class_feature`, not `monster`), so
+    /// they are still dropped, unchanged from before this cycle.
     #[test]
-    fn the_product_identity_rows_are_not_records() {
+    fn the_product_identity_monster_rows_are_not_records() {
         for line in [78u32, 79] {
             assert!(
                 !monsters().iter().any(|m| m.source_line == line),
                 "isb_races.lst:{line} is Product Identity and must not ship"
             );
         }
+    }
+
+    /// **Superseded `decisions.md §24` (T9 round 7).** The seven ability
+    /// lines whose own KEY namespace carried a deity's proper name used to
+    /// be dropped outright (`the_product_identity_rows_are_not_records`,
+    /// this test's prior name and shape). They now SHIP, under a
+    /// Codex-generated neutral name/key derived ONLY from
+    /// `(kind, book, source_file, source_line)` — never from the original
+    /// string — rather than being dropped, per the operator's "ingest them
+    /// with a Codex-generated neutral name" ruling. Pinned by corpus line,
+    /// same reason as the monster-row test above: naming the original in
+    /// source would turn `pi-sweep` red the moment it drifted onto this
+    /// file. `no_shipped_record_carries_a_product_identity_term` below is
+    /// the generic proof that the RENAME actually removed the term; this
+    /// test proves the coordinate-to-record mapping and the marker fields.
+    #[test]
+    fn the_seven_name_pi_ability_rows_ship_renamed_not_dropped() {
         for line in [312u32, 313, 314, 315, 316, 317, 318] {
+            let record = monster_abilities()
+                .iter()
+                .find(|a| a.source_line == line)
+                .unwrap_or_else(|| {
+                    panic!("isb_abilities_race.lst:{line} must ship (renamed, not dropped)")
+                });
             assert!(
-                !monster_abilities().iter().any(|a| a.source_line == line),
-                "isb_abilities_race.lst:{line} is Product Identity and must not ship"
+                record.codex_generated_name,
+                "isb_abilities_race.lst:{line} shipped but was not marked \
+                 `codex_generated_name` -- a renamed record must be visibly renamed \
+                 (`decisions.md §24b`-3)"
             );
+            assert_eq!(record.rename_reason, Some("name_pi_blocked"));
+            assert!(record.name.starts_with("Codex-Named Unit ("));
+            assert_eq!(record.name, record.key);
         }
     }
 

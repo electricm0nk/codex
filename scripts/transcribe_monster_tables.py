@@ -36,6 +36,13 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from codex_neutral_name import (  # noqa: E402
+    divergence_entry,
+    neutral_key,
+    neutral_name,
+)
+
 # Book id -> path of the book's directory relative to the PCGen `data/` root.
 # The two `.lst` file names are read from the inventory units themselves, so
 # they are deliberately NOT repeated here.
@@ -1369,16 +1376,30 @@ def transcribe(book: str) -> str:
     unmodelled_facet: set[str] = set()
 
     # Ability rows whose `DESC:` text is declared Product Identity
-    # (`DESCISPI:YES`) but whose ROW is not otherwise dropped -- these ship,
-    # with `description` (and its variables) replaced by
+    # (`DESCISPI:YES`) OR whose description text carries an undeclared
+    # blacklist-term hit -- either way the ROW is not otherwise dropped:
+    # these ship, with `description` (and its variables) replaced by
     # `REDACTED_PI_MARKER` at emission time below, mirroring
     # `ingest_race_traits.rs`/`ingest_pu_classes.rs`'s "a description CAN be
     # redacted and the record still works" rule (`decisions.md §39.4`). A row
-    # that is ALSO `NAMEISPI:YES` is dropped outright by `ability_pi_reason`
-    # below and never reaches this set -- the name-drop always takes priority
-    # over the description-redact, because a dropped row has no description
-    # to redact.
+    # whose NAME carries PI is renamed, not dropped, either (see
+    # `name_renamed` below) -- a dropped row exists only when a hit lands
+    # in a field neither mechanism can fix.
     desc_redacted: set[str] = set()
+
+    # Ability rows whose bare NAME (an emitted value, not a PCGen
+    # declaration) hits the blacklist term list -- `decisions.md §24`'s "the
+    # name itself is PI" case. Value is `(codex_name, codex_key)`, both
+    # derived ONLY from `(kind, book, source_file, source_line)` via
+    # `scripts/codex_neutral_name.py` -- see that module's own docstring for
+    # the `§24b`-1 proof this cannot be influenced by the original name.
+    # Deliberately narrower than PCGen's OWN `NAMEISPI:YES` declaration
+    # (still handled by the early-return branch below, unchanged: dropped,
+    # not renamed) -- this branch only fires when the ROW ITSELF never
+    # declared its name PI and the term scan found it anyway, which is
+    # exactly the population T9 round 6 named and this cycle closes.
+    name_renamed: dict[str, tuple[str, str]] = {}
+    renamed_divergence: list[dict] = []
 
     def ability_pi_reason(unit: dict) -> str | None:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
@@ -1418,19 +1439,45 @@ def transcribe(book: str) -> str:
         # for the two screens. Every OTHER emitted value is still screened
         # exactly as before.
         desc_declared = token(row, "DESCISPI:") == "YES"
-        if desc_declared:
-            desc_redacted.add(unit["corpus_key"])
-        hits = pi_hits(
+
+        # The name and key are the ONE field a hit here cannot be redacted
+        # away from -- `decisions.md §24` is the fix, screened separately
+        # from every other emitted value so a name-only hit renames rather
+        # than drops.
+        name_hits = pi_hits(terms, unit["corpus_key"], unit["name"])
+        desc_hits = [] if desc_declared else pi_hits(terms, description)
+        other_hits = pi_hits(
             terms,
-            unit["corpus_key"],
-            unit["name"],
-            None if desc_declared else description,
             token(row, "SOURCEPAGE:"),
             *traits,
             *variables,
             *owners[unit["corpus_key"]],
         )
-        return f"{len(hits)} PI_BLACKLIST_TERMS hit(s) in emitted values" if hits else None
+        if other_hits:
+            # A hit outside the name/description fields is not something
+            # either the `§24` rename or the redact-and-ship path can fix
+            # (an owner's name, a trait/variable value) -- unchanged from
+            # the prior behaviour: dropped.
+            return f"{len(other_hits)} PI_BLACKLIST_TERMS hit(s) in emitted values"
+
+        if name_hits:
+            codex_name = neutral_name("monster_ability", book, unit["source_file"], unit["source_line"])
+            codex_key = neutral_key("monster_ability", book, unit["source_file"], unit["source_line"])
+            name_renamed[unit["corpus_key"]] = (codex_name, codex_key)
+            renamed_divergence.append(
+                divergence_entry(
+                    "monster_ability", book, unit["source_file"], unit["source_line"], reason="name_pi_blocked"
+                )
+            )
+            if desc_declared or desc_hits:
+                desc_redacted.add(unit["corpus_key"])
+            return None
+
+        if desc_declared or desc_hits:
+            desc_redacted.add(unit["corpus_key"])
+            return None
+
+        return None
 
     # Monsters first, and the ability screen runs only AFTER their owners are
     # withdrawn. `owners` is an emitted field, so an ability whose owner is a
@@ -1463,6 +1510,13 @@ def transcribe(book: str) -> str:
         # first), but a term-blacklist hit on another field runs AFTER that
         # line, so this cleanup is not a no-op.
         desc_redacted -= dropped_ability_keys
+        # Symmetric safety net for the rename map -- structurally unreachable
+        # today (`ability_pi_reason` returns on `other_hits` before it ever
+        # populates `name_renamed`), kept so a future branch reordering
+        # cannot silently ship a renamed row alongside a drop for the same
+        # key.
+        for key in dropped_ability_keys:
+            name_renamed.pop(key, None)
         # stderr may name the keys: it is a console message, not a checked-in
         # file, and an operator ruling on the exclusion needs to know what was
         # excluded.
@@ -1748,8 +1802,18 @@ def transcribe(book: str) -> str:
     # Finalized against whatever `abilities` actually ships after every screen
     # above (the `.COPY=`/`.MOD`/cross-table/orphan passes can each remove a
     # row this set was computed before) -- an ability no longer shipping has
-    # no description left to redact either.
-    desc_redacted &= {u["corpus_key"] for u in abilities}
+    # no description left to redact either, and one dropped for an unrelated
+    # reason (e.g. `unmodelled_facet`) has no name left to rename.
+    shipping_keys = {u["corpus_key"] for u in abilities}
+    desc_redacted &= shipping_keys
+    name_renamed = {k: v for k, v in name_renamed.items() if k in shipping_keys}
+
+    # Every ability key this table emits, after renaming: the identity a
+    # cross-reference (a monster's own `ability_keys` list) must use to find
+    # a renamed row, because the row's emitted `key` is the neutral one, not
+    # `corpus_key`. Every OTHER key maps to itself.
+    def emitted_ability_key(k: str) -> str:
+        return name_renamed[k][1] if k in name_renamed else k
     if desc_redacted:
         print(
             f"{book}: {len(desc_redacted)} ability row(s) description redacted "
@@ -1797,16 +1861,25 @@ def transcribe(book: str) -> str:
             "//! book are Product Identity and are NOT transcribed -- either because the corpus"
         )
         out.append(
-            "//! row DECLARES it (`NAMEISPI:YES`, PCGen's own per-record marker) or because an"
+            "//! row DECLARES its name Product Identity (`NAMEISPI:YES`, PCGen's own"
         )
         out.append(
-            "//! emitted value carries a `pi_screening::PI_BLACKLIST_TERMS` term. Both land in"
+            "//! per-record marker) or because a `pi_screening::PI_BLACKLIST_TERMS` term lands"
         )
         out.append(
-            "//! the name or key, which is the one field redaction cannot touch. Reclassifying"
+            "//! in a field neither the `§24` rename nor the description-redact path can fix"
         )
         out.append(
-            "//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
+            "//! (an owner's name, a trait/variable value). A hit confined to the name/key or"
+        )
+        out.append(
+            "//! description alone ships instead -- see the renamed/redacted lists below."
+        )
+        out.append(
+            "//! Reclassifying is `docs/governance/ogl-pi-blacklist.md` §3's per-book override,"
+        )
+        out.append(
+            "//! an operator"
         )
         out.append("//! decision, not a transcriber's:")
         # The row is cited by FILE:LINE and never by its key. `pi_table_sweep`
@@ -1821,19 +1894,51 @@ def transcribe(book: str) -> str:
                 f"//!   * `{unit['source_file']}:{unit['source_line']}` "
                 f"({'monster' if unit['kind'] == 'monster' else 'ability'} row, {reason})"
             )
+    if name_renamed:
+        out.append("//!")
+        out.append(
+            f"//! {len(name_renamed)} ability row(s) of this book have their OWN name/key match"
+        )
+        out.append(
+            "//! a `pi_screening::PI_BLACKLIST_TERMS` term -- `decisions.md §24`'s \"the name"
+        )
+        out.append(
+            "//! itself is PI\" case. Each ships under a Codex-generated NEUTRAL name/key"
+        )
+        out.append(
+            "//! derived ONLY from `(kind, book, source_file, source_line)` -- never from the"
+        )
+        out.append(
+            "//! original name, not even transformed -- `scripts/codex_neutral_name.py`. Per"
+        )
+        out.append(
+            "//! `§24b`-4, the divergence record below stops at the coordinate and the reason;"
+        )
+        out.append("//! the original string is never written here:")
+        for entry in sorted(renamed_divergence, key=lambda e: (e["source_file"], e["source_line"])):
+            out.append(
+                f"//!   * `{entry['source_file']}:{entry['source_line']}` "
+                f"-> {entry['codex_name']} ({entry['reason']})"
+            )
     if desc_redacted:
         out.append("//!")
         out.append(
-            f"//! {len(desc_redacted)} ability row(s) of this book DECLARE `DESCISPI:YES` --"
+            f"//! {len(desc_redacted)} ability row(s) of this book carry Product Identity in"
         )
         out.append(
-            "//! their `description` (and its `%N` variables) SHIP REDACTED to"
+            "//! their `description` field ONLY (declared `DESCISPI:YES`, or an undeclared"
         )
         out.append(
-            "//! `shape_b_v1::REDACTED_PI_MARKER` rather than dropped, because a description"
+            "//! `pi_screening::PI_BLACKLIST_TERMS` term found by scanning) -- `description`"
         )
         out.append(
-            "//! (unlike a name) can be redacted and the record still works. Reclassifying is"
+            "//! (and its `%N` variables) SHIP REDACTED to `shape_b_v1::REDACTED_PI_MARKER`"
+        )
+        out.append(
+            "//! rather than dropped, because a description (unlike a name) can be redacted"
+        )
+        out.append(
+            "//! and the record still works. Reclassifying is"
         )
         out.append(
             "//! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
@@ -1842,7 +1947,10 @@ def transcribe(book: str) -> str:
         redacted_units = {u["corpus_key"]: u for u in abilities}
         for key in sorted(desc_redacted):
             unit = redacted_units[key]
-            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({key})")
+            out.append(
+                f"//!   * `{unit['source_file']}:{unit['source_line']}` "
+                f"({emitted_ability_key(key)})"
+            )
     if copy_monsters:
         out.append("//!")
         out.append(
@@ -2038,7 +2146,8 @@ def transcribe(book: str) -> str:
             + "],"
         )
         out.append(
-            f"        ability_keys: {rust_slice(monster_ability_keys[key])},"
+            "        ability_keys: "
+            f"{rust_slice([emitted_ability_key(k) for k in monster_ability_keys[key]])},"
         )
         out.append(f"        external_ability_refs: {rust_slice(external[key])},")
         out.append(
@@ -2080,16 +2189,20 @@ def transcribe(book: str) -> str:
         facet, delivery, traits = parse_type(row)
         description, variables = parse_desc(row)
         if unit["corpus_key"] in desc_redacted:
-            # `DESCISPI:YES` -- the redaction promised by the module doc's
-            # own listing above. The `%N` placeholders in `description` name
-            # variables from the ORIGINAL text, which no longer ships, so
-            # they are cleared too rather than left dangling against a marker
-            # string that contains no `%N` for them to refer to.
+            # `DESCISPI:YES`, or an undeclared blacklist-term hit found by
+            # scanning -- either way the redaction promised by the module
+            # doc's own listing above. The `%N` placeholders in `description`
+            # name variables from the ORIGINAL text, which no longer ships,
+            # so they are cleared too rather than left dangling against a
+            # marker string that contains no `%N` for them to refer to.
             description = redacted_pi_marker()
             variables = []
+        renamed = name_renamed.get(unit["corpus_key"])
+        emitted_key = renamed[1] if renamed else unit["corpus_key"]
+        emitted_name = renamed[0] if renamed else unit["name"]
         out.append("    MonsterAbilityRecord {")
-        out.append(f"        key: {rust_str(unit['corpus_key'])},")
-        out.append(f"        name: {rust_str(unit['name'])},")
+        out.append(f"        key: {rust_str(emitted_key)},")
+        out.append(f"        name: {rust_str(emitted_name)},")
         out.append(f"        facet: MonsterAbilityFacet::{facet},")
         out.append(
             "        delivery: "
@@ -2107,6 +2220,16 @@ def transcribe(book: str) -> str:
         out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
+        # `decisions.md §24b`-3: "a field marks it as carrying a
+        # Codex-generated name". `§24b`-4: the divergence record stops at
+        # the coordinate -- never the original string.
+        out.append(f"        codex_generated_name: {'true' if renamed else 'false'},")
+        out.append(f"        rename_reason: {rust_opt('name_pi_blocked' if renamed else None)},")
+        out.append(
+            "        rename_coordinate: "
+            + rust_opt(f"{book}:{unit['source_file']}:{unit['source_line']}" if renamed else None)
+            + ","
+        )
         out.append("    },")
     out.append("];")
     out.append("")

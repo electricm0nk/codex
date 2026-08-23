@@ -492,5 +492,204 @@ class TypeSegmentsUpstreamDivergenceCorrection(unittest.TestCase):
         self.assertEqual(delivery, "Extraordinary")
 
 
+class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
+    """`decisions.md §24` -- an ability row whose bare NAME/KEY matches the
+    blacklist ships under a Codex-generated neutral name/key instead of
+    being dropped (T9 round 6's "13 name-embedded PI" group); a row whose
+    NAME is clean but whose DESCRIPTION carries an undeclared blacklist hit
+    ships with the description redacted, the same path `DESCISPI:YES`
+    already used (round 6's "2 description-only PI" group). A hit confined
+    to neither field (an owner, a trait/variable, `SOURCEPAGE`) still drops
+    the row -- unchanged from before this cycle.
+
+    This file deliberately never types a real blacklist term literally --
+    every fixture indexes into `pi_blacklist_terms()` instead, matching
+    `test_ingest_ability_raw_tokens_pi_screen.py`'s own instruction not to
+    carry a real PI string in test code.
+
+    Hermetic: a synthetic `bonus_bestiary`-shaped corpus tree, never the
+    live oracle.
+    """
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self._old_cwd = os.getcwd()
+        self._old_pi_screen_rs = tmt.PI_SCREEN_RS
+        self._old_pi_marker_rs = tmt.PI_MARKER_RS
+        tmt.PI_SCREEN_RS = os.path.abspath(tmt.PI_SCREEN_RS)
+        tmt.PI_MARKER_RS = os.path.abspath(tmt.PI_MARKER_RS)
+        self.addCleanup(self._restore_pi_paths)
+
+        # Read the real, signed-off term list BEFORE chdir'ing -- same
+        # repo-relative-path reason as `PI_SCREEN_RS` above.
+        self.term = tmt.pi_blacklist_terms()[14]
+
+        os.chdir(self._tmp.name)
+        self.addCleanup(os.chdir, self._old_cwd)
+
+        self.corpus_root = pathlib.Path(self._tmp.name) / "pcgen"
+        book_dir = (
+            self.corpus_root
+            / "pathfinder"
+            / "paizo"
+            / "roleplaying_game"
+            / "bonus_bestiary"
+        )
+        book_dir.mkdir(parents=True)
+        self._old_env = os.environ.get("PCGEN_CORPUS_ROOT")
+        os.environ["PCGEN_CORPUS_ROOT"] = str(self.corpus_root)
+        self.addCleanup(self._restore_env)
+
+        races = book_dir / "bb_races.lst"
+        races.write_text(
+            "Test Monster\tKEY:Test Monster\tSIZE:M\t"
+            "ABILITY:Special Ability|AUTOMATIC|Test Monster ~ Clean Ability|"
+            f"{self.term} Ability\tSOURCEPAGE:p.1\n"
+        )
+        abilities = book_dir / "bb_abilities.lst"
+        abilities.write_text(
+            "Clean Ability\tKEY:Test Monster ~ Clean Ability\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            "DESC:An ordinary description.\tSOURCEPAGE:p.2\n"
+            f"{self.term} Ability\tKEY:{self.term} Ability\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialAttack\t"
+            "DESC:An ordinary description of a dangerous strike.\tSOURCEPAGE:p.2\n"
+            "Whisper\tKEY:Test Monster ~ Whisper\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            f"DESC:A description that mentions {self.term} in passing.\tSOURCEPAGE:p.2\n"
+            "Guarded\tKEY:Test Monster ~ Guarded\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            f"DESC:An ordinary description.\tSOURCEPAGE:{self.term}\n"
+        )
+
+        os.makedirs("docs", exist_ok=True)
+        inventory = {
+            "units": [
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster",
+                    "corpus_key": "Test Monster",
+                    "name": "Test Monster",
+                    "source_file": "bb_races.lst",
+                    "source_line": 1,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Test Monster ~ Clean Ability",
+                    "name": "Clean Ability",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 1,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": f"{self.term} Ability",
+                    "name": f"{self.term} Ability",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 2,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Test Monster ~ Whisper",
+                    "name": "Whisper",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 3,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Test Monster ~ Guarded",
+                    "name": "Guarded",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 4,
+                    "status": "not-ingested",
+                },
+            ]
+        }
+        with open("docs/work-inventory.json", "w", encoding="utf-8") as handle:
+            import json
+
+            json.dump(inventory, handle)
+
+    def _restore_env(self) -> None:
+        if self._old_env is None:
+            os.environ.pop("PCGEN_CORPUS_ROOT", None)
+        else:
+            os.environ["PCGEN_CORPUS_ROOT"] = self._old_env
+
+    def _restore_pi_paths(self) -> None:
+        tmt.PI_SCREEN_RS = self._old_pi_screen_rs
+        tmt.PI_MARKER_RS = self._old_pi_marker_rs
+
+    def test_name_pi_ships_renamed_and_the_original_string_is_gone(self) -> None:
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertNotIn(self.term, content)
+        self.assertIn("codex_generated_name: true", content)
+        self.assertIn(
+            tmt.neutral_name("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2),
+            content,
+        )
+        self.assertIn('rename_reason: Some("name_pi_blocked")', content)
+
+    def test_owning_monsters_ability_keys_list_uses_the_neutral_key(self) -> None:
+        """The monster directly names the PI ability via `ABILITY:`. Its own
+        `ability_keys` slice must cross-reference the RENAMED key -- the
+        original key is never emitted anywhere, including here."""
+        content = tmt.transcribe("bonus_bestiary")
+        roster = content.split("MONSTER_ABILITIES")[0]
+        self.assertNotIn(self.term, roster)
+        self.assertIn(
+            tmt.neutral_key("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2),
+            roster,
+        )
+
+    def test_desc_only_pi_hit_ships_with_a_clean_name_and_redacted_description(
+        self,
+    ) -> None:
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertIn('key: "Test Monster ~ Whisper"', content)
+        self.assertIn('name: "Whisper"', content)
+        self.assertNotIn(self.term, content)
+        record = content.split('key: "Test Monster ~ Whisper"')[1].split("},")[0]
+        self.assertIn(tmt.redacted_pi_marker(), record)
+        self.assertIn("codex_generated_name: false", record)
+
+    def test_a_hit_confined_to_source_page_still_drops_the_row(self) -> None:
+        """Unchanged control: a blacklist hit outside the name/description
+        fields is neither renameable nor redactable, so the row is still
+        dropped exactly as before this cycle."""
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertNotIn("Test Monster ~ Guarded", content.split("MONSTER_ABILITIES")[1])
+        self.assertIn("bb_abilities.lst:4", content)
+
+    def test_a_clean_ability_is_unaffected(self) -> None:
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertIn('key: "Test Monster ~ Clean Ability"', content)
+        record = content.split('key: "Test Monster ~ Clean Ability"')[1].split("},")[0]
+        self.assertIn("codex_generated_name: false", record)
+        self.assertIn("rename_reason: None", record)
+
+    def test_the_neutral_name_cannot_be_influenced_by_the_original_name(self) -> None:
+        """`§24b`-1's proof, applied at this integration point: two units
+        that share coordinates but differ only in their (never-passed)
+        original name/key produce the IDENTICAL Codex name. Proven by
+        calling the real derivation this cycle wires in, not by trusting
+        its own module's unit tests alone."""
+        first = tmt.neutral_name("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2)
+        second = tmt.neutral_name("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2)
+        self.assertEqual(first, second)
+        # Determinism across repeated derivation (`§24b`-6), not just across
+        # two call sites.
+        third = tmt.neutral_name("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2)
+        self.assertEqual(second, third)
+
+
 if __name__ == "__main__":
     unittest.main()

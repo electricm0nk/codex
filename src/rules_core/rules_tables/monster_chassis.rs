@@ -239,6 +239,20 @@ pub struct MonsterAbilityRecord {
     pub source_file: &'static str,
     /// The 1-based line of [`Self::source_file`] this record was read from.
     pub source_line: u32,
+    /// `true` when [`Self::key`]/[`Self::name`] are a Codex-generated
+    /// neutral identity rather than the printed name (`decisions.md §24`):
+    /// the row's own name matched a Product Identity term, so it ships
+    /// de-identified instead of being dropped. `false` for every
+    /// ordinarily-named record.
+    pub codex_generated_name: bool,
+    /// `Some("name_pi_blocked")` exactly when [`Self::codex_generated_name`]
+    /// is `true`. `§24b`-4: the divergence record stops at the coordinate
+    /// (`Self::source_file`/`Self::source_line`) -- never the original
+    /// string, which is why there is no field here that could carry it.
+    pub rename_reason: Option<&'static str>,
+    /// `Some("<book>:<file>:<line>")` alongside [`Self::rename_reason`] --
+    /// the exact citation the rename applies to.
+    pub rename_coordinate: Option<&'static str>,
 }
 
 /// One monster stat block.
@@ -993,7 +1007,23 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3711,
+            3726,
+            // 3706 -> 3711 (`decisions.md §27b`, +5): `occult_adventures`
+            // registered for the first time, all 5 rows owner-less.
+            // 3711 -> 3726 (`decisions.md §24`/round 7, +15): the T9
+            // name-PI/desc-PI `monster_ability` group closes. 13 rows whose
+            // own name/key matched the blacklist now ship under a
+            // Codex-generated neutral name/key (`decisions.md §24`) rather
+            // than being dropped; 2 rows whose CLEAN name/key had an
+            // undeclared blacklist hit confined to `DESC:` now ship with
+            // the description redacted, the same path `DESCISPI:YES`
+            // already used. Both are strictly additive: no PREVIOUSLY-
+            // SHIPPED triple's facet/delivery moved, only 15 rows that were
+            // previously DROPPED now ship — confirmed by `git diff
+            // --stat`'s 21-book regeneration showing only new
+            // `MonsterAbilityRecord` blocks appended, zero removed, across
+            // the 3 books (`inner_sea_bestiary`, `inner_sea_gods`,
+            // `inner_sea_world_guide`) this group's population lives in.
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -1038,7 +1068,7 @@ mod tests {
              (`occult_adventures`) appended, all 5 rows ship owner-less."
         );
         assert_eq!(
-            digest, 0xc4c1_44e1_483d_297d,
+            digest, 0xc7f5_5369_ed18_7098,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -1067,8 +1097,14 @@ mod tests {
              reclassification, same additive reasoning as rounds 3-5. 0x38f4aedd6de1caf3 -> \
              0xc4c144e1483d297d (`decisions.md §27b`): the sorted triple set gains 5 new \
              members from the newly-registered `occult_adventures` — zero reclassification, \
-             same reasoning as rounds 3-5, only one new `MonsterBook` row appended; re-derived \
-             live from this test's own failing run (never guessed), per `decisions.md §17a`"
+             same reasoning as rounds 3-5, only one new `MonsterBook` row appended. \
+             0xc4c144e1483d297d -> 0xc7f55369ed187098 (`decisions.md §24`/round 7): the digest moves \
+             because the sorted triple set gains 15 more members (the name-PI/desc-PI group \
+             closing) — zero reclassification: every one of the 15 was previously ABSENT from \
+             the set entirely (dropped, not shipped under a different facet), so no existing \
+             triple's facet/delivery value changed; re-derived live from this test's own \
+             failing run after merging both concurrent lanes' changes, never guessed, per \
+             `decisions.md §17a`."
         );
     }
 }

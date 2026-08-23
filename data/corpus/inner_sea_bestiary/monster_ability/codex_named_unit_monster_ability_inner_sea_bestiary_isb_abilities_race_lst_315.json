@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:41:15Z",
+  "data": {
+    "codex_generated_name": true,
+    "corpus_key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315)",
+    "delivery": "Extraordinary",
+    "description": "[redacted PI]",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315",
+    "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315)",
+    "owners": [],
+    "rename": {
+      "coordinate": "inner_sea_bestiary:isb_abilities_race.lst:315",
+      "reason": "name_pi_blocked"
+    },
+    "source_page": "p.46",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 315,
+    "record_key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

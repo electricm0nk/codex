@@ -71,6 +71,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Bat (Sootwing)"],
         source_file: "mc_abilities_race.lst",
         source_line: 71,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seru ~ Poison",
@@ -84,6 +87,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Seru"],
         source_file: "mc_abilities_race.lst",
         source_line: 85,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seru ~ Spit Venom",
@@ -97,5 +103,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Seru"],
         source_file: "mc_abilities_race.lst",
         source_line: 86,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];
