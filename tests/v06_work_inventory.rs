@@ -916,6 +916,18 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // subset it was reading, not the book's figure; see
     // `rules_tables::inner_sea_gods`'s header.
     "inner_sea_gods",
+    // SD-32 Gate 0 book-onboarding (`gate-0-book-onboarding-precondition`,
+    // AT-32-G0-003, `kanban.md` row 4, commit `a50b7da04`): each of these
+    // four books lands its first compiled `RuleSetId` -- `inner_sea_faiths`/
+    // `inner_sea_magic`/`inner_sea_temples` via a new spell family
+    // (`ingest_inner_sea_setting_spells.rs`), `inner_sea_taverns` via the
+    // existing generalised feat gap-row generator. All four move
+    // `future_state` -> `in_scope` the same way every book above this
+    // comment did; this is the fifth lane, not a new exemption shape.
+    "inner_sea_faiths",
+    "inner_sea_magic",
+    "inner_sea_taverns",
+    "inner_sea_temples",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
