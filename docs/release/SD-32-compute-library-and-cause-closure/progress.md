@@ -2331,6 +2331,26 @@ and after this sweep (not "none found" without having run the commands).
   picker), not a T2b-shaped ingest-tool row extension. Proposed target: an operator ruling on
   whether this scope belongs in SD-32 or a successor bundle, per `AGENTS.md` Blocker Discipline
   disposition 2. Full evidence: `artifacts/gate-3-closure-invariant/epic-2-t2b-adoptive-parentage_cycle-1_cycle_receipt.md §9`.
+- 2026-08-23, Cycle `decisions.md §24 / ability-pi-rename` (`epic-2-cause-closure`): while proving
+  the new `§24` rename generator leaks nothing, found **503 of the ~4,248 already-shipped
+  (pre-`§24`, non-`codex_named_unit_*`) `ability` corpus records** carry a Golarion deity/proper-
+  noun name inside `data.key`/`data.raw_tokens` despite a clean bare `data.name` — e.g.
+  `data/corpus/inner_sea_faiths/ability/focused_assassin.json`'s key embeds a deity name between
+  two concept words (not reproduced here — this document is itself under `docs/release/**`, one of
+  the places `§24b`-2 forbids the original from appearing; see the file directly for the exact
+  string). Neither the original ingest screen (checks bare
+  `name` + full `key` against the 60-term `PI_BLACKLIST_TERMS`, which does not include this deity)
+  nor `declared_pi_shipping_audit`'s per-row `NAMEISPI:`/`DESCISPI:` cross-check (that specific
+  row's own declaration is clean; only the compound `KEY` embeds the name) catches this shape.
+  This is a **different defect from `decisions.md §24`'s scope** (name-itself-is-PI, which stops
+  ingestion outright) — here the name is clean and only a secondary field leaks, so it shipped and
+  nothing flagged it. Out of this cycle's granted scope (the 576 name-PI-blocked `ability` units,
+  `deity`, `class_feature`); logged as `scripts/retro.py deferral`
+  `1787491744623-sd32-t9-onboarding-957b2f`. Proposed target: a dedicated audit lane (same
+  audit-before-remediate pattern as `decisions.md §15`/`§18`'s T9 PI review) re-screens every
+  already-shipped record's `key`/`raw_tokens` — not only `name`/`description` — against an expanded
+  deity/proper-noun vocabulary beyond the 60-term list, across `ability` and likely other kinds,
+  before any remediation is designed.
 
 ## Cycle `t9-pi-audit/1` — Card 11, shape T9 — Product-Identity exposure audit, `decisions.md §15`
 
@@ -5195,3 +5215,117 @@ audit on this cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
   behaviour, and picked up 4 new records from `docs/work-inventory.json`'s current state,
   unrelated to this cycle's scope).
 - Commit: `ecfb9986e` (pushed clean, first attempt, `033068f0c..ecfb9986e`).
+
+## 2026-08-23 — `ability`'s 576 name-PI-blocked units ingested under a Codex-generated neutral name (`decisions.md §24`)
+
+**Scope:** the 576 `ability` records `17-ability-pi-skipped.json` previously `§15`-stopped on
+(whole population re-derived, not trusted from the operator brief's `~576` figure: dry-run
+`scripts/ingest_ability.py` against the pinned oracle reports `name_pi_renamed: 576`, matching
+exactly). `deity` (459) and `class_feature` (140, re-derived post-rebase — was 144 in the operator
+brief, moved by a concurrent T2a Domain Power cycle unrelated to this one) are the SAME `§24`
+population and are **NOT done by this cycle** — named as next-cycle scope below, not silently
+dropped.
+
+**Design (`§24a`/`§24b`):** identity derived ONLY from `(kind, book, source_file, source_line)` —
+never from the original PI name, not transformed, not truncated, not hashed.
+`scripts/codex_neutral_name.py` (new) is the shared generator: every public function's signature
+has no name/key/free-text parameter at all, so there is no channel a PI string could enter through
+— proved structurally by `scripts/tests/test_codex_neutral_name.py`'s signature-introspection
+tests, and behaviourally by `§24b`-1's own required test (`test_output_is_unchanged_when_the_pi_name_is_replaced`:
+two records built with different candidate original names at the same coordinates produce the
+identical Codex name).
+
+**`scripts/ingest_ability.py` changes:** the 576 records that previously hit the
+`name_declared or name_hit` skip branch are now ingested. `data.name`/`data.key` become the Codex
+name; `data.codex_generated_name: true` marks the rename visibly (`§24b`-3); `data.rename` records
+`{reason, coordinate}` only — never the original string (`§24b`-4, the refinement of `§22` that
+stops visibility at the coordinate). New `scrub_name_pi_tokens` additionally redacts any OTHER raw
+token whose value restates the record's own original `name`/`key` (or a `~`-delimited segment of
+`key`) — found live this cycle: a row's own `KEY:` token repeated the full original identity
+verbatim even though the pre-`§24` screen only ever checked `NAME`/`DESC`, so the deity name it
+carried would otherwise have shipped unredacted inside `raw_tokens` (`§24b`-2 requires the
+original appear nowhere that ships, not only in the identity column that's dropped by construction).
+
+**Zero-leak proof, two independent methods:**
+1. For all 576 renamed records, the exact original `name` and `key` string (parsed back out of
+   the now-coordinate-only skip-list's pre-edit content) is confirmed absent from that record's own
+   written file — 0/576 leaks.
+2. A full recursive scan of every string value in all 576 written files against the 60-term PI
+   blacklist (`sd32_t9_pi_review_feat_equipment.normalized_term_hit`) returns 0 hits.
+
+Also found and fixed live: this cycle's own first-draft docstrings/tests used one of the 576
+records' real original names as an illustrative example — a leak of exactly the shape `§24b`-2
+forbids (and this document, being under `docs/release/**`, is itself a place that must never carry
+it either — deliberately not naming it here). Caught by grepping the cycle's own new files for the
+skip-list's original strings before commit, and replaced with synthetic placeholder strings.
+**Lesson for future `§24` cycles: grep your OWN new comments/tests/docs for the real original
+strings, not only the generated corpus output.**
+
+**Determinism (`§24b`-6):** regenerated the full `ability` corpus (4,824 files) twice via
+`python3 scripts/ingest_ability.py`, diffed all 47,208 `data/corpus/**/*.json` files byte-for-byte
+(`ingested_at` excluded as wall-clock, not part of the generator's identity derivation) — 0
+mismatches.
+
+**Standing gate adapted (`declared_pi_shipping_audit`, `verify.sh`'s `declared-pi-audit` stage):**
+its `NAME-PI-SHIPPED` check previously flagged ANY shipped record citing a `NAMEISPI:YES` row
+unconditionally — correct pre-`§24`, but it does not know about the new licensed case. Added a
+narrow `codex_generated_name: true` exception, with a paired test proving a record WITHOUT the
+marker is still caught exactly as before (the exception cannot swallow the pre-`§24` defect shape).
+Its `DESC-PI-SHIPPED` field check also widened from exact-match `pi_field == "description"` to
+list-membership, since a renamed record's `pi_field` is now a comma-joined list (e.g.
+`"description,name,raw_tokens"`) when more than one field was redacted.
+
+**`17-ability-pi-skipped.json` reduced to coordinates only** (`§24b`-2: the skip-list named these
+576 records by their PI name/key, which was correct as a stop-list and became a leak the moment
+they shipped). A parallel `24-pi-name-renamed-units.json` divergence log records `{kind, book,
+source_file, source_line, codex_name, reason}` for all 576 — never the original string.
+
+**Result — ingestion and shape-classification reported separately, per `§1a`/`§24c`:**
+`no_record` per kind, `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`,
+before this cycle (post-rebase baseline) vs. after:
+
+| Kind | Before | After |
+|---|---:|---:|
+| `ability` | 576 | **0** |
+| `deity` | 459 | 459 (untouched — next cycle) |
+| `class_feature` | 140 | 140 (untouched — next cycle) |
+
+All 576 formerly-`no_record` `ability` units now land `matched` (128) or `no_formula_tokens` (448)
+join status, spread across shape families F0 (487), F1 (79), F4 (7), F8 (2), F3 (1) — zero
+unclassified. Both halves of `§1a`/`§24c` are therefore closed for this population: the units are
+ingested AND their shapes are actually measured, not merely relabelled.
+
+**Discovered, out of scope, not caused by this cycle:** `declared-pi-audit` reports 28 pre-existing
+violations (`language`/`template` kind records — e.g. `inner_sea_world_guide/language/jistka.json`,
+`book_of_the_damned_volume_2/template/master_of_shapes_haagenti.json`) already present on
+`origin/tranche/12` before this cycle touched anything — confirmed via `git diff --stat HEAD` on
+those exact files (empty) prior to any edit here. Not `ability`/`deity`/`class_feature`, so not
+remediated in this cycle; flagged for a future pass.
+
+**What remains — next-cycle plan:** `deity` (459 units, `scripts/ingest_simple_filename_kinds.py`'s
+module docstring already documents why the whole kind is excluded there — its identity IS a
+deity's proper name in every case, `ogl-pi-blacklist.md §2.1`) and `class_feature` (140 units,
+`src/rules_core/cache_gen/class_feature.rs`'s `name_pi_skipped` counter, no committed name-list —
+enumerating the 140 by coordinate is the first step) both need the identical `§24` treatment this
+cycle applied to `ability`, reusing `scripts/codex_neutral_name.py` unchanged (it is already kind-
+generic). Neither was attempted this cycle for scope reasons, not a blocker.
+
+- **Verification:** `python3 -m unittest scripts.tests.test_codex_neutral_name
+  scripts.tests.test_ingest_ability_pi_rename scripts.tests.test_shape_ledger
+  scripts.tests.test_shape_coverage_standing_gate` — 70/70 GREEN. `cargo test --locked --bin
+  declared_pi_shipping_audit` — 14/14 GREEN (3 new, proving the exception's narrowness).
+  `scripts/shape_coverage_standing_gate.py` — `no_record` 3788→3440 (post-rebase; budget
+  21521/36028 not exceeded, not touched). Unscoped `cargo test --locked --no-fail-fast` NOT run
+  (too large for this turn, per dispatch brief) — scoped builds/tests only.
+- **Kanban:** row 11 stays `in-progress` (card 11's other populations, including this same
+  cycle's own `deity`/`class_feature` residual, are untouched) — entry prepended, merged through a
+  real rebase conflict against a concurrent T2a Domain Power landing (`231d1fe13`).
+- Receipt: this progress.md entry (no separate `artifacts/` receipt file written this cycle —
+  everything load-bearing is in this entry, the divergence log, and the coordinate-only skip-list).
+- Files: `scripts/codex_neutral_name.py` (new), `scripts/tests/test_codex_neutral_name.py` (new),
+  `scripts/tests/test_ingest_ability_pi_rename.py` (new), `scripts/ingest_ability.py` (rename path),
+  `src/bin/declared_pi_shipping_audit.rs` (`codex_generated_name` exception + list-membership
+  `pi_field` check, 3 new tests), `data/corpus/**/ability/*.json` (4,824 regenerated, 576 newly
+  under a `codex_named_unit_*` filename), `17-ability-pi-skipped.json` (reduced to coordinates),
+  `24-pi-name-renamed-units.json` (new divergence log), `kanban.md` row 11.
+- Commit: `e9d02c840` (pushed clean, first attempt after rebase, `231d1fe13..e9d02c840`).
