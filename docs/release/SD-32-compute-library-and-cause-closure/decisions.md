@@ -955,3 +955,76 @@ cycle ingested 190 records by finding an existing config-driven pipeline rather 
 and the facet widening then landed 442 more by extending a vocabulary. Twenty thousand objects is
 not twenty thousand cycles — it is however many distinct ingest mechanisms these eighteen kinds need,
 and several already exist.
+
+## Decision 21 — Duplicate-chooser-picker groups are ruled on as a CLASS, not id by id (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. Answers the escalation in
+`artifacts/gate-0-census-closure/15-card-15-duplicate-identity-review-memo.md`. **Amends SD-31
+`decisions.md` Decision 17's "case by case" posture** for this specific shape — see 21c on why that
+is not a reversal.
+
+### The ruling
+
+> **Operator: A — rule on the class.**
+
+**The rule, in force:**
+
+> Every fallback-key `class_feature` collision group whose members **all** carry a `TYPE:*Choice`
+> facet **and** whose granted targets pairwise coincide is a **duplicate-chooser-picker group, not
+> distinct objects**.
+
+Such groups collapse: the picker rows are the same game concept as the feature they select, and are
+removed from the unit ledger rather than counted as separate objects.
+
+### 21a — What this closes
+
+**39 collision groups, 113 rows, 74 residual ids**, across `advanced_class_guide` (27),
+`ultimate_magic` (7), `advanced_race_guide` (2), `occult_adventures` (2), `monster_codex` (1).
+
+The evidence, traced per group by the review cycle — **grant targets, not adjacency**:
+- ACG's 27 groups: every member's `ABILITY:AUTOMATIC` target is either the Sorcerer chassis feature
+  or the Bloodrager one, **never a third independent target**. The extra rows are Arcanist / Blood
+  Arcanist / Crossblooded archetype pickers for the same feature.
+- The 5 single-chassis groups: all **five** member rows (Sorcerer, Arcanist, Blood Arcanist,
+  Crossblooded, Eldritch Heritage) converge on one target — those races and that monster only ever
+  had a Sorcerer-chassis bloodline. One real feature, five duplicate pickers.
+- `ultimate_magic`'s 7: both rows grant an identical target set, and **all seven surviving rows are
+  already on `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`**. The residual siblings are the other half of
+  pairs the operator already ruled on in Decision 17 — invisible to that audit only because it worked
+  from ids and these rows have none.
+
+**Zero exceptions were found across all 39 groups.**
+
+### 21b — Binding conditions on the implementation
+
+The rule is broader than an id list, so it carries obligations an id list did not need:
+
+1. **The predicate is exactly as stated.** All members carry a `TYPE:*Choice` facet **AND** granted
+   targets pairwise coincide. Both conditions, every member. A group failing either is **not**
+   covered and stays counted.
+2. **Every collapse is logged, never silent.** The implementation emits a committed artifact naming
+   every group it collapses and every row it removes, with book/file/line. Decision 17's real concern
+   was *unreviewed* sweeps; a sweep whose every action is enumerated in a committed file is
+   reviewable after the fact even though it was not reviewed before.
+3. **A test proves the predicate cannot over-reach** — specifically, that a group whose members grant
+   *different* targets is left alone. Prove it goes red by loosening the predicate to adjacency (the
+   rule Decision 17 rejected), then revert.
+4. **This is a denominator change** (`§1a`, "sum the piles"): report units before and after, prove
+   nothing is lost beyond the named collapses, and re-run `scripts/card15_reconcile.py`.
+5. **Scope is `class_feature` fallback-key collisions.** It does not extend to other kinds, to keyed
+   collisions, or to any other duplicate shape without a further ruling.
+
+### 21c — Why this is not a reversal of Decision 17
+
+Decision 17 rejected *"a generic 'same name, adjacent line' rule"*, on the grounds that adjacency is
+a heuristic rather than proof and would sweep in future collisions nobody reviewed. **That objection
+stands, and this rule is not that rule.**
+
+Adjacency asks *"are these two rows near each other?"*. This predicate asks *"do these rows hand the
+player the same thing?"* — a semantic test on `ABILITY:AUTOMATIC` grant targets, which is the
+evidence Decision 17 itself used to confirm its original 33. The class rule generalises Decision 17's
+**reasoning**, not its heuristic.
+
+The residual risk the operator accepted is real and named here: a future group matching this
+predicate collapses without a human reading it. Condition 21b-2 is the mitigation — such a collapse
+is enumerated in a committed artifact, so it is visible in review even though it was automatic.
