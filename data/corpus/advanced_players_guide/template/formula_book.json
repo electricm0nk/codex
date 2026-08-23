@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:11:31Z",
+  "ingested_at": "2026-08-23T15:18:04Z",
   "data": {
     "key": "Formula Book",
     "name": "Formula Book",
@@ -29,5 +29,7 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
 }

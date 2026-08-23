@@ -5848,3 +5848,101 @@ Next-cycle plan: `equipment` (170, root cause untraced) and `equipment_modifier`
 are the natural next targets in this scope; `spell` (285) needs either the
 `gen_cache_spell_lane_dump` self-erasure fix confirmed landed, or a different ingestion path per
 `§17`'s "search for the existing path" discipline.
+### Cycle pi-key-rawtokens-followup — Epic 2 / Card 11 `epic-2-cause-closure`, lane T9 — the two named unowned PI defects closed (3 of 4 leaks + all 28 `NAME-PI-SHIPPED`), one false positive corrected, 9 new leaks found and named
+
+**Defect 1** (4 confirmed cross-kind leaks under the signed-off 60-term blacklist):
+re-derived per `§17a` rather than trusted. Real count was 3 of the 4 named
+(`domain`, `equipment`, `language`) — the 4th (`spell/bard_s_escape.json`) is a
+**false positive** of the audit's own `rn`→`m` OCR-confusion fold colliding
+with an ordinary English word in the record's genuine OGL prose; the term is
+provably absent from the record's actual bytes. Not fixed (correctly `OGL`
+already), reported as a discovery forward — the fold itself is a shared,
+operator-approved scan (`decisions.md §19a`) used across every kind, so
+narrowing it is out of this cycle's scope. The 3 real leaks are fixed at the
+cause, per kind: `domain`/`language` share one cause (`ingest_simple_
+filename_kinds.py` only screened `name`/`description`, never the rest of
+`raw_tokens` — the same `scrub_blacklist_pi_tokens` reuse `ingest_ability.py`
+already proved, now applied unconditionally there and in `ingest_generic_
+kind.py`); `equipment`'s cause was `pi_screening.rs::classify_field`'s
+case-sensitive substring match missing the oracle's own lowercase-possessive
+typo — fixed with one new, verified-unique term addition (60→61), following
+the SAME per-book-override precedent the Inner Sea Gods typo-variant terms
+already established, rather than case-folding the whole scan (which would
+reopen a documented false-positive class for an existing short term).
+**9 MORE confirmed leaks discovered** by the corpus-wide re-scan (25,653
+records, up from 24,051 — sibling `no_record` lanes landed new kinds since
+the original report): `feat_generic` (7, `adventurers_guide`) and
+`monster_generic` (2, `inner_sea_bestiary`), real per direct literal grep
+against the pinned oracle. **Not fixed this cycle** — `ingest_generic_
+kind.py`'s writer is gated on `no_record` ledger status and cannot re-touch
+an already-shipped record the way this cycle's simpler equipment-generator
+fix could; needs its own follow-up. Named in full in the cycle receipt and
+`scripts/retro.py` discovery-forward events, never silently skipped (`§15`).
+
+**Defect 2** (28 pre-existing `NAME-PI-SHIPPED` violations, `language`/`template`):
+root cause was NOT a screening gap (the coordination note's hypothesis) —
+`ingest_simple_filename_kinds.py` correctly detected every one of these 28
+records' declared PI name; the bug was the REMEDIATION shape. Only `deity`
+went through `§24`'s neutral-name path; the other five kinds (`template`,
+`power`, `domain`, `language`, `skill`) used a legacy pre-`§24` branch that
+replaced `name`/`key` with the literal marker string **in place** — a shape
+`declared_pi_shipping_audit.rs` correctly rejects (a key/name's mere presence
+on disk, even marker-redacted, is still the violation). Fixed by removing the
+`always_pi` branch gate entirely: every `name_is_pi` record across all six
+kinds now takes the single `§24` path, reusing `codex_neutral_name.py`/
+`scrub_name_pi_tokens` exactly as `deity`/`ability`/`class_feature` already
+do — no second scheme invented, per the dispatch brief's explicit
+instruction. Regenerated the full `domain`+`language`+`template` population
+(2,567 records); 60 were declared/blacklisted-name PI and now ship as
+`codex_named_unit_*` neutral-name siblings. The rename changes the output
+slug, so the 60 old marker-shaped files were left as orphans by the first
+regen pass — found (`declared_pi_shipping_audit` still failed after
+regenerating) and removed via `git rm` (not hand-edited: cleanup of files the
+same guarded generator superseded, confirmed exact-count against the 60
+renames, not a guess).
+
+**Verified:** `cargo run --locked --bin declared_pi_shipping_audit` →
+`CLEAN — no shipped record contradicts its own corpus row's PI declaration`.
+`python3 scripts/pi_key_rawtokens_audit.py` → `domain`/`equipment`/`language`
+report zero confirmed hits (down from 4; `feat_generic`/`monster_generic`
+report 9, `spell` reports 1 confirmed-false-positive, both named above).
+
+**`no_record` unaffected** — every touched record kept its `(book,
+source_file, source_line)` coordinate (the ledger's join key, not the
+filename); population counts before/after match exactly (183 `domain` / 136
+`language` / 2,248 `template`, `citation_mismatches: []`, `unresolved: []`).
+No unit moved kind, none created or deleted.
+
+**Tests, mutation-proved**: `src/rules_core/pi_screening.rs`'s new test
+proved RED (term removed → assertion fails for the intended reason) then
+GREEN. `scripts/tests/test_pi_key_rawtokens_defect1_regen.py` and
+`scripts/tests/test_declared_pi_shipping_defect2_regen.py` (both new) proved
+RED against `git show HEAD` (pre-fix content still on that commit) and GREEN
+against the current working tree.
+
+**Own-diff PI scrub**: grepped every added line against all 61 blacklist
+terms before pushing; found and fixed 2 real hits in my own explanatory
+prose (a deity name and a 3-letter term, written out literally in comments)
+— rewritten to reference the array by index/coordinate instead. Re-grepped
+clean.
+
+**Gate 3's budget constants — untouched.**
+
+- **Status:** complete.
+- **Kanban:** rows 11 and 15 left `in-progress` (no card-status change this cycle).
+- Receipt: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-followup_cycle-1_cycle_receipt.md`.
+- **Files touched:** `src/rules_core/pi_screening.rs` (term list + 2 new tests),
+  `scripts/ingest_simple_filename_kinds.py`, `scripts/ingest_generic_kind.py`,
+  `docs/governance/ogl-pi-blacklist.md` (new per-book-override section),
+  `scripts/tests/test_pi_key_rawtokens_defect1_regen.py` (new),
+  `scripts/tests/test_declared_pi_shipping_defect2_regen.py` (new),
+  `data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json` (1 file,
+  regenerated), `data/corpus/**/domain/**`, `data/corpus/**/language/**`,
+  `data/corpus/**/template/**` (2,567 regenerated + 60 old marker-shaped
+  files removed as rename orphans).
+- **What remains:** the 9 newly-discovered `feat_generic`/`monster_generic`
+  leaks (needs a `no_record`-ledger-aware re-ingest path — the generator fix
+  is landed but cannot alone reach already-shipped records), and an operator
+  ruling on the `normalized_term_hit` `rn`→`m` OCR-fold's proven
+  false-positive/false-redaction risk (`§17a`-shaped finding against a
+  shared, already-approved instrument).

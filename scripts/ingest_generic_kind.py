@@ -88,6 +88,7 @@ from codex_neutral_name import (  # noqa: E402
 from pi_scrub import (  # noqa: E402
     PI_MARKER_REDACTED,
     REDACTED_PI_MARKER,
+    blacklist_term_hit_including_concatenated,
     scrub_name_pi_tokens,
 )
 
@@ -333,9 +334,36 @@ def main() -> int:
             seeded_books.add(book)
         used = used_by_book[book]
 
+        # `decisions.md §17` gap-close (found live, `pi-key-rawtokens-screen`
+        # follow-up cycle, 2026-08-23, applied here to `<kind>_generic`): a
+        # record whose bare `name`/`description` are clean can still carry a
+        # blacklisted term inside a DIFFERENT raw-token value. Before this
+        # fix, `scrub_name_pi_tokens` below only ran when `name_is_pi` -- a
+        # clean-name record's `raw_tokens` shipped entirely unscanned. Scans
+        # EVERY token value with `blacklist_term_hit_including_concatenated`
+        # (the shared `pi_scrub` module's own blacklist-only check, the same
+        # word-bounded 60-term scan `scrub_name_pi_tokens` uses plus its
+        # concatenated-identifier coverage), independent of whether the name
+        # triggered a rename below.
+        blacklist_extra_redacted = False
+        _scrubbed_for_blacklist: list[dict[str, str]] = []
+        for _t in tokens:
+            _value = _t["value"]
+            if pi_redacted and _t["key"] == "DESC" and _value == REDACTED_PI_MARKER:
+                _scrubbed_for_blacklist.append(dict(_t))
+                continue
+            if _value and blacklist_term_hit_including_concatenated(_value):
+                _scrubbed_for_blacklist.append({"key": _t["key"], "value": REDACTED_PI_MARKER})
+                blacklist_extra_redacted = True
+            else:
+                _scrubbed_for_blacklist.append(dict(_t))
+        tokens = _scrubbed_for_blacklist
+
         fields_redacted: list[str] = []
         if pi_redacted:
             fields_redacted.append("description")
+        if blacklist_extra_redacted:
+            fields_redacted.append("raw_tokens")
 
         if name_is_pi:
             # `decisions.md §24` -- ingest under a Codex-generated neutral
@@ -359,7 +387,7 @@ def main() -> int:
                 "coordinate": f"{book}:{os.path.basename(source_file)}:{line}",
             }
             fields_redacted.append("name")
-            if extra_redacted:
+            if extra_redacted and "raw_tokens" not in fields_redacted:
                 fields_redacted.append("raw_tokens")
         else:
             record_name = name

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:11:36Z",
+  "ingested_at": "2026-08-23T15:18:11Z",
   "data": {
     "key": "Leshy Subdomain",
     "name": "Leshy Subdomain",
@@ -53,5 +53,7 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
 }

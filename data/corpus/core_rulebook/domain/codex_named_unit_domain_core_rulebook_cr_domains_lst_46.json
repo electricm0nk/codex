@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Codex-Named Unit (domain_core_rulebook_cr_domains_lst_46)",
+    "name": "Codex-Named Unit (domain_core_rulebook_cr_domains_lst_46)",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainDeath,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Death Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.DeathDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause the living to bleed at a touch, and find comfort in the presence of the dead."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "[redacted PI]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 46,
+    "record_key": "Codex-Named Unit (domain_core_rulebook_cr_domains_lst_46)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "core_rulebook:cr_domains.lst:46"
+  }
+}

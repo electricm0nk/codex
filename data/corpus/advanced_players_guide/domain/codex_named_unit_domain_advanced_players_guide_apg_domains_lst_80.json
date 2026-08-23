@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Codex-Named Unit (domain_advanced_players_guide_apg_domains_lst_80)",
+    "name": "Codex-Named Unit (domain_advanced_players_guide_apg_domains_lst_80)",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Souls Subdomain ~ Touch the Spirit World|PREVARGTEQ:DomainReposeAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Repose Domain ~ Ward Against Death|PREVARGTEQ:DomainReposeAbilityTriggerLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReposeDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ReposeDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeDC|10+(DomainReposeLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainReposeAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Souls Subdomain=1|Deathwatch|Souls Subdomain=2|Gentle Repose|Souls Subdomain=3|Animate Dead|Souls Subdomain=4|Death Ward|Souls Subdomain=5|Slay Living|Souls Subdomain=6|Antilife Shell|Souls Subdomain=7|Destruction|Souls Subdomain=8|Waves of Exhaustion|Souls Subdomain=9|Trap the Soul"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 80,
+    "record_key": "Codex-Named Unit (domain_advanced_players_guide_apg_domains_lst_80)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "advanced_players_guide:apg_domains.lst:80"
+  }
+}

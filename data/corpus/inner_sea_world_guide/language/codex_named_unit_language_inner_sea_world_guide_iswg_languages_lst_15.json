@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Codex-Named Unit (language_inner_sea_world_guide_iswg_languages_lst_15)",
+    "name": "Codex-Named Unit (language_inner_sea_world_guide_iswg_languages_lst_15)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read.ModernHumanLanguage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_languages.lst",
+    "sha256": "57a704bcfd7c5a859ce74688021feb788803bb82265385701aa4d5abb5cc26d4",
+    "line": 15,
+    "record_key": "Codex-Named Unit (language_inner_sea_world_guide_iswg_languages_lst_15)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_languages.lst:15"
+  }
+}

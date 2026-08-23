@@ -110,7 +110,7 @@ from codex_neutral_name import (  # noqa: E402
     neutral_key,
     neutral_name,
 )
-from ingest_ability import scrub_name_pi_tokens  # noqa: E402
+from ingest_ability import scrub_blacklist_pi_tokens, scrub_name_pi_tokens  # noqa: E402
 
 REDACTED_PI_MARKER = "[redacted PI]"
 
@@ -375,11 +375,46 @@ def main(argv: list[str] | None = None) -> int:
                 v = REDACTED_PI_MARKER + (("|" + tail) if tail else "")
             out_tokens.append({"key": t["key"], "value": v})
 
+        # `decisions.md §17` gap-close (found live, `pi-key-rawtokens-screen`
+        # cycle 2026-08-23): a record whose bare `name`/`description` are
+        # clean can still carry a blacklisted term inside a DIFFERENT
+        # raw-token value -- e.g. a `SPELLLEVEL` token's own
+        # `PREDEITY:1,<deity>` segment. The description-only redaction loop
+        # above never touched those. `scrub_blacklist_pi_tokens` (the same
+        # generic fix `ingest_ability.py` proved) scans EVERY token value
+        # against the SIGNED-OFF 60-term blacklist, independent of whether
+        # the name triggered a rename below. Applied before the rename
+        # branch so a renamed record's `scrub_name_pi_tokens` pass (which
+        # scrubs restatements of the ORIGINAL name/key) runs on top of an
+        # already blacklist-clean token set.
+        out_tokens, blacklist_extra_redacted = scrub_blacklist_pi_tokens(
+            out_tokens, desc_already_redacted=redact_desc
+        )
+
         fields_redacted: list[str] = []
         codex_generated_name = False
         rename_info = None
 
-        if name_is_pi and always_pi:
+        if name_is_pi:
+            # `decisions.md §24` gap-close (found live, `pi-key-rawtokens-
+            # screen` follow-up cycle, 2026-08-23,
+            # `cargo run --bin declared_pi_shipping_audit`'s 28
+            # `NAME-PI-SHIPPED` violations in `language`/`template`): this
+            # branch used to fire ONLY for `always_pi` kinds (`deity`), with
+            # every OTHER `TARGET_KINDS` member falling through to a legacy
+            # pre-§24 path that replaced `name`/`key` with the literal
+            # `REDACTED_PI_MARKER` string in place. `declared_pi_shipping_
+            # audit.rs`'s own check (`§24b`-3's own reasoning: "a key/name
+            # cannot be redacted -- its mere presence on disk IS the
+            # violation") rejects that shape outright: a declared-PI name
+            # must ship under a Codex-generated NEUTRAL name
+            # (`codex_generated_name: true`), never as an in-place marker
+            # substitution, for every kind this script serves, not only the
+            # `always_pi` ones. `always_pi` still exists (it decides
+            # whether a CLEAN-looking name is treated as PI regardless of
+            # declaration/blacklist for `deity`), but no longer decides
+            # WHICH remediation a PI name gets -- there is only one now.
+            #
             # `§24b`-1: derived ONLY from (kind, book, source_file,
             # source_line) -- never from `name`/`corpus_key`. `§24b`-2: any
             # OTHER token restating the original name/key is separately
@@ -401,19 +436,14 @@ def main(argv: list[str] | None = None) -> int:
             }
             renamed_records.append(divergence_entry(kind, book, basename, line_no, reason="name_pi_blocked"))
             name_pi_renamed[kind] += 1
-        elif name_is_pi:
-            # Legacy pre-§24 path for the five kinds `§24` does not cover:
-            # a name cannot be redacted in place, so the whole name/key is
-            # replaced with the standing marker (unchanged behaviour).
-            out_name = REDACTED_PI_MARKER
-            out_key = REDACTED_PI_MARKER
-            fields_redacted.append("name")
         else:
             out_name = name
             out_key = corpus_key
 
         if redact_desc:
             fields_redacted.append("description")
+        if blacklist_extra_redacted and "raw_tokens" not in fields_redacted:
+            fields_redacted.append("raw_tokens")
 
         if fields_redacted:
             license_val = "PI-REDACTED"
@@ -454,7 +484,7 @@ def main(argv: list[str] | None = None) -> int:
             "rename": rename_info,
         }
 
-        slug = slugify(codex_name if (name_is_pi and always_pi) else corpus_key)
+        slug = slugify(codex_name if name_is_pi else corpus_key)
         seen = slug_seen[(book, kind)]
         if slug in seen:
             slug = f"{slug}_{line_no}"

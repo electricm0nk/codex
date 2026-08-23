@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:11:35Z",
+  "ingested_at": "2026-08-23T15:18:10Z",
   "data": {
     "key": "The Shield of the Sun",
     "name": "The Shield of the Sun",
@@ -41,5 +41,7 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
 }

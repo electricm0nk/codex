@@ -247,6 +247,49 @@ not silently diverge from this shared file:
   (SD-32 card 11, not yet dispatched at sign-off time) applies these rules to the
   corpus and writes each affected book's `LICENSE.json` per §5 below.
 
+### Per-book override: Inner Sea Gods, equipment (added by cycle `t9-onboarding`/`pi-key-rawtokens-screen` follow-up, 2026-08-23)
+
+- **One new term added to the shared list** (the term itself is deliberately
+  not repeated here — see `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS`'s
+  own trailing entry, which is this document's actual canonical source, not
+  illustrative text) — classified PI (a deity name, "names and descriptions
+  of characters... personas" per OGL §1(e)), the pinned oracle's OWN
+  lowercase-possessive spelling of an already-blacklisted deity name (index
+  9 of the same array). Found by the corpus-wide `data.key`/`data.raw_tokens`
+  screen (`scripts/pi_key_rawtokens_audit.py`, `pi-key-rawtokens-screen`
+  cycle) confirming `decisions.md §19a`'s own case-fold-normalized Python
+  scan against the SIGNED-OFF list — the production Rust
+  `pi_screening.rs::classify_field` this codebase's `equipment` generator
+  (`src/bin/gen_equipment_gap_tables.rs`) actually runs at ingest time has NO
+  case-fold normalization, so it never caught the oracle's lowercase
+  variant. `isg_equip.lst:232` (the `Wayfinder Of Zephyrs` record's `DESC`
+  token) shipped unredacted in both
+  `data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json`'s
+  `data.description` and its `raw_tokens[DESC]` copy until this fix. Same
+  shape as the Inner Sea Gods override immediately above (an oracle
+  spelling/casing variant of an existing blacklisted deity), same
+  resolution — fold the exact variant into the shared list rather than
+  changing the scan's general matching rule. Verified before folding in:
+  this variant (any case) occurs in exactly one PCGen source file at
+  exactly two lines — one already excluded via that record's own
+  `NAMEISPI:YES` declaration (line 20, an altar item naming the same deity),
+  the other this leak (line 232) — so adding it does not widen redaction
+  anywhere beyond this one record. **A whole-list case-fold was considered
+  and rejected** for the Rust production copy: `PI_BLACKLIST_TERMS` includes
+  a 3-letter term prone to colliding with an ordinary English word once
+  case-folded (the same shape `§2.3a`'s own word-boundary guard exists to
+  prevent, above), and a case-fold without that guard would reopen the
+  identical collision class in the Rust copy — which deliberately has NO
+  word-boundary guard at all, because real corpus identifiers concatenate a
+  PI term into another identifier
+  with no separator (e.g. a class-feature key ending `...LVL` immediately
+  after a deity/place name). A single, verified, narrow term addition
+  carries none of that risk. `PI_BLACKLIST_TERMS` (Rust production copy) is
+  now 61 terms (60 + this one) — one ahead of the script-side copies' 60
+  until a future sign-off cycle folds this addition into `§2.3c` the way
+  the three `§19a` additions were. Re-derive:
+  `cargo test --locked --lib rules_core::pi_screening::tests::term_list_matches_the_reference_copy_plus_the_documented_acg_addition`.
+
 No other entries yet — cycles 2.0.6-2.0.9 (CRB, APG, ACG, Bestiary 1 retro-fits)
 append here as they run.
 

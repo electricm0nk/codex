@@ -69,6 +69,33 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
     // per the same union-not-book-scoped rationale as "Jarn" above.
     "Cayden CaiLean",
     "lrori",
+    // Per-book addition, `ogl-pi-blacklist.md`'s per-book-override
+    // template, same shape as the two additions immediately above: the
+    // `pi-key-rawtokens-screen` cycle's generic `data.key`/`data.raw_tokens`
+    // corpus-wide audit (SD-32 card 11, 2026-08-23) found the pinned
+    // oracle's OWN lowercase-possessive typo of an already-blacklisted
+    // deity name at `isg_equip.lst:232` (coordinate, not the term itself --
+    // see `ogl-pi-blacklist.md`'s per-book-override section for this
+    // addition, which names it) surviving `classify_field`'s
+    // case-SENSITIVE substring scan, because the capitalized canonical
+    // spelling already on this list never matches the oracle's own
+    // lowercase variant. Shipped unredacted in
+    // `data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json`'s
+    // `data.description` and `raw_tokens[DESC]` until this cycle's fix.
+    // Verified before adding: this lowercase variant (any case) occurs in
+    // exactly one PCGen source file at exactly two lines -- one already
+    // `NAMEISPI:YES`-excluded, the other this leak -- so this addition
+    // widens redaction nowhere else. Folded into the shared list per the
+    // same union-not-book-scoped rationale as the two additions above,
+    // rather than case-folding the whole scan (evaluated and rejected: a
+    // whole-list case-fold reopens the exact short-term/ordinary-word
+    // collision `§19a`'s own normalization rule had to add word-boundary
+    // matching to avoid (its own recorded incident, `ogl-pi-blacklist.md
+    // §2.3a`), and this production copy deliberately has NO word-boundary
+    // guard because real corpus identifiers concatenate a PI term into
+    // another word with no separator, e.g. the concatenated identifier
+    // shape `magaambya_is_redacted` below tests against).
+    "gozreh's",
 ];
 
 /// `(license, pi_field, pi_marker, stored_value)` for one free-text field
@@ -270,8 +297,45 @@ mod tests {
         // blacklisted deity names) + 3 SD-32 `decisions.md §19a` amendment
         // 3d additions ("Aldori", "Magaambya", "Magaambyan" -- operator
         // sign-off 2026-08-23, `ogl-pi-blacklist.md` §2.3c), bringing this
-        // production copy to parity with the SIGNED-OFF 60-term list.
-        assert_eq!(PI_BLACKLIST_TERMS.len(), 60);
+        // production copy to parity with the SIGNED-OFF 60-term list, + 1
+        // more per-book addition (`pi-key-rawtokens-screen` cycle,
+        // 2026-08-23, see this array's own trailing entry's comment and
+        // `ogl-pi-blacklist.md`'s per-book-override section for what it is
+        // and why) -- 61 total, one term ahead of the SIGNED-OFF list until
+        // a future sign-off cycle folds this addition into
+        // `ogl-pi-blacklist.md §2.3c`'s own term count the way the three
+        // `§19a` additions were.
+        assert_eq!(PI_BLACKLIST_TERMS.len(), 61);
+    }
+
+    /// The `pi-key-rawtokens-screen` cycle's addition (2026-08-23) redacts
+    /// the oracle's own lowercase-possessive typo of the deity name at
+    /// index 9 -- built HERE by lowercasing that pre-existing entry and
+    /// appending a possessive, never by indexing the new array entry
+    /// itself, so this test independently re-derives the target string
+    /// instead of just echoing back whatever the array's last slot holds
+    /// (a position-based echo would spuriously pass against ANY entry, not
+    /// specifically the one this cycle added -- confirmed live: an
+    /// earlier draft of this test kept passing after the real fix was
+    /// reverted, because it re-read whatever the (now different) last
+    /// entry was rather than this specific derived string). Mutation-proved
+    /// RED with the fix reverted (`git stash`-free repro: temporarily
+    /// deleting this array's last entry), GREEN restored.
+    #[test]
+    fn the_oracle_s_lowercase_possessive_typo_of_the_index_9_deity_is_redacted() {
+        let canonical_deity = PI_BLACKLIST_TERMS[9];
+        let oracle_typo_variant = format!("{}'s", canonical_deity.to_lowercase());
+        let text = format!("engraved with themes of {oracle_typo_variant} oceanic aspect");
+        // Sanity: the pre-existing capitalized entry alone must NOT already
+        // catch this lowercase variant -- otherwise this test would pass
+        // for a reason unrelated to this cycle's addition.
+        assert!(!text.contains(canonical_deity));
+        let (license, ..) = classify_field("description", &text);
+        assert_eq!(
+            license,
+            License::PiRedacted,
+            "the oracle's own lowercase-possessive typo of an already-blacklisted deity name must redact"
+        );
     }
 
     #[test]
