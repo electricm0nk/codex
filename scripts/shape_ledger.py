@@ -434,18 +434,33 @@ def _family_metadata() -> dict:
 
 
 def build_ledger(units: list[dict], corpus_index: dict) -> dict:
-    """Returns {'population', 'rows', 'families', 'unclassified_count'}.
-    `unclassified_count` is structurally always 0 for a non-empty
-    population -- classify_unit never returns a null family -- so its
-    presence at 0 is the AT-32-G1-001/002 gate variable, not a tautology
-    this script could accidentally satisfy: it is 0 because F0/F8 exist as
-    real, counted, honestly-labelled families, not because nothing was
-    checked."""
+    """Returns {'population', 'rows', 'families', 'unclassified_count',
+    'join_status_counts'}. `unclassified_count` is structurally always 0
+    for a non-empty population -- classify_unit never returns a null
+    family -- so its presence at 0 is the AT-32-G1-001/002 gate variable,
+    not a tautology this script could accidentally satisfy: it is 0
+    because F0/F8 exist as real, counted, honestly-labelled families, not
+    because nothing was checked.
+
+    `join_status_counts` (decisions.md §14b) is the honest split that
+    `unclassified_count`/`families` alone hides: F0 (20,113 of 24,914,
+    81%) conflates two different populations its own proof-width text
+    distinguishes -- `no_record` ("the join found nothing", 10,419) vs.
+    `no_formula_tokens` ("found a record, it carries no DEFINE/BONUS",
+    9,694) -- plus `matched` (4,801, the only status resting on a real
+    corpus record). A quoted `unclassified_count: 0` without this split
+    is a bare total under `decisions.md §12c`; this field is what every
+    caller (this script's own printed output, the standing gate, the
+    family-vocabulary reconciliation, and every AT-32-G1-* criterion that
+    quotes a coverage figure) must surface alongside it."""
     rows = [classify_unit(u, corpus_index) for u in units]
     meta = _family_metadata()
     counts: dict[str, int] = {}
+    join_status_counts: dict[str, int] = {}
     for row in rows:
         counts[row["family"]] = counts.get(row["family"], 0) + 1
+        status = row.get("join_status") or "unknown"
+        join_status_counts[status] = join_status_counts.get(status, 0) + 1
     families = {
         fid: {
             "label": meta.get(fid, {}).get("label", ""),
@@ -461,6 +476,7 @@ def build_ledger(units: list[dict], corpus_index: dict) -> dict:
         "families": families,
         "unclassified_count": len(unclassified),
         "unclassified": [r["id"] for r in unclassified],
+        "join_status_counts": join_status_counts,
     }
 
 
@@ -492,6 +508,22 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"population (not-done units considered): {ledger['population']}")
     print(f"unclassified: {ledger['unclassified_count']}")
+    # decisions.md §14b: a bare unclassified_count/family total hides that
+    # only `matched` rests on a real corpus record -- `no_record` and
+    # `no_formula_tokens` both collapse into F0 above but mean different
+    # things (join found nothing vs. join found a record with no formula).
+    jsc = ledger.get("join_status_counts", {})
+    matched = jsc.get("matched", 0)
+    no_record = jsc.get("no_record", 0)
+    no_formula_tokens = jsc.get("no_formula_tokens", 0)
+    pop = ledger["population"] or 1
+    print(
+        "join-status split (decisions.md §14b -- this is the honest coverage "
+        "figure, not the family rollup below on its own):"
+    )
+    print(f"  matched            {matched:>7}  ({100.0 * matched / pop:.1f}%)  -- rests on a real corpus record")
+    print(f"  no_formula_tokens  {no_formula_tokens:>7}  ({100.0 * no_formula_tokens / pop:.1f}%)  -- record found, carries no DEFINE/BONUS")
+    print(f"  no_record          {no_record:>7}  ({100.0 * no_record / pop:.1f}%)  -- join found no corpus record at all")
     print()
     print("family rollup:")
     for fid, info in sorted(ledger["families"].items()):

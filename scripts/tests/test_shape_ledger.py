@@ -208,6 +208,27 @@ class BuildLedgerTest(unittest.TestCase):
         self.assertIn(SL.FAMILY_F0_NO_FORMULA, ledger["families"])
         self.assertIn("F3", ledger["families"])
 
+    def test_join_status_counts_reconciles_to_population(self):
+        """decisions.md §14b: a bare unclassified_count/family total hides
+        that F0 conflates no_record ("join found nothing") and
+        no_formula_tokens ("found a record with no DEFINE/BONUS"). This
+        aggregate must be present and must sum back to the population."""
+        units = [
+            _unit("b:spell:no-record", "spell", "b", "not-started", "static", "missing.lst", 1),
+            _unit("b:spell:no-formula", "spell", "b", "not-started", "static", "empty.lst", 1),
+            _unit("b:spell:matched", "spell", "b", "not-started", "static", "f.lst", 1),
+        ]
+        index = {
+            ("b", "empty.lst", 1): [],
+            ("b", "f.lst", 1): [{"key": "BONUS", "value": "VAR|Foo|WIS"}],
+        }
+        ledger = SL.build_ledger(units, index)
+        jsc = ledger["join_status_counts"]
+        self.assertEqual(jsc.get("no_record"), 1)
+        self.assertEqual(jsc.get("no_formula_tokens"), 1)
+        self.assertEqual(jsc.get("matched"), 1)
+        self.assertEqual(sum(jsc.values()), ledger["population"])
+
 
 class FailClosedOnEmptyTest(unittest.TestCase):
     """AT-32-G1-002: the shape ledger fails closed on empty predicates."""

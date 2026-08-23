@@ -1482,6 +1482,58 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   `companion`/`monster_ability` residuals, and T4's L9 (471 units, needs a feat-held reachability
   gate). Receipt: `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-4_consolidation_cycle_receipt.md`.
 
+### Cycle 002-reclose — Gate 1 (card 5) + Gate 3 (card 9) reclosure (`decisions.md §14`)
+
+Responds to `decisions.md §14a`/`§14b`, the finding of record that reopened both gates (verified
+twice: card 15's Opus adversarial verifier, then the orchestrating session, both against the
+repo-local pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`).
+
+**§14b — Gate 1 (card 5).** `shape_ledger.build_ledger()` now returns `join_status_counts`
+(matched/no_formula_tokens/no_record), surfaced in `shape_ledger.py`'s own printed output,
+`ledger.json`, the Gate 3 standing gate's report, and a new "§0 Join-status split" section in
+`family-vocabulary.md`. Re-derived over the unchanged 24,914-unit population, same corpus SHA:
+matched 4,801 (19.3%) / no_formula_tokens 9,694 (38.9%) / no_record 10,419 (41.8%) — exact match to
+`decisions.md §14b`, no correction needed. F0 unchanged (not deleted/renamed/subsumed). New
+AT-32-G1-004 in `acceptance-and-verification.md` requires the split on every quoted coverage
+figure going forward.
+
+**§14a — Gate 3 (card 9).** The prior AT-32-G3-001 red-proof `mock.patch`ed
+`shape_ledger.build_ledger` to fabricate a `family: None` row, a state no real object can ever
+reach. That test class is deleted, not retained alongside a fix. The gate's real invariant is now
+`join_status == "no_record"` — a unit whose join finds no corpus record is precisely "an object no
+shape covers" — enforced as a committed, explicitly-shrinking budget on `no_record`'s share of the
+population (`NO_RECORD_BUDGET_COUNT=10419`/`NO_RECORD_BUDGET_POPULATION=24914`, integer
+cross-multiplication). The orchestrator's own reproduction, re-run unmodified through the real
+`run_gate` path (`corpus_root='/nonexistent'`, no patching): **before this fix, `exit 0, PASS`;
+after, `exit 1, FAIL` (`no_record_budget_exceeded: True`)**. The real full 24,914-unit population
+still passes (`no_record` sits exactly at the committed baseline, not above it).
+
+- **Suites, live run:**
+  ```
+  $ cargo test --locked --lib
+  test result: ok. 2388 passed; 0 failed; 13 ignored
+
+  $ cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml
+  test result: ok. 516 passed; 0 failed; 0 ignored
+
+  $ scripts/verify.sh --only shape-coverage-standing-gate
+  PASS  shape-coverage-standing-gate  (population=24914 unclassified=0 no_record=10419 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+
+  $ scripts/verify.sh --only shape-coverage-standing-gate-selftest
+  PASS  shape-coverage-standing-gate-selftest  (12 cases passed)
+  ```
+- **Dual-audit:** clean isolated to this cycle's own diff against the pinned base (`2368cc4dd..HEAD`)
+  — `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`. The protocol-defined `BASE_BRANCH=$(git merge-base HEAD
+  origin/develop)` diff flags "placeholder" twice, both pre-existing AT-32-G1-002/G3-002 doctrine
+  prose unchanged by this cycle (the whole `docs/release/SD-32-...` tree reads as "added" against
+  `develop` since the bundle is unmerged — every SD-32 cycle's audit hits this same noise on this
+  file).
+- **Retro:** `rework` event logged (`docs/retro/events/gates-1-3-reclose.jsonl`).
+- **Receipt:** `artifacts/gate-3-closure-invariant/002_reclose_cycle_receipt.md` (full transcript).
+- **Next-cycle plan:** card 11's T2b/T9 book-onboarding work (`decisions.md §13`, already open) is
+  what lets a future cycle tighten `NO_RECORD_BUDGET_COUNT` downward as real `no_record` units gain
+  corpus records.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,

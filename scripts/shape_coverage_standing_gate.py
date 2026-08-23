@@ -41,13 +41,39 @@ script adds on top:
 `classify_unit()` in `shape_ledger.py` structurally never returns an
 uncovered family -- it falls through to F0 (no formula content) or F8
 (residual) rather than ever emitting `None` -- so on a real inventory
-`unclassified_count` can never organically go non-zero today. That is Gate
-1's own closed-vocabulary design, not a loophole in this gate: AT-32-G3-001
-requires this gate to be *capable* of going red when an uncovered object
-appears, and `scripts/tests/test_shape_coverage_standing_gate.py` proves
-that capability with a FABRICATED uncovered row (the same "prove it can
-fail before it is trusted" discipline `test_reachability_audit.py` uses),
-since the real inventory cannot exercise that path by itself.
+`unclassified_count` can never organically go non-zero. **`decisions.md`
+§14a is the finding of record on this: a prior version of this gate was
+accepted on a red-proof that `mock.patch`ed `shape_ledger.build_ledger` to
+fabricate a row with `family: None`, which cannot occur for any real
+object -- 80 fabricated units pointing at a nonexistent corpus file
+returned `exit 0, PASS`.** A gate proven red only by patching the code
+under test is worse than no gate (`decisions.md` §1a): it reports safety
+it does not provide.
+
+**The real, organically-reachable invariant is `join_status == "no_record"`
+(`decisions.md` §14b)** -- a unit whose (book, source_file, source_line)
+join finds no corpus record at all is precisely "an object no shape
+covers" (AT-32-G3-001's own text), reachable through the real
+`classify_unit`/`build_corpus_index` path with no patching: point a real
+unit at a real-shaped but non-existent corpus location and the join
+organically fails. Because 10,419 of the current 24,914-unit population
+are already `no_record` (a book-onboarding backlog this cycle does not
+close -- `decisions.md` §14c item 3), the gate cannot demand `no_record ==
+0` yet without being permanently red for a reason unrelated to a
+regression. Instead it enforces a **committed, explicitly-shrinking
+budget**: `no_record`'s *share* of the population may not exceed the
+pinned baseline share (`NO_RECORD_BUDGET_COUNT` /
+`NO_RECORD_BUDGET_POPULATION` below, re-derived from `decisions.md` §14b
+at the time this invariant was written). A run whose `no_record` share
+rises above that baseline -- whether from a regression in the join, a
+newly-added population with no corpus coverage, or the reproduction case
+below -- now fails the gate. A future cycle that closes real `no_record`
+units (card 11's T2b/T9 book-onboarding work) tightens the budget
+constants downward; nothing in this gate lets the budget rise.
+`scripts/tests/test_shape_coverage_standing_gate.py` proves this
+organically, by feeding real (if synthetic) units through the real
+`run_gate`/`build_ledger`/`classify_unit` path with an unreachable corpus
+root -- never by patching `build_ledger` or any other code under test.
 
 Usage
 -----
@@ -79,6 +105,22 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_INVENTORY = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
 DEFAULT_CORPUS_ROOT = os.path.join(REPO_ROOT, "data", "corpus")
 PIN_FILE = os.path.join(REPO_ROOT, "scripts", "pcgen-oracle-pin.env")
+
+# decisions.md §14a/§14b -- the committed, explicitly-shrinking no_record
+# budget. Re-derive: `python3 scripts/shape_ledger.py --inventory
+# docs/work-inventory.json --output /tmp/l.json && python3 -c "import
+# json,collections; r=json.load(open('/tmp/l.json'))['rows'];
+# print(collections.Counter(x['join_status'] for x in r))"` -> no_record
+# 10419, matched 4801, no_formula_tokens 9694, population 24914 (2026-08-22,
+# corpus SHA 7f818006e371188e5717fd18d74d18a420747fc6). A run's no_record
+# SHARE of its population may never exceed this baseline share -- compared
+# by integer cross-multiplication (no_record_count * BUDGET_POPULATION >
+# BUDGET_COUNT * population) to avoid float rounding at the boundary. This
+# number only ever moves DOWN, when a future cycle actually closes
+# no_record units (card 11's T2b/T9 book-onboarding backlog) -- never up to
+# accommodate a regression.
+NO_RECORD_BUDGET_COUNT = 10419
+NO_RECORD_BUDGET_POPULATION = 24914
 
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 import shape_ledger as SL  # noqa: E402
@@ -121,7 +163,12 @@ def _load_inventory(inventory_path: str | None) -> dict:
         return json.load(fh)
 
 
-def run_gate(inventory, corpus_root: str) -> tuple[int, dict]:
+def run_gate(
+    inventory,
+    corpus_root: str,
+    no_record_budget_count: int = NO_RECORD_BUDGET_COUNT,
+    no_record_budget_population: int = NO_RECORD_BUDGET_POPULATION,
+) -> tuple[int, dict]:
     """Runs the standing gate against an already-loaded inventory dict (or
     a path -- see below) and a corpus root. Returns (exit_status, report).
 
@@ -129,7 +176,13 @@ def run_gate(inventory, corpus_root: str) -> tuple[int, dict]:
     and any Python caller uses) or a string path (loaded here) or None
     (falls back to _load_inventory's stdin/default resolution) -- this
     keeps `main()`'s CLI plumbing and the test suite's direct calls sharing
-    one code path rather than two independently-maintained ones."""
+    one code path rather than two independently-maintained ones.
+
+    `no_record_budget_count`/`no_record_budget_population` default to the
+    committed module-level baseline (decisions.md §14b) but are overridable
+    -- the test suite uses a tight override to prove the invariant goes
+    red on a small, real (non-mocked) population without needing tens of
+    thousands of synthetic rows."""
     if not isinstance(inventory, dict):
         try:
             inventory = _load_inventory(inventory)
@@ -152,6 +205,23 @@ def run_gate(inventory, corpus_root: str) -> tuple[int, dict]:
     corpus_index = SL.build_corpus_index(corpus_root, books)
     ledger = SL.build_ledger(units, corpus_index)
 
+    return evaluate_ledger(ledger, no_record_budget_count, no_record_budget_population)
+
+
+def evaluate_ledger(
+    ledger: dict,
+    no_record_budget_count: int = NO_RECORD_BUDGET_COUNT,
+    no_record_budget_population: int = NO_RECORD_BUDGET_POPULATION,
+) -> tuple[int, dict]:
+    """Pure evaluation step: takes an already-built ledger dict (the shape
+    `shape_ledger.build_ledger` returns) and applies the three gate
+    invariants, with no knowledge of how the ledger was produced. Split out
+    of `run_gate` so the test suite can exercise each invariant -- including
+    a deliberately malformed ledger for the sum-the-piles regression check
+    -- by constructing a plain dict and calling this function directly,
+    never by mocking or monkeypatching `shape_ledger.build_ledger` or any
+    other code under test (decisions.md §14a: patching the thing under test
+    to force red is exactly the defect this gate was reopened for)."""
     # Sum-the-piles: the per-family rollup must add back to exactly the
     # population considered -- an independent check from unclassified_count,
     # catching a build_ledger regression that silently drops rows from the
@@ -160,14 +230,32 @@ def run_gate(inventory, corpus_root: str) -> tuple[int, dict]:
     piles_reconcile = family_total == ledger["population"]
     unclassified_count = ledger["unclassified_count"]
 
-    ok = piles_reconcile and unclassified_count == 0
+    # decisions.md §14a/§14b -- the real, organically-reachable closure
+    # invariant: no_record's SHARE of the population may not exceed the
+    # committed baseline share. Integer cross-multiplication avoids float
+    # rounding at the exact-baseline boundary (the real full population is
+    # currently AT the baseline, not below it, so a float `>` could flip
+    # sign on rounding).
+    join_status_counts = ledger.get("join_status_counts", {})
+    no_record_count = join_status_counts.get("no_record", 0)
+    population = ledger["population"]
+    no_record_budget_exceeded = (
+        no_record_count * no_record_budget_population > no_record_budget_count * population
+    )
+
+    ok = piles_reconcile and unclassified_count == 0 and not no_record_budget_exceeded
 
     report = {
-        "population": ledger["population"],
+        "population": population,
         "unclassified_count": unclassified_count,
         "family_total": family_total,
         "piles_reconcile": piles_reconcile,
         "families": {fid: info["count"] for fid, info in ledger["families"].items()},
+        "join_status_counts": join_status_counts,
+        "no_record_count": no_record_count,
+        "no_record_budget_count": no_record_budget_count,
+        "no_record_budget_population": no_record_budget_population,
+        "no_record_budget_exceeded": no_record_budget_exceeded,
         "corpus_sha": read_oracle_sha(),
     }
     return (0 if ok else 1), report
@@ -182,9 +270,26 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--corpus-root", default=DEFAULT_CORPUS_ROOT, help="path to data/corpus")
     parser.add_argument("--output", help="write the full report as JSON to this path")
+    parser.add_argument(
+        "--no-record-budget-count",
+        type=int,
+        default=NO_RECORD_BUDGET_COUNT,
+        help="committed no_record budget numerator (decisions.md §14b default)",
+    )
+    parser.add_argument(
+        "--no-record-budget-population",
+        type=int,
+        default=NO_RECORD_BUDGET_POPULATION,
+        help="committed no_record budget denominator (decisions.md §14b default)",
+    )
     args = parser.parse_args(argv)
 
-    status, report = run_gate(args.inventory, args.corpus_root)
+    status, report = run_gate(
+        args.inventory,
+        args.corpus_root,
+        no_record_budget_count=args.no_record_budget_count,
+        no_record_budget_population=args.no_record_budget_population,
+    )
 
     if "error" in report:
         print(report["error"], file=sys.stderr)
@@ -196,6 +301,18 @@ def main(argv: list[str] | None = None) -> int:
         f"piles reconcile: {report['piles_reconcile']} "
         f"({report['family_total']} families-total == {report['population']} population)"
     )
+    jsc = report.get("join_status_counts", {})
+    print(
+        "join-status split (decisions.md §14b): "
+        f"matched={jsc.get('matched', 0)} "
+        f"no_formula_tokens={jsc.get('no_formula_tokens', 0)} "
+        f"no_record={report['no_record_count']}"
+    )
+    print(
+        f"no_record budget: {report['no_record_count']}/{report['population']} vs. baseline "
+        f"{report['no_record_budget_count']}/{report['no_record_budget_population']} -- "
+        f"exceeded: {report['no_record_budget_exceeded']}"
+    )
     print(f"corpus SHA: {report.get('corpus_sha') or 'unknown'}")
     print()
     print("family rollup:")
@@ -205,8 +322,9 @@ def main(argv: list[str] | None = None) -> int:
     if status != 0:
         print(
             "shape-coverage-standing-gate: FAIL — an object appears that no "
-            "shape covers, or the per-family piles do not reconcile to the "
-            "population",
+            "shape covers, the per-family piles do not reconcile to the "
+            "population, or the no_record share exceeds its committed "
+            "budget (decisions.md §14a/§14b)",
             file=sys.stderr,
         )
 

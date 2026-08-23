@@ -72,12 +72,25 @@ When the shape ledger (`scripts/shape_ledger.py`, Gate 1 deliverable) runs again
 
 Then every unit in the closed census maps to one of the ten semantic families from SD-31 wave 31,
 **or** the vocabulary is honestly extended — the family is added with measured units behind it,
-not silently subsumed under another family.
+not silently subsumed under another family. **`unclassified_count: 0` alone does not satisfy this
+criterion** (`decisions.md` §14a/§14b, finding of record from the 2026-08-22 reclosure): F0 ("no
+formula content") collapses three structurally different populations — `matched` (a real corpus
+record with a formula), `no_formula_tokens` (a real corpus record with none), and `no_record` (the
+join found no corpus record at all, i.e. absence of evidence, not evidence of no formula). A
+statement of this criterion being met must quote the `join_status` split alongside
+`unclassified_count`, not `unclassified_count` alone.
 
 **AT-32-G1-002.** The shape ledger fails closed on empty predicates, mirroring
 `scripts/coverage_ledger.py`'s posture. A placeholder family with zero units behind it cannot
 manufacture false 100% coverage. The verification command's exit code is the gate; "the script
 ran and reported 100%" without a non-zero-on-empty proof is out of protocol.
+
+**AT-32-G1-004** (added `decisions.md` §14b). Every quoted statement of Gate 1's coverage — in the
+ledger's own printed output, `ledger.json`, the Gate 3 standing gate's output,
+`family-vocabulary.md`'s canonical table, and this file's own criteria — carries the `join_status`
+split (`matched` / `no_formula_tokens` / `no_record`) alongside any `unclassified_count` or family
+total it names, per `decisions.md` §12c (no bare totals). F0 itself is not deleted, renamed, or
+subsumed to satisfy this — the split is surfaced *in addition to* F0, not instead of it.
 
 **AT-32-G1-003.** Each family carries a stated proof width: which corpus shapes the proof does
 and does not cover. The ten families are documented with their measured unit populations in
@@ -91,6 +104,11 @@ out of protocol — the SD-31 wave 21 lesson (proof width gap → 73.4% fabricat
 python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
   --output artifacts/gate-1-shape-closure/ledger.json
 test "$(jq -r '.unclassified_count' artifacts/gate-1-shape-closure/ledger.json)" = "0"
+
+# AT-32-G1-004: the join-status split, not unclassified_count alone
+# (decisions.md §14b) -- expect matched=4801 no_formula_tokens=9694
+# no_record=10419 at the pinned corpus SHA.
+jq -r '.join_status_counts' artifacts/gate-1-shape-closure/ledger.json
 
 # Closed-on-empty proof
 python3 scripts/shape_ledger.py --inventory /dev/null 2>&1 | grep -q "no coverage" \
@@ -237,7 +255,18 @@ not a `src/bin/` target (`technical-design.md` Gate 2).
 **AT-32-G3-001.** A standing test exists (`scripts/shape_coverage_standing_gate.py` or wired into
 `scripts/verify.sh` as a real stage, named `shape-coverage-standing-gate` or equivalent) that goes
 red when any object appears that no shape covers. The gate runs on every `scripts/verify.sh`
-invocation — not on demand, not as a courtesy check.
+invocation — not on demand, not as a courtesy check. **The red-proof must reach this state through
+the real classification path (real `classify_unit`/`build_corpus_index`/`build_ledger`), never by
+patching `shape_ledger.build_ledger` or any other code under test to fabricate it**
+(`decisions.md` §1a/§14a, finding of record: the prior version of this criterion was accepted on a
+`mock.patch`-based proof that could not occur for any real object — 80 fabricated units returned
+`exit 0, PASS`). The real, organically-reachable invariant is `join_status == "no_record"`: a unit
+whose join finds no corpus record is precisely "an object no shape covers." Because 10,419 of the
+current 24,914-unit population are already `no_record` and cannot be closed to zero within this
+cycle, the gate enforces a **committed, explicitly-shrinking budget** on `no_record`'s share of the
+population (`NO_RECORD_BUDGET_COUNT`/`NO_RECORD_BUDGET_POPULATION` in
+`scripts/shape_coverage_standing_gate.py`) rather than demanding zero outright; the budget only
+ever tightens as future work closes real `no_record` units, never loosens to admit a regression.
 
 **AT-32-G3-002.** The gate fails closed on an empty predicate. A placeholder shape with zero units
 behind it cannot manufacture false coverage; a placeholder predicate with zero matches cannot
@@ -248,6 +277,9 @@ manufacture false 100%. The verifier itself is part of the proof.
 
 * Names the per-family unit count at closure.
 * Names the unclassified count (must be zero for Gate 3 to be met).
+* Names the `join_status` split (`matched`/`no_formula_tokens`/`no_record`) and states whether the
+  `no_record` share is within its committed budget (`decisions.md` §14b) — not just
+  `unclassified_count`.
 * Names the corpus SHA (`scripts/pcgen-oracle-pin.env`'s `PCGEN_ORACLE_SHA`) against which the
   count was re-derived, read from the repo-local slot `artifacts/corpus/operator-supplied/pcgen`.
 
@@ -264,6 +296,17 @@ scripts/verify.sh --only shape-coverage-standing-gate 2>&1 | tee \
 # Closed-on-empty proof
 echo '{}' | python3 scripts/shape_coverage_standing_gate.py 2>&1 | grep -q "no coverage" \
   && echo "GATE_G3_FAILS_CLOSED_ON_EMPTY_OK"
+
+# AT-32-G3-001 red-proof, through the REAL path -- no mock.patch anywhere.
+# 80 real units across 8 kinds, all pointing at a nonexistent corpus file;
+# corpus_root itself is unreachable, so the join organically produces
+# no_record rows. Must now be nonzero exit / no_record_budget_exceeded:
+# true (before this fix: exit 0, PASS -- decisions.md §14a).
+python3 -c "
+import sys; sys.path.insert(0,'scripts')
+import shape_coverage_standing_gate as G
+u=[{'id':f'b:{k}:{i}','kind':k,'book':'b','status':'not-started','wiring_class':'static','source_file':'totally_fake_file.lst','source_line':i} for k in ('ability','skill','template','deity','power','domain','language','kit') for i in range(1,11)]
+print(G.run_gate({'units':u}, corpus_root='/nonexistent'))"
 ```
 
 ## Epic-level acceptance criteria (in addition to the four gates)

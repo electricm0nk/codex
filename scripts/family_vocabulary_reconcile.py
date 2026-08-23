@@ -266,7 +266,13 @@ def reconcile_engine_coverage(corpus_root: str) -> dict:
     }
 
 
-def render_markdown(canonical: list[dict], mapping: list[dict], coverage: dict, ledger_population: int) -> str:
+def render_markdown(
+    canonical: list[dict],
+    mapping: list[dict],
+    coverage: dict,
+    ledger_population: int,
+    join_status_counts: dict | None = None,
+) -> str:
     lines = []
     lines.append("# SD-32 Gate 1 — canonical shape-family vocabulary and reconciliation")
     lines.append("")
@@ -285,6 +291,41 @@ def render_markdown(canonical: list[dict], mapping: list[dict], coverage: dict, 
         f"count, and re-derive command are defined; every other document (engine module docs, "
         f"AT-32-* criteria, kanban card titles, `epic-breakdown.md`) cites this table rather than "
         f"restating it."
+    )
+    lines.append("")
+    lines.append("## 0. Join-status split (decisions.md §14b — read this before the family table)")
+    lines.append("")
+    lines.append(
+        "**The family rollup below (and F0 in particular) is not the honest coverage figure on "
+        "its own.** F0 (\"no formula content\") conflates two different populations its own "
+        "proof-width text distinguishes: a unit whose `(book, source_file, source_line)` join found "
+        "**no corpus record at all** (`no_record`), and a unit whose join found a record that simply "
+        "**carries no `DEFINE`/`BONUS` token** (`no_formula_tokens`). Only `matched` rests on a real "
+        "corpus record. Absence of a record is absence of evidence, not evidence the unit has no "
+        "formula — do not read `unclassified_count: 0` as \"100% of this population is understood\"."
+    )
+    lines.append("")
+    jsc = join_status_counts or {}
+    matched = jsc.get("matched", 0)
+    no_formula_tokens = jsc.get("no_formula_tokens", 0)
+    no_record = jsc.get("no_record", 0)
+    pop = ledger_population or 1
+    lines.append("| join_status | count | share | meaning |")
+    lines.append("|---|---:|---:|---|")
+    lines.append(f"| `matched` | {matched} | {100.0 * matched / pop:.1f}% | rests on a real corpus record |")
+    lines.append(
+        f"| `no_formula_tokens` | {no_formula_tokens} | {100.0 * no_formula_tokens / pop:.1f}% | "
+        "record found, carries no DEFINE/BONUS token |"
+    )
+    lines.append(
+        f"| `no_record` | {no_record} | {100.0 * no_record / pop:.1f}% | "
+        "join found no corpus record at all — this is Gate 3's `no_record` closure-budget invariant |"
+    )
+    lines.append("")
+    lines.append(
+        "Re-derive: `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output "
+        "/tmp/l.json && python3 -c \"import json,collections; r=json.load(open('/tmp/l.json'))"
+        "['rows']; print(collections.Counter(x['join_status'] for x in r))\"`."
     )
     lines.append("")
     lines.append("## 1. Canonical family table")
@@ -435,6 +476,7 @@ def main(argv: list[str] | None = None) -> int:
     out = {
         "population": ledger["population"],
         "unclassified_count": ledger["unclassified_count"],
+        "join_status_counts": ledger.get("join_status_counts", {}),
         "canonical_families": canonical,
         "mt_mapping": mapping,
         "mt_total_primary_partition": MT_TOTAL_PRIMARY_PARTITION,
@@ -448,7 +490,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.output_md:
         os.makedirs(os.path.dirname(args.output_md) or ".", exist_ok=True)
         with open(args.output_md, "w", encoding="utf-8") as fh:
-            fh.write(render_markdown(canonical, mapping, coverage, ledger["population"]))
+            fh.write(
+                render_markdown(
+                    canonical, mapping, coverage, ledger["population"], ledger.get("join_status_counts", {})
+                )
+            )
 
     return 0
 

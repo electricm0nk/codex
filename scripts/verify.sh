@@ -1064,19 +1064,22 @@ run_shape_coverage_standing_gate() {
     ) >"$log" 2>&1
     local status=$?
 
-    local population unclassified piles sha
+    local population unclassified piles sha no_record budget_exceeded
     population=$(sed -n 's/^population (not-done units considered): \([0-9]*\)$/\1/p' "$log" | tail -1)
     unclassified=$(sed -n 's/^unclassified: \([0-9]*\)$/\1/p' "$log" | tail -1)
     piles=$(sed -n 's/^piles reconcile: \([A-Za-z]*\).*$/\1/p' "$log" | tail -1)
+    no_record=$(sed -n 's/^join-status split.*no_record=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    budget_exceeded=$(sed -n 's/^.*exceeded: \([A-Za-z]*\)$/\1/p' "$log" | tail -1)
     sha=$(sed -n 's/^corpus SHA: \(.*\)$/\1/p' "$log" | tail -1)
     actual "SHAPE_COVERAGE_POPULATION=${population:-unknown}"
+    actual "SHAPE_COVERAGE_NO_RECORD=${no_record:-unknown}"
 
     if (( status != 0 )); then
-        stage_fail shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} piles_reconcile=${piles:-?} corpus_sha=${sha:-?} — $log"
+        stage_fail shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} piles_reconcile=${piles:-?} no_record=${no_record:-?} budget_exceeded=${budget_exceeded:-?} corpus_sha=${sha:-?} — $log"
         return
     fi
 
-    stage_pass shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} corpus_sha=${sha:-?}"
+    stage_pass shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} no_record=${no_record:-?} corpus_sha=${sha:-?}"
 }
 
 # ---------------------------------------------------------------------------

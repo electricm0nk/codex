@@ -1,6 +1,11 @@
 {
   "population": 24914,
   "unclassified_count": 0,
+  "join_status_counts": {
+    "no_record": 10419,
+    "matched": 4801,
+    "no_formula_tokens": 9694
+  },
   "canonical_families": [
     {
       "id": "F9",
