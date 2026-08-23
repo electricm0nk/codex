@@ -18,6 +18,7 @@ pub mod feat_gap;
 pub mod hand_authored_equipment;
 pub mod lst_provenance_repair;
 pub mod spell_lane_dump;
+pub mod spell_mod_access;
 pub mod ultimate_equipment;
 
 use std::collections::BTreeMap;

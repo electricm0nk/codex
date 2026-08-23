@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:27:59Z",
+  "data": {
+    "key": "mislead",
+    "name": "mislead",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Psychic=6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+    "line": 1941,
+    "record_key": "mislead"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
