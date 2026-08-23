@@ -3562,7 +3562,18 @@ WIRING_CLASS_CACHE = os.environ.get(
 # rather than a corpus-doc change. `NO_GROUNDING_PROBE` feeds
 # `doneness_verdict()`'s capping step directly, so it is exactly as
 # invalidating as the branch-logic changes above.
-WIRING_SUMMARY_SCHEMA = 12
+# Bumped 12 -> 13 (SD-32 Epic 2 T8 follow-up, `decisions.md §11`): the T8
+# fix added `classifier_reclassified_units` to this function's return dict
+# but did not bump this constant, so every pre-T8 warm cache (also schema
+# 12) passed the equality check below unchanged and the fix never fired
+# against the real `WIRING_CLASS_CACHE` -- reproduced live on the tip of
+# this bundle (cached schema 12, field absent, `corpus_wide` at the pre-fix
+# values). This is the SAME hazard shape schema 11->12's own history above
+# already documents once. See `StaleSchemaCacheIsRejectedTest` and
+# `WiringSummaryTopLevelKeysCanaryTest` in
+# `scripts/tests/test_pf1e_dashboard_producer.py` for the regression
+# coverage this incident earned.
+WIRING_SUMMARY_SCHEMA = 13
 
 # ---------------------------------------------------------------------------
 # Doneness (added 2026-08-12, operator directive; SD-29 `decisions.md §46`)

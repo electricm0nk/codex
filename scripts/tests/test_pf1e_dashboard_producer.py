@@ -287,6 +287,154 @@ class ClassifierReclassifiedUnitsTest(unittest.TestCase):
         self.assertEqual(record["count"], 1)
 
 
+class StaleSchemaCacheIsRejectedTest(unittest.TestCase):
+    """SD-32 T8 follow-up (`decisions.md §11` re-verification): the T8 fix
+    added `classifier_reclassified_units` to `compute_wiring_class_summary()`'s
+    return shape but did not bump `WIRING_SUMMARY_SCHEMA` off its pre-T8 value
+    of 12. A cache written by the PRE-fix producer therefore carries schema
+    12, is NEWER than the source doc, and passes the warm-cache equality
+    check unchanged -- so the fix never fires against a warm cache, which is
+    exactly the shape the real `WIRING_CLASS_CACHE` was found in on the tip
+    of this bundle. `ClassifierReclassifiedUnitsTest` above always calls
+    `compute_wiring_class_summary()` against a COLD cache (a path that has
+    never been written), so it cannot see this: it built the fresh summary
+    every time and never exercised the cache-hit branch at all.
+
+    This test writes a pre-T8-SHAPED cache -- schema 12 (the pre-T8 value,
+    hardcoded here rather than read off the live constant, precisely so this
+    test keeps proving the historical defect even after the constant is
+    bumped), no `classifier_reclassified_units` field, and `display`/`computed`
+    counts that reflect the UNCLASSIFIED (pre-fix) tally -- gives it a newer
+    mtime than the source doc, and asserts the cache is rejected: the
+    reclassification must fire and the returned summary must NOT be the
+    stale cached object.
+
+    Prove-it-can-fail: revert `WIRING_SUMMARY_SCHEMA` to `12` and re-run --
+    this test goes red because the stale cache (also schema 12) then passes
+    the equality check and is served verbatim, exactly the live defect this
+    test was written to catch."""
+
+    _EVIDENCE = "explanation_id_observed_in_a_real_computation"
+    _PRE_T8_SCHEMA = 12  # the value WIRING_SUMMARY_SCHEMA held before this fix
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+
+    def test_pre_t8_schema_cache_is_rejected_and_reclassification_fires(self):
+        units = [
+            {"id": "core_rulebook:class_feature:monk_evasion", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded",
+             "evidence": self._EVIDENCE},
+        ]
+        doc_path = os.path.join(self._tmp.name, "work-inventory.json")
+        with open(doc_path, "w", encoding="utf-8") as f:
+            json.dump({"generated_at": "2026-08-22T00:00:00Z", "units": units}, f)
+
+        cache_path = os.path.join(self._tmp.name, "wiring-class-summary.json")
+        # A pre-T8-SHAPED cache: schema 12 (this test's own pinned constant,
+        # not the live one), `available: True`, `source_document` matching
+        # this doc_path (so the P0.2 source-document guard does not itself
+        # cause the rejection -- this test isolates the schema/field gap
+        # specifically), no `classifier_reclassified_units` field, and
+        # `display`/`computed` counts that are the PRE-fix (unreclassified)
+        # tally -- exactly what a producer run before the T8 fix landed
+        # would have written.
+        stale_cache = {
+            "available": True,
+            "schema": self._PRE_T8_SCHEMA,
+            "source_document": producer.publishable_document_path(doc_path),
+            "corpus_wide": {"display": 1, "computed": 0},
+            "doneness": {producer.DONENESS_HELD: 1},
+            # deliberately no "classifier_reclassified_units" key -- the
+            # pre-T8 shape.
+        }
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(stale_cache, f)
+        # Cache must be strictly newer than the source doc for the warm-cache
+        # branch to even be considered.
+        doc_mtime = os.path.getmtime(doc_path)
+        os.utime(cache_path, (doc_mtime + 10, doc_mtime + 10))
+
+        summary = producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path
+        )
+
+        # The stale cache must be REJECTED, not served verbatim: if it were
+        # served, `classifier_reclassified_units` would be absent (the exact
+        # live symptom) and `corpus_wide.computed` would stay 0.
+        record = summary.get("classifier_reclassified_units")
+        self.assertIsNotNone(
+            record,
+            "classifier_reclassified_units missing -- a pre-T8-schema warm "
+            "cache was served instead of being recomputed",
+        )
+        self.assertEqual(record["count"], 1)
+        self.assertEqual(summary["corpus_wide"].get("computed", 0), 1)
+        self.assertEqual(summary["corpus_wide"].get("display", 0), 0)
+        self.assertEqual(summary["doneness"].get(producer.DONENESS_DONE, 0), 1)
+
+
+class WiringSummaryTopLevelKeysCanaryTest(unittest.TestCase):
+    """General-defect hardening (SD-32 T8 follow-up, `decisions.md §11`
+    condition 3): a field added to `compute_wiring_class_summary()`'s return
+    dict without a `WIRING_SUMMARY_SCHEMA` bump is a recurring hazard, not a
+    one-off -- this exact shape has now happened at least twice (schema
+    11->12's own comment above the constant documents the prior incident,
+    and the T8 fix this test file's `StaleSchemaCacheIsRejectedTest` covers
+    is the second). The constant is only load-bearing if a human remembers
+    to touch it; this canary makes forgetting loud instead of silent.
+
+    Pins the exact top-level key set the function returns for a real
+    (non-degenerate) summary, tied to the CURRENT `WIRING_SUMMARY_SCHEMA`
+    value in the failure message. Any top-level key added, removed, or
+    renamed on the `result` dict inside `compute_wiring_class_summary()`
+    fails this test immediately -- forcing whoever touched the shape to
+    consciously decide whether `WIRING_SUMMARY_SCHEMA` needs to move, rather
+    than that decision silently defaulting to "no"."""
+
+    _EXPECTED_TOP_LEVEL_KEYS = frozenset({
+        "available", "schema", "generated_at", "source_document",
+        "wiring_class_values", "corpus_wide", "by_book", "cross_tab",
+        "cross_tab_by_book", "cross_tab_by_kind", "cross_tab_by_kind_by_book",
+        "doneness_values", "doneness_meaning", "doneness", "doneness_by_book",
+        "doneness_by_kind", "doneness_by_kind_by_book",
+        "mechanically_confirmed_by_kind", "mechanically_confirmed_by_kind_by_book",
+        "classifier_reclassified_units", "doneness_unmapped",
+        "no_grounding_probe_kinds", "determinator_versions",
+        # Present only when no unit in the source doc carries
+        # `wiring_class_determinator_version` -- the fabricated doc this test
+        # uses never does, so this key is always in the fixture's output.
+        "determinator_version_note",
+    })
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+
+    def test_top_level_keys_match_pinned_set_for_current_schema(self):
+        doc_path = os.path.join(self._tmp.name, "work-inventory.json")
+        with open(doc_path, "w", encoding="utf-8") as f:
+            json.dump({"generated_at": "2026-08-22T00:00:00Z", "units": [
+                {"id": "x", "book": "core_rulebook", "kind": "spell",
+                 "wiring_class": "static", "status": "grounded"},
+            ]}, f)
+        cache_path = os.path.join(self._tmp.name, "wiring-class-summary.json")
+        summary = producer.compute_wiring_class_summary(
+            doc_path=doc_path, cache_path=cache_path
+        )
+        actual_keys = frozenset(summary.keys())
+        self.assertEqual(
+            actual_keys, self._EXPECTED_TOP_LEVEL_KEYS,
+            "compute_wiring_class_summary()'s top-level key set changed "
+            f"(schema is currently {producer.WIRING_SUMMARY_SCHEMA}) without "
+            "updating this pinned set -- if the change was deliberate, update "
+            "_EXPECTED_TOP_LEVEL_KEYS here AND bump WIRING_SUMMARY_SCHEMA in "
+            "pf1e_dashboard_producer.py so every pre-change warm cache is "
+            "correctly rejected (this is the exact T8 defect).",
+        )
+
+
 class BuildUnitShardsPiRedactionTest(unittest.TestCase):
     """Decision 12 (2026-08-17): `build_unit_shards` must withhold a unit's
     NAME when its own (book, source_file, source_line) row declares
