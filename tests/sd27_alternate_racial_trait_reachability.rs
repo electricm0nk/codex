@@ -248,7 +248,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        824,
+        831,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
          113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
@@ -263,18 +263,21 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
          closing arg_races.lst's full 37-row playable-race roster + SD-31 wave-24's Rougarou \
          (Bestiary 6, 2026-08-20), 8 standard rows (786 -> 794) + SD-32 card-11 T2b lane's 18 \
          (2026-08-23: Dhampir's 12 standard rows + Monster Codex's 4 new Ratfolk alternates \
-         + the 2 dependent rows Surface Sprinter grants; 794 -> 812) + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified) = 12 (812 -> 824)"
+         + the 2 dependent rows Surface Sprinter grants; 794 -> 812) + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified) = 12 (812 -> 824) + this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members (824 -> 831)"
     );
     assert_eq!(
         arg,
-        414,
-        "ARG's 414 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
+        421,
+        "ARG's 421 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
          by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by SD-31-E6-F4-003's own \
          alternate-trait batch for those same 6 races, both 2026-08-16; 283 -> 321 by \
          SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \
          SD31-E6-F4-006's own alternate-trait batch for those same 4 races, 2026-08-17; \
          332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling, Samsaran), \
-         2026-08-17, closing arg_races.lst's full 37-row playable-race roster)"
+         2026-08-17, closing arg_races.lst's full 37-row playable-race roster; 350 -> 414 by \
+         the Core Essentials removal, 2026-08-18; 414 -> 421 by SD-32 card-11 T2b lane, \
+         2026-08-23, decisions.md §16 item 2: the 7 `Human ~ Adoptive Parentage` \
+         CHOOSE-pool members, Drow/Dwarf/Elf/Gnome/Grippli/Halfling/Orc)"
     );
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
@@ -336,7 +339,7 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
     }
     assert_eq!(
         checked,
-        824,
+        831,
         "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on \
          batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch; 695 -> 719 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races (2026-08-16); \
@@ -348,7 +351,9 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
          by SD-32 card-11 T2b lane's Dhampir (12) + Monster Codex's 4 new Ratfolk \
          alternates + their 2 grant-linked rows (2026-08-23); 812 -> 824 by a sibling \
          SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new \
-         alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified)"
+         alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified); \
+         824 -> 831 by this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md \
+         §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members"
     );
 }
 

@@ -447,17 +447,27 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
             let text = std::fs::read_to_string(&path).unwrap();
             let value: serde_json::Value = serde_json::from_str(&text).unwrap();
             checked += 1;
-            assert_eq!(
-                value["data"]["category"], "Special Ability",
-                "{path:?}: every already-ingested ARG alternate racial trait carries \
-                 CATEGORY:Special Ability, never CATEGORY:Choice"
+            let category = value["data"]["category"].as_str().unwrap_or_default();
+            // SD-32 card-11 T2b lane, 2026-08-23 (`decisions.md §16` item 2):
+            // `Human ~ Adoptive Parentage`'s 7 CHOOSE-pool members carry
+            // CATEGORY:Adoptive Parentage, a real third category this test's
+            // original "Special Ability, never Choice" binary did not
+            // anticipate -- named here rather than widening the assertion to
+            // accept anything, so a FUTURE unexpected category still fails
+            // loudly.
+            assert!(
+                category == "Special Ability" || category == "Adoptive Parentage",
+                "{path:?}: every already-ingested ARG race_trait record carries either \
+                 CATEGORY:Special Ability (the alternate/standard shape) or \
+                 CATEGORY:Adoptive Parentage (the 7 CHOOSE-pool members), never \
+                 CATEGORY:Choice or anything else; got {category:?}"
             );
         }
     }
     assert_eq!(
         checked,
-        414,
-        "414 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
+        421,
+        "421 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
          2026-08-15; 201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races, both 2026-08-16; \
          283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \
@@ -465,7 +475,11 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
          332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling, Samsaran), \
          2026-08-17, closing arg_races.lst's full 37-row playable-race roster -- every new \
          record also carries CATEGORY:Special Ability, same as every alternate this \
-         directory already held)"
+         directory already held; 350 -> 414 by the Core Essentials removal, 2026-08-18; \
+         414 -> 421 by SD-32 card-11 T2b lane, 2026-08-23, decisions.md §16 item 2: the 7 \
+         `Human ~ Adoptive Parentage` CHOOSE-pool members, the first records in this \
+         directory to carry CATEGORY:Adoptive Parentage rather than CATEGORY:Special \
+         Ability)"
     );
 }
 

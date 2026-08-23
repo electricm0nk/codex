@@ -113,7 +113,9 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
-use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole};
+use codex::rules_core::race_resolver::{
+    adoptive_parentage_options, load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole,
+};
 
 use crate::authoring_workbench::codex_repo_root;
 use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};
@@ -227,10 +229,51 @@ pub struct RacePickerDto {
     pub alternates: Vec<AlternateTraitDto>,
 }
 
+/// One trait an [`AdoptiveParentageOptionDto`] grants, resolved against the
+/// adopted race's own already-ingested standard traits.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptiveParentageGrantDto {
+    pub key: String,
+    pub name: String,
+}
+
+/// One "Adoptive Parentage" option (`decisions.md §16` item 2, SD-32 card-11
+/// T2b lane): a member of `Human ~ Adoptive Parentage`'s `CHOOSE:
+/// ABILITYSELECTION|Adoptive Parentage|ANY` pool (that alternate trait is
+/// itself one of `Human`'s own [`AlternateTraitDto`] rows, above — a Human
+/// character replaces Bonus Feat with it, then picks one of these). Not
+/// race-scoped the way [`RacePickerDto`] is, because picking one is a Human
+/// character's choice of *which other race* to have been adopted by, not a
+/// trait of the race named here.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptiveParentageOptionDto {
+    /// The corpus key, e.g. `"Dwarf"` — no explicit `KEY:` token upstream, so
+    /// the option's own display name doubles as both its key and the race it
+    /// adopts.
+    pub key: String,
+    pub name: String,
+    pub book: String,
+    pub adopted_race: String,
+    /// Real corpus `DESC:` prose, verbatim — every option this menu serves
+    /// carries a fixed, argument-free sentence (no `%N` substitution, pinned
+    /// by [`every_adoptive_parentage_option_carries_real_prose_and_real_grants`]),
+    /// so unlike [`AlternateTraitDto::description`] this is read from the
+    /// stored field rather than re-rendered against a feat list.
+    pub description: String,
+    /// The already-ingested traits this option grants. Empty is a legitimate,
+    /// honestly-reported answer — never papered over with an invented trait.
+    pub grants: Vec<AdoptiveParentageGrantDto>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AlternateRacialTraitsResponse {
     pub races: Vec<RacePickerDto>,
+    /// `Human ~ Adoptive Parentage`'s CHOOSE pool, resolved. See
+    /// [`AdoptiveParentageOptionDto`].
+    pub adoptive_parentage_options: Vec<AdoptiveParentageOptionDto>,
     /// Corpus files that could not be read, plus any failure to locate the
     /// corpus at all. Empty in a healthy checkout.
     pub diagnostics: Vec<String>,
@@ -688,13 +731,29 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
         });
     }
 
+    let adoptive_parentage_options: Vec<AdoptiveParentageOptionDto> = adoptive_parentage_options(corpus)
+        .into_iter()
+        .map(|option| AdoptiveParentageOptionDto {
+            key: option.key,
+            name: option.name,
+            book: book_code(&option.book_id),
+            adopted_race: option.adopted_race,
+            description: option.description.unwrap_or_default(),
+            grants: option
+                .grants
+                .into_iter()
+                .map(|grant| AdoptiveParentageGrantDto { key: grant.key, name: grant.name })
+                .collect(),
+        })
+        .collect();
+
     let diagnostics =
         corpus.diagnostics().iter().map(|diagnostic| format!("{}: {}", diagnostic.path, diagnostic.message)).collect();
 
     let mut findings = multi_flag_gate_findings(corpus);
     findings.extend(preability_guard_findings(corpus));
 
-    AlternateRacialTraitsResponse { races, diagnostics, findings }
+    AlternateRacialTraitsResponse { races, adoptive_parentage_options, diagnostics, findings }
 }
 
 /// Resolves one race against a chosen alternate set, by calling
@@ -865,6 +924,7 @@ fn menu_or_error() -> AlternateRacialTraitsResponse {
         Ok(corpus) => build_menu(corpus),
         Err(err) => AlternateRacialTraitsResponse {
             races: Vec::new(),
+            adoptive_parentage_options: Vec::new(),
             diagnostics: vec![format!("race corpus unavailable: {err}")],
             findings: Vec::new(),
         },
@@ -2007,5 +2067,25 @@ mod tests {
         // Reported rather than pinned: widening what the engine can resolve
         // must not fail here, and neither must a record quietly guessing.
         println!("trait rows still reporting an unresolved DESC argument: {dropping}");
+    }
+
+    /// `decisions.md §16` item 2 / SD-32 card-11 T2b: the real IPC builder
+    /// `reach_gate` executes carries the 7 `Human ~ Adoptive Parentage`
+    /// CHOOSE-pool options, each with a real description and real resolved
+    /// grants — not just the resolver-level `adoptive_parentage_options`
+    /// this cycle also unit-tests in `race_resolver`, but the actual Tauri
+    /// command surface a player's frontend would call.
+    #[test]
+    fn the_menu_command_itself_carries_all_seven_adoptive_parentage_options_with_real_grants() {
+        let menu = menu();
+        let keys: Vec<&str> = menu.adoptive_parentage_options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(keys, vec!["Drow", "Dwarf", "Elf", "Gnome", "Grippli", "Halfling", "Orc"]);
+        for option in &menu.adoptive_parentage_options {
+            assert_eq!(option.book, "ARG", "the ARG book code, matching every other ARG row on this menu");
+            assert_eq!(option.adopted_race, option.key);
+            assert!(!option.description.trim().is_empty());
+            let grant_names: Vec<&str> = option.grants.iter().map(|g| g.name.as_str()).collect();
+            assert_eq!(grant_names, vec!["Weapon Familiarity", "Languages"]);
+        }
     }
 }

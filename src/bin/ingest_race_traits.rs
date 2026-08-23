@@ -90,6 +90,7 @@ use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
+use codex::rules_core::race_resolver::ADOPTIVE_PARENTAGE_CATEGORY;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, Population, RaceTraitCacheData, RawBonusChain, RawToken,
 };
@@ -1007,10 +1008,35 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     // and the more specific reading is the right one if anything ever does.
     let racial_trait_race =
         type_tokens.iter().find_map(|t| t.strip_suffix(RACIAL_TRAIT_TYPE_SUFFIX)).map(|r| r.trim().to_string());
-    let is_subrace_selector = racial_trait_race.is_none();
-    let race_key = match racial_trait_race {
+    let subrace_race =
+        type_tokens.iter().find_map(|t| t.strip_suffix(SUBRACE_TYPE_SUFFIX)).map(|r| r.trim().to_string());
+    let is_subrace_selector = racial_trait_race.is_none() && subrace_race.is_some();
+
+    // A third row shape carries no `TYPE:` at all: `arg_abilities_race.lst`'s
+    // `###Block: Adoptive Parentage Options` (Dwarf/Elf/Gnome/Halfling/Orc/
+    // Drow/Grippli, `:291-297` against the pinned oracle). It is neither a
+    // standard/alternate racial trait of the race whose file it lives in, nor
+    // a heritage selector -- it is available to a character of ANY race and,
+    // when selected, grants a NAMED other race's own standard traits outright
+    // via a flat `ABILITY:<cat>|AUTOMATIC|<key>|<key>` token, no `CHOOSE` at
+    // all. `decisions.md §16` item 2 / SD-32 card-11 T2b names this shape and
+    // asks for it to resolve to the race it adopts; `race_resolver::
+    // adoptive_parentage_options` is the reader that does the resolving. The
+    // row's own display NAME doubles as its `KEY` (no explicit `KEY:` token,
+    // same PCGen convention the explicit `key` fallback below already
+    // implements) and as the target race's name -- both are the literal
+    // string "Dwarf", not a coincidence: PCGen files the option under the
+    // race it adopts.
+    let is_adoptive_parentage_option = racial_trait_race.is_none()
+        && subrace_race.is_none()
+        && parsed.iter().any(|f| f.key == "CATEGORY" && f.value.trim() == ADOPTIVE_PARENTAGE_CATEGORY);
+
+    let race_key = match racial_trait_race.or(subrace_race) {
         Some(race) => race,
-        None => type_tokens.iter().find_map(|t| t.strip_suffix(SUBRACE_TYPE_SUFFIX)).map(|r| r.trim().to_string())?,
+        None if is_adoptive_parentage_option => name
+            .clone()
+            .unwrap_or_else(|| panic!("line {line_number}: Adoptive Parentage row has no display-name field")),
+        None => return None,
     };
 
     let name = name.unwrap_or_else(|| panic!("line {line_number}: racial-trait row has no display-name field"));
@@ -1652,6 +1678,56 @@ mod tests {
         "DESC:Dwarves receive a +2 racial bonus on Appraise skill checks.",
     );
 
+    /// `arg_abilities_race.lst:291` verbatim, `###Block: Adoptive Parentage
+    /// Options` (`decisions.md §16` item 2, SD-32 card-11 T2b lane). Carries
+    /// no `TYPE:` at all — the shape `rows_without_a_racial_trait_type_are_not_racial_traits`
+    /// below exists to refuse for every OTHER un-typed row, and this fixture
+    /// is the one exception `parse_row` must recognise instead.
+    const ADOPTIVE_PARENTAGE_DWARF: &str = concat!(
+        "Dwarf\t",
+        "CATEGORY:Adoptive Parentage\t",
+        "DESC:You were adopted and raised by dwarves.\t",
+        "ABILITY:Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Weapon Familiarity|Dwarf ~ Languages\t",
+        "SOURCEPAGE:p.72",
+    );
+
+    #[test]
+    fn an_adoptive_parentage_row_resolves_to_the_race_it_adopts_despite_carrying_no_type() {
+        let row = parse_row(291, ADOPTIVE_PARENTAGE_DWARF).expect("Adoptive Parentage row is not dropped");
+        assert_eq!(row.key, "Dwarf", "no explicit KEY: token -- the display name doubles as the key");
+        assert_eq!(row.name, "Dwarf");
+        assert_eq!(row.race_key, "Dwarf", "resolves to the race it adopts");
+        assert_eq!(row.category.as_deref(), Some(ADOPTIVE_PARENTAGE_CATEGORY));
+        assert!(row.type_tokens.is_empty(), "the real oracle row carries no TYPE: token at all");
+        assert!(!row.is_racial_default);
+        assert!(row.sets_replace_flags.is_empty(), "this row itself replaces nothing");
+        assert_eq!(row.suppressed_by_flag, None);
+        // Not the heritage-selector shape -- must never enter the subrace
+        // reconciliation loop, which would panic on an empty grants lookup
+        // for a flag name ("Dwarf") the globalvar files never declare.
+        assert!(!row.is_subrace_selector);
+        assert_eq!(row.description.as_deref(), Some("You were adopted and raised by dwarves."));
+        assert_eq!(row.source_page.as_deref(), Some("p.72"));
+        let ability = row.raw_tokens.iter().find(|t| t.key == "ABILITY").expect("ABILITY token preserved");
+        assert_eq!(ability.value, "Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Weapon Familiarity|Dwarf ~ Languages");
+    }
+
+    #[test]
+    fn a_row_with_no_type_and_no_adoptive_parentage_category_is_still_dropped() {
+        // Same shape as `ADOPTIVE_PARENTAGE_DWARF` but a different CATEGORY --
+        // proves the new branch is gated on the category string, not merely
+        // on "no TYPE:", which would have reopened the exact hazard
+        // `a_mod_row_declares_nothing_even_when_it_carries_a_racial_trait_type`
+        // and `rows_without_a_racial_trait_type_are_not_racial_traits` exist
+        // to refuse.
+        let row = concat!(
+            "Dwarf\t",
+            "CATEGORY:Special Ability\t",
+            "DESC:Not an Adoptive Parentage row.\t",
+        );
+        assert!(parse_row(1, row).is_none());
+    }
+
     #[test]
     fn alternate_row_sets_its_replace_flag_and_is_not_suppressed_by_its_own_guard() {
         let row = parse_row(38, MAGIC_RESISTANT).expect("row is a racial trait");
@@ -2005,7 +2081,14 @@ mod tests {
         // '*.json' | wc -l` -> 11.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 414usize),
+                // 414 -> 421 by SD-32 card-11 T2b lane (2026-08-23):
+                // `arg_abilities_race.lst`'s `###Block: Adoptive Parentage
+                // Options` -- 7 CHOOSE-pool members for `Human ~ Adoptive
+                // Parentage` (Drow, Dwarf, Elf, Gnome, Grippli, Halfling,
+                // Orc), previously silently dropped by `parse_row` because
+                // they carry no `TYPE:` at all. See `race_resolver::
+                // adoptive_parentage_options`.
+                ("advanced_race_guide", 421usize),
                 ("monster_codex", 11),
                 ("inner_sea_races", 94),
                 ("horror_adventures", 43),
@@ -2070,8 +2153,9 @@ mod tests {
         }
         assert_eq!(
             total,
-            562,
-            "414 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
+            569,
+            "421 ARG (of which 7 are SD-32 card-11 T2b's Adoptive Parentage CHOOSE-pool \
+             members, 2026-08-23, and 414 are the rest -- 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
              from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
              Samsaran, SD31-E6-F4-007 -- closing arg_races.lst's full 37-row playable-race \

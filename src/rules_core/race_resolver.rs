@@ -691,6 +691,23 @@ impl RaceCorpus {
         out
     }
 
+    /// Every trait record, across every loaded race, whose `CATEGORY:` token
+    /// equals `category` verbatim, sorted by key.
+    ///
+    /// A general-purpose seam for a shape that does not fit the
+    /// default/alternate/flag-granted protocol at all — see
+    /// [`adoptive_parentage_options`], its one caller today.
+    pub fn traits_by_category(&self, category: &str) -> Vec<&RaceTraitRecord> {
+        let mut out: Vec<&RaceTraitRecord> = self
+            .traits
+            .values()
+            .flatten()
+            .filter(|t| t.data.category.as_deref() == Some(category))
+            .collect();
+        out.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+        out
+    }
+
     /// Matches a loose race identifier — a bare key (`"Half-Elf"`), a
     /// `race:`-prefixed character-input token (`"race:half-elf"`), or either
     /// in any case — to a loaded race key. `None` when nothing matches; a
@@ -949,6 +966,109 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     // Bestiary 6's 1, SD-31 wave-24 integration cycle (2026-08-20).
     ("Rougarou", SizeCategory::Medium),    // chassis FACT:BaseSize|M, DESC "Rougarous are Medium creatures"
 ];
+
+/// PCGen's `CATEGORY:` value for the "Adoptive Parentage" ability shape —
+/// `arg_abilities_race.lst`'s `###Block: Adoptive Parentage Options`
+/// (`decisions.md §16` item 2, SD-32 card-11 T2b lane). Public so the ingest
+/// binary and this module read the identical literal.
+pub const ADOPTIVE_PARENTAGE_CATEGORY: &str = "Adoptive Parentage";
+
+/// One trait this option grants, resolved against the adopted race's own
+/// already-ingested trait set — never fabricated. `None` if the corpus does
+/// not (yet) carry a record for the target key; see
+/// [`AdoptiveParentageOption::unresolved_grants`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AdoptiveParentageGrant {
+    pub key: String,
+    pub name: String,
+}
+
+/// One "Adoptive Parentage" ability: available to a character of **any**
+/// race, and — when selected — grants a **named other race**'s own standard
+/// traits outright.
+///
+/// This is a structurally different mechanic from [`TraitRole::Alternate`]
+/// (which replaces content *within* the race a character already is) and
+/// from [`TraitRole::FlagGranted`] (content granted *by another trait of the
+/// same race*): here the granting record and its two grant targets belong to
+/// the SAME race (e.g. all three of `"Dwarf"`, `"Dwarf ~ Weapon
+/// Familiarity"` and `"Dwarf ~ Languages"` are filed under race key
+/// `"Dwarf"`), but the *character* selecting it need not be that race at
+/// all. [`RaceCorpus::resolve`] resolves one race's own trait set against
+/// itself and has no notion of "any character, any race" — so this is
+/// deliberately a standalone reader, not a `TraitRole` variant threaded
+/// through `resolve`'s per-race pipeline (`decisions.md §16`'s "resolves the
+/// selector to the race it adopts", read literally: the race, not a rebuild
+/// of the resolver around a mechanic seven records use).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AdoptiveParentageOption {
+    /// The record's own corpus key — bare, e.g. `"Dwarf"` (PCGen states no
+    /// explicit `KEY:` on these rows, so the display name doubles as both).
+    pub key: String,
+    pub name: String,
+    pub book_id: String,
+    /// The race this option adopts. Always a race with its own chassis
+    /// record in the SAME loaded corpus (`decisions.md §16`'s ask) — every
+    /// one of the 7 ARG rows this reads targets an already in-scope race, and
+    /// [`RaceCorpus::chassis`] on this key is how a caller re-verifies that
+    /// rather than trusting this struct's word for it.
+    pub adopted_race: String,
+    pub description: Option<String>,
+    /// Grant targets the corpus resolves to a real, already-ingested trait
+    /// record. Empty is a legitimate, honestly-reported answer, never
+    /// papered over with a fabricated trait.
+    pub grants: Vec<AdoptiveParentageGrant>,
+    /// Grant targets this option's own `ABILITY:...AUTOMATIC` token names
+    /// that do **not** resolve to a loaded record for the adopted race — a
+    /// fact this struct surfaces rather than silently drops. Empty for every
+    /// option this cycle ingests (both of ARG's two grant targets per race
+    /// are already-ingested standard traits), but the field exists so a
+    /// future book's adoptive-parentage row that names an unmodelled trait
+    /// is a visible finding, not a quieter one.
+    pub unresolved_grants: Vec<String>,
+}
+
+/// Every "Adoptive Parentage" option in a loaded corpus (`decisions.md §16`
+/// item 2), resolved against the same corpus's own already-ingested trait
+/// records — never fabricated, never assumed present.
+///
+/// Reads [`RaceCorpus::traits_by_category`] rather than iterating every
+/// trait and checking role, because these records are deliberately
+/// [`TraitRole::Unclassified`] (no readable default/replace/grant gate of
+/// their own) — the general-purpose seam exists exactly so a shape like this
+/// one, which the default/alternate/flag-granted vocabulary was never
+/// written to describe, has somewhere to be read from instead of forcing a
+/// new [`TraitRole`] variant through every exhaustive match in the crate for
+/// seven records.
+pub fn adoptive_parentage_options(corpus: &RaceCorpus) -> Vec<AdoptiveParentageOption> {
+    let mut out = Vec::new();
+    for record in corpus.traits_by_category(ADOPTIVE_PARENTAGE_CATEGORY) {
+        let adopted_race = record.data.race_key.clone();
+        let pool = corpus.traits_for(&adopted_race);
+        let mut grants = Vec::new();
+        let mut unresolved_grants = Vec::new();
+        for target_key in record.automatic_trait_grants() {
+            match pool.iter().find(|t| t.data.key == target_key) {
+                Some(found) => grants.push(AdoptiveParentageGrant {
+                    key: found.data.key.clone(),
+                    name: found.data.name.clone(),
+                }),
+                None => unresolved_grants.push(target_key),
+            }
+        }
+        out.push(AdoptiveParentageOption {
+            key: record.data.key.clone(),
+            name: record.data.name.clone(),
+            book_id: record.book_id.clone(),
+            adopted_race,
+            description: record.data.description.clone(),
+            grants,
+            unresolved_grants,
+        });
+    }
+    out.sort_by(|a, b| a.key.cmp(&b.key));
+    out
+}
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
 /// token, a bare corpus race key, or either in any case, matched by exactly the
@@ -2114,10 +2234,34 @@ mod tests {
         // a `PREMULT` self-exclusion guard (see this module's doc comment on
         // why that is preserved verbatim rather than read as a standalone
         // suppressor), so it carries no standalone gate this engine reads.
+        //
+        // The 7 `Drow`/`Dwarf`/`Elf`/`Gnome`/`Grippli`/`Halfling`/`Orc` rows
+        // (SD-32 card-11 T2b lane, 2026-08-23) are a **different kind of
+        // residue than all three above**: they are not a data gap. Each is a
+        // genuine `CHOOSE:ABILITYSELECTION|Adoptive Parentage|ANY` pool
+        // member for `Human ~ Adoptive Parentage` (`arg_abilities_race.lst:
+        // 257`, already ingested and already `TraitRole::Alternate`) — gated
+        // by the CHOOSE on that OTHER row, not by any readable gate of their
+        // own, which is exactly why `classify()` correctly leaves them
+        // `Unclassified` rather than inventing a fifth role for seven
+        // records. [`adoptive_parentage_options`] is the reader that
+        // resolves them (to the race each one adopts, and the two
+        // already-modelled traits it grants); this test's job is only to
+        // confirm they carry no gate this engine would otherwise apply them
+        // by, which would be wrong — nobody who has not picked `Human ~
+        // Adoptive Parentage` and then chosen one of these seven gets it for
+        // free.
         assert_eq!(
             unclassified,
             vec![
+                ("Drow", "Drow"),
+                ("Dwarf", "Dwarf"),
+                ("Elf", "Elf"),
+                ("Gnome", "Gnome"),
+                ("Grippli", "Grippli"),
+                ("Halfling", "Halfling"),
                 ("Human", "Human ~ Tribalistic Languages"),
+                ("Orc", "Orc"),
                 ("Goblin", "Oversized Goblin"),
                 ("Suli", "Suli ~ Trusted Mediator"),
             ]
@@ -2340,10 +2484,18 @@ mod tests {
         // three by key and names each one's remedy. Unchanged by SD-31 Epic
         // 1-F2: every one of that batch's gate-free rows has a real granter
         // (see above), so none of them lands here.
-        assert_eq!(count(TraitRole::Unclassified), 3);
+        //
+        // 3 -> 10 by SD-32 card-11 T2b lane (2026-08-23): the 7 `Human ~
+        // Adoptive Parentage` CHOOSE-pool members (Drow/Dwarf/Elf/Gnome/
+        // Grippli/Halfling/Orc). They carry no gate of their own by design
+        // -- `no_corpus_trait_is_left_without_a_readable_gate` names why --
+        // and `link_automatic_grants` cannot promote them either, because
+        // its per-race grouping never crosses from `Human`'s trait group
+        // into theirs.
+        assert_eq!(count(TraitRole::Unclassified), 10);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            824,
+            831,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2366,7 +2518,9 @@ mod tests {
              new Ratfolk alternates + the 2 dependent rows Surface Sprinter grants; 794 -> 812) \
              + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix \
              (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted \
-             Mediator (Unclassified) = 12 (812 -> 824)"
+             Mediator (Unclassified) = 12 (812 -> 824) + this cycle's 7 `Human ~ Adoptive \
+             Parentage` CHOOSE-pool members (Unclassified: Drow, Dwarf, Elf, Gnome, \
+             Grippli, Halfling, Orc; `decisions.md §16` item 2, 2026-08-23; 824 -> 831)"
         );
     }
 
@@ -2920,5 +3074,77 @@ mod tests {
             .find(|t| t.type_tokens.iter().any(|tt| tt == "Racial Ability Scores"))
             .expect("ability scores trait");
         assert_eq!(ability.declared_bonus_magnitudes(), vec![2, -2]);
+    }
+
+    /// `decisions.md §16` item 2 / SD-32 card-11 T2b: the "Adoptive
+    /// Parentage" selector resolves to the race it adopts, corpus-wide, by
+    /// class, not by instance. `arg_abilities_race.lst`'s `###Block:
+    /// Adoptive Parentage Options` names exactly 7 rows against the pinned
+    /// oracle (Dwarf, Elf, Gnome, Halfling, Orc, Drow, Grippli — verified
+    /// directly, `grep -c` over the corrected census script). Every one of
+    /// the 7 targets a race already chassis-modelled in this same corpus,
+    /// and both of its two grant targets (`<Race> ~ Weapon Familiarity`,
+    /// `<Race> ~ Languages`) are already-ingested standard traits — so this
+    /// is a real, closed grant link, not a browse-only stub: unlike
+    /// `bestiary_6`'s Rougarou row (proven empty corpus-wide, excluded, not
+    /// ingested), this shape has real content on the other end and is
+    /// therefore ingested.
+    #[test]
+    fn adoptive_parentage_resolves_all_seven_arg_options_to_a_modelled_race_with_real_grants() {
+        let corpus = all_books();
+        let options = adoptive_parentage_options(&corpus);
+        let keys: Vec<&str> = options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(
+            keys,
+            vec!["Drow", "Dwarf", "Elf", "Gnome", "Grippli", "Halfling", "Orc"],
+            "exactly ARG's 7 Adoptive Parentage rows, sorted by key"
+        );
+        for option in &options {
+            assert_eq!(option.book_id, "advanced_race_guide");
+            assert_eq!(
+                option.adopted_race, option.key,
+                "every ARG Adoptive Parentage row's own KEY is its target race's name"
+            );
+            assert!(
+                corpus.chassis(&option.adopted_race).is_some(),
+                "{:?} must resolve to a race with its own chassis record in this corpus",
+                option.adopted_race
+            );
+            assert!(
+                option.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
+                "{:?} must carry real corpus prose, not a fabricated placeholder",
+                option.key
+            );
+            assert!(
+                option.unresolved_grants.is_empty(),
+                "{:?}: every ARG Adoptive Parentage grant target must resolve against this \
+                 project's own already-ingested standard traits; a gap here would mean this \
+                 option grants nothing real, {:?}",
+                option.key,
+                option.unresolved_grants
+            );
+            let grant_names: Vec<&str> = option.grants.iter().map(|g| g.name.as_str()).collect();
+            assert_eq!(
+                grant_names,
+                vec!["Weapon Familiarity", "Languages"],
+                "{:?}: ARG's own row grants exactly these two already-modelled traits, in this \
+                 order (`ABILITY:<Race> Racial Trait|AUTOMATIC|<Race> ~ Weapon Familiarity|<Race> \
+                 ~ Languages`, verbatim against the pinned oracle)",
+                option.key
+            );
+        }
+    }
+
+    /// An option's target race resolving is not enough on its own —
+    /// `traits_by_category` must be scoped to the exact category string, not
+    /// a substring or a case-insensitive match, so a future book's
+    /// differently-cased or differently-worded category never silently joins
+    /// this population.
+    #[test]
+    fn traits_by_category_is_an_exact_match_not_a_substring() {
+        let corpus = all_books();
+        assert!(corpus.traits_by_category("Adoptive").is_empty());
+        assert!(corpus.traits_by_category("adoptive parentage").is_empty());
+        assert_eq!(corpus.traits_by_category(ADOPTIVE_PARENTAGE_CATEGORY).len(), 7);
     }
 }

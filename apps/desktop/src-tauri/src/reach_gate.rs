@@ -2072,6 +2072,23 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
         }
     }
 
+    // `Human ~ Adoptive Parentage`'s CHOOSE pool (`decisions.md §16` item 2,
+    // SD-32 card-11 T2b lane) — surfaced by the same command, in its own
+    // top-level field rather than nested under a race, because picking one
+    // is not a trait *of* the race it names (see
+    // `AdoptiveParentageOptionDto`'s doc comment). A row with a real target
+    // race and a resolved grant is payload; nothing in this cycle's batch
+    // ever resolves to zero grants, but an empty `grants` list would count as
+    // identity-only rather than silently as payload, the same rule every
+    // other family in this function applies.
+    for option in menu.adoptive_parentage_options.iter().filter(|option| option.book == wire_book) {
+        if option.grants.is_empty() {
+            identity_only.insert(option.key.clone());
+        } else {
+            with_payload.insert(option.key.clone());
+        }
+    }
+
     assess(
         "list_alternate_racial_traits + resolve_race_alternate_selection",
         &ingested,
@@ -3616,8 +3633,8 @@ mod tests {
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
         assert_eq!(
             ingested.len(),
-            414,
-            "ARG's 414 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+            421,
+            "ARG's 421 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
              1-F2, 2026-08-15, Bestiary 2's 6-race batch; 201 -> 259 by SD-31-E6-F4-002, \
              2026-08-16, ingest_races.rs's own 6-race batch of 58 standard-tier records for \
              Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, sharing this book directory with this \
@@ -3635,10 +3652,15 @@ mod tests {
              350 -> 414 by the Core Essentials removal, 2026-08-18, which re-filed Aasimar's \
              and Tiefling's 64 heritage records here -- 16 selectable heritages (6 Aasimar + \
              10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows they grant, \
-             previously read out of data/corpus/core_essentials/race_trait/)"
+             previously read out of data/corpus/core_essentials/race_trait/; 414 -> 421 by \
+             SD-32 card-11 T2b lane, 2026-08-23, decisions.md §16 item 2: the 7 `Human ~ \
+             Adoptive Parentage` CHOOSE-pool members (Drow, Dwarf, Elf, Gnome, Grippli, \
+             Halfling, Orc), previously silently dropped by `parse_row` because they carry no \
+             `TYPE:` at all -- see `race_resolver::adoptive_parentage_options` and \
+             `AdoptiveParentageOptionDto`)"
         );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 414),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 421),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
