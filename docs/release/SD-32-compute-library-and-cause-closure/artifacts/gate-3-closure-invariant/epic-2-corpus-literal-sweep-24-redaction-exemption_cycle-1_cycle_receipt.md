@@ -155,8 +155,20 @@ between that entry and this cycle's base; not attributable to this cycle, which 
 
 ## Discovery forwards
 
-None.
+One, reported by name in `progress.md`'s addendum to this cycle's own entry rather than added to
+`## DISCOVERED` (already at its 10-entry self-heal ceiling): after rebasing onto sibling commit
+`e7d80ad430` ("`ability` fully regenerated"), a third sweep run found 1 NEW, unrelated finding —
+`data/corpus/inner_sea_magic/ability/hidden_wand.json`, NOT `§24`-renamed, whose `raw_tokens.DESC`
+is over-redacted relative to its own clean `data.description` (a `scripts/ingest_ability.py`
+two-scan-disagreement defect — `blacklist_term_hit_including_concatenated` vs
+`normalized_term_hit` disagreeing on the identical text). Confirms the `§24` exemption built this
+cycle is not over-broad: the sweep correctly still reports it. Out of this cycle's granted scope
+(`corpus_literal_sweep.rs` only) and out of this cycle's file scope
+(`scripts/ingest_ability.py`, the sibling lane's active file) — escalated, not fixed.
 
 ## Next-cycle plan
 
-None outstanding for this defect. `corpus_literal_sweep` is CLEAN on the real pinned oracle.
+This cycle's own defect (`§24` redaction / `pi_field` comma-list) is closed and mutation-proved,
+both directions, on the real pinned oracle. One residual, unrelated finding remains open for a
+future cycle scoped to `scripts/ingest_ability.py` (see Discovery forwards above) — the sweep
+itself is not the fix site for that defect.

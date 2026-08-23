@@ -5806,8 +5806,50 @@ exactly as before, proved by mutation on the real corpus.
 - Receipt: `artifacts/gate-3-closure-invariant/epic-2-corpus-literal-sweep-24-redaction-exemption_cycle-1_cycle_receipt.md`.
 - **Files touched:** `src/rules_core/corpus_literal_sweep.rs`, `src/bin/corpus_literal_sweep.rs`,
   `kanban.md` (row 11), `progress.md` (this entry).
-- **Discovery forwards:** none.
-- **Next-cycle plan:** none outstanding for this defect — `corpus_literal_sweep` is CLEAN on the
-  real pinned oracle. `no_record` (1,814, campaign-wide) remains open scope for a future cycle,
-  dominated by `monster_ability`/`feat`/`spell`-adjacent kinds per the prior cycle's own note, not
-  re-verified per-kind this cycle (out of this cycle's scope, which was the sweep gate only).
+- **Discovery forwards:** see addendum below — one new, unrelated finding surfaced by re-running
+  the sweep after rebasing onto a sibling lane's concurrent regen; not added to `## DISCOVERED`
+  because that queue is already at its 10-entry self-heal ceiling (`§8`) — reported here instead,
+  by name, escalated in the cycle's own final report rather than silently absorbed or silently
+  dropped.
+- **Next-cycle plan:** none outstanding for THIS cycle's own defect (`§24` redaction / `pi_field`
+  comma-list) — both are closed and mutation-proved. See addendum for the one residual finding a
+  future cycle should pick up. `no_record` (1,814, campaign-wide) remains open scope for a future
+  cycle, dominated by `monster_ability`/`feat`/`spell`-adjacent kinds per the prior cycle's own
+  note, not re-verified per-kind this cycle (out of this cycle's scope, which was the sweep gate
+  only).
+
+### Addendum — one NEW, unrelated finding surfaced after rebasing onto a concurrent sibling regen
+
+After `git rebase origin/tranche/12` picked up a sibling lane's commit `e7d80ad430` ("`ability`
+fully regenerated"), a third sweep run (post-rebase, same pinned oracle) found **1 finding — a
+different record from anything this cycle touched or measured before**:
+
+```
+corpus-literal-sweep: 46119 records examined of 49926 read, 379715 tokens compared (9 synthesized), 49913 digests checked, 1 findings
+corpus-literal-sweep: 2363 tokens exempted under decisions.md §24 redaction across 718 codex_generated_name records
+corpus-literal-sweep: MISMATCH data/corpus/inner_sea_magic/ability/hidden_wand.json: token not byte-present in corpus token closure: DESC:[redacted PI]
+corpus-literal-sweep: 1 findings across 1 records
+```
+
+**Not this cycle's defect.** `hidden_wand.json` is NOT `§24`-renamed (`codex_generated_name:
+false`) and its `pi_field` is `"raw_tokens"` only (not `"description"`) — `data.description` itself
+carries the REAL, non-PI prose (confirmed against the oracle row: `ism_abilities_other.lst:120`'s
+`DESC:` field is verbatim-identical to `data.description`, ordinary non-PI flavor text). Yet
+`data.raw_tokens`' own `DESC` entry independently reads `[redacted PI]`. Root cause (read, not
+fixed — `scripts/ingest_ability.py`, a file this cycle never touched, actively owned by the
+sibling `scrub_name_pi_tokens` lane): `scrub_blacklist_pi_tokens` (ingest_ability.py:196) scans
+the DESC token's raw value with `blacklist_term_hit_including_concatenated`, a DIFFERENT, more
+aggressive scan than the one that decided `data.description` itself was clean
+(`normalized_term_hit` against `extract_free_text`) — the two scans disagree on the identical
+underlying text, over-redacting the raw-token copy of an otherwise-clean description. This is a
+real generator defect, not a sweep defect: the sweep is CORRECTLY reporting it (proof the `§24`
+exemption this cycle built is not over-broad — it does not paper over an unrelated,
+non-`§24`-shaped redaction it was never scoped to exempt).
+
+**Escalated, not silently fixed:** `scripts/ingest_ability.py` is a file this cycle was never
+granted scope to modify, and it is the sibling lane's active file — modifying it here risks
+exactly the collision the dispatch brief warned against. Per `AGENTS.md` Blocker Discipline this
+is disposition 2 (raise a hand): the fix belongs to a future cycle scoped to
+`scripts/ingest_ability.py`'s two-scan disagreement (reconcile `blacklist_term_hit_including_
+concatenated` and `normalized_term_hit` to agree, or gate the raw-token scan on the SAME verdict
+the description scan already computed).
