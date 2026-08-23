@@ -6492,3 +6492,93 @@ that does not exist, and the kanban card stays `in-progress`.
   + `reach_gate.rs` family (all three have a working precedent already in this codebase —
   `adoptive_parentage_options`/`AdoptiveParentageOptionDto`/`race_traits_reach`'s own loop).
 - Commit: (this cycle's commit — see push output).
+
+## Cycle t9-monster-ability-owner-less-ingest-round4 — Card 11, T9 — `monster_ability` `no_record` 191 -> 121 (2026-08-23)
+
+Re-derived per `decisions.md §17a` before starting: the round-3 receipt's own "remains" list was
+current (72 `pathfinder_unchained` + 1 `advanced_race_guide`, both deferred because each needs its
+own hand-rolled `gen_book_cache.rs` generator function extended, not a bare `MonsterBookSpec` row).
+
+**Landed:** registered both books in `scripts/transcribe_monster_tables.py`'s `BOOKS` dict and
+`monster_chassis::MONSTER_BOOKS`; extended `gen_pathfinder_unchained()`/`gen_advanced_race_guide()`
+to each call the existing `gen_monster_book()` mechanism once, after their existing writes — no new
+code path. 70 owner-less records ship (69 + 1); 3 of `pathfinder_unchained`'s 72 orphan candidates
+correctly refused as an unscreenable multi-`DESC:` shape (`Elemental ~ Unchained Eidolon LVL01/08/20`),
+the identical class the round-3 receipt named for Bestiary 5's residual.
+
+**A near-miss caught before commit:** `cargo run --bin gen_book_cache advanced_race_guide` deleted 48
+pre-existing, unrelated `feat/*.json` files (its bundled feat/equipment/spell writers re-ran along
+with the new monster call) — a pre-existing drift this cycle's own generator-run triggered but did not
+cause. Restored via `git checkout HEAD -- data/corpus/advanced_race_guide/feat/` before committing;
+`git status --porcelain` shows zero deletions in the final diff.
+
+**A stale-binary footgun fired and was self-healed:** `cargo run --bin gen_book_cache
+pathfinder_unchained` panicked "not registered in `MONSTER_BOOKS`" on the FIRST rebuild after
+registering the book — twice, even after `touch` + rebuild — while a `cargo test --lib
+monster_chassis::` run in the SAME target dir, same source, saw the registration correctly. Root
+cause: a corrupted `dev`-profile incremental-compilation cache in this cycle's OWN private
+`CARGO_TARGET_DIR` (not a cross-agent collision — a second, independent instance of the "test passes,
+binary runs stale" hazard). Fixed via a clean rebuild with `CARGO_INCREMENTAL=0`.
+
+Re-derived: `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` — `monster_ability`
+`no_record` 191 → 121; bundle total 573 → 503. `monster_chassis.rs`'s
+`widening_the_facet_vocabulary_does_not_reclassify_any_existing_record` pin repinned 3613→3683 /
+digest `0x5c2ee6087da263c9`→`0x2fa5c4578c0267bb`, both re-derived from a live test failure, not
+guessed. `reach_gate.rs`/`monster_catalog.rs`/`corpus_ingest_diagnostic.rs` pins updated to match (2
+new reach-claim arms, 70 new `UNREACHED_RECORD_FINDINGS` keys, owner-less-count 957→1027).
+
+**Closure/reclassification/reachability (`decisions.md §16`):** closure 70 units, real ingestion;
+reclassification 0; reachability **0** (all 70 pinned as named, provable non-reach in
+`reach_gate.rs::UNREACHED_RECORD_FINDINGS`, matching the round-3 cycle's own standard).
+
+**What remains:** `mythic_adventures` (21 units, needs a new `rules_tables/` module scaffolded from
+scratch); 92 units of real per-record/per-facet work across 9 already-registered books, unchanged from
+round 3, plus `pathfinder_unchained`'s own 3 new multi-`DESC:` refusals (95 total); `occult_adventures`
+(5 units) correctly out of scope (negated `PRECAMPAIGN` gate).
+
+- **Status:** complete (card 11 stays `in-progress`).
+- **Kanban:** row 11, `t9-monster-ability-owner-less-ingest-round4` appended.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-monster-ability-owner-less-ingest-round4_cycle-1_cycle_receipt.md`.
+- Commit: `0514071f58`.
+
+## Cycle t9-template-concat-pi-redaction-regen — Card 11, T9 — `template` corpus regenerated through the guarded path (2026-08-23)
+
+Closes the deferral named in `epic-2-companion-allowlist-widening_cycle-1_cycle_receipt.md`: the
+concat-blacklist-term PI cause-fix (`scrub_blacklist_pi_tokens`, shared via `ingest_ability.py`) had
+landed in code but was never run for real against `template`'s 2,248 already-shipped records, because
+of the blast radius.
+
+**Landed:** ran `scripts/ingest_simple_filename_kinds.py --kind template` for real. `git diff
+--numstat` confirms exactly what changed: 2,230 files carry only their `ingested_at` timestamp bump;
+18 carry real content changes — 3 genuinely new redactions (`inner_sea_world_guide/template`'s
+`human_ethnicity_garundi`/`bonus_language_varisian`/`human_ethnicity_varisian`, the SUBRACE/LANGBONUS/
+AUTO tokens the deferring receipt named live) plus 15 already-redacted records re-affirmed
+byte-identical. Zero blacklist-term leaks remain in `template`, proved via a corpus-wide
+`pi_scrub.blacklist_term_hit_including_concatenated` re-scan (grep-prefiltered to 1,507 candidate
+files for tractability, every candidate checked exactly).
+
+**Attempted the full `v06_work_inventory` guarded regen per the brief's letter** — built fresh
+`corpus_literal_sweep --json-out`/`derived_evaluator_fixture_check --json-out` reports and ran
+`v06_work_inventory` with both env vars set, no `--allow-stamp-loss`. **It refused** (would drop 6,506
+of 8,247 verification stamps) — the identical refusal a sibling `epic-6-kind-trait` cycle hit and
+logged the same day (`recurrence-key: corpus-literal-sweep-pi-exemption-gap`). Correctly did NOT
+force it. `docs/work-inventory.json` confirmed byte-identical before/after (`git status --porcelain`
+empty, status-distribution re-derived and matched).
+
+Re-derived the concat-defect population fresh per `decisions.md §17a`: 38 hits/6 kind dirs (down from
+the deferring receipt's 43/9 — `equipment`/`spell` already closed by sibling lanes since that receipt
+was written). 35 `class_feature` hits across 5 books remain — Rust-side generators, out of this
+cycle's reach, named by book: `advanced_players_guide` 1, `adventurers_guide` 11,
+`book_of_the_damned_volume_2` 8, `inner_sea_magic` 12, `ultimate_combat` 3.
+
+**`no_record` movement note:** bundle total moved 503→439 during this cycle's own rebase, but that
+delta is `equipment`(170→116)/`equipment_modifier`(43→33) — a sibling lane's concurrent closure
+absorbed via `git rebase`, not this cycle's own work (`git status --porcelain` before this cycle's
+commit shows zero touched files under either kind). `template` was already at `no_record: 0` before
+this cycle and stays there — this cycle's acceptance criterion was PI-redaction correctness on
+already-ingested records, not a shape-measurement gap.
+
+- **Status:** complete.
+- **Kanban:** row 11, `t9-template-concat-pi-redaction-regen` appended.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-template-concat-pi-redaction-regen_cycle-1_cycle_receipt.md`.
+- Commit: `3c7834101c`.
