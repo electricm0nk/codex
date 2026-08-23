@@ -1213,6 +1213,58 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   `_classify_kind_by_filename` with the new branches this memo names, re-runs `shape_ledger.py`
   over the widened population, and re-verifies `unclassified_count` stays 0.
 
+### Cycle 006 — Gate 0 / Card 15 `census-scope-closure`, lane 2 of 3 — class_feature memo
+
+- **Card ID:** `census-scope-closure` (card 15, `decisions.md §12b`) — this lane covers the
+  `class_feature` disagreement (census 18,231 vs `docs/work-inventory.json` 15,439, 2,792-unit
+  gap, direction previously unknown). Two sibling lanes (`other-kinds`, `ability_category:*`) run
+  concurrently; a single integration cycle applies all three memos afterward.
+- **Commit SHA:** `0487a3a92` (rebased onto `tranche/12` at push time; SHA after rebase per
+  `git log -1 --oneline` on `origin/tranche/12`).
+- **Files touched:** `artifacts/gate-0-census-closure/15-card-15-class-feature-memo.md` (new),
+  `docs/retro/events/card-15-class-feature.jsonl` (new).
+- **Acceptance criterion:** `decisions.md §12b` — every object in scope disposed (A) enumerated +
+  shaped, or (B) proven not-an-object by class with a committed command and its count; the leading
+  `mod_continuation`/`copy_derivation` hypothesis tested, not assumed.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (this lane). Card 15's row stays `in-progress` — one sibling lane
+  (`ability_category:*`) plus integration remain.
+- **Summary:** Leading hypothesis (`.MOD`/`.COPY=` continuation rows inflating the census count)
+  **tested and refuted**: `scripts/census_independent.py`'s `count_objects()` already excludes
+  `.MOD` rows before incrementing `kind_unenumerable` (verified: file-total rows minus `.MOD` rows
+  over the 259 `_abilities_class.lst` files equals 18,231 exactly, the reported figure); zero
+  `.COPY=` rows exist in this bucket. Real cause found by joining every census-counted row to
+  `docs/work-inventory.json` by physical location (`book`, `source_file`, `source_line` — immune to
+  KEY-vs-display-name ambiguity), decomposing the 18,231 exactly, no residual error term:
+  `15,438` already agree; `2,614` carry the literal field `CATEGORY:Internal` — PCGen bookkeeping
+  rows the walker itself already excludes for *other* `_abilities_*.lst` files via the identical
+  rule, just not for `_abilities_class.lst` (disposition B, not an object, proven by class); `179`
+  are real `class_feature` records across 11 books that the inventory does not currently enumerate
+  (disposition A, is an object — not a new kind, the existing `class_feature` kind). All 179
+  classify cleanly into card 14's canonical F0-F10 vocabulary via `shape_ledger.classify_formula`
+  applied directly to each row's `DEFINE`/`BONUS*` tokens (F2 134 / F0 36 / F4 7 / F1 1 / F3 1) —
+  no new family, `unclassified_count` contribution 0. Separately (outside the 18,231 population
+  entirely, noted for "sum the piles" completeness): one `.MOD`-orphan-rescue unit
+  (`ultimate_wilderness:class_feature:exotic_heritage`) is tracked by the inventory but correctly
+  absent from the census's `class_feature` bucket, since its own identity ends `.MOD` and census
+  tallies it under `mod_continuation` instead — `15,439 = 15,438 (matched) + 1 (this rescue)`.
+  Flagged, not silently rounded into either bucket: 2 of the 15,438 "already agree" rows
+  (`Domain Power ~ Touch of Good`, `core_rulebook`, lines 713/3220) carry byte-identical
+  `DEFINE`/`BONUS` content and differ only in a `TYPE:` facet — looks like the same domain power
+  declared twice in the corpus rather than two objects, named as an open follow-up, not quantified
+  here. Memo does not touch `docs/work-inventory.json`/`scripts/census_independent.py`/
+  `scripts/shape_ledger.py`/pinned-count files, per this lane's own scope (measurement, not
+  widening).
+- **Discovery forwards:** none beyond the retro correction logged for the refuted hypothesis
+  (`docs/retro/events/card-15-class-feature.jsonl`).
+- **Next-cycle plan:** integration cycle reads this memo plus the `other-kinds`/`ability_category:*`
+  lanes' memos, (1) adds the 179-row list (memo §5/§3) to `v06_work_inventory.rs`'s `class_feature`
+  enumeration, (2) extends `census_independent.py`'s `_classify_kind_by_filename` so
+  `_abilities_class.lst` files apply the same row-level `CATEGORY:Internal` check the bare
+  `_abilities*.lst` branch already applies (filing those 2,614 under `ability_category:Internal`
+  instead of `class_feature`), and (3) re-verifies the reconciliation stays exact after both
+  changes.
+
 ### Cycle epic-2-t2a-t12/1 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T2a+T12 (combined) — CLOSED at the cause, honest residual
 
 - **Card ID:** `epic-2-cause-closure` (T2a+T12 combined lane, per card 11's own cycle-1 receipt:
