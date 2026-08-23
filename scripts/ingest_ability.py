@@ -240,6 +240,61 @@ def scrub_name_pi_tokens(
     return scrubbed, any_redacted
 
 
+def scrub_blacklist_pi_tokens(
+    tokens: list[dict[str, str]], desc_already_redacted: bool
+) -> tuple[list[dict[str, str]], bool]:
+    """`decisions.md §17` gap-close: the SIGNED-OFF 60-term blacklist scan
+    applied to EVERY raw-token VALUE, not only `DESC`.
+
+    Before this function existed, a record whose bare `name`/`key` are
+    clean never went through `scrub_name_pi_tokens` (that path only runs
+    when the name itself is PI) and only its `DESC` token was screened.
+    Two already-shipped records proved live that a blacklisted term can
+    still leak through a DIFFERENT token's value on an otherwise-clean
+    record: a `SPELLLEVEL` token's own `PREDEITY:1,<deity>` segment, and a
+    `TYPE`/`PREABILITY` token naming a published campaign-setting institution.
+    This function
+    is the union-closing fix: every token value is scanned with
+    `normalized_term_hit` (word-boundary, case-fold, OCR-normalized —
+    same scan `scrub_name_pi_tokens` already uses for the renamed branch),
+    independent of whether the record's own name triggered a rename.
+
+    `desc_already_redacted` skips re-scanning a `DESC` token the caller has
+    already replaced with [`REDACTED_PI_MARKER`] via the declared-PI /
+    description-blacklist path — idempotent either way, but keeps the
+    caller's intent single-sourced instead of two paths agreeing by luck.
+
+    Returns `(scrubbed_tokens, any_redacted)`. Never mutates the input."""
+    scrubbed = []
+    any_redacted = False
+    for t in tokens:
+        if desc_already_redacted and t["key"] == "DESC" and t["value"] == REDACTED_PI_MARKER:
+            scrubbed.append(dict(t))
+            continue
+        value = t["value"]
+        if value and normalized_term_hit(value):
+            scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
+            any_redacted = True
+        else:
+            scrubbed.append(dict(t))
+    return scrubbed, any_redacted
+
+
+def records_equal_ignoring_timestamp(a: dict, b: dict) -> bool:
+    """`True` when two written records are identical except `ingested_at`.
+
+    A generic ingest (`decisions.md §17`) is re-run whenever its logic
+    changes, over the WHOLE population every time -- but re-running it must
+    not touch a file whose content did not actually change, or every
+    unrelated re-run produces a corpus-wide timestamp-only diff (concurrent
+    cycles collide on files neither one meant to touch, and a real content
+    fix is buried in thousands of no-op lines). Comparing everything except
+    `ingested_at` keeps a re-run's git diff scoped to what actually changed."""
+    a2 = {k: v for k, v in a.items() if k != "ingested_at"}
+    b2 = {k: v for k, v in b.items() if k != "ingested_at"}
+    return a2 == b2
+
+
 def desc_value(tokens: list[dict[str, str]]) -> str | None:
     for t in tokens:
         if t["key"] == "DESC":
@@ -307,6 +362,12 @@ def main() -> int:
     report = {
         "population": len(units),
         "written": 0,
+        # `changed`/`unchanged` split what `written` already counted: a
+        # re-run whose logic did not affect a given record leaves that
+        # record's file byte-identical (ignoring `ingested_at`) and does
+        # not touch it on disk -- see `records_equal_ignoring_timestamp`.
+        "changed": 0,
+        "unchanged": 0,
         "name_pi_renamed": 0,
         "unresolved": [],
         "written_by_book": defaultdict(int),
@@ -400,12 +461,21 @@ def main() -> int:
             if extra_redacted:
                 fields_redacted.append("raw_tokens")
         else:
+            # `decisions.md §17` gap-close: a clean bare name/key does not
+            # mean the row's OTHER token values are clean -- see
+            # `scrub_blacklist_pi_tokens`'s own docstring for the two
+            # already-shipped records (`inner_sea_gods/ability/adept.json`,
+            # `inner_sea_magic/ability/diplomatic_student.json`) that
+            # proved this live.
+            scrubbed_tokens, extra_redacted = scrub_blacklist_pi_tokens(tokens, desc_already_redacted=pi_redacted)
             record_name = name
             record_key = key
-            record_tokens = tokens
+            record_tokens = scrubbed_tokens
             slug = slugify(name, used)
             codex_generated_name = False
             rename_info = None
+            if extra_redacted:
+                fields_redacted.append("raw_tokens")
 
         license_value = "PI-REDACTED" if fields_redacted else "OGL"
 
@@ -441,11 +511,23 @@ def main() -> int:
 
         write_dir_book = CORPUS_WRITE_DIR_ALIASES.get(book, book)
         out_dir = os.path.join(REPO_ROOT, "data/corpus", write_dir_book, "ability")
+        out_file = os.path.join(out_dir, f"{slug}.json")
         if not dry_run:
             os.makedirs(out_dir, exist_ok=True)
-            with open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8") as fh:
-                json.dump(record, fh, indent=2, ensure_ascii=False)
-                fh.write("\n")
+            existing = None
+            if os.path.exists(out_file):
+                try:
+                    with open(out_file, encoding="utf-8") as fh:
+                        existing = json.load(fh)
+                except (OSError, json.JSONDecodeError):
+                    existing = None
+            if existing is not None and records_equal_ignoring_timestamp(existing, record):
+                report["unchanged"] += 1
+            else:
+                with open(out_file, "w", encoding="utf-8") as fh:
+                    json.dump(record, fh, indent=2, ensure_ascii=False)
+                    fh.write("\n")
+                report["changed"] += 1
         report["written"] += 1
         report["written_by_book"][book] += 1
 

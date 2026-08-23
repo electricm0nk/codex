@@ -20,10 +20,12 @@
 //! further.
 //!
 //! The term list itself is a bounded, documented heuristic
-//! (`docs/governance/ogl-pi-blacklist.md` — DRAFT, operator-reviewable),
-//! not an exhaustive legal review. It is reproduced here byte-for-byte
-//! from `gen_book_cache.rs::PI_BLACKLIST_TERMS`, the most complete
-//! of the three existing copies (20 deities + 34 place/nation names).
+//! (`docs/governance/ogl-pi-blacklist.md` — SIGNED-OFF per SD-32
+//! `decisions.md §19`), not an exhaustive legal review. It started as a
+//! byte-for-byte reproduction of `gen_book_cache.rs::PI_BLACKLIST_TERMS`
+//! (20 deities + 34 place/nation names) and has since grown by five
+//! operator-approved per-book additions to 60 terms; see the term list's
+//! own inline comments for each addition's provenance.
 
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 
@@ -36,6 +38,14 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
     "Mwangi", "Tian Xia", "Avistan", "Garund", "Sarkoris", "Worldwound", "Vudra", "Kyonin", "Molthune", "Nidal",
     "Nirmathas", "Qadira", "Razmiran", "Rahadoum", "Galt", "Isger", "Lastwall", "Brevoy", "Druma", "Irrisen",
     "Jalmeray", "Thuvia", "Geb", "Nex",
+    // SD-32 `decisions.md §19a` amendment 3d (operator sign-off 2026-08-23,
+    // `ogl-pi-blacklist.md` §2.3c): a citation of a PI term in a mechanical
+    // `PREABILITY` prerequisite field redacts the citing record too.
+    // Ported here (production Rust copy) by the T9-onboarding cycle that
+    // transcribes corpus data under the amended, SIGNED-OFF blacklist --
+    // `ogl-pi-blacklist.md`'s own frontmatter names this as the cycle
+    // responsible for the bump from 57 to 60 terms.
+    "Aldori", "Magaambya", "Magaambyan",
     // Per-book addition, `ogl-pi-blacklist.md`'s per-book-override
     // template: ACG's own E2.0.8 retrofit found the example NPC name
     // "Jarn" embedded in `advanced_class_guide/spell/discern_next_of_kin.json`'s
@@ -107,7 +117,7 @@ pub fn blanket_ogl() -> (License, Option<String>, Option<String>) {
 
 /// What a PCGen row says about *itself*, read from its own tokens.
 ///
-/// [`PI_BLACKLIST_TERMS`] above is a heuristic this program assembled — 55
+/// [`PI_BLACKLIST_TERMS`] above is a heuristic this program assembled — 60
 /// names, documented as a bounded sample rather than a legal review. The corpus
 /// states the same fact directly, per record, in two tokens the ingest path had
 /// never read: `NAMEISPI:YES` and `DESCISPI:YES`.
@@ -257,8 +267,23 @@ mod tests {
         // ("Jarn", `ogl-pi-blacklist.md`'s per-book-override template) + 2
         // Inner Sea Gods-specific per-book additions ("Cayden CaiLean",
         // "lrori" -- the oracle's own typo/OCR variants of two already-
-        // blacklisted deity names).
-        assert_eq!(PI_BLACKLIST_TERMS.len(), 57);
+        // blacklisted deity names) + 3 SD-32 `decisions.md §19a` amendment
+        // 3d additions ("Aldori", "Magaambya", "Magaambyan" -- operator
+        // sign-off 2026-08-23, `ogl-pi-blacklist.md` §2.3c), bringing this
+        // production copy to parity with the SIGNED-OFF 60-term list.
+        assert_eq!(PI_BLACKLIST_TERMS.len(), 60);
+    }
+
+    #[test]
+    fn aldori_is_redacted() {
+        let (license, ..) = classify_field("value", "1,FEAT=Aldori Dueling Sword Proficiency");
+        assert_eq!(license, License::PiRedacted);
+    }
+
+    #[test]
+    fn magaambya_is_redacted() {
+        let (license, ..) = classify_field("value", "SpecialQuality.MagaambyaReward");
+        assert_eq!(license, License::PiRedacted);
     }
 
     #[test]
