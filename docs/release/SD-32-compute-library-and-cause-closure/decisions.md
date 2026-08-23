@@ -761,3 +761,58 @@ target's PI status — is a smaller population but the same shape of hole, and g
   bucket is therefore a **legitimate and expected** output. Forcing 1,344 records into blocked/clear
   to produce a tidy number would be the worst available outcome.
 - T9's onboarding stays paused until the operator acts on the review.
+
+## Decision 17a — Correction: `pi_screen` had NOT drifted into three behaviours (2026-08-23)
+
+**Status:** Correction of record, issued by the orchestrating session against its own claim in
+`decisions.md §17`. `§17`'s ruling stands unchanged; one of its supporting facts was wrong.
+
+### What §17 claimed
+
+> *"The copies have **drifted** — `pi_screen` has three distinct implementations across the seven,
+> and `ultimate_combat`'s is six lines shorter than the others. That is a live
+> licensing-correctness defect, not just duplication, and it undermines the T9 PI audit's own
+> `clear` bucket."*
+
+### What is actually true
+
+The three copies were **byte**-distinct and **logically identical**. Normalising whitespace and
+comments, the only differences are line-wrapping and two inline comments:
+
+```bash
+diff <(git show 6ae4a364b:src/bin/ingest_ultimate_combat_spells.rs | awk '/^fn pi_screen/,/^}/' | grep -vE '^\s*//') \
+     <(git show 6ae4a364b:src/bin/ingest_ultimate_magic_spells.rs  | awk '/^fn pi_screen/,/^}/' | grep -vE '^\s*//')
+# only: one call wrapped across two lines; one struct literal expanded with `// filled by caller`
+```
+
+The "six lines shorter" figure was a **line count of a differently-wrapped copy**, not a behavioural
+difference. The orchestrator's own hashing method produced three distinct digests because it
+stripped only leading `//` comments, not trailing inline ones — a bad instrument, trusted without
+validating it against a known case.
+
+**There was no live licensing defect here, and the T9 PI audit's `clear` bucket was never
+undermined by this.** `decisions.md §18`'s per-record review proceeded on a sound basis.
+
+### What the collapse cycle did find, which is real
+
+1. **A proof-coverage gap.** Deleting `|| name_blacklisted` from `pi_screen`'s guard left **every
+   existing test green** across all seven binaries — none of them exercised the blacklist-only path
+   (a record whose *name* is blacklisted with no declared PI token). The screen's most important
+   branch was untested everywhere. Now covered by
+   `pi_screen_drops_a_record_whose_name_is_blacklisted_with_no_declared_pi_token_at_all`,
+   mutation-proved RED then GREEN.
+2. **`min_level` had genuinely diverged.** `occult_adventures` and `ultimate_combat` lacked
+   `DOMAINS:` support and PRESKILL/PREDEITY bracket-stripping. Re-derived against the pinned oracle:
+   neither book's corpus exercises the gap (`grep -c 'DOMAINS:'` and `PRESKILL` are both 0), so
+   unifying to the general form is output-neutral — but the divergence was real.
+
+### The lesson
+
+**Validate the instrument against a known case before trusting a confident claim it produces.** A
+hash-comparison that reports "three distinct implementations" is a proxy; the claim it was used to
+support — *behaviours differ* — needed one `diff` to check, and the `diff` refutes it. This is the
+same failure shape as `decisions.md §14a`'s mock-based red-proof: a check that could not have
+produced the answer it was read as producing.
+
+Escalating an overstated defect costs real work: this one was written into a committed decision,
+relayed to the operator as urgent, and used to justify a lane's priority.
