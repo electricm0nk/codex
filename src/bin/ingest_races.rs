@@ -337,6 +337,36 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     // (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across the
     // whole directory: zero hits.
     RaceSpec { dir: "rougarou", book: "bestiary_6" },
+    // Dhampir, SD-32 card-11 T2b lane (2026-08-22/23). This module's own
+    // header doc comment excluded Dhampir because `core_essentials/races/
+    // dhampir/` carries a `dhampir_abilities_subrace.lst` (a real
+    // heritage/subrace file, confirmed present on disk -- unlike Rougarou,
+    // which has none). That heritage file is a genuinely different shape
+    // this loop does not model and stays deferred, per the identical
+    // Skinwalker precedent above: **chassis + the 11 unconditional
+    // `###Block: Racial Traits` rows only**, not the heritage block.
+    // Verified directly against the pinned oracle (not assumed): all 11
+    // trait rows in `dhampir_abilities_race.lst` carry
+    // `TYPE:RacialTraits.Dhampir Racial Trait.Dhampir Racial Default...`
+    // (the identical flat, self-gating shape Fetchling/Grippli/etc. above
+    // already use), and `dhampir_abilities_globalvar.lst` states all 11
+    // matching `PREVAREQ:Dhampir_Replace*,0` gates under `CATEGORY=
+    // Internal|Racial Traits ~ Dhampir.MOD` (same convention Fetchling's
+    // globalvar file uses) -- so the existing cross-check between the two
+    // sources (this loop's `gates`/`row_flags` reconciliation) covers
+    // Dhampir with no new code. The `###Block: Favored Enemies` and
+    // `###Block: Universal Monster Rules Descriptions` rows in the same
+    // file are NOT captured by this batch (`is_standard_racial_trait`
+    // correctly does not match either -- no `RacialTraits`-leading `TYPE:`
+    // token on the Favored Enemy row, no `TYPE:` token at all on the two
+    // `.MOD` description rows), matching how Grippli's own `Favored Enemy
+    // ~ Humanoid (Grippli)` row is likewise left open by this same loop
+    // today -- a separate, smaller residual, not silently dropped.
+    // `data/corpus/bestiary_2/` is the same real, registered corpus book
+    // directory the other 6 B2 races above already file under.
+    // PI-blacklist scan (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/
+    // `NAMEISPI:` grep across the whole `dhampir/` directory: zero hits.
+    RaceSpec { dir: "dhampir", book: "bestiary_2" },
 ];
 
 /// `TYPE:` markers that lead with `RacialTraits` (so
@@ -2142,9 +2172,15 @@ mod tests {
         // standard-tier traits: Ability Scores/Type/Size/Speed/Vision/
         // Change Shape/Natural Weapon/Languages) -- 38 races / 363
         // standard racial trait records, re-measured 2026-08-20 by running
-        // this binary against the real corpus, not invented.
-        assert_eq!(races, 38, "38 in-scope race chassis records");
-        assert_eq!(traits, 363, "363 standard racial trait records");
+        // this binary against the real corpus, not invented. Plus SD-32
+        // card-11 T2b lane's Dhampir (Bestiary 2, 2026-08-23, chassis + 12
+        // standard-tier traits: Ability Scores/Type/Size/Speed/Vision/
+        // Skilled/Undead Resistance/Weakness/Negative Energy Affinity/
+        // Spell-Like Ability/Resist Level Drain/Languages) -- 39 races /
+        // 375 standard racial trait records, re-measured by running this
+        // binary against the real corpus.
+        assert_eq!(races, 39, "39 in-scope race chassis records");
+        assert_eq!(traits, 375, "375 standard racial trait records");
     }
 
     // -----------------------------------------------------------------

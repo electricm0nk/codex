@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:43:10Z",
+  "data": {
+    "key": "Ratfolk ~ Lab Rat",
+    "name": "Lab Rat",
+    "race_key": "Ratfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ratfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ratfolk_ReplaceTinker"
+    ],
+    "description": "For every ingenious ratfolk inventor, there is another who must inevitably test the invention. Those who survive enough experiments sometimes develop strange metabolic quirks that grant them heightened resilience and, on occasion, fortunate side effects when consuming alchemical or magical draughts. As a result, they gain a +1 racial bonus on saving throws against poison, alchemical weapons, and harmful effects from drinking potions or elixirs. In addition, once per day such a ratfolk can either increase the caster level of a potion he consumes by 1 or double the duration of an alchemical remedy he consumes or applies to himself (to a maximum of 4 hours). This racial trait replaces tinker.",
+    "source_page": "p.176",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ratfolk ~ Lab Rat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ratfolk ~ Lab Rat],[!PREFACT:1,ABILITIES,Ratfolk_ReplaceTinker=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "For every ingenious ratfolk inventor, there is another who must inevitably test the invention. Those who survive enough experiments sometimes develop strange metabolic quirks that grant them heightened resilience and, on occasion, fortunate side effects when consuming alchemical or magical draughts. As a result, they gain a +1 racial bonus on saving throws against poison, alchemical weapons, and harmful effects from drinking potions or elixirs. In addition, once per day such a ratfolk can either increase the caster level of a potion he consumes by 1 or double the duration of an alchemical remedy he consumes or applies to himself (to a maximum of 4 hours)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces tinker.|!PREABILITY:1,CATEGORY=Special Ability,Ratfolk ~ Lab Rat"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+1 racial bonus on saving throws against poison, alchemical weapons, and harmful effects from drinking potions or elixirs."
+      },
+      {
+        "key": "FACT",
+        "value": "Ratfolk_ReplaceTinker|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Poison,SaveBonus_vs_AlchemicalWeapons,SaveBonus_vs_PotionsElixirs",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
+    "line": 47,
+    "record_key": "Ratfolk ~ Lab Rat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

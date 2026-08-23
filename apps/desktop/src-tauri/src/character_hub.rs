@@ -4119,7 +4119,10 @@ mod tests {
                 "race:svirfneblin",
                 "race:tengu",
                 "race:tiefling",
-                // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15).
+                // Bestiary 2's 7: the original 6 (SD-31 Epic 1-F2,
+                // 2026-08-15) plus Dhampir (SD-32 card-11 T2b lane,
+                // 2026-08-23, chassis + standard tier only).
+                "race:dhampir",
                 "race:fetchling",
                 "race:grippli",
                 "race:ifrit",
@@ -4829,8 +4832,13 @@ mod tests {
                 race.race_id
             );
         }
+        // Dhampir gained a chassis + standard-tier traits, SD-32 card-11
+        // T2b lane (2026-08-23), and is now offered above -- Kasatha (ARG's
+        // reprint of an Inner Sea Races race, `inner_sea_races` itself
+        // un-ingested for it) stands in as the still-genuinely-un-ingested
+        // example this test needs.
         let unknown = compute_pilot_with_corpus(
-            &compose_character_input(&request_for("race:dhampir", 1)),
+            &compose_character_input(&request_for("race:kasatha", 1)),
             corpus_fixture_bundle(),
         );
         assert!(

@@ -1393,11 +1393,11 @@ mod tests {
         );
         assert_eq!(
             races("bestiary_2"),
-            Some(6),
-            "Bestiary 2's six races (SD-31 Epic 1-F2, 2026-08-15) -- the first race batch \
-             this panel has reported since Bestiary 1's, and proof the \
+            Some(7),
+            "Bestiary 2's seven races: the original six (SD-31 Epic 1-F2, 2026-08-15) -- the \
+             first race batch this panel has reported since Bestiary 1's, and proof the \
              `diagnostic_book_id(\"B2\")` mapping this batch added actually attaches the \
-             count to the right book row"
+             count to the right book row -- plus Dhampir (SD-32 card-11 T2b lane, 2026-08-23)"
         );
     }
 
@@ -1421,9 +1421,10 @@ mod tests {
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
         assert_eq!(
-            panel_total, 38,
-            "38 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
-             (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
+            panel_total, 39,
+            "39 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 7 (the \
+             original 6, SD-31 Epic 1-F2, 2026-08-15, plus Dhampir, SD-32 card-11 T2b lane, \
+             2026-08-23) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
              2026-08-15) plus Advanced Race Guide's 12 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
              Kitsune, Ratfolk, Strix, Suli, Wayang; SD31-E6-F4-004, 2026-08-17: Gillman, \
              Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, 2026-08-17: Changeling, Samsaran -- \

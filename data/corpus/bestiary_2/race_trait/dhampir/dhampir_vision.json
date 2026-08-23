@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:49:29Z",
+  "data": {
+    "key": "Dhampir ~ Vision",
+    "name": "Senses",
+    "race_key": "Dhampir",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dhampir Racial Trait",
+      "Dhampir Racial Default",
+      "SpecialQuality",
+      "Racial Vision"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Dhampir_ReplaceVision",
+    "sets_replace_flags": [],
+    "description": "Dhampirs get low-light vision and darkvision with a range of 60 feet.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dhampir_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Dhampirs get low-light vision and darkvision with a range of 60 feet."
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)|Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+    "sha256": "faeeb2800b2a75f92e1f2c7b02ee3d2c253bc3599735699d8bca0acaf00742c5",
+    "line": 17,
+    "record_key": "Dhampir ~ Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

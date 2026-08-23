@@ -535,6 +535,10 @@ mod tests {
         assert_eq!(count_for(&response, "Oread"), 9);
         assert_eq!(count_for(&response, "Sylph"), 9);
         assert_eq!(count_for(&response, "Undine"), 9);
+        // Dhampir, SD-32 card-11 T2b lane (2026-08-23): chassis + the 12
+        // unconditional `<Race> Racial Default` rows only (its heritage/
+        // subrace file stays deferred, same precedent as Skinwalker below).
+        assert_eq!(count_for(&response, "Dhampir"), 12);
         // Skinwalker, the follow-on batch (2026-08-15): 9 standard-tier
         // records, chassis + default tier only (heritage rows excluded --
         // see `ingest_races.rs`'s `skinwalker` doc comment).
@@ -579,11 +583,12 @@ mod tests {
 
         // Pinned as a total as well as per race so a race silently dropping
         // out cannot be masked by another race growing.
-        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) + 18 (9+9) + 8 = 361.
-        assert_eq!(response.entries.len(), 361);
+        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) + 18 (9+9) + 8 + 12 (Dhampir,
+        // SD-32 card-11 T2b lane, 2026-08-23) = 373.
+        assert_eq!(response.entries.len(), 373);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 38, "38 in-scope races: {races:?}");
+        assert_eq!(races.len(), 39, "39 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -638,7 +643,8 @@ mod tests {
         );
 
         // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
-        // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
+        // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15, plus Dhampir's 12,
+        // SD-32 card-11 T2b lane, 2026-08-23) + 9 Bestiary 5 rows
         // (Skinwalker follow-on batch, 2026-08-15) + 8 Bestiary 6 rows
         // (Rougarou, SD-31 wave-24, 2026-08-20) + ARG's 12-race total
         // (58 from SD-31-E6-F4-002's Catfolk/Kitsune/Ratfolk/Strix/Suli/
@@ -654,7 +660,7 @@ mod tests {
         let arg = response.entries.iter().filter(|e| e.book == BOOK_ARG).count();
         assert_eq!(crb, 67);
         assert_eq!(b1, 106);
-        assert_eq!(b2, 57);
+        assert_eq!(b2, 69);
         assert_eq!(b5, 9);
         assert_eq!(b6, 8);
         assert_eq!(arg, 114);
@@ -708,9 +714,10 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 357,
+            alternates, 361,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
-             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
+             Codex's 8 (SD-29 decisions.md §43's original 4 + SD-32 card-11 T2b lane's 4 Ratfolk \
+             alternates, 2026-08-23) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
              (§49) + SD-31 Epic 1-F2's 6 Bestiary 2 races' 48 (ARG's 42 + Inner Sea Races' 6 \
              actually-Alternate rows; re-derived by role, not by the raw per-book row counts \

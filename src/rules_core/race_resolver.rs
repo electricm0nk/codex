@@ -921,6 +921,8 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Oread", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Sylph", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Undine", SizeCategory::Medium),      // TEMPLATE:SIZE_M
+    // Bestiary 2's Dhampir, SD-32 card-11 T2b lane (2026-08-23).
+    ("Dhampir", SizeCategory::Medium),     // TEMPLATE:SIZE_M
     // Bestiary 5's 1, SD-31 Epic 1 follow-on batch (2026-08-15).
     ("Skinwalker", SizeCategory::Medium),  // TEMPLATE:SIZE_M, over a chassis FACT:BaseSize|S
     // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16).
@@ -1034,6 +1036,21 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     // Monster Codex (SD-29's race-trait pilot). `mc_abilities_race.lst:16,17`.
     ("Duergar ~ Ironskinned", &["Duergar_ReplaceSLAEnlargePerson"]),
     ("Duergar ~ Twilight-Touched", &["Duergar_ReplaceSLAInvisibility"]),
+    // Monster Codex's Ratfolk alternates (SD-32 card-11 T2b lane,
+    // 2026-08-23): `mc_abilities_race.lst:34-52`. Ratfolk gained a chassis
+    // in `ingest_races.rs`'s SD-31-E6-F4-002 batch (ARG-native), so these
+    // four Monster Codex rows -- previously refused by `ingest_race_traits.
+    // rs`'s `IN_SCOPE_RACES` filter under a stale "no chassis" premise --
+    // now ingest. `Surface Sprinter` sets two flags on one row (it replaces
+    // both darkvision/slow-speed at once); its two replacement rows
+    // (`Ratfolk ~ Surface Sprinter ~ Speed`/`~ Vision`) are
+    // `TraitRole::FlagGranted` via its own `ABILITY:...|AUTOMATIC|` token,
+    // never entered here directly -- same convention Strix's Wing-Clipped
+    // uses above.
+    ("Ratfolk ~ Cheek Pouches", &["Ratfolk_ReplaceSwarming"]),
+    ("Ratfolk ~ Cleanliness", &["Ratfolk_ReplaceRodentEmpathy"]),
+    ("Ratfolk ~ Lab Rat", &["Ratfolk_ReplaceTinker"]),
+    ("Ratfolk ~ Surface Sprinter", &["Ratfolk_ReplaceSpeed", "Ratfolk_ReplaceVision"]),
     // ---- Dwarf ----
     ("Dwarf ~ Ancient Enmity", &["Dwarf_ReplaceHatred"]),
     ("Dwarf ~ Craftsman", &["Dwarf_ReplaceGreed"]),
@@ -1844,8 +1861,11 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            38,
-            "38 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+            39,
+            "39 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 7 (the original 6 plus \
+             Dhampir, SD-32 card-11 T2b lane, 2026-08-23, chassis + the 11 unconditional \
+             standard traits only -- its own heritage/subrace file stays deferred, same \
+             precedent as Skinwalker below) + Bestiary 5's 1 \
              (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 12 \
              (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
              SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, \
@@ -2180,7 +2200,14 @@ mod tests {
         // `is_heritage_choice_subtrait`), not silently absorbed here.
         // 353 -> 361 by SD-31 wave-24 (2026-08-20): Rougarou (Bestiary 6)
         // adds 8 new standard rows, same flat shape, no heritage content.
-        assert_eq!(count(TraitRole::Default), 361);
+        // 361 -> 373 by SD-32 card-11 T2b lane (2026-08-23): Dhampir
+        // (Bestiary 2) adds its 12 unconditional standard-trait rows
+        // (Ability Scores, Type, Size, Speed, Vision, Skilled, Undead
+        // Resistance, Weakness, Negative Energy Affinity, Spell-Like
+        // Ability, Resist Level Drain, Languages) -- same flat shape, its
+        // heritage/subrace file stays deferred, same precedent as
+        // Skinwalker/Rougarou above.
+        assert_eq!(count(TraitRole::Default), 373);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2196,7 +2223,11 @@ mod tests {
         // of them granting a further dependent row that would also count
         // here (Throwback's and Tree Stranger's grants are `FlagGranted`,
         // counted below instead).
-        assert_eq!(count(TraitRole::Alternate), 357);
+        // 357 -> 361 by SD-32 card-11 T2b lane (2026-08-23): Monster
+        // Codex's 4 new Ratfolk alternates (Cheek Pouches, Cleanliness,
+        // Lab Rat, Surface Sprinter) -- Surface Sprinter's own two
+        // replacement rows are `FlagGranted`, counted below instead.
+        assert_eq!(count(TraitRole::Alternate), 361);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2245,7 +2276,12 @@ mod tests {
         // ~ Speed` (one `ABILITY:...|AUTOMATIC|` token naming two keys), and
         // Vanara's `Tree Stranger` grants `Tree Stranger ~ Vanara ~ Speed`
         // the same way -- 3 new dependent rows total.
-        assert_eq!(count(TraitRole::FlagGranted), 74);
+        // 74 -> 76 by SD-32 card-11 T2b lane (2026-08-23): Monster Codex's
+        // Ratfolk `Surface Sprinter` grants both `Ratfolk ~ Surface Sprinter
+        // ~ Speed` and `Ratfolk ~ Surface Sprinter ~ Vision` (one
+        // `ABILITY:...|AUTOMATIC|` token naming two keys) -- the identical
+        // Gillman `Throwback` shape immediately above.
+        assert_eq!(count(TraitRole::FlagGranted), 76);
         // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
         // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
         // key and names each one's remedy. Unchanged by SD-31 Epic 1-F2: every
@@ -2254,7 +2290,7 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            794,
+            812,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2272,7 +2308,9 @@ mod tests {
              Changeling 9, Samsaran 9; 768 -> 786), closing `arg_races.lst`'s full 37-row \
              playable-race roster -- no new alternate-trait batch, neither race has any ARG \
              alternate content + SD-31 wave-24's Rougarou (Bestiary 6, 2026-08-20): 8 new \
-             standard-tier rows, no heritage/alternate content (786 -> 794)"
+             standard-tier rows, no heritage/alternate content (786 -> 794) + SD-32 card-11 \
+             T2b lane's 18 (2026-08-23: Dhampir's 12 standard-tier rows + Monster Codex's 4 \
+             new Ratfolk alternates + the 2 dependent rows Surface Sprinter grants; 794 -> 812)"
         );
     }
 
@@ -2456,7 +2494,20 @@ mod tests {
         // (`ingest_races.rs`'s `SD31-E6-F4-004` batch wrote each race's
         // `!PREFACT` gates from its own globalvar file), so the orphan-flag
         // assertion above still does not move.
-        assert_eq!(all_flags.len(), 137);
+        //
+        // SD-32 card-11 T2b lane (2026-08-23) moved this 137 -> 139: Monster
+        // Codex's Ratfolk `Surface Sprinter` sets 2 brand-new flags,
+        // `Ratfolk_ReplaceSpeed` and `Ratfolk_ReplaceVision` (its other
+        // three new alternates -- Cheek Pouches/Cleanliness/Lab Rat -- reuse
+        // `Ratfolk_ReplaceSwarming`/`ReplaceRodentEmpathy`/`ReplaceTinker`,
+        // the SAME flags ARG's own Ratfolk alternates already claim: two
+        // different books' alternates legitimately replacing the same base
+        // trait share its one replace-flag by PCGen's own design). Every
+        // flag is claimed by Ratfolk's own standard row (`ingest_races.rs`
+        // wrote its `!PREFACT` gates from Ratfolk's globalvar file, as
+        // every other race's do), so the orphan-flag assertion above still
+        // does not move.
+        assert_eq!(all_flags.len(), 139);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2479,8 +2530,14 @@ mod tests {
         }
         assert_eq!(
             checked,
-            357,
-            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+            361,
+            "153 ARG + 8 Monster Codex (the original 4 -- Duergar's Ironskinned/Twilight-\
+             Touched, Goblin's the two Oversized replacement rows -- plus SD-32 card-11 T2b's \
+             4 Ratfolk alternates, 2026-08-23: Cheek Pouches/Cleanliness/Lab Rat/Surface \
+             Sprinter. Surface Sprinter's own two replacement rows, `~ Speed`/`~ Vision`, are \
+             `FlagGranted` via its own `ABILITY:...AUTOMATIC...` token, same as Strix's \
+             Wing-Clipped below, so they are not counted here) + 1 APG + 67 Inner Sea Races + \
+             41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's alternates, \
              minus Strix's Wing-Clipped-granted Flight and Suli's Energy-Strike-granted \
@@ -2599,7 +2656,9 @@ mod tests {
         assert_eq!(corpus.resolve_key("race:half-elf"), Some("Half-Elf"));
         assert_eq!(corpus.resolve_key("  race:HALF-ORC "), Some("Half-Orc"));
         assert_eq!(corpus.resolve_key("race:tiefling"), Some("Tiefling"));
-        assert_eq!(corpus.resolve_key("race:dhampir"), None, "a B2 race is not ingested");
+        // Dhampir gained a chassis + standard-tier traits, SD-32 card-11 T2b
+        // lane (2026-08-23); it now resolves like any other B2 race.
+        assert_eq!(corpus.resolve_key("race:dhampir"), Some("Dhampir"));
         assert_eq!(corpus.resolve_key(""), None);
     }
 
@@ -2665,13 +2724,14 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             RACE_SIZES.len(),
-            38,
+            39,
             "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6 + the Skinwalker follow-on \
              batch + SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16) + \
              SD31-E6-F4-004's Advanced Race Guide follow-on batch of 4 (2026-08-17) + \
              SD31-E6-F4-007's Advanced Race Guide follow-on batch of 2 (2026-08-17: \
              Changeling, Samsaran), closing `arg_races.lst`'s full 37-row roster + SD-31 \
-             wave-24's Rougarou (Bestiary 6, 2026-08-20)"
+             wave-24's Rougarou (Bestiary 6, 2026-08-20) + SD-32 card-11 T2b lane's Dhampir \
+             (Bestiary 2, 2026-08-23)"
         );
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");
@@ -2685,8 +2745,9 @@ mod tests {
         assert_eq!(race_size_for_race_token("race:goblin"), Some(SizeCategory::Small));
         assert_eq!(race_size_for_race_token("race:half-elf"), Some(SizeCategory::Medium));
         assert_eq!(race_size_for_race_token("race:tiefling"), Some(SizeCategory::Medium));
-        // A race outside the ingested 18 stays an honest absence.
-        assert_eq!(race_size_for_race_token("race:dhampir"), None);
+        // Dhampir gained a chassis + standard-tier traits, SD-32 card-11
+        // T2b lane (2026-08-23); it now resolves like any other B2 race.
+        assert_eq!(race_size_for_race_token("race:dhampir"), Some(SizeCategory::Medium));
         assert_eq!(race_size_for_race_token(""), None);
     }
 
@@ -2709,8 +2770,9 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            357,
-            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+            361,
+            "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
+             alternates, 2026-08-23) + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
              SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch) \
@@ -2755,7 +2817,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 357);
+        assert_eq!(selectable_alternate_trait_keys().len(), 361);
     }
 
     #[test]

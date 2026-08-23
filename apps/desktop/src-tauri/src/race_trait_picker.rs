@@ -982,8 +982,8 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            38,
-            "38 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+            39,
+            "39 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
              Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
              SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
              Ratfolk, Strix, Suli, Wayang) + SD31-E6-F4-004's Advanced Race Guide follow-on \
@@ -991,11 +991,12 @@ mod tests {
              Advanced Race Guide follow-on batch of 2 (2026-08-17: Changeling, Samsaran -- \
              closing `arg_races.lst`'s full 37-row playable-race roster) + SD-31 wave-24's \
              Rougarou (Bestiary 6, 2026-08-20, chassis + 8 standard-tier traits, no ARG \
-             alternate-trait content)"
+             alternate-trait content) + SD-32 card-11 T2b lane's Dhampir (Bestiary 2, \
+             2026-08-23, chassis + standard tier only)"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 357,
+            total, 361,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
@@ -1061,7 +1062,11 @@ mod tests {
             ("Nagaji", 1),      // ARG 1 (SD31-E6-F4-006, 2026-08-17)
             ("Oread", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Orc", 5),         // ARG 4 + ISR 1
-            ("Ratfolk", 4),     // ARG 4 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 4 (SD-31-E6-F4-003, 2026-08-16) + Monster Codex 4
+            // (Cheek Pouches/Cleanliness/Lab Rat/Surface Sprinter, SD-32
+            // card-11 T2b lane, 2026-08-23; Surface Sprinter's own 2
+            // replacement rows are `FlagGranted`, not counted here).
+            ("Ratfolk", 8),
             // Strix's real ARG total is 6, but `Wing-Clipped` grants
             // `Wing-Clipped ~ Strix ~ Flight` (`TraitRole::FlagGranted`), so
             // only 5 are menu rows -- the same shape `Dwarf ~ Saltbeard`
@@ -1087,7 +1092,7 @@ mod tests {
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 357);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 361);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1314,8 +1319,9 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 357,
-            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
+            checked, 361,
+            "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
+             alternates, 2026-08-23) + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
              (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch) + 8 \
@@ -1888,9 +1894,14 @@ mod tests {
         // heritage/alternate-trait content in the pinned oracle at all
         // (confirmed: no `*_subrace.lst` file, no `Rougarou_Replace*` flag
         // ever set to `True` anywhere in the corpus).
-        assert_eq!((standard, alternates), (361, 357));
+        // SD-32 card-11 T2b lane (2026-08-23) adds Dhampir (Bestiary 2):
+        // 1 more `race`/ chassis and 12 more standard rows (361 -> 373),
+        // plus Monster Codex's 4 new Ratfolk alternates (357 -> 361) --
+        // its `Adopted Race ~ Dhampir` row stays deferred, same browse-only
+        // stub disposition as Rougarou's `Adopted Race ~ Rougarou` above.
+        assert_eq!((standard, alternates), (373, 361));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 718);
+        assert_eq!(checked, 734);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

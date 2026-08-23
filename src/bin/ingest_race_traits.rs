@@ -1994,10 +1994,19 @@ mod tests {
         // `ABILITY:...|AUTOMATIC|...` companion token for the real trait
         // `Stalwart Watcher`, already ingested, not a second player-facing
         // object.)
+        // Monster Codex 5->11: SD-32 card-11 T2b lane (2026-08-23) widened
+        // `IN_SCOPE_RACES` to include Ratfolk's real chassis (already
+        // ingested by `ingest_races.rs`'s SD-31-E6-F4-002 batch) -- this
+        // binary's own scope filter had been stale since that batch landed.
+        // `mc_abilities_race.lst`'s 6 real Ratfolk alternate-trait rows
+        // (Cheek Pouches, Cleanliness, Lab Rat, Surface Sprinter, and
+        // Surface Sprinter's own 2 replacement rows) now pass. Re-derived
+        // on disk: `find data/corpus/monster_codex/race_trait -name
+        // '*.json' | wc -l` -> 11.
         let expected: BTreeMap<&str, usize> =
             [
                 ("advanced_race_guide", 414usize),
-                ("monster_codex", 5),
+                ("monster_codex", 11),
                 ("inner_sea_races", 94),
                 ("horror_adventures", 43),
             ]
@@ -2061,7 +2070,7 @@ mod tests {
         }
         assert_eq!(
             total,
-            556,
+            562,
             "414 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
              from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
@@ -2071,8 +2080,11 @@ mod tests {
              alternate-trait content): 201 pre-existing + 24 for the first \
              6-race batch, SD-31-E6-F4-003, 2026-08-16, plus 11 for the second 4-race \
              follow-on batch, SD31-E6-F4-006, 2026-08-17) + \
-             5 Monster Codex + 94 Inner Sea Races (SD-32 card 11 T2b, 82->94: a stale \
-             regen, not new content -- see the per-book table's comment above) + \
+             11 Monster Codex (5 pre-existing + 6 for SD-32 card-11 T2b's Ratfolk batch, \
+             2026-08-23: Cheek Pouches/Cleanliness/Lab Rat/Surface Sprinter plus its own \
+             2 replacement rows -- see `IN_SCOPE_RACES` doc comment) + 94 Inner Sea Races \
+             (SD-32 card 11 T2b, 82->94: a stale regen, not new content -- see the \
+             per-book table's comment above) + \
              43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
              2026-08-15). Advanced Player's Guide was investigated (SD-31 Epic 6-F4,
@@ -2082,8 +2094,9 @@ mod tests {
              This total sits alongside the per-book map above and must move with it; round \
              3 moved the map first and this pin caught the omission, round 4 did the same, \
              the companion lane hit it a third time in one cycle, batch four a fourth, and \
-             SD31-E6-F4-004 a fifth, SD31-E6-F4-006 a sixth -- fixing one assertion reveals \
-             the next one below it, which is the whole reason the test states both"
+             SD31-E6-F4-004 a fifth, SD31-E6-F4-006 a sixth, SD-32 card-11 T2b a seventh -- \
+             fixing one assertion reveals the next one below it, which is the whole reason \
+             the test states both"
         );
     }
 
