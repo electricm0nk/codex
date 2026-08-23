@@ -1435,3 +1435,50 @@ by it, and should be marking those units now so the pass can find them.
 
 **`§16` unchanged.** A unit ingested under a provisional default is **not** a unit whose shape is
 measured. Report it in its own bucket; do not book it as closure of Gate 1's shape-measurement DoD.
+
+## Decision 27a — Scope of the final categorization pass, confirmed by the operator: **all the shapes, every book, 100%**
+
+The orchestrator flagged that `§27`'s phrase *"categorize all the shapes"* could be read narrowly (the
+~2 delivery-only `monster_ability` rows that prompted the question) or broadly (every shape assignment
+in the bundle), and asked which was meant.
+
+**Ruling, verbatim:**
+
+> *"all the shapes. every book. 100%"*
+
+**This settles the scope at its widest, and there is no narrow reading available.**
+
+1. **All the shapes.** Every unit's shape is categorized — not only the units that received `§27`'s
+   provisional `SpecialQuality` default, and not only units in the families a given cycle happened to
+   touch. Any placeholder, provisional, defaulted, "unknown", or otherwise not-genuinely-derived shape
+   assignment anywhere in the bundle is in scope for the pass and must be replaced with a real one.
+2. **Every book.** Not "every registered book", not "every book a cycle has onboarded so far", and not
+   "every book except the awkward ones". If a book in the corpus holds units whose shapes are not
+   categorized, **onboarding that book is inside this scope** — book onboarding cost in this repo is
+   per-file, not per-record (~7 count-pinning files), so the marginal cost of the content itself is
+   small once a book is registered.
+3. **100%.** The completion criterion is a number, and the number is **zero remaining uncategorized
+   units** — not a budget, not a ratchet, not a threshold, not "all but the hard ones". Consistent with
+   `§20`'s treatment of `no_record`: **a budget says the backlog did not get worse; only zero says the
+   work is done.**
+
+**Two live dispositions this ruling requires a cycle to re-examine rather than inherit.** Neither is
+overturned here — each needs its reasoning re-checked against "every book, 100%" and the result stated
+explicitly in a receipt:
+
+- **`occult_adventures`' 5 `monster_ability` units**, repeatedly confirmed "correctly out of scope"
+  because a negated `PRECAMPAIGN` gate this repo's campaign set fails. That reasoning may still hold —
+  an object genuinely not applicable to the modelled campaign set is a different thing from an object
+  skipped for cost. **Say which it is, with evidence.**
+- **Any unit whose shape is recorded as `F0`/no-formula-content by default rather than by derivation.**
+  `F0` reached by measurement is a real answer; `F0` reached by "nothing else matched" is a placeholder
+  wearing a family label, and `§1a` treats those very differently.
+
+**Closure.** `§10` applies unchanged: this pass gets a kanban card, and **SD-32 does not close until
+that card reads `complete`** with the uncategorized population at zero. It is sequenced after `no_record`
+reaches zero (`§27`), because a shape cannot be categorized for an object that has not been ingested.
+
+**Standing note.** This is the fourth time in this bundle the operator has answered a
+scope-narrowing question by widening it (`§20`, `§25`, `§27`, and this). Cycles should stop treating
+cost, awkwardness, or "this needs a new mechanism" as grounds for a narrower reading, and should
+present the plan and its size instead of an opt-out.
