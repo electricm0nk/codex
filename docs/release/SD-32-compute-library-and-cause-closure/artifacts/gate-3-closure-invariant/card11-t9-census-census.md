@@ -92,36 +92,49 @@ already includes card 4's landings) — it is not a stale pre-card-4 quote.
 
 ## 4. Overlap with T2b — significant, must be reported to work lanes
 
-T2b (`decisions.md §13`, 2,472 units, `race_trait` kind) names its own book population in
-`artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-2_epic-2-t2b_cycle_receipt.md §3`:
-13 books never registered in `RACE_CORPUS_BOOKS` at all, plus 10 books registered but with
-untranscribed `race_trait` rows. **21 of T9's 29 books also appear in T2b's book list:**
+**Superseding note:** while this census was in progress, a concurrent T2b-census cycle landed
+(`ad7d7c157`, `artifacts/gate-3-closure-invariant/card11-t2b-census-census.md`) with a
+command-derived, corrected T2b book list — 17 unregistered + 9 registered-but-untranscribed = 26
+books (`beastiary`, the legacy core-bestiary id, has 0 residual units and drops out). This
+supersedes the earlier T2b lane receipt's book list (which this memo originally compared against)
+with a more accurate one — e.g. it adds `pathfinder_unchained` and `advanced_class_guide`, absent
+from the earlier receipt's hand-derived list. **Comparing T9's fresh 29-book set against this
+newer, committed T2b book list:**
+
+```
+python3 -c "
+t9 = {...29 books from §2...}
+t2b = {...26 books from card11-t2b-census-census.md §2's table...}
+print(sorted(t9 & t2b))
+"
+```
+
+**22 of T9's 29 books also appear in T2b's 26-book list:**
 
 ```
 advanced_players_guide, advanced_race_guide, bestiary, bestiary_2, bestiary_3, bestiary_4,
 bestiary_5, book_of_the_damned_volume_1, book_of_the_damned_volume_2, core_rulebook,
-horror_adventures, inner_sea_gods, inner_sea_races, inner_sea_world_guide, monster_codex,
-mythic_adventures, occult_adventures, ultimate_combat, ultimate_magic, ultimate_psionics,
-ultimate_wilderness
+horror_adventures, inner_sea_bestiary, inner_sea_gods, inner_sea_races, inner_sea_world_guide,
+monster_codex, mythic_adventures, occult_adventures, ultimate_combat, ultimate_magic,
+ultimate_psionics, ultimate_wilderness
 ```
 
-**T9-only books (8, not named in T2b's population at all):** `adventurers_guide`,
-`inner_sea_bestiary`, `inner_sea_combat`, `inner_sea_faiths`, `inner_sea_intrigue`,
-`inner_sea_magic`, `inner_sea_temples`, `ultimate_equipment`.
+**T9-only books (7, not named in T2b's population):** `adventurers_guide`, `inner_sea_combat`,
+`inner_sea_faiths`, `inner_sea_intrigue`, `inner_sea_magic`, `inner_sea_temples`,
+`ultimate_equipment`.
 
-**Consequence for dispatch:** for those 21 books, one onboarding cycle touching that book's
-count-pinning files closes units in *both* T2b (`race_trait`) and T9 (`spell`/`companion`/`feat`/
-`monster_ability`/`equipment`/`monster`) simultaneously — different kinds, same book-level fixed
-cost. Sequencing a T9 book cycle and a T2b book cycle for the same book as two independent
+**T2b-only books (4, not named in T9's population):** `advanced_class_guide`, `bestiary_6`,
+`pathfinder_unchained`, `ultimate_intrigue`.
+
+**Consequence for dispatch:** for those 22 shared books, one onboarding cycle touching that
+book's count-pinning files closes units in *both* T2b (`race_trait`) and T9 (`spell`/`companion`/
+`feat`/`monster_ability`/`equipment`/`monster`) simultaneously — different kinds, same book-level
+fixed cost. Sequencing a T9 book cycle and a T2b book cycle for the same book as two independent
 efforts double-pays the fixed cost `decisions.md §13` explicitly says is what determines size.
 **A single per-book cycle scoped to "onboard book X across every kind with an open shape (T2b
-and/or T9)" is the correct unit of work**, not one cycle per shape per book.
-
-Re-derive: `scripts/sd32_t9_census.py` for T9's set; T2b's set is quoted verbatim from its own
-already-committed receipt (`epic-2-cause-closure_cycle-2_epic-2-t2b_cycle_receipt.md §3`) — no
-tool re-derives T2b's book list mechanically today, so this comparison uses the two lanes' own
-documented sets and is not independently re-run against T2b's evidence codes this cycle. Any T2b
-work-lane should re-verify its own list before either lane is dispatched.
+and/or T9)" is the correct unit of work**, not one cycle per shape per book. 22 of T9's 29 books
+(76%) fall in this shared-cost category — this is the single most consequential finding for
+dispatch sequencing across both censuses.
 
 ## 5. Confirmed false-positive / non-closeable-by-data-cycle sub-population (monster kind)
 
@@ -179,8 +192,9 @@ cycles**, plus:
 
 - Total re-derived at **2,712**, matching `decisions.md §13` exactly — the headline figure that
   "looked right" was checked and holds.
-- **21-of-29 book overlap with T2b** is the single most consequential finding for dispatch
-  sequencing (§4) — not previously quantified in any prior receipt.
+- **22-of-29 book overlap with T2b** (against T2b's own newer, corrected 26-book census) is the
+  single most consequential finding for dispatch sequencing (§4) — not previously quantified in
+  any prior receipt.
 - **27 of 2,712 units (1.0%) are not real per-record gaps at all** (21 PI-excluded — blocked
   pending an operator ruling, not closeable by data entry; 6 structurally-correct exclusions —
   never should be "closed"). These are false positives in the raw evidence-code count in the same
