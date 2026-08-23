@@ -4769,9 +4769,12 @@ cause-pinning gap remains anywhere in the 183-unit population.
 **Residual: 183 → 179** (153 non-internal + 26 internal-collision-losers).
 `scripts/card15_reconcile.py` updated and re-run: `equals_total_this_run: True`,
 `remaining_undisposed: 0`, 18,992 total (invariant — the already-tracked/pending-A split moved
-18,008/183 → 18,012/179, sum unchanged). Gate 3's standing gate now **PASSES**
-(`no_record` 20,778/35,422 vs. baseline 21,521/36,028, not exceeded) — a side effect of the
-pre-existing staleness resolving via this cycle's required regen, not this cycle's own fix.
+18,008/183 → 18,012/179, sum unchanged). Gate 3's evidence-gated budget check reports "not
+exceeded" (`no_record` 20,778/35,422 vs. baseline 21,521/36,028) — a side effect of the
+pre-existing staleness resolving via this cycle's required regen, not this cycle's own fix. **Per
+`decisions.md` Decision 20 (landed concurrently this cycle), "budget not exceeded" is NOT Gate 3
+closure — the real closure condition is `no_record == 0`, and it is not: 20,778 objects remain
+un-ingested.**
 
 Suites: `cargo test --locked --bin v06_work_inventory` → 339/339 (was 335, +4). Dual audit on this
 cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.

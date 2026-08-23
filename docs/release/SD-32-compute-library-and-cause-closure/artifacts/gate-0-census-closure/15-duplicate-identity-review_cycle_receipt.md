@@ -104,16 +104,19 @@ anywhere in the 183-unit population.** Not reallocated from `pending_a` to `disp
 `scripts/card15_reconcile.py`'s own bucket structure this cycle — named as real, in-scope future
 bookkeeping (see the review memo's "What this cycle did not do").
 
-## Gate 3 (`scripts/shape_coverage_standing_gate.py`) — now PASSES
+## Gate 3 (`scripts/shape_coverage_standing_gate.py`) — budget check "not exceeded"; NOT met per Decision 20
 
 ```bash
 python3 scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.json
 ```
-→ `no_record` budget 20,778/35,422 vs. baseline 21,521/36,028 — **not exceeded** (previously FAIL).
-This is a side effect of the pre-existing checked-in-JSON staleness resolving via this cycle's
-required regen (see "not this cycle's effect" above), not a claim this cycle's own fix improved
-coverage. `ledger.json` regenerated for consistency (population 36,028 → 35,422, `unclassified_count:
-0`, piles reconcile).
+→ `no_record` budget 20,778/35,422 vs. baseline 21,521/36,028 — the script's own **evidence-gated
+ratchet check reports "not exceeded"** (a side effect of the pre-existing checked-in-JSON staleness
+resolving via this cycle's required regen, not a claim this cycle's own fix improved coverage). **Per
+`decisions.md` Decision 20 (landed concurrently on this branch this cycle, `d26996388`), the
+budget-not-exceeded reading is NOT closure: Gate 3's real closure condition is `no_record == 0`, and
+`no_record` is 20,778 — still far from zero.** Reported accurately here rather than repeating the
+"budget not exceeded = green" overclaim Decision 20 corrects. `ledger.json` regenerated for
+consistency (population 36,028 → 35,422, `unclassified_count: 0`, piles reconcile).
 
 ## §15 — Product Identity
 
