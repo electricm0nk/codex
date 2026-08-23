@@ -605,6 +605,51 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   opportunistic pickup if a future cycle has spare scope. T8 needs an operator ruling before any
   cycle can pick it up at all.
 
+### Cycle T9 — Epic 2 / Card 11 `epic-2-cause-closure` (T9 lane: re-derived population, forensic root-cause split, zero banked)
+
+- **Card ID:** `epic-2-cause-closure` (T9 lane, one of six concurrent lanes on this row per the
+  dispatch that also produced this run — `decisions.md §10` requires the row itself to stay off
+  `complete` until every lane lands and a consolidation cycle checks all six).
+- **Files touched:** `docs/retro/events/epic-2-t9.jsonl` (new — 1 correction, 1 deferral),
+  `kanban.md` (card 11 row: status `returned-to-backlog` → `in-progress`, T9 lane note appended),
+  this file. No production source changed — see Notes for why.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001, this lane's scope is
+  T9 only: "Per-record onboarding backlog in registered books... spell, companion, feat,
+  monster_ability, equipment, and monster kinds."
+- **Status:** measurement-only cycle, zero units banked — a legitimate closed cycle per standing
+  lesson 6 (a real, re-derivable count, not a guess).
+- **Notes:** Re-derived T9's population fresh (`cargo build --release --bin v06_work_inventory`
+  + `--stdout-only`, filtered by the six evidence-code families `epic-breakdown.md`/`THE-BOX.md`
+  name for T9): **2,712 units, not the filed 2,651** — spell 732 (was 726), companion 726
+  (unchanged), feat 487 (was 480), monster_ability 517 (unchanged), equipment 222 (was 174),
+  monster 28 (unchanged). Correction logged.
+
+  Full forensic pass (dry-run, zero writes) on the `monster` family (28 units, all 6 residual
+  books) via `scripts/transcribe_monster_tables.py`: every book's fresh output diffed
+  byte-identical to committed — nothing stale. The 28 units split into **21 Product-Identity-
+  excluded** (needs an operator PI ruling, `docs/governance/ogl-pi-blacklist.md` is DRAFT/
+  operator-review-gated), **6 structurally-correct `.MOD`/`.COPY` overlay exclusions** (not a
+  defect — these rows are not standalone creatures), and **1 genuine gap**
+  (`occult_adventures:monster:kami_shikigami`, no `RuleSetId` wiring for that book's monster
+  kind at all). Spot-check on `companion`/`core_rulebook` (86 of 726 units) found the identical
+  orphan-ability-row shape (feat-grant rows with no owning companion record) — not generalised
+  to the other 7 companion books' 640 residual units, and `spell`/`feat`/`equipment` (no
+  transcription tool exists for any of the three) plus `monster_ability` (517) received no
+  forensic pass this cycle. Full breakdown, every command, and the explicit proof-width statement:
+  `artifacts/gate-3-closure-invariant/epic-2-t9_cycle-1_cycle_receipt.md`.
+
+  Zero units closed this cycle because closing "by class" requires knowing which of the three
+  causes (PI-excluded / structurally-non-standalone / genuine-gap) applies to a given record
+  before writing anything — fabricating PI content is a licensing violation, and the one genuine
+  gap found is a single instance, not a class (closing it alone would itself violate
+  AT-32-E2-001's own "closes a single class and stops is out of protocol" rule).
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** (1) operator PI ruling on the license-flagged subset; (2) close
+  `occult_adventures` monster onboarding (1 record, real wiring, smallest concrete T9 win
+  identified); (3) forensic pass on the remaining `companion`/`monster_ability` residuals using
+  the same dry-run method; (4) build `transcribe_spell_tables.py`/`transcribe_feat_tables.py`/
+  `transcribe_equipment_tables.py` before attempting those three kinds blind.
+
 ### Cycle 003 — Epics 1-3 / Card 12 `epic-3-class-reachability` (entry-requirement gating mechanism landed; 18-untabled-classes deferred)
 
 - **Card ID:** `epic-3-class-reachability`
