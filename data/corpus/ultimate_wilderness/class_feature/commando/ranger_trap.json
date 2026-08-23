@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-23T20:09:16Z",
   "data": {
     "key": "Commando ~ Ranger Trap",
     "name": "Ranger Trap",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "[redacted PI]"
+        "value": "Commando ~ Ranger Trap"
       },
       {
         "key": "CATEGORY",
@@ -49,8 +49,8 @@
   "wiring_class_signals": [
     "computed:choice"
   ],
-  "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
-  "pi_marker": "redacted",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
   "codex_generated_name": false
 }

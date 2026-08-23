@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-23T20:09:16Z",
   "data": {
     "key": "Barbarian Archetype ~ Dreadnought",
     "name": "Dreadnought",
@@ -42,7 +42,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Dreadnought ~ Steady Gait|PRECLASS:1,Barbarian=1"
       },
       {
         "key": "ABILITY",
@@ -101,8 +101,8 @@
   "wiring_class_signals": [
     "computed:pre_guard"
   ],
-  "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
-  "pi_marker": "redacted",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
   "codex_generated_name": false
 }

@@ -50,7 +50,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use crate::rules_core::pi_screening::classify_field;
+use crate::rules_core::pi_screening::{blacklist_term_hit_including_concatenated, classify_field};
 
 use crate::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
@@ -360,17 +360,31 @@ fn compare_typed_numeric_field(
 /// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
 /// token on a redacted record still must byte-match.
 ///
-/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`).**
-/// `enrich_spell_raw_tokens.rs`'s `enrich_one` redacts ANY token (not only
-/// `DESC`) whose value hits the shared blacklist term scan, one field at a
-/// time -- so a `FACTSET:`-shaped token naming a deity on an Inner Sea Gods
-/// spell legitimately stores [`REDACTED_PI_MARKER`], the identical shape a
-/// redacted `DESC` uses, but the record-level `pi_redacted_description` flag
-/// only ever describes `DESC`. Rather than trust the marker string alone
-/// (which would let an accidental literal `"[redacted PI]"` value hide a
-/// real transcription defect), this token is exempt ONLY when the real
-/// corpus closure's own same-key value RE-SCREENS as blacklisted through the
-/// identical scan the write path used (`pi_screening::classify_field`) --
+/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`,
+/// widened t9-onboarding cycle 2026-08-23 for `class_feature`'s
+/// concatenated-blacklist redaction path).** `enrich_spell_raw_tokens.rs`'s
+/// `enrich_one` redacts ANY token (not only `DESC`) whose value hits the
+/// shared blacklist term scan, one field at a time -- so a `FACTSET:`-shaped
+/// token naming a deity on an Inner Sea Gods spell legitimately stores
+/// [`REDACTED_PI_MARKER`], the identical shape a redacted `DESC` uses, but
+/// the record-level `pi_redacted_description` flag only ever describes
+/// `DESC`. Rather than trust the marker string alone (which would let an
+/// accidental literal `"[redacted PI]"` value hide a real transcription
+/// defect), this token is exempt ONLY when the real corpus closure's own
+/// same-key value RE-SCREENS as blacklisted through EITHER of the two scans
+/// a write path in this repo actually uses: `pi_screening::classify_field`
+/// (the older, bare-substring scan `enrich_spell_raw_tokens.rs` uses), OR
+/// `pi_screening::blacklist_term_hit_including_concatenated` (the
+/// word-bounded, OCR-normalized, concatenation-aware scan
+/// `cache_gen::class_feature::redact_concatenated_blacklist_tokens` uses,
+/// added when re-deriving `corpus_literal_sweep` against the pinned oracle
+/// found `class_feature`'s KEY/PREDEITY tokens legitimately redacted for a
+/// misspelled deity name -- `"Cayden Callean"`, an OCR-fold-equivalent typo
+/// of the blacklisted `"Cayden Cailean"` -- that `classify_field`'s
+/// unbounded literal substring check alone cannot see). Purely additive: a
+/// token that neither scan's re-derivation backs is still reported exactly
+/// as before, so this widening cannot hide a real transcription defect,
+/// only recognise a second write path's own legitimate redaction shape --
 /// so the exemption is re-derived against the oracle every sweep run, never
 /// merely asserted by the shipped record.
 ///
@@ -445,7 +459,9 @@ pub fn compare_tokens(
             && token.value == REDACTED_PI_MARKER
             && closure.iter().any(|field| {
                 field.split_once(':').is_some_and(|(key, raw_value)| {
-                    key == token.key && classify_field(key, raw_value).0 != License::Ogl
+                    key == token.key
+                        && (classify_field(key, raw_value).0 != License::Ogl
+                            || blacklist_term_hit_including_concatenated(raw_value).is_some())
                 })
             })
         {
@@ -811,6 +827,60 @@ mod tests {
             }],
             "a token reading the marker string with no independently-reconfirmed blacklist \
              hit on the real corpus row must still be reported"
+        );
+    }
+
+    /// t9-onboarding cycle (2026-08-23), `corpus_literal_sweep` unblock: the
+    /// widened re-screen must recognise a legitimate `class_feature`
+    /// redaction that `classify_field`'s bare-substring scan alone cannot
+    /// see -- the real, live shape: `inner_sea_combat/class_feature/
+    /// ranger_combat_style/cayden_callean.json`'s KEY/PREDEITY tokens are
+    /// genuinely redacted for "Cayden Callean", a misspelled (double-L)
+    /// variant of the blacklisted "Cayden Cailean" that only the
+    /// word-bounded, OCR-normalized scan catches (both spellings fold to
+    /// the same canonical form under the l/1/!->i table).
+    #[test]
+    fn a_non_desc_token_whose_value_only_the_concatenated_scan_reconfirms_is_exempt() {
+        let rec = record(&[("KEY", "[redacted PI]")]);
+        let rows = ["Cayden Callean\tKEY:Ranger Combat Style ~ Cayden Callean"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![],
+            "a KEY token legitimately redacted for a misspelled-deity-name \
+             concatenated-scan hit must not be flagged"
+        );
+    }
+
+    /// The widening is purely additive: it must not also cause a genuinely
+    /// wrong token (real corpus value clean under BOTH scans) to be waved
+    /// through -- proving `§1a` directly for the new disjunct, mirroring the
+    /// sibling proof above for the pre-existing `classify_field` disjunct.
+    #[test]
+    fn the_concatenated_scan_disjunct_does_not_wave_through_a_genuinely_clean_value() {
+        let rec = record(&[("KEY", "[redacted PI]")]);
+        let rows = ["Thing\tKEY:Some Ordinary Non PI Value"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "KEY:[redacted PI]".to_string(),
+            }],
+            "a token reading the marker string with no independently-reconfirmed hit under \
+             EITHER re-screen must still be reported"
         );
     }
 

@@ -245,8 +245,13 @@ class Section26JarnJamFoldCollisionTests(unittest.TestCase):
             pi_scrub._CANON_TERMS = [
                 (
                     term,
-                    pi_scrub.canonicalize(term, apply_rn_fold=pi_scrub._term_needs_rn_fold(term)),
+                    pi_scrub.canonicalize(
+                        term,
+                        apply_rn_fold=pi_scrub._term_needs_rn_fold(term),
+                        apply_char_fold=pi_scrub._term_needs_char_fold(term),
+                    ),
                     pi_scrub._term_needs_rn_fold(term),
+                    pi_scrub._term_needs_char_fold(term),
                 )
                 for term in pi_scrub.PI_BLACKLIST_TERMS
             ]
@@ -263,8 +268,13 @@ class Section26JarnJamFoldCollisionTests(unittest.TestCase):
             pi_scrub._CANON_TERMS = [
                 (
                     term,
-                    pi_scrub.canonicalize(term, apply_rn_fold=pi_scrub._term_needs_rn_fold(term)),
+                    pi_scrub.canonicalize(
+                        term,
+                        apply_rn_fold=pi_scrub._term_needs_rn_fold(term),
+                        apply_char_fold=pi_scrub._term_needs_char_fold(term),
+                    ),
                     pi_scrub._term_needs_rn_fold(term),
+                    pi_scrub._term_needs_char_fold(term),
                 )
                 for term in pi_scrub.PI_BLACKLIST_TERMS
             ]
@@ -292,7 +302,7 @@ class Section26JarnJamFoldCollisionTests(unittest.TestCase):
         try:
             synthetic_term = "Kaernos"  # synthetic OCR-affected proper noun
             pi_scrub._CANON_TERMS = [
-                (synthetic_term, pi_scrub.canonicalize(synthetic_term), True)
+                (synthetic_term, pi_scrub.canonicalize(synthetic_term), True, True)
             ]
             # A scanner ligature-confuses "rn" for "m": "Kaernos" -> "Kaemos".
             free_text = "The old road to Kaemos was long forgotten."
@@ -301,6 +311,127 @@ class Section26JarnJamFoldCollisionTests(unittest.TestCase):
                 synthetic_term,
                 "the rn->m fold mechanism must still catch a genuine OCR "
                 "ligature artifact for terms other than the exempted 'Jarn'",
+            )
+        finally:
+            pi_scrub._CANON_TERMS = original_terms
+
+
+class GaltGaitFoldCollisionTests(unittest.TestCase):
+    """t9-onboarding cycle (2026-08-23), `corpus_literal_sweep` unblock: the
+    SAME false-positive class `decisions.md §26` fixed for the rn->m fold
+    (Jarn/jam) recurs for the l/1/!->i fold: "Galt" (a Golarion nation, the
+    only blacklist term containing "l") canonicalizes to "gait" — an
+    ordinary English word that occurs in genuine OGL prose ("his gait more
+    deliberate..."). Found live re-deriving `corpus_literal_sweep` against
+    the pinned oracle: `advanced_players_guide/class_feature/
+    shifter_s_blessing/form_of_the_cat.json`'s DESC token, and three sibling
+    `class_feature` records (KEY/ABILITY tokens restating a "<Name>'s
+    Gait"/"Steady Gait"-shaped ability name) all went `[redacted PI]` for a
+    collision, not a real PI hit.
+    """
+
+    def test_reproduces_the_form_of_the_cat_false_positive_pre_fix(self):
+        """Direct reproduction against the real record's own prose (pinned
+        oracle `advanced_players_guide/apg_abilities_class.lst:2827`)."""
+        desc = (
+            "The ranger's muscles become lean and defined, and his gait "
+            "more deliberate and graceful. While in this form, the ranger "
+            "increases his base speed by 10 feet, and he gains a +4 bonus "
+            "on Acrobatics and Climb checks."
+        )
+        self.assertEqual(pi_scrub.normalized_term_hit(desc), None)
+
+    def test_word_boundary_alone_does_not_prevent_the_collision(self):
+        """Proves the negative claim directly: an already-word-bounded
+        reimplementation with NO l-fold exemption still matches "gait" —
+        confirming the real fix could not have been "word boundary" alone,
+        the same shape `§26` proved for Jarn/jam."""
+        free_text = "his gait more deliberate and graceful"
+        canon_text = free_text.casefold().translate(pi_scrub._FOLD_TABLE)
+        canon_galt_full_fold = "galt".translate(pi_scrub._FOLD_TABLE)  # "gait"
+        self.assertRegex(
+            canon_text,
+            r"(?<![a-z0-9])" + re.escape(canon_galt_full_fold) + r"(?![a-z0-9])",
+            "word-boundary matching alone does not prevent the Galt/gait "
+            "fold collision -- this is what the real fix must additionally "
+            "guard against",
+        )
+
+    def test_mutation_proof_removing_the_char_fold_exemption_reopens_the_false_positive(self):
+        """Mutation-proves `_CHAR_FOLD_EXEMPT_TERMS_CASEFOLD` is
+        load-bearing: with it emptied, the real shared function
+        false-positives on the same text the fixed function correctly
+        clears."""
+        original = pi_scrub._CHAR_FOLD_EXEMPT_TERMS_CASEFOLD
+        try:
+            pi_scrub._CHAR_FOLD_EXEMPT_TERMS_CASEFOLD = set()
+            pi_scrub._CANON_TERMS = [
+                (
+                    term,
+                    pi_scrub.canonicalize(
+                        term,
+                        apply_rn_fold=pi_scrub._term_needs_rn_fold(term),
+                        apply_char_fold=pi_scrub._term_needs_char_fold(term),
+                    ),
+                    pi_scrub._term_needs_rn_fold(term),
+                    pi_scrub._term_needs_char_fold(term),
+                )
+                for term in pi_scrub.PI_BLACKLIST_TERMS
+            ]
+            free_text = "his gait more deliberate and graceful"
+            self.assertEqual(
+                pi_scrub.normalized_term_hit(free_text),
+                "Galt",
+                "mutation (emptying the char-fold exemption) must reopen "
+                "the false positive -- confirming the guard is load-bearing, "
+                "not decorative",
+            )
+        finally:
+            pi_scrub._CHAR_FOLD_EXEMPT_TERMS_CASEFOLD = original
+            pi_scrub._CANON_TERMS = [
+                (
+                    term,
+                    pi_scrub.canonicalize(
+                        term,
+                        apply_rn_fold=pi_scrub._term_needs_rn_fold(term),
+                        apply_char_fold=pi_scrub._term_needs_char_fold(term),
+                    ),
+                    pi_scrub._term_needs_rn_fold(term),
+                    pi_scrub._term_needs_char_fold(term),
+                )
+                for term in pi_scrub.PI_BLACKLIST_TERMS
+            ]
+            # Confirm the real (unmutated) function is GREEN again.
+            self.assertIsNone(pi_scrub.normalized_term_hit("his gait more deliberate and graceful"))
+
+    def test_literal_plainly_spelled_term_is_still_caught_despite_the_exemption(self):
+        """The exemption must not silently also break the ORIGINAL catch
+        "Galt" exists for: a plainly, correctly spelled occurrence of the
+        nation name in prose. Only the l-fold-INDUCED collision with "gait"
+        is exempted -- a literal spelling still hits."""
+        free_text = "The rebels of Galt overthrew their aristocracy."
+        self.assertEqual(pi_scrub.normalized_term_hit(free_text), "Galt")
+
+    def test_genuine_l_fold_still_catches_a_synthetic_ocr_term(self):
+        """The l/1/!->i fold mechanism itself (not the "Galt"-specific
+        exemption) must still catch a genuine OCR-confused artifact for any
+        OTHER term. Uses a synthetic, throwaway term -- never a real Product
+        Identity string -- because "Galt" is currently the ONLY real
+        blacklist term containing "l", and it is now (correctly) exempt from
+        this exact fold."""
+        original_terms = pi_scrub._CANON_TERMS
+        try:
+            synthetic_term = "Kelmoria"  # synthetic OCR-affected proper noun
+            pi_scrub._CANON_TERMS = [
+                (synthetic_term, pi_scrub.canonicalize(synthetic_term), True, True)
+            ]
+            # A scanner confuses "l" for "1": "Kelmoria" -> "Ke1moria".
+            free_text = "The old road to Ke1moria was long forgotten."
+            self.assertEqual(
+                pi_scrub.normalized_term_hit(free_text),
+                synthetic_term,
+                "the l/1/!->i fold mechanism must still catch a genuine OCR "
+                "artifact for terms other than the exempted 'Galt'",
             )
         finally:
             pi_scrub._CANON_TERMS = original_terms

@@ -150,23 +150,61 @@ _FOLD_TABLE = str.maketrans({"l": "i", "1": "i", "!": "i", "0": "o"})
 # still canonicalizes to "jarn", not "jam", and still matches).
 _RN_FOLD_EXEMPT_TERMS_CASEFOLD = {"jarn"}
 
+# `decisions.md §26`-adjacent (t9-onboarding cycle, 2026-08-23,
+# corpus_literal_sweep unblock): the SAME false-positive class §26 fixed for
+# the rn->m fold recurs for the l/1/!->i fold: "Galt" (a Golarion nation) is
+# the only blacklist term containing "l", and its `_FOLD_TABLE` substitution
+# canonicalizes it to "gait" — an ordinary English word ("his gait more
+# deliberate...") that occurs in genuine OGL prose. Word-boundary matching
+# does not help (as with Jarn/jam): "gait" is itself a boundary-clean whole
+# word. Found live re-deriving `corpus_literal_sweep` against the pinned
+# oracle: `advanced_players_guide/class_feature/shifter_s_blessing/
+# form_of_the_cat.json`'s DESC, and three sibling `class_feature` records
+# whose KEY/ABILITY token restates a "<Name>'s Gait"/"Steady Gait"-shaped
+# ability name. "Galt" has never been recorded as a scanned-OCR artifact
+# (unlike Irori/lrori, Cayden Cailean/CaiLean) -- it is always spelled
+# correctly in the oracle wherever it is genuinely the nation, so exempting
+# it from the l/1/!/0 fold removes no proven real-OCR coverage: a literal,
+# correctly-spelled "Galt" still matches via case-fold alone (both sides of
+# the comparison skip the SAME fold for this one term, symmetric with the
+# rn-fold exemption above).
+_CHAR_FOLD_EXEMPT_TERMS_CASEFOLD = {"galt"}
 
-def canonicalize(s: str, *, apply_rn_fold: bool = True) -> str:
+
+def canonicalize(s: str, *, apply_rn_fold: bool = True, apply_char_fold: bool = True) -> str:
     """Case-fold + bounded OCR-confusion fold. `apply_rn_fold=False` skips
     ONLY the rn->m substitution — used for the `_RN_FOLD_EXEMPT_TERMS_CASEFOLD`
-    carve-out (`decisions.md §26`); every other fold still applies."""
+    carve-out (`decisions.md §26`). `apply_char_fold=False` skips ONLY the
+    `l`/`1`/`!`->`i`, `0`->`o` table — used for the `_CHAR_FOLD_EXEMPT_TERMS_CASEFOLD`
+    carve-out (the Galt/gait collision, same class as §26's Jarn/jam). Every
+    other fold still applies in both cases."""
     s = s.casefold().replace(SOFT_HYPHEN, "-")
     if apply_rn_fold:
         s = s.replace("rn", "m")
-    return s.translate(_FOLD_TABLE)
+    if apply_char_fold:
+        s = s.translate(_FOLD_TABLE)
+    return s
 
 
 def _term_needs_rn_fold(term: str) -> bool:
     return term.casefold() not in _RN_FOLD_EXEMPT_TERMS_CASEFOLD
 
 
-_CANON_TERMS: list[tuple[str, str, bool]] = [
-    (term, canonicalize(term, apply_rn_fold=_term_needs_rn_fold(term)), _term_needs_rn_fold(term))
+def _term_needs_char_fold(term: str) -> bool:
+    return term.casefold() not in _CHAR_FOLD_EXEMPT_TERMS_CASEFOLD
+
+
+_CANON_TERMS: list[tuple[str, str, bool, bool]] = [
+    (
+        term,
+        canonicalize(
+            term,
+            apply_rn_fold=_term_needs_rn_fold(term),
+            apply_char_fold=_term_needs_char_fold(term),
+        ),
+        _term_needs_rn_fold(term),
+        _term_needs_char_fold(term),
+    )
     for term in PI_BLACKLIST_TERMS
 ]
 
@@ -205,15 +243,24 @@ def normalized_term_hits(free_text: str) -> list[str]:
     if not free_text.strip():
         return []
     text_casefold = free_text.casefold().replace(SOFT_HYPHEN, "-")
-    canon_text_by_rn_fold = {
-        True: text_casefold.replace("rn", "m").translate(_FOLD_TABLE),
-        False: text_casefold.translate(_FOLD_TABLE),
-    }
+    canon_text_cache: dict[tuple[bool, bool], str] = {}
+
+    def canon_text_for(needs_rn_fold: bool, needs_char_fold: bool) -> str:
+        key = (needs_rn_fold, needs_char_fold)
+        if key not in canon_text_cache:
+            t = text_casefold
+            if needs_rn_fold:
+                t = t.replace("rn", "m")
+            if needs_char_fold:
+                t = t.translate(_FOLD_TABLE)
+            canon_text_cache[key] = t
+        return canon_text_cache[key]
+
     hits = []
-    for term, canon_term, needs_rn_fold in _CANON_TERMS:
+    for term, canon_term, needs_rn_fold, needs_char_fold in _CANON_TERMS:
         if not canon_term:
             continue
-        canon_text = canon_text_by_rn_fold[needs_rn_fold]
+        canon_text = canon_text_for(needs_rn_fold, needs_char_fold)
         if re.search(r"(?<![a-z0-9])" + re.escape(canon_term) + r"(?![a-z0-9])", canon_text):
             hits.append(term)
     return hits

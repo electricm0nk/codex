@@ -149,16 +149,34 @@ fn term_needs_rn_fold(term: &str) -> bool {
     !term.eq_ignore_ascii_case("jarn")
 }
 
+/// "Galt" is the only blacklist term containing `l`, and its `l`->`i` fold
+/// collides with the ordinary English word "gait" -- the SAME false-positive
+/// class `term_needs_rn_fold` above exists for (Jarn/jam), found live
+/// re-deriving `corpus_literal_sweep` against the pinned oracle
+/// (t9-onboarding cycle, 2026-08-23): `advanced_players_guide/class_feature/
+/// shifter_s_blessing/form_of_the_cat.json`'s DESC token, and three sibling
+/// `class_feature` records whose KEY/ABILITY token restates a "<Name>'s
+/// Gait"/"Steady Gait"-shaped ability name, all went `[redacted PI]` for a
+/// fold collision, not a real PI hit. Mirrors
+/// `pi_scrub.py::_CHAR_FOLD_EXEMPT_TERMS_CASEFOLD`/`_term_needs_char_fold`.
+fn term_needs_char_fold(term: &str) -> bool {
+    !term.eq_ignore_ascii_case("galt")
+}
+
 /// Case-fold + bounded OCR-confusion fold (`l`/`1`/`!` -> `i`, `0` -> `o`,
-/// `rn` -> `m` unless `apply_rn_fold` is false). Mirrors
+/// `rn` -> `m` unless `apply_rn_fold` is false; the `l`/`1`/`!`/`0` table
+/// itself skipped when `apply_char_fold` is false). Mirrors
 /// `pi_scrub.py::canonicalize` exactly, including fold order (rn-fold before
 /// the character table, so `rn` is never itself re-split by the l/1/!/0
 /// substitutions -- neither table produces or consumes those bytes, so order
 /// is actually immaterial here, but kept identical to the Python source for
 /// auditability).
-fn canonicalize(s: &str, apply_rn_fold: bool) -> String {
+fn canonicalize(s: &str, apply_rn_fold: bool, apply_char_fold: bool) -> String {
     let folded = s.to_lowercase().replace(SOFT_HYPHEN, "-");
     let folded = if apply_rn_fold { folded.replace("rn", "m") } else { folded };
+    if !apply_char_fold {
+        return folded;
+    }
     folded
         .chars()
         .map(|c| match c {
@@ -206,11 +224,12 @@ pub fn normalized_term_hits(free_text: &str) -> Vec<&'static str> {
     let mut hits = Vec::new();
     for term in PI_BLACKLIST_TERMS {
         let needs_rn_fold = term_needs_rn_fold(term);
-        let canon_term = canonicalize(term, needs_rn_fold);
+        let needs_char_fold = term_needs_char_fold(term);
+        let canon_term = canonicalize(term, needs_rn_fold, needs_char_fold);
         if canon_term.is_empty() {
             continue;
         }
-        let canon_text = canonicalize(free_text, needs_rn_fold);
+        let canon_text = canonicalize(free_text, needs_rn_fold, needs_char_fold);
         if word_bounded_contains(&canon_text, &canon_term) {
             hits.push(*term);
         }
@@ -233,20 +252,47 @@ pub fn normalized_term_hit(free_text: &str) -> Option<&'static str> {
 const MIN_NORMALIZED_NEEDLE_LEN: usize = 6;
 
 /// Lowercase, then strip every byte that is not ASCII alphanumeric -- mirrors
-/// `pi_scrub.py::_normalize` (`re.sub(r"[^a-z0-9]", "", s.lower())`).
+/// `pi_scrub.py::_normalize` (`re.sub(r"[^a-z0-9]", "", s.lower())`). Used
+/// ONLY to build the short, known needle/term forms
+/// ([`PI_BLACKLIST_TERMS`]'s own normalized forms below) -- never on a
+/// haystack VALUE being scanned for a hit; see [`alnum_normalize_haystack`]
+/// for why.
 fn alnum_normalize(s: &str) -> String {
     s.to_lowercase().chars().filter(|c| c.is_ascii_alphanumeric()).collect()
+}
+
+/// Value-side normalization for the concatenated-form check: strips
+/// punctuation the way [`alnum_normalize`] does, but PRESERVES real
+/// whitespace as a hard separator. Mirrors `pi_scrub.py::_normalize_haystack`
+/// exactly -- that fix (`decisions.md §26`-adjacent, the
+/// `hidden_wand.json`/"Andoran" incident) was never ported to this Rust copy
+/// until the t9-onboarding `corpus_literal_sweep` unblock cycle
+/// (2026-08-23): the OLD (whitespace-stripping) normalization manufactured
+/// the substring "andoran" out of the three separate, real English words
+/// "Commando", "Ranger", "Trap" once every space was deleted
+/// (`ultimate_wilderness/class_feature/commando/ranger_trap.json`'s KEY
+/// token went `[redacted PI]` for exactly this reason, live on this corpus,
+/// before this fix). This check exists to catch a term truly joined with NO
+/// separator at all -- a PCGen `BONUS`/`DEFINE` variable identifier or a
+/// `TYPE:` value never contains whitespace to begin with -- so preserving
+/// whitespace here costs that genuine catch nothing while it stops natural
+/// -language prose whose words merely happen to concatenate into a term once
+/// whitespace is deleted from being treated as a no-separator join it never
+/// was.
+fn alnum_normalize_haystack(s: &str) -> String {
+    s.to_lowercase().chars().filter(|c| c.is_ascii_alphanumeric() || c.is_whitespace()).collect()
 }
 
 /// [`normalized_term_hit`] (word-bounded, OCR-normalized), OR -- if that
 /// finds nothing -- an alphanumeric-normalized (no-separator) substring
 /// match against [`PI_BLACKLIST_TERMS`], bounded to
-/// [`MIN_NORMALIZED_NEEDLE_LEN`] normalized characters. Mirrors
-/// `pi_scrub.py::blacklist_term_hit_including_concatenated` exactly: this is
-/// the check that catches a blacklisted term concatenated PascalCase-style
-/// into another token's value with no separator (`AldoriDefensiveParryLVL`,
-/// `CalistrianHunter`), which `normalized_term_hit`'s word-boundary
-/// requirement alone cannot see.
+/// [`MIN_NORMALIZED_NEEDLE_LEN`] normalized characters, with real whitespace
+/// in `value` still acting as a boundary ([`alnum_normalize_haystack`]).
+/// Mirrors `pi_scrub.py::blacklist_term_hit_including_concatenated` exactly:
+/// this is the check that catches a blacklisted term concatenated
+/// PascalCase-style into another token's value with no separator
+/// (`AldoriDefensiveParryLVL`, `CalistrianHunter`), which
+/// `normalized_term_hit`'s word-boundary requirement alone cannot see.
 pub fn blacklist_term_hit_including_concatenated(value: &str) -> Option<&'static str> {
     if value.is_empty() {
         return None;
@@ -254,8 +300,8 @@ pub fn blacklist_term_hit_including_concatenated(value: &str) -> Option<&'static
     if let Some(hit) = normalized_term_hit(value) {
         return Some(hit);
     }
-    let norm_value = alnum_normalize(value);
-    if norm_value.is_empty() {
+    let norm_value = alnum_normalize_haystack(value);
+    if norm_value.trim().is_empty() {
         return None;
     }
     for term in PI_BLACKLIST_TERMS {
@@ -452,6 +498,71 @@ mod tests {
         // an ordinary word, and "Jarn" is exempted from the rn->m fold so
         // this must NOT match.
         assert_eq!(blacklist_term_hit_including_concatenated("out of a tight jam"), None);
+    }
+
+    // ---- t9-onboarding cycle (2026-08-23), corpus_literal_sweep unblock:
+    // the "Galt"/"gait" l-fold collision, same class as Jarn/jam above.
+
+    #[test]
+    fn concatenated_scan_galt_char_fold_does_not_catch_an_ordinary_gait() {
+        // Real reproduction: `advanced_players_guide/class_feature/
+        // shifter_s_blessing/form_of_the_cat.json`'s DESC token, pinned
+        // oracle `apg_abilities_class.lst:2827`.
+        assert_eq!(
+            blacklist_term_hit_including_concatenated(
+                "his gait more deliberate and graceful"
+            ),
+            None
+        );
+    }
+
+    #[test]
+    fn concatenated_scan_galt_still_catches_a_literal_plain_spelling() {
+        assert_eq!(
+            blacklist_term_hit_including_concatenated(
+                "The rebels of Galt overthrew their aristocracy"
+            ),
+            Some("Galt")
+        );
+    }
+
+    #[test]
+    fn word_boundary_alone_does_not_prevent_the_galt_gait_collision() {
+        // Proves the negative claim directly, mirroring Jarn/jam's proof:
+        // an already-word-bounded scan with NO l-fold exemption still
+        // matches "gait".
+        let canon_text = canonicalize("his gait more deliberate", false, true);
+        let canon_galt_full_fold = canonicalize("Galt", false, true); // "gait"
+        assert!(word_bounded_contains(&canon_text, &canon_galt_full_fold));
+    }
+
+    // ---- t9-onboarding cycle (2026-08-23): the "Andoran"/whitespace-
+    // stripping collision this same cycle found and fixed in
+    // `alnum_normalize_haystack`.
+
+    #[test]
+    fn concatenated_scan_does_not_manufacture_andoran_across_real_word_boundaries() {
+        // Real reproduction: `ultimate_wilderness/class_feature/commando/
+        // ranger_trap.json`'s KEY token, pinned oracle
+        // `uw_abilities_class.lst:635` (`KEY:Commando ~ Ranger Trap`).
+        // "Commando" + "Ranger" concatenate to "...mandoranger..." (containing
+        // "andoran") ONLY if real whitespace is stripped before the scan --
+        // whitespace-preserving normalization must refuse this.
+        assert_eq!(
+            blacklist_term_hit_including_concatenated("Commando ~ Ranger Trap"),
+            None
+        );
+    }
+
+    #[test]
+    fn concatenated_scan_still_catches_a_genuinely_no_separator_andoran_identifier() {
+        // The genuine catch this check exists for must survive: a PCGen
+        // variable identifier that concatenates the term with NO real
+        // whitespace anywhere.
+        assert_eq!(
+            blacklist_term_hit_including_concatenated("AndoranCitizenshipLVL"),
+            Some("Andoran")
+        );
     }
 
     #[test]

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-23T20:09:16Z",
   "data": {
     "key": "Dreadnought ~ Steady Gait",
     "name": "Steady Gait",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "[redacted PI]"
+        "value": "Dreadnought ~ Steady Gait"
       },
       {
         "key": "CATEGORY",
@@ -57,8 +57,8 @@
   "wiring_class_signals": [
     "computed:pre_guard"
   ],
-  "license": "PI-REDACTED",
-  "pi_field": "raw_tokens",
-  "pi_marker": "redacted",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
   "codex_generated_name": false
 }
