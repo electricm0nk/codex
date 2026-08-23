@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Draconic Companion ~ Draconic Resistance",
+    "name": "Draconic Resistance",
+    "description": "Choose acid, cold, electricity, or fire, based on the draconic companion's draconic ancestor. The draconic companion gains resistance against the chosen energy type, as well as a +2 racial bonus on saves against paralysis and sleep.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Companion ~ Draconic Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DraconicCompanionResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose acid, cold, electricity, or fire, based on the draconic companion's draconic ancestor. The draconic companion gains resistance against the chosen energy type, as well as a +2 racial bonus on saves against paralysis and sleep."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Draconic Companion Resistance Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DraconicCompanionResistanceBonus|5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 on saves vs. paralysis and sleep|PREVARLT:MasterLevel,6"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 481,
+    "record_key": "Draconic Companion ~ Draconic Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

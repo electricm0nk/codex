@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Familiar ~ Intelligence Score",
+    "name": "Intelligence Score",
+    "description": "The familiar's Intelligence score.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar ~ Intelligence Score"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Familiar Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|INT|FamiliarIntScore"
+      },
+      {
+        "key": "DESC",
+        "value": "The familiar's Intelligence score."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarIntScore|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarIntScore|5+((1+MASTERVAR(\"FamiliarLVL\"))/2)|PREVAREQ:FamiliarIntScoreStandard,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarIntScoreStandard|0"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_cr.lst",
+    "sha256": "edda5ccc2df39b9c3415b43b6bf208454cd1233824b38070c8f19f97c9b45b93",
+    "line": 60,
+    "record_key": "Familiar ~ Intelligence Score"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

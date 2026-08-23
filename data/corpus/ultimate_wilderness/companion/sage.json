@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Familiar Archetype ~ Sage",
+    "name": "Sage",
+    "description": "Sages are masters of useful facts, able to recall them for their masters' benefit, though this leads many to become haughty and proud.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Sage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarIntelligenceScore.CF_FamiliarNaturalArmorBonus.CF_FamiliarAlertness.CF_FamiliarShareSkillRanks"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Sage],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarIntelligenceScore,TYPE.CF_FamiliarNaturalArmorBonus,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarShareSkillRanks]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sages are masters of useful facts, able to recall them for their masters' benefit, though this leads many to become haughty and proud."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Sage ~ Class Skills|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Sage ~ Dazzling Intellect|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Sage ~ Sage's Knowledge|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 544,
+    "record_key": "Familiar Archetype ~ Sage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

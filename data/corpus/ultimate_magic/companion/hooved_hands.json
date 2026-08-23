@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Hooved Hands",
+    "name": "Hooved Hands",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Hooved Hands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Arms"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+2"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "(EidArms-EidArmsUsed),1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidHooveCount|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=3|NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidHooveCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidUsedAttacks|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidArmsUsed|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 90,
+    "record_key": "Evolution ~ Hooved Hands"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

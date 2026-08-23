@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Daredevil ~ Devil May Care",
+    "name": "Devil May Care",
+    "description": "A daredevil can't be flanked.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Daredevil ~ Devil May Care"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A daredevil can't be flanked."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 468,
+    "record_key": "Daredevil ~ Devil May Care"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

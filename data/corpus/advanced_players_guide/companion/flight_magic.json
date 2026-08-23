@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Flight Magic",
+    "name": "Flight (Magic)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Flight Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Flight Winged"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight ~ Su"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1|PRESIZELTEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|2|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3|PRESIZEEQ:H"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Fly"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 128,
+    "record_key": "Evolution ~ Flight Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

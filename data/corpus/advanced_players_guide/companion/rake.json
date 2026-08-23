@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Rake",
+    "name": "Rake",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Rake"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Legs"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Eidolon (Quadruped)],[PREABILITY:1,CATEGORY=Internal,Eidolon Type ~ Quadruped]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidLegs,EidLegsUsed+1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rake"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidUsedAttacks|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidLegsUsed|1"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 145,
+    "record_key": "Evolution ~ Rake"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

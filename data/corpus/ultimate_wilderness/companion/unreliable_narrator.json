@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Prankster ~ Unreliable Narrator",
+    "name": "Unreliable Narrator",
+    "description": "Whenever its master uses scry on familiar, a prankster can use false vision to fool that ability; this doesn't affect any other divination (scrying) effects in the area, only its master's scry on familiar ability. This alters scry on familiar.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Prankster ~ Unreliable Narrator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever its master uses scry on familiar, a prankster can use false vision to fool that ability; this doesn't affect any other divination (scrying) effects in the area, only its master's scry on familiar ability. This alters scry on familiar."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 613,
+    "record_key": "Prankster ~ Unreliable Narrator"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

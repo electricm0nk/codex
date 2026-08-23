@@ -4910,3 +4910,44 @@ TAGS`, `OK_NO_TOKENS`.
 
 Receipt: `artifacts/gate-3-closure-invariant/card15-source-path-repair_cycle-1_cycle_receipt.md`.
 Commit: (recorded after push).
+
+## `epic-2-companion-ingest` — `companion` `no_record` closure (2026-08-23)
+
+`decisions.md §20`: `companion` carried 769 `no_record` units. Resolved the dispatch brief's own
+flagged contradiction first: a prior T9 cycle correctly closed a smaller, DIFFERENT 4-unit
+`companion` population (2 `bestiary_4` `.COPY=`/`.MOD` deltas + 2 `bestiary_5` `PRECAMPAIGN`-gated
+rows) at zero net new records via `transcribe_companion_tables.py`'s ownership-resolving pipeline —
+that finding stands. `scripts/classify_companion_rows.py` run fresh over all 16 companion books
+found its own `orphans`/`deltas`/`classes`/`gated` exclusion union is 768 of the 769, confirmed by
+exact key-set diff (1 residual, `bestiary:companion:pseudodragon_tail`, a separate rendering-side
+`engine_book` gap) — the same mechanism (deliberately) refusing to fabricate ownership for
+reachability, not the same population that earlier cycle closed.
+
+New `scripts/ingest_companion.py` (generic, ~300 lines): literal, verbatim, per-unit transcription
+of every `status: not-ingested` companion unit's own cited row, `owners: []` on every record (no
+reachability claim, `companion_chassis.rs`/`gen_book_cache.rs` untouched). PI screen reuses
+`sd32_t9_pi_exposure_audit.py::classify_row` + `sd32_t9_pi_review_companion_monsterability.py`'s
+`normalized_scan`/`classify_uncertain_content` (the exact `decisions.md §19a`/`§19c`-approved
+companion chain) verbatim.
+
+**Result:** 769 population → **552 written**, 217 `still_undecidable` (named, not transcribed,
+`epic-2-companion-ingest_cycle-1_cycle_receipt_pi-skipped.json`), 0 unresolved, 0 blocked.
+`shape_ledger.py`: `companion` `no_record` **769 → 217** (every other kind's count unchanged,
+diffed the full per-kind `Counter`). `corpus_literal_sweep` scoped via a symlink `--repo-root`
+(the repo's full-corpus sweep still fatals on the pre-existing, unrelated `battle_spirit.json`
+`source.path` defect noted above — checked, still present, not this cycle's to fix): **CLEAN**,
+1,314 records examined (552 new + 762 pre-existing), 0 findings. `git status --porcelain --
+data/corpus`: 552 untracked adds, 0 modifications — no existing record or verification stamp
+touched. Reachability: **0**, honestly claimed (`reach_gate.rs`'s only companion entry sources
+from `COMPANION_BOOKS`, untouched by this cycle) — Gate-1 measurability only.
+
+- **Status:** in-progress (row 11 stays open; card 11 has other open sub-populations besides
+  `companion`).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-companion-ingest_cycle-1_cycle_receipt.md`.
+- PI-skip list: `artifacts/gate-3-closure-invariant/epic-2-companion-ingest_cycle-1_cycle_receipt_pi-skipped.json`.
+- **What remains:** 217 `still_undecidable` records need an operator PI ruling or a further,
+  operator-named allowlist widening (not this cycle's authority); the `pseudodragon_tail`
+  `engine_book` gap; the `BONUS:ABILITYPOOL` 7th ownership shape (Gate-2/reachability, separate
+  work); no unit tests yet for `scripts/ingest_companion.py`.
+- Commit: (recorded after push).

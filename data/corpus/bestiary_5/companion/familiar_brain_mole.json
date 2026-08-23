@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Familiar (Brain Mole)",
+    "name": "Familiar (Brain Mole)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Burrow,20"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PE_MAX_Count|12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Racial Traits ~ Brain Mole"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Magical Beast"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Brain Mole"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_races_companion_oa.lst",
+    "sha256": "791058bf0b2adae7ec9eb5785dd4af4764375a7ac4cdf87b6094b1ecad45adb0",
+    "line": 5,
+    "record_key": "Familiar (Brain Mole)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

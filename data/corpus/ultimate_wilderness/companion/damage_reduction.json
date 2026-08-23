@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Mauler ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "description": "A mauler gains DR 5/magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mauler ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mauler gains DR 5/magic."
+      },
+      {
+        "key": "DR",
+        "value": "5/magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 597,
+    "record_key": "Mauler ~ Damage Reduction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

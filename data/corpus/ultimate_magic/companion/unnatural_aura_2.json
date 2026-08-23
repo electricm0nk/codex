@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Temp Evolution ~ Unnatural Aura",
+    "name": "Unnatural Aura",
+    "description": "You are obviously of unnatural origin. Normal animals do not willingly approach you unless the animal's master makes a DC 25 Handle Animal, Ride, or wild empathy check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Temp Evolution ~ Unnatural Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TempEvolutionChoice.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Unnatural Aura"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidolonTempEvolutionPool,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TempEvolutionTaken,TempEvolutionsAllowed"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempEvolutionTaken|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are obviously of unnatural origin. Normal animals do not willingly approach you unless the animal's master makes a DC 25 Handle Animal, Ride, or wild empathy check."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Evolution ~ Unnatural Aura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionCost|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionTaken|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 211,
+    "record_key": "Temp Evolution ~ Unnatural Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

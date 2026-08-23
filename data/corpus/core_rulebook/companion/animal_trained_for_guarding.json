@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Training ~ Guarding",
+    "name": "Animal Trained for Guarding",
+    "description": "An animal trained to guard knows the tricks attack, defend, down, and guard. Training an animal for guarding takes 4 weeks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Training ~ Guarding"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Guarding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick.AnimalTraining.General.SpecialQuality"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.AnimalTraining"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=2"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal trained to guard knows the tricks attack, defend, down, and guard. Training an animal for guarding takes 4 weeks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Animal Trick|AUTOMATIC|Animal Trick ~ Attack|Animal Trick ~ Defend|Animal Trick ~ Down|Animal Trick ~ Guard"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 154,
+    "record_key": "Animal Training ~ Guarding"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

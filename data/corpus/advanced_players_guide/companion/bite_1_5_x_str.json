@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Improved Bite",
+    "name": "Bite (1.5 x Str.)",
+    "description": "If the eidolon already has a bite attack, this evolution allows it to deal 1-1/2 times its Strength modifier on damage rolls made with its bite.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Improved Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Bite"
+      },
+      {
+        "key": "!PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PRERACE:1,Eidolon (Biped)],[!PREABILITY:1,CATEGORY=Internal,Eidolon Type ~ Biped]"
+      },
+      {
+        "key": "DESC",
+        "value": "If the eidolon already has a bite attack, this evolution allows it to deal 1-1/2 times its Strength modifier on damage rolls made with its bite."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|STR/2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 77,
+    "record_key": "Evolution ~ Improved Bite"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

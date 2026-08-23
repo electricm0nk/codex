@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Ultimate Meld Into Stone 1",
+    "name": "Ultimate Magic ~ Meld Into Stone (1/day)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Ultimate Meld Into Stone 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpellLike.EidUltimateMagic"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Shaitan Binder Eidolon"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=13"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=(max(HD-2,1))|Meld Into Stone,10+HD/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 27,
+    "record_key": "Evolution ~ Ultimate Meld Into Stone 1"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

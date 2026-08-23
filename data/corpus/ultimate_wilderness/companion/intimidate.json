@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Trick ~ Intimidate",
+    "name": "Intimidate",
+    "description": "The companion bares its teeth, barks, bristles, growls, or otherwise threatens a creature you designate, or, alternatively, it can be trained to do so when it encounters any creature besides its handler. The companion takes a -4 penalty on Intimidate checks against creatures other than those with the animal or humanoid types unless it has also been trained to attack creatures of any type. A companion that knows this trick automatically uses the aid another action to assist Intimidate checks attempted by its handler, provided that it is within 15 feet of its handler at the time and has not been ordered to perform another task.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Intimidate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion bares its teeth, barks, bristles, growls, or otherwise threatens a creature you designate, or, alternatively, it can be trained to do so when it encounters any creature besides its handler. The companion takes a -4 penalty on Intimidate checks against creatures other than those with the animal or humanoid types unless it has also been trained to attack creatures of any type. A companion that knows this trick automatically uses the aid another action to assist Intimidate checks attempted by its handler, provided that it is within 15 feet of its handler at the time and has not been ordered to perform another task."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 96,
+    "record_key": "Animal Trick ~ Intimidate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

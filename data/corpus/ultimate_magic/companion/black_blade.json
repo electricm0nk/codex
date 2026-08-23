@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Black Blade",
+    "name": "Black Blade",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Black Blade"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monster.Companion"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|5"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|Companion"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|BB"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes_companion.lst",
+    "sha256": "4cf830e5a1958ea30fa04951a19119c7a60be4fb4a373b241976eaf2bd8ae0b9",
+    "line": 16,
+    "record_key": "Black Blade"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

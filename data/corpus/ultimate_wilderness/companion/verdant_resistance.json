@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Verdant Companion ~ Verdant Resistance",
+    "name": "Verdant Resistance",
+    "description": "A verdant companion gains a +%1 racial bonus on saving throws against mind-affecting effects, paralysis, poison, polymorph, sleep effects, and stunning.|VerdantCompanionResistanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Companion ~ Verdant Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerdantCompanionResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant companion gains a +%1 racial bonus on saving throws against mind-affecting effects, paralysis, poison, polymorph, sleep effects, and stunning.|VerdantCompanionResistanceBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "A verdant companion gains roots it can plant or retract as a swift action. With its roots planted, it can't move, but it gains a +4 bonus to its CMD against bull rush, pull, push, reposition, trip, and other combat maneuvers that would knock it over or move it.|PREVARGTEQ:MasterLevel,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerdantCompanionResistanceBonus|1+(MasterLevel>=3)+(MasterLevel>=6)+(MasterLevel>=15)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on saves vs. mind-affecting effects, paralysis, poison, polymorph, sleep effects, and stunning.|VerdantCompanionResistanceBonus"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 523,
+    "record_key": "Verdant Companion ~ Verdant Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

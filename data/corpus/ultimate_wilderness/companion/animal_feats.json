@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Bodyguard ~ Animal Feats",
+    "name": "Animal Feats",
+    "description": "In addition to the standard animal companion feats, a bodyguard may select Bodyguard, Combat Patrol, Heroic Defiance, Heroic Recovery, and In Harm's Way.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bodyguard ~ Animal Feats"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to the standard animal companion feats, a bodyguard may select Bodyguard, Combat Patrol, Heroic Defiance, Heroic Recovery, and In Harm's Way."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AllowCompanionFeatBodyguard,AllowCompanionFeatCombatPatrol,AllowCompanionFeatHeroicDefiance,AllowCompanionFeatHeroicRecovery,AllowCompanionFeatInHarmsWay|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 455,
+    "record_key": "Bodyguard ~ Animal Feats"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

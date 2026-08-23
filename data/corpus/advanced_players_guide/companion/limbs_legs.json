@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Legs",
+    "name": "Limbs (Legs)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Legs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary.EvolutionQuadruped.EvolutionBiped"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidLegs|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidLegsUsed|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|10|PREABILITY:1,CATEGORY=Special Ability,Evolution ~ Climb"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Fly|10|PREABILITY:1,CATEGORY=Special Ability,Evolution ~ Flight Winged"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Burrow|5|PREABILITY:1,CATEGORY=Special Ability,Evolution ~ Burrow"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|10|PREABILITY:1,CATEGORY=Special Ability,Evolution ~ Swim"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidLegs|2"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 142,
+    "record_key": "Evolution ~ Legs"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

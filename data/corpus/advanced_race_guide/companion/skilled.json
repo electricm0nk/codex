@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "WCEvolution ~ Skilled",
+    "name": "Skilled",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "WCEvolution ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.EvolutionChoice.Extraordinary"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "IsWildCallerEidolon,1"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|Acrobatics|Climb|Escape Artist|Fly|Intimidate|Perception|Survival|Swim"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|LIST|8|TYPE=Racial"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 65,
+    "record_key": "WCEvolution ~ Skilled"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

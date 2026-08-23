@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Companion ~ Ability Score Increase",
+    "name": "Mod Ability Score Increase",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion ~ Ability Score Increase"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Ability Score Increase|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_AbilityScoreIncrease"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 75,
+    "record_key": "Companion ~ Ability Score Increase"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

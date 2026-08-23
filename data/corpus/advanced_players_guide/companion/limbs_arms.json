@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Arms",
+    "name": "Limbs (Arms)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary.EvolutionBiped"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidArms|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidArmsUsed|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidArms|2"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 141,
+    "record_key": "Evolution ~ Arms"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

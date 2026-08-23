@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Cat (Fiendish)",
+    "name": "Cat (Fiendish)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Cat"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Fiendish Creature"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      }
+    ],
+    "origin": "copy",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87",
+    "line": 48,
+    "record_key": "Cat (Fiendish)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

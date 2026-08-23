@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Pilferer ~ Sneak",
+    "name": "Sneak",
+    "description": "A pilferer gains a +%1 competence bonus on Sleight of Hand and Stealth checks.|MasterLevel/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pilferer ~ Sneak"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A pilferer gains a +%1 competence bonus on Sleight of Hand and Stealth checks.|MasterLevel/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sleight of Hand,Stealth|MasterLevel/2|TYPE=Competence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 603,
+    "record_key": "Pilferer ~ Sneak"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

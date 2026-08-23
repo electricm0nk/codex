@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Training ~ Heavy Labor",
+    "name": "Animal Trained for Heavy Labor",
+    "description": "An animal trained for heavy labor knows the tricks come and work. Training an animal for heavy labor takes 2 weeks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Training ~ Heavy Labor"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Heavy Labor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick.AnimalTraining.General.SpecialQuality"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.AnimalTraining"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal trained for heavy labor knows the tricks come and work. Training an animal for heavy labor takes 2 weeks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Animal Trick|AUTOMATIC|Animal Trick ~ Come|Animal Trick ~ Work"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 155,
+    "record_key": "Animal Training ~ Heavy Labor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

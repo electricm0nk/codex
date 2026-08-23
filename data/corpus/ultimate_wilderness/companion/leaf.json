@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Unchained Eidolon Base Form ~ Leaf",
+    "name": "Leaf",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Base Form ~ Leaf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Base Form Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonLeaf,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonFortGood,EidolonReflexGood|1"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b",
+    "line": 14,
+    "record_key": "Unchained Eidolon Base Form ~ Leaf"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

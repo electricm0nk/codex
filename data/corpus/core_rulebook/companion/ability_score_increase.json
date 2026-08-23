@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Companion ~ Ability Score Increase",
+    "name": "Ability Score Increase",
+    "description": "The animal companion adds +1 to one of its ability scores.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion ~ Ability Score Increase"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal companion adds +1 to one of its ability scores."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Companion Stat Increase|(MasterLevel>=4)+(MasterLevel>=9)+(MasterLevel>=14)+(MasterLevel>=20)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 53,
+    "record_key": "Animal Companion ~ Ability Score Increase"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

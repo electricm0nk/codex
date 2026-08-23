@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Trick ~ Attack",
+    "name": "Attack",
+    "description": "The animal attacks apparent enemies. You may point to a particular creature that you wish the animal to attack, and it will comply if able. Normally, an animal will attack only humanoids, monstrous humanoids, giants, or other animals. Teaching an animal to attack all creatures (including such unnatural creatures as undead and aberrations) counts as two tricks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal attacks apparent enemies. You may point to a particular creature that you wish the animal to attack, and it will comply if able. Normally, an animal will attack only humanoids, monstrous humanoids, giants, or other animals. Teaching an animal to attack all creatures (including such unnatural creatures as undead and aberrations) counts as two tricks."
+      },
+      {
+        "key": "DESC",
+        "value": "Animal will attack all creatures|PREABILITY:1,CATEGORY=Special Ability,Animal Trick ~ Attack II"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Attack I|!PREABILITY:1,CATEGORY=Special Ability,Animal Trick ~ Attack II"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Attack II|PREABILITY:1,CATEGORY=Special Ability,Animal Trick ~ Attack II"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 132,
+    "record_key": "Animal Trick ~ Attack"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Companion Stat ~ INT",
+    "name": "CompStat 4 Intelligence",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Stat ~ INT"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Intelligence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompStatChoice"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "STAT|INT"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|-1"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 166,
+    "record_key": "Companion Stat ~ INT"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

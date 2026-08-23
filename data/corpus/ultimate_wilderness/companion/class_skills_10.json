@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Valet ~ Class Skills",
+    "name": "Class Skills",
+    "description": "A valet treats Craft, Perform, and Profession as class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Valet ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A valet treats Craft, Perform, and Profession as class skills."
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Craft|TYPE=Perform|TYPE=Profession"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 630,
+    "record_key": "Valet ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

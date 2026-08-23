@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Feat",
+    "name": "Add Normal Feat",
+    "description": "For Companions with Intelligence of 3+, you may select any regular feat (Will open the Normal Feats).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Feat"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "INTSCORE,3"
+      },
+      {
+        "key": "DESC",
+        "value": "For Companions with Intelligence of 3+, you may select any regular feat (Will open the Normal Feats)."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|FEAT|1"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 256,
+    "record_key": "Animal Companion Feat ~ Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

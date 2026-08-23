@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Vermin Companion",
+    "name": "Vermin Companion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Vermin"
+      },
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monster.Companion"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vermin Traits|PREVAREQ:NoTypeTraits,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mindless Companion|!PREABILITY:1,CATEGORY=Special Ability,Companion Stat ~ Mindless to 1 INT"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will,BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|Companion"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|VC"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes_companion.lst",
+    "sha256": "4cf830e5a1958ea30fa04951a19119c7a60be4fb4a373b241976eaf2bd8ae0b9",
+    "line": 9,
+    "record_key": "Vermin Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

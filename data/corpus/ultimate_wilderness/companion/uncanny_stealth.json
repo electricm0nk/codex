@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Infiltrator ~ Uncanny Stealth",
+    "name": "Uncanny Stealth",
+    "description": "An infiltrator gains uncanny dodge and improved uncanny dodge, treating its master's level as its effective rogue level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Uncanny Stealth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An infiltrator gains uncanny dodge and improved uncanny dodge, treating its master's level as its effective rogue level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncannyDodgeFlankingLevel|MasterLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 577,
+    "record_key": "Infiltrator ~ Uncanny Stealth"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

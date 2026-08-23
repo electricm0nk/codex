@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Major See Invisibility 1",
+    "name": "Major Magic ~ See Invisibility (1/day)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Major See Invisibility 1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpellLike.EidMajorMagic"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=12"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeeInvisibilityEidSLAPerDay|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SeeInvisibilityEidSLAPerDay|CASTERLEVEL=(max(HD-2,1))|See Invisibility,10+HD/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeeInvisibilityEidSLAPerDay|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 187,
+    "record_key": "Evolution ~ Major See Invisibility 1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

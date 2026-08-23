@@ -1,0 +1,156 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Familiar (Chuspiki)",
+    "name": "Familiar (Chuspiki)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,60"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PE_MAX_Count|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Fan|Reach|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Fan|CRITMULTADD|1"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran|Common"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Chuspiki"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail Fan,Natural.Melee.Finesseable.Weapon,*1,1d4"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Air Blast,Natural.Ranged.Weapon.Touch,*1,0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:3"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Air"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Magical Beast"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Chuspiki"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_races_companion_oa.lst",
+    "sha256": "791058bf0b2adae7ec9eb5785dd4af4764375a7ac4cdf87b6094b1ecad45adb0",
+    "line": 6,
+    "record_key": "Familiar (Chuspiki)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

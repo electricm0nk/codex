@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Dimension Door",
+    "name": "Dimension Door",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Dimension Door"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,CHA=14"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,13"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=(max(HD,1))|Dimension Door,10+HD/2+CHA"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 106,
+    "record_key": "Evolution ~ Dimension Door"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

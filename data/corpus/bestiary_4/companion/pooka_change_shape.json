@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Pooka ~ Change Shape",
+    "name": "Pooka ~ Change Shape",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Change Shape"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2 of the following forms: cat, goat, rabbit [use stats for raccoon], or raven; polymorph)"
+      }
+    ],
+    "origin": "copy",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 99,
+    "record_key": "Pooka ~ Change Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

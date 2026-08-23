@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Wind Stance",
+    "name": "Wind Stance",
+    "description": "If you move more than 5 feet this turn, you gain 20%% concealment for 1 round against ranged attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Wind Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Dodge"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "6"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AllowCompanionFeatWindStance,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,15"
+      },
+      {
+        "key": "DESC",
+        "value": "If you move more than 5 feet this turn, you gain 20%% concealment for 1 round against ranged attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Wind Stance"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 693,
+    "record_key": "Animal Companion Feat ~ Wind Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

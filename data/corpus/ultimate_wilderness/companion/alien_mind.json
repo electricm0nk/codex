@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Aberrant Companion ~ Alien Mind",
+    "name": "Alien Mind",
+    "description": "An aberrant companion is immune to mind-affecting effects that specifically target animals, such as charm animal. Anyone who attempts to use such an effect against it takes 1d4 points of Wisdom damage (Will DC 20 half).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aberrant Companion ~ Alien Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An aberrant companion is immune to mind-affecting effects that specifically target animals, such as charm animal. Anyone who attempts to use such an effect against it takes 1d4 points of Wisdom damage (Will DC 20 half)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 436,
+    "record_key": "Aberrant Companion ~ Alien Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

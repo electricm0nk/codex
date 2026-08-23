@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Deathtouched Companion ~ One Foot in the Grave",
+    "name": "One Foot in the Grave",
+    "description": "A deathtouched companion gains a +4 morale bonus on Fortitude saves against effects that could not normally affect objects or undead, and it takes only half damage from bleed effects. However, it can be affected by attacks that specifically target undead, such as halt undead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deathtouched Companion ~ One Foot in the Grave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A deathtouched companion gains a +4 morale bonus on Fortitude saves against effects that could not normally affect objects or undead, and it takes only half damage from bleed effects. However, it can be affected by attacks that specifically target undead, such as halt undead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 475,
+    "record_key": "Deathtouched Companion ~ One Foot in the Grave"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

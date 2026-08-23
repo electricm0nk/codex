@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Mephit ~ Summon",
+    "name": "Summon",
+    "description": "Summon (Level 2, 1 %1 25%%)|%CHOICE",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mephit ~ Summon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Innate"
+      },
+      {
+        "key": "DESC",
+        "value": "Summon (Level 2, 1 %1 25%%)|%CHOICE"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|USERINPUT|TITLE=Mephit Type"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SpellCL|%1|SLA_CL"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(level 2, 1 %1 25%%)|%LIST"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60",
+    "line": 172,
+    "record_key": "Mephit ~ Summon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
