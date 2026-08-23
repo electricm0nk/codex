@@ -5329,3 +5329,58 @@ generic). Neither was attempted this cycle for scope reasons, not a blocker.
   under a `codex_named_unit_*` filename), `17-ability-pi-skipped.json` (reduced to coordinates),
   `24-pi-name-renamed-units.json` (new divergence log), `kanban.md` row 11.
 - Commit: `e9d02c840` (pushed clean, first attempt after rebase, `231d1fe13..e9d02c840`).
+## Cycle: `epic-2-t2a-residual-demonic-obedience-retype` — `decisions.md §23b` (2026-08-23)
+
+`Demonic Obedience` (42 units) re-typed out of `class_feature` into `feat`, per the operator ruling
+in `decisions.md §23b`. Re-confirmed the 42-unit premise fresh before moving anything (`§17a`):
+every one of 42 `demonic_obedience/*.json` records (excluding the "Demonic Obedience Base" chassis
+marker, which has no `PREDEITY` token and correctly stays `class_feature`) carries exactly one
+`PREDEITY:` token naming a demon lord and zero other `PRE*:` tokens — no exceptions.
+
+**The cause fix is generic, not a 42-record exclusion.** `refine_kind`'s new `Kind::ClassFeature`
+arm (`src/bin/v06_work_inventory.rs`) reclassifies to `Kind::Feat` any `_abilities_class.lst` row
+whose ONLY prerequisite is `PREDEITY:` and whose `KEY:` group prefix names no PC class in a new
+CORPUS-WIDE class roster (unioned from every book's own `book_pc_class_names`, computed once before
+enumeration — needed because most deity-obedience-shaped books declare no `*classes*.lst` of their
+own). Validated against 7 real corpus false positives sharing the identical `PREDEITY`-only shape but
+genuinely class-owned (`"Ranger Combat Style ~ Kurgess"` and 3 siblings, `"Warpriest Archetype ~
+Mantis Zealot"`, `"Cleric Archetype ~ Elder Mythos Cultist"`, `"Paladin Archetype ~ Sword of
+Valor"`) — all 7 correctly stay `class_feature` because their group prefix embeds the real class
+name. RED→GREEN proved inline; all 23 existing `refine_kind`/`file_kind` tests and the full 353-test
+`v06_work_inventory` suite stayed green.
+
+**Both directions proven.** `docs/work-inventory.json` regenerated through the real producer
+(stamp-loss guard honored: `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set from a
+live, fresh `corpus_literal_sweep`/`derived_evaluator_fixture_check` run, no `--allow-stamp-loss`).
+`class_feature: 18085 → 18043` (-42), `feat: 2722 → 2764` (+42), zero other ids changed kind.
+Verified idempotent (two consecutive regens of the patched binary against the same oracle/reports
+are byte-identical modulo `generated_at`). 42 stale `data/corpus/book_of_the_damned_volume_2/
+class_feature/demonic_obedience/*.json` files deleted; `gen_cache_class_feature` re-run afterward
+confirmed no orphans (it does not recreate them, since they no longer match its `kind=="class_feature"`
+input filter). That regen also touched `ingested_at` on 17,809 unrelated already-tracked records and
+surfaced 4 unrelated newly-materialized files (pre-existing citation-resolution gaps, not this
+cycle's); both reverted so the commit's diff carries only the 42 real deletions.
+
+**`decisions.md §16` binds:** reclassification ≠ closure. 0 units closed this cycle. `no_record`
+effect (`§20`): +2 (of the 42, 40 already carried `status: text-complete`, outside the standing
+gate's not-done population either way; only 2 — `~ Mazmezz`, `~ Shivaska` — were `status: unknown`
+and land as `no_record` under `feat`, since no generator yet produces a cache record for this shape).
+Standing gate re-run: `no_record: 7487/35328` vs. the committed `21521/36028` budget — **exceeded:
+False**, huge headroom. `NO_RECORD_BUDGET_COUNT`/`NO_RECORD_BUDGET_POPULATION` **untouched**, no
+provenance repin needed.
+
+**Discovered, not fixed, forwarded:** the committed `docs/work-inventory.json` baseline was already
+stale relative to a fresh regen of its OWN unmodified code (zero commits touched
+`v06_work_inventory.rs` between the baseline commit and this cycle's pin) — 55 `race_trait` units
+across 8 books vanish on a fresh regen with no compensating gain elsewhere. Proven NOT caused by this
+cycle's patch via the same idempotence check above. Logged (`scripts/retro.py note`,
+`t9-onboarding.jsonl`) with its re-derive command; not investigated further here.
+
+- **Status:** complete (this lane's kind-correction scope only — reclassification, not closure; card
+  11's shared row stays `in-progress`, other sub-populations open).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t2a-residual-demonic-obedience-retype_cycle-1_cycle_receipt.md`.
+- **What remains:** a corpus-cache generator for feat-kind option-pool boons (closing the 2
+  `no_record` units this cycle surfaced); the 55-unit `race_trait` drift discovery; the ~525
+  remaining unverified category labels (`decisions.md §23c`'s table governs their disposition).
+- Commit: (recorded after push).

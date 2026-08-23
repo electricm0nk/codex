@@ -500,7 +500,7 @@ mod kind_ability_tests {
     fn category_feat_row_redirects_to_feat() {
         let fields = ["Magical Lineage", "KEY:Magical Lineage ~ Metamagic", "CATEGORY:FEAT", "TYPE:Metamagic"];
         let empty = BTreeSet::new();
-        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new()), Kind::Feat);
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Feat);
     }
 
     /// A non-FEAT bare-abilities row stays `Kind::Ability` under `refine_kind`.
@@ -508,7 +508,7 @@ mod kind_ability_tests {
     fn non_feat_ability_row_stays_ability_under_refine_kind() {
         let fields = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
         let empty = BTreeSet::new();
-        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new()), Kind::Ability);
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Ability);
     }
 
     /// `has_classifying_token`: only content-bearing (A) rows pass; a
@@ -559,6 +559,7 @@ mod kind_ability_tests {
             text,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
@@ -580,6 +581,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::Ability,
             text,
+            &empty,
             &empty,
             &empty,
             &mut out,
@@ -604,6 +606,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::ClassFeature,
             text,
+            &empty,
             &empty,
             &empty,
             &mut out,
@@ -643,6 +646,7 @@ mod kind_ability_tests {
             text,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 0, "{:?}", out.units);
@@ -666,6 +670,7 @@ mod kind_ability_tests {
             text,
             &empty,
             &empty,
+            &empty,
             &mut out,
         );
         assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
@@ -686,6 +691,7 @@ mod kind_ability_tests {
             "core_rulebook",
             Kind::ClassFeature,
             text,
+            &empty,
             &empty,
             &empty,
             &mut out,
@@ -1939,11 +1945,31 @@ fn book_pc_class_names(book_dir: &Path) -> BTreeSet<String> {
 ///   is a third, distinct data shape neither `race_trait` nor
 ///   `class_feature` -- moving it would be exactly as wrong as moving it to
 ///   `monster_ability`, so it stays `RaceTrait` untouched, same as today.
+/// - `decisions.md §23b`: a `Kind::ClassFeature` (`_abilities_class.lst`) row
+///   whose ONLY `PRE*:`-shaped prerequisite is `PREDEITY:` (a specific
+///   deity/demon lord) and whose `KEY:` group prefix (the text before
+///   `" ~ "`) names no PC class anywhere in the CORPUS-WIDE roster
+///   (`corpus_pc_class_names`, not just this book's own -- most
+///   archetype/supplement books declare no `*classes*.lst` of their own at
+///   all, see `book_pc_class_names`'s doc comment, so a book-scoped check
+///   would fire on every deity-flavored row regardless of real ownership)
+///   is a deity-obedience feat line filed in the wrong file by
+///   `file_kind`'s whole-file `_abilities_class` guess, not a class
+///   feature -- `"Demonic Obedience ~ Abraxas"` names no class at all in
+///   any of its 42 corpus records, verified corpus-wide, never a class or
+///   class-shaped variable. Reclassifies to `Kind::Feat` (comparable to a
+///   boon feat; the base `"Demonic Obedience"` feat itself is already
+///   `Kind::Feat`, sourced from a real `CATEGORY:FEAT` row in a different
+///   file). A genuinely class-owned deity-flavored row --
+///   `"Ranger Combat Style ~ Kurgess"` (`PREDEITY` only, same shape) -- is
+///   NOT caught here because its `KEY:` group prefix embeds the real class
+///   name (`"Ranger"`).
 fn refine_kind(
     file_kind: Kind,
     fields: &[&str],
     book_monster_race_names: &BTreeSet<String>,
     book_pc_class_names: &BTreeSet<String>,
+    corpus_pc_class_names: &BTreeSet<String>,
 ) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
@@ -1994,6 +2020,30 @@ fn refine_kind(
                 return Kind::ClassFeature;
             }
             Kind::RaceTrait
+        }
+        // SD-32 `decisions.md §23b`: see this function's own doc comment,
+        // last bullet, for the full reasoning and the discriminating
+        // example (`"Ranger Combat Style ~ Kurgess"`, correctly untouched).
+        Kind::ClassFeature => {
+            let has_other_pre_token = fields.iter().any(|f| f.starts_with("PRE") && !f.starts_with("PREDEITY:"));
+            if has_token(fields, "PREDEITY:") && !has_other_pre_token {
+                let key_prefix = token_value(fields, "KEY:")
+                    .or_else(|| fields.first().copied())
+                    .unwrap_or("")
+                    .split(" ~ ")
+                    .next()
+                    .unwrap_or("")
+                    .trim();
+                let names_a_class = !key_prefix.is_empty()
+                    && corpus_pc_class_names.iter().any(|class_name| {
+                        key_prefix == class_name.as_str()
+                            || key_prefix.strip_prefix(class_name.as_str()).is_some_and(|rest| rest.starts_with(' '))
+                    });
+                if !names_a_class {
+                    return Kind::Feat;
+                }
+            }
+            Kind::ClassFeature
         }
         // SD-32 card 15-ability: `census_independent.py`'s `row_dependent`
         // branch special-cases `CATEGORY:FEAT` before its own A/B
@@ -2130,7 +2180,7 @@ mod refine_kind_monster_ability_tests {
             "DESC:Gain a bonus.",
             "BONUS:VAR|ElfHunterCritConfLongbowBonus|1",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `uw_abilities_race.lst:235` -- the auto-granted "Output" display row a
@@ -2149,7 +2199,7 @@ mod refine_kind_monster_ability_tests {
             "VISIBLE:EXPORT",
             "DESC:Add a bonus on wild empathy checks.|DwarfShifterEmpathyBonus/2",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `arg_abilities_race.lst:279` real shape (verbatim, tab-split) --
@@ -2232,7 +2282,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality",
             "DESC:Your animal companion has extra hit points.|HalfOrcHunterFavClassBonus",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `ce_abilities_race.lst:1739`, one of Core Essentials' 380 genuine
@@ -2249,7 +2299,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Aberrations breathe, eat, and sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// `uw_abilities_race.lst:25`, one of `ultimate_wilderness`'s 2 genuine
@@ -2265,7 +2315,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Plants breathe and eat, but do not sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// A bare `NaturalAttack`/`Universal Monster Rule` first segment is
@@ -2277,7 +2327,7 @@ mod refine_kind_monster_ability_tests {
     #[test]
     fn natural_attack_first_segment_is_never_gated_by_the_choice_test() {
         let fields = ["Bite 1 (Medium)", "CATEGORY:Special Ability", "TYPE:NaturalAttack"];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// SD-32 card 11 T2b classifier fix (`decisions.md §16`): `bestiary_3`'s
@@ -2296,7 +2346,7 @@ mod refine_kind_monster_ability_tests {
         ];
         let mut names = BTreeSet::new();
         names.insert("Bandersnatch".to_string());
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new()), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// The named trap (`t2b-bestiary_3-measurement-receipt.md` §6 item 1):
@@ -2322,7 +2372,7 @@ mod refine_kind_monster_ability_tests {
         // never the race name embedded inside the KEY's own suffix.
         let mut names = BTreeSet::new();
         names.insert("Human".to_string());
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// A row whose KEY prefix happens to equal a book monster/race name is
@@ -2341,7 +2391,7 @@ mod refine_kind_monster_ability_tests {
         ];
         let mut names = BTreeSet::new();
         names.insert("Bandersnatch".to_string());
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// Regression guard for the over-widening this fix must NOT do: a row
@@ -2372,7 +2422,7 @@ mod refine_kind_monster_ability_tests {
         // `book_cr_bearing_race_names` never reads `*_templates.lst`, so no
         // caller ever passes a set containing it. An empty set here is not a
         // weaker test; it IS the invariant.
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md
@@ -2396,7 +2446,7 @@ mod refine_kind_monster_ability_tests {
         let mut pc_classes = BTreeSet::new();
         pc_classes.insert("Skald".to_string());
         assert_eq!(
-            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
             Kind::ClassFeature
         );
     }
@@ -2414,7 +2464,7 @@ mod refine_kind_monster_ability_tests {
         let mut pc_classes = BTreeSet::new();
         pc_classes.insert("Warpriest".to_string());
         assert_eq!(
-            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
             Kind::ClassFeature
         );
     }
@@ -2441,7 +2491,7 @@ mod refine_kind_monster_ability_tests {
         let mut pc_classes = BTreeSet::new();
         pc_classes.insert("Alchemist".to_string());
         assert_eq!(
-            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
             Kind::RaceTrait
         );
     }
@@ -2458,9 +2508,94 @@ mod refine_kind_monster_ability_tests {
         let mut pc_classes = BTreeSet::new();
         pc_classes.insert("Skald".to_string());
         assert_eq!(
-            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes),
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
             Kind::RaceTrait
         );
+    }
+}
+
+/// `decisions.md §23b`: `refine_kind`'s `Kind::ClassFeature` arm --
+/// deity-obedience feat lines re-typed out of `class_feature`, genuine
+/// class features left untouched even when they carry the same `PREDEITY`
+/// shape.
+#[cfg(test)]
+mod refine_kind_class_feature_deity_obedience_tests {
+    use super::*;
+
+    /// The real corpus shape (`botd2_abilities_classes.lst`, 42 records):
+    /// `PREDEITY` is the ONLY prerequisite and the `KEY:` group prefix
+    /// ("Demonic Obedience") names no PC class anywhere in the corpus-wide
+    /// roster. Reclassifies to `Kind::Feat`.
+    #[test]
+    fn demonic_obedience_row_reclassifies_from_class_feature_to_feat() {
+        let fields = [
+            "Demonic Obedience",
+            "KEY:Demonic Obedience ~ Abraxas",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.DemonicObedience.SaveBonus",
+            "PREDEITY:1,Abraxas",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &empty), Kind::Feat);
+    }
+
+    /// The book's own chassis marker row for the SAME label -- no
+    /// `PREDEITY:` token at all (it applies across every demon lord) --
+    /// is unaffected and stays `Kind::ClassFeature`.
+    #[test]
+    fn demonic_obedience_base_row_with_no_predeity_stays_class_feature() {
+        let fields = [
+            "Demonic Obedience",
+            "KEY:Demonic Obedience Base",
+            "CATEGORY:Special Ability",
+            "TYPE:Internal",
+            "DEFINE:DemonicObedienceApply|0",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &empty), Kind::ClassFeature);
+    }
+
+    /// The real corpus false-positive guard: `"Ranger Combat Style ~
+    /// Kurgess"` (`inner_sea_combat`) carries the SAME `PREDEITY`-only
+    /// prerequisite shape as `"Demonic Obedience ~ Abraxas"`, but its
+    /// `KEY:` group prefix embeds the real class name `"Ranger"` -- must
+    /// stay `Kind::ClassFeature`. This is why the class-name check is
+    /// against the CORPUS-WIDE roster, not just this book's own (which
+    /// `inner_sea_combat` does not declare).
+    #[test]
+    fn class_owned_deity_flavored_row_stays_class_feature() {
+        let fields = [
+            "Ranger Combat Style",
+            "KEY:Ranger Combat Style ~ Kurgess",
+            "CATEGORY:Special Ability",
+            "PREDEITY:1,Kurgess",
+        ];
+        let empty = BTreeSet::new();
+        let mut corpus_classes = BTreeSet::new();
+        corpus_classes.insert("Ranger".to_string());
+        assert_eq!(
+            refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &corpus_classes),
+            Kind::ClassFeature
+        );
+    }
+
+    /// A row with `PREDEITY` plus another `PRE*:` prerequisite (e.g.
+    /// `PRECLASS:`) is never reclassified by this arm even when its group
+    /// names no corpus class -- the "no other PRE* token" guard is
+    /// independent of the class-name check, so a row this narrow rule was
+    /// never meant to touch (a real class feature with an unusual group
+    /// label) is not silently moved.
+    #[test]
+    fn predeity_row_with_another_pre_token_stays_class_feature() {
+        let fields = [
+            "Mystery Cult",
+            "KEY:Mystery Cult ~ Example",
+            "CATEGORY:Special Ability",
+            "PREDEITY:1,Example",
+            "PRECLASS:1,Cleric=1",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &empty), Kind::ClassFeature);
     }
 }
 
@@ -3674,6 +3809,7 @@ fn enumerate_file(
     text: &str,
     book_monster_race_names: &BTreeSet<String>,
     book_pc_class_names: &BTreeSet<String>,
+    corpus_pc_class_names: &BTreeSet<String>,
     out: &mut BookEnumeration,
 ) {
     // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
@@ -3833,7 +3969,7 @@ fn enumerate_file(
                 .filter(|t| has_token(&fields, t))
                 .count();
             out.mod_targets.push((
-                refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names),
+                refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names, corpus_pc_class_names),
                 base.clone(),
                 base,
                 Provenance { file: rel.clone(), line: line_number },
@@ -3949,7 +4085,7 @@ fn enumerate_file(
             continue;
         }
 
-        let record_kind = refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names);
+        let record_kind = refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names, corpus_pc_class_names);
         if !has_classifying_token(record_kind, &fields) {
             *out.trap_hits.entry("missing_classifying_token").or_default() += 1;
             continue;
@@ -4009,7 +4145,7 @@ fn enumerate_file(
 
 /// Walk one book directory (recursively — `core_essentials` nests its per-race
 /// files two levels deep) and enumerate every `.lst` it holds.
-fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
+fn enumerate_book(book_dir: &Path, book: &str, corpus_pc_class_names: &BTreeSet<String>) -> BookEnumeration {
     let mut out = BookEnumeration::default();
     let mut stack = vec![book_dir.to_path_buf()];
     let mut files: Vec<PathBuf> = Vec::new();
@@ -4055,6 +4191,7 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
                         &text,
                         &book_monster_race_names,
                         &book_pc_class_names,
+                        corpus_pc_class_names,
                         &mut out,
                     );
                 } else {
@@ -10593,9 +10730,20 @@ fn main() {
     }
 
     // --- enumerate ---------------------------------------------------------
+    // `decisions.md §23b`: corpus-wide PC class roster, unioned from every
+    // book's own `book_pc_class_names` and computed BEFORE enumeration --
+    // `refine_kind`'s `Kind::ClassFeature` arm needs it to tell a
+    // deity-obedience feat line apart from a genuine class feature even in a
+    // book that declares no `*classes*.lst` of its own (most archetype/
+    // supplement books, `book_pc_class_names`'s own doc comment).
+    let corpus_pc_class_names_pre: BTreeSet<String> =
+        books.iter().flat_map(|book| book_pc_class_names(&book_paths[&book.id])).collect();
     let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
     for book in &books {
-        enumerations.insert(book.id.clone(), enumerate_book(&book_paths[&book.id], &book.id));
+        enumerations.insert(
+            book.id.clone(),
+            enumerate_book(&book_paths[&book.id], &book.id, &corpus_pc_class_names_pre),
+        );
     }
 
     // `mod_only_rescue`: a `.MOD` row whose base name appears nowhere in the
@@ -17255,7 +17403,7 @@ mod core_essentials_book_attribution_tests {
             "races/kasatha/kasatha_races.lst",
             "Kasatha\t\tSORTKEY:a_base_pc\tSTARTFEATS:1\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -17280,7 +17428,7 @@ mod core_essentials_book_attribution_tests {
             "ce_spells.lst",
             "SOURCELONG:Bestiary\tSOURCESHORT:B1\n\nMage Hand\tSCHOOL:Transmutation\tCLASSES:Wizard\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -17302,7 +17450,7 @@ mod core_essentials_book_attribution_tests {
             "races/monkey_goblin/monkey_goblin_races.lst",
             "Goblin (Monkey)\t\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -17323,7 +17471,7 @@ mod core_essentials_book_attribution_tests {
             "ce_abilities_race.lst",
             "Darkvision\t\tKEY:Darkvision\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -17351,7 +17499,7 @@ mod core_essentials_book_attribution_tests {
              SOURCELONG:Bestiary\tSOURCESHORT:B1\tSOURCEDATE:2009-10\n\
              After Directive\tKEY:After Directive\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let before = enumeration
             .units
             .iter()
@@ -17386,7 +17534,7 @@ mod core_essentials_book_attribution_tests {
              SOURCELONG:Bestiary 2\tSOURCESHORT:B2\n\
              B2 Row\tKEY:B2 Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let b1 = enumeration.units.iter().find(|u| u.key == "B1 Row").unwrap();
         assert_eq!(b1.book, "bestiary");
         let b2 = enumeration.units.iter().find(|u| u.key == "B2 Row").unwrap();
@@ -17413,7 +17561,7 @@ mod core_essentials_book_attribution_tests {
              SOURCELONG:Universal Rules\tSOURCESHORT:UR\n\
              Capsize\tKEY:Capsize\tCATEGORY:Special Ability\tTYPE:Extraordinary.SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let b3 = enumeration.units.iter().find(|u| u.key == "B3 Row").unwrap();
         assert_eq!(b3.book, "bestiary_3");
         let capsize = enumeration.units.iter().find(|u| u.key == "Capsize").unwrap();
@@ -17436,7 +17584,7 @@ mod core_essentials_book_attribution_tests {
             "SOURCELONG:Universal Rules\tSOURCESHORT:UR\n\
              UR Row\tKEY:UR Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let ur = enumeration.units.iter().find(|u| u.key == "UR Row").unwrap();
         assert_eq!(ur.book, "core_essentials");
     }
@@ -17452,7 +17600,7 @@ mod core_essentials_book_attribution_tests {
             "SOURCELONG:Bestiary 2\tSOURCESHORT:B2\n\
              Dwarf Ability\tKEY:Dwarf Ability\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.key == "Dwarf Ability").unwrap();
         assert_eq!(
             unit.book, "core_rulebook",
@@ -17475,7 +17623,7 @@ mod core_essentials_book_attribution_tests {
         let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
         enumerations.insert(
             "core_essentials".to_string(),
-            enumerate_book(&book.root, "core_essentials"),
+            enumerate_book(&book.root, "core_essentials", &BTreeSet::new()),
         );
         let declared: BTreeSet<(Kind, String)> = BTreeSet::new();
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
@@ -17527,7 +17675,7 @@ mod core_essentials_book_attribution_tests {
         let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
         enumerations.insert(
             "core_essentials".to_string(),
-            enumerate_book(&book.root, "core_essentials"),
+            enumerate_book(&book.root, "core_essentials", &BTreeSet::new()),
         );
         let declared: BTreeSet<(Kind, String)> = BTreeSet::new();
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
@@ -17721,7 +17869,7 @@ mod core_essentials_book_attribution_tests {
             // would be a false negative, not a real finding.
             return;
         }
-        let mut enumeration = enumerate_book(&book_dir, "core_essentials");
+        let mut enumeration = enumerate_book(&book_dir, "core_essentials", &BTreeSet::new());
         // `main`'s own pipeline runs a (kind, key) duplicate-identity dedup
         // pass over every book's units AFTER `enumerate_book` (see `main`'s
         // `--- id uniqueness ---` section) before it ever counts a residual;
@@ -17771,7 +17919,7 @@ mod core_essentials_book_attribution_tests {
             "races/catfolk/catfolk_races.lst",
             "Catfolk\t\tSORTKEY:a_base_pc\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.name == "Catfolk").unwrap();
         assert_eq!(unit.book, "advanced_race_guide");
     }
@@ -17788,7 +17936,7 @@ mod core_essentials_book_attribution_tests {
             "races/catfolk/catfolk_abilities_race.lst",
             "Catfolk ~ Cat's Luck\tKEY:Catfolk ~ Cat's Luck\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.name == "Catfolk ~ Cat's Luck").unwrap();
         assert_eq!(
             unit.book, "bestiary_3",
@@ -17807,7 +17955,7 @@ mod core_essentials_book_attribution_tests {
             "races/skinwalker/skinwalker_races.lst",
             "Skinwalker\t\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.name == "Skinwalker").unwrap();
         assert_eq!(unit.book, "bestiary_5");
     }
