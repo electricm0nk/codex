@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Lost Passage",
+    "school": "Enchantment",
+    "level": 3,
+    "description": "Creatures in the area of this spell are subject to a subtle enchantment that confounds their senses of direction, interferes with recognizing landmarks, and causes them to misjudge distances and angles. Creatures that enter the area must succeed at a new Survival check to avoid becoming lost immediately, whether or not they succeed at their saving throws. Those that fail the save take a -%1 penalty on such Survival checks, treat all squares they enter as difficult terrain for as long as they are in the area and for %2 hours thereafter, lose the benefit of all effects that allow them to ignore difficult terrain, and take a -4 penalty to Dexterity."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 28,
+    "record_key": "Lost Passage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

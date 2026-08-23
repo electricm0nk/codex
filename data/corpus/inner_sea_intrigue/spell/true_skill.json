@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "True Skill",
+    "school": "Divination",
+    "level": 1,
+    "description": "When faced with an important situation, you grant yourself a magical edge to ensure your success. When casting this spell, select one skill for which you can attempt a skill check. The next time you attempt a skill check using the selected skill (before the spell's duration ends), you gain a +(max(1,CASTERLEVEL/2)) insight bonus on the check."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 31,
+    "record_key": "True Skill"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

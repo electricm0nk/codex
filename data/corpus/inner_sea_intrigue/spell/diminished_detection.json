@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Diminished Detection",
+    "school": "Abjuration",
+    "level": 2,
+    "description": "You can avoid being detected when you are on the edges of some divination spells' ranges. Whenever you would normally be within the area of effect of a detection spell (such as detect magic, detect evil, or detect undead), the area of effect is reduced by half for the purposes of the spell's caster detecting you or your possessions. The caster of the detect spell is unaware of this reduction in her spell's range; she simply does not detect you."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 14,
+    "record_key": "Diminished Detection"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

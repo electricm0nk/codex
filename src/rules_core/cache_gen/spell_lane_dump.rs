@@ -62,9 +62,11 @@ use crate::rules_core::pi_screening::{
 };
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 use crate::rules_core::rules_tables::{
-    adventurers_guide, bestiary, bestiary_4, horror_adventures, inner_sea_faiths, inner_sea_gods,
-    inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
-    ultimate_magic, ultimate_wilderness,
+    adventurers_guide, bestiary, bestiary_4, book_of_the_damned_volume_1,
+    book_of_the_damned_volume_2, horror_adventures, inner_sea_faiths, inner_sea_gods,
+    inner_sea_intrigue, inner_sea_magic, inner_sea_races, inner_sea_temples, inner_sea_world_guide,
+    monster_codex, mythic_adventures, occult_adventures, ultimate_combat, ultimate_equipment,
+    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 
 // ---------------------------------------------------------------------
@@ -348,6 +350,123 @@ fn book_specs() -> Vec<BookSpec> {
             dir: "pathfinder/paizo/roleplaying_game/bestiary_4",
             spell_file: "b4_spells_modified.lst",
             entries: bestiary_4::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        // SD-32 `decisions.md §20`, no_record-to-zero wave: eight more
+        // compiled tables (`ingest_spells.rs`'s config-driven `BOOKS`)
+        // with no `data/corpus/<book>/spell/*.json` cache at all -- same
+        // "compiled table but no corpus dump" gap this module already
+        // closes for every book above.
+        BookSpec {
+            book_id: "inner_sea_races",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_races",
+            spell_file: "isr_spells.lst",
+            entries: inner_sea_races::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "inner_sea_intrigue",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
+            spell_file: "isi_spells.lst",
+            entries: inner_sea_intrigue::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "monster_codex",
+            dir: "pathfinder/paizo/roleplaying_game/monster_codex",
+            spell_file: "mc_spells.lst",
+            entries: monster_codex::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "inner_sea_world_guide",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
+            spell_file: "iswg_spells.lst",
+            entries: inner_sea_world_guide::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "book_of_the_damned_volume_1",
+            dir: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
+            spell_file: "botd1_spells.lst",
+            entries: book_of_the_damned_volume_1::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "book_of_the_damned_volume_2",
+            dir: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
+            spell_file: "botd2_spells.lst",
+            entries: book_of_the_damned_volume_2::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "mythic_adventures",
+            dir: "pathfinder/paizo/roleplaying_game/mythic_adventures",
+            spell_file: "ma_spells.lst",
+            entries: mythic_adventures::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "ultimate_equipment",
+            dir: "pathfinder/paizo/roleplaying_game/ultimate_equipment",
+            spell_file: "ue_spells.lst",
+            entries: ultimate_equipment::spell_list::SPELL_LIST
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,

@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Seek Shelter",
+    "school": "Enchantment",
+    "level": 4,
+    "description": "You send an empathic urge to seek safety both as fast as possible and in an orderly fashion, and to remain in such secure locations for the duration of the spell. Targets with 5 or more Hit Dice are unaffected. When you cast the spell, you can designate a fortified location-either general (such as \"indoors\") or specific (such as \"the local garrison\")-for the targets to attempt to reach. If you do not specify a location for the targets to retreat to, they attempt to find safety to the best of their ability. Affected creatures defend themselves normally but attack only if provoked."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 28,
+    "record_key": "Seek Shelter"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

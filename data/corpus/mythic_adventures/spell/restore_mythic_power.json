@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Restore Mythic Power",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "By laying your hands on the target, you're able to transfer some of your mythic essence to the target. You expend three uses of your mythic power to restore one use of the target's mythic power."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+    "sha256": "d62f0bb802aab15dde7b963773c586cb539a4571e3c404ead1b76788b0546374",
+    "line": 285,
+    "record_key": "Restore Mythic Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

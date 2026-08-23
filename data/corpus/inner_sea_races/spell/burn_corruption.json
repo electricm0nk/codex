@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Burn Corruption",
+    "school": "Evocation",
+    "level": 4,
+    "description": "This spell fills the area with violet flames that scour an area clean of life-especially of the corrupted life of the Abyss. Creatures (and foliage) in the area take %1d8 points of fire damage unless they are outsiders with the chaotic and evil subtypes or are otherwise tainted by demons, in which case they instead take %2d6 points of fire damage. This fire damage ignores the fire resistance granted by the demon subtype, but it does not penetrate any other form of fire resistance or immunity."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 14,
+    "record_key": "Burn Corruption"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

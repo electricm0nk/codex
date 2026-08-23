@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Teleport Trap",
+    "school": "Abjuration",
+    "level": 7,
+    "description": "Ward an area, redirecting all teleportation into or out of the area to a specific open space on a solid surface within the area on a failed Will save. The teleport attempt fails and this spell ends if the save is successful. A teleport trap can exclude a category of creatures."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_spells.lst",
+    "sha256": "526932ef9d7113c17ecbcc92781fbc7b434d15aa18cd3d84ea8c83601cf58b9c",
+    "line": 16,
+    "record_key": "Teleport Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

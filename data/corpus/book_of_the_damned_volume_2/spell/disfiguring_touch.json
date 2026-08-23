@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Disfiguring Touch",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "With a touch, you cause the victim of this spell to suffer a painful curse that causes it to grow horribly disfigured."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
+    "sha256": "cec56af35e0cda5fa61a508cd76ff21a42f9720dd11c459dec81cc3279d094ea",
+    "line": 16,
+    "record_key": "Disfiguring Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

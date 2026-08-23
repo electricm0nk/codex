@@ -240,6 +240,91 @@ const BOOKS: &[BookInput] = &[
         already_ingested: None,
         dedup_within_book: false,
     },
+    // SD-32 `decisions.md §20`, no_record-to-zero wave: eight more books
+    // with a real, dedicated spell `.lst` and zero corpus coverage,
+    // re-derived directly against the pinned oracle (`find ... -iname
+    // '*spell*.lst'` under each book's directory) rather than assumed --
+    // same "config-driven, no new logic" shape as every entry above.
+    BookInput {
+        id: "inner_sea_races",
+        display_name: "Inner Sea Races",
+        lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+        out_path: "src/rules_core/rules_tables/inner_sea_races/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    BookInput {
+        id: "inner_sea_intrigue",
+        display_name: "Inner Sea Intrigue",
+        lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+        out_path: "src/rules_core/rules_tables/inner_sea_intrigue/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    BookInput {
+        id: "monster_codex",
+        display_name: "Monster Codex",
+        lst_rel: "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+        out_path: "src/rules_core/rules_tables/monster_codex/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    BookInput {
+        id: "inner_sea_world_guide",
+        display_name: "Inner Sea World Guide",
+        lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_spells.lst",
+        out_path: "src/rules_core/rules_tables/inner_sea_world_guide/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    // The book's own `.pcc` loads `botd1_spells.lst` unconditionally; a
+    // `_pfs/pfs_botd1_spells.lst` variant also exists but is the
+    // Pathfinder-Society-legal restatement, not this pipeline's target
+    // (every other book in this table ingests the base sourcebook file,
+    // never its `_pfs/` counterpart).
+    BookInput {
+        id: "book_of_the_damned_volume_1",
+        display_name: "Book of the Damned, Volume 1",
+        lst_rel: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
+        out_path: "src/rules_core/rules_tables/book_of_the_damned_volume_1/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    // This book's own `.pcc` loads TWO spell lists: `botd2_spells.lst`
+    // unconditionally and `botd2_spells_ndl.lst` only
+    // `!PRECAMPAIGN:1,Inner Sea World Guide` (a "no-duplicates" restatement
+    // gated OFF when Inner Sea World Guide is also loaded, to avoid
+    // redeclaring spells that book already owns). This pipeline models no
+    // campaign gating anywhere else, so `botd2_spells.lst` -- the
+    // unconditional file -- is the ingested source, matching every other
+    // book's single-canonical-file shape.
+    BookInput {
+        id: "book_of_the_damned_volume_2",
+        display_name: "Book of the Damned, Volume 2",
+        lst_rel: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
+        out_path: "src/rules_core/rules_tables/book_of_the_damned_volume_2/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    // `ma_abilities_spell.lst` is a spell-LIKE-ability catalog (a distinct
+    // kind, `monster_ability`/`race_trait`-shaped), not this book's base
+    // spell catalog; `ma_spells.lst` is.
+    BookInput {
+        id: "mythic_adventures",
+        display_name: "Mythic Adventures",
+        lst_rel: "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+        out_path: "src/rules_core/rules_tables/mythic_adventures/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    BookInput {
+        id: "ultimate_equipment",
+        display_name: "Ultimate Equipment",
+        lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_spells.lst",
+        out_path: "src/rules_core/rules_tables/ultimate_equipment/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
 ];
 
 /// Referenced so `cargo build`/`clippy` see these modules as used -- their
@@ -757,7 +842,7 @@ mod tests {
     }
 
     #[test]
-    fn books_table_names_exactly_the_twelve_spell_bearing_books_this_binary_replaces() {
+    fn books_table_names_exactly_the_twenty_spell_bearing_books_this_binary_replaces() {
         // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): +1,
         // `horror_adventures` -- this module's own doc comment's "seven
         // near-identical binaries plus the already-config-driven ISF/ISM/
@@ -786,6 +871,14 @@ mod tests {
                 "horror_adventures",
                 "bestiary",
                 "bestiary_4",
+                "inner_sea_races",
+                "inner_sea_intrigue",
+                "monster_codex",
+                "inner_sea_world_guide",
+                "book_of_the_damned_volume_1",
+                "book_of_the_damned_volume_2",
+                "mythic_adventures",
+                "ultimate_equipment",
             ]
         );
     }

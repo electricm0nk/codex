@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Ice Slick",
+    "school": "Evocation",
+    "level": 2,
+    "description": "You create a blast of intense cold, coating all solid surfaces in the area with a thin coating of ice. Any creature in the area when the spell is cast takes 1d6+(min(10,CASTERLEVEL)) points of cold damage and falls prone; creatures that succeed at a Reflex save take half damage and don't fall prone. Spell resistance applies to this initial effect. A creature can walk within or through the area of ice at half its normal speed with a successful DC 10 Acrobatics check. Failure by 4 or less means the creature can't move that round (and must succeed at a Reflex save or fall); failure by 5 or more means it falls (see the Acrobatics skill on page 87 of the Pathfinder RPG Core Rulebook for details). Creatures that do not move on their turn do not need to attempt this check. A 5-foot square of ice has hardness 0 and 3 hit points. The ice is an instantaneous effect, but persists as nonmagical ice. Under temperate conditions, the ice lasts (CASTERLEVEL) minutes. In tropical environments, it might last only half as long. In cold environments where ice and snow persist without melting, it could last indefinitely."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 16,
+    "record_key": "Ice Slick"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

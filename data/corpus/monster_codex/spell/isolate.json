@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Isolate",
+    "school": "Illusion",
+    "level": 3,
+    "description": "You cause the target to become invisible and silent, but only to his allies. Any creature with an attitude of indifferent or worse toward the target, and any creature that wishes the target harm, can see the target normally. The target can see and hear himself, can cast spells with verbal components, and can use command words normally, but any effect that requires allies to see or hear the target does not function. An ally that can see invisible creatures can both see and hear the target of isolate. If the target succeeds at its save, the duration of the spell is reduced to 1 round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 18,
+    "record_key": "Isolate"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

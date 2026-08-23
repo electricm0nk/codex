@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Fleshwarping Swarm",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "This spell functions as summon swarm, except that living and undead creatures that fail their saving throw against the swarm's distraction find that their limbs twist and spasm, as their bodies become susceptible to transmutations. Such creatures take a -4 penalty to Dexterity and on saving throws against transmutation effects for %1 hours."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 25,
+    "record_key": "Fleshwarping Swarm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

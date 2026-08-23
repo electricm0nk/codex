@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Gift of the Deep",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "You give the targets the appearance and many of the abilities of sahuagin mutants, with effects as described below. Choose one benefit for all targets of this spell. This spell has no effect on sahuagin that are already mutants or already under the effects of gift of the deep. &nl;[Four-Armed] The sahuagin sprouts an extra pair of arms-which can be used to make claw attacks (dealing 1d4 points of damage), or to wield weapons or hold items. It gains the benefits of the Multiattack and Multiweapon Fighting feats. &nl;[Molenti] The sahuagin's features shift to resemble those of an aquatic elf. It loses its light blindness as well as its claw and bite attacks. The sahuagin gains a +4 enhancement bonus to Dexterity and Charisma, and a +10 circumstance bonus on Disguise checks to appear to be an aquatic elf. &nl;[Prehistoric] The sahuagin grows in size, as enlarge person. It also gains a +2 enhancement bonus to its natural armor. &nl;[Shark-Blooded] The sahuagin's tail elongates and melds with its legs. Its mouth enlarges, increasing its bite damage by one size category (to 1d6 for a typical sahuagin). Its swim speed increases by 20 feet, but its land speed is reduced to 5 feet. The sahuagin can't be tripped. &nl;[Sightless] The sahuagin is blinded, but gains the benefits of the Blind Fight feat and blindsense with a range of 90 feet. &nl;[Spined] Spines grow on the sahuagin's scales. Any creature that successfully grapples with it, is grappled by it, or hits it with an unarmed strike or natural weapon takes 1d4 points of piercing damage. The sahuagin also gains the benefits of the Improved Grapple feat."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 14,
+    "record_key": "Gift of the Deep"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

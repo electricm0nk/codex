@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Ironskin",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "Your skin hardens and takes on the color and texture of rough iron. You gain a +4  enhancement bonus to your existing natural armor bonus (if you do not have a natural armor bonus, you are considered to have an effective natural armor bonus of +0). This enhancement bonus increases by 1 for every 4 caster levels above 3rd, to a maximum of +7 at 15th level. While you're under the effects of this spell, if an opponent confirms a critical hit or sneak attack against you with a physical weapon (not a spell or magical effect), you can dismiss this spell to negate the critical hit or sneak attack and treat it is as a normal hit. Dismissing the spell in this way is not an action, but you must be conscious and aware of the attack to do so."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 17,
+    "record_key": "Ironskin"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:prose_expr",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -51,6 +51,12 @@ pub mod inner_sea_combat;
 pub mod inner_sea_faiths;
 pub mod inner_sea_gods;
 pub mod inner_sea_intrigue;
+/// Inner Sea Races. SD-32 `decisions.md §20`, no_record-to-zero wave --
+/// this book's FIRST compiled rule set of any kind, first record family:
+/// base spell declarations transcribed from `isr_spells.lst`
+/// (`rules_tables::inner_sea_races::spell_list`). See
+/// `src/bin/ingest_spells.rs` for the ingest path.
+pub mod inner_sea_races;
 /// Inner Sea Magic. SD-32 Gate 0 book-onboarding precondition
 /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
 /// FIRST compiled rule set of any kind, first record family: base spell
@@ -68,6 +74,12 @@ pub mod inner_sea_temples;
 pub mod inner_sea_world_guide;
 pub mod monster_chassis;
 pub mod monster_codex;
+/// Mythic Adventures. SD-32 `decisions.md §20`, no_record-to-zero wave --
+/// this book's FIRST compiled rule set of any kind, first record family:
+/// base spell declarations transcribed from `ma_spells.lst`
+/// (`rules_tables::mythic_adventures::spell_list`). See
+/// `src/bin/ingest_spells.rs` for the ingest path.
+pub mod mythic_adventures;
 pub mod occult_adventures;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
