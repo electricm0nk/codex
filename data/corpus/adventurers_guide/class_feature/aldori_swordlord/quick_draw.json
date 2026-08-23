@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Aldori Swordlord ~ Quick Draw",
     "name": "Quick Draw",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Aldori Swordlord ~ Quick Draw"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "ClassFeatures.Aldori Swordlord Class Feature.SpecialQuality"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -34,7 +34,7 @@
       },
       {
         "key": "BONUS",
-        "value": "ABILITYPOOL|Aldori Swordlord Bonus Feat|1"
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -50,7 +50,7 @@
     "static:literal_magnitudes_only"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false
 }

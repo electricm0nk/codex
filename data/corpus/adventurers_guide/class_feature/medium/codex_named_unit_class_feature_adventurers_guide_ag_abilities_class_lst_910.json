@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_910)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_910)",
@@ -22,7 +22,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Medium Class Feature.StormDreamerClassFeatures.SpecialQuality.Supernatural"
       },
       {
         "key": "DESCISPI",
@@ -42,19 +42,19 @@
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "DomainLVL|0"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "DomainPowerTimes|0"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DomainLVL|MediumLVL"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DomainPowerTimes|3+WIS"
       }
     ]
   },

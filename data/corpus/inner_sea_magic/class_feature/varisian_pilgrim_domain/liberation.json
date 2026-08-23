@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Varisian Pilgrim Domain ~ Liberation",
     "name": "Liberation",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Varisian Pilgrim Domain ~ Liberation"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "VarisianPilgrimDomain"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -49,8 +49,8 @@
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false
 }

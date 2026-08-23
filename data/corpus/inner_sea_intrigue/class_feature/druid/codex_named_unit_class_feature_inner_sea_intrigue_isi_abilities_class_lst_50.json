@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_intrigue_isi_abilities_class_lst_50)",
     "name": "Codex-Named Unit (class_feature_inner_sea_intrigue_isi_abilities_class_lst_50)",
@@ -22,7 +22,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.SpellLike"
       },
       {
         "key": "DESCISPI",

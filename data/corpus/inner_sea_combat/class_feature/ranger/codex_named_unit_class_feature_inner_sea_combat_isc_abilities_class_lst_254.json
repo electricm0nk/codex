@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_254)",
     "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_254)",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
       },
       {
         "key": "VISIBLE",
@@ -34,35 +34,35 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Quick_Draw|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Point_Blank_Shot|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Rapid_Shot|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Weapon_Finesse|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Distance_Thrower|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Opening_Volley|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Close_Quarters_Thrower|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Shot_on_the_Run|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "SOURCEPAGE",

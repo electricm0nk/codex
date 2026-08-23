@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_263)",
     "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_263)",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
       },
       {
         "key": "VISIBLE",
@@ -34,35 +34,35 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Bludgeoner|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Sunder|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Power_Attack|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Shield_Focus|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Felling_Smash|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Sunder|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Shield_Focus|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Sundering_Strike|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "SOURCEPAGE",

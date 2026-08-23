@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Aldori Swordlord ~ Adaptive Tactics",
     "name": "Adaptive Tactics",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Aldori Swordlord ~ Adaptive Tactics"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -18,11 +18,11 @@
       },
       {
         "key": "TYPE",
-        "value": "ClassFeatures.Aldori Swordlord Class Feature.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "AldoriSwordlordAdaptiveTactics|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -38,11 +38,11 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|AldoriSwordlordAdaptiveTactics|1"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|AldoriSwordlordAdaptiveTactics|1|PREVARGTEQ:AlchemistLVL,8"
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -58,7 +58,7 @@
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false
 }

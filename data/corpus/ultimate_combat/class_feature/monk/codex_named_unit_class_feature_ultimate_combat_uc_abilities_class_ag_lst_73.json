@@ -1,16 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
-    "key": "Monk Bonus Feat ~ Aldori Style Conquest",
-    "name": "Aldori Style Conquest",
+    "key": "Codex-Named Unit (class_feature_ultimate_combat_uc_abilities_class_ag_lst_73)",
+    "name": "Codex-Named Unit (class_feature_ultimate_combat_uc_abilities_class_ag_lst_73)",
     "class": "Monk",
     "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Monk Bonus Feat ~ Aldori Style Conquest"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "MonkBonusFeat"
+        "value": "MasterOfManyStylesBonusFeat"
       },
       {
         "key": "VISIBLE",
@@ -26,15 +26,19 @@
       },
       {
         "key": "!PREABILITY",
-        "value": "1,CATEGORY=FEAT,Aldori Style Conquest"
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
       },
       {
         "key": "PREVARGTEQ",
-        "value": "MonkBonusFeat_AldoriStyleConquest,1"
+        "value": "MonkBonusFeatLVL,1"
       },
       {
         "key": "ABILITY",
-        "value": "FEAT|VIRTUAL|Aldori Style Conquest"
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -42,15 +46,19 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_ag.lst",
     "sha256": "a577a4ade3adf62d5c71ac3612e97140664b46e1781243111076f536f3f5c11b",
-    "line": 7,
-    "record_key": "Monk Bonus Feat ~ Aldori Style Conquest"
+    "line": 73,
+    "record_key": "Codex-Named Unit (class_feature_ultimate_combat_uc_abilities_class_ag_lst_73)"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
-  "codex_generated_name": false
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_combat:uc_abilities_class_ag.lst:73"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_advanced_players_guide_apg_abilities_class_lst_375)",
     "name": "Codex-Named Unit (class_feature_advanced_players_guide_apg_abilities_class_lst_375)",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "InquisitorDomain"
       },
       {
         "key": "PREMULT",
@@ -30,43 +30,43 @@
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "DomainDeathLVL|0"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "DomainDeathDC|0"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "DomainDeathTimes|0"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "DeathDomain|0"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Death Domain ~ Bleeding Touch"
       },
       {
         "key": "ABILITY",
-        "value": "[redacted PI]"
+        "value": "Special Ability|AUTOMATIC|Death Domain ~ Death's Embrace|PREVARGTEQ:DomainDeathLVL,8"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DomainDeathLVL|DomainLVL|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DomainDeathDC|10+(DomainDeathLVL/2)+CHA|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DomainDeathTimes|DomainPowerTimes|TYPE=Domain"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|DeathDomain|1"
       },
       {
         "key": "SOURCELONG",

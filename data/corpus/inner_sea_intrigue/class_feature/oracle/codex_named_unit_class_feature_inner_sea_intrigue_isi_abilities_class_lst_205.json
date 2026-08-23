@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_intrigue_isi_abilities_class_lst_205)",
     "name": "Codex-Named Unit (class_feature_inner_sea_intrigue_isi_abilities_class_lst_205)",
@@ -18,15 +18,15 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.OracleArchetype"
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Oracle=1"
       },
       {
         "key": "PREMULT",
@@ -62,59 +62,59 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_MysterySkills|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_MysterySpell6|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_MysterySpell10|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_MysterySpell12|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_MysterySpell16|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_MysterySpell18|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_Archetype_Revelation1|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_MysterySkills|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_MysterySpell6|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_MysterySpell10|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_MysterySpell12|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_MysterySpell16|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_MysterySpell18|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Oracle_CF_Revelation1|true"
       }
     ]
   },

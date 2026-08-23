@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_intrigue_isi_abilities_class_lst_242)",
     "name": "Codex-Named Unit (class_feature_inner_sea_intrigue_isi_abilities_class_lst_242)",
@@ -18,15 +18,15 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.RogueArchetype"
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Rogue=1"
       },
       {
         "key": "PREMULT",
@@ -70,43 +70,43 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_Archetype_Trapfinding|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_Archetype_TrapSense|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_Archetype_RogueTalent4|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_Archetype_RogueTalent8|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_Archetype_RogueTalent12|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_CF_Trapfinding|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_CF_TrapSense|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_CF_RogueTalent4|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_CF_RogueTalent8|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Rogue_CF_RogueTalent12|true"
       }
     ]
   },

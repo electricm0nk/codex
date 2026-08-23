@@ -117,6 +117,153 @@ pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>
     (License::Ogl, None, None, value.to_string())
 }
 
+// ---------------------------------------------------------------------------
+// `decisions.md §12b`/T9-round-4 receipt: Rust-side port of
+// `scripts/pi_scrub.py`'s `canonicalize`/`normalized_term_hit`/
+// `blacklist_term_hit_including_concatenated` -- mirrors that module's
+// semantics exactly (word-bounded, case-folded, bounded-OCR-normalized scan,
+// OR an alphanumeric-normalized substring match for a blacklisted term
+// concatenated PascalCase-style into another token's value with no
+// separator, bounded to needles of at least 6 normalized characters).
+// [`classify_field`] above is a DIFFERENT, older, deliberately-unbounded bare
+// substring scan (its own doc comment explains why); this port is additive,
+// used where a caller specifically needs the same guarantees the Python
+// review/ingest scripts give (word-boundary + OCR fold with the length-bound
+// concatenated fallback), not a replacement for `classify_field`'s callers.
+//
+// This is the SAME 61-term `PI_BLACKLIST_TERMS` above (deliberately one term
+// ahead of `pi_scrub.py`'s 60-term signed-off list -- see that module's own
+// comment on its copy of the list for why the two counts are allowed to
+// differ). Every OTHER behaviour (fold table, word-boundary rule,
+// concatenated-match bound) is a byte-identical port.
+
+const SOFT_HYPHEN: char = '\u{ad}';
+
+/// "Jarn" is the only blacklist term whose OCR-fold `rn`->`m` substitution
+/// collides with an ordinary English word ("jam") -- mirrors
+/// `pi_scrub.py::_RN_FOLD_EXEMPT_TERMS_CASEFOLD`/`_term_needs_rn_fold`.
+fn term_needs_rn_fold(term: &str) -> bool {
+    !term.eq_ignore_ascii_case("jarn")
+}
+
+/// Case-fold + bounded OCR-confusion fold (`l`/`1`/`!` -> `i`, `0` -> `o`,
+/// `rn` -> `m` unless `apply_rn_fold` is false). Mirrors
+/// `pi_scrub.py::canonicalize` exactly, including fold order (rn-fold before
+/// the character table, so `rn` is never itself re-split by the l/1/!/0
+/// substitutions -- neither table produces or consumes those bytes, so order
+/// is actually immaterial here, but kept identical to the Python source for
+/// auditability).
+fn canonicalize(s: &str, apply_rn_fold: bool) -> String {
+    let folded = s.to_lowercase().replace(SOFT_HYPHEN, "-");
+    let folded = if apply_rn_fold { folded.replace("rn", "m") } else { folded };
+    folded
+        .chars()
+        .map(|c| match c {
+            'l' | '1' | '!' => 'i',
+            '0' => 'o',
+            other => other,
+        })
+        .collect()
+}
+
+/// `true` when `needle` occurs in `haystack` with an ASCII-alphanumeric
+/// boundary (or string edge) on both sides -- mirrors the Python regex
+/// `(?<![a-z0-9])term(?![a-z0-9])` against an already-canonicalized (lowercase
+/// -only) haystack, so checking `is_ascii_alphanumeric()` on either boundary
+/// byte reproduces the same `[a-z0-9]` class Python excludes.
+fn word_bounded_contains(haystack: &str, needle: &str) -> bool {
+    if needle.is_empty() {
+        return false;
+    }
+    let hb = haystack.as_bytes();
+    let nb = needle.as_bytes();
+    if nb.len() > hb.len() {
+        return false;
+    }
+    for start in 0..=(hb.len() - nb.len()) {
+        if &hb[start..start + nb.len()] != nb {
+            continue;
+        }
+        let left_ok = start == 0 || !hb[start - 1].is_ascii_alphanumeric();
+        let right = start + nb.len();
+        let right_ok = right == hb.len() || !hb[right].is_ascii_alphanumeric();
+        if left_ok && right_ok {
+            return true;
+        }
+    }
+    false
+}
+
+/// Every blacklist term whose canonicalized form appears, word-bounded, in
+/// the canonicalized `free_text` -- mirrors `pi_scrub.py::normalized_term_hits`.
+pub fn normalized_term_hits(free_text: &str) -> Vec<&'static str> {
+    if free_text.trim().is_empty() {
+        return Vec::new();
+    }
+    let mut hits = Vec::new();
+    for term in PI_BLACKLIST_TERMS {
+        let needs_rn_fold = term_needs_rn_fold(term);
+        let canon_term = canonicalize(term, needs_rn_fold);
+        if canon_term.is_empty() {
+            continue;
+        }
+        let canon_text = canonicalize(free_text, needs_rn_fold);
+        if word_bounded_contains(&canon_text, &canon_term) {
+            hits.push(*term);
+        }
+    }
+    hits
+}
+
+/// First blacklist term whose canonicalized form appears, word-bounded, in
+/// `free_text` -- mirrors `pi_scrub.py::normalized_term_hit`.
+pub fn normalized_term_hit(free_text: &str) -> Option<&'static str> {
+    normalized_term_hits(free_text).into_iter().next()
+}
+
+/// The minimum normalized-character length a blacklist term must reach
+/// before the alphanumeric-normalized (no-separator) concatenated check
+/// applies to it -- mirrors `pi_scrub.py::_MIN_NORMALIZED_NEEDLE_LEN`. Below
+/// this bound, a short blacklist term (already covered at its ordinary,
+/// separated occurrences by the word-bounded scan above) risks
+/// over-redacting a value by coincidence.
+const MIN_NORMALIZED_NEEDLE_LEN: usize = 6;
+
+/// Lowercase, then strip every byte that is not ASCII alphanumeric -- mirrors
+/// `pi_scrub.py::_normalize` (`re.sub(r"[^a-z0-9]", "", s.lower())`).
+fn alnum_normalize(s: &str) -> String {
+    s.to_lowercase().chars().filter(|c| c.is_ascii_alphanumeric()).collect()
+}
+
+/// [`normalized_term_hit`] (word-bounded, OCR-normalized), OR -- if that
+/// finds nothing -- an alphanumeric-normalized (no-separator) substring
+/// match against [`PI_BLACKLIST_TERMS`], bounded to
+/// [`MIN_NORMALIZED_NEEDLE_LEN`] normalized characters. Mirrors
+/// `pi_scrub.py::blacklist_term_hit_including_concatenated` exactly: this is
+/// the check that catches a blacklisted term concatenated PascalCase-style
+/// into another token's value with no separator (`AldoriDefensiveParryLVL`,
+/// `CalistrianHunter`), which `normalized_term_hit`'s word-boundary
+/// requirement alone cannot see.
+pub fn blacklist_term_hit_including_concatenated(value: &str) -> Option<&'static str> {
+    if value.is_empty() {
+        return None;
+    }
+    if let Some(hit) = normalized_term_hit(value) {
+        return Some(hit);
+    }
+    let norm_value = alnum_normalize(value);
+    if norm_value.is_empty() {
+        return None;
+    }
+    for term in PI_BLACKLIST_TERMS {
+        let canon_term = alnum_normalize(term);
+        if canon_term.chars().count() >= MIN_NORMALIZED_NEEDLE_LEN && norm_value.contains(&canon_term) {
+            return Some(term);
+        }
+    }
+    None
+}
+
 /// [`classify_field`] over an `Option<&str>` field (a record whose free-text
 /// field may be absent, e.g. no `description` token at all): `None` is
 /// blanket OGL with nothing to redact, never scanned.
@@ -246,6 +393,68 @@ pub fn classify_optional_field_declared(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // --- `blacklist_term_hit_including_concatenated` (Python-port scan) ---
+
+    #[test]
+    fn concatenated_scan_finds_nothing_in_ordinary_text() {
+        assert_eq!(blacklist_term_hit_including_concatenated("Deals 1d6 points of fire damage."), None);
+    }
+
+    #[test]
+    fn concatenated_scan_catches_an_ordinary_separated_occurrence() {
+        // Falls through to `normalized_term_hit` (word-bounded) -- the same
+        // shape `classify_field` already catches, proving the two checks
+        // agree on the easy case.
+        assert_eq!(blacklist_term_hit_including_concatenated("As per Iomedae's blessing"), Some("Iomedae"));
+    }
+
+    #[test]
+    fn concatenated_scan_catches_a_pascalcase_concatenated_identifier() {
+        // `normalized_term_hit` alone cannot see this: "Aldori" is
+        // immediately followed by "D" with no boundary. This is the live
+        // shape found in `adventurers_guide/class_feature/aldori_defender/
+        // defensive_parry.json`'s own `DEFINE` token.
+        assert_eq!(blacklist_term_hit_including_concatenated("AldoriDefensiveParryLVL|0"), Some("Aldori"));
+        assert_eq!(blacklist_term_hit_including_concatenated("VAR|CalistrianHunterLVL|1"), Some("Calistria"));
+    }
+
+    #[test]
+    fn concatenated_scan_does_not_over_redact_a_short_term_by_coincidence() {
+        // "Nex" (3 normalized chars) is below `MIN_NORMALIZED_NEEDLE_LEN`
+        // (6), so the concatenated fallback never fires for it -- only the
+        // word-bounded scan can catch "Nex", and that scan already refuses
+        // to match inside "next" (no boundary).
+        assert_eq!(blacklist_term_hit_including_concatenated("the next round"), None);
+    }
+
+    #[test]
+    fn concatenated_scan_word_boundary_still_refuses_next_for_nex() {
+        assert_eq!(normalized_term_hit("the next round"), None);
+    }
+
+    #[test]
+    fn concatenated_scan_catches_the_ocr_lrori_variant() {
+        assert_eq!(blacklist_term_hit_including_concatenated("Sometimes lrori smiles"), Some("Irori"));
+    }
+
+    #[test]
+    fn concatenated_scan_jarn_still_catches_a_literal_plain_spelling() {
+        assert_eq!(blacklist_term_hit_including_concatenated("an NPC named Jarn appears"), Some("Jarn"));
+    }
+
+    #[test]
+    fn concatenated_scan_jarn_rn_fold_does_not_catch_an_ordinary_jam() {
+        // `decisions.md §26`'s own recorded false-positive class: "jam" is
+        // an ordinary word, and "Jarn" is exempted from the rn->m fold so
+        // this must NOT match.
+        assert_eq!(blacklist_term_hit_including_concatenated("out of a tight jam"), None);
+    }
+
+    #[test]
+    fn concatenated_scan_empty_value_is_never_a_hit() {
+        assert_eq!(blacklist_term_hit_including_concatenated(""), None);
+    }
 
     #[test]
     fn no_blacklist_term_is_plain_ogl() {

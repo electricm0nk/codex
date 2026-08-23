@@ -1,16 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
-    "key": "Magic Warrior ~ Magaambya Spell Access LVL 5",
-    "name": "Magaambya Spell Access LVL 5",
+    "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_895)",
+    "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_895)",
     "class": "Warrior",
     "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Magic Warrior ~ Magaambya Spell Access LVL 5"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "Magus Class Features.MagicWarriorClassFeatures.MagaambyaSpellAccess"
+        "value": "[redacted PI]"
       },
       {
         "key": "MULT",
@@ -26,7 +26,7 @@
       },
       {
         "key": "CHOOSE",
-        "value": "SPELLS|CLASSLIST=Druid[LEVELMIN=5;LEVELMAX=5]"
+        "value": "SPELLS|CLASSLIST=Druid[LEVELMIN=4;LEVELMAX=4]"
       }
     ]
   },
@@ -34,15 +34,19 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
     "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
-    "line": 896,
-    "record_key": "Magic Warrior ~ Magaambya Spell Access LVL 5"
+    "line": 895,
+    "record_key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_895)"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
-  "codex_generated_name": false
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_abilities_class.lst:895"
+  }
 }

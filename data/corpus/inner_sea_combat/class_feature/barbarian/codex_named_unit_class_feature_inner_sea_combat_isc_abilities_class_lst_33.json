@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_33)",
     "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_33)",
@@ -18,15 +18,15 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.BarbarianArchetype.BarbarianFastMovement.BarbarianUncannyDodge.BarbarianTrapSense.BarbarianImprovedUncannyDodge.BarbarianRagePower4.BarbarianRagePower8.BarbarianRagePower12.BarbarianRagePower16"
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Barbarian=1"
       },
       {
         "key": "PREMULT",
@@ -34,7 +34,7 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "The Shoanti tribes who live in the Cinderlands have turned the deadly emberstorms that plague the region into a rite of passage. A few who survive the experience begin to embrace the adrenaline and surge of joy that comes from dancing along the edge of a whirling firestorm. These thrill-seekers are known as burn riders, and their exploits are celebrated by all Shoanti. Bum riders learn early on that speed and lightning-quick reactions are essential to avoid becoming trapped by the fickle whims of a raging emberstorm. They have an uncanny understanding of fire and can read the currents in the smoke."
       },
       {
         "key": "ABILITY",

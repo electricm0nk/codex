@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_220)",
     "name": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_220)",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "SpecialQuality.TotemSpirit"
       },
       {
         "key": "DESC",
@@ -50,7 +50,7 @@
     "static:literal_magnitudes_only"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "name,raw_tokens",
+  "pi_field": "name",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

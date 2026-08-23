@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_106)",
     "name": "Codex-Named Unit (class_feature_book_of_the_damned_volume_2_botd2_abilities_classes_lst_106)",
@@ -26,11 +26,11 @@
       },
       {
         "key": "SPELLS",
-        "value": "[redacted PI]"
+        "value": "Demonic Obedience|TIMES=1|CASTERLEVEL=TL|Summon Monster VI,18+CHA"
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "1/day as a swift action, you can summon an advanced fiendish girallon, 1d3 advanced fiendish dire apes, or 1d4+1 advanced fiendish apes as if by casting summon monster VI."
       },
       {
         "key": "SOURCEPAGE",

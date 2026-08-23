@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_743)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_743)",
@@ -18,11 +18,11 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.CavalierArchetype"
       },
       {
         "key": "DESCISPI",
@@ -38,7 +38,7 @@
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Cavalier=1"
       },
       {
         "key": "PREMULT",
@@ -70,55 +70,55 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_HeavyArmorProficiency|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_Mount|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_Tactician|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_CavaliersCharge|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_BonusFeat6|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_GreaterTactician|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_Archetype_MasterTactician|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_CF_HeavyArmorProficiency|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_CF_Tactician|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_CF_CavaliersCharge|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_CF_BonusFeat6|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_CF_GreaterTactician|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Cavalier_CF_MasterTactician|true"
       },
       {
         "key": "COST",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_597)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_597)",
@@ -18,11 +18,11 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.ArcanistArchetype"
       },
       {
         "key": "DESCISPI",
@@ -42,7 +42,7 @@
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Arcanist=1"
       },
       {
         "key": "PREMULT",
@@ -62,35 +62,35 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_Archetype_ArcanistExploit1|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_Archetype_ArcanistExploit5|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_Archetype_ArcanistExploit9|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_Archetype_ArcanistExploit17|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_CF_ArcanistExploit1|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_CF_ArcanistExploit5|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_CF_ArcanistExploit9|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Arcanist_CF_ArcanistExploit17|true"
       },
       {
         "key": "COST",

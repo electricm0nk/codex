@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Razmiran Priest ~ False Piety",
     "name": "False Piety",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Razmiran Priest ~ False Piety"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -22,7 +22,7 @@
       },
       {
         "key": "DEFINE",
-        "value": "RazmiranUMDBonus|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -38,11 +38,11 @@
       },
       {
         "key": "BONUS",
-        "value": "SITUATION|Use Magic Device=Divine spell trigger/completion|RazmiranUMDBonus"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|RazmiranUMDBonus|SorcererLVL/2"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
@@ -62,7 +62,7 @@
     "derived:bonus"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false
 }

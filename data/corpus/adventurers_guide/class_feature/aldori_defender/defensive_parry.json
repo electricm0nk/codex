@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Aldori Defender ~ Defensive Parry",
     "name": "Defensive Parry",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Aldori Defender ~ Defensive Parry"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -18,15 +18,15 @@
       },
       {
         "key": "TYPE",
-        "value": "Fighter Class Feature.AldoriDefenderClassFeatures.SpecialQuality.Extraordinary"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "AldoriDefensiveParryLVL|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DEFINE",
-        "value": "AldoriDefenderDefensiveParry|0"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESCISPI",
@@ -42,11 +42,11 @@
       },
       {
         "key": "BONUS",
-        "value": "VAR|AldoriDefensiveParryLVL|FighterLVL"
+        "value": "[redacted PI]"
       },
       {
         "key": "BONUS",
-        "value": "VAR|AldoriDefenderDefensiveParry|min(4,(FighterLVL+1)/4)"
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -62,7 +62,7 @@
     "derived:bonus"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false
 }

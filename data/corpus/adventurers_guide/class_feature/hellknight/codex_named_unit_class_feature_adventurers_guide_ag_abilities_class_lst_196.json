@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_196)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_196)",
@@ -22,15 +22,15 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "ClassFeatures.Hellknight Class Feature.SpecialQuality.Extraordinary"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "HellknightArmorLVL|0"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "HellknightArmorBonus|0"
       },
       {
         "key": "DESCISPI",
@@ -50,7 +50,7 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)"
       }
     ]
   },

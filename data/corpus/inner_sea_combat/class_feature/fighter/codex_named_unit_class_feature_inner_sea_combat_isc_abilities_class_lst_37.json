@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_37)",
     "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_37)",
@@ -18,15 +18,15 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.FighterArchetype.FighterProficiencies.FighterBonusFeat1.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4"
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Fighter=1"
       },
       {
         "key": "PREMULT",
@@ -34,7 +34,7 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "The University of Lepidstadt has developed a reputation for churning out fearsome duelists. At the end of each academic year, the students all gather together and duel one another with light blades. Each student duels one opponent after another until he is marked on the cheek by an adversary's blade. These \"Lepidstadt scars\" are recognized throughout the Inner Sea region and beyond as marks of their prowess. The Lepidstadt Style is one of fluid motion and precise thrusts."
       },
       {
         "key": "ABILITY",

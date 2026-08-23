@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1188)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1188)",
@@ -22,7 +22,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
       },
       {
         "key": "SOURCEPAGE",
@@ -30,7 +30,7 @@
       },
       {
         "key": "DESC",
-        "value": "[redacted PI]"
+        "value": "The rogue has been trained in a minor occult technique. The rogue gains Psychic Sensitivity as a bonus feat."
       },
       {
         "key": "ABILITY",

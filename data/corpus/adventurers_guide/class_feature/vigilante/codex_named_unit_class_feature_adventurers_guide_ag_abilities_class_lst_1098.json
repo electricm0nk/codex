@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1098)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_1098)",
@@ -18,11 +18,11 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.VigilanteArchetype"
       },
       {
         "key": "DESCISPI",
@@ -38,7 +38,7 @@
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Vigilante=1"
       },
       {
         "key": "PREMULT",
@@ -66,31 +66,31 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_Archetype_DualIdentity|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_Archetype_SocialTalent1|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_Archetype_VigilanteTalent2|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_CF_VigilanteSpecialization|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_CF_SocialTalent1|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Vigilante_CF_VigilanteTalent2|true"
       },
       {
         "key": "COST",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_289)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_289)",
@@ -26,11 +26,11 @@
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "SigniferArmorCheckBonus1|0"
       },
       {
         "key": "DEFINE",
-        "value": "[redacted PI]"
+        "value": "SigniferArmorCheckBonus2|0"
       },
       {
         "key": "DESCISPI",
@@ -50,27 +50,27 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|SigniferArmorCheckBonus1|max(0,ACCHECK-1)"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|SigniferArmorCheckBonus2|max(0,ACCHECK-2)"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "MISC|ACCHECK|SigniferArmorCheckBonus1|PREARMORTYPE:1,TYPE.HellknightArmor"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "MISC|ACCHECK|SigniferArmorCheckBonus2|PREARMORTYPE:1,TYPE.HellknightArmor|PREVARGTEQ:HellknightSigniferLVL,8"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "MISC|SPELLFAILURE|-5|PREARMORTYPE:1,TYPE.HellknightArmor"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "MISC|SPELLFAILURE|-5|PREARMORTYPE:1,TYPE.HellknightArmor|PREVARGTEQ:HellknightSigniferLVL,8"
       }
     ]
   },

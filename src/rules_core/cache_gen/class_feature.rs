@@ -1072,6 +1072,34 @@ fn redact_desc_token_if_pi(tokens: &mut [RawToken], license: crate::rules_core::
     }
 }
 
+/// SD-32 card 11, T9-round-4-followup: a blacklisted term concatenated
+/// PascalCase-style into a NON-`DESC` token's value (`AldoriDefensiveParryLVL`,
+/// `CalistrianHunter ~ ...`) ships un-redacted whenever the record's own NAME
+/// and DESCRIPTION are both clean -- `redact_desc_token_if_pi` above only
+/// ever screens the `DESC` token, and [`scrub_name_pi_tokens`] below only
+/// ever runs on the `name_is_pi` branch. This scrubs EVERY raw token value
+/// against [`pi_screening::blacklist_term_hit_including_concatenated`]
+/// (the Rust port of `scripts/pi_scrub.py`'s function of the same name),
+/// unconditionally -- the generic ingest path's equivalent of
+/// `scrub_name_pi_tokens`'s check 1+4, run on every record rather than only
+/// name-PI ones. Skips a value that is already the redaction marker (a
+/// `redact_desc_token_if_pi` DESC token, most commonly) so it is not
+/// re-scanned against itself. Never mutates a token this cycle did not
+/// redact; returns whether anything changed.
+fn redact_concatenated_blacklist_tokens(tokens: &mut [RawToken]) -> bool {
+    let mut any_redacted = false;
+    for t in tokens.iter_mut() {
+        if t.value.is_empty() || t.value == crate::rules_core::shape_b_v1::REDACTED_PI_MARKER {
+            continue;
+        }
+        if pi_screening::blacklist_term_hit_including_concatenated(&t.value).is_some() {
+            t.value = crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string();
+            any_redacted = true;
+        }
+    }
+    any_redacted
+}
+
 /// `decisions.md §24b`-2: "The PI original appears nowhere that ships."
 /// A record whose NAME is PI can carry that same name again inside another
 /// token's VALUE (a `KEY:` token restating the row's own key verbatim is
@@ -1280,6 +1308,26 @@ pub fn generate(
             // raw_tokens even while `data.description` carried the redaction marker.
             // Mirror `enrich_equipment_raw_tokens.rs::screen_field_value`'s precedent.
             redact_desc_token_if_pi(&mut tokens, license);
+            // SD-32 card 11, T9-round-4-followup: run the concatenated-term
+            // scrub over EVERY raw token before the name-PI branch below, so
+            // a clean-name/clean-description record that still carries a
+            // blacklisted term concatenated into some OTHER token's value
+            // (`DEFINE`/`BONUS`/`TYPE`/`KEY`, ...) is caught regardless of
+            // which branch this unit takes.
+            let concat_redacted = redact_concatenated_blacklist_tokens(&mut tokens);
+            if concat_redacted && license != crate::rules_core::shape_b_v1::License::PiRedacted {
+                license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+            }
+            if concat_redacted {
+                let already_named = pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "raw_tokens"));
+                if !already_named {
+                    pi_field = Some(match pi_field.take() {
+                        Some(existing) => format!("{existing},raw_tokens"),
+                        None => "raw_tokens".to_string(),
+                    });
+                }
+            }
             let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
                 &mut lines,
                 &unit.source_file,
@@ -1380,11 +1428,18 @@ pub fn generate(
                 // list-present in `pi_field` even when "name" is also
                 // present.
                 let mut redacted_fields: Vec<&str> = Vec::new();
-                if pi_field.as_deref() == Some("description") {
+                // `.split(',')` rather than an exact `== Some("description")`
+                // equality check: the concatenated-token scrub above can
+                // already have set `pi_field` to `"description,raw_tokens"`
+                // by this point (a record can be desc-PI AND carry a
+                // concatenated blacklist hit in some OTHER token at once),
+                // and an exact-equality check would silently drop
+                // "description" off this branch's rebuilt list.
+                if pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "description")) {
                     redacted_fields.push("description");
                 }
                 redacted_fields.push("name");
-                if extra_redacted {
+                if extra_redacted || concat_redacted {
                     redacted_fields.push("raw_tokens");
                 }
                 license = crate::rules_core::shape_b_v1::License::PiRedacted;
@@ -1853,6 +1908,63 @@ mod tests {
             vec![RawToken { key: "DESC".to_string(), value: "Ordinary open-content prose.".to_string() }];
         redact_desc_token_if_pi(&mut tokens, crate::rules_core::shape_b_v1::License::Ogl);
         assert_eq!(tokens[0].value, "Ordinary open-content prose.");
+    }
+
+    // ------------------------------------------------------------------
+    // `redact_concatenated_blacklist_tokens` -- SD-32 card 11,
+    // T9-round-4-followup's own live-found gap: a clean-name/clean-
+    // description record whose SOME OTHER raw token concatenates a
+    // blacklisted term into an identifier with no separator
+    // (`AldoriDefensiveParryLVL`, `CalistrianHunter ~ ...`).
+    // ------------------------------------------------------------------
+
+    /// Live shape, `adventurers_guide/class_feature/aldori_defender/
+    /// defensive_parry.json`'s own `DEFINE`/`BONUS` tokens, reproduced
+    /// exactly. Mutating `redact_concatenated_blacklist_tokens` to a no-op
+    /// (or dropping its call site in `generate`) must turn this red -- the
+    /// mutation-proof this cycle's fix is real.
+    #[test]
+    fn redact_concatenated_blacklist_tokens_redacts_a_pascalcase_concatenated_hit() {
+        let mut tokens = vec![
+            RawToken { key: "KEY".to_string(), value: "Aldori Defender ~ Defensive Parry".to_string() },
+            RawToken { key: "DEFINE".to_string(), value: "AldoriDefensiveParryLVL|0".to_string() },
+            RawToken {
+                key: "BONUS".to_string(),
+                value: "VAR|AldoriDefensiveParryLVL|FighterLVL".to_string(),
+            },
+            RawToken { key: "CATEGORY".to_string(), value: "Special Ability".to_string() },
+        ];
+        let any_redacted = redact_concatenated_blacklist_tokens(&mut tokens);
+        assert!(any_redacted);
+        assert_eq!(tokens[0].value, crate::rules_core::shape_b_v1::REDACTED_PI_MARKER, "KEY carries a word-bounded hit too");
+        assert_eq!(tokens[1].value, crate::rules_core::shape_b_v1::REDACTED_PI_MARKER);
+        assert_eq!(tokens[2].value, crate::rules_core::shape_b_v1::REDACTED_PI_MARKER);
+        // The unrelated CATEGORY token is untouched.
+        assert_eq!(tokens[3].value, "Special Ability");
+    }
+
+    #[test]
+    fn redact_concatenated_blacklist_tokens_is_a_no_op_on_clean_tokens() {
+        let mut tokens = vec![
+            RawToken { key: "KEY".to_string(), value: "Fighter ~ Bravery".to_string() },
+            RawToken { key: "DEFINE".to_string(), value: "FighterBraveryLVL|0".to_string() },
+        ];
+        let any_redacted = redact_concatenated_blacklist_tokens(&mut tokens);
+        assert!(!any_redacted);
+        assert_eq!(tokens[0].value, "Fighter ~ Bravery");
+        assert_eq!(tokens[1].value, "FighterBraveryLVL|0");
+    }
+
+    #[test]
+    fn redact_concatenated_blacklist_tokens_skips_a_value_already_redacted() {
+        let mut tokens = vec![RawToken {
+            key: "DESC".to_string(),
+            value: crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string(),
+        }];
+        // The marker string itself must never trip a second (spurious) hit.
+        let any_redacted = redact_concatenated_blacklist_tokens(&mut tokens);
+        assert!(!any_redacted);
+        assert_eq!(tokens[0].value, crate::rules_core::shape_b_v1::REDACTED_PI_MARKER);
     }
 
     // ------------------------------------------------------------------

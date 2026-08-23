@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Magaambyan Arcanist ~ Virtuous Spells",
     "name": "Virtuous Spells",
@@ -10,7 +10,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Magaambyan Arcanist ~ Virtuous Spells"
+        "value": "[redacted PI]"
       },
       {
         "key": "CATEGORY",
@@ -50,7 +50,7 @@
     "derived:bonus"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false
 }

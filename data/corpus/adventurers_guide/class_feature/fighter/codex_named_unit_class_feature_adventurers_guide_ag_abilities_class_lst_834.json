@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_834)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_834)",
@@ -18,11 +18,11 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.FighterArchetype"
       },
       {
         "key": "DESCISPI",
@@ -38,7 +38,7 @@
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Fighter=1"
       },
       {
         "key": "PREMULT",
@@ -62,35 +62,35 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_Archetype_ArmorTraining|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_Archetype_BonusFeat6|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_Archetype_BonusFeat8|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_Archetype_BonusFeat10|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_CF_ArmorTraining|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_CF_BonusFeat6|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_CF_BonusFeat8|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Fighter_CF_BonusFeat10|true"
       },
       {
         "key": "COST",

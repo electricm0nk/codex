@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_252)",
     "name": "Codex-Named Unit (class_feature_inner_sea_combat_isc_abilities_class_lst_252)",
@@ -18,7 +18,7 @@
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "RangerClassFeatures.RangerCombatStyle.ClassFeatures"
       },
       {
         "key": "VISIBLE",
@@ -34,35 +34,35 @@
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Combat_Reflexes|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Exotic_Weapon_Proficiency_Whip|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Weapon_Finesse|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Whip_Mastery|1"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Trip|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Improved_Whip_Mastery|1|PREVARGTEQ:CombatStyleLVL,6"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Trip|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "BONUS",
-        "value": "[redacted PI]"
+        "value": "VAR|Ranger_Combat_Style_Feat_Greater_Whip_Mastery|1|PREVARGTEQ:CombatStyleLVL,10"
       },
       {
         "key": "SOURCEPAGE",

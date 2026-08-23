@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_968)",
     "name": "Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_968)",
@@ -18,11 +18,11 @@
       },
       {
         "key": "CATEGORY",
-        "value": "[redacted PI]"
+        "value": "Archetype"
       },
       {
         "key": "TYPE",
-        "value": "[redacted PI]"
+        "value": "Archetype.PaladinArchetype"
       },
       {
         "key": "DESCISPI",
@@ -42,7 +42,7 @@
       },
       {
         "key": "PRECLASS",
-        "value": "[redacted PI]"
+        "value": "1,Paladin=1"
       },
       {
         "key": "PREMULT",
@@ -70,39 +70,39 @@
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_Archetype_ClassSkills|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_Archetype_DivineGrace|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_Archetype_DivineBond|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_Archetype_AuraOfResolve|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_Archetype_AuraOfJustice|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_CF_ClassSkills|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_CF_DivineBond|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_CF_AuraOfResolve|true"
       },
       {
         "key": "FACT",
-        "value": "[redacted PI]"
+        "value": "Paladin_CF_AuraOfJustice|true"
       },
       {
         "key": "COST",

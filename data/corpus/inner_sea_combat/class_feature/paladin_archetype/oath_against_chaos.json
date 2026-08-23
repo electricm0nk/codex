@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:55Z",
+  "ingested_at": "2026-08-23T17:22:22Z",
   "data": {
     "key": "Paladin Archetype ~ Oath against Chaos",
     "name": "Oath against Chaos",
@@ -30,7 +30,7 @@
       },
       {
         "key": "PRETEXT",
-        "value": "Deities: Abadar, Erastil, Iomedae, Torag."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
@@ -82,7 +82,7 @@
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false
 }
