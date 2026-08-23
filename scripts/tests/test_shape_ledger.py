@@ -189,6 +189,49 @@ class BuildCorpusIndexTest(unittest.TestCase):
             self.assertIn(key, index)
             self.assertEqual(len(index[key]), 1)
 
+    def test_bestiary_alias_does_not_hide_the_correctly_spelled_directory(self):
+        """`BOOK_CORPUS_DIR_ALIASES` routes book `"bestiary"` to the legacy
+        `beastiary` directory (see the test above). But not every `bestiary`
+        kind lives under that legacy spelling -- `spell` (and `equipment`)
+        records this bundle ingested land under the CORRECTLY-spelled
+        `data/corpus/bestiary/` directory, which the alias-only walk never
+        visits. Before this fix, 109 real `bestiary` `spell` records (already
+        on disk at `data/corpus/bestiary/spell/*.json`, e.g.
+        `blur_self_only.json`, ce_spells.lst:62) were invisible to the join
+        and reported `no_record` even though their corpus record exists
+        (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+        --output /tmp/l.json` then filter `join_status == "no_record" and
+        book == "bestiary" and kind == "spell"`). The index must contain
+        records from BOTH the aliased legacy directory AND the book's own
+        correctly-spelled directory."""
+        with tempfile.TemporaryDirectory() as tmp:
+            legacy_dir = os.path.join(tmp, "beastiary", "monster_ability")
+            os.makedirs(legacy_dir)
+            with open(os.path.join(legacy_dir, "unit.json"), "w") as fh:
+                json.dump(
+                    {
+                        "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                        "source": {"path": "ce_abilities_race.lst", "line": 1280},
+                    },
+                    fh,
+                )
+            real_dir = os.path.join(tmp, "bestiary", "spell")
+            os.makedirs(real_dir)
+            with open(os.path.join(real_dir, "unit.json"), "w") as fh:
+                json.dump(
+                    {
+                        "data": {"raw_tokens": []},
+                        "source": {"path": "ce_spells.lst", "line": 62},
+                    },
+                    fh,
+                )
+
+            index = SL.build_corpus_index(tmp, books={"bestiary"})
+            legacy_key = ("bestiary", "ce_abilities_race.lst", 1280)
+            real_key = ("bestiary", "ce_spells.lst", 62)
+            self.assertIn(legacy_key, index)
+            self.assertIn(real_key, index)
+
 
 class ClassifyUnitTest(unittest.TestCase):
     def test_no_join_match_is_f0_no_record(self):

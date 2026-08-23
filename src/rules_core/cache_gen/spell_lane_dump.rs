@@ -62,7 +62,7 @@ use crate::rules_core::pi_screening::{
 };
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 use crate::rules_core::rules_tables::{
-    adventurers_guide, bestiary, bestiary_4, book_of_the_damned_volume_1,
+    adventurers_guide, bestiary, bestiary_4, bestiary_6, book_of_the_damned_volume_1,
     book_of_the_damned_volume_2, horror_adventures, inner_sea_faiths, inner_sea_gods,
     inner_sea_intrigue, inner_sea_magic, inner_sea_races, inner_sea_temples, inner_sea_world_guide,
     monster_codex, mythic_adventures, occult_adventures, ultimate_combat, ultimate_equipment,
@@ -453,6 +453,28 @@ fn book_specs() -> Vec<BookSpec> {
             dir: "pathfinder/paizo/roleplaying_game/mythic_adventures",
             spell_file: "ma_spells.lst",
             entries: mythic_adventures::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        // SD-32 `decisions.md §20`, spell no_record closure: `bestiary_6`'s
+        // `spell_list::SPELL_LIST` (SD-31 wave 24, hand-authored, both of
+        // the book's two base declarations already compiled) had no
+        // `book_specs()` entry -- the same "compiled table, no corpus dump"
+        // gap this module closes for every book above -- so its two units
+        // had no `data/corpus/bestiary_6/spell/*.json` record for
+        // `shape_ledger.py`'s join to find, reporting `no_record` despite
+        // real, already-transcribed content.
+        BookSpec {
+            book_id: "bestiary_6",
+            dir: "pathfinder/paizo/roleplaying_game/bestiary_6",
+            spell_file: "b6_spells.lst",
+            entries: bestiary_6::spell_list::SPELL_LIST
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,

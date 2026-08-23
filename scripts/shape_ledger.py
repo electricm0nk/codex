@@ -329,10 +329,21 @@ def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
     """
     index: dict[tuple[str, str, int], list[dict]] = {}
     if books is not None:
-        search_roots = [
-            (b, os.path.join(corpus_root, BOOK_CORPUS_DIR_ALIASES.get(b, b)))
-            for b in sorted(books)
-        ]
+        search_roots = []
+        for b in sorted(books):
+            aliased = BOOK_CORPUS_DIR_ALIASES.get(b)
+            if aliased and aliased != b:
+                # An aliased book does not necessarily keep EVERY kind under
+                # the legacy directory -- e.g. `bestiary`'s `monster_ability`
+                # records live under the legacy `beastiary/` spelling, but
+                # its `spell`/`equipment` records live under the correctly
+                # spelled `bestiary/`. Walk both and merge; a real key can
+                # only be minted once (one (book, source_file, source_line)
+                # per corpus record) so there is no collision to resolve.
+                search_roots.append((b, os.path.join(corpus_root, aliased)))
+                search_roots.append((b, os.path.join(corpus_root, b)))
+            else:
+                search_roots.append((b, os.path.join(corpus_root, b)))
     else:
         search_roots = [(None, corpus_root)]
     for book_override, root in search_roots:

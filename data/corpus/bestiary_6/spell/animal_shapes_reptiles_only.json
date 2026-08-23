@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:35:27Z",
+  "data": {
+    "key": "Animal Shapes (Reptiles Only)",
+    "school": "Transmutation",
+    "level": 8,
+    "description": "You change the form of up to (CASTERLEVEL) willing reptiles into an animal of your choice."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_spells.lst",
+    "sha256": "0fa632827ccf17f999c6742231a58a20185cfe0d1e831d23cb5ae193798ba20d",
+    "line": 4,
+    "record_key": "Animal Shapes (Reptiles Only)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
