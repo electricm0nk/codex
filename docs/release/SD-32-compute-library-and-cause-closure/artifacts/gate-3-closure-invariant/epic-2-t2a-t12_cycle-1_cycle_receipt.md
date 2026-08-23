@@ -2,9 +2,8 @@
 
 - **Card ID:** `epic-2-cause-closure` (shared row, six concurrent lanes — this receipt covers ONLY
   the T2a+T12 combined lane; see `progress.md`'s other Cycle-1-lane receipts for the sibling shapes)
-- **Commit SHA:** `b22d2281bc68e71a14db2d6e05909b1104bca756` (pre-rebase-onto-tranche/12 local
-  commit; the SHA that lands on `tranche/12` may differ if a later rebase during push retry
-  reapplies this commit — see `progress.md`'s own entry for the final landed SHA if they differ)
+- **Commit SHA:** `985e24c1e` (landed on `tranche/12`; the code+data fix commit. The receipt/
+  kanban/progress bookkeeping commit landed as `a255eeba7`.)
 - **Files touched:**
   - `src/rules_core/cache_gen/class_feature.rs` (the cause site: `generate()`'s `class`-derivation
     chain, extended with two new resolution tiers before the raw key-prefix fallback; +9 new tests)

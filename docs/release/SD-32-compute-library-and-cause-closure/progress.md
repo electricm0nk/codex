@@ -1217,8 +1217,7 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 
 - **Card ID:** `epic-2-cause-closure` (T2a+T12 combined lane, per card 11's own cycle-1 receipt:
   "T2a and T12 need one combined cycle, not two independent half-measures").
-- **Commit SHA:** `b22d2281bc68e71a14db2d6e05909b1104bca756` (pre-rebase; landed SHA on `tranche/12`
-  after push retry may differ — see the git log for the actual merged SHA if so).
+- **Commit SHA:** `985e24c1e` (landed on `tranche/12`; the bookkeeping commit landed as `a255eeba7`).
 - **Files touched:** `src/rules_core/cache_gen/class_feature.rs` (the cause site — new
   pool-catalog/type-facet/corpus-class resolution tiers, +9 tests),
   `src/bin/gen_cache_class_feature.rs` (threads the new argument),
