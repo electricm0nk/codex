@@ -432,3 +432,85 @@ zero units but produces a real, re-derivable book/file census is a legitimate cl
    reopened for, reproduced inside card 11.
 4. **Card 15's own acceptance bar is unchanged** (`§12b`): the single committed reconciliation
    command, and every unit in the reconciled total carrying a family.
+
+## Decision 14 — Gates 1 and 3 are REOPENED: the closure invariant cannot fail, and 41.8% of the "covered" population has no corpus record (2026-08-22)
+
+**Status:** Finding of record, verified twice — by card 15's Opus adversarial verifier and independently
+re-run by the orchestrating session against the **repo-local pinned oracle**
+(`7f818006e371188e5717fd18d74d18a420747fc6`, identical SHA to the path the verifier used, so its
+findings are not an artefact of corpus choice). **Gate 1 and Gate 3 no longer count as met.**
+
+### 14a — Gate 3's standing gate cannot go red for a real object of any kind
+
+`scripts/shape_coverage_standing_gate.py` was accepted as Gate 3 on a red-proof that **fabricates a
+row with `family: None`** by `mock.patch`-ing `SL.build_ledger`. That path cannot occur in reality:
+`shape_ledger.classify_unit()` **always** returns a family, falling through to F0 or F8 rather than
+ever returning `None`. `scripts/tests/test_shape_coverage_standing_gate.py` states this in its own
+docstring. So `unclassified_count` can never organically go non-zero, and the gate can never fail.
+
+Reproduced by the orchestrator — 80 fabricated objects across the eight kinds card 15 has pending,
+every one pointing at a nonexistent corpus file, zero shape evidence:
+
+```bash
+export PCGEN_CORPUS_ROOT="$(git rev-parse --show-toplevel)/docs/release/SD-32-compute-library-and-cause-closure/artifacts/corpus/operator-supplied/pcgen/data"
+python3 -c "
+import sys; sys.path.insert(0,'scripts')
+import shape_coverage_standing_gate as G
+u=[{'id':f'b:{k}:{i}','kind':k,'book':'b','status':'not-started','wiring_class':'static','source_file':'totally_fake_file.lst','source_line':i} for k in ('ability','skill','template','deity','power','domain','language','kit') for i in range(1,11)]
+print(G.run_gate({'units':u}, corpus_root='/nonexistent'))"
+```
+→ `(0, {'population': 80, 'unclassified_count': 0, 'piles_reconcile': True, 'families': {'F0': 80}})`
+— **exit 0, PASS.**
+
+This is `decisions.md §1a` verbatim: *a gate that cannot fail is worse than no gate*, because it
+reports safety it does not provide. It also invalidates card 15's stated remaining path — *"once
+units land correctly, family classification and Gate 3 coverage follow for free"*. Landing the
+9,008 pending units produces 9,008 more F0 rows and an unchanged `PASS`.
+
+**Required:** Gate 3 must carry an invariant that goes red on a **real** object with no shape
+evidence, proven by mutating real data — never by patching the ledger builder. See 14b: the
+`no_record` join status is the natural candidate, because a unit whose corpus record cannot be
+found is precisely an object no shape covers.
+
+### 14b — 41.8% of the ledger's "100% covered" population has no corpus record at all
+
+`unclassified_count = 0` over 24,914 units has been quoted as Gate 1's closure throughout this
+bundle. The join behind it:
+
+```bash
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/l.json
+python3 -c "
+import json,collections
+r=json.load(open('/tmp/l.json'))['rows']
+print(collections.Counter(x['join_status'] for x in r))"
+```
+→ `{'no_record': 10419, 'matched': 4801, 'no_formula_tokens': 9694}`
+
+**Only 4,801 of 24,914 units (19.3%) rest on a matched corpus record.** F0 (20,113 units, 81% of the
+population) conflates two different things its own proof-width text distinguishes — `no_record`
+("the join found nothing") and `no_formula_tokens` ("found a record, it carries no DEFINE/BONUS").
+The first is not evidence of no formula content; it is absence of evidence.
+
+The disclosure exists in F0's proof-width prose but appears in **no** gate output, in **no**
+AT-32-G* criterion, and not in card 14's canonical family table headline — and card 14 blessed this
+vocabulary as canonical without flagging it. Under `decisions.md §12c` (no bare totals), every
+statement of Gate 1 coverage must from now on carry its join-status split.
+
+### 14c — Consequences
+
+1. **Gates 1 and 3 are reopened.** Neither may be quoted as met until 14a's invariant exists and
+   14b's split is surfaced in the gate output and the criteria. The Definition of Done
+   (`decisions.md §10`) is unchanged; the gates simply are not met yet.
+2. **This is a blocker, not a deferral** (`docs/governance/blocker-closure-doctrine.md`). It was in
+   the Definition of Done at launch. It gets cleared.
+3. **Do not "fix" this by deleting or renaming F0.** The honest split is the deliverable: state how
+   many units have a matched record, how many have a record with no formula tokens, and how many
+   have no record — then make the third category behave like the gap it is.
+4. **Card 15's 2,614-row `CATEGORY:Internal` disposition is unresolved, not settled.** Card 15's
+   class_feature lane disposed all 2,614 as (B) "not an object"; the sibling `ability_category`
+   lane's own per-row classifier found **81.6% (685/839)** of the same marker is (A) "is an object".
+   The verifier found 910 of the 2,614 resolve to no already-counted unit, and 2,420 (92.6%) carry
+   independent mechanical content (`SPELLKNOWN:` 1,185, `BONUS:` 675, `ABILITY:` 512, `DEFINE:` 151,
+   `TEMPBONUS:` 70, `AUTO:` 38). Two lanes reached opposite conclusions on the same rows and neither
+   cross-checked. `remaining_undisposed: 0` is arithmetic, not substance. Settle it by evidence
+   before any of it is enumerated or excluded.
