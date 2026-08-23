@@ -5383,4 +5383,5 @@ cycle's patch via the same idempotence check above. Logged (`scripts/retro.py no
 - **What remains:** a corpus-cache generator for feat-kind option-pool boons (closing the 2
   `no_record` units this cycle surfaced); the 55-unit `race_trait` drift discovery; the ~525
   remaining unverified category labels (`decisions.md §23c`'s table governs their disposition).
-- Commit: (recorded after push).
+- Commit: `42f77f8ac` (the fix), `0247407bc` (rebase-discovered `"AG"` equipment-book-code
+  addendum) — pushed clean after two rebases (`60721c68a..0247407bc`).

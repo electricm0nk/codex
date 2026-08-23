@@ -3,7 +3,8 @@
 - **Card ID:** `epic-2-cause-closure` (shared row — this receipt covers ONLY the `Demonic Obedience`
   re-type lane named in `decisions.md §23b`; card 11 stays `in-progress`, not marked `complete`, per
   the dispatch brief's instruction — sibling lanes close the row's other shapes)
-- **Commit SHA:** (this cycle's commit — see `git log -1` on `tranche/12` immediately after push)
+- **Commit SHA:** `42f77f8ac` (the fix), `0247407bc` (rebase-discovered `"AG"` equipment-book-code
+  addendum) — both pushed clean to `tranche/12` after two rebases.
 - **Files touched:**
   - `src/bin/v06_work_inventory.rs` — the cause site: `refine_kind`'s new `Kind::ClassFeature` arm
     (deity-obedience-only-prerequisite rows whose group names no corpus-wide PC class reclassify to
