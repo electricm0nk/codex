@@ -943,6 +943,80 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   the named write-scope ruling lands. Card 11's remaining lanes (T2a+T12, T2b, T9, T4, and a
   consolidation cycle once every lane reports) are other lanes' scope, not this one's.
 
+### Cycle epic-2-t4/1 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T4 — CLOSED (L8 population)
+
+- **Card ID:** `epic-2-cause-closure` (T4 lane; do not set the card row `complete` from this lane
+  alone — six lanes share this row per `decisions.md §10`)
+- **Commit SHA:** `4911a9b33` (implementation), `c8a5fa3a1` (receipt SHA fill-in)
+- **Files touched:** `apps/desktop/src/characterHub/classFeaturesModel.ts` (new export
+  `unmatchedClassFeatureDescriptions`), `apps/desktop/src/characterHub/classFeaturesModel.test.ts`
+  (4 new tests), `apps/desktop/src/characterHub/CharacterSheet.tsx` (new component
+  `ClassFeatureDescriptionReferenceSection`, wired in), `apps/desktop/package-lock.json`
+  (incidental version-field sync), `docs/retro/events/epic-2-t4.jsonl` (new), `kanban.md` (card 11
+  T4 lane note), this file.
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by class,
+  T4 lane ("built-but-unreachable render surface").
+- **Status:** complete for this lane's own scope (T4's L8 population, 6,975 units, re-derived).
+  Card 11 overall stays `in-progress` — see `kanban.md`.
+- **Notes:** **Re-derived the population before scoping the fix, per the anti-gaming bar.** T4's own
+  `MEASURE-TWICE.md` row names two disjoint populations: L8 ("up to 2,763", `class_feature_
+  descriptions.rs`'s served catalog — the figure `epic-breakdown.md`'s T4 row and card 11's
+  cycle-1 receipt both carry) and L9 (471, `class_feature_feat_bridge.rs`, already separately
+  measured at 0-of-471 truly reachable). This lane's scope is L8.
+
+  Re-derived by temporary `eprintln!` instrumentation inside the module's own existing test
+  (reverted immediately after measuring, `git diff --stat` empty at HEAD for that file):
+  `SD32_T4_REDERIVE_COUNT=6975`, not 2,763 — a real, material correction (`scripts/retro.py
+  correction`, `docs/retro/events/epic-2-t4.jsonl`). Cause: the catalog's reader
+  (`load_class_feature_descriptions`) walks `data/corpus/*/class_feature/**/*.json` with no
+  `RuleSetId` gate; card 4's own Epic-4/Gate-0 book-onboarding landings this bundle (four books'
+  `RuleSetId`s) silently widened it, unnoticed until this cycle re-measured.
+
+  **Root cause, traced not guessed:** `buildClassFeatureSurface` (`classFeaturesModel.ts`) only
+  ever creates a row by iterating engine `ExplanationDto`s; a corpus description attaches ONLY as
+  enrichment on a row an explanation already created (confirmed unchanged by the module's own
+  pre-existing regression test, left passing). A description with no matching explanation — the
+  exact shape of a `class_feature` record whose engine derivation the interpreter cannot yet
+  produce — reached no code path a player's screen renders, for any of the 6,975.
+
+  **Fix, closed by class:** new `unmatchedClassFeatureDescriptions(explanations, heldClasses,
+  descriptions)` — filters to held classes, excludes only descriptions matching a **grounded**
+  (non-`.unsupported`) explanation via the same `matchesCorpusFeature` join the existing enrichment
+  path already uses (an `.unsupported`-only match is deliberately NOT excluded — that record is
+  still unreachable today too). New `ClassFeatureDescriptionReferenceSection` (`CharacterSheet.tsx`)
+  renders it, modelled on `ClassFeaturePoolReferenceSection`'s own browsable-reference shape but
+  data-driven off `heldClasses` — no per-class hardcoding, so it covers every class corpus-wide,
+  not a sample. Wired into `ActionsTab`'s render and its empty-state check.
+
+  **L9 (471 units) is explicitly NOT closed by this fix** — its `classSlug` is a synthetic
+  pool-group name (`golden_legionnaire`, etc.), not a real class token, so the held-class gate
+  correctly never matches it (consistent with the wave-29 finding that only 1 of 471 group slugs
+  is holdable). It needs a feat-held, not class-held, reachability gate — a different mechanism,
+  named as residual scope, not attempted here.
+
+  **RED→GREEN:** 4 new tests; mutation proof (`return []` in the new function's body → real
+  assertion failure for the intended reason → revert → clean). Full frontend suite
+  `node apps/desktop/scripts/run-tests.mjs`: **97/100 unchanged** (3 pre-existing, unrelated
+  `Cargo.toml`-version failures, confirmed by direct read). `tsc --noEmit`: clean.
+
+  **Fixture discipline (`decisions.md §3`) — not applicable:** no new interpreted value is
+  computed; this makes an already-verified, already-PI-screened, already-leak-checked corpus
+  **text** field reachable, the same posture `race_trait_picker.rs`/`monster_catalog::
+  serve_ability_description` already hold for their own text (not value) render paths.
+
+  **Ruling §18 — checked, not gated on:** not among SD-32's carried-forward open rulings
+  (`decisions.md §7`) and not cited by `AT-32-E2-001`; this lane changes nothing about which
+  records `class_feature_descriptions.rs` itself serves (diff-verified empty), so it inherits
+  whatever posture that catalog already has. Full detail:
+  `artifacts/gate-3-closure-invariant/epic-2-t4_cycle-1_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card — L9 was already named in `MEASURE-TWICE.md`'s
+  own T4 row before this cycle, not a new-scope discovery.
+- **Next-cycle plan:** T4/L8 is closed. L9 (471 units, feat-held reachability gate) is the only
+  remaining T4-shaped work, if a future cycle wants it. Card 11's other lanes (T2a+T12, T2b, T9,
+  and a consolidation cycle once every lane reports) are other lanes' scope.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
