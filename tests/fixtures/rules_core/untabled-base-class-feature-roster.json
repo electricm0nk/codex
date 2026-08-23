@@ -101,6 +101,39 @@
     },
     {
       "class_id": "antipaladin",
+      "description": "You project a faint evil aura.|PREVAREQ:AuraEvilLVL,1",
+      "key": "Aura of Evil",
+      "min_level": 1,
+      "name": "Aura of Evil",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 76,
+      "source_shape": "mod_ability",
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "At will, you can use Detect Good, as the spell. You can, as a move action, concentrate on a single item or individual within 60 feet and determine if it is good, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect good in any other object or individual within range.",
+      "key": "Detect Good",
+      "min_level": 1,
+      "name": "Detect Good",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 77,
+      "source_shape": "mod_ability",
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
+      "description": "You can call out to the dark powers to crush the forces of good %1 times per day. As a swift action, you choose one target within sight to smite. If this target is good, you add +%2 to your attack rolls and +%3 on all damage rolls made against the target of your smite. If the target of Smite Good is an outsider with the good subtype, a good-aligned dragon, or a good creature with levels of cleric or paladin, the bonus to damage on the first successful attack increases to +%4. Regardless of the target, Smite Good attacks automatically bypass any DR the creature might possess. In addition, while Smite Good is in effect, you gains a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not good, the smite is wasted with no effect. The Smite Good effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteGoodTimes|SmiteGoodAttackBonus|SmiteGoodDamageBonus|SmiteGoodDamageBonus*2|SmiteGoodACBonus",
+      "key": "Smite Good",
+      "min_level": 1,
+      "name": "Smite Good",
+      "source_file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+      "source_line": 78,
+      "source_shape": "mod_ability",
+      "text_only": false
+    },
+    {
+      "class_id": "antipaladin",
       "description": "You surrounds your hand with a fiendish flame, causing terrible wounds to open on those you touch. You can use this ability %1 times per day. As a touch attack, you can cause %2d6 points of damage. Using this ability is a standard action that does not provoke attacks of opportunity. Alternatively, you can use this power to heal undead creatures, restoring %2d6 hit points. This ability is modified by any feat, spell, or effect that specifically works with the lay on hands paladin class feature.|LayOnHandsTimes|LayOnHandsDice",
       "key": "Antipaladin ~ Touch of Corruption",
       "min_level": 2,
@@ -233,6 +266,17 @@
     },
     {
       "class_id": "cryptic",
+      "description": "Cryptic Powers Known: %1; Cryptic Maximum Power Level Known: %2|CrypticPowersKnown|CrypticMaxPowerLevel",
+      "key": "Cryptic Manifesting",
+      "min_level": 1,
+      "name": "Cryptic Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 59,
+      "source_shape": "class_level_table_bare",
+      "text_only": true
+    },
+    {
+      "class_id": "cryptic",
       "description": "You learned early on to modify the patterns around you to grant yourself protection as a swift action. You choose from the options below and may only have one such effect active at any given time. You can use this ability for %1 rounds per day. You can maintain this ability as long as you want as long as you have rounds available, or dismiss it at any time as a free action.  Absorb: You gain DR %3/-.  Deflect: You gain a +%2 dodge bonus to AC.  Retaliate: You gain a +%2 bonus on your attack rolls against any opponent that successfully hit you since your last turn.|AlteredDefenseRounds|AlteredDefenseBonus|AlteredDefenseDR",
       "key": "Cryptic ~ Altered Defense",
       "min_level": 1,
@@ -362,6 +406,17 @@
       "source_line": 98,
       "source_shape": "class_level_table",
       "text_only": false
+    },
+    {
+      "class_id": "dread",
+      "description": "Dread Powers Known:%1; Dread Maximum Power Level: %2|DreadPowersKnown|DreadMaxPowerLevel",
+      "key": "Dread Manifesting",
+      "min_level": 1,
+      "name": "Dread Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 119,
+      "source_shape": "class_level_table_bare",
+      "text_only": true
     },
     {
       "class_id": "dread",
@@ -834,6 +889,17 @@
       "source_file": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
       "source_line": 24,
       "source_shape": "mod_ability",
+      "text_only": true
+    },
+    {
+      "class_id": "marksman",
+      "description": "Marksman Powers Known: %1; Marksman Maximum Power Level Known: %2|MarksmanPowersKnown|MarksmanMaxPowerLevel",
+      "key": "Marksman Manifesting",
+      "min_level": 1,
+      "name": "Marksman Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 178,
+      "source_shape": "class_level_table_bare",
       "text_only": true
     },
     {
@@ -1442,6 +1508,17 @@
       "text_only": true
     },
     {
+      "class_id": "psion",
+      "description": "Psion Powers Known: %1; Psion Maximum Power Level Known: %2|PsionPowersKnown|PsionMaxPowerLevel",
+      "key": "Psion Manifesting",
+      "min_level": 1,
+      "name": "Psion Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 264,
+      "source_shape": "class_level_table_bare",
+      "text_only": true
+    },
+    {
       "class_id": "psychic",
       "description": "",
       "key": "Psychic ~ Class Skills",
@@ -1571,6 +1648,17 @@
       "source_file": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
       "source_line": 134,
       "source_shape": "mod_ability",
+      "text_only": true
+    },
+    {
+      "class_id": "psychic_warrior",
+      "description": "Psychic Warrior Powers Known: %1; Psychic Warrior Maximum Power Level Known: %2|PsychicWarriorPowersKnown|PsychicWarriorMaxPowerLevel",
+      "key": "Psychic Warrior Manifesting",
+      "min_level": 1,
+      "name": "Psychic Warrior Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 314,
+      "source_shape": "class_level_table_bare",
       "text_only": true
     },
     {
@@ -2158,6 +2246,17 @@
     },
     {
       "class_id": "tactician",
+      "description": "Tactician Powers Known: %1; Tactician Maximum Power Level Known: %2|TacticianPowersKnown|TacticianMaxPowerLevel",
+      "key": "Tactician Manifesting",
+      "min_level": 1,
+      "name": "Tactician Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 411,
+      "source_shape": "class_level_table_bare",
+      "text_only": true
+    },
+    {
+      "class_id": "tactician",
       "description": "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.|TacticianCollectiveMinds|TacticianCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Tactician ~ Collective Range Unlimited",
       "key": "Tactician ~ Collective",
       "min_level": 1,
@@ -2411,6 +2510,17 @@
     },
     {
       "class_id": "vitalist",
+      "description": "Vitalist Powers Known: %1; Vitalist Maximum Power Level Known: %2|VitalistPowersKnown|VitalistMaxPowerLevel",
+      "key": "Vitalist Manifesting",
+      "min_level": 1,
+      "name": "Vitalist Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 468,
+      "source_shape": "class_level_table_bare",
+      "text_only": true
+    },
+    {
+      "class_id": "vitalist",
       "description": "Connect %1 willing minds into collective, manifest certain powers on members|CollectiveMinds",
       "key": "Vitalist ~ Collective",
       "min_level": 1,
@@ -2518,6 +2628,17 @@
       "source_line": 504,
       "source_shape": "class_level_table",
       "text_only": false
+    },
+    {
+      "class_id": "wilder",
+      "description": "Wilder Powers Known: %1; Wilder Maximum Power Level Known: %2|WilderPowersKnown|WilderMaxPowerLevel",
+      "key": "Wilder Manifesting",
+      "min_level": 1,
+      "name": "Wilder Manifesting",
+      "source_file": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+      "source_line": 528,
+      "source_shape": "class_level_table_bare",
+      "text_only": true
     },
     {
       "class_id": "wilder",

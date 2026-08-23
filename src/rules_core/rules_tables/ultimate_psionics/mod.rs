@@ -76,6 +76,7 @@ pub mod dread_features;
 pub mod equipment_tables;
 pub mod feat_tables;
 pub mod marksman_features;
+pub mod psion_features;
 pub mod psychic_warrior_features;
 pub mod soulknife_features;
 pub mod tactician_features;

@@ -26,6 +26,28 @@ extracted here with no per-class branching:
   of them (`aegis`, `cryptic`, `dread`, `marksman`, `psychic_warrior`,
   `shifter`, `soulknife`, `tactician`, `vitalist`, `wilder`) -- see the
   `--summary` output for the remaining honest gap.
+* **Shape 3 (bare own-named `CLASS:` row, no group-separator prefix).**
+  Structurally identical to shape 2 -- same category prefix, same
+  leading-column level -- but the field's payload target does not repeat
+  "`<ClassName> ~ `" before the feature name; it is the bare feature name
+  itself (`psion`'s own `CLASS:Psion` block grants `ABILITY:Psion Class
+  Feature|AUTOMATIC|Psion Manifesting`, not `...|AUTOMATIC|Psion ~ Psion
+  Manifesting`). Found re-deriving SD-32 card 11 (T12)'s `psion`
+  remainder: confirmed by a direct oracle check (`grep -c "Psion ~ "
+  up_classes.lst up_abilities_class.lst` -> `0` and `7`, every one of the
+  7 a false-positive substring match inside a DIFFERENT class's own group
+  name, e.g. `Ascendant Psion ~ Hide Mind`) that this is genuinely a third
+  convention, not a repeat of the `CATEGORY=Class` vs `CATEGORY=CLASS`
+  case-sensitivity bug that closed 6 of the earlier "7 classes need a
+  third shape" false lead. One mechanical rule change captures it with no
+  per-class branching: a target is this class's own-named group if it
+  EITHER starts with "`<ClassName> ~ `" (shapes 1/2's explicit prefix) OR
+  contains no "` ~ `" group separator at all (shape 3's implicit, bare
+  own-name). A target containing "` ~ `" that does NOT start with the
+  class's own name belongs to a DIFFERENT group (another class's own-named
+  group, or a discipline/archetype pool member reached only through a
+  chosen-pick chain) and stays excluded -- this widening adds coverage, it
+  does not loosen the existing own-named-group boundary.
 
 Both shapes are matched by the literal substring
 `ABILITY:<ClassName> Class Feature|AUTOMATIC|<ClassName> ~ ` (or, for shape 1,
@@ -143,11 +165,25 @@ def main() -> None:
         class_id = meta["class_id"]
         rows: list[dict] = []
         seen_keys: set[str] = set()
-        shape2_marker = f"ABILITY:{display_name} Class Feature|AUTOMATIC|{display_name} ~ "
+        # Shape 2's marker used to require the payload to ALSO repeat
+        # "<ClassName> ~ " before the feature name. Widened to the bare
+        # category+AUTOMATIC prefix so shape 3's own-named-but-unprefixed
+        # targets (`psion`'s "Psion Manifesting") are found by the same
+        # scan -- the group-membership test below (not this marker) is what
+        # still keeps pool/other-group targets out.
+        shape2_marker = f"ABILITY:{display_name} Class Feature|AUTOMATIC|"
         for path in lst_files:
             with open(path, encoding="utf-8", errors="replace") as f:
                 lines = f.readlines()
-            for lineno, line in enumerate(lines, 1):
+            for lineno, raw_line in enumerate(lines, 1):
+                # Strip the trailing line ending before any field split --
+                # a target that is the LAST tab-separated field on its line
+                # (true of every shape 3 hit found so far, e.g. `psion`'s
+                # own `... AUTOMATIC|Psion Manifesting`) otherwise carries a
+                # literal trailing `\n` into its own `KEY:`, corrupting the
+                # fixture's `key`/`name` fields for exactly the population
+                # this shape exists to capture correctly.
+                line = raw_line.rstrip("\n").rstrip("\r")
                 # `CATEGORY=` casing varies in the corpus itself (`Class` and
                 # `CLASS` both occur -- confirmed for Kineticist/Medium/
                 # Mesmerist/Occultist/Psychic/Spiritualist, all `occult_
@@ -175,8 +211,10 @@ def main() -> None:
                     if len(parts) < 3:
                         continue
                     key = parts[2]
-                    if not key.startswith(f"{display_name} ~ "):
-                        continue  # own-named group only; pool grants excluded
+                    is_own_named_explicit = key.startswith(f"{display_name} ~ ")
+                    is_own_named_bare = " ~ " not in key
+                    if not is_own_named_explicit and not is_own_named_bare:
+                        continue  # a different group entirely; pool grants excluded
                     if key in seen_keys:
                         continue
                     min_level = None
@@ -188,7 +226,7 @@ def main() -> None:
                             shape = "mod_ability"
                     if min_level is None and is_shape2 and shape2_level is not None:
                         min_level = shape2_level
-                        shape = "class_level_table"
+                        shape = "class_level_table" if is_own_named_explicit else "class_level_table_bare"
                     if min_level is None:
                         continue  # no reliably-parsed level -- skip, don't guess
                     seen_keys.add(key)

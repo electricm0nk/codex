@@ -40,7 +40,9 @@
         "key": "SOURCEPAGE",
         "value": "p.60"
       }
-    ]
+    ],
+    "shape_provisional_default": true,
+    "shape_provisional_reason": "SD-32 card 11 (T12) psion cycle audit, decisions.md \u00a727: PhrenicPoolAbility (this record's own BONUS:VAR|PhrenicPool|(PsychicLVL/2)+PhrenicPoolAbility term) is set by whichever of the 9 Psychic Discipline records the character chose (CHA for 4 disciplines, WIS for 5) -- ground_psychic_class_features defaults it to Charisma because this engine does not track the chosen discipline. One of several possible correct answers chosen for now, not the only value the engine's inputs could produce."
   },
   "source": {
     "kind": "lst_token",

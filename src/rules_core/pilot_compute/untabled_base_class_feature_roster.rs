@@ -134,7 +134,16 @@ mod tests {
         assert!(!rows.is_empty(), "census script found antipaladin data; fixture must carry it");
         for row in &rows {
             assert!(row.min_level >= 1, "{}: min_level must be a real class level", row.key);
-            assert!(row.key.starts_with("Antipaladin ~ "), "{}: must be own-named group", row.key);
+            // Own-named group membership is either the explicit
+            // "Antipaladin ~ " prefix (shapes 1/2) or a bare target with no
+            // " ~ " group separator at all (shape 3, e.g. a `.MOD`-shaped
+            // core mirror-paladin grant like `Aura of Evil` -- census
+            // script's own doc comment, shape 3).
+            assert!(
+                row.key.starts_with("Antipaladin ~ ") || !row.key.contains(" ~ "),
+                "{}: must be own-named group",
+                row.key
+            );
         }
     }
 
@@ -146,13 +155,32 @@ mod tests {
     #[test]
     fn a_class_the_census_script_found_no_mod_shaped_data_for_is_honestly_empty() {
         // Cryptic was this test's original example but is now covered by
-        // shape 2 (`CLASS:` level-table row) -- Psion is registered in
-        // `untabled_base_class_chassis` and this fixture's own re-derive
-        // found no shape-1 or shape-2 own-named grant for it -- confirmed
-        // absent, not merely unchecked (this module's own doc comment). A
-        // future fixture regeneration that adds Psion data would need this
-        // test updated deliberately, not silently pass.
-        assert!(roster_for("psion").is_empty());
+        // shape 2 (`CLASS:` level-table row); Psion was this test's second
+        // example through SD-32 card 11 (T12) cycle 4 but is now covered by
+        // shape 3 (bare own-named `CLASS:` row -- census script's own doc
+        // comment) and asserted positively below
+        // (`psion_manifesting_row_is_shape_3_and_carries_no_group_prefix`).
+        // `undine_scion` is not a registered class at all -- confirmed
+        // absent, not merely unchecked.
+        assert!(roster_for("undine_scion").is_empty());
+    }
+
+    /// Fixture-checked against bytes this module never reads: the oracle's
+    /// own `up_classes.lst` line 264 (`1\t...\tABILITY:Psion Class
+    /// Feature|AUTOMATIC|Psion Manifesting`, re-derived against
+    /// `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`), hand-
+    /// transcribed here from the oracle text this cycle's own probe read.
+    #[test]
+    fn psion_manifesting_row_is_shape_3_and_carries_no_group_prefix() {
+        let rows = roster_for("psion");
+        assert_eq!(rows.len(), 1, "psion carries exactly one shape-3 own-named row: {rows:?}");
+        let row = rows[0];
+        assert_eq!(row.key, "Psion Manifesting");
+        assert_eq!(row.min_level, 1);
+        assert!(
+            !row.key.contains(" ~ "),
+            "shape 3's whole point is the bare, unprefixed target name"
+        );
     }
 
     /// Fixture-checked against bytes this module never reads: the oracle's

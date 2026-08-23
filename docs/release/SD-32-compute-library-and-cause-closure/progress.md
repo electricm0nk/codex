@@ -7652,4 +7652,57 @@ Card 11 / row 11 stays `in-progress`.
 
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-monster-ability-provisional-facet-default-round8_cycle-1_cycle_receipt.md`.
+## Cycle `t12-psion-shape3-closure` (2026-08-23) — Card 11, row 15's T12 remainder: `psion` + provisional-default audit
+
+**`psion` sized, confirmed genuinely-third (not the `CATEGORY=Class`/`CATEGORY=CLASS` false lead), and
+closed for its own single non-pool magnitude.** `grep -c "Psion ~ " up_classes.lst up_abilities_class.lst`
+→ 0 and 7, every one of the 7 a false-positive substring hit inside a DIFFERENT class's own group name.
+`psion`'s own `CLASS:Psion` block grants exactly one own-named `Class Feature` magnitude at level 1
+(`Psion Manifesting`, line 264) with **no** `"Psion ~ "` group prefix at all — Shape 3. A mechanical BFS
+from the class's own block additionally sizes the discipline-choice pool population this class's other
+`ABILITY:` grants route through: **32 magnitude-bearing leaf records** across 9 disciplines/archetypes,
+structurally pool-shaped (same exclusion class as `Vigilante Talent`/`Magus Arcana`), sized and named, not
+closed here, not filed as an exclusion (`§27b`).
+
+**`census_untabled_base_class_feature_roster.py` widened generically for Shape 3** (one mechanical rule
+change, no per-class branching): a target is own-named if it starts with `"<ClassName> ~ "` OR carries no
+`" ~ "` separator at all. Fixed a real pre-existing bug this widening surfaced along the way (the last tab
+field on a line carried a literal trailing `\n` into its own key/name). **The SAME widened pass also
+surfaced 7 sibling classes' identically-shaped `"<ClassName> Manifesting"` records** (cryptic, dread,
+marksman, psychic_warrior, tactician, vitalist, wilder) **and 3 NEW magnitude-bearing records on the
+already-"108/108"-closed antipaladin** (`Aura of Evil`, `Detect Good`, `Smite Good`, shape 1) — total roster
+fixture: 235 → 246 entries. None of the 10 non-psion new records closed this cycle; all named, sized, and
+forwarded (`§17`/`§17a`).
+
+**Closed:** `Psion Manifesting`'s power-points magnitude — `psion_features::psion_power_points_total`
+(base-ladder table, "highest satisfied `PREVARGTEQ` threshold wins", cross-checked against the
+well-established real Power Points per level table, plus a single unambiguous `TYPE=PsionBonusPP`
+Intelligence-modifier term), wired through `pilot_compute::ground_psion_class_features`, RED→GREEN proven
+at both the unit and end-to-end wiring altitudes (mutated the bonus term `+99`; both a unit test and the
+wiring test failed for the intended reason; reverted).
+
+**Escalated, not guessed:** the SAME record's `PsionPowersKnown`/`PsionMaxPowerLevel` terms carry a
+genuinely ambiguous `BONUS:VAR` combination (sum vs. replace disagree on which reading is plausible for
+which term), and this repo cannot execute real PCGen to settle it — named by coordinate
+(`up_abilities_class.lst` line 392), not fabricated either way.
+
+**Provisional-default audit (`decisions.md §27`).** Re-examined cycle 4's four documented judgment calls
+with evidence, not inherited belief. Two (FCB terms dropped, Shifter's Defensive Instinct) confirmed to be
+**the only value this engine's actual inputs could produce** (a structural absence, not a discretionary
+pick) — real measurements, left unmarked. One (secondary trivial-pool `BONUS:VAR` tokens skipped) is a
+token-classification call, not a choice between competing correct VALUES — not a `§27` shape, left unmarked.
+One — **Psychic Discipline's Phrenic Pool ability term defaulting to Charisma** — is genuinely one of two
+live candidate answers (CHA for 4 of the 9 disciplines, WIS for 5) picked without the discipline-choice
+input that would resolve it: the exact `§27` shape. **Stamped** via the sanctioned
+`scripts/shape_provisional_marker.py::stamp_provisional_default` (never hand-edited) on
+`data/corpus/occult_adventures/class_feature/psychic/phrenic_pool.json`. `python3 scripts/row17_census.py
+--check` before/after: `§27 provisional default` count `0 → 1`, `--check` exits 0 both times (well-formed
+marker). **Row 17 was genuinely under-counting by this one unit before this cycle** — the brief's own
+concern confirmed real, not hypothetical.
+
+Targeted test sweep: `178/178` green (T12 class-feature scope) + `55/55` green (roster-mechanism-level
+tests, including two updated stale tests and one new positive fixture-transcription test).
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/epic-2-t12-psion-shape3-closure_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).

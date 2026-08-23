@@ -26127,6 +26127,8 @@ fn compute_class_chassis(
             ground_shifter_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:vigilante" {
             ground_vigilante_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:psion" {
+            ground_psion_class_features(class_level.level, ability_modifiers, explanations);
         }
 
         Some((base_attack_bonus, base_saves))
@@ -28259,6 +28261,30 @@ fn ground_vigilante_class_features(
             value: v,
             detail: format!(
                 "Vigilante level {level} Stunning Appearance: {v} HD threshold (equal to level)"
+            ),
+        });
+    }
+}
+
+/// Grounds Psion's own shape-3 magnitude-bearing feature (`rules_tables::
+/// ultimate_psionics::psion_features`) — SD-32 card 11 (T12), the tenth
+/// `ultimate_psionics` class attempted end-to-end, and the last named T12
+/// item. See `psion_features`'s own module doc comment for why `psion`
+/// uses a genuinely-third grant convention (confirmed against the earlier
+/// "7 classes need a third shape" false lead, not a repeat of that
+/// case-sensitivity bug) and for the discipline-choice pool population
+/// (32 magnitude leaves) this function deliberately does not attempt.
+fn ground_psion_class_features(level: u8, ability_modifiers: &AbilityModifiers, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::ultimate_psionics::psion_features as pf;
+    let int_mod = ability_modifiers.intelligence;
+
+    if let Some(v) = pf::psion_power_points_total(level, int_mod) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psion.psion_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Psion level {level} Psion Manifesting: {v} power points (base ladder + \
+                 (Intelligence modifier {int_mod} * level)/2)"
             ),
         });
     }
@@ -48851,19 +48877,29 @@ mod untabled_base_class_feature_roster_wiring_tests {
         );
     }
 
-    /// A registry class the roster fixture has NO data for (Psion -- Cryptic
-    /// was this test's original example but is now covered by shape 2) must
+    /// A registry class the roster fixture has NO `.MOD`/`CLASS:`-row data
+    /// for (`kineticist`'s own roster attribution went through shape 2 like
+    /// every other T12 class; there is no longer a class the roster fixture
+    /// covers zero shapes for at level 20, so this test now names a class
+    /// this repo's chassis genuinely does not dispatch at all --
+    /// `undine_scion`, a race feature id namespace, never a class id) must
     /// emit zero `class_feature.untabled.*` ids -- confirms the mechanism
     /// never fabricates a row for a class it has no corpus evidence for.
+    /// **Superseded example, not superseded assertion:** `psion` was this
+    /// test's example through SD-32 card 11 (T12) cycle 4; it is now
+    /// covered by shape 3 (`ground_psion_class_features`,
+    /// `psion_features`'s own module doc comment) and asserted positively
+    /// below (`psion_manifesting_emits_its_own_power_points_magnitude`),
+    /// same as Cryptic's shape-2 supersession noted above.
     #[test]
     fn a_class_with_no_roster_data_emits_no_untabled_class_feature_ids() {
         let mut input = antipaladin_input(20);
-        input.chosen.class_levels[0].class_id = "class:psion".to_owned();
+        input.chosen.class_levels[0].class_id = "class:undine_scion".to_owned();
         let computation = compute_pilot_base_chassis(&input);
         let ids = explanation_ids(&computation);
         assert!(
-            ids.iter().all(|id| !id.starts_with("class_feature.untabled.psion.")),
-            "psion has no roster fixture data; must emit none: {ids:?}"
+            ids.iter().all(|id| !id.starts_with("class_feature.untabled.undine_scion.")),
+            "undine_scion is not a dispatched class id; must emit none: {ids:?}"
         );
     }
 
@@ -49469,6 +49505,46 @@ mod untabled_base_class_feature_roster_wiring_tests {
         assert_eq!(
             value("class_feature.untabled.vigilante.stunning_appearance.hd_threshold"),
             20
+        );
+    }
+
+    /// Proves `ground_psion_class_features` really runs through
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` (not a
+    /// direct unit call on `psion_features` alone), and that a real
+    /// Intelligence modifier reaches the formula.
+    #[test]
+    fn psion_manifesting_emits_its_own_power_points_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psion".to_owned();
+        input.chosen.ability_scores.intelligence = 20; // +5
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        // base ladder at level 20 = 32, bonus (5*20)/2 = 50.
+        assert_eq!(value("class_feature.untabled.psion.psion_manifesting.power_points"), 82);
+    }
+
+    /// Below level 1 (the character's own lowest possible class level in
+    /// this fixture shape), Psion Power Points must be absent -- the same
+    /// "absent means not yet granted" contract every other class above
+    /// proves, spot-checked at level 1 itself since Psion grants this
+    /// magnitude from its very first level (no higher gate to under-shoot).
+    #[test]
+    fn psion_level_1_already_carries_power_points() {
+        let mut input = antipaladin_input(1);
+        input.chosen.class_levels[0].class_id = "class:psion".to_owned();
+        input.chosen.ability_scores.intelligence = 10; // +0
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.psion.psion_manifesting.power_points".to_owned()),
+            "level-1 Psion must already carry Psion Manifesting's power points; got: {ids:?}"
         );
     }
 
