@@ -181,14 +181,19 @@ _GENERIC_CAPWORDS = set(
     # capitalized token in full row context. All are ordinary anatomy/ability-tag/PCGen-
     # boilerplate words, none a setting-specific proper noun:
     "Bite", "Claws", "Ex", "Using", "When", "Skill", "Eldritch", "Cooperative", "Crafting",
+    # --- decisions.md §27b — EVERYTHING, resolved 2026-08-23 ---
+    # "Shaitan" -- was left deliberately OFF this allowlist pending operator review
+    # (`advanced_race_guide:Stone Curse`'s PRERACE field, RACETYPE=Shaitan Binder
+    # Eidolon). The operator spot-check RESOLVED it: `t9-pi-review-companion-
+    # monsterability.md` §7, `advanced_race_guide:Earth Glide (Shaitan Binder
+    # Eidolon) — clear. "Shaitan" here is the genie-subtype term from the core
+    # Bestiary's elemental taxonomy (djinn/efreeti/shaitan/marid), not a
+    # Golarion-specific name.` `scripts/pi_scrub.py`'s own canonical blacklist scan
+    # independently confirms zero hits on either affected row's full text. This was
+    # the only capitalized-token holdout in the companion residual; allowlisting it
+    # closes the last 2 `companion` `no_record` units (`decisions.md §20`/`§27b`).
+    "Shaitan",
 }
-# Left deliberately OFF this allowlist (decisions.md §19c: "if a flagged row turns on a
-# token you are not willing to allowlist, leave it undecidable and say which"):
-#   "Shaitan" -- `advanced_race_guide:Stone Curse`'s PRERACE field
-#   (RACETYPE=Shaitan Binder Eidolon). Shaitan is a genie-kin creature subtype; whether
-#   it is Golarion/Paizo-specific or public-domain-mythological (as with "imp") was not
-#   resolved by this pass. Stays `still_undecidable`. Reconfirmed 2026-08-23: still the
-#   only capitalized-token holdout in the companion residual.
 
 # lowercase words that precede a creature-species mention but are not
 # themselves species names (generic role/anatomy/mechanic nouns) -- used
@@ -283,9 +288,18 @@ _GENERIC_LOWER_NOUNS = set(
     "acrobatics", "mile", "water", "blindsight", "human", "stealth", "purposes",
     "perception", "stimulus", "tenacious", "immediate", "strength", "last", "trainer",
     "plant", "wisdom", "valid", "break", "focus", "cooperative",
-    # Left deliberately OFF (decisions.md §19c precedent): "shaitan" -- see the
-    # `_GENERIC_CAPWORDS` comment above; the same two `Shaitan Binder Eidolon` rows
-    # are the reason both sets exclude it.
+    # `decisions.md §27b` — resolved 2026-08-23, same operator ruling the
+    # `_GENERIC_CAPWORDS` comment above cites: "shaitan" is a generic genie-subtype
+    # term (djinn/efreeti/shaitan/marid), not a Golarion-specific proper noun.
+    "shaitan",
+    # `decisions.md §27b`, same closure: `advanced_race_guide:Earth Glide`'s own DESC
+    # ("A burrowing Shaitan Binder Eidolon can pass through dirt, gravel, or other
+    # loose or porous solid matter as easily as a fish swims through water...") trips
+    # the `a/an/the <noun>` species-reference heuristic on three ordinary English
+    # words, none a species name -- the exact false-positive class this file's other
+    # widenings already document and correct. `scripts/pi_scrub.py`'s canonical
+    # blacklist scan independently confirms zero hits on this row's full DESC text.
+    "burrowing", "fish", "solid",
 }
 
 

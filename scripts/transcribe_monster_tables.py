@@ -268,6 +268,38 @@ BOOKS = {
     # `PRECAMPAIGN`). Zero Product Identity rows (`grep -c
     # 'NAMEISPI:YES\|DESCISPI:YES' ma_abilities_race.lst` -> 0).
     "mythic_adventures": "pathfinder/paizo/roleplaying_game/mythic_adventures",
+    # `decisions.md §27b` -- EVERYTHING: the repeatedly-reconfirmed
+    # "correctly out of scope" disposition for this book is OVERTURNED.
+    # "Not applicable to the modelled campaign set" was a reachability
+    # statement about the negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate on
+    # `support/oa_races_b3.lst`/`support/oa_abilities_race_b3.lst`
+    # (`_occult_adventures.pcc:74-75`), never an ingest statement -- the
+    # objects exist in the book and are ingested here like every other book.
+    # Reachability stays a SEPARATE number (`decisions.md §16`), reported
+    # honestly as 0 by `monster_chassis.rs`'s reach-gate: no owning race row
+    # in this dict's scope claims any of the 5 in-scope ability rows by name
+    # (`grep -n 'Homunculus Companion ~\|Shikigami ~' oa_abilities_race.lst
+    # support/oa_abilities_race_b3.lst` shows only CATEGORY:Internal umbrella
+    # rows referencing them, which this generator does not resolve into
+    # ownership), so all 5 ship owner-less, the identical honest shape
+    # `mythic_adventures`/`ultimate_wilderness`/`ultimate_intrigue`/
+    # `ultimate_magic` above already ship.
+    #
+    # `races_lsts: []` deliberately, matching those same four precedent rows:
+    # this book's `race`/`monster`-kind rows (`oa_races.lst`'s 4,
+    # `oa_races_b3.lst`'s 1) are a DIFFERENT `docs/work-inventory.json` kind
+    # (`race`/`monster`, not `monster_ability`) and outside this cycle's
+    # scope -- registering them here would risk emitting `MonsterStatBlock`
+    # records into a sibling lane's territory rather than the 5
+    # `monster_ability` units this cycle closes. Derived, never assumed:
+    # `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+    # cross-referenced against `docs/work-inventory.json`'s own
+    # `book=="occult_adventures"` rows -- exactly 5 `monster_ability` units,
+    # all `not-ingested`; the `race`(4)/`monster`(1) rows are a separate kind
+    # this cycle does not touch. Zero Product Identity rows in either
+    # abilities file (`grep -c 'NAMEISPI:YES\|DESCISPI:YES'
+    # oa_abilities_race.lst support/oa_abilities_race_b3.lst` -> 0, 0).
+    "occult_adventures": "pathfinder/paizo/roleplaying_game/occult_adventures",
 }
 
 # Books part of whose monster rows another compiled table of THIS repo already

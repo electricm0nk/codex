@@ -187,6 +187,14 @@ const BOOK_ARG: &str = "ARG";
 /// arm) — reused, not invented.
 const BOOK_MYTHIC: &str = "MYTHIC";
 
+/// `decisions.md §27b` — EVERYTHING: `occult_adventures`'s 5 `monster_ability`
+/// units, overturning the repeatedly-reconfirmed "correctly out of scope"
+/// disposition (a reachability finding about a negated `PRECAMPAIGN` gate,
+/// not an ingest exemption). Already serves its `equipment`/`spell` families
+/// under this same wire code (`spell_catalog::BOOK_OA`, `reach_gate`'s
+/// `("occult_adventures", "equipment")` arm) — reused, not invented.
+const BOOK_OA: &str = "OA";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -230,6 +238,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "pathfinder_unchained" => "Pathfinder Unchained",
         "advanced_race_guide" => "Advanced Race Guide",
         "mythic_adventures" => "Mythic Adventures",
+        "occult_adventures" => "Occult Adventures",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -263,6 +272,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "pathfinder_unchained" => BOOK_PU,
         "advanced_race_guide" => BOOK_ARG,
         "mythic_adventures" => BOOK_MYTHIC,
+        "occult_adventures" => BOOK_OA,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -1105,8 +1115,15 @@ mod tests {
         // orphan candidates shipped, 0 refused). Re-derived: `python3
         // scripts/shape_ledger.py --inventory docs/work-inventory.json` --
         // `monster_ability` `no_record` 121 -> 100.
+        // 1048 -> 1053 (`decisions.md §27b` — EVERYTHING, +5): `occult_
+        // adventures`, registered for the first time, overturning four
+        // cycles' worth of "correctly out of scope" for a REACHABILITY
+        // finding (negated `PRECAMPAIGN` gate), not an ingest exemption. All
+        // 5 orphan candidates shipped, 0 refused. Re-derived: `python3
+        // scripts/transcribe_monster_tables.py occult_adventures 2>&1
+        // >/dev/null` prints exactly these 5 keys as owner-less.
         assert_eq!(
-            owner_less_records_held, 1048,
+            owner_less_records_held, 1053,
             "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
              from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
              update both this pin and `reach_gate.rs`'s matching entries"

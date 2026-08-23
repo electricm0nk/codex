@@ -7049,6 +7049,7 @@ already-existing `DESCISPI:YES` redact-and-ship path, extended to a term-list-hi
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-monster-ability-per-record-refusal-groups-round6_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit — see push output).
+
 ## Cycle t9-onboarding-class-feature-abilities-race-closure (2026-08-23)
 
 **`class_feature`'s last 25 `no_record` units, closed (`decisions.md §20`/`§17a`):** re-derived not
@@ -7157,3 +7158,85 @@ a `§26`-class OCR-fold false positive against an ordinary English word, unrelat
 Full receipt:
 `artifacts/gate-3-closure-invariant/sd32-pi-leak-screening-path-inner-sea-combat-feat_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle: decision-27b-carveout-closure (2026-08-23)
+
+`decisions.md §27b` — **EVERYTHING**. The operator overturned the two long-standing exclusions the
+prior round left flagged for re-examination rather than closed: `occult_adventures`'s 5
+`monster_ability` units (excluded across 4 cycles on a negated `PRECAMPAIGN` gate — a
+**reachability** finding, not an ingest exemption) and `advanced_race_guide`'s 2 `companion` units
+(carried as "correctly parked", which prior briefs wrongly attributed to a pending PI ruling when
+the real reason was an already-adjudicated reachability exclusion, `§50`/`§56.1`).
+
+**Re-derived first (`§17a`):** `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+confirmed the pre-cycle honest total — `no_record` 157 (`monster_ability` 98, `class_feature` 25,
+`equipment_modifier` 19, `equipment` 10, `companion` 2, `spell` 2, `ability` 1) — before touching
+anything.
+
+**`occult_adventures` (5 units), closed by the proved-five-times mechanism, no new code:**
+registered the book in `scripts/transcribe_monster_tables.py`'s `BOOKS` dict (the script derives its
+own file set from `docs/work-inventory.json`'s per-book unit set, not a config glob), added a
+`MonsterBookSpec` in `src/bin/gen_book_cache.rs` (`races_lsts: ["oa_races_b3.lst"]` — deliberately
+NOT `oa_races.lst`, whose 4 rows are `kind: race`, a different kind and a sibling lane's territory),
+and registered `MONSTER_BOOKS` in `monster_chassis.rs`. `python3 scripts/transcribe_monster_tables.py
+occult_adventures` wrote `monster_data.rs` verbatim (1 `MonsterStatBlock`, 5 `MonsterAbilityRecord`s,
+all `owners: &[]`, reporting "reachability NOT claimed" per its own stderr). `cargo run --bin
+gen_book_cache -- occult_adventures` (env vars set, no `--allow-stamp-loss`) wrote the corpus JSON:
+"1 new monsters ... 5 new monster abilities", zero deletions.
+`monster_chassis::widening_the_facet_vocabulary_does_not_reclassify_any_existing_record` re-derived
+live from its own failing run (never guessed): 3706 → 3711 records, digest `0x38f4aedd6de1caf3` →
+`0xc4c144e1483d297d`.
+
+Wired reachability honestly: new `("occult_adventures", "monsters")`/`("occult_adventures",
+"monster_abilities")` reach arms in `reach_gate.rs`, plus the exact-key owner-less pin
+(`UNREACHED_RECORD_FINDINGS` gap note + pin list) — reachability **0** for all 5, proven and pinned,
+never assumed. `monster_catalog.rs` gained `BOOK_OA` and its `book_display_name`/`book_wire_code`
+exhaustive-match arms (both panic on an unregistered book). Re-derived `bonus_bestiary_ability_
+keys_carry_the_namespace`'s owner-less pin from its own live failure: 1048 → 1053.
+`corpus_ingest_diagnostic.rs`'s `occult_adventures_counts()` now chains `chassis_book_counts`
+(mirroring `mythic_adventures_counts`'s existing shape) so the panel reports the book's second
+compiled family.
+
+**`companion` (2 units), closed via the pre-existing generic closer:** `python3 scripts/
+ingest_companion.py --dry-run` found exactly the 2 target units but both `pi_skipped` under
+`sd32_t9_pi_review_companion_monsterability.py`'s own stricter, non-canonical `still_undecidable`
+heuristic ("Shaitan" capitalized-token flag; "burrowing"/"fish"/"solid" species-reference false
+positives on `Earth Glide`'s DESC). Both were already resolved, not merely suspected: an operator
+spot-check already on file (`t9-pi-review-companion-monsterability.md` §7) explicitly ruled
+`advanced_race_guide:Earth Glide (Shaitan Binder Eidolon)` **clear** — "Shaitan" is the genie-subtype
+term from the core Bestiary's elemental taxonomy, not a Golarion-specific name — and an independent
+re-run of the canonical `scripts/pi_scrub.py` blacklist scan (imported, not re-implemented) found
+**zero** hits on either record's full text. Allowlisted both terms in `sd32_t9_pi_review_companion_
+monsterability.py`, citing the operator ruling and the independent re-scan; re-ran `ingest_companion.py`
+for real: 2 new corpus files (`earth_glide.json`, `noble_eidolon.json`), `skipped_existing_already_
+ingested: 767` unchanged (idempotent).
+
+**Carve-out sweep (brief's required item 3):** grepped `decisions.md`/`progress.md`/`kanban.md` for
+`out of scope`/`excluded`/`deferred`/`parked`/`correctly skipped`/`not applicable`/`pending an
+operator ruling`. Beyond the two closed here, everything else found is either an already-escalated
+`## Open blockers`-shaped request awaiting an operator ruling (T9's 2,712-unit reachability register:
+21 PI-excluded + 6 structurally-correct `.MOD`/`.COPY` exclusions in the `monster` family alone — a
+different epic, reachability/consumer wiring, not Gate 1 ingest) or another lane's disclosed scope
+boundary (`class_feature`'s 39-of-64 `TYPE:*Choice` collision groups held for hand review;
+`bestiary`'s 17-unit `unscreenable`/`unmodelled_facet` residual — both sibling lanes' own named
+territory). Full table in the receipt.
+
+**Result (`decisions.md §16`, three separate figures):** closure 7 units (5 `occult_adventures`
+`monster_ability` + 2 `advanced_race_guide` `companion`), 0 reclassified. `no_record`: 157 → **150**
+(re-derived: `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` → `monster_ability`
+93, `class_feature` 25, `equipment_modifier` 19, `equipment` 10, `spell` 2, `ability` 1, `companion`
+**0**). Reachability for all 7 new records: **0**, reported honestly and separately, pinned by exact
+key.
+
+**Tests:** `cargo test --locked --lib monster_chassis::` 8/8; `cargo test ... apps/desktop ... --bins
+monster_catalog::` 26/26; `... reach_gate::` 23 passed/8 failed (IDENTICAL split to round 4/5/6's own
+baseline — confirmed neither `occult_adventures/monsters` nor `occult_adventures/monster_abilities`
+names any of the 8 failures, before or after; my 2 new `companion` records join the SAME
+pre-existing, already-red `advanced_race_guide/companions` gap, not a new one); `...
+corpus_ingest_diagnostic::` 15/15 (2 previously-known failures already resolved by a sibling lane's
+work landed since round 6, re-confirmed not caused by this cycle); `python3 -m unittest scripts.tests.
+test_transcribe_monster_tables` 17/18 (1 pre-existing, unrelated failure, confirmed present against
+HEAD too); companion/PI test modules 24/24.
+
+Full receipt: `artifacts/gate-3-closure-invariant/decision-27b-carveout-closure_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit — see push output).

@@ -1682,6 +1682,19 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("mythic_adventures", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("mythic_adventures", "MYTHIC"))
         }
+        // `decisions.md §27b` — EVERYTHING: overturns the repeatedly-
+        // reconfirmed "correctly out of scope" disposition for this book's 5
+        // `monster_ability` units AND its 1 `monster` row (Kami (Shikigami)).
+        // Unlike `mythic_adventures` above, this book DOES carry a real
+        // `("book", "monsters")` claim -- its chassis registration includes
+        // one real `MonsterStatBlock` -- so both kinds get a claim here,
+        // under the wire code this book already serves its OTHER families
+        // with (`monster_catalog::BOOK_OA`, this book's existing
+        // `("occult_adventures", "equipment")` arm above).
+        ("occult_adventures", "monsters") => Some(chassis_monsters_reach("occult_adventures", "OA")),
+        ("occult_adventures", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("occult_adventures", "OA"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by
@@ -2844,6 +2857,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("pathfinder_unchained", "monster_abilities", "Gap: 69 of Pathfinder Unchained's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 4) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. A further 3 of the book's 72 orphan candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped this round, and NOT counted in this Gap figure (they stay `no_record`, not owner-less-shipped). Remedy: none needed for the 69 that ship -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-DESC: residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("occult_adventures", "monster_abilities", "Gap: all 5 of Occult Adventures's `monster_ability` records (`decisions.md §27b` — EVERYTHING, overturning four cycles' worth of \"correctly out of scope\" for a negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate this repo's campaign set fails, a REACHABILITY finding, not an ingest exemption) ship with `owners: &[]` -- no monster row in this generator's ownership pass claims any of the 5 by name (the two owning race rows reference them only via a CATEGORY:Internal umbrella row this generator does not resolve into per-record ownership: `Race Traits ~ Homunculus Companion` names 2 of the 3 Homunculus rows, `Poison` is not named at all; `Racial Traits ~ Kami (Shikigami)` grants by TYPE=, not by name), the identical shape every other zero-record-owner book in this registry already ships. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`/`§27b`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: a per-record trace of each umbrella row's own grant logic (named references plus TYPE= auto-grants) to determine real ownership, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -4688,6 +4702,31 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "mythic_adventures:monster_ability:steal",
             "mythic_adventures:monster_ability:surge",
             "mythic_adventures:monster_ability:x_ray_vision",
+        ],
+    ),
+    (
+        "occult_adventures",
+        "monster_abilities",
+        // `decisions.md §27b` — EVERYTHING: all 5 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- no monster
+        // row's ownership pass claims any of them by name (both owning race
+        // rows reference their sub-abilities only via a CATEGORY:Internal
+        // umbrella row this generator does not resolve into per-record
+        // ownership; see this book's own `monster_data.rs` header). Shipped
+        // anyway per `decisions.md §20`/`§27b`: an un-ingested row's shape
+        // cannot be measured, and Gate 1's DoD needs every unit's shape
+        // measured; the "correctly out of scope" disposition this book
+        // carried across four prior cycles was a REACHABILITY finding (a
+        // negated `PRECAMPAIGN` gate), never an ingest exemption. Pinned by
+        // exact key rather than by count so a NEW silent non-reach still
+        // fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py
+        // occult_adventures 2>&1 >/dev/null`.
+        &[
+            "occult_adventures:monster_ability:homunculus_companion_poison",
+            "occult_adventures:monster_ability:homunculus_companion_sympathetic_alchemy",
+            "occult_adventures:monster_ability:homunculus_companion_telepathic_link",
+            "occult_adventures:monster_ability:shikigami_improvised_weapon_mastery",
+            "occult_adventures:monster_ability:shikigami_spell_like_abilities",
         ],
     ),
     (

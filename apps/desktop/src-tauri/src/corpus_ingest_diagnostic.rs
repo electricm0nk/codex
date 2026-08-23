@@ -527,9 +527,23 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
 /// base spell records -- see `occult_adventures::spell_list`'s own doc
 /// comment for the catalog and the 328-unit `mod_only` class-widening
 /// residue it deliberately does not cover.
+///
+/// `decisions.md §27b` — EVERYTHING: this book's second compiled family,
+/// `monster`/`monster_ability` (`monster_chassis::MONSTER_BOOKS` now lists
+/// `"occult_adventures"`, same shape `mythic_adventures_counts` above
+/// chains), overturns the repeatedly-reconfirmed "correctly out of scope"
+/// disposition for its 5 `monster_ability` units -- a reachability finding
+/// about a negated `PRECAMPAIGN` gate, not an ingest exemption. Chained via
+/// `chassis_book_counts` rather than a literal insert, matching the same
+/// convention every other chassis-registered book on this panel uses.
 fn occult_adventures_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("spells".to_string(), oa::spell_list::SPELL_LIST.len() as u32);
+    counts.extend(
+        chassis_book_counts("occult_adventures")
+            .into_iter()
+            .filter(|(_, count)| *count > 0),
+    );
     counts
 }
 

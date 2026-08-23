@@ -651,6 +651,19 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monster_abilities: super::mythic_adventures::monster_abilities_static(),
         cross_table_owner_names: &[],
     },
+    // `decisions.md §27b` — EVERYTHING: overturns four cycles' worth of
+    // "correctly out of scope" for this book's 5 `monster_ability` units,
+    // reasoning that a reachability finding (negated `PRECAMPAIGN` gate) is
+    // not an ingest exemption. All 5 ship owner-less, same honest shape
+    // `mythic_adventures` above ships; see `occult_adventures/monster_data.rs`
+    // for the keys and `reach_gate.rs::UNREACHED_RECORD_FINDINGS` for the
+    // pinned non-reach.
+    MonsterBook {
+        corpus_book: "occult_adventures",
+        monsters: super::occult_adventures::monsters_static(),
+        monster_abilities: super::occult_adventures::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -980,7 +993,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3706,
+            3711,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -1016,10 +1029,16 @@ mod tests {
              facet (`SpecialAttack`) instead of raising `UnmodelledFacet` -- structurally \
              additive only: no existing `MonsterBook` entry's other rows changed, confirmed by \
              `git status --porcelain` showing exactly the 2 new `??` corpus files plus the 2 \
-             regenerated `monster_data.rs` files, zero deletions."
+             regenerated `monster_data.rs` files, zero deletions. 3706 -> 3711 \
+             (`decisions.md §27b`, +5): `occult_adventures` registered for the first time -- \
+             `decisions.md §27b` overturns the repeatedly-reconfirmed \"correctly out of scope\" \
+             disposition for this book's 5 `monster_ability` units (a reachability finding \
+             about a negated `PRECAMPAIGN` gate, not an ingest exemption). Structurally \
+             additive only: no pre-existing `MonsterBook` entry was modified, only one new one \
+             (`occult_adventures`) appended, all 5 rows ship owner-less."
         );
         assert_eq!(
-            digest, 0x38f4_aedd_6de1_caf3,
+            digest, 0xc4c1_44e1_483d_297d,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -1043,7 +1062,13 @@ mod tests {
              0x2fa5c4578c0267bb -> 0xd732c20ec4c2a946 (`decisions.md §20` round 5): the sorted \
              triple set gains 21 new members from the last newly-registered book \
              (`mythic_adventures`) — zero reclassification, same reasoning as rounds 3-4, only \
-             one new `MonsterBook` row appended"
+             one new `MonsterBook` row appended. 0xd732c20ec4c2a946 -> 0x38f4aedd6de1caf3 \
+             (`decisions.md §22` round 6): two `type_segments` upstream-data corrections, zero \
+             reclassification, same additive reasoning as rounds 3-5. 0x38f4aedd6de1caf3 -> \
+             0xc4c144e1483d297d (`decisions.md §27b`): the sorted triple set gains 5 new \
+             members from the newly-registered `occult_adventures` — zero reclassification, \
+             same reasoning as rounds 3-5, only one new `MonsterBook` row appended; re-derived \
+             live from this test's own failing run (never guessed), per `decisions.md §17a`"
         );
     }
 }

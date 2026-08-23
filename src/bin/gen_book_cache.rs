@@ -2525,10 +2525,14 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
     // `grep -n 'ha_races.lst\|ha_abilities_race.lst' _horror_adventures.pcc`
     // -> `63:ABILITY:ha_abilities_race.lst`, `77:RACE:ha_races.lst`, neither
     // carrying a `PRECAMPAIGN` gate. That check is read from the PCC LOAD LINE,
-    // per round 9's finding, and it is the check that disqualified this lane's
-    // other nominally-workable book -- `occult_adventures` loads its one
-    // monster row under a NEGATED gate (`!PRECAMPAIGN:1,INCLUDES=Bestiary 3`)
-    // this repo's campaign set fails, see `decisions.md`.
+    // per round 9's finding, and at the time this was written it disqualified
+    // this lane's other nominally-workable book: `occult_adventures` loads
+    // its one monster row under a NEGATED gate
+    // (`!PRECAMPAIGN:1,INCLUDES=Bestiary 3`) this repo's campaign set fails.
+    // `decisions.md §27b` overturns that disposition: the gate is a
+    // reachability finding, not an ingest exemption, so `occult_adventures`
+    // is registered below too (own `MonsterBookSpec` entry) -- reachability
+    // for its 5 units is reported honestly as 0.
     //
     // `corpus_book` is `horror_adventures`, matching the `data/corpus/` tree
     // this book's `race_trait` (Epic 6 round 3) and `companion` (Epic 7)
@@ -2670,6 +2674,30 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _mythic_adventures.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Mythic Adventures, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES or DESCISPI:YES",
         classified_by_cycle: "SD32-T9-NORECORD-R5",
+    },
+    // `decisions.md §27b` -- EVERYTHING. Overturns the disposition this
+    // file's own comment above (near `horror_adventures`) recorded: "occult_
+    // adventures loads its one monster row under a NEGATED gate this repo's
+    // campaign set fails" was a REACHABILITY finding, not an ingest
+    // exemption -- the book's `.lst` rows exist and are ingested here like
+    // every other book; reachability is reported separately and honestly
+    // (0 -- all 5 `monster_ability` rows ship owner-less, the identical
+    // shape `mythic_adventures` above already ships). `races_lsts: []`
+    // deliberately: `oa_races.lst`'s 4 rows are `docs/work-inventory.json`
+    // kind `race`, a different kind and a sibling lane's territory, not
+    // this cycle's `monster_ability` scope; the Python transcriber's own
+    // unit-set (`docs/work-inventory.json`, not a raw `races_lsts` glob)
+    // auto-includes the one `kind: monster` row (`oa_races_b3.lst`'s Kami
+    // (Shikigami)) regardless, because it is the sole `monster`-kind unit
+    // this book has -- see `occult_adventures/monster_data.rs`'s own header.
+    MonsterBookSpec {
+        corpus_book: "occult_adventures",
+        book_relative: "pathfinder/paizo/roleplaying_game/occult_adventures",
+        races_lsts: &["oa_races_b3.lst"],
+        abilities_lsts: &["oa_abilities_race.lst", "oa_abilities_race_b3.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _occult_adventures.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Occult Adventures, OGL §15 Product Identity section; zero rows of either abilities file declare NAMEISPI:YES or DESCISPI:YES",
+        classified_by_cycle: "SD32-DECISION-27B-CARVEOUT-CLOSURE",
     },
 ];
 

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:21:37Z",
+  "data": {
+    "corpus_key": "Shikigami ~ Improvised Weapon Mastery",
+    "delivery": "Extraordinary",
+    "description": "A shikigami gains Catch Off-Guard and Throw Anything as bonus feats, and adds its Charisma modifier instead of its Strength modifier to damage done with any improvised weapon, as attacks it makes with such weapons seem supernaturally lucky in landing damaging blows. Although a shikigami is Tiny, it never provokes attacks of opportunity when it attacks an adjacent foe with a melee weapon. If a shikigami critically hits an opponent with an improvised weapon, it deals ?3 damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "occult_adventures:monster_ability:shikigami_improvised_weapon_mastery",
+    "name": "Improvised Weapon Mastery",
+    "owners": [],
+    "source_page": "p.163",
+    "traits": [
+      "ShikigamiRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/support/oa_abilities_race_b3.lst",
+    "sha256": "0bc71f2432abdf7b5d8af974cb43d8a8c40bdd0f1b012371c56e8f47e265abea",
+    "line": 9,
+    "record_key": "Shikigami ~ Improvised Weapon Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
