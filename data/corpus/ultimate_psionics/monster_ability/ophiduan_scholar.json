@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Ophiduan ~ Scholar",
+    "delivery": null,
+    "description": "Choose one Knowledge skill; gain it as a class skill, and get +2 on the skill.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:ophiduan_scholar",
+    "name": "Scholar",
+    "owners": [
+      "ultimate_psionics:monster:ophiduan"
+    ],
+    "source_page": "p.336",
+    "traits": [
+      "RacialTraits",
+      "OphiduanRacialTrait",
+      "OphiduanSerpentsBite"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 319,
+    "record_key": "Ophiduan ~ Scholar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Maenad ~ Weapon Familiarity",
+    "delivery": "Extraordinary",
+    "description": "Maenads are proficient with flails, and treat any weapon with the word \"maenad\" in it as a martial weapon.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:maenad_weapon_familiarity",
+    "name": "Weapon Familiarity",
+    "owners": [
+      "ultimate_psionics:monster:maenad"
+    ],
+    "source_page": "p.19",
+    "traits": [
+      "RacialTraits",
+      "MaenadRacialTrait",
+      "MaenadRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 252,
+    "record_key": "Maenad ~ Weapon Familiarity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

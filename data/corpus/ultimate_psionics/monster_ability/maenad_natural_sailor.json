@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Maenad ~ Natural Sailor",
+    "delivery": "Extraordinary",
+    "description": "+2 bonus to Swim and Profession (Sailor); +2 bonus to Acrobatics and Climb made on sailing ships.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:maenad_natural_sailor",
+    "name": "Natural Sailor",
+    "owners": [
+      "ultimate_psionics:monster:maenad"
+    ],
+    "source_page": "p.19",
+    "traits": [
+      "RacialTraits",
+      "MaenadRacialTrait",
+      "MaenadRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 251,
+    "record_key": "Maenad ~ Natural Sailor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

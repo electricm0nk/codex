@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Naturally Psionic",
+    "delivery": null,
+    "description": "Gain the Wild Talent feat, or Psionic Talent if levels in a psionic class taken.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:naturally_psionic",
+    "name": "Naturally Psionic",
+    "owners": [
+      "ultimate_psionics:monster:blue",
+      "ultimate_psionics:monster:dromite",
+      "ultimate_psionics:monster:duergar_psionic",
+      "ultimate_psionics:monster:elan",
+      "ultimate_psionics:monster:forgeborn",
+      "ultimate_psionics:monster:half_giant",
+      "ultimate_psionics:monster:maenad",
+      "ultimate_psionics:monster:noral",
+      "ultimate_psionics:monster:ophiduan",
+      "ultimate_psionics:monster:xeph"
+    ],
+    "source_page": "p.10",
+    "traits": [
+      "NaturallyPsionic",
+      "ForgebornRacialTrait",
+      "ForgebornRacialDefault",
+      "NoralRacialTrait",
+      "NoralRacialDefault",
+      "BlueRacialTrait",
+      "BlueRacialDefault",
+      "DromiteRacialTrait",
+      "DromiteRacialDefault",
+      "DuergarDSPRacialTrait",
+      "DuergarDSPRacialDefault",
+      "ElanRacialTrait",
+      "ElanRacialDefault",
+      "Half-GiantRacialTrait",
+      "Half-GiantRacialDefault",
+      "MaenadRacialTrait",
+      "MaenadRacialDefault",
+      "OphiduanRacialTrait",
+      "OphiduanRacialDefault",
+      "XephRacialTrait",
+      "XephRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 12,
+    "record_key": "Naturally Psionic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

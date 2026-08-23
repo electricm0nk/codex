@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Dromite ~ Atavistic Link",
+    "delivery": "Supernatural",
+    "description": "Others can contact your mind more easily.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:dromite_atavistic_link",
+    "name": "Atavistic Link",
+    "owners": [
+      "ultimate_psionics:monster:dromite"
+    ],
+    "source_page": "p.313",
+    "traits": [
+      "RacialTraits",
+      "DromiteRacialTrait",
+      "DromitePsionics"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 70,
+    "record_key": "Dromite ~ Atavistic Link"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

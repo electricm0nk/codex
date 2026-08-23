@@ -105,17 +105,33 @@ mod monster_tests {
     use super::*;
     use std::collections::HashSet;
 
-    /// What ships is 21 and 15, against corpus unit counts of 21 and 79.
+    /// What ships is 21 and 127, against corpus unit counts of 21 and 176
+    /// (`docs/work-inventory.json`'s current `monster_ability` count for this
+    /// book, up from the 79 the original round-10 transcription ran
+    /// against).
     ///
     /// Every corpus monster row of this book ships — no `NAMEISPI:YES`, no
     /// `.COPY=` delta and no `.MOD` overlay reaches the monster side here.
     ///
     /// 13 -> 15 (SD31-W21-MONSTER-001, +2): the `CATEGORY:Internal` bundle-row
     /// ownership hop resolved 2 previously-orphaned ability rows.
+    ///
+    /// 15 -> 127 (SD-32 card 11, T9 onboarding, `decisions.md §19` sign-off /
+    /// `§17` generic-pass discipline, +112): re-running `transcribe_monster_
+    /// tables.py ultimate_psionics` against the current corpus/inventory
+    /// found 112 rows reachable through the namespaced-prefix shape
+    /// (`Astral Warrior ~ Link` etc. -- a monster row's own name as the
+    /// ability row's key prefix) that the round-10 transcription's own
+    /// snapshot had not yet resolved. 64 `Astral_`-namespaced rows remain
+    /// genuine orphans (no monster row of this book owns a bundle named
+    /// `Astral`) and are correctly still excluded -- named explicitly by the
+    /// transcriber's own stderr, not silently dropped. Re-derive: `python3
+    /// scripts/transcribe_monster_tables.py ultimate_psionics && cargo run
+    /// --locked --release --bin gen_book_cache -- ultimate_psionics`.
     #[test]
     fn the_shipped_counts_are_the_reachable_ones() {
         assert_eq!(monsters().len(), 21, "every corpus monster row of this book ships");
-        assert_eq!(monster_abilities().len(), 15);
+        assert_eq!(monster_abilities().len(), 127);
     }
 
     /// Every record cites one of this book's two `.lst` files, asserted on the

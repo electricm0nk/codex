@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "data": {
+    "corpus_key": "Breath Weapon ~ Cone of Poison",
+    "delivery": "Supernatural",
+    "description": "%1' Cone of Poisonous Gas, 2d4 Con damage from poison, DC %2 for half, usable every 1d4 rounds. You are immune to your own breath weapon.",
+    "description_variables": [
+      "BreathWeaponCone",
+      "BreathWeaponDC",
+      "BreathWeaponDuration"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:breath_weapon_cone_of_poison",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_4:monster:guardian_dragon"
+    ],
+    "source_page": null,
+    "traits": [
+      "BreathWeapon"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 44,
+    "record_key": "Breath Weapon ~ Cone of Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

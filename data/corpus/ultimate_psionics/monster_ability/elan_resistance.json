@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Elan ~ Resistance",
+    "delivery": "Supernatural",
+    "description": "As immediate action, spend 1 power point to gain +4 on saves until next action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:elan_resistance",
+    "name": "Resistance",
+    "owners": [
+      "ultimate_psionics:monster:elan"
+    ],
+    "source_page": "p.14",
+    "traits": [
+      "RacialTraits",
+      "ElanRacialTrait",
+      "ElanRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 128,
+    "record_key": "Elan ~ Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

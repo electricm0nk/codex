@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Noral ~ Master of Deception",
+    "delivery": null,
+    "description": "You gain a +4 racial bonus on Bluff checks to convince an opponent that what you are saying is true.  Once per day you can roll twice when making a Bluff or Diplomacy check and take the better roll.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:noral_master_of_deception",
+    "name": "Master of Deception",
+    "owners": [
+      "ultimate_psionics:monster:noral"
+    ],
+    "source_page": "p.333",
+    "traits": [
+      "RacialTraits",
+      "NoralRacialTrait",
+      "NoralPsionics"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 287,
+    "record_key": "Noral ~ Master of Deception"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

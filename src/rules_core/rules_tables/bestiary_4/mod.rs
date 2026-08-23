@@ -166,31 +166,45 @@ pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
 mod tests {
     use super::*;
 
-    /// What ships is 206 and 577, against corpus unit counts of 220 and 768.
-    /// Asserting 220 here would assert that this book ships fourteen Product
-    /// Identity personas; asserting 768 would assert it ships 191 records
-    /// nothing can reach.
+    /// What ships is 206 and 619, against corpus unit counts of 220 and 768
+    /// (+ `b4_abilities_races_ce.lst`'s own rows, added `SD-32 card 11` T9
+    /// onboarding). Asserting 220 here would assert that this book ships
+    /// fourteen Product Identity personas; asserting the raw `.lst` total
+    /// would assert it ships records nothing can reach.
     ///
     /// 543 -> 577 (SD31-W21-MONSTER-001, +34): the `CATEGORY:Internal`
     /// bundle-row ownership hop (`transcribe_monster_tables.py::
     /// find_internal_bundle_ability_refs`) resolved 34 of this book's
     /// previously-orphaned ability rows, owned only indirectly through a
     /// bundle row a monster's `ABILITY:Internal|AUTOMATIC|` token names.
+    ///
+    /// 577 -> 619 (SD-32 card 11, T9 onboarding, `decisions.md §19` sign-off
+    /// / `§17` generic-pass discipline, +42): `gen_book_cache.rs`'s
+    /// `MonsterBookSpec` for this book named only `b4_abilities_race.lst`;
+    /// `b4_abilities_races_ce.lst` is loaded by the SAME `_bestiary_4.pcc`
+    /// (line 59, ungated) and was simply never registered. Re-running
+    /// `transcribe_monster_tables.py bestiary_4` against the fresh inventory
+    /// (`t9-onboarding_cycle-1_cycle_receipt.md`) found these 42 newly-
+    /// reachable rows citing it; widening `abilities_lsts` to include it and
+    /// re-running `gen_book_cache -- bestiary_4` shipped them. Re-derive:
+    /// `python3 scripts/transcribe_monster_tables.py bestiary_4 && cargo run
+    /// --locked --release --bin gen_book_cache -- bestiary_4`.
     #[test]
-    fn the_book_ships_two_hundred_six_monsters_and_five_hundred_seventy_seven_abilities() {
+    fn the_book_ships_two_hundred_six_monsters_and_six_hundred_nineteen_abilities() {
         assert_eq!(monsters().len(), 206);
-        assert_eq!(monster_abilities().len(), 577);
+        assert_eq!(monster_abilities().len(), 619);
     }
 
-    /// The shipped total, pinned directly. 749 -> 783 (+34, same cause as the
-    /// test above); re-derive with `python3 scripts/classify_monster_ability_
-    /// rows.py bestiary_4` (whose own "remaining"/"reachable remainder"
-    /// framing answers a different, inventory-status-relative question and is
-    /// no longer the live source for this number) or `scripts/scan_monster_
-    /// ability_bundle_rows.py bestiary_4` rather than re-deriving by hand.
+    /// The shipped total, pinned directly. 749 -> 783 -> 825 (+42, same cause
+    /// as the test above); re-derive with `python3 scripts/classify_monster_
+    /// ability_rows.py bestiary_4` (whose own "remaining"/"reachable
+    /// remainder" framing answers a different, inventory-status-relative
+    /// question and is no longer the live source for this number) or
+    /// `scripts/scan_monster_ability_bundle_rows.py bestiary_4` rather than
+    /// re-deriving by hand.
     #[test]
     fn the_shipped_total_is_the_books_real_measured_count() {
-        assert_eq!(monsters().len() + monster_abilities().len(), 783);
+        assert_eq!(monsters().len() + monster_abilities().len(), 825);
     }
 
     /// Every transcribed ability row is owned by a monster row of this book.

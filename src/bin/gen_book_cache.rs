@@ -2343,8 +2343,19 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_4",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_4",
         races_lsts: &["b4_races.lst"],
-        abilities_lsts: &["b4_abilities_race.lst"],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        // `b4_abilities_races_ce.lst` added SD-32 card 11 (T9 onboarding,
+        // `decisions.md §19` sign-off / `§17` generic-pass discipline): both
+        // `_bestiary_4.pcc:59` and `_bestiary_4_for_players.pcc:59` load it
+        // UNGATED alongside `b4_abilities_race.lst` (`ABILITY:` line, no
+        // `PRECAMPAIGN`/other condition), the same "second abilities file at
+        // the book's own root" shape `inner_sea_gods`'s `support/` pair and
+        // `beastiary`'s `ce_abilities_race.lst` entry already cover --
+        // `transcribe_monster_tables.py`'s re-run against the fresh inventory
+        // found 42 newly-reachable rows citing this file, and this generator
+        // refuses (rather than silently drops) any citation to a file not
+        // named here.
+        abilities_lsts: &["b4_abilities_race.lst", "b4_abilities_races_ce.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt. `b4_abilities_races_ce.lst` is loaded by the SAME `_bestiary_4.pcc`/`_bestiary_4_for_players.pcc` (line 59, `ABILITY:` token, no gate) so the same OGL declaration governs it.",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section; 14 monster rows additionally declare NAMEISPI:YES per-record and are dropped by the screen",
         classified_by_cycle: "SD29-E5-F2-007",
     },

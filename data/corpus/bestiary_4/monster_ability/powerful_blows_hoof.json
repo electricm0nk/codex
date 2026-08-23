@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "data": {
+    "corpus_key": "Powerful Blows (Hoof)",
+    "delivery": "Extraordinary",
+    "description": "The creature's hoof attacks add 1-1/2 times the creature's Strength bonus to damage instead of its normal Strength bonus or half its Strength bonus.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:powerful_blows_hoof",
+    "name": "Powerful Blows (Hoof)",
+    "owners": [
+      "bestiary_4:monster:tikbalang"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b",
+    "line": 58,
+    "record_key": "Powerful Blows (Hoof)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
