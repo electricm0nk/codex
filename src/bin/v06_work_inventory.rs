@@ -59,6 +59,7 @@ use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
     compute_pilot_base_chassis, race_ids_with_a_magnitude_consumer,
 };
+use codex::rules_core::pilot_compute::untabled_base_class_chassis;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
@@ -8526,6 +8527,39 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
     for id in PuClassId::ALL {
         class_books.insert(id.name().to_string(), "pathfinder_unchained");
     }
+    // SD-32 card 11 (T12): `untabled_base_class_chassis`'s 20-class registry
+    // (`epic-3-class-reachability`, `decisions.md §10` item 4) is a REAL
+    // `compute_pilot_base_chassis` dispatch arm (`pilot_compute/mod.rs`,
+    // `untabled_base_class_chassis::resolve`) that already emits genuine
+    // `class_chassis.base_attack_bonus`/`base_save.*` explanations for a
+    // selected character -- it was simply never registered here, so the
+    // classifier reported every one of these 20 classes' `Kind::Class`
+    // records `not-ingested` even though the engine holds and computes a
+    // real chassis for them. Driven entirely by the registry's own data
+    // (`untabled-base-class-chassis.json`, itself corpus-derived): adding a
+    // 21st class here costs zero new code, unlike a hand-added match arm.
+    for meta in untabled_base_class_chassis::untabled_base_class_registry() {
+        let bare_name = meta
+            .class_id
+            .strip_prefix("class:")
+            .unwrap_or(meta.class_id.as_str())
+            .to_string();
+        let book: &'static str = match meta.source_book.as_str() {
+            "ultimate_psionics" => "ultimate_psionics",
+            "occult_adventures" => "occult_adventures",
+            "advanced_players_guide" => "advanced_players_guide",
+            "ultimate_magic" => "ultimate_magic",
+            "ultimate_intrigue" => "ultimate_intrigue",
+            "ultimate_wilderness" => "ultimate_wilderness",
+            other => panic!(
+                "untabled_base_class_chassis registry entry {} names source_book {other:?}, \
+                 which modelled_class_books()'s match has no arm for -- add one rather than \
+                 silently dropping the class from the registered set",
+                meta.class_id
+            ),
+        };
+        class_books.insert(bare_name, book);
+    }
     class_books
 }
 
@@ -13423,6 +13457,56 @@ mod modelled_class_books_registry_tests {
         assert_eq!(class_books.get("unchained_monk"), Some(&"pathfinder_unchained"));
         assert_eq!(class_books.get("unchained_rogue"), Some(&"pathfinder_unchained"));
         assert_eq!(class_books.get("unchained_summoner"), Some(&"pathfinder_unchained"));
+    }
+
+    /// SD-32 card 11 (T12): all 20 `untabled_base_class_chassis` registry
+    /// entries must register here, driven entirely by the registry's own
+    /// data (mutation-proof: comment out the loop above and this goes RED
+    /// for every one of the 20, not just a sample).
+    #[test]
+    fn all_twenty_untabled_base_classes_are_registered_from_the_chassis_registry_itself() {
+        let class_books = modelled_class_books();
+        let registry = untabled_base_class_chassis::untabled_base_class_registry();
+        assert_eq!(registry.len(), 20, "registry population drifted; re-run its own census script");
+        for meta in registry {
+            let bare = meta.class_id.strip_prefix("class:").unwrap_or(meta.class_id.as_str());
+            assert_eq!(
+                class_books.get(bare).copied(),
+                Some(meta.source_book.as_str()),
+                "{bare} (registry entry) must be registered under its own source_book"
+            );
+        }
+        // Spot check two by name, so a reader sees a concrete example rather
+        // than only the loop's abstraction.
+        assert_eq!(class_books.get("kineticist"), Some(&"occult_adventures"));
+        assert_eq!(class_books.get("vigilante"), Some(&"ultimate_intrigue"));
+    }
+
+    /// The class-probe's own real compute sweep now finds an attributable
+    /// delta for a formerly-unmodelled class: `Kind::Class` records for
+    /// these 20 move from `not-ingested` to `grounded`, proving the wiring
+    /// reaches the real dispatch chain (`compute_pilot_base_chassis` ->
+    /// `untabled_base_class_chassis::resolve`), not just this map.
+    #[test]
+    fn a_kind_class_record_for_a_newly_registered_class_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.class_books = modelled_class_books();
+        facts.class_effect_wired.insert("kineticist".to_string());
+        let unit = CorpusUnit {
+            book: "occult_adventures".to_string(),
+            source_book: "occult_adventures".to_string(),
+            kind: Kind::Class,
+            key: "Kineticist".to_string(),
+            name: "Kineticist".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "oa_classes.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "class_probe_observed_computed_delta_on_the_rendered_snapshot");
     }
 }
 
