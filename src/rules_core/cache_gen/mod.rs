@@ -13,6 +13,7 @@ pub mod apg;
 pub mod beastiary1;
 pub mod class_feature;
 pub mod class_feature_grants;
+pub mod equipment_copy_citation_repair;
 pub mod equipment_gap;
 pub mod feat_gap;
 pub mod hand_authored_equipment;

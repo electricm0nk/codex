@@ -1,27 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:06:17Z",
   "data": {
-    "key": "Gecko (Riding)",
     "category": "General",
-    "name": "Gecko (Riding)",
     "cost_gp": 300.0,
-    "weight_lbs": 1200.0,
-    "description": null
+    "description": null,
+    "key": "Gecko (Riding)",
+    "name": "Gecko (Riding)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Mount.Goods.Transportation.Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "*780|Any"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "WT",
+        "value": "1200"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ],
+    "weight_lbs": 1200.0
   },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
-    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690",
     "line": 805,
-    "record_key": "Gecko (Riding)"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Gecko (Riding)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -26,6 +26,10 @@
     ],
     "raw_tokens": [
       {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
         "key": "KEY",
         "value": "Material ~ Dragonhide"
       },
@@ -87,7 +91,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 108,
+    "line": 528,
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
     "record_key": "Dragonhide",
     "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"

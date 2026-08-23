@@ -1,27 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:06:17Z",
   "data": {
-    "key": "Shackles of Durance Vile",
     "category": "MagicItems",
-    "name": "Shackles of Durance Vile",
     "cost_gp": 16200.0,
-    "weight_lbs": 2.0,
-    "description": null
+    "description": null,
+    "key": "Shackles of Durance Vile",
+    "name": "Shackles of Durance Vile",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Bracer.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "16200"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      }
+    ],
+    "weight_lbs": 2.0
   },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
-    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
     "line": 944,
-    "record_key": "Shackles of Durance Vile"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Shackles of Durance Vile",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

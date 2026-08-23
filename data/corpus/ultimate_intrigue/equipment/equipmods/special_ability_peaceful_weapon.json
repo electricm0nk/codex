@@ -1,27 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:10:33Z",
   "data": {
-    "key": "Special Ability ~ Peaceful ~ Weapon",
     "category": "Equipmods",
-    "name": "Peaceful",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "A creature that has taken nonlethal damage from a peaceful weapon becomes shaken for 1 round each time it deals lethal damage to another living creature."
+    "description": "A creature that has taken nonlethal damage from a peaceful weapon becomes shaken for 1 round each time it deals lethal damage to another living creature.",
+    "key": "Special Ability ~ Peaceful ~ Weapon",
+    "name": "Peaceful",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Peaceful ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon.Melee.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement"
+      },
+      {
+        "key": "SPROP",
+        "value": "A creature that has taken nonlethal damage from a peaceful weapon becomes shaken for 1 round each time it deals lethal damage to another living creature."
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equipmods.lst",
-    "sha256": "5bc2ad2638890d74716a60fb31681d23ec188d9c540e2e662a31e696f3fcd056",
     "line": 13,
-    "record_key": "Special Ability ~ Peaceful ~ Weapon"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equipmods.lst",
+    "record_key": "Special Ability ~ Peaceful ~ Weapon",
+    "sha256": "5bc2ad2638890d74716a60fb31681d23ec188d9c540e2e662a31e696f3fcd056"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

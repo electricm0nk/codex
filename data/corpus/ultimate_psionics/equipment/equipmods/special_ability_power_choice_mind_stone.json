@@ -1,29 +1,68 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:10:33Z",
   "data": {
-    "key": "Special Ability ~ Power Choice / Mind Stone",
     "category": "Equipmods",
-    "name": "|Power Choice (Mind Stone)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Ability ~ Power Choice / Mind Stone",
+    "name": "|Power Choice (Mind Stone)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Power Choice / Mind Stone"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "SPELL"
+      },
+      {
+        "key": "TYPE",
+        "value": "MindStone"
+      },
+      {
+        "key": "COST",
+        "value": "(2000*(%SPELLLEVEL)*%SPELLLEVEL)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.417"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,MindStone"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Psionic|1|9"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
-    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968",
     "line": 130,
-    "record_key": "Special Ability ~ Power Choice / Mind Stone"
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Ability ~ Power Choice / Mind Stone",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:choice",
     "computed:pre_guard",
     "derived:cost"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

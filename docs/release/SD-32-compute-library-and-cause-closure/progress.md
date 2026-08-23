@@ -6582,3 +6582,66 @@ already-ingested records, not a shape-measurement gap.
 - **Kanban:** row 11, `t9-template-concat-pi-redaction-regen` appended.
 - Receipt: `artifacts/gate-3-closure-invariant/t9-template-concat-pi-redaction-regen_cycle-1_cycle_receipt.md`.
 - Commit: `3c7834101c`.
+## Cycle: `t9-onboarding-equipment-copy-citation-repair` (2026-08-23)
+
+Picked up the prior cycle's own named next-highest-confidence lead: `advanced_class_guide`'s
+`.COPY=`-alias citation-matcher fix, plus the full-population regression check that lead explicitly
+asked for.
+
+**Fix:** `equipment_gap::find_citation`'s `try_files` tried `KEY:<id>` then bare first-column `<id>`
+then, only as an absolute last resort, `.COPY=<id>`. Reordered so `.COPY=<id>` is tried immediately
+after `KEY:<id>`, before the bare first-column match, per identifier. Safe by construction (a
+`.COPY=<id>` target is a strictly stronger identity signal than a coincidental display-name match).
+New regression test proves the exact defect shape RED then GREEN.
+
+**Full-population regression** (`decisions.md §17`'s ask, honored): a new `#[ignore]`d test
+re-resolves all 7,464 already-shipped `lst_token` equipment/equipment_modifier citations against
+the fixed resolver. 32 real diffs, all traced by hand: 29 the real defect (a stale citation, same
+file, different line), 3 harmless (resolve differently but don't touch any `no_record` unit — left
+untouched).
+
+**The resolver fix alone doesn't move `no_record`** — `write_json` never overwrites an
+already-shipped record. Built `cache_gen::equipment_copy_citation_repair` /
+`repair_equipment_copy_citations` (same bar `lst_provenance_repair` sets: narrow, never
+fabricate), gated on 4 checks proven per-record against the real corpus, most importantly "the
+OLD citation stays covered by an INDEPENDENT sibling record" — every book this touches writes its
+long-key `held` units through a separate generator that already, independently, cites the same
+base line, confirmed live for all 29 repaired records before any write. `enrich_equipment_raw_tokens`
+(existing, established tool) repopulated the 29 records' `raw_tokens` from the corrected line —
+this cycle removed rather than hand-computed them.
+
+**Results:** `equipment_modifier` 33→**6** (`advanced_class_guide` 22→0, `core_rulebook` 5→2,
+`mythic_adventures` 2→0); `equipment` unchanged at 116 (a different shape — see below). Bundle
+`no_record` 509→**482**.
+
+**Major new lead traced, not fixed this cycle:** `decisions.md §24`'s Codex-neutral-name mechanism
+(`codex_neutral_name.rs`, already proven on `ability`/`deity`/`class_feature`) is NOT wired into
+any equipment generator. ≥41 of `equipment`'s 116 (`adventurers_guide`'s 18, 23 of
+`inner_sea_gods`'s 25) carry `NAMEISPI:YES` on their own `.lst` row — named by coordinate per this
+dispatch's PI discipline, not by name; see the cycle receipt. Wiring `§24` in here needs
+`EquipmentGapRow`/`hand_authored_equipment`'s output schema extended (or an equivalent post-write
+pass) plus full consumer-surface verification — sized as its own cycle. `ultimate_magic`'s 19-unit
+residual partially re-traced: the `.COPY=`-shaped generator config IS correct and complete; at
+least 5 of the 19 are this same `§24` shape, the remaining ~14 not isolated this cycle.
+
+- **Closure/reclassification/reachability** (`§16`): closure = 27 units (all `equipment_modifier`
+  citation corrections — data content unchanged, `.COPY=` inheritance already verified identical);
+  reclassification = 0; reachability = 0 (honest, unchanged from every prior cycle's own precedent
+  on this generator — not newly wired into `equipment_resolver::equipment_catalog_rows()`).
+- **PI screening:** 0 drops, 0 transcriptions. Repaired records were already-screened,
+  already-shipped; only `source.line` and enrichment-eligible fields changed.
+  `enrich_equipment_raw_tokens`'s own `NAMEISPI:YES` skip fired 0 times this run.
+- **Tests:** `cargo test --locked --lib rules_core::cache_gen::equipment_gap` (16/16, +1),
+  `cargo test --locked --lib rules_core::cache_gen::equipment_copy_citation_repair` (3/3, new),
+  `cargo test --locked --lib rules_core::cache_gen::` (144/144, 11 pre-existing ignored),
+  `cargo test --locked --test sd24_equipment_coverage_audit --test sd24_acg_equipment_field_completion
+  --test sd22_acg_equipment_resolves --test equipment_gap_tables` (31/31), full-corpus
+  `corpus_literal_sweep` (1 pre-existing unrelated finding, `inner_sea_magic`/`ability`, untouched).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-onboarding-equipment-copy-citation-repair_cycle-1_cycle_receipt.md`.
+- **What remains:** wire `decisions.md §24` into the equipment pipeline (≥41-unit lead, needs its
+  own cycle); `core_rulebook`'s 2 remaining `equipment_modifier` units (a different `write_json`
+  slug-collision defect, named in the repair module's own doc comment); `ultimate_magic`'s
+  remaining ~14 `equipment` units; `inner_sea_intrigue`/`bestiary_2`/`inner_sea_combat`/
+  `inner_sea_world_guide` and the remaining smaller `equipment` books; `spell`'s 167.
+- Commit: (this cycle's commit — see push output).

@@ -1,27 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:06:17Z",
   "data": {
-    "key": "Halo of Menace",
     "category": "MagicItems",
-    "name": "Halo of Menace",
     "cost_gp": 84000.0,
-    "weight_lbs": 1.0,
-    "description": null
+    "description": null,
+    "key": "Halo of Menace",
+    "name": "Halo of Menace",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "84000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
-    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
     "line": 689,
-    "record_key": "Halo of Menace"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Halo of Menace",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

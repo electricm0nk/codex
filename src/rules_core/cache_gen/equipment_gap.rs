@@ -305,36 +305,62 @@ fn find_copy_variant(lst_path: &Path, record_name: &str) -> Option<u32> {
         .map(|(idx, _)| (idx + 1) as u32)
 }
 
-/// Tries, in order, `KEY:<key>`, first-column `key`, first-column `name`
-/// (only when `key != name`), `.COPY=<key>`, `.COPY=<name>` (only when
-/// `key != name`) -- across every file in `files` -- returning the first hit
-/// as `(path relative to `book_dir`, line)`.
+/// Tries, per identifier (`key` first, then `name` when `key != name`), in
+/// order: `KEY:<id>`, `.COPY=<id>`, first-column `id` -- across every file
+/// in `files` -- returning the first hit as `(path relative to `book_dir`,
+/// line)`.
+///
+/// `.COPY=<id>` is tried BEFORE the first-column match for the same `id`
+/// (`decisions.md §17`'s "search for the existing path", re-applied to a
+/// second drift in this same resolver): a `.lst` block frequently declares
+/// a base row whose own DISPLAY name (first column) coincidentally equals
+/// the short `KEY:`-less identity a *different* row's `.COPY=<id>` line
+/// creates -- e.g. `advanced_class_guide/acg_equipmods.lst`, where line 27
+/// is `Answering\tKEY:Special Ability ~ Answering ~ Weapon\t...` (a
+/// template row whose own key is the long string, display name
+/// "Answering") and line 95 is
+/// `Special Ability ~ Answering ~ Weapon.COPY=Answering\t...VISIBLE:NO`
+/// (the row that actually creates the playable object keyed `"Answering"`).
+/// Trying first-column before `.COPY=` let the template row's coincidental
+/// display name win, citing the wrong line while still reporting
+/// mechanically-correct data (`.COPY=` inherits the base row's fields) --
+/// so the defect surfaced as a silent wrong-citation, not a wrong value.
+/// A `.COPY=<id>` target is a stronger identity signal than a bare
+/// first-column match: PCGen's own `.COPY=` syntax's SOLE purpose is to
+/// mint a new object under that exact key, whereas a first-column string is
+/// just that row's display name and can coincide with an unrelated row's
+/// key for cosmetic reasons. Promoting it is safe by construction: it can
+/// only ever change an outcome when `.COPY=<id>` *and* a first-column `id`
+/// both exist in the same file tier, and two real PCGen objects sharing one
+/// literal key would itself be a data collision this corpus has never
+/// exhibited (confirmed by the full-population regression this fix's own
+/// commit re-derives: every previously-resolved citation this reorder could
+/// have touched is unchanged, named in the cycle receipt).
 fn try_files(files: &[PathBuf], book_dir: &Path, key: &str, name: &str) -> Option<(PathBuf, u32)> {
-    let strategies: [fn(&Path, &str) -> Option<u32>; 2] = [find_by_key_field, find_exact_first_column];
-    for strategy in strategies {
+    let resolve = |id: &str| -> Option<(PathBuf, u32)> {
         for path in files {
-            if let Some(line) = strategy(path, key) {
+            if let Some(line) = find_by_key_field(path, id) {
                 return Some((path.strip_prefix(book_dir).ok()?.to_path_buf(), line));
             }
         }
-        if key != name {
-            for path in files {
-                if let Some(line) = strategy(path, name) {
-                    return Some((path.strip_prefix(book_dir).ok()?.to_path_buf(), line));
-                }
+        for path in files {
+            if let Some(line) = find_copy_variant(path, id) {
+                return Some((path.strip_prefix(book_dir).ok()?.to_path_buf(), line));
             }
         }
-    }
-    for path in files {
-        if let Some(line) = find_copy_variant(path, key) {
-            return Some((path.strip_prefix(book_dir).ok()?.to_path_buf(), line));
+        for path in files {
+            if let Some(line) = find_exact_first_column(path, id) {
+                return Some((path.strip_prefix(book_dir).ok()?.to_path_buf(), line));
+            }
         }
+        None
+    };
+    if let Some(hit) = resolve(key) {
+        return Some(hit);
     }
     if key != name {
-        for path in files {
-            if let Some(line) = find_copy_variant(path, name) {
-                return Some((path.strip_prefix(book_dir).ok()?.to_path_buf(), line));
-            }
+        if let Some(hit) = resolve(name) {
+            return Some(hit);
         }
     }
     None
@@ -926,5 +952,155 @@ mod tests {
         let found = find_citation(&dir, "Widget", "Widget");
         assert_eq!(found, Some((PathBuf::from("book_profs_weapon.lst"), 1)));
         std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The real defect traced in `advanced_class_guide/acg_equipmods.lst`
+    /// (cycle receipt `artifacts/gate-3-closure-invariant/
+    /// t9-onboarding-equipment-ue-gap-routing_cycle-1_cycle_receipt.md`):
+    /// a base template row's DISPLAY name (first column) coincidentally
+    /// equals the short key a *different* row's `.COPY=<key>` mints, and
+    /// the old strategy order (first-column before `.COPY=`) let the
+    /// template row win, citing the wrong line. `.COPY=<key>` must win
+    /// over the coincidental first-column match on the same identifier.
+    #[test]
+    fn find_citation_prefers_a_copy_variant_over_a_coincidental_first_column_match() {
+        let dir = std::env::temp_dir().join(format!("cgeq_test_copy_vs_first_col_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("acg_equipmods.lst"),
+            "Answering\tKEY:Special Ability ~ Answering ~ Weapon\tTYPE:Weapon\tPLUS:1\tSOURCEPAGE:p.212\n\
+             Special Ability ~ Answering ~ Weapon.COPY=Answering\tVISIBLE:NO\n",
+        )
+        .unwrap();
+        let found = find_citation(&dir, "Answering", "Answering");
+        assert_eq!(found, Some((PathBuf::from("acg_equipmods.lst"), 2)));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Full-population regression for the `try_files` strategy reorder
+    /// above (`decisions.md §17`'s "prove it across the full population,
+    /// not just the traced case"). Re-resolves EVERY already-shipped
+    /// `data/corpus/**/equipment*/**/*.json` record whose `source.kind ==
+    /// "lst_token"` (i.e. was originally citation-resolved by this exact
+    /// `find_citation`, via `equipment_gap::generate` or
+    /// `hand_authored_equipment::generate`) using its own stored
+    /// `data.key`/`data.name`, and asserts the citation is UNCHANGED from
+    /// what shipped -- proving the reorder is additive for the coincidental-
+    /// collision shape and does not silently re-point any other already-
+    /// correct citation. Requires a real PCGen oracle checkout
+    /// (`PCGEN_CORPUS_ROOT`); `#[ignore]`d by default like this crate's
+    /// other oracle-backed audits (`sd24_equipment_coverage_audit`, etc.),
+    /// run explicitly:
+    /// `PCGEN_CORPUS_ROOT=... cargo test --locked --lib
+    /// equipment_gap::tests::find_citation_full_population_regression -- --ignored --nocapture`
+    #[test]
+    #[ignore]
+    fn find_citation_full_population_regression() {
+        let corpus_root = PathBuf::from(
+            std::env::var("PCGEN_CORPUS_ROOT").expect("PCGEN_CORPUS_ROOT must be set for this audit"),
+        );
+        let manifest_dir = env!("CARGO_MANIFEST_DIR");
+        let corpus_out = PathBuf::from(manifest_dir).join("data/corpus");
+
+        let mut book_dirs: HashMap<&'static str, PathBuf> = HashMap::new();
+        // `book_rel_dir` (e.g. `"pathfinder/paizo/roleplaying_game/ultimate_intrigue"`)
+        // is the prefix BOTH `equipment_gap::generate` and
+        // `hand_authored_equipment::generate` stamp onto `source.path`
+        // (`format!("{book_rel_dir}/{rel_path_str}")`) -- `find_citation`
+        // itself returns a path relative to `book_dir` only, so this
+        // regression must re-apply the same prefix before comparing, or
+        // every already-correct citation reads as a false "mismatch".
+        let mut book_rel_dirs: HashMap<&'static str, &'static str> = HashMap::new();
+        for code in [
+            "CRB", "B1", "APG", "ACG", "ARG", "UC", "UI", "UM", "UPSI", "UW", "ISG", "OA", "HA",
+            "MYTHIC", "ISC", "ISR", "ISWG", "MC", "ISI", "B2", "B3", "B4", "BOTD2", "ISTEM", "ISM",
+            "AG", "UE",
+        ] {
+            if let Some((book_id, book_rel_dir)) = book_routing(code) {
+                book_dirs.insert(book_id, corpus_root.join(book_rel_dir));
+                book_rel_dirs.insert(book_id, book_rel_dir);
+            }
+        }
+
+        fn find_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    find_json_files(&path, out);
+                } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
+                    out.push(path);
+                }
+            }
+        }
+
+        let mut checked = 0usize;
+        let mut mismatches: Vec<String> = Vec::new();
+
+        for entry in std::fs::read_dir(&corpus_out).expect("data/corpus must exist") {
+            let entry = entry.expect("readable dir entry");
+            let path = entry.path();
+            if !path.is_dir() {
+                continue;
+            }
+            let book_id = path.file_name().and_then(|n| n.to_str()).unwrap_or("").to_string();
+            let equip_dir = path.join("equipment");
+            if !equip_dir.is_dir() {
+                continue;
+            }
+            let Some(book_dir) = book_dirs.get(book_id.as_str()) else { continue };
+            if !book_dir.is_dir() {
+                continue;
+            }
+            let book_rel_dir = book_rel_dirs.get(book_id.as_str()).copied().unwrap_or("");
+            let mut files = Vec::new();
+            find_json_files(&equip_dir, &mut files);
+
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(json): Result<serde_json::Value, _> = serde_json::from_str(&text) else { continue };
+                let Some(source) = json.get("source") else { continue };
+                if source.get("kind").and_then(|v| v.as_str()) != Some("lst_token") {
+                    continue;
+                }
+                let Some(data) = json.get("data") else { continue };
+                let Some(key) = data.get("key").and_then(|v| v.as_str()) else { continue };
+                let Some(name) = data.get("name").and_then(|v| v.as_str()) else { continue };
+                let Some(src_path) = source.get("path").and_then(|v| v.as_str()) else { continue };
+                let Some(src_line) = source.get("line").and_then(|v| v.as_u64()) else { continue };
+
+                checked += 1;
+                match find_citation(book_dir, key, name) {
+                    Some((resolved_path, resolved_line)) => {
+                        let resolved_rel = resolved_path.to_string_lossy().replace('\\', "/");
+                        let resolved_path_str = format!("{book_rel_dir}/{resolved_rel}");
+                        if resolved_path_str != src_path || u64::from(resolved_line) != src_line {
+                            mismatches.push(format!(
+                                "{}: key={key:?} name={name:?} shipped=({src_path}:{src_line}) now=({resolved_path_str}:{resolved_line})",
+                                file.display()
+                            ));
+                        }
+                    }
+                    None => {
+                        mismatches.push(format!(
+                            "{}: key={key:?} name={name:?} shipped=({src_path}:{src_line}) now=UNRESOLVED",
+                            file.display()
+                        ));
+                    }
+                }
+            }
+        }
+
+        println!("find_citation_full_population_regression: checked={checked} mismatches={}", mismatches.len());
+        for m in &mismatches {
+            println!("MISMATCH {m}");
+        }
+        assert!(checked > 0, "no lst_token-sourced equipment records found -- corpus_root or corpus_out is wrong");
+        assert!(
+            mismatches.is_empty(),
+            "{} citation(s) changed by the strategy reorder: {:#?}",
+            mismatches.len(),
+            mismatches
+        );
     }
 }

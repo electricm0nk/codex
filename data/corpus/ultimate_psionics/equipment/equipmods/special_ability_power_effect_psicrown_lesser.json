@@ -1,29 +1,68 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:10:33Z",
   "data": {
-    "key": "Special Ability ~ Power Effect / Psicrown / Lesser",
     "category": "Equipmods",
-    "name": "|Power Effect (Psicrown/Lesser)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Ability ~ Power Effect / Psicrown / Lesser",
+    "name": "|Power Effect (Psicrown/Lesser)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Power Effect / Psicrown / Lesser"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "SPELL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psicrown"
+      },
+      {
+        "key": "COST",
+        "value": "(200*(%SPELLLEVEL)*%CASTERLEVEL)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.430"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Psicrown"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Psionic|1|9"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
-    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968",
     "line": 125,
-    "record_key": "Special Ability ~ Power Effect / Psicrown / Lesser"
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Ability ~ Power Effect / Psicrown / Lesser",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:choice",
     "computed:pre_guard",
     "derived:cost"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }
