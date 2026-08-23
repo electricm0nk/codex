@@ -26101,6 +26101,14 @@ fn compute_class_chassis(
             ground_psychic_warrior_class_features(class_level.level, explanations);
         } else if class_level.class_id == "class:soulknife" {
             ground_soulknife_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:aegis" {
+            ground_aegis_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:tactician" {
+            ground_tactician_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:vitalist" {
+            ground_vitalist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:wilder" {
+            ground_wilder_class_features(class_level.level, explanations);
         }
 
         Some((base_attack_bonus, base_saves))
@@ -27264,6 +27272,287 @@ fn ground_soulknife_class_features(level: u8, explanations: &mut Vec<Computation
             detail: format!(
                 "Soulknife level {level} Quick Draw: {uses} free-action manifestation per \
                  round (flat)"
+            ),
+        });
+    }
+}
+
+/// Grounds Aegis's seven magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::aegis_features`) — SD-32 card 11
+/// (T12), cycle 3, the sixth class of `ultimate_psionics` attempted.
+fn ground_aegis_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::aegis_features as agf;
+    let int = ability_modifiers.intelligence;
+
+    if let Some(hp) = agf::astral_repair_hp(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.astral_repair.hp".to_owned(),
+            value: hp,
+            detail: format!("Aegis level {level} Astral Repair: {hp} hit points restored (flat)"),
+        });
+    }
+    if let Some(dr) = agf::damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.damage_reduction.value".to_owned(),
+            value: dr,
+            detail: format!(
+                "Aegis level {level} Damage Reduction: DR {dr}/- while wearing the astral suit \
+                 (floor((level+4)/3))"
+            ),
+        });
+    }
+    if let Some(points) = agf::form_astral_suit_custom_points(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.form_astral_suit.custom_points".to_owned(),
+            value: points,
+            detail: format!(
+                "Aegis level {level} Form Astral Suit: {points} customization points \
+                 (2+level+floor((level+1)/5))"
+            ),
+        });
+    }
+    if let Some(bonus) = agf::craftsman_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.craftsman.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Aegis level {level} Craftsman: +{bonus} bonus on a chosen Craft skill \
+                 (floor((level+2)/4))"
+            ),
+        });
+    }
+    if let Some(times) = agf::reconfigure_times_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.reconfigure.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Aegis level {level} Reconfigure: {times} uses per day (floor((level-1)/2))"
+            ),
+        });
+    }
+    if let Some(duration) = agf::augment_suit_duration_rounds(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.augment_suit.duration_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Aegis level {level} Augment Suit: {duration} rounds duration (Intelligence \
+                 modifier {int} only, no level term)"
+            ),
+        });
+    }
+    if let Some(times) = agf::cannibalize_suit_times_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.cannibalize_suit.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Aegis level {level} Cannibalize Suit: {times} uses per day \
+                 (floor((level-10)/2))"
+            ),
+        });
+    }
+}
+
+/// Grounds Tactician's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::tactician_features`) — SD-32 card 11
+/// (T12), cycle 3, the seventh class of `ultimate_psionics` attempted.
+fn ground_tactician_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::tactician_features as tf;
+    let int = ability_modifiers.intelligence;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(minds) = tf::collective_minds(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.collective.minds".to_owned(),
+            value: minds,
+            detail: format!(
+                "Tactician level {level} Collective: {minds} minds joined \
+                 (max(Intelligence modifier {int}, level/2))"
+            ),
+        });
+    }
+    if let Some(times) = tf::coordinated_strike_times_per_day(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.coordinated_strike.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Tactician level {level} Coordinated Strike: {times} uses per day (3 + \
+                 Intelligence modifier {int})"
+            ),
+        });
+    }
+    if let Some(times) = tf::strategy_times_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.strategy.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Tactician level {level} Strategy: {times} uses per day (3 + Charisma \
+                 modifier {cha})"
+            ),
+        });
+    }
+    if let Some(powers) = tf::improved_share_powers(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.improved_share.powers".to_owned(),
+            value: powers,
+            detail: format!(
+                "Tactician level {level} Improved Share: {powers} Shared powers maintained \
+                 (1+floor((level+1)/6))"
+            ),
+        });
+    }
+    if let Some(pool) = tf::teamwork_feats_bonus_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.teamwork_feats.bonus_pool".to_owned(),
+            value: pool,
+            detail: format!(
+                "Tactician level {level} Teamwork Feats: {pool} bonus teamwork feats \
+                 (floor(level/6))"
+            ),
+        });
+    }
+    if let Some(bonus) = tf::master_strategist_bonus(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.master_strategist.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Tactician level {level} Master Strategist: +{bonus} insight bonus \
+                 (Intelligence modifier {int} only, no level term)"
+            ),
+        });
+    }
+}
+
+/// Grounds Vitalist's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::vitalist_features`) — SD-32 card 11
+/// (T12), cycle 3, the eighth class of `ultimate_psionics` attempted.
+fn ground_vitalist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::vitalist_features as vf;
+    let wis = ability_modifiers.wisdom;
+
+    if let Some(minds) = vf::collective_minds(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.collective.minds".to_owned(),
+            value: minds,
+            detail: format!(
+                "Vitalist level {level} Collective: {minds} minds joined \
+                 (max(level/2, Wisdom modifier {wis}))"
+            ),
+        });
+    }
+    if let Some(times) = vf::transfer_wounds_times_per_day(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.transfer_wounds.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Vitalist level {level} Transfer Wounds: {times} uses per day (3 + Wisdom \
+                 modifier {wis})"
+            ),
+        });
+    }
+    if let Some(lvl) = vf::health_sense_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.health_sense.level".to_owned(),
+            value: lvl,
+            detail: format!(
+                "Vitalist level {level} Health Sense: tracked level {lvl} (equal to class \
+                 level)"
+            ),
+        });
+    }
+    if let Some(dmg) = vf::steal_health_damage(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.steal_health.damage".to_owned(),
+            value: dmg,
+            detail: format!(
+                "Vitalist level {level} Steal Health: {dmg} hit points dealt and healed \
+                 (level + Wisdom modifier {wis})"
+            ),
+        });
+    }
+    if let Some(times) = vf::request_aid_times_per_day(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.request_aid.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Vitalist level {level} Request Aid: {times} uses per day (3 + Wisdom \
+                 modifier {wis})"
+            ),
+        });
+    }
+    if let Some(dc) = vf::steal_life_dc(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.steal_life.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Vitalist level {level} Steal Life: DC {dc} (10 + Wisdom modifier {wis} + \
+                 level/2)"
+            ),
+        });
+    }
+}
+
+/// Grounds Wilder's five magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::wilder_features`) — SD-32 card 11
+/// (T12), cycle 3, the ninth and last class of `ultimate_psionics`
+/// attempted, closing the whole source book.
+fn ground_wilder_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::ultimate_psionics::wilder_features as wf;
+
+    if let Some(pct) = wf::psychic_enervation_percent(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.psychic_enervation.percent".to_owned(),
+            value: pct,
+            detail: format!(
+                "Wilder level {level} Psychic Enervation: {pct}% chance of enervation (flat)"
+            ),
+        });
+    }
+    if let Some(range) = wf::surge_blast_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.surge_blast.range_feet".to_owned(),
+            value: range,
+            detail: format!("Wilder level {level} Surge Blast: {range}-foot range (flat)"),
+        });
+    }
+    if let Some(bonus) = wf::wild_surge_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wild_surge.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Wilder level {level} Wild Surge: +{bonus} manifester level and bonus power \
+                 points (1+floor((level+1)/4))"
+            ),
+        });
+    }
+    if let Some(bonus) = wf::elude_attack_ac_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.elude_attack.ac_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Wilder level {level} Elude Attack: +{bonus} dodge bonus to AC \
+                 (floor((level+2)/4))"
+            ),
+        });
+    }
+    if let Some(duration) = wf::surging_euphoria_duration_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.surging_euphoria.duration_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Wilder level {level} Surging Euphoria: {duration} rounds duration (equal to \
+                 the current Wild Surge bonus)"
             ),
         });
     }
@@ -48090,6 +48379,161 @@ mod untabled_base_class_feature_roster_wiring_tests {
         assert_eq!(value("class_feature.untabled.soulknife.quick_draw.uses_per_round"), 1);
     }
 
+    /// SD-32 card 11 (T12), cycle 3: proves `ground_aegis_class_features`,
+    /// `ground_tactician_class_features`, `ground_vitalist_class_features`,
+    /// and `ground_wilder_class_features` really run through the real
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` dispatch
+    /// site, at level 20 with real ability scores overridden away from the
+    /// fixture's default (10, modifier 0) -- closing all nine
+    /// magnitude-bearing `ultimate_psionics` classes.
+    #[test]
+    fn aegis_level_20_reaches_every_real_magnitude_with_a_real_intelligence_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:aegis".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.aegis.astral_repair.hp"), 2);
+        assert_eq!(
+            value("class_feature.untabled.aegis.damage_reduction.value"),
+            8, // (20+4)/3
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.form_astral_suit.custom_points"),
+            26, // 2+20+4
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.craftsman.bonus"),
+            5, // (20+2)/4
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.reconfigure.times_per_day"),
+            9, // (20-1)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.augment_suit.duration_rounds"),
+            3, // intelligence modifier only
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.cannibalize_suit.times_per_day"),
+            5, // (20-10)/2
+        );
+    }
+
+    #[test]
+    fn tactician_level_20_reaches_every_real_magnitude_with_real_ability_scores() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:tactician".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        input.chosen.ability_scores.charisma = 14; // +2
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.tactician.collective.minds"),
+            10, // max(3, 20/2=10)
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.coordinated_strike.times_per_day"),
+            6, // 3+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.strategy.times_per_day"),
+            5, // 3+2
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.improved_share.powers"),
+            4, // 1+(21/6)
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.teamwork_feats.bonus_pool"),
+            3, // 20/6
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.master_strategist.bonus"),
+            3, // intelligence modifier only
+        );
+    }
+
+    #[test]
+    fn vitalist_level_20_reaches_every_real_magnitude_with_a_real_wisdom_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:vitalist".to_owned();
+        input.chosen.ability_scores.wisdom = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.vitalist.collective.minds"),
+            10, // max(20/2=10, 3)
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.transfer_wounds.times_per_day"),
+            6, // 3+3
+        );
+        assert_eq!(value("class_feature.untabled.vitalist.health_sense.level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.vitalist.steal_health.damage"),
+            23, // 20+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.request_aid.times_per_day"),
+            6, // 3+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.steal_life.dc"),
+            23, // 10+3+10
+        );
+    }
+
+    #[test]
+    fn wilder_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:wilder".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.wilder.psychic_enervation.percent"), 15);
+        assert_eq!(value("class_feature.untabled.wilder.surge_blast.range_feet"), 30);
+        assert_eq!(
+            value("class_feature.untabled.wilder.wild_surge.bonus"),
+            6, // 1+(21/4)
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.elude_attack.ac_bonus"),
+            5, // (22/4)
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.surging_euphoria.duration_rounds"),
+            6, // mirrors wild_surge bonus
+        );
+    }
+
     /// Below each class's own highest-gated magnitude's `min_level`, that
     /// specific id must be absent -- the same "absent means not yet
     /// granted" contract proven for Antipaladin above, spot-checked at
@@ -48099,7 +48543,7 @@ mod untabled_base_class_feature_roster_wiring_tests {
     /// does not apply generically here).
     #[test]
     fn each_new_class_lacks_its_highest_gated_magnitude_one_level_early() {
-        let cases: [(&str, u8, &str); 5] = [
+        let cases: [(&str, u8, &str); 9] = [
             (
                 "class:cryptic",
                 18,
@@ -48124,6 +48568,26 @@ mod untabled_base_class_feature_roster_wiring_tests {
                 "class:soulknife",
                 5,
                 "class_feature.untabled.soulknife.quick_draw.uses_per_round",
+            ),
+            (
+                "class:aegis",
+                12,
+                "class_feature.untabled.aegis.cannibalize_suit.times_per_day",
+            ),
+            (
+                "class:tactician",
+                20,
+                "class_feature.untabled.tactician.master_strategist.bonus",
+            ),
+            (
+                "class:vitalist",
+                14,
+                "class_feature.untabled.vitalist.steal_life.dc",
+            ),
+            (
+                "class:wilder",
+                4,
+                "class_feature.untabled.wilder.surging_euphoria.duration_rounds",
             ),
         ];
         for (class_id, min_level, gated_id) in cases {

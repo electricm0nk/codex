@@ -7384,3 +7384,54 @@ Groups B, C, E are corpus-record-generator-side and independent of the walker/re
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-onboarding-equipment-modifier-ability-rootcause_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle t12-class-feature-shapes-cycle3 (2026-08-23) — Card 11, row 15's T12 remainder
+
+Closed 4 more classes end-to-end (Aegis 7, Tactician 6, Vitalist 6, Wilder 5 = 24 records), joining
+the prior cycle's 24 (Cryptic/Dread/Marksman/Psychic Warrior/Soulknife) and Antipaladin's 7 — **55 of
+108 magnitude-bearing `untabled_base_class_feature_roster` records now closed with real compute
+functions and real wiring**. This closes all 9 of `ultimate_psionics`'s magnitude-bearing classes
+(Aegis, Cryptic, Dread, Marksman, Psychic Warrior, Soulknife, Tactician, Vitalist, Wilder — 48
+records, all now closed); Antipaladin (7, `apg`) was the prior book closed before that.
+
+Same template as the prior two cycles: real per-feature compute functions in
+`src/rules_core/rules_tables/ultimate_psionics/{aegis,tactician,vitalist,wilder}_features.rs` (23 unit
+tests), wired via 4 new `ground_<class>_class_features` functions into
+`compute_class_chassis`'s `untabled_base_class_chassis::resolve` dispatch arm, proven end-to-end by 4
+new level-20 wiring tests plus 4 new cases in the shared `each_new_class_lacks_its_highest_gated_
+magnitude_one_level_early` table (`src/rules_core/pilot_compute/mod.rs`).
+
+All 24 records fit the four shapes the prior cycles established (flat/constant, `level`-scaled,
+`level+ability_modifier`, `ability_modifier`-only) plus one real two-term variant seen twice
+(`max(ability_modifier, level/2)` — Tactician's and Vitalist's own `Collective`) — a genuine formula
+variation, not a new exclusion-worthy shape (`decisions.md §17`/`§27b`). Two roster-census quirks
+handled the same documented way as the prior cycle's Cryptic/Soulknife cases: Tactician's `Collective`
+roster "var" is a mis-picked `PREABILITY` gate clause (grounded the record's real
+`TacticianCollectiveMinds` token instead); Vitalist's `Health Sense` and Tactician's `Teamwork Feats`
+both have `var: None` in the roster but carry real `BONUS:VAR`/`BONUS:ABILITYPOOL` tokens, grounded as
+their own magnitudes.
+
+RED→GREEN proven live at both altitudes (mutated `vitalist_features::steal_life_dc` +99; unit test and
+wiring test both failed for the intended reason, reverted). 75/75 targeted tests green (23 new unit
+tests + 4 new wiring tests + all 48 pre-existing Antipaladin/Cryptic/Dread/Marksman/Psychic
+Warrior/Soulknife tests), no regressions.
+
+Oracle bootstrap note: a fresh worktree's `artifacts/corpus/operator-supplied/pcgen/` slot is empty
+(git-ignored); `scripts/verify.sh --only preflight-oracle` initially resolved against the forbidden
+`$HOME/workspace/repos/pcgen` default until `PCGEN_REPO_DIR` was exported and
+`scripts/fetch-pcgen-oracle.sh --dest "$PCGEN_REPO_DIR"` was run to populate the repo-local slot per
+this bundle's own directive.
+
+**Remaining: 53 of 108 magnitude-bearing records across 10 classes** — Kineticist 6, Magus 5,
+Medium 7, Mesmerist 10, Occultist 6, Psychic 4, Shifter 5, Spiritualist 3, Vigilante 7 — plus
+`psion`'s genuinely-third convention (sized, not closed, by an earlier cycle). `occult_adventures`'s
+Kineticist/Medium/Mesmerist/Occultist/Psychic/Spiritualist share `oa_abilities_class.lst` (36
+records/6 classes, one source file) — the next highest-leverage single oracle-reading pass, leaving
+Magus (`ultimate_magic`), Shifter (`ultimate_wilderness`), and Vigilante (`ultimate_intrigue`) as
+single-class single-book tails.
+
+Card 11 / row 11 stays `in-progress`.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/epic-2-t12-class-feature-shapes_cycle-3_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).

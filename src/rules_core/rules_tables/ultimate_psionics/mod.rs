@@ -69,6 +69,7 @@
 //! `CATEGORY:Internal` row named `bundle_key` and credits the monster with
 //! every ability that row names.
 
+pub mod aegis_features;
 pub mod archetype_tables;
 pub mod cryptic_features;
 pub mod dread_features;
@@ -77,6 +78,9 @@ pub mod feat_tables;
 pub mod marksman_features;
 pub mod psychic_warrior_features;
 pub mod soulknife_features;
+pub mod tactician_features;
+pub mod vitalist_features;
+pub mod wilder_features;
 
 mod monster_data;
 
