@@ -816,3 +816,67 @@ produced the answer it was read as producing.
 
 Escalating an overstated defect costs real work: this one was written into a committed decision,
 relayed to the operator as urgent, and used to justify a lane's priority.
+
+## Decision 19 — T9 PI sign-off: all four blacklist amendments approved; the two open questions ruled (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. Closes the chain `§15` (order the audit) → `§18` (order the per-record
+review) → this. **`docs/governance/ogl-pi-blacklist.md` is signed off as amended** and stops being
+`DRAFT` / `pending_operator_sign_off`. T9's onboarding pause is lifted for everything the rulings
+below place in `clear`.
+
+### 19a — Amendments 3a-3d, all approved
+
+Verbatim text in `artifacts/gate-3-closure-invariant/t9-pi-signoff-package.md §3`. Applied to
+`ogl-pi-blacklist.md`:
+
+- **3a — new §2.3 entries for `companion` and `monster_ability`.** Neither kind had *any* field rule
+  before, which is why 802 units could not be resolved either way. `companion`'s 443 uncertain rows
+  were read corpus-wide and found to be entirely generic game mechanic; `monster_ability`'s rule ties
+  judgment to the owning creature's PI status rather than the row's content in isolation.
+- **3b — normalization rule.** Case-fold plus a bounded OCR-confusion table (`l`/`I`/`1`/`!` → one
+  canonical character, `0`/`o`, `rn`→`m`), with **word-boundary matching, not bare substring**. Two of
+  three lanes independently hit the `Nex`/`next` false positive and fixed it the same way. The PCGen
+  field delimiter `|` must **never** enter the OCR table — folding it produces a false *negative* on
+  the `Cayden CaiLean` incident itself, confirmed by direct test.
+- **3c — `.COPY=`/`.MOD` inheritance.** A derivative row inherits its base item's declared
+  `NAMEISPI:YES`/`DESCISPI:YES`. Both lanes that examined it reached this independently. Resolves 5
+  units (Hellknight/Gray Maiden equipment, `clear` → `blocked`); identifies 6 more whose targets were
+  never traced.
+- **3d — term-list additions.** `Aldori` and `Magaambya`/`Magaambyan` added. The reviewing lane left
+  this undecided because the terms appear in mechanical `PREABILITY` prerequisite fields rather than
+  a record's own name or flavour, and judged that a legal call. **The operator has now made it.**
+
+### 19b — The 954 `monster_ability` embedded-creature-name units: the row's own declaration governs
+
+Ruled **clear**. A `monster_ability` row carrying no PI declaration and no term-list hit is not
+Product Identity merely because its text names a Paizo-original creature.
+
+**Recorded caveat, once, so it is not lost:** the review found PCGen's own data inconsistent here —
+`Summon Monster IX (Cthulhu)` is declared `NAMEISPI:YES` as a **spell**, while the three
+`Star-Spawn of Cthulhu` **monster_ability** rows for the identical creature carry no declaration.
+Under this ruling "no declaration" is decisive, so that inconsistency now resolves in favour of
+`clear`. It remains a **data-quality finding against the pinned oracle**, independent of the policy
+question, and is not re-litigated by any later cycle without a new operator ruling.
+
+### 19c — The ~360 generic-token units: widen the allowlist and re-run
+
+Ruled **widen**. Rows flagged only for a generic token outside the classifier's allowlist
+(`reflex`, `eidolon`, `swim`, `Adamantine`, `Mithral`, …) are stuck because the vocabulary is
+incomplete, not because content was found — the consolidating lane's own read, which the operator
+accepts.
+
+**Binding condition:** the widening cycle **names every token it adds and why**, in its receipt. A
+too-broad allowlist is precisely how a silent miss happens, and §4's recorded incident is the
+program's own proof of that. A token added without a stated reason is a defect, not a shortcut.
+
+### 19d — Consequences
+
+1. `ogl-pi-blacklist.md` frontmatter moves to signed-off, dated 2026-08-23, citing this decision.
+   Its DRAFT banner's standing instruction — *"when a real field's content doesn't obviously fit a
+   bucket, stop and ask the operator rather than guessing"* — **survives sign-off unchanged** and
+   continues to bind every cycle.
+2. **`§15`'s standing rule stays in force for every shape, not only T9:** a cycle reaching a
+   suspected Product Identity record stops on that record, lands everything else, and reports it by
+   name. Never transcribe, never silently skip.
+3. T9's real disposition is re-derived after 19a-19c are applied. The pre-ruling figures (266
+   blocked / 1,988 clear / 1,319 undecidable) are superseded and must not be quoted as final.
