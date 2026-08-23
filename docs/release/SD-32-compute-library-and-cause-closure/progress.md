@@ -4186,3 +4186,115 @@ not written by this cycle, budget constants untouched).
   per-feature compute functions, named not attempted; the original brief's "11-large/82-small" split
   no longer describes the corpus and must be re-derived before reuse in a future dispatch.
 - Commit: (recorded after push).
+
+## Cycle `epic-2-t2b-cluster4-classfeature-fix` — card 11, T2b cluster 4 (`decisions.md §17` item 3)
+
+Re-derived the dispatch brief's own T2b figure fresh (`decisions.md §17a`) before touching anything:
+**1,571**, not the handed 1,578 — the checked-in `docs/work-inventory.json` had already absorbed
+`card11-t2b-remeasure.md`'s own finding-5 7-unit stale-ledger gap via an intervening commit
+(`004bbe8c2`, landed after the memo, before this cycle). Correction logged
+(`docs/retro/events/t2b-remeasure-remediation.jsonl`).
+
+**Investigated the memo's own cluster-4 recommendation before building it and found it unsafe.**
+The literal recommendation ("a book with no `*_races.lst` content at all → reclassify its
+`_abilities_race.lst` rows") would have reclassified `core_rulebook`'s ENTIRE real race-trait
+population — `core_rulebook`'s own `cr_races.lst` also carries zero `CR:` tokens (it's a pure
+player-race book, 0 monsters), so the proposed discriminator cannot distinguish "no races because
+this book has no playable races" from "no races because this book has no monsters." Caught before
+any code was written, per `decisions.md §1a` ("a gate that cannot fail is worse than no gate").
+
+Reading the actual residual content instead found it is **heterogeneous, not one classifier gap**:
+
+1. `advanced_class_guide`'s and part of `advanced_players_guide`'s residual is a real player
+   class's own bookkeeping mis-filed by `file_kind`'s whole-file filename guess —
+   `Skald Spell Level 0` (`TYPE:BonusSpellKnownSkald`), `Warpriest`
+   (`TYPE:Warpriest Class Feature.SpecialQuality.Supernatural`, the TYPE literally says "Class
+   Feature"). **This cycle fixed this sub-cause.**
+2. `mythic_adventures`/`pathfinder_unchained`'s residual is monster-template content
+   (`Mythic Aboleth ~ Mucus Cloud`, `Agathion Base Form ~ Biped`) whose creature/template name is
+   declared in NEITHER this book's own `*_races.lst` NOR `*_templates.lst` NOR `*_classes.lst` —
+   the creature itself lives in a different book (the Bestiary). The existing KEY-prefix
+   cross-reference mechanism has no name to check against; needs a genuinely different, cross-book
+   mechanism. **Not attempted this cycle.**
+3. `occult_adventures`'s residual (`Emotional Focus / Anger`, a Spiritualist class feature) doesn't
+   even KEY-prefix-match its own owning class's name. **Not attempted this cycle.**
+
+**The fix**: new `book_pc_class_names()` (`src/bin/v06_work_inventory.rs`), same one-per-book shape
+as the existing `book_cr_bearing_race_names`, extracting `CLASS:<Name>` from the book's own
+`*classes*.lst`, gated on `TYPE:` containing the exact `.PC` dot-segment — the corpus's own
+player-class-vs-monster-class discriminator. **Proven necessary, not assumed**: an un-gated version
+wrongly matched `bestiary`'s `CLASS:Drider` / `bonus_bestiary`'s `Faerie Dragon` / `core_essentials`'s
+`Dragon Age (N)`, all real monster-hit-dice "classes" (`TYPE:Monster`), before the `.PC` gate was
+added — found by running the corpus-wide safety scan before, not after, trusting the design.
+
+`refine_kind` gained a 4th parameter and a new arm: a row whose KEY prefix (falling back to the
+bare first column when no `KEY:` field exists — ACG's own rows carry none, confirmed against the
+real corpus row) exactly names, or begins with `"<Class> "`, one of the book's genuine PC classes
+reclassifies `RaceTrait -> ClassFeature`. Gated by the SAME `is_player_favored_class_choice_row`
+guard the existing monster-ability arm already uses, so a Favored Class Bonus row sharing a bare
+class-name KEY (`advanced_players_guide`'s `Alchemist`, `TYPE:FavoredClass`,
+`BONUS:ABILITYPOOL|Favored Class Bonus|...`) — a third, distinct data shape, neither race nor class
+feature — stays untouched, proven by a dedicated regression test.
+
+**Corpus-wide safety proof, no hardcoded book list** — the exact discipline the guard rail names
+(`scripts/t2b_pc_class_prefix_stress_test.py`, new, committed): walks every `*_abilities_race.lst`-
+shaped file found by `glob.glob` under `PCGEN_CORPUS_ROOT`, not a curated list (the predecessor
+stress test's own defect — a 10-dir hardcode that silently missed `dreamscarred_press` and let 112
+Ultimate Psionics units through on a bad discriminator). Zero matches against 11 known real-race
+books (`core_rulebook`, `bestiary` through `bestiary_6`, `advanced_race_guide`,
+`inner_sea_races`, `core_essentials`, `ultimate_wilderness`).
+
+**RED -> GREEN, twice.** The 3 new `refine_kind` tests failed for the intended reason before the
+new arm existed (`left: RaceTrait, right: ClassFeature`). Implemented once (reusing the existing
+`KEY:`-field-only `key_prefix`) — all 3 STILL failed, because ACG's real rows carry no `KEY:` field
+at all (confirmed: `grep "Skald Spell Level 0" acg_abilities_race.lst` shows no `KEY:` token — the
+bare first column IS the identity, PCGen's own convention). Added a bare-first-column fallback
+scoped to the new arm only (`decisions.md §16`'s already-signed-off monster-ability arm's own
+`key_prefix` left byte-for-byte unchanged), re-ran: GREEN.
+
+**Measured effect via an isolated `--stdout-only` run — `docs/work-inventory.json` itself NOT
+touched.** 25 provenance rows (book, source_file, source_line) move `race_trait -> class_feature`:
+`advanced_players_guide` 15, `advanced_class_guide` 10. Per `decisions.md §16`, this is a
+**reclassification**, not a closure — named as such, not folded into a claimed T2b reduction. T2b's
+own re-derived population would move 1,571 -> 1,547 once the ledger is regenerated.
+
+**Ledger regen deliberately deferred — the exact near-miss the dispatch brief warned about, caught
+before it happened rather than after.** Diffing the isolated run's stamp population against the
+checked-in ledger:
+
+```
+literal-verified: checked-in 6,506 -> isolated run 2   (-6,504)
+fixture-verified:  checked-in 1,741 -> isolated run 2   (-1,739)
+```
+
+A plain regen without `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` set silently
+drops nearly every provenance stamp. Regenerating those two reports first
+(`corpus_literal_sweep --json-out`, `derived_evaluator_fixture_check --json-out`), then the ledger,
+then diffing the full status distribution before/after, is named explicit next-cycle work — real,
+non-trivial, out of this cycle's remaining budget, not silently skipped.
+
+**Suites re-run**: `v06_work_inventory` bin's own full suite 341/0 (includes the 7 new tests,
+re-confirmed post-rebase against `origin/tranche/12`'s two intervening commits, no conflicts). Root
+`cargo test --locked --lib` 2,409 passed / 1 FAILED / 13 ignored — the 1 failure
+(`rules_core::feat_prereqs::prerequisite_tests::a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why`,
+`left: 755, right: 701`) is **pre-existing and unrelated**: this diff touches no file under
+`rules_core/`, and the failure reproduces identically before and after this cycle's rebase.
+
+**Dual audit** (own diff, `git diff --unified=0 HEAD -- src/bin/v06_work_inventory.rs`, i.e. the
+cycle's own change against its own starting commit, not the tens-of-thousands-of-lines
+`BASE_BRANCH...HEAD` form): `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+**Pinned-count sweep**: `grep -rn "2472\|2,472\|1578\|1,578\|1571\|1,571" tests/ src/ scripts/
+apps/` (excluding `target/`, `artifacts/corpus/`) — no hardcoded `assert`/`assert_eq` anywhere pins
+T2b's total; every hit is prose in `docs/release/` receipts.
+
+- **Status:** complete for its own stated scope (a real, generic, corpus-wide classifier fix,
+  verified). **Not** a closure of T2b or of card 11.
+- **Kanban:** row 11 prepended (T2b cluster-4 entry); rows 11, 15 left `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-t2b-cluster4-classfeature-fix_cycle-1_cycle_receipt.md`.
+- **What remains:** `mythic_adventures`/`pathfinder_unchained`'s cross-book monster-template
+  residual (needs a new mechanism); `occult_adventures`'s non-prefix-matching residual; cluster 3
+  (`Adopted Race` selector, 35 real units/9 books) and clusters 1-2 (`bestiary_5`'s 8 chassis +
+  Skinwalker heritage-selector, 133 units) — real content builds, not attempted this cycle,
+  mechanism-sized per `decisions.md §17` item 3; the ledger regen named above.
+- Commit: (recorded after push).
