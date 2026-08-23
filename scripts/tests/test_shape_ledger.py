@@ -161,6 +161,34 @@ class BuildCorpusIndexTest(unittest.TestCase):
             self.assertEqual(len(toks), 2)
             self.assertTrue(all(t["key"] in ("BONUS", "DEFINE") for t in toks))
 
+    def test_bestiary_book_walks_the_beastiary_corpus_directory(self):
+        """`data/corpus/`'s core Bestiary output lives under the historical
+        `beastiary` spelling (see `scripts/transcribe_monster_tables.py`'s
+        `CROSS_TABLE_MONSTER_RECORDS = {"bestiary": "beastiary"}` and
+        `src/bin/gen_book_cache.rs`'s `corpus_book: "beastiary"`), but every
+        `docs/work-inventory.json` unit for this book carries `book:
+        "bestiary"` (no trailing `a`). Without an alias, `build_corpus_index`
+        asked for book `"bestiary"` walks a near-empty directory and every
+        such unit's join reports `no_record` even though its record exists.
+        This reproduced for real: 260 `bestiary` `monster_ability` units
+        alone (`python3 scripts/shape_ledger.py --inventory
+        docs/work-inventory.json --output /tmp/l.json` then filter
+        `join_status == "no_record" and book == "bestiary"`)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "beastiary", "monster_ability")
+            os.makedirs(book_dir)
+            record = {
+                "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                "source": {"path": "ce_abilities_race.lst", "line": 1280},
+            }
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump(record, fh)
+
+            index = SL.build_corpus_index(tmp, books={"bestiary"})
+            key = ("bestiary", "ce_abilities_race.lst", 1280)
+            self.assertIn(key, index)
+            self.assertEqual(len(index[key]), 1)
+
 
 class ClassifyUnitTest(unittest.TestCase):
     def test_no_join_match_is_f0_no_record(self):

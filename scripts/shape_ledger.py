@@ -296,11 +296,31 @@ def load_inventory_or_die(path: str) -> dict:
         return json.load(fh)
 
 
+# `docs/work-inventory.json` names this book `"bestiary"` (no trailing
+# `a`) for every unit, but `data/corpus/`'s directory for it carries the
+# historical `"beastiary"` spelling -- see `scripts/transcribe_monster_
+# tables.py`'s `CROSS_TABLE_MONSTER_RECORDS = {"bestiary": "beastiary"}`
+# and `src/bin/gen_book_cache.rs`'s `corpus_book: "beastiary"` (both
+# already document this as deliberate, historical, and not something to
+# rename out from under). Without this alias, every `bestiary` unit's
+# join walks a near-empty `data/corpus/bestiary/` and reports
+# `no_record` even though its real record exists one directory over --
+# confirmed for real: 260 `bestiary` `monster_ability` units alone
+# (`decisions.md §20`'s ledger re-derive).
+BOOK_CORPUS_DIR_ALIASES: dict[str, str] = {
+    "bestiary": "beastiary",
+}
+
+
 def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
     """Walks `data/corpus/<book>/**/*.json` (excluding LICENSE.json) and
     indexes every record's raw_tokens by (book, source_basename,
     source_line). `books`, if given, restricts the walk to those book
-    directories (an optimisation; omit to index the whole corpus).
+    directories (an optimisation; omit to index the whole corpus). A
+    book in `BOOK_CORPUS_DIR_ALIASES` walks its aliased directory but is
+    still indexed under its own (inventory-spelled) book name, so the
+    join key `classify_unit` builds from a unit's own `book` field still
+    matches.
 
     Returns {(book, basename, line): [ {"key":..., "value":...}, ... ]}.
     A (book, basename, line) with no DEFINE/BONUS tokens is still present
@@ -309,13 +329,16 @@ def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
     """
     index: dict[tuple[str, str, int], list[dict]] = {}
     if books is not None:
-        search_roots = [os.path.join(corpus_root, b) for b in sorted(books)]
+        search_roots = [
+            (b, os.path.join(corpus_root, BOOK_CORPUS_DIR_ALIASES.get(b, b)))
+            for b in sorted(books)
+        ]
     else:
-        search_roots = [corpus_root]
-    for root in search_roots:
+        search_roots = [(None, corpus_root)]
+    for book_override, root in search_roots:
         if not os.path.isdir(root):
             continue
-        book = os.path.relpath(root, corpus_root).split(os.sep)[0]
+        book = book_override if book_override is not None else os.path.relpath(root, corpus_root).split(os.sep)[0]
         for path in glob.glob(os.path.join(root, "**", "*.json"), recursive=True):
             if os.path.basename(path) == "LICENSE.json":
                 continue
