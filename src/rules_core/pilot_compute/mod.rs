@@ -26091,6 +26091,16 @@ fn compute_class_chassis(
         // `ground_antipaladin_class_features`'s own doc comment.
         if class_level.class_id == "class:antipaladin" {
             ground_antipaladin_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:cryptic" {
+            ground_cryptic_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:dread" {
+            ground_dread_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:marksman" {
+            ground_marksman_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:psychic_warrior" {
+            ground_psychic_warrior_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:soulknife" {
+            ground_soulknife_class_features(class_level.level, explanations);
         }
 
         Some((base_attack_bonus, base_saves))
@@ -26969,6 +26979,291 @@ fn ground_antipaladin_class_features(
                  antipaladin level; the upstream PCGen token reads a Paladin-only variable that \
                  is never set on an Antipaladin -- decisions.md §22, inherited but not \
                  perpetuated)"
+            ),
+        });
+    }
+}
+
+/// Grounds Cryptic's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::cryptic_features`) — SD-32 card 11
+/// (T12), the second class attempted end-to-end after Antipaladin.
+fn ground_cryptic_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::ultimate_psionics::cryptic_features as cf;
+
+    if let Some(dr) = cf::altered_defense_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.altered_defense.damage_reduction".to_owned(),
+            value: dr,
+            detail: format!(
+                "Cryptic level {level} Altered Defense (Absorb): DR {dr}/- \
+                 (floor((level+3)/4))"
+            ),
+        });
+    }
+    if let Some(range) = cf::disrupt_pattern_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.disrupt_pattern.range_feet".to_owned(),
+            value: range,
+            detail: format!("Cryptic level {level} Disrupt Pattern: {range}-foot range (flat)"),
+        });
+    }
+    if let Some(dice) = cf::enhanced_disruption_bonus_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.enhanced_disruption.bonus_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Cryptic level {level} Enhanced Disruption: +{dice} bonus disrupt pattern \
+                 dice (floor((level-1)/2))"
+            ),
+        });
+    }
+    if let Some(bonus) = cf::hidden_pattern_stealth_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.hidden_pattern.stealth_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Cryptic level {level} Hidden Pattern: +{bonus} competence bonus on Stealth \
+                 (2*min(3,floor((level+1)/3)))"
+            ),
+        });
+    }
+    if let Some(bonus) = cf::trapmaker_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.trapmaker.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Cryptic level {level} Trapmaker: +{bonus} competence bonus on Craft (traps) \
+                 (equal to level)"
+            ),
+        });
+    }
+    if let Some(pr) = cf::unchanging_pattern_power_resistance(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.unchanging_pattern.power_resistance".to_owned(),
+            value: pr,
+            detail: format!(
+                "Cryptic level {level} Unchanging Pattern: power resistance {pr} (12+level)"
+            ),
+        });
+    }
+}
+
+/// Grounds Dread's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::dread_features`) — SD-32 card 11
+/// (T12), the third class attempted end-to-end.
+fn ground_dread_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::dread_features as df;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(dmg) = df::devastating_touch_bonus_damage(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.devastating_touch.bonus_damage".to_owned(),
+            value: dmg,
+            detail: format!(
+                "Dread level {level} Devastating Touch: +{dmg} bonus damage on the melee \
+                 touch attack (equal to level, added to a flat 1d6)"
+            ),
+        });
+    }
+    if let Some(bonus) = df::fearsome_insight_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.fearsome_insight.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Dread level {level} Fearsome Insight: +{bonus} insight bonus on Intimidate \
+                 (max(1,floor(level/2)))"
+            ),
+        });
+    }
+    if let Some(uses) = df::terror_uses_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.terror.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Dread level {level} Terror: {uses} uses per day (level + Charisma modifier \
+                 {cha})"
+            ),
+        });
+    }
+    if let Some(penalty) = df::aura_of_fear_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.aura_of_fear.penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Dread level {level} Aura of Fear: {penalty} penalty on nearby enemies' saves \
+                 against fear (flat)"
+            ),
+        });
+    }
+    if let Some(uses) = df::shadow_twin_uses_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.shadow_twin.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Dread level {level} Shadow Twin: {uses} uses per day (Charisma modifier {cha} \
+                 only, no level term)"
+            ),
+        });
+    }
+    if let Some(dr) = df::fear_incarnate_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.fear_incarnate.damage_reduction".to_owned(),
+            value: dr,
+            detail: format!("Dread level {level} Fear Incarnate: DR {dr}/psionic (flat)"),
+        });
+    }
+}
+
+/// Grounds Marksman's five magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::marksman_features`) — SD-32 card 11
+/// (T12), the fourth class attempted end-to-end.
+fn ground_marksman_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::marksman_features as mf;
+    let dex = ability_modifiers.dexterity;
+
+    if let Some(uses) = mf::wind_reader_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.wind_reader.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Marksman level {level} Wind Reader: {uses} uses per day (3+level)"
+            ),
+        });
+    }
+    if let Some(bonus) = mf::evade_arrows_ac_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.evade_arrows.ac_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Marksman level {level} Evade Arrows: +{bonus} AC vs. ranged attacks \
+                 ((level+2)/4)"
+            ),
+        });
+    }
+    if let Some(bonus) = mf::favored_weapon_base_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.favored_weapon.base_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Marksman level {level} Favored Weapon: +{bonus} base competence bonus \
+                 ((level+2)/4)"
+            ),
+        });
+    }
+    if let Some(dc) = mf::cover_fire_dc(level, dex) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.cover_fire.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Marksman level {level} Cover Fire: DC {dc} (10 + Dexterity modifier {dex} + \
+                 level/2)"
+            ),
+        });
+    }
+    if let Some(bonus) = mf::ranged_specialist_critical_multiplier_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Marksman level {level} Ranged Specialist: +{bonus} critical multiplier on \
+                 ranged/thrown weapons (flat)"
+            ),
+        });
+    }
+}
+
+/// Grounds Psychic Warrior's three magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::psychic_warrior_features`) — SD-32
+/// card 11 (T12), the fifth class attempted end-to-end.
+fn ground_psychic_warrior_class_features(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::psychic_warrior_features as pwf;
+
+    if let Some(lvl) = pwf::warriors_path_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.warriors_path.level".to_owned(),
+            value: lvl,
+            detail: format!(
+                "Psychic Warrior level {level} Warrior's Path: tracked path level {lvl} \
+                 (equal to class level)"
+            ),
+        });
+    }
+    if let Some(uses) = pwf::pathweaving_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.pathweaving.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Psychic Warrior level {level} Pathweaving: {uses} uses per day \
+                 ((level-12)/3)"
+            ),
+        });
+    }
+    if let Some(uses) = pwf::eternal_warrior_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Psychic Warrior level {level} Eternal Warrior: {uses} use per day (flat)"
+            ),
+        });
+    }
+}
+
+/// Grounds Soulknife's four magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::soulknife_features`) — SD-32 card 11
+/// (T12), the sixth class attempted end-to-end.
+fn ground_soulknife_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::ultimate_psionics::soulknife_features as skf;
+
+    if let Some(lvl) = skf::form_mind_blade_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.form_mind_blade.level".to_owned(),
+            value: lvl,
+            detail: format!(
+                "Soulknife level {level} Form Mind Blade: tracked mind blade level {lvl} \
+                 (equal to class level)"
+            ),
+        });
+    }
+    if let Some(bonus) = skf::enhanced_mind_blade_max_enhancement_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.enhanced_mind_blade.max_enhancement_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Soulknife level {level} Enhanced Mind Blade: max enhancement bonus +{bonus} \
+                 (min(level/3,5))"
+            ),
+        });
+    }
+    if let Some(size) = skf::psychic_strike_die_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.psychic_strike.die_size".to_owned(),
+            value: size,
+            detail: format!(
+                "Soulknife level {level} Psychic Strike: d{size} damage die size (flat)"
+            ),
+        });
+    }
+    if let Some(uses) = skf::quick_draw_uses_per_round(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.quick_draw.uses_per_round".to_owned(),
+            value: uses,
+            detail: format!(
+                "Soulknife level {level} Quick Draw: {uses} free-action manifestation per \
+                 round (flat)"
             ),
         });
     }
@@ -47648,6 +47943,210 @@ mod untabled_base_class_feature_roster_wiring_tests {
             "level-1 Antipaladin must have no magnitude explanations yet, only (if any) roster \
              identity records: {ids:?}"
         );
+    }
+
+    /// SD-32 card 11 (T12), classes 2-6 of the group attempted after
+    /// Antipaladin: proves `ground_cryptic_class_features`,
+    /// `ground_dread_class_features`, `ground_marksman_class_features`,
+    /// `ground_psychic_warrior_class_features`, and
+    /// `ground_soulknife_class_features` really run through the real
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` dispatch
+    /// site, at level 20 with real ability scores overridden away from the
+    /// fixture's default (10, modifier 0).
+    #[test]
+    fn cryptic_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.cryptic.altered_defense.damage_reduction"),
+            5, // (20+3)/4
+        );
+        assert_eq!(value("class_feature.untabled.cryptic.disrupt_pattern.range_feet"), 30);
+        assert_eq!(
+            value("class_feature.untabled.cryptic.enhanced_disruption.bonus_dice"),
+            9, // (20-1)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.cryptic.hidden_pattern.stealth_bonus"),
+            6, // capped
+        );
+        assert_eq!(value("class_feature.untabled.cryptic.trapmaker.bonus"), 20);
+        assert_eq!(
+            value("class_feature.untabled.cryptic.unchanging_pattern.power_resistance"),
+            32, // 12+20
+        );
+    }
+
+    #[test]
+    fn dread_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:dread".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.dread.devastating_touch.bonus_damage"),
+            20,
+        );
+        assert_eq!(value("class_feature.untabled.dread.fearsome_insight.bonus"), 10);
+        assert_eq!(
+            value("class_feature.untabled.dread.terror.uses_per_day"),
+            23, // 20+3
+        );
+        assert_eq!(value("class_feature.untabled.dread.aura_of_fear.penalty"), -4);
+        assert_eq!(
+            value("class_feature.untabled.dread.shadow_twin.uses_per_day"),
+            3, // charisma modifier only
+        );
+        assert_eq!(value("class_feature.untabled.dread.fear_incarnate.damage_reduction"), 10);
+    }
+
+    #[test]
+    fn marksman_level_20_reaches_every_real_magnitude_with_a_real_dexterity_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:marksman".to_owned();
+        input.chosen.ability_scores.dexterity = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.marksman.wind_reader.uses_per_day"), 23);
+        assert_eq!(value("class_feature.untabled.marksman.evade_arrows.ac_bonus"), 5);
+        assert_eq!(value("class_feature.untabled.marksman.favored_weapon.base_bonus"), 5);
+        assert_eq!(
+            value("class_feature.untabled.marksman.cover_fire.dc"),
+            23, // 10+3+10
+        );
+        assert_eq!(
+            value("class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus"),
+            1,
+        );
+    }
+
+    #[test]
+    fn psychic_warrior_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic_warrior".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.psychic_warrior.warriors_path.level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.psychic_warrior.pathweaving.uses_per_day"),
+            2, // (20-12)/3
+        );
+        assert_eq!(
+            value("class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day"),
+            1,
+        );
+    }
+
+    #[test]
+    fn soulknife_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:soulknife".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.soulknife.form_mind_blade.level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.soulknife.enhanced_mind_blade.max_enhancement_bonus"),
+            5, // capped
+        );
+        assert_eq!(value("class_feature.untabled.soulknife.psychic_strike.die_size"), 8);
+        assert_eq!(value("class_feature.untabled.soulknife.quick_draw.uses_per_round"), 1);
+    }
+
+    /// Below each class's own highest-gated magnitude's `min_level`, that
+    /// specific id must be absent -- the same "absent means not yet
+    /// granted" contract proven for Antipaladin above, spot-checked at
+    /// each new class's own highest threshold (several of these five
+    /// classes grant one or more magnitudes at level 1 itself, unlike
+    /// Antipaladin whose lowest is level 2, so a blanket level-1 check
+    /// does not apply generically here).
+    #[test]
+    fn each_new_class_lacks_its_highest_gated_magnitude_one_level_early() {
+        let cases: [(&str, u8, &str); 5] = [
+            (
+                "class:cryptic",
+                18,
+                "class_feature.untabled.cryptic.unchanging_pattern.power_resistance",
+            ),
+            (
+                "class:dread",
+                20,
+                "class_feature.untabled.dread.fear_incarnate.damage_reduction",
+            ),
+            (
+                "class:marksman",
+                19,
+                "class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus",
+            ),
+            (
+                "class:psychic_warrior",
+                20,
+                "class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day",
+            ),
+            (
+                "class:soulknife",
+                5,
+                "class_feature.untabled.soulknife.quick_draw.uses_per_round",
+            ),
+        ];
+        for (class_id, min_level, gated_id) in cases {
+            let mut input = antipaladin_input(min_level - 1);
+            input.chosen.class_levels[0].class_id = class_id.to_owned();
+            let computation = compute_pilot_base_chassis(&input);
+            let ids = explanation_ids(&computation);
+            assert!(
+                !ids.contains(&gated_id.to_owned()),
+                "{class_id} at level {} (one below {gated_id}'s min_level {min_level}) must \
+                 not yet carry it: {ids:?}",
+                min_level - 1
+            );
+
+            let mut input_at = antipaladin_input(min_level);
+            input_at.chosen.class_levels[0].class_id = class_id.to_owned();
+            let computation_at = compute_pilot_base_chassis(&input_at);
+            let ids_at = explanation_ids(&computation_at);
+            assert!(
+                ids_at.contains(&gated_id.to_owned()),
+                "{class_id} at level {min_level} must carry {gated_id}: {ids_at:?}"
+            );
+        }
     }
 }
 

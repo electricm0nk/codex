@@ -70,8 +70,13 @@
 //! every ability that row names.
 
 pub mod archetype_tables;
+pub mod cryptic_features;
+pub mod dread_features;
 pub mod equipment_tables;
 pub mod feat_tables;
+pub mod marksman_features;
+pub mod psychic_warrior_features;
+pub mod soulknife_features;
 
 mod monster_data;
 
