@@ -2330,3 +2330,45 @@ and after this sweep (not "none found" without having run the commands).
   (`docs/work-inventory.json`'s producer, `v06_work_inventory.rs`), out of this lane's granted
   scope. Full evidence:
   `artifacts/gate-3-closure-invariant/epic-2-t2b-w1b-horror_adventures_cycle_receipt.md`.
+
+- 2026-08-23, Cycle `t2b-w1-a/1-3` (`epic-2-cause-closure`, T2b lane, books `bestiary_2` /
+  `monster_codex` / `bestiary_6`): **18 real T2b units closed by class, 8 corrected to not-work.**
+  - `monster_codex`: Ratfolk's 6 alternate-trait rows now ingest (Ratfolk was already
+    `IN_SCOPE_RACES` in `ingest_race_traits.rs`, widened by SD-31-E6-F4-002/003 — the 5-record
+    disk state was stale output, not a code gap; a plain re-run emits them). Wired the 4 new
+    selectable alternates into `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` (RED proven
+    first: `race.alternate_trait.unknown` on all 4). `Standard Goblin` corrected to not-work (no
+    `DESC`/`BONUS`/`ABILITY` token at all — nothing to transcribe). `Bat (Sootwing) ~ Paralysis`
+    (1 unit) escalated — monster stat-block content, not a race, filed `race_trait` by filename.
+  - `bestiary_2`: Dhampir gains a chassis + 12 standard-tier traits (Skinwalker/Rougarou
+    precedent — heritage/subrace file stays deferred). Found and fixed a real defect along the
+    way: `race_creation.rs`'s `vision_reading()` only read the first `VISION:` value on a
+    multi-sense row stated as one `|`-joined field (Dhampir's shape); Svirfneblin's pre-existing
+    two-separate-fields shape already worked. The 7 "Adopted Race ~ <X>" selector rows (this
+    book's 6 + Dhampir) corrected to not-work — identical browse-only stub already investigated
+    for `bestiary_6`'s Rougarou (see below): `CHOOSE:ABILITYSELECTION` over a pool whose only
+    member is the literal `No Race Trait Available.MOD` placeholder. ~235 monster-special-ability
+    records (Avoral, Cetaceal, Draconal, …) and Dhampir's own ~5-unit Favored-Enemy/UMR-`.MOD`
+    residual escalated, not attempted — genuine content, out of a per-race-chassis pipeline's
+    reach without inventing a new mechanism.
+  - `bestiary_6`: its one residual unit (`Adopted Race ~ Rougarou`) is the same browse-only stub
+    — fully closed, 0 real work needed once corrected.
+  - Corrections logged via `scripts/retro.py correction` against the census memo's
+    characterization of all 8 "Adopted Race" rows and `monster_codex`'s "Standard Goblin".
+  - **Cross-lane finding, surfaced by the §5 rebase protocol:** rebasing onto `origin/tranche/12`
+    picked up a sibling T2b lane's `inner_sea_races` stale-regen fix (`f7e709f50`), which landed
+    9 new alternates without widening the engine table — left `cargo test --locked --lib` red on
+    `origin/tranche/12` itself. Fixed as part of this cycle's post-rebase verification (9 more
+    `ALTERNATE_TRAIT_REPLACE_FLAGS` entries + the matching pinned-count sweep); `inner_sea_races`
+    content itself untouched. Retro correction logged.
+  - Suites: `cargo test --locked --lib` 2388/2388; `cargo test --locked --bins` 300/300 (one
+    pre-existing unrelated failure, `rule_set_mapping_tests::uncompiled_books_stay_none`,
+    InnerSeaTemples drift, not touched); desktop crate (separate cargo workspace) 517/517;
+    targeted `sd27_*`/`duergar_invisibility_*` integration tests all green. Dual-audit:
+    `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+  - Receipts: `artifacts/gate-3-closure-invariant/epic-2-t2b-{bestiary2,bestiary6,monster-codex}
+    _cycle-1_cycle_receipt.md`.
+  - **Discovery forwards:** `bestiary_2`'s ~235-unit monster-special-ability bulk and
+    `monster_codex`'s `Bat (Sootwing)` (1 unit) — need T9's mechanism or a ruling, not this
+    pipeline; Dhampir's own ~5-unit residual — small, well-scoped follow-on.
+  - **Disk:** `df -h /` → 968G total, 332G used, 636G available, 35% used.
