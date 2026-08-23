@@ -311,3 +311,74 @@ Epic 0 surface, and no other file under `scripts/observer/` is in scope.
    compiles clean but can leave other files' pinned assertions red, so the cycle greps the old and
    new counts across `tests/`, `src/`, `scripts/`, and `apps/` before committing.
 4. T8 closing removes the last non-`complete` condition on card 11 under `decisions.md §10`.
+
+## Decision 12 — One family vocabulary, and the 27,847 kind-unenumerable objects are in scope (operator ruling 2026-08-22)
+
+**Status:** Operator-pinned. Adds kanban cards 14 and 15. Both are Epic-scope cards and therefore
+bind closure under `decisions.md §10`.
+
+Two defects surfaced when the operator asked, after the first dispatch run, whether SD-32 had
+classified 100% of all objects. The honest answer was no, for two independent reasons.
+
+### 12a — The shape-family vocabulary forked; reconcile it to one
+
+`scripts/shape_ledger.py` ships eleven families (F0-F10) whose definitions and counts are its own:
+F0 20,113 / F1 1,790 / F2 1,490 / F4 570 / F5 361 / F3 303 / F6 211 / F8 41 / F9 27 / F7 5 /
+F10 3, summing to 24,914 with `unclassified_count` 0. SD-31's `MEASURE-TWICE.md §3` carries a
+*different* ten-family vocabulary with different counts (1747/1140/804/563/368/211/54/37/17/7).
+AT-32-G1-001's "vocabulary extension allowed with measured units" permits the ledger to define its
+own — but nothing reconciled the two, and three consequences followed:
+
+1. **AT-32-G1-003's own cross-check command names a table that does not exist.** Card 5 logged this
+   as a `scripts/retro.py correction` (`docs/retro/events/gate-1-shape.jsonl`, id
+   `1787437987996-gate-1-shape-0ae65f`): the criterion tells a cycle to diff the ledger's printed
+   family counts against "the F1..F10 table in `epic-breakdown.md`", and `epic-breakdown.md`
+   Epic 1's F1/F2/F3 entries are three *work items*, not semantic families with counts.
+2. **The same label means two things.** `kanban.md` card 7 is titled "Generalise
+   `bonus_stack_reader.rs` for **F10** binding-layer family", while the shipped ledger's own F4
+   proof-width text states F4 is "the shape `bonus_stack_reader.rs`'s binding-layer pattern
+   targets" and defines F10 as an unrelated step-count heuristic covering 3 units.
+3. **Engine coverage claims are not checkable.** Card 7's "77.2% of custom identifiers (893/1,156)"
+   and the ledger's F4/F10 counts are three different denominators; no committed command reconciles
+   them.
+
+**Ruling: SD-32 ships exactly one shape-family vocabulary.** Card 14 picks it, defines it in one
+committed, re-derivable place, and propagates it to the ledger, every engine's module
+documentation, every AT-32-* criterion that names a family, `kanban.md`'s card titles, and
+`epic-breakdown.md`. Where the two vocabularies genuinely disagree about what a shape *is*, the
+reconciliation states which is correct and why, with counts — it does not silently pick one.
+
+### 12b — The 27,847 kind-unenumerable objects are in scope, not a footnote
+
+Gate 0's own `artifacts/gate-0-census-closure/diff.json` reports `unexplained: 0` while also
+reporting `total_kind_unenumerable_units: 27,847` across 44 buckets. That filing is *honest* — it
+names and counts them rather than pretending they are zero, which is what AT-32-G0-002 asked for —
+but naming an object is not enumerating it, and an object outside the ledger's population is an
+object no shape covers and no engine reaches. The buckets:
+
+| Bucket | Units | Note |
+|---|---|---|
+| `class_feature` | 18,231 | `docs/work-inventory.json` tracks 15,439 — a **2,792-unit** disagreement, direction unknown |
+| `ability_category:*` | 5,886 | ~10 categories (`Special Ability` 3,436, `Internal` 839, `Words of Power` 369, …), no tracked kind |
+| everything else | 3,551 | `template_row` 2,343, `deity` 460, `power` 421, `domain` 183, `language` 143, … |
+| `unclassified:<file>` | 179 | files the walker could not type at all |
+
+**Ruling: these are in scope for SD-32.** Card 15 closes them. Closure means each object is either
+(a) enumerated as a unit in a tracked kind, classified into a shape family, and covered by Gate 3's
+standing gate, or (b) proven **not** to be an object — a continuation row, a facet of a unit already
+counted, or a non-object file — by class, with the committed command that proves it and the count
+it accounts for. The `mod_continuation: 23,625` and `copy_derivation: 2,338` figures in the same
+`diff.json` are the leading hypothesis for the `class_feature` disagreement and must be tested, not
+assumed.
+
+**"Sum the piles" is the acceptance bar** (standing lesson 5). Card 15 is complete when the census
+population, the inventory population, and the shape-ledger population reconcile to each other with
+one committed command, and every unit in the reconciled total carries a family.
+
+### 12c — Consequence for the three denominators
+
+The bundle currently quotes three unreconciled totals: the ledger's 24,914, the inventory's 38,391,
+and the census's 28,037-plus-27,847. The 24,914-vs-38,391 gap is legitimate and already explained
+(the ledger's population is *not-done* units; 13,477 are done). It must nonetheless be **stated**
+wherever a total is quoted, with its command — no bundle document may quote a bare total again
+without naming which population it is.
