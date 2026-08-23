@@ -26085,6 +26085,13 @@ fn compute_class_chassis(
             class_level.level,
             explanations,
         );
+        // SD-32 card 11 (T12): the first magnitude-bearing group of the
+        // roster given real per-feature compute functions rather than
+        // left "named, not attempted" -- see
+        // `ground_antipaladin_class_features`'s own doc comment.
+        if class_level.class_id == "class:antipaladin" {
+            ground_antipaladin_class_features(class_level.level, ability_modifiers, explanations);
+        }
 
         Some((base_attack_bonus, base_saves))
     } else if let Some(gate) =
@@ -26840,6 +26847,128 @@ fn push_untabled_base_class_feature_records(
                 "{class_id_str} level {level}: `{}` is a class feature of this character, \
                  granted from class level {} (source: {}:{}).",
                 record.name, record.min_level, record.source_file, record.source_line
+            ),
+        });
+    }
+}
+
+/// Grounds the seven magnitude-bearing Antipaladin features
+/// (`rules_tables::apg::antipaladin_features`) — the first `untabled_base_
+/// class_feature_roster` group given a real per-feature compute function
+/// rather than left "named, not attempted" (SD-32 card 11, T12).
+///
+/// Every magnitude below is that module's own pure function; nothing is
+/// recomputed here, and a feature the character has not yet reached simply
+/// emits no record (`None` below its grant level), the same contract
+/// `ground_unchained_barbarian_class_features` uses.
+fn ground_antipaladin_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::apg::antipaladin_features as af;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(uses) = af::touch_of_corruption_uses_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.touch_of_corruption.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Antipaladin level {level} Touch of Corruption: {uses} uses per day \
+                 (level/2 + Charisma modifier {cha}), identical formula to Paladin's Lay on Hands"
+            ),
+        });
+    }
+    if let Some(dice) = af::touch_of_corruption_damage_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.touch_of_corruption.damage_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Antipaladin level {level} Touch of Corruption: {dice}d6 damage (to a living \
+                 target) or healing (to an undead target), level/2"
+            ),
+        });
+    }
+    if let Some(bonus) = af::unholy_resilience_save_bonus(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.unholy_resilience.save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Antipaladin level {level} Unholy Resilience: +{bonus} on all saving throws \
+                 (Charisma modifier {cha}, floored at 0)"
+            ),
+        });
+    }
+    if let Some(dc) = af::cruelty_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.cruelty.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Antipaladin level {level} Cruelty: DC {dc} Fortitude save to resist an applied \
+                 cruelty's effect (10 + Charisma modifier {cha} + level/2)"
+            ),
+        });
+    }
+    if let Some(known) = af::cruelties_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.cruelty.known".to_owned(),
+            value: known,
+            detail: format!(
+                "Antipaladin level {level} Cruelty: {known} cruelties known (one every 3 levels \
+                 from 3rd, capped at 6)"
+            ),
+        });
+    }
+    if let Some(dice) = af::channel_negative_energy_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.channel_negative_energy.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Antipaladin level {level} Channel Negative Energy: {dice}d{} damage/healing \
+                 ((level+1)/2 dice)",
+                af::CHANNEL_NEGATIVE_ENERGY_DIE_SIZE
+            ),
+        });
+    }
+    if let Some(dc) = af::channel_negative_energy_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.channel_negative_energy.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Antipaladin level {level} Channel Negative Energy: DC {dc} Will save to halve \
+                 (10 + level/2 + Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(selections) = af::fiendish_boon_selections(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.fiendish_boon.selections".to_owned(),
+            value: selections,
+            detail: format!(
+                "Antipaladin level {level} Fiendish Boon: {selections} selection(s) (one at 5th \
+                 level, one more every 4 levels thereafter, capped at 4)"
+            ),
+        });
+    }
+    if let Some(dr) = af::aura_of_depravity_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.aura_of_depravity.damage_reduction"
+                .to_owned(),
+            value: dr,
+            detail: format!("Antipaladin level {level} Aura of Depravity: DR {dr}/good"),
+        });
+    }
+    if let Some(cl) = af::unholy_champion_banishment_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.unholy_champion.banishment_caster_level"
+                .to_owned(),
+            value: cl,
+            detail: format!(
+                "Antipaladin level {level} Unholy Champion: Banishment caster level {cl} on a \
+                 successful Smite Good against a good outsider (grounds the RAW-correct \
+                 antipaladin level; the upstream PCGen token reads a Paladin-only variable that \
+                 is never set on an Antipaladin -- decisions.md §22, inherited but not \
+                 perpetuated)"
             ),
         });
     }
@@ -47445,6 +47574,79 @@ mod untabled_base_class_feature_roster_wiring_tests {
         assert!(
             ids.iter().all(|id| !id.starts_with("class_feature.untabled.psion.")),
             "psion has no roster fixture data; must emit none: {ids:?}"
+        );
+    }
+
+    /// Proves `ground_antipaladin_class_features` really runs through this
+    /// same `compute_pilot_base_chassis` -> `compute_class_chassis` call
+    /// site (not a direct unit call on `antipaladin_features` alone), and
+    /// that a real Charisma modifier reaches the formula: the fixture's
+    /// human Fighter carries a 10 Charisma (modifier 0) by default, so this
+    /// overrides it to a 16 (+3) to prove the ability score is actually
+    /// read, not a hardcoded stand-in.
+    #[test]
+    fn antipaladin_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.ability_scores.charisma = 16;
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.touch_of_corruption.uses_per_day"),
+            13, // 20/2 + 3
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.touch_of_corruption.damage_dice"),
+            10, // 20/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.unholy_resilience.save_bonus"),
+            3,
+        );
+        assert_eq!(value("class_feature.untabled.antipaladin.cruelty.dc"), 23); // 10+3+10
+        assert_eq!(value("class_feature.untabled.antipaladin.cruelty.known"), 6); // capped
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.channel_negative_energy.dice"),
+            10, // (20+1)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.channel_negative_energy.dc"),
+            23, // 10+10+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.fiendish_boon.selections"),
+            4, // capped
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.aura_of_depravity.damage_reduction"),
+            5,
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.unholy_champion.banishment_caster_level"),
+            20,
+        );
+    }
+
+    /// Below every grant level (a level-1 Antipaladin, one below Touch of
+    /// Corruption's own level-2 minimum), none of the seven magnitude ids
+    /// fire -- the "absent means not yet granted" contract, proven live at
+    /// the real dispatch site.
+    #[test]
+    fn antipaladin_level_1_has_none_of_the_seven_magnitudes_yet() {
+        let input = antipaladin_input(1);
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.iter().all(|id| !id.starts_with("class_feature.untabled.antipaladin.")
+                || id.starts_with("class_feature.untabled.antipaladin.corpus_record.")),
+            "level-1 Antipaladin must have no magnitude explanations yet, only (if any) roster \
+             identity records: {ids:?}"
         );
     }
 }

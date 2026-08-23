@@ -14,16 +14,31 @@
 //! leading column states the level (shape 2, added when closing the T12
 //! attribution gap) — for the 20-class `untabled_base_class_chassis`
 //! registry. **Not every registered class uses either shape**: this run
-//! found data for 13 of the 20 (`antipaladin`, `magus`, `vigilante` via
+//! found data for 19 of the 20 (`antipaladin`, `magus`, `vigilante` via
 //! shape 1; `aegis`, `cryptic`, `dread`, `marksman`, `psychic_warrior`,
 //! `shifter`, `soulknife`, `tactician`, `vitalist`, `wilder` via shape 2;
-//! 135 records total). The other 7 (`kineticist`, `medium`, `mesmerist`,
-//! `occultist`, `psion`, `psychic`, `spiritualist`) grant their own-named
-//! features through a still-different progression convention neither
-//! script parses (confirmed absent, not merely unchecked — see the
-//! script's own `--summary` output). A class absent from this fixture is
-//! honestly absent, not silently assumed complete; [`roster_for`] returns an
-//! empty slice for it and no caller may treat that as "nothing to grant."
+//! `kineticist`, `medium`, `mesmerist`, `occultist`, `psychic`,
+//! `spiritualist` via shape 1 too — the corpus itself spells the
+//! `CATEGORY=` token both `Class` and `CLASS` (all six are the uppercase
+//! form, all in `occult_adventures/oa_abilities_class.lst`); an inherited
+//! framing that these six needed "a third progression shape" was checked
+//! against the oracle directly and found false — it was this script's own
+//! case-sensitive substring match missing an existing shape-1 row, not a
+//! new shape (`decisions.md §17a` — validate before trusting a lead;
+//! `docs/retro/` correction logged). 235 records total. The remaining one
+//! (`psion`) is registered under `ultimate_psionics`
+//! (`up_classes.lst`), not the superseded `psionics_unleashed` book an
+//! earlier brief cited, and genuinely uses a third convention this script
+//! does not parse: its own-named features are singly-named
+//! (`ABILITY:Psion Class Feature|AUTOMATIC|Psion Manifesting`, no
+//! `"Psion ~ "` group prefix) and chain through further per-discipline
+//! `ABILITY:` indirection (e.g. `Clairsentience Discipline` itself grants
+//! `Psion Class Feature|AUTOMATIC|Clairsentience ~ ...` rows) rather than
+//! a single flat level-table or `.MOD` list — confirmed absent from both
+//! shapes, not merely unchecked (see the script's own `--summary` output).
+//! A class absent from this fixture is honestly absent, not silently
+//! assumed complete; [`roster_for`] returns an empty slice for it and no
+//! caller may treat that as "nothing to grant."
 //!
 //! Pool-shaped groups (`Vigilante Talent`, `Magus Arcana`, ...) are
 //! deliberately excluded — see the census script's own doc comment for why
@@ -174,5 +189,40 @@ mod tests {
         assert_eq!(row.min_level, 1);
         assert_eq!(row.source_line, 84);
         assert!(row.source_file.ends_with("up_classes.lst"));
+    }
+
+    /// Same discipline, shape 1, uppercase `CATEGORY=CLASS` casing: the
+    /// oracle's own `occult_adventures/oa_abilities_class.lst` line 37 is a
+    /// `CATEGORY=CLASS|Kineticist.MOD` virtual-ability row carrying
+    /// `ABILITY:Kineticist Class Feature|AUTOMATIC|Kineticist ~ Class
+    /// Skills|...|PREVARGTEQ:Kineticist_CFP_Level,1`. Hand-transcribed from
+    /// the corpus text this cycle's own probe read. Guards the case-fold
+    /// fix in `scripts/census_untabled_base_class_feature_roster.py`
+    /// against regressing back to zero for the six `occult_adventures`
+    /// classes this shape covers.
+    #[test]
+    fn kineticist_class_skills_matches_the_oracle_s_uppercase_category_shape_1_grant() {
+        let rows = roster_for("kineticist");
+        let row = rows
+            .iter()
+            .find(|r| r.key == "Kineticist ~ Class Skills")
+            .expect("Class Skills must be in the fixture");
+        assert_eq!(row.min_level, 1);
+        assert_eq!(row.source_line, 37);
+        assert!(row.source_file.ends_with("oa_abilities_class.lst"));
+    }
+
+    /// The other five `occult_adventures` classes the same case-fold fix
+    /// unblocked: each must now carry at least one own-named row, not the
+    /// pre-fix empty slice.
+    #[test]
+    fn the_other_five_occult_adventures_classes_are_no_longer_empty() {
+        for class_id in ["medium", "mesmerist", "occultist", "psychic", "spiritualist"] {
+            let rows = roster_for(class_id);
+            assert!(
+                !rows.is_empty(),
+                "{class_id}: census script's case-fold fix must have found shape-1 data"
+            );
+        }
     }
 }

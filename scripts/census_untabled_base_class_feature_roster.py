@@ -148,7 +148,13 @@ def main() -> None:
             with open(path, encoding="utf-8", errors="replace") as f:
                 lines = f.readlines()
             for lineno, line in enumerate(lines, 1):
-                is_shape1 = f"CATEGORY=Class|{display_name}.MOD" in line
+                # `CATEGORY=` casing varies in the corpus itself (`Class` and
+                # `CLASS` both occur -- confirmed for Kineticist/Medium/
+                # Mesmerist/Occultist/Psychic/Spiritualist, all `occult_
+                # adventures`, all `CATEGORY=CLASS|<Name>.MOD` uppercase).
+                # Match case-insensitively so this one mechanical pass covers
+                # both casings with no per-class branching.
+                is_shape1 = f"category=class|{display_name.lower()}.mod" in line.lower()
                 is_shape2 = shape2_marker in line
                 if not is_shape1 and not is_shape2:
                     continue
