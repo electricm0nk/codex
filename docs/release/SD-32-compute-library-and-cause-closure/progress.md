@@ -5385,3 +5385,72 @@ cycle's patch via the same idempotence check above. Logged (`scripts/retro.py no
   remaining unverified category labels (`decisions.md §23c`'s table governs their disposition).
 - Commit: `42f77f8ac` (the fix), `0247407bc` (rebase-discovered `"AG"` equipment-book-code
   addendum) — pushed clean after two rebases (`60721c68a..0247407bc`).
+
+## Cycle `pi-key-rawtokens-screen` — Card 11, T9 — `data.key`/`data.raw_tokens` PI screening gap closed generically, 2 confirmed leaks fixed
+
+**Follows up** `scripts/retro.py` deferral `1787491744623-sd32-t9-onboarding-957b2f` (the `§24`
+ability-rename cycle's own discovery: 503 already-shipped `ability` records carry a
+campaign-setting proper-noun name in `data.key`/`data.raw_tokens` despite a clean bare
+`data.name`, under a BROADER unratified vocabulary — that figure is a candidate population, never
+confused here with the operator-signed-off 60-term list's real hit count).
+
+**Job 1 — the 2 operator-confirmed leaks, fixed.** Re-derived first (`§17a`, not trusted from the
+brief): `data/corpus/inner_sea_gods/ability/adept.json` (a `SPELLLEVEL` raw_token's own
+`PREDEITY:` segment) and `data/corpus/inner_sea_magic/ability/diplomatic_student.json` (a
+`PREABILITY` raw_token). Both confirmed under the SIGNED-OFF 60-term list
+(`decisions.md §19`), name clean. Fixed through the guarded generator path only:
+`scripts/ingest_ability.py`'s new `scrub_blacklist_pi_tokens` applies the SAME
+word-boundary/case-fold/OCR-normalized blacklist scan every raw_token already gets on the
+`§24`-renamed branch to EVERY record's tokens, not only `DESC`. Rerunning the generator over the
+full 4,824-record `ability` population (dry-run first reproduced `population: 4824,
+name_pi_renamed: 576` exactly) changed exactly these 2 files
+(`"changed": 2, "unchanged": 4822"`, confirmed by `git status --porcelain data/corpus`) — a new
+`records_equal_ignoring_timestamp` guard keeps every future re-run's diff scoped to files that
+actually changed, not the whole population's timestamp. `src/rules_core/pi_screening.rs`'s
+`PI_BLACKLIST_TERMS` bumped 57 → 60 (`Aldori`, `Magaambya`, `Magaambyan` — `decisions.md §19a`
+amendment 3d, approved but not yet ported to the Rust production copy per `ogl-pi-blacklist.md`'s
+own frontmatter) — **load-bearing**: `corpus_literal_sweep`'s PI-redaction exemption reads this
+list via `classify_field`, so the two fixed records only clear the sweep after the bump. Verified:
+`corpus_literal_sweep` reports 0 mismatches for either file (841 PRE-EXISTING mismatches remain in
+the unrelated `codex_named_unit_*` renamed population from `§24` itself — confirmed untouched by
+this cycle's diff, not investigated further here, worth a future lane's attention).
+
+**Job 2 — screening gap closed generically, corpus-wide.** New `scripts/pi_key_rawtokens_audit.py`
+(`decisions.md §17`: one generic tool, every kind, not per-object work) scans
+`data/corpus/<book>/<kind>/*.json` for every kind — 24,051 records this run. **`§17a`
+self-correction, live**: the first version wrongly reported 37 confirmed records; a spot-check of
+the sample (per `AGENTS.md`'s "validate a proxy against a known case") found 26/30 were records
+whose `data.name` was ALREADY `[redacted PI]` from an earlier screen, wrongly counted as a fresh
+leak. Fixed (`name_already_flagged` now treats the marker itself as already-flagged, not clean).
+**Corrected count: 4** additional confirmed leaks beyond the 2 fixed — `domain` 1
+(`core_rulebook/domain/death.json`), `equipment` 1 (`inner_sea_gods/equipment/wayfinder_of_zephyrs.json`),
+`language` 1 (`inner_sea_temples/language/nightsong.json`), `spell` 1
+(`advanced_players_guide/spell/bard_s_escape.json`). Logged as `scripts/retro.py correction`
+`1787493549497-t9-onboarding-01846b` and `deferral` `1787493585450-t9-onboarding-bcf0ca` (named,
+not remediated — each kind's generator needs its own inspection and guarded-path fix, out of this
+cycle's granted scope). Full table: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-corpus-report.md`.
+
+**`declared-pi-audit`'s pre-existing 28 violations (`language`/`template`, `NAME-PI-SHIPPED`
+shape) — confirmed unrelated.** Different defect (a declared-PI record's own NAME shipped
+unredacted, vs. this cycle's clean-name-hiding-a-field-leak shape); this cycle's diff touches
+none of those 28 files.
+
+**Job 3 — unratified-vocabulary candidates reported, not acted on.** 23,062 of 24,051 scanned
+records show a capitalized non-blacklisted token via a heuristic scan. Spot-checked the top
+terms honestly: dominated by ordinary mechanical vocabulary (`Base`, `Weapon`, `Melee`, `Magic`,
+...), not proper nouns — this figure is NOT presented as actionable PI exposure.
+`ogl-pi-blacklist.md` untouched (stays `SIGNED-OFF` at exactly the 60 `§19`-approved terms). Exact
+operator question stated in the committed report, not paraphrased here.
+
+**Own-diff PI scrub before push:** grepped every new/modified file against all 60 blacklist terms;
+found and fixed 3 uses of "Golarion" as a generic descriptor in this cycle's own authored prose
+(docstrings + the report), replaced with "published campaign-setting" — `pi_screening.rs`'s own
+term array is the canonical blacklist source and legitimately contains the real terms.
+
+- **Status:** complete (this cycle's 2 named leaks + generic screen + corpus-wide report; the 4
+  newly-found other-kind leaks and the unratified-vocabulary ruling are named forward scope, not
+  silently folded into "done").
+- **Kanban:** rows 11 and 15 untouched, stay `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-screen_cycle-1_cycle_receipt.md`.
+- Report: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-corpus-report.md`.
+- Commit: `95348a92e` — pushed clean, first attempt (`97594f3e7..a3d9f066a`).
