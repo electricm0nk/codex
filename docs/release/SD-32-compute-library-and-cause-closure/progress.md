@@ -1169,6 +1169,50 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   unchanged by this cycle. Per `workflow-instruction.md §6` step 8, `kanban.md` row 11 stays
   `in-progress` — a consolidation cycle owns marking it `complete`.
 
+### Cycle 005 — Gate 0 / Card 15 `census-scope-closure`, lane 1 of 3 — template_row/deity/power/domain/language/untypeable-files memo
+
+- **Card ID:** `census-scope-closure` (card 15, `decisions.md §12b`) — this lane covers
+  `kind_unenumerable` minus `class_feature`/`ability_category:*`, plus `unclassified:<file>` and
+  `non_object_files`. Two sibling lanes (`class_feature`, `ability_category:*`) run concurrently;
+  a single integration cycle applies all three memos afterward.
+- **Commit SHA:** `a0aba9da3`
+- **Files touched:** `artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md` (new),
+  `artifacts/gate-0-census-closure/005_cycle_receipt.md` (new),
+  `docs/retro/events/card-15-other-kinds.jsonl` (new).
+- **Acceptance criterion:** `decisions.md §12b` — every object in scope disposed (A) enumerated +
+  shaped, or (B) proven not-an-object by class with a committed command and its count.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (this lane). Card 15's row stays `in-progress` — two sibling lanes plus
+  integration remain.
+- **Summary:** Reproduced this lane's exact population with one script driving
+  `census_independent.py`'s own reader/classifier functions (not a re-implementation):
+  `template_row` 2,343 + `deity` 460 + `power` 421 + `domain` 183 + `language` 143 + `kit` 1 =
+  **3,551**, matching `diff.json` exactly. All six are disposition (A) — real, currently-uncounted
+  objects (verified not double-counted: zero `grep -rl` hits joining any of these source filenames
+  against `data/corpus`), 6 candidate new kinds. Shape families assigned via card 14's canonical
+  vocabulary (`shape_ledger.FAMILIES`/`classify_formula`/`extract_formula_segment`) applied
+  directly to each row's own `DEFINE`/`BONUS*` fields. `unclassified:<file>` (179 units, 11 files)
+  splits on inspection: **170 units across 10 `*_skills.lst` files are a whole missing kind
+  (`skill`)** — `_classify_kind_by_filename` has no `"skill"` branch at all, a real classifier gap,
+  not noise (retro correction logged); **9 units (`ce__sizes.lst`) are disposition (B)** — PF1e's
+  fixed 9-category size table, proven not-a-new-population by `src/rules_core/size.rs` already
+  declaring the identical 9-variant enum. All 253 `non_object_files` confirmed non-object by
+  content, most trivially (UI/config/roll-table wiring) but the `profs_weapon`/`profs_armor`/
+  `profs_shield` subset (35 files, 450 non-`.MOD` rows) needed a row-level proof rather than a bare
+  filename-token trust — **418/450 (92.9%) match an existing `equipment`-kind record's own name or
+  `KEY:` field** (e.g. `Cestus` in `apg_profs_weapon.lst` matches the full `Cestus` weapon record
+  in `apg_equip_arms_armor.lst` byte-for-byte), the remaining 32 are proficiency-group category
+  labels (`Firearms`, `Improvised Weapon`, …), not instances — the "reverse error" (walker calls it
+  non-object but it might be real content) the brief warned to check for. Net new units this lane
+  identifies: **3,551 + 170 = 3,721**, across 7 candidate kinds. Memo does not touch
+  `docs/work-inventory.json`/`scripts/census_independent.py`/`scripts/shape_ledger.py`/pinned-count
+  files, per this lane's own scope (measurement, not widening).
+- **Discovery forwards:** none beyond the one retro correction (fully resolved within this memo).
+- **Next-cycle plan:** integration cycle reads this memo plus the `class_feature`/
+  `ability_category:*` lanes' memos, adds the new kinds to `docs/work-inventory.json`, extends
+  `_classify_kind_by_filename` with the new branches this memo names, re-runs `shape_ledger.py`
+  over the widened population, and re-verifies `unclassified_count` stays 0.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
