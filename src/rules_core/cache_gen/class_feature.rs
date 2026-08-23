@@ -206,6 +206,35 @@ pub const BOOK_PRIMARY_FILES: &[(&str, &str, &str)] = &[
 /// never seen.
 const ABILITIES_CLASS_FILE_SUBSTRING: &str = "abilities_class";
 
+/// `(book, source_file)` pairs that carry genuine `class_feature`-shaped
+/// rows OUTSIDE the `*abilities_class*.lst` naming convention -- found this
+/// cycle (`t9-onboarding`) as the true cause of `class_feature`'s last 25
+/// `no_record` units (25 = 15 `advanced_players_guide` + 10
+/// `advanced_class_guide`; `decisions.md §20`/`§17a`), NOT a stale record
+/// or an already-covered coordinate (verified: no corpus record of any
+/// kind exists at these 25 `(book, source_file, source_line)` triples
+/// before this cycle's write). Both books also have their own primary
+/// `*_abilities_class.lst` file already in scope via
+/// [`ABILITIES_CLASS_FILE_SUBSTRING`] above; `acg_abilities_race.lst` /
+/// `apg_abilities_race.lst` are a SECOND file per book that PCGen's own
+/// authors mixed favored-class-bonus rows into (Skald/Inquisitor/Oracle
+/// bonus-spell-known progressions, one Warpriest favored-class blessing
+/// counter) alongside the file's otherwise-race-ability content -- direct
+/// read of both files at the cited lines confirms real class-feature
+/// tokens (`CATEGORY:Special Ability`, a `TYPE:Bonus*`/`TYPE:<Class> Class
+/// Feature...` facet, `BONUS:SPELLKNOWN`/`BONUS:VAR` or a `DEFINE:`
+/// counter), not a race trait. `v06_work_inventory.rs`'s census already
+/// typed these correctly as `kind: class_feature`
+/// (`units_from_inventory_json`'s `kind` filter above trusts that, not
+/// re-derived here) -- the ONLY gap was this generator's file-scope list
+/// never including the second file. An explicit pair list, not a broadened
+/// substring match, so no other book's `*_abilities_race.lst` (genuinely
+/// race content) is swept in without the same per-file verification.
+const EXTRA_CLASS_FEATURE_SOURCE_FILES: &[(&str, &str)] = &[
+    ("advanced_class_guide", "acg_abilities_race.lst"),
+    ("advanced_players_guide", "apg_abilities_race.lst"),
+];
+
 /// One `class_feature` unit as `v06_work_inventory`'s own enumeration
 /// already established it -- this generator never re-derives `key`/`name`/
 /// the citation, only reads the line they already cite.
@@ -252,7 +281,13 @@ pub fn units_from_inventory_json(json_text: &str) -> Result<Vec<ClassFeatureSour
         // this book, not only its own listed primary file -- module doc
         // comment's "Scope" section. `generate` resolves the real path
         // (primary or nested `support/`) via [`resolve_book_file`].
-        if !source_file.contains(ABILITIES_CLASS_FILE_SUBSTRING) {
+        // Further widened (t9-onboarding cycle): the small, explicit
+        // [`EXTRA_CLASS_FEATURE_SOURCE_FILES`] allowlist admits the two
+        // known `*_abilities_race.lst` files that also carry genuine
+        // class-feature rows -- see that constant's doc comment.
+        let in_scope = source_file.contains(ABILITIES_CLASS_FILE_SUBSTRING)
+            || EXTRA_CLASS_FEATURE_SOURCE_FILES.contains(&(book, source_file));
+        if !in_scope {
             continue;
         }
         let Some(source_line) = unit.get("source_line").and_then(Value::as_u64) else { continue };
@@ -1611,6 +1646,28 @@ mod tests {
         // The nested-support-file row (`uc_abilities_class_um.lst`) is
         // accepted too -- widened scope, this cycle.
         assert!(units.iter().any(|u| u.source_file == "uc_abilities_class_um.lst"));
+    }
+
+    #[test]
+    fn units_from_inventory_json_accepts_the_two_known_abilities_race_files_but_no_other_book() {
+        // RED before the `EXTRA_CLASS_FEATURE_SOURCE_FILES` allowlist: all
+        // three `abilities_race.lst` rows below were dropped by the bare
+        // `abilities_class` substring check, reproducing the real
+        // `no_record` shape found this cycle (`decisions.md §20`/`§17a`).
+        let json = r#"{"units":[
+            {"kind":"class_feature","book":"advanced_class_guide","source_file":"acg_abilities_race.lst","source_line":294,"corpus_key":"Skald Spell Level 0","name":"Skald Spell Level 0"},
+            {"kind":"class_feature","book":"advanced_players_guide","source_file":"apg_abilities_race.lst","source_line":284,"corpus_key":"Oracle Spell Level 0","name":"Oracle Spell Level 0"},
+            {"kind":"class_feature","book":"core_rulebook","source_file":"cr_abilities_race.lst","source_line":1,"corpus_key":"Not A Real Pair","name":"Not A Real Pair"}
+        ]}"#;
+        let units = units_from_inventory_json(json).unwrap();
+        // Only the two allowlisted (book, file) pairs are admitted -- a
+        // THIRD book's own `*_abilities_race.lst` (genuinely race content,
+        // never verified for this book) stays excluded, proving this is a
+        // precise pair list, not a broadened substring match.
+        assert_eq!(units.len(), 2);
+        assert!(units.iter().any(|u| u.book == "advanced_class_guide" && u.source_file == "acg_abilities_race.lst"));
+        assert!(units.iter().any(|u| u.book == "advanced_players_guide" && u.source_file == "apg_abilities_race.lst"));
+        assert!(!units.iter().any(|u| u.book == "core_rulebook"));
     }
 
     #[test]

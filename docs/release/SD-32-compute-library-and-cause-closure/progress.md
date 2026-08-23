@@ -7049,3 +7049,65 @@ already-existing `DESCISPI:YES` redact-and-ship path, extended to a term-list-hi
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-monster-ability-per-record-refusal-groups-round6_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit — see push output).
+## Cycle t9-onboarding-class-feature-abilities-race-closure (2026-08-23)
+
+**`class_feature`'s last 25 `no_record` units, closed (`decisions.md §20`/`§17a`):** re-derived not
+assumed — exactly 25 (`advanced_players_guide` 15, `advanced_class_guide` 10), matching this cycle's
+own brief exactly. This is the `t9-onboarding-kind-aware-join_cycle-1` cycle's own "Instrument
+correction" finding (that cycle's join fix revealed `class_feature`→`race_trait_generic` at 25
+coordinates, previously masked as `matched`/`no_formula_tokens` against the wrong kind).
+
+**Stale-twin check first (this dispatch's own warning):** direct scan of every record under
+`data/corpus/{advanced_class_guide,advanced_players_guide}/**` for the 25 cited coordinates found
+zero — genuine un-ingested work, not a duplicate already sitting under another kind.
+
+**Root cause: (a) a missing routing row, not (b) a shape refusal.** Direct read of both cited files
+(`acg_abilities_race.lst`, `apg_abilities_race.lst`) at every line found real class-feature tokens
+(`CATEGORY:Special Ability`, a `TYPE:Bonus*`/`TYPE:<Class> Class Feature...` facet,
+`BONUS:SPELLKNOWN`/`BONUS:VAR`, a `DEFINE:` counter — Skald/Inquisitor/Oracle bonus-spell-known
+progressions plus one Warpriest favored-class-blessing counter), never race content. Both books put
+a handful of genuine class-feature rows in their SECOND abilities file
+(`*_abilities_race.lst`) alongside that file's otherwise-genuine race content;
+`class_feature.rs`'s file-scope check only ever matched `*abilities_class*.lst`, so these 25 —
+already correctly typed `kind: class_feature` by the census — were filtered out before reaching the
+generator.
+
+**Fixed with a precise 2-pair allowlist**, not a broadened substring match: new
+`EXTRA_CLASS_FEATURE_SOURCE_FILES` const names exactly the two verified `(book, source_file)` pairs;
+`units_from_inventory_json`'s scope check admits them alongside the existing `abilities_class`
+substring match. No other book's own `*_abilities_race.lst` (unverified for that book) is swept in.
+
+RED→GREEN: new test `units_from_inventory_json_accepts_the_two_known_abilities_race_files_but_no_other_book`
+proves a third book's own `abilities_race.lst` row stays excluded while the two real coordinates are
+admitted (0/2 before the allowlist existed — the real `no_record` shape reproduced synthetically —
+2/2 after). `cargo test --locked --lib rules_core::cache_gen::class_feature` → 70/70 GREEN.
+
+`cargo run --locked --bin gen_cache_class_feature` against the freshly-bootstrapped pinned oracle:
+17,954 → 17,979 records (**+25 exact**), 0 renamed under `§24` (all 25 ship OGL, 0 PI-blacklist hits
+via `scripts/pi_scrub.py::normalized_term_hit` over the 25 new files). **Additive-only, verified**:
+`git status --porcelain` shows 25 new files; the 17,954 pre-existing records each changed by exactly
+1 line (`ingested_at` timestamp only — `git diff --numstat -- data/corpus | awk '$1+$2>4'` → 0
+rows); 0 deletions.
+
+Re-derived: bundle-wide `no_record` 1,251 → **1,226** (−25 exact); `class_feature`'s own `no_record`
+**25 → 0**. Gate 3 budget (`NO_RECORD_BUDGET_COUNT`/`_POPULATION`) **not touched** — 1,226/34,631
+passes the existing, unrepinned 21,521/36,028 baseline on its own merit (`exceeded: False`).
+`ledger.json`/`family-vocabulary.{md,json}` regenerated, corpus SHA unchanged
+`7f818006e371188e5717fd18d74d18a420747fc6`.
+
+`corpus_literal_sweep` re-run whole-repo: same 8 pre-existing findings across 7 records an earlier
+cycle already traced as unrelated pre-existing PI-redaction mismatches — none of the 7 are among
+these 25's coordinates (confirmed by direct path comparison).
+
+**Movement, kept separate (`§16`):** Closure 25 (real ingest, `kind: class_feature`).
+Reclassification 0. Reachability 0 (cache-record write only; no chassis/wiring consumer change).
+Instrument correction 0 this cycle's own (the +25 finding was the prior cycle's, closed here).
+
+Dual audit on `git diff -- src/rules_core/cache_gen/class_feature.rs`: `OK_NO_BUNDLE_TAGS`,
+`OK_NO_TOKENS`.
+
+- Receipt: `artifacts/gate-3-closure-invariant/t9-onboarding-class-feature-abilities-race-closure_cycle-1_cycle_receipt.md`.
+- **What remains:** `equipment_modifier`'s 999-unit sibling correction from the same join fix is a
+  separate lane's territory, untouched here per this dispatch's Territory section. `class_feature`'s
+  own `no_record` is 0 — no further work in this kind's territory.
+- Commit: (this cycle's commit — see push output).
