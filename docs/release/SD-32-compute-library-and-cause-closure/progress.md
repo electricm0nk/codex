@@ -7774,3 +7774,59 @@ Card 11 / row 11 stays `in-progress`.
 Full receipt:
 `artifacts/gate-3-closure-invariant/t9-onboarding-pi-last-leak-and-generators_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## `closure-readiness-audit` (2026-08-23) — read-only audit of rows 11/15, no ingest/compute code
+
+Dispatched as a closure-readiness audit, not an implementation cycle. Wrote no code in any sibling
+lane's territory (`monster_ability`/T9, PI-scrub/T9, T12's census script or `pilot_compute`/
+`rules_tables/**/*_features.rs`). Re-derived every figure live (`§17a`) rather than trusting the
+dispatch brief or inherited kanban prose.
+
+**Gates 0-3, re-derived live:** all PASS against their own `acceptance-and-verification.md`
+criteria. `census_independent.py` unexplained=0; `shape_ledger.py` unclassified_count=0,
+`join_status_counts` {matched: 11422, no_formula_tokens: 22919, no_record: 56}; Gate 3 standing
+gate PASS (`population=34397 unclassified=0 no_record=56`); selftest PASS (20 cases). No
+gate-that-cannot-fail or never-run-green assertion found.
+
+**Row 11:** T1/T2a/T2b/T4/T7/T8 confirmed `ALREADY-CLOSED` (`no_record` breakdown by kind is 100%
+`monster_ability`, zero of any other shape's kind). T9 `CONFIRMED-OPEN`, sibling territory,
+actively closing. T12's "108/108" claim (cycle4) was stale — the psion cycle's Shape-3 widening
+found 10 more records + a 32-record psion pool + 2 escalated `BONUS:VAR` terms; a sibling commit
+fetched and rebased in mid-audit (`cd60d08042`, landed after this cycle's own PIN) closed the 10
+records and **resolved** the `BONUS:VAR` ambiguity against real PCGen source (no operator ruling
+needed after all — the brief's one named candidate item is moot). **New finding, `CONFIRMED-OPEN`,
+currently unowned:** `cd60d08042`'s own commit message sizes but does not close
+`class_feature_pool_catalog.rs`'s pool-shaped exclusion class — ~6,131 magnitude-bearing records
+corpus-wide, only ~71 (2 of 27 registered pools) modeled. This population exists only inside a
+commit message right now, not as its own kanban line — flagged here so it does not become a second
+`§10`-violating "named but unowned" gap. Row 11 stays `in-progress` (per dispatch instruction, not
+reclosed this cycle even though most of its named shapes are done).
+
+**Row 15:** live re-derivation confirms the underlying content claim (`no_record` is fully
+`monster_ability`-only; Gate 0/1 both zero-gap) but the row's own stated "integration cycle next"
+— a consolidation pass across its three landed lanes, analogous to row 11's own
+`epic-2-cause-closure/4` — has not run. Row 15 stays `in-progress`.
+
+**Named-but-unowned sweep:** `## Open blockers` above is empty of live entries (all five present
+are marked RESOLVED, removed 2026-08-23). `forward-scope-register.md` C2.5 is stale documentation
+(describes the first dispatch run's returned-to-backlog disposition, not updated when those Open
+Blockers entries resolved) — flagged, not corrected (outside this cycle's file scope). No other
+genuinely-open unowned item found under a careful read (not pattern-match) of "named not
+attempted"/"next-cycle plan"/"escalated"/"logged not fixed" matches across `kanban.md`; every
+other match traced to a state chronologically superseded by a later prepended entry or by a kind
+with zero live `no_record` today.
+
+**Tests:** `pilot_compute::` 898/898, `rules_tables::` 623/623 (3 ignored), `cache_gen::` 186/186,
+`generator_name_key_screening_static_audit` 4/4, Gate 3 standing gate + selftest both PASS — all
+green. `apps/desktop/src-tauri` (separate cargo workspace) `equipment_catalog::` **14/17, 3
+FAILED** — confirmed still red, matching the pre-existing, already-logged
+`scripts/retro.py deferral` (per-book description-coverage/category-filter/overall-length stale
+pins); not fixed (out of this cycle's scope), not silently inherited (named here again with the
+live re-run). `declared_pi_shipping_audit` (the Rust bin, corpus-wide) was started but did not
+finish inside this cycle's turn (a multi-minute full-corpus scan); corroborated instead by the
+sibling T9 lane's own most recent cycle (`sd32_t9_corpus_wide_pi_rescan.py`, 0 hits/51,360 records)
+and this cycle's own live `generator_name_key_screening_static_audit` run (4/4).
+
+No card status changed this cycle. Full receipt:
+`artifacts/gate-3-closure-invariant/closure-readiness-audit_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).
