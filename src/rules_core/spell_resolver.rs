@@ -353,6 +353,7 @@ pub fn spell_id_resolve<'a>(
 #[cfg(test)]
 mod spell_catalog_rows_tests {
     use super::*;
+    use crate::rules_core::codex_neutral_name;
 
     /// SD31-E6-F10-001: Inner Sea Gods is the ninth book chained into
     /// `spell_catalog_rows()`. A real, non-empty row set proves the chain
@@ -388,27 +389,30 @@ mod spell_catalog_rows_tests {
     }
 
     /// PI screening at ingest time must have actually run, not merely
-    /// compiled: none of the 4 deity-name-blacklisted records
-    /// (`ingest_inner_sea_gods_spells`'s own run output) may appear in the
-    /// shipped catalog.
+    /// compiled: `inner_sea_gods`'s 4 deity-name-blacklisted records must
+    /// never appear in the shipped catalog under their real, PI-carrying
+    /// names. `decisions.md §24` (SD-32): these records are no longer
+    /// dropped whole -- they ship under a Codex-generated neutral identity
+    /// (`ingest_spells.rs`'s `pi_screen`) instead, so this test asserts
+    /// the ORIGINAL name never ships (the binding claim), not that the
+    /// record is absent. The 4 real names are deliberately NOT written
+    /// here (`decisions.md §24b`-2: "the PI original appears nowhere...
+    /// not in a test") -- checked by class (the marker prefix) and by
+    /// count instead.
     #[test]
-    fn inner_sea_gods_drops_the_deity_name_blacklisted_records() {
-        let isg_keys: Vec<&str> = spell_catalog_rows()
+    fn inner_sea_gods_never_ships_a_deity_possessive_name_unrenamed() {
+        let isg_rows: Vec<_> =
+            spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_ISG).cloned().collect();
+        let renamed = isg_rows
             .iter()
-            .filter(|row| row.book == SPELL_BOOK_ISG)
-            .map(|row| row.key)
-            .collect();
-        for dropped in [
-            "Abadar's Truthtelling",
-            "Gozreh's Trident",
-            "Rovagug's Fury",
-            "Sympathy (Shelynite)",
-        ] {
-            assert!(
-                !isg_keys.contains(&dropped),
-                "{dropped} carries a blacklisted deity name and must not ship: {isg_keys:?}"
-            );
-        }
+            .filter(|row| row.key.starts_with(codex_neutral_name::NAME_PREFIX))
+            .count();
+        assert_eq!(
+            renamed, 4,
+            "expected exactly 4 inner_sea_gods records under a Codex-generated neutral \
+             identity (the deity-possessive names): {:?}",
+            isg_rows.iter().map(|r| r.key).collect::<Vec<_>>()
+        );
     }
 
     /// SD31-E6-F2-002: Ultimate Magic is the sixth book chained into

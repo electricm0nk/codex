@@ -214,9 +214,17 @@ pub struct GenerationReport {
     /// written (never fabricated).
     pub unresolved_citations: Vec<String>,
     /// Rows whose `name` carries declared or blacklist-matched Product
-    /// Identity -- dropped outright (a required field cannot be
-    /// redacted), counted, never silently absorbed.
+    /// Identity. `decisions.md §24`: written under a Codex-generated
+    /// neutral name (never dropped whole any more); field name kept for
+    /// compatibility, now counts renames -- see
+    /// `cache_gen::equipment_gap::GenerationReport::name_pi_excluded`'s
+    /// identical doc comment.
     pub name_pi_excluded: Vec<String>,
+    /// `(kind, book, source_file, source_line, codex_name, reason)`
+    /// divergence entries for every unit renamed this run --
+    /// `decisions.md §24b`-4: coordinate + reason, never the original
+    /// string.
+    pub name_pi_renamed_records: Vec<serde_json::Value>,
     /// Rows whose slugified output path already exists on disk (e.g. from
     /// `cache_gen::equipment_gap`'s own `equipmods/` sibling content, or a
     /// prior run of this generator) -- left untouched, never clobbered.
@@ -279,15 +287,14 @@ pub fn generate(
 
             let declared = equipment_gap::declared_pi_at(&abs_path, line);
             let (name_license, _, _, _) = pi_screening::classify_field("name", entry.name);
-            if declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted {
-                report.name_pi_excluded.push(format!("{book_id}:{}", entry.key));
-                continue;
-            }
+            let name_is_pi = declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted;
+            let is_modifier = entry.category == "Equipmods";
+            let kind = if is_modifier { "equipment_modifier" } else { "equipment" };
 
             let (wiring_class, wiring_class_signals) =
                 wiring_index.wiring_class_for(&mut wiring_lines, &rel_path_str, line, entry.key, entry.key);
 
-            let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+            let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
                 "description",
                 entry.description,
                 declared.description,
@@ -296,14 +303,34 @@ pub fn generate(
             let completeness =
                 if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
 
+            // `decisions.md §24` -- see
+            // `cache_gen::equipment_gap::resolve_name_or_rename`'s doc
+            // comment for the full rationale; this sibling generator
+            // shares the same PI-name-exclusion shape and the same fix
+            // (the SAME function, not a duplicate copy).
+            let (record_name, record_key, codex_generated_name, rename_info, divergence) =
+                equipment_gap::resolve_name_or_rename(name_is_pi, kind, book_id, &rel_path_str, line, entry.name, entry.key);
+            if let Some(entry) = divergence {
+                report.name_pi_excluded.push(format!("{book_id}:{}:{}", rel_path_str, line));
+                report.name_pi_renamed_records.push(entry);
+                let mut redacted_fields: Vec<&str> = Vec::new();
+                if pi_field.as_deref() == Some("description") {
+                    redacted_fields.push("description");
+                }
+                redacted_fields.push("name");
+                license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                pi_field = Some(redacted_fields.join(","));
+                pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+            }
+
             let record = CacheRecord {
                 population: Population::InScope,
                 completeness,
                 ingested_at: ingested_at.to_string(),
                 data: EquipmentData {
-                    key: entry.key.to_string(),
+                    key: record_key.clone(),
                     category: entry.category.clone(),
-                    name: entry.name.to_string(),
+                    name: record_name.clone(),
                     cost_gp: entry.cost_gp,
                     weight_lbs: entry.weight_lbs,
                     description: stored_desc,
@@ -312,31 +339,29 @@ pub fn generate(
                     path: format!("{book_rel_dir}/{rel_path_str}"),
                     sha256: sha,
                     line,
-                    record_key: entry.key.to_string(),
+                    record_key: record_key.clone(),
                 },
                 wiring_class,
                 wiring_class_signals,
                 license,
                 pi_field,
                 pi_marker,
+                codex_generated_name,
+                rename: rename_info,
             };
 
-            let slug = equipment_gap::slugify(entry.key, &mut used);
+            let slug = equipment_gap::slugify(&record_key, &mut used);
             // Same routing convention `cache_gen::equipment_gap::generate`
             // uses: an `Equipmods` row belongs to the `equipment_modifier`
             // kind, which lives under `equipment/equipmods/`, not the
             // `equipment` kind's own root -- sharing this convention is what
             // makes `write_json`'s no-clobber write a real de-dup against
             // that sibling generator's own output rather than a coincidence.
-            let (write_dir, is_modifier) = if entry.category == "Equipmods" {
-                (equipment_out.join("equipmods"), true)
-            } else {
-                (equipment_out.clone(), false)
-            };
+            let write_dir = if is_modifier { equipment_out.join("equipmods") } else { equipment_out.clone() };
             let wrote = equipment_gap::write_json(&write_dir, &slug, &record)
                 .map_err(|_| GenerationError::CorpusUnreachable(write_dir.clone()))?;
             if !wrote {
-                report.skipped_pre_existing.push(format!("{book_id}:{}", entry.key));
+                report.skipped_pre_existing.push(format!("{book_id}:{}:{}", rel_path_str, line));
                 continue;
             }
             if is_modifier {
@@ -408,15 +433,17 @@ mod tests {
     }
 
     #[test]
-    fn a_nameispi_declared_row_would_be_excluded_not_redacted() {
+    fn a_nameispi_declared_row_would_be_renamed_not_redacted() {
         let tokens = [("NAMEISPI", "YES")];
         let declared = pi_screening::declared_product_identity(tokens);
         assert!(declared.name);
         // `SourceEntry.name` (and the resulting `EquipmentData.name`) is a
         // required `String`, mirroring `cache_gen::equipment_gap`'s own
-        // proof for the identical shape: there is no field-level redaction
-        // path for a required identity field by construction, which is why
-        // `generate()` treats `declared.name` as a whole-record skip.
+        // proof for the identical shape: `decisions.md §24` supersedes the
+        // old "whole-record skip" disposition -- `generate()` now ingests
+        // a `declared.name` row under a Codex-generated neutral name
+        // (`equipment_gap::resolve_name_or_rename`, the SAME function this
+        // module's sibling generator calls) rather than skipping it.
     }
 
     #[test]

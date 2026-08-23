@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_races_isr_equip_general_lst_17)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_races_isr_equip_general_lst_17)",
+    "cost_gp": 34000.0,
+    "weight_lbs": 3.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_general.lst",
+    "sha256": "84a3e01dc08eb0973262e16a2d9b0fa29512085f2dbc2f6087f0edf2697f0a6f",
+    "line": 17,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_races_isr_equip_general_lst_17)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_races:isr_equip_general.lst:17"
+  }
+}

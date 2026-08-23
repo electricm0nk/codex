@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_7)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_7)",
+    "cost_gp": 100.0,
+    "weight_lbs": 0.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_general.lst",
+    "sha256": "c5067b7b3b2e9fb524eab2c1804da96aa980b65e0532aa7bfd81a16dd37f27b0",
+    "line": 7,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_7)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_equip_general.lst:7"
+  }
+}

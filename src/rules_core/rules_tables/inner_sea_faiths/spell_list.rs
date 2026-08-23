@@ -49,12 +49,19 @@ impl Pf1SchoolId {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpellListEntry {
     pub key: &'static str,
+    /// `decisions.md §24`: `Some(line)` ONLY when `key` above
+    /// is a Codex-generated neutral identity (the row's real
+    /// name is Product Identity) -- carries the real citation
+    /// line so `cache_gen::spell_lane_dump` can resolve it
+    /// without a name-based lookup. `None` for an ordinary entry.
+    pub name_pi_line: Option<u32>,
     pub school: Option<Pf1SchoolId>,
     pub level: Option<u8>,
     pub description: Option<&'static str>,
 }
 
 pub const SPELL_LIST: &[SpellListEntry] = &[
-    SpellListEntry { key: "Curse of Disgust (Besmaran)", school: Some(Pf1SchoolId::Enchantment), level: None, description: Some("Target is sickened when viewing a trigger.") },
-    SpellListEntry { key: "Geas (Lesser/Besmaran)", school: Some(Pf1SchoolId::Enchantment), level: None, description: Some("A lesser geas places a magical command on a creature to carry out some service or to refrain from some action or course of activity, as desired by you.") },
+    SpellListEntry { key: "Codex-Named Unit (spell_inner_sea_faiths_isf_spells_lst_5)", name_pi_line: Some(5), school: Some(Pf1SchoolId::Transmutation), level: None, description: Some("You greatly magnify the target's ability to smell the presence of blood. The target is considered to have the scent universal monster ability, but only for purposes of detecting and pinpointing injured creatures (below full hit points). Creatures below half their full hit points or suffering bleed damage are considered strong scents for this ability.") },
+    SpellListEntry { key: "Curse of Disgust (Besmaran)", name_pi_line: None, school: Some(Pf1SchoolId::Enchantment), level: None, description: Some("Target is sickened when viewing a trigger.") },
+    SpellListEntry { key: "Geas (Lesser/Besmaran)", name_pi_line: None, school: Some(Pf1SchoolId::Enchantment), level: None, description: Some("A lesser geas places a magical command on a creature to carry out some service or to refrain from some action or course of activity, as desired by you.") },
 ];

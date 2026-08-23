@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_25)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_25)",
+    "cost_gp": 10000.0,
+    "weight_lbs": 250.0,
+    "description": "This altar is a lead-lined chest covered in dark fabric and a false cover, usually built into the floor or wall so that it can be easily concealed when not in use. Praying at the altar grants a +2 circumstance bonus on Bluff, Disguise, Sleight of Hand, and Stealth checks. The creature can choose to expend this blessing before the duration expires to cast False Alibi (DC 14), but the spell's DC decreases by 1 for every 4 hours that have passed since praying at the altar."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74",
+    "line": 25,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_25)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_equip.lst:25"
+  }
+}

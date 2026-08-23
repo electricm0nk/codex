@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_17)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_17)",
+    "cost_gp": 770.0,
+    "weight_lbs": null,
+    "description": "Level 5 Alchemist; Formulae - 2.blur, delay poison, fire breath, transmute potion to poison, vomit swarm; 1.bomber's eye, comprehend languages, cure light wounds, jump, keen senses, negate aroma, resist energy, touch of the sea; Preparation Ritual - Alchemical Protection"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 17,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_17)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:17"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_32)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_32)",
+    "cost_gp": 8000.0,
+    "weight_lbs": 150.0,
+    "description": "This altar is a veiled box of thick steel designed to house ritual implements of torture and self-mutilation in perfect darkness. Praying at the altar grants the worshiper a +2 competence bonus on attack rolls, weapon damage rolls, and saving throws for 1 minute whenever the worshiper takes damage or is the target of a pain effect during the next 24 hours after praying at the altar. Multiple sources of damage or pain reset this duration rather than stack."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74",
+    "line": 32,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_32)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_equip.lst:32"
+  }
+}

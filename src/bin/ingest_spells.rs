@@ -74,6 +74,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use codex::pcgen_import::lst_parser::spell::{parse_lst_spell_file, LstSpellRecord};
+use codex::rules_core::codex_neutral_name::neutral_name;
 use codex::rules_core::pi_screening::{
     classify_field, classify_optional_field_declared, declared_product_identity,
 };
@@ -445,21 +446,29 @@ fn raw_row_tokens(raw_line: &str) -> Vec<(String, String)> {
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct SpellEntry {
     key: String,
+    /// `decisions.md §24`: `Some(line)` when `key` above is a
+    /// Codex-generated neutral identity (the row's real name is Product
+    /// Identity) -- carries the real citation line so `cache_gen::
+    /// spell_lane_dump` can resolve it without a name-based LST lookup,
+    /// which would fail (the real content no longer contains this
+    /// string). `None` for an ordinary entry.
+    name_pi_line: Option<u32>,
     school: Option<String>,
     level: Option<u8>,
     description: Option<String>,
 }
 
-enum PiOutcome {
-    Clean(SpellEntry),
-    NamePiDropped(String),
-}
-
 /// Screens one record with BOTH SD-30 invocation contracts -- the blacklist
 /// sweep (`classify_field`) and the declared-PI reader
 /// (`declared_product_identity`) -- against BOTH the name and the
-/// description. A name hit (from either contract) drops the record; a
-/// description hit redacts the description field only.
+/// description. A description hit redacts the description field only.
+///
+/// **`decisions.md §24` (SD-32):** a name hit (from either contract) no
+/// longer drops the record -- it ingests under a Codex-generated neutral
+/// name/key (`codex_neutral_name::neutral_name`) derived ONLY from
+/// `(kind, book, source_file, source_line)`, never from the original PI
+/// name (`name`/`description` are not even read in that branch's
+/// derivation). `line` is 1-indexed within `lst_rel`.
 ///
 /// **The one canonical screen.** Every one of the seven binaries this
 /// module replaces carried its own byte copy of this function; three
@@ -473,24 +482,36 @@ enum PiOutcome {
 /// tests don't exercise the blacklist branch at all) -- only
 /// `pi_screen_drops_a_record_whose_name_is_blacklisted_with_no_declared_pi_token_at_all`
 /// caught it, which is why that test exists.
-fn pi_screen(raw_line: &str, name: &str, description: Option<&str>) -> PiOutcome {
+fn pi_screen(
+    raw_line: &str,
+    name: &str,
+    description: Option<&str>,
+    book_id: &str,
+    lst_rel: &str,
+    line: u32,
+) -> SpellEntry {
     let declared = declared_product_identity(raw_row_tokens(raw_line));
 
     let (name_license, ..) = classify_field("name", name);
     let name_blacklisted = name_license != codex::rules_core::shape_b_v1::License::Ogl;
-    if declared.name || name_blacklisted {
-        return PiOutcome::NamePiDropped(name.to_string());
-    }
+    let name_is_pi = declared.name || name_blacklisted;
 
     let (_, _, _, stored_description) =
         classify_optional_field_declared("description", description, declared.description);
 
-    PiOutcome::Clean(SpellEntry {
-        key: name.to_string(),
+    let (key, name_pi_line) = if name_is_pi {
+        (neutral_name("spell", book_id, lst_rel, line), Some(line))
+    } else {
+        (name.to_string(), None)
+    };
+
+    SpellEntry {
+        key,
+        name_pi_line,
         school: None, // filled by caller, which also owns school-string normalization
         level: None,  // filled by caller
         description: stored_description,
-    })
+    }
 }
 
 /// The corpus's raw `SCHOOL:` string, verbatim -- normalized to a
@@ -529,8 +550,12 @@ fn render_entry(e: &SpellEntry) -> String {
         Some(d) => format!("Some(\"{}\")", escape_rust_string(d)),
         None => "None".to_string(),
     };
+    let name_pi_line = match e.name_pi_line {
+        Some(n) => format!("Some({n})"),
+        None => "None".to_string(),
+    };
     format!(
-        "    SpellListEntry {{ key: \"{}\", school: {school}, level: {level}, description: {description} }},",
+        "    SpellListEntry {{ key: \"{}\", name_pi_line: {name_pi_line}, school: {school}, level: {level}, description: {description} }},",
         escape_rust_string(&e.key)
     )
 }
@@ -590,6 +615,12 @@ fn build_module_source(display_name: &str, lst_rel: &str, entries: &[SpellEntry]
         "#[derive(Debug, Clone, PartialEq, Eq)]\n\
          pub struct SpellListEntry {\n\
          \x20   pub key: &'static str,\n\
+         \x20   /// `decisions.md §24`: `Some(line)` ONLY when `key` above\n\
+         \x20   /// is a Codex-generated neutral identity (the row's real\n\
+         \x20   /// name is Product Identity) -- carries the real citation\n\
+         \x20   /// line so `cache_gen::spell_lane_dump` can resolve it\n\
+         \x20   /// without a name-based lookup. `None` for an ordinary entry.\n\
+         \x20   pub name_pi_line: Option<u32>,\n\
          \x20   pub school: Option<Pf1SchoolId>,\n\
          \x20   pub level: Option<u8>,\n\
          \x20   pub description: Option<&'static str>,\n\
@@ -615,7 +646,7 @@ fn ingest_one_book(data_root: &Path, book: &BookInput) {
     let elsewhere: BTreeSet<&'static str> = book.already_ingested.map(|f| f()).unwrap_or_default();
 
     let mut entries: Vec<SpellEntry> = Vec::new();
-    let mut dropped_pi: Vec<String> = Vec::new();
+    let mut renamed_pi: Vec<String> = Vec::new();
     let mut school_unrecognized: Vec<String> = Vec::new();
     let mut no_level: Vec<String> = Vec::new();
     let mut cross_book_collision: Vec<String> = Vec::new();
@@ -640,42 +671,48 @@ fn ingest_one_book(data_root: &Path, book: &BookInput) {
             no_level.push(name.clone());
         }
 
-        match pi_screen(raw_line, name, record.description.as_deref()) {
-            PiOutcome::NamePiDropped(n) => dropped_pi.push(n),
-            PiOutcome::Clean(mut entry) => {
-                if let Some(real_key) = key_field(raw_line) {
-                    entry.key = real_key;
-                }
-                entry.level = level;
-                entry.school = match &record.school {
-                    Some(raw_school) => match school_variant_name(raw_school) {
-                        Some(v) => Some(v.to_string()),
-                        None => {
-                            school_unrecognized.push(format!("{name}: {raw_school:?}"));
-                            None
-                        }
-                    },
-                    None => None,
-                };
-                entries.push(entry);
-            }
+        let mut entry = pi_screen(raw_line, name, record.description.as_deref(), book.id, book.lst_rel, record.line_number as u32);
+        if entry.name_pi_line.is_some() {
+            // `decisions.md §24b`-4: coordinate + reason only, never the
+            // original PI name -- `book.id`/`book.lst_rel`/`record.
+            // line_number` are all non-PI coordinates.
+            renamed_pi.push(format!("{}:{}:{}", book.id, book.lst_rel, record.line_number));
+        } else if let Some(real_key) = key_field(raw_line) {
+            // A declared `KEY:` token overrides the display name for an
+            // ORDINARY record only -- a renamed (name-PI) entry's `key`
+            // is already the Codex-generated neutral identity and must
+            // never be overwritten back toward anything derived from the
+            // real corpus row (`§24b`-1).
+            entry.key = real_key;
         }
+        entry.level = level;
+        entry.school = match &record.school {
+            Some(raw_school) => match school_variant_name(raw_school) {
+                Some(v) => Some(v.to_string()),
+                None => {
+                    school_unrecognized.push(format!("{name}: {raw_school:?}"));
+                    None
+                }
+            },
+            None => None,
+        };
+        entries.push(entry);
     }
 
     eprintln!(
-        "ingest_spells [{}]: {} base declarations, {} cross-book collisions (skipped), {} PI-dropped, {} no-level (real gap, not fabricated), {} school-unrecognized",
+        "ingest_spells [{}]: {} base declarations, {} cross-book collisions (skipped), {} renamed under a Codex-generated neutral identity (decisions.md §24), {} no-level (real gap, not fabricated), {} school-unrecognized",
         book.id,
         entries.len(),
         cross_book_collision.len(),
-        dropped_pi.len(),
+        renamed_pi.len(),
         no_level.len(),
         school_unrecognized.len(),
     );
     if !cross_book_collision.is_empty() {
         eprintln!("  Cross-book collisions (kept the existing book's fuller record): {cross_book_collision:?}");
     }
-    if !dropped_pi.is_empty() {
-        eprintln!("  PI-dropped (name declared or blacklisted): {dropped_pi:?}");
+    if !renamed_pi.is_empty() {
+        eprintln!("  Renamed under a Codex-generated neutral identity (name declared or blacklisted), by coordinate: {renamed_pi:?}");
     }
     if !no_level.is_empty() {
         eprintln!("  No CLASSES:/DOMAINS: level (kept, level=None -> text-complete): {no_level:?}");
@@ -778,58 +815,71 @@ mod tests {
         assert_eq!(key_field(raw), None);
     }
 
+    /// `decisions.md §24` end-to-end proof: a declared `NAMEISPI:YES` row
+    /// must now be KEPT (not dropped) under a Codex-generated neutral
+    /// identity, with `name_pi_line` carrying the real citation and the
+    /// original name appearing NOWHERE in the output.
     #[test]
-    fn pi_screen_drops_a_record_whose_row_declares_nameispi_yes() {
+    fn pi_screen_renames_a_record_whose_row_declares_nameispi_yes() {
         let raw = "Secret Name\tNAMEISPI:YES\tCLASSES:Wizard=1\tSCHOOL:Evocation\tDESC:text";
-        let outcome = pi_screen(raw, "Secret Name", Some("text"));
-        assert!(matches!(outcome, PiOutcome::NamePiDropped(_)));
+        let entry = pi_screen(raw, "Secret Name", Some("text"), "inner_sea_gods", "isg_spells.lst", 7);
+        assert!(entry.key.starts_with("Codex-Named Unit ("), "must carry the marker: {}", entry.key);
+        assert!(!entry.key.contains("Secret Name"));
+        assert_eq!(entry.name_pi_line, Some(7));
     }
 
-    /// The SECOND, independent drop path -- `classify_field`'s blacklist
-    /// sweep, with NO `NAMEISPI:`/`DESCISPI:` token declared at all. This
-    /// is the case the mutation proof required by the task brief
-    /// ("prove the test goes red by reverting one book to a divergent
-    /// screen") actually needs: the `NAMEISPI:YES` test above alone does
-    /// NOT catch a mutant that drops the `name_blacklisted` check (verified
-    /// by hand -- deleting `|| name_blacklisted` from `pi_screen`'s `if`
-    /// condition left every other test green). Only a name that trips the
-    /// blacklist WITHOUT a declared PI token exercises that branch.
+    /// The SECOND, independent rename trigger -- `classify_field`'s
+    /// blacklist sweep, with NO `NAMEISPI:`/`DESCISPI:` token declared at
+    /// all. This is the case the mutation proof required by the task
+    /// brief ("prove the test goes red by reverting one book to a
+    /// divergent screen") actually needs: the `NAMEISPI:YES` test above
+    /// alone does NOT catch a mutant that drops the `name_blacklisted`
+    /// check (verified by hand -- deleting `|| name_blacklisted` from
+    /// `pi_screen`'s `if` condition left every other test green). Only a
+    /// name that trips the blacklist WITHOUT a declared PI token exercises
+    /// that branch.
     #[test]
-    fn pi_screen_drops_a_record_whose_name_is_blacklisted_with_no_declared_pi_token_at_all() {
+    fn pi_screen_renames_a_record_whose_name_is_blacklisted_with_no_declared_pi_token_at_all() {
         // "Iomedae" is one of the 20 canonical deity names in
         // `pi_screening::PI_BLACKLIST_TERMS`; this row carries neither
         // `NAMEISPI:` nor `DESCISPI:`.
         let raw = "Iomedae's Radiance\tCLASSES:Cleric=3\tSCHOOL:Evocation\tDESC:text";
-        let outcome = pi_screen(raw, "Iomedae's Radiance", Some("text"));
+        let entry = pi_screen(raw, "Iomedae's Radiance", Some("text"), "inner_sea_gods", "isg_spells.lst", 3);
         assert!(
-            matches!(outcome, PiOutcome::NamePiDropped(_)),
-            "a blacklisted name with no declared PI token must still be dropped by the blacklist sweep"
+            entry.key.starts_with("Codex-Named Unit ("),
+            "a blacklisted name with no declared PI token must still be renamed by the blacklist sweep"
         );
+        assert!(!entry.key.contains("Iomedae"));
+        assert_eq!(entry.name_pi_line, Some(3));
     }
 
     #[test]
     fn pi_screen_redacts_a_description_whose_row_declares_descispi_yes() {
         let raw = "Ordinary Spell\tDESCISPI:YES\tCLASSES:Wizard=1\tSCHOOL:Evocation\tDESC:secret lore";
-        let outcome = pi_screen(raw, "Ordinary Spell", Some("secret lore"));
-        match outcome {
-            PiOutcome::Clean(entry) => {
-                assert_eq!(entry.key, "Ordinary Spell");
-                assert_ne!(entry.description.as_deref(), Some("secret lore"));
-            }
-            PiOutcome::NamePiDropped(_) => panic!("a DESCISPI-only declaration must not drop the record"),
-        }
+        let entry = pi_screen(raw, "Ordinary Spell", Some("secret lore"), "occult_adventures", "oa_spells.lst", 1);
+        assert_eq!(entry.key, "Ordinary Spell");
+        assert!(entry.name_pi_line.is_none(), "a DESCISPI-only declaration must not rename the record");
+        assert_ne!(entry.description.as_deref(), Some("secret lore"));
     }
 
     #[test]
     fn pi_screen_passes_a_clean_record_through_unredacted() {
         let raw = "Bone Flense\tCLASSES:Wizard=6\tSCHOOL:Necromancy\tDESC:you flense the bones";
-        let outcome = pi_screen(raw, "Bone Flense", Some("you flense the bones"));
-        match outcome {
-            PiOutcome::Clean(entry) => {
-                assert_eq!(entry.description.as_deref(), Some("you flense the bones"));
-            }
-            PiOutcome::NamePiDropped(_) => panic!("a clean record must not be dropped"),
-        }
+        let entry = pi_screen(raw, "Bone Flense", Some("you flense the bones"), "occult_adventures", "oa_spells.lst", 1);
+        assert!(entry.name_pi_line.is_none());
+        assert_eq!(entry.description.as_deref(), Some("you flense the bones"));
+    }
+
+    /// `§24b`-1's own required proof: the identity is unchanged when the
+    /// ORIGINAL name (never consulted by the rename branch) is swapped
+    /// for something completely different.
+    #[test]
+    fn pi_screen_output_is_unchanged_when_the_original_name_is_swapped() {
+        let raw_a = "Name A\tNAMEISPI:YES\tCLASSES:Wizard=1\tSCHOOL:Evocation";
+        let raw_b = "Completely Different\tNAMEISPI:YES\tCLASSES:Wizard=1\tSCHOOL:Evocation";
+        let a = pi_screen(raw_a, "Name A", None, "book", "file.lst", 9);
+        let b = pi_screen(raw_b, "Completely Different", None, "book", "file.lst", 9);
+        assert_eq!(a.key, b.key);
     }
 
     #[test]

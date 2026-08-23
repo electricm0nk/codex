@@ -49,15 +49,21 @@ impl Pf1SchoolId {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpellListEntry {
     pub key: &'static str,
+    /// `decisions.md §24`: `Some(line)` ONLY when `key` above
+    /// is a Codex-generated neutral identity (the row's real
+    /// name is Product Identity) -- carries the real citation
+    /// line so `cache_gen::spell_lane_dump` can resolve it
+    /// without a name-based lookup. `None` for an ordinary entry.
+    pub name_pi_line: Option<u32>,
     pub school: Option<Pf1SchoolId>,
     pub level: Option<u8>,
     pub description: Option<&'static str>,
 }
 
 pub const SPELL_LIST: &[SpellListEntry] = &[
-    SpellListEntry { key: "Agonize", school: Some(Pf1SchoolId::Evocation), level: Some(3), description: Some("You afflict a creature you have conjured with a calling spell with bolts of vicious energy to make it more pliant to your will.") },
-    SpellListEntry { key: "Hellfire Ray", school: Some(Pf1SchoolId::Evocation), level: Some(6), description: Some("A blast of hellfire blazes from your hands and deals (min(15,CASTERLEVEL))d6 points of damage.") },
-    SpellListEntry { key: "Maledication", school: Some(Pf1SchoolId::Necromancy), level: Some(4), description: Some("Target's soul is damned to hell and cannot be resurrected if killed while the spell lasts.") },
-    SpellListEntry { key: "Sacrifice", school: Some(Pf1SchoolId::Enchantment), level: Some(4), description: Some("You make a sacrifice to aid in conjuring and commanding a creature called with planar ally, planar binding, or a similar spell.") },
-    SpellListEntry { key: "Vision of Hell", school: Some(Pf1SchoolId::Illusion), level: Some(3), description: Some("You overlay a realistic illusion of a terrifying hellscape upon an area, causing creatures to be shaken.") },
+    SpellListEntry { key: "Agonize", name_pi_line: None, school: Some(Pf1SchoolId::Evocation), level: Some(3), description: Some("You afflict a creature you have conjured with a calling spell with bolts of vicious energy to make it more pliant to your will.") },
+    SpellListEntry { key: "Hellfire Ray", name_pi_line: None, school: Some(Pf1SchoolId::Evocation), level: Some(6), description: Some("A blast of hellfire blazes from your hands and deals (min(15,CASTERLEVEL))d6 points of damage.") },
+    SpellListEntry { key: "Maledication", name_pi_line: None, school: Some(Pf1SchoolId::Necromancy), level: Some(4), description: Some("Target's soul is damned to hell and cannot be resurrected if killed while the spell lasts.") },
+    SpellListEntry { key: "Sacrifice", name_pi_line: None, school: Some(Pf1SchoolId::Enchantment), level: Some(4), description: Some("You make a sacrifice to aid in conjuring and commanding a creature called with planar ally, planar binding, or a similar spell.") },
+    SpellListEntry { key: "Vision of Hell", name_pi_line: None, school: Some(Pf1SchoolId::Illusion), level: Some(3), description: Some("You overlay a realistic illusion of a terrifying hellscape upon an area, causing creatures to be shaken.") },
 ];

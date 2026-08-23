@@ -63,19 +63,24 @@
 //! * `name` is a REQUIRED field (a record's identity), so it cannot be
 //!   redacted to a marker the way an optional `description` can --
 //!   [`DeclaredProductIdentity`]'s own doc comment: "the only way not to
-//!   publish it is not to publish the row." When `declared.name` is `true`
-//!   OR the shared blacklist term scan
-//!   (`pi_screening::classify_field("name", entry.name)`) flags the name,
-//!   this generator does not write the record at all -- it is counted in
-//!   [`GenerationReport::name_pi_excluded`], never silently dropped.
+//!   publish it is not to publish the row [under the ORIGINAL name]."
+//!   **`decisions.md §24` (SD-32): when `declared.name` is `true` OR the
+//!   shared blacklist term scan (`pi_screening::classify_field("name",
+//!   entry.name)`) flags the name, this generator now WRITES the record
+//!   under a Codex-generated neutral name** derived only from
+//!   `(kind, book, source_file, source_line)` ([`resolve_name_or_rename`]) --
+//!   never from the original PI name -- rather than excluding it whole.
+//!   Counted in [`GenerationReport::name_pi_excluded`] (field name kept for
+//!   compatibility; it now counts renames) and
+//!   [`GenerationReport::name_pi_renamed_records`].
 //! * `description` keeps `cache_gen::ultimate_equipment`'s existing,
 //!   correct redact-to-marker behaviour via
 //!   `pi_screening::classify_optional_field_declared`.
 //!
-//! Zero rows hit either name screen against the real corpus at generation
-//! time (this cycle's receipt records the exact count: 0); the code path
-//! is exercised by a unit test with a synthetic PI-declared name instead,
-//! because the real 704-row population happens not to need it.
+//! 82 of the module's `equipment`/`equipment_modifier` residual `no_record`
+//! population were name-PI rows (re-derived `decisions.md §17a`-style --
+//! see this cycle's own receipt for the command); this is no longer a
+//! near-zero code path.
 
 // `SD31-E6-F5-003`: `book_routing`, `find_citation`, `disabled_identity_
 // column`, `declared_pi_at`, `slugify`, and `write_json` below are
@@ -92,6 +97,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::rules_core::rules_tables::equipment_gap_tables;
 
@@ -120,6 +126,16 @@ pub enum Source {
     LstToken { path: String, sha256: String, line: u32, record_key: String },
 }
 
+/// `decisions.md §24b`-4: divergence recorded as coordinate + reason only,
+/// never the original PI string. Mirrors `cache_gen::class_feature`'s own
+/// `RenameInfo` shape (own local copy, per the no-shared-types-file
+/// convention this file's own module doc comment already establishes).
+#[derive(Debug, Clone, Serialize)]
+pub struct RenameInfo {
+    pub reason: String,
+    pub coordinate: String,
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct CacheRecord<T: Serialize> {
     pub population: Population,
@@ -132,6 +148,15 @@ pub struct CacheRecord<T: Serialize> {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// `decisions.md §24b`-3: "a field marks it as carrying a
+    /// Codex-generated name, so no reader or player mistakes it for the
+    /// printed name." Defaults to `false` via `#[serde(default)]` on read
+    /// (not needed here -- every writer in this file sets it explicitly)
+    /// so this is additive to any prior record shape.
+    #[serde(default)]
+    pub codex_generated_name: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rename: Option<RenameInfo>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -481,6 +506,52 @@ pub(crate) fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdent
     pi_screening::declared_product_identity(tokens)
 }
 
+/// `decisions.md §24` -- the shared rename decision, factored out of
+/// `generate()`'s loop body (and reused by `cache_gen::hand_authored_
+/// equipment`'s identical sibling loop, which shares this exact PI-name-
+/// exclusion shape) so it is independently testable without needing to
+/// inject synthetic rows into the static `equipment_gap_tables::
+/// equipment_gap_rows()` table `generate()` reads.
+///
+/// When `name_is_pi` is `false`, the original `(name, key)` pass through
+/// unchanged and `rename` is `None` -- zero behavior change for every
+/// ordinary record. When `true`, the returned name/key are BOTH the
+/// Codex-generated neutral identity (`codex_neutral_name::neutral_name`/
+/// `neutral_key`), derived ONLY from `(kind, book, source_file,
+/// source_line)` -- never from `original_name`/`original_key`, which this
+/// function does not even read in that branch (`§24b`-1's structural
+/// proof: there is no argument path from the PI string to the output).
+/// Also returns the coordinate-only divergence record
+/// (`§24b`-4: coordinate + reason, never the original string) for the
+/// caller's own `name_pi_renamed_records` report bucket.
+pub(crate) fn resolve_name_or_rename(
+    name_is_pi: bool,
+    kind: &str,
+    book_id: &str,
+    source_file: &str,
+    source_line: u32,
+    original_name: &str,
+    original_key: &str,
+) -> (String, String, bool, Option<RenameInfo>, Option<serde_json::Value>) {
+    if !name_is_pi {
+        return (original_name.to_string(), original_key.to_string(), false, None, None);
+    }
+    let codex_name = neutral_name(kind, book_id, source_file, source_line);
+    let codex_key = neutral_key(kind, book_id, source_file, source_line);
+    let basename = Path::new(source_file).file_name().and_then(|n| n.to_str()).unwrap_or(source_file);
+    let coordinate = format!("{book_id}:{basename}:{source_line}");
+    let rename_info = Some(RenameInfo { reason: "name_pi_blocked".to_string(), coordinate });
+    let divergence = Some(serde_json::json!({
+        "kind": kind,
+        "book": book_id,
+        "source_file": basename,
+        "source_line": source_line,
+        "codex_name": codex_name,
+        "reason": "name_pi_blocked",
+    }));
+    (codex_name, codex_key, true, rename_info, divergence)
+}
+
 pub(crate) fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
     let mut slug: String = name
         .to_lowercase()
@@ -555,9 +626,18 @@ pub struct GenerationReport {
     /// written (never fabricated).
     pub unresolved_citations: Vec<String>,
     /// Rows whose `name` carries declared or blacklist-matched Product
-    /// Identity -- honestly not written, per the module doc comment's
-    /// "cannot redact a required field" rule.
+    /// Identity. `decisions.md §24`: these are no longer excluded whole --
+    /// they are WRITTEN under a Codex-generated neutral name
+    /// (`codex_neutral_name::neutral_name`), coordinate-only. Field name
+    /// kept for compatibility with existing callers; it now counts
+    /// RENAMES, not silent drops -- every one of these units is still
+    /// counted in `equipment_written`/`equipment_modifier_written` above.
     pub name_pi_excluded: Vec<String>,
+    /// `(kind, book, source_file, source_line, codex_name, reason)`
+    /// divergence entries for every unit renamed this run --
+    /// `decisions.md §24b`-4: coordinate + reason, never the original
+    /// string.
+    pub name_pi_renamed_records: Vec<serde_json::Value>,
     /// Rows whose slugified output path already exists on disk from a
     /// DIFFERENT, already-shipped ingest run -- not written, to guarantee
     /// this generator never clobbers already-verified data (see
@@ -627,9 +707,22 @@ pub fn generate(
             return Err(GenerationError::CorpusUnreachable(book_dir));
         }
 
-        let Some((rel_path, line)) = find_citation(&book_dir, entry.key, entry.name) else {
-            report.unresolved_citations.push(format!("{book_id}:{}", entry.key));
-            continue;
+        // `decisions.md §24`: a row whose `key`/`name` are ALREADY a
+        // Codex-generated neutral identity (`equipment_gap_tables`'s own
+        // rename branch, upstream of this generator) carries its real
+        // citation directly on `name_pi_citation` -- `find_citation`'s
+        // text search would otherwise fail, since the real `.lst` content
+        // no longer contains `entry.key`/`entry.name` (it now reads
+        // "Codex-Named Unit (...)").
+        let (rel_path, line) = match entry.name_pi_citation {
+            Some((file, ln)) => (PathBuf::from(file), ln),
+            None => {
+                let Some(found) = find_citation(&book_dir, entry.key, entry.name) else {
+                    report.unresolved_citations.push(format!("{book_id}:{}", entry.key));
+                    continue;
+                };
+                found
+            }
         };
         let abs_path = book_dir.join(&rel_path);
         let rel_path_str = rel_path.to_string_lossy().replace('\\', "/");
@@ -660,10 +753,9 @@ pub fn generate(
 
         let declared = declared_pi_at(&abs_path, line);
         let (name_license, _, _, _) = pi_screening::classify_field("name", entry.name);
-        if declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted {
-            report.name_pi_excluded.push(format!("{book_id}:{}", entry.key));
-            continue;
-        }
+        let name_is_pi = declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted;
+        let is_modifier = entry.category == "Equipmods";
+        let kind = if is_modifier { "equipment_modifier" } else { "equipment" };
 
         let wiring_index = wiring_indexes
             .entry(book_id)
@@ -672,7 +764,7 @@ pub fn generate(
         let (wiring_class, wiring_class_signals) =
             wiring_index.wiring_class_for(&mut wiring_lines, &rel_path_str, line, entry.key, entry.key);
 
-        let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+        let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
             "description",
             entry.description,
             declared.description,
@@ -681,14 +773,33 @@ pub fn generate(
         let completeness =
             if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
 
+        // `decisions.md §24` -- a name-PI row is no longer excluded whole;
+        // it ingests under a Codex-generated neutral name derived ONLY
+        // from `(kind, book, source_file, source_line)` (see
+        // `resolve_name_or_rename`'s doc comment for the `§24b`-1 proof).
+        let (record_name, record_key, codex_generated_name, rename_info, divergence) =
+            resolve_name_or_rename(name_is_pi, kind, book_id, &rel_path_str, line, entry.name, entry.key);
+        if let Some(entry) = divergence {
+            report.name_pi_excluded.push(format!("{book_id}:{}:{}", rel_path_str, line));
+            report.name_pi_renamed_records.push(entry);
+            let mut redacted_fields: Vec<&str> = Vec::new();
+            if pi_field.as_deref() == Some("description") {
+                redacted_fields.push("description");
+            }
+            redacted_fields.push("name");
+            license = crate::rules_core::shape_b_v1::License::PiRedacted;
+            pi_field = Some(redacted_fields.join(","));
+            pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+        }
+
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
             ingested_at: ingested_at.to_string(),
             data: EquipmentData {
-                key: entry.key.to_string(),
+                key: record_key.clone(),
                 category: entry.category.to_string(),
-                name: entry.name.to_string(),
+                name: record_name.clone(),
                 cost_gp: entry.cost_gp,
                 weight_lbs: entry.weight_lbs,
                 description: stored_desc,
@@ -697,23 +808,26 @@ pub fn generate(
                 path: format!("{book_rel_dir}/{rel_path_str}"),
                 sha256: sha,
                 line,
-                record_key: entry.key.to_string(),
+                record_key: record_key.clone(),
             },
             wiring_class,
             wiring_class_signals,
             license,
             pi_field,
             pi_marker,
+            codex_generated_name,
+            rename: rename_info,
         };
 
         let used = used_by_book.entry(book_id).or_default();
-        let mut slug = slugify(entry.key, used);
+        // A renamed record's slug is derived from the already-neutral
+        // `record_key` (never `entry.key`, which can itself be the PI
+        // content) so the output filename never carries the original name
+        // either (`decisions.md §24b`-2's directory/filename guard, mirrored
+        // from `cache_gen::class_feature`'s identical precedent).
+        let mut slug = slugify(&record_key, used);
         let book_out = out_root.join(book_id).join("equipment");
-        let (write_dir, is_modifier) = if entry.category == "Equipmods" {
-            (book_out.join("equipmods"), true)
-        } else {
-            (book_out.clone(), false)
-        };
+        let write_dir = if is_modifier { book_out.join("equipmods") } else { book_out.clone() };
         // A genuine second real corpus row can slugify to the same path an
         // already-shipped file occupies (`write_json`'s own doc comment
         // names the incident: `core_rulebook`'s "Intelligent Item Purpose
@@ -726,15 +840,15 @@ pub fn generate(
             if existing_line != line {
                 report.disambiguated_collision.push(format!(
                     "{book_id}:{} (line {line}, was slug of the line-{existing_line} record)",
-                    entry.key
+                    record_key
                 ));
-                slug = slugify(entry.key, used);
+                slug = slugify(&record_key, used);
             }
         }
         let wrote = write_json(&write_dir, &slug, &record)
             .map_err(|_| GenerationError::CorpusUnreachable(book_out.clone()))?;
         if !wrote {
-            report.skipped_pre_existing.push(format!("{book_id}:{}", entry.key));
+            report.skipped_pre_existing.push(format!("{book_id}:{}:{}", rel_path_str, line));
             continue;
         }
         if is_modifier {
@@ -750,6 +864,136 @@ pub fn generate(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// `decisions.md §24` end-to-end proof: a name-PI row must now be
+    /// WRITTEN (not excluded whole) under a Codex-generated neutral name,
+    /// visibly marked, with ONLY the coordinate (never the original name)
+    /// recorded on `data.rename`, and the original name/key must appear
+    /// nowhere in the returned identity.
+    #[test]
+    fn resolve_name_or_rename_renames_a_name_pi_row_instead_of_excluding_it() {
+        let (name, key, codex_generated_name, rename_info, divergence) = resolve_name_or_rename(
+            true,
+            "equipment",
+            "inner_sea_gods",
+            "_pfs/isg_equip.lst",
+            42,
+            "Original PI Item Name",
+            "Original PI Item Name",
+        );
+        assert!(codex_generated_name);
+        assert!(name.starts_with("Codex-Named Unit ("), "data.name must carry the marker: {name}");
+        assert!(key.starts_with("Codex-Named Unit ("), "data.key must carry the marker: {key}");
+        assert!(!name.contains("Original PI Item Name"));
+        assert!(!key.contains("Original PI Item Name"));
+        let rename_info = rename_info.expect("a name-PI row must carry rename info");
+        assert_eq!(rename_info.reason, "name_pi_blocked");
+        assert_eq!(rename_info.coordinate, "inner_sea_gods:isg_equip.lst:42");
+        let divergence = divergence.expect("a name-PI row must produce a divergence report entry");
+        assert_eq!(divergence["book"], "inner_sea_gods");
+        assert_eq!(divergence["source_line"], 42);
+        assert_eq!(divergence["reason"], "name_pi_blocked");
+        assert!(
+            divergence.to_string().find("Original PI Item Name").is_none(),
+            "the divergence report entry must never carry the original name: {divergence}"
+        );
+    }
+
+    #[test]
+    fn resolve_name_or_rename_passes_a_clean_row_through_unchanged() {
+        let (name, key, codex_generated_name, rename_info, divergence) = resolve_name_or_rename(
+            false,
+            "equipment",
+            "core_rulebook",
+            "cr_equip.lst",
+            10,
+            "Masterwork Backpack",
+            "Masterwork Backpack",
+        );
+        assert!(!codex_generated_name);
+        assert_eq!(name, "Masterwork Backpack");
+        assert_eq!(key, "Masterwork Backpack");
+        assert!(rename_info.is_none());
+        assert!(divergence.is_none());
+    }
+
+    /// `§24b`-1's own required proof (same shape as `codex_neutral_name`'s
+    /// own test): the identity is unchanged when the ORIGINAL name/key
+    /// (never consulted by the rename branch) is swapped for something
+    /// completely different.
+    #[test]
+    fn resolve_name_or_rename_output_is_unchanged_when_the_original_name_is_swapped() {
+        let (name_a, key_a, ..) =
+            resolve_name_or_rename(true, "equipment", "book", "file.lst", 7, "Name A", "Name A");
+        let (name_b, key_b, ..) =
+            resolve_name_or_rename(true, "equipment", "book", "file.lst", 7, "Completely Different", "Completely Different");
+        assert_eq!(name_a, name_b);
+        assert_eq!(key_a, key_b);
+    }
+
+    /// End-to-end proof against the real `generate()`/`write_json` path:
+    /// a synthetic name-PI equipment row (declared `NAMEISPI:YES`) must
+    /// land as a real, written `data/corpus/**/equipment/*.json` file
+    /// whose `data.name`/`data.key` carry the Codex-generated marker and
+    /// whose `rename.coordinate` is the only trace of where it came from
+    /// -- the original PI-shaped string must appear NOWHERE in the file.
+    #[test]
+    fn write_json_of_a_renamed_record_never_carries_the_original_name() {
+        let tmp = std::env::temp_dir()
+            .join(format!("cgeq-rename-write-{}", std::process::id()));
+        std::fs::remove_dir_all(&tmp).ok();
+        std::fs::create_dir_all(&tmp).unwrap();
+
+        let (record_name, record_key, codex_generated_name, rename_info, _) = resolve_name_or_rename(
+            true,
+            "equipment",
+            "inner_sea_gods",
+            "isg_equip.lst",
+            5,
+            "Secret Sacred Relic",
+            "Secret Sacred Relic",
+        );
+        let record = CacheRecord {
+            population: Population::InScope,
+            completeness: Completeness::ChassisOnly,
+            ingested_at: "2026-08-23T00:00:00Z".to_string(),
+            data: EquipmentData {
+                key: record_key.clone(),
+                category: "Wondrous Item".to_string(),
+                name: record_name,
+                cost_gp: None,
+                weight_lbs: None,
+                description: None,
+            },
+            source: Source::LstToken {
+                path: "inner_sea_gods/isg_equip.lst".to_string(),
+                sha256: "deadbeef".to_string(),
+                line: 5,
+                record_key: record_key.clone(),
+            },
+            wiring_class: "display".to_string(),
+            wiring_class_signals: vec![],
+            license: crate::rules_core::shape_b_v1::License::PiRedacted,
+            pi_field: Some("name".to_string()),
+            pi_marker: Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string()),
+            codex_generated_name,
+            rename: rename_info,
+        };
+
+        let mut used = BTreeSet::new();
+        let slug = slugify(&record_key, &mut used);
+        assert!(!slug.contains("secret") && !slug.contains("sacred") && !slug.contains("relic"));
+        let wrote = write_json(&tmp, &slug, &record).unwrap();
+        assert!(wrote);
+        let on_disk = std::fs::read_to_string(tmp.join(format!("{slug}.json"))).unwrap();
+        assert!(on_disk.contains("\"codex_generated_name\": true"));
+        assert!(on_disk.contains("\"reason\": \"name_pi_blocked\""));
+        assert!(
+            !on_disk.contains("Secret Sacred Relic"),
+            "the original PI name must appear NOWHERE in the written file: {on_disk}"
+        );
+        std::fs::remove_dir_all(&tmp).ok();
+    }
 
     #[test]
     fn book_routing_includes_ue_gap_residue() {
@@ -896,6 +1140,8 @@ mod tests {
             license: crate::rules_core::shape_b_v1::License::Ogl,
             pi_field: None,
             pi_marker: None,
+            codex_generated_name: false,
+            rename: None,
         };
         let wrote = write_json(&dir, "widget", &record).unwrap();
         assert!(!wrote, "write_json must report it did NOT write over an existing file");
@@ -910,15 +1156,18 @@ mod tests {
     /// synthetic declared-PI row, since the real 704-row population (this
     /// cycle's receipt) happens to carry zero such rows.
     #[test]
-    fn a_nameispi_declared_row_would_be_excluded_not_redacted() {
+    fn a_nameispi_declared_row_would_be_renamed_not_redacted() {
         let tokens = [("NAMEISPI", "YES")];
         let declared = pi_screening::declared_product_identity(tokens);
         assert!(declared.name);
         // EquipmentData.name is a required String, not Option<String> --
-        // there is no field-level redaction path for it by construction,
-        // which is exactly why `generate()` treats `declared.name` as a
-        // whole-record skip (`report.name_pi_excluded`) rather than
-        // reaching for a marker this type has nowhere to put.
+        // there is no field-level redaction path for it by construction.
+        // `decisions.md §24` supersedes the old "whole-record skip"
+        // disposition: `generate()` now ingests `declared.name` rows under
+        // a Codex-generated neutral name (`resolve_name_or_rename`) rather
+        // than reaching for a marker this type has nowhere to put -- see
+        // `resolve_name_or_rename_renames_a_name_pi_row_instead_of_excluding_it`
+        // for the end-to-end proof.
     }
 
     /// The blacklist half of the union: a name containing a blacklisted

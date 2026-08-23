@@ -40,7 +40,10 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // new books below) caught a genuine, pre-existing PI leak this cycle
     // did not introduce: `ultimate_equipment:"Elysian Shield"` declares
     // `NAMEISPI:YES` in the real corpus and was shipping unscreened here.
-    ("UE", 64),
+    // SD-32 `decisions.md §24`: 64 -> 65. The declared-PI row above is no
+    // longer excluded whole -- it is INCLUDED under a Codex-generated
+    // neutral name (`name_pi_citation` carries its real citation).
+    ("UE", 65),
     ("UPSI", 113),
     ("UW", 127),
     // `SD31-E6-F10-003`: 8 further already-compiled books extended into the
@@ -61,12 +64,16 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // `ingested_record_keys_match_their_cited_line` caught.
     ("OA", 119),
     ("HA", 117),
-    ("ISR", 71),
-    ("ISWG", 46),
+    // SD-32 `decisions.md §24`: 71 -> 72 (`inner_sea_races`), 46 -> 53
+    // (`inner_sea_world_guide`, +7), 5 -> 8 (`bestiary_4`, +3) -- each
+    // book's declared-PI/blacklist exclusions are no longer excluded
+    // whole; they are INCLUDED under a Codex-generated neutral name.
+    ("ISR", 72),
+    ("ISWG", 53),
     ("MC", 49),
     ("B2", 7),
     ("B3", 8),
-    ("B4", 5),
+    ("B4", 8),
     // `SD31-E6-F10-004`: 5 further already-compiled books, the ones
     // `SD31-E6-F10-003` deliberately left out of the batch above because
     // their real corpus text hit `screen_generated_table`'s whole-file
@@ -78,11 +85,18 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // (`ISG` -2, `MYTHIC` -4, no hits for the other 3) and the new
     // blacklist screen (9 name/key exclusions corpus-wide across the 5) net
     // out.
-    ("ISG", 125),
-    ("MYTHIC", 252),
-    ("ISC", 65),
-    ("ISI", 34),
-    ("BOTD2", 5),
+    // SD-32 `decisions.md §24`: each book's declared-PI/blacklist name
+    // exclusions are no longer excluded whole -- they are INCLUDED under a
+    // Codex-generated neutral name (`name_pi_citation` carries the real
+    // citation). 125 -> 150 (`inner_sea_gods`, +25), 252 -> 255
+    // (`mythic_adventures`, +3), 65 -> 72 (`inner_sea_combat`, +7),
+    // 34 -> 42 (`inner_sea_intrigue`, +8), 5 -> 6
+    // (`book_of_the_damned_volume_2`, +1).
+    ("ISG", 150),
+    ("MYTHIC", 255),
+    ("ISC", 72),
+    ("ISI", 42),
+    ("BOTD2", 6),
     // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off: two
     // more already-compiled books extended into the gap lane. Both figures
     // are that book's `not-ingested` equipment population, re-derived
@@ -108,7 +122,10 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // screening; the remainder are unresolved citations or PI exclusions,
     // both reported by the generator's own stdout, not fabricated to close
     // the gap.
-    ("AG", 97),
+    // SD-32 `decisions.md §24`: 97 -> 115 (+18). The PI exclusions above
+    // are no longer excluded whole -- they are INCLUDED under a
+    // Codex-generated neutral name.
+    ("AG", 115),
     // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
     // routed in the compiled catalog) had no `BOOK_INPUT` entry either, but
     // its real residual (19 `not-ingested` equipment units) turns out to be
@@ -131,8 +148,13 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1879,
-        "1879 = 1720 + 159 new (SD-32 T9 residual, `decisions.md §20`: ISM's routing fix + \
+        total, 1953,
+        "1953 = 1879 + 74 (SD-32 `decisions.md §24`: a declared-PI or blacklisted-name row is \
+         no longer excluded from this table whole -- it is INCLUDED under a Codex-generated \
+         neutral name/key, `name_pi_citation` carrying its real citation forward so `cache_gen::\
+         equipment_gap` can still resolve it; 65 declared + 9 blacklist across 10 books: UE +1, \
+         ISR +1, ISWG +7, B4 +3, ISG +25, MYTHIC +3, ISC +7, ISI +8, BOTD2 +1, AG +18). \
+         1879 = 1720 + 159 new (SD-32 T9 residual, `decisions.md §20`: ISM's routing fix + \
          its recovered ism_equipmods.lst citations raise ISM 6 -> 68 (+62), the new AG book \
          adds 97, the new UM book adds 0). 1720 = 1671 + 49 (2 books, SD-32 T9 onboarding \
          card 11: inner_sea_temples 43 + inner_sea_magic 6) = 1190 + 481 new (5 books, \

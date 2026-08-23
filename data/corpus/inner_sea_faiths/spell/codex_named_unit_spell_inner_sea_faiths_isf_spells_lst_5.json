@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:40:06Z",
+  "data": {
+    "key": "Codex-Named Unit (spell_inner_sea_faiths_isf_spells_lst_5)",
+    "school": "Transmutation",
+    "level": null,
+    "description": "You greatly magnify the target's ability to smell the presence of blood. The target is considered to have the scent universal monster ability, but only for purposes of detecting and pinpointing injured creatures (below full hit points). Creatures below half their full hit points or suffering bleed damage are considered strong scents for this ability."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_spells.lst",
+    "sha256": "e60f5e8033d0f4709d70949073b43dae83d3bd77b4ebf58324f1a831e42c9528",
+    "line": 5,
+    "record_key": "Codex-Named Unit (spell_inner_sea_faiths_isf_spells_lst_5)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_faiths:isf_spells.lst:5"
+  }
+}

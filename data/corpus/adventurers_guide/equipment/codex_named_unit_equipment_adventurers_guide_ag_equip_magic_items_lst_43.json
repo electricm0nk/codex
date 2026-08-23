@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_43)",
+    "category": "MagicItems",
+    "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_43)",
+    "cost_gp": 4000.0,
+    "weight_lbs": 1.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+    "sha256": "792741b27d5309e252c6f35e597f507e4eb2c0756fae9b087406d5c34cc51611",
+    "line": 43,
+    "record_key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_43)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_equip_magic_items.lst:43"
+  }
+}

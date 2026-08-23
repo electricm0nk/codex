@@ -49,11 +49,17 @@ impl Pf1SchoolId {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpellListEntry {
     pub key: &'static str,
+    /// `decisions.md §24`: `Some(line)` ONLY when `key` above
+    /// is a Codex-generated neutral identity (the row's real
+    /// name is Product Identity) -- carries the real citation
+    /// line so `cache_gen::spell_lane_dump` can resolve it
+    /// without a name-based lookup. `None` for an ordinary entry.
+    pub name_pi_line: Option<u32>,
     pub school: Option<Pf1SchoolId>,
     pub level: Option<u8>,
     pub description: Option<&'static str>,
 }
 
 pub const SPELL_LIST: &[SpellListEntry] = &[
-    SpellListEntry { key: "Medusa Mask Gaze", school: Some(Pf1SchoolId::Transmutation), level: None, description: Some("The subject, along with all its carried gear, turns into a mindless, inert statue.") },
+    SpellListEntry { key: "Medusa Mask Gaze", name_pi_line: None, school: Some(Pf1SchoolId::Transmutation), level: None, description: Some("The subject, along with all its carried gear, turns into a mindless, inert statue.") },
 ];

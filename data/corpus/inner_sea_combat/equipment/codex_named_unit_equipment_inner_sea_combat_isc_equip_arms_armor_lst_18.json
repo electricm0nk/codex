@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)",
+    "category": "ArmsArmor",
+    "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_arms_armor.lst",
+    "sha256": "153507257e4d5c2196feeabed3e55e998c31ac43f8c46b593a1128280a60ff3f",
+    "line": 18,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

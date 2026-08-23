@@ -57,6 +57,7 @@ use serde::Serialize;
 
 use crate::pcgen_import::lst_parser::spell::parse_lst_spell_file;
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::codex_neutral_name::neutral_name;
 use crate::rules_core::pi_screening::{
     self, classify_optional_field_declared, declared_product_identity,
 };
@@ -94,6 +95,14 @@ pub enum Source {
     LstToken { path: String, sha256: String, line: u32, record_key: String },
 }
 
+/// `decisions.md §24b`-4: divergence recorded as coordinate + reason only,
+/// never the original PI string.
+#[derive(Debug, Clone, Serialize)]
+pub struct RenameInfo {
+    pub reason: String,
+    pub coordinate: String,
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct CacheRecord<T: Serialize> {
     pub population: Population,
@@ -106,6 +115,13 @@ pub struct CacheRecord<T: Serialize> {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// `decisions.md §24b`-3: "a field marks it as carrying a
+    /// Codex-generated name, so no reader or player mistakes it for the
+    /// printed name."
+    #[serde(default)]
+    pub codex_generated_name: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rename: Option<RenameInfo>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -126,6 +142,14 @@ pub struct SpellData {
 /// never a second, hand-authored source.
 struct NormalizedEntry<'a> {
     key: &'a str,
+    /// `decisions.md §24`: `Some(line)` when `key` above is ALREADY a
+    /// Codex-generated neutral identity (`ingest_spells.rs`'s own rename
+    /// branch renamed it before it ever reached `SPELL_LIST`) -- carries
+    /// the real citation line so this generator can resolve it directly
+    /// instead of `lines_by_name.get(key)`, which would fail: the real
+    /// `.lst` content no longer contains the neutral string. `None` for
+    /// an ordinary (non-renamed) entry.
+    name_pi_line: Option<u32>,
     school: Option<String>,
     level: Option<u8>,
     description: Option<&'a str>,
@@ -152,6 +176,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -166,6 +191,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -191,6 +217,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -205,6 +232,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -219,6 +247,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: Some(format!("{:?}", e.school)),
                     level: Some(e.level),
                     description: Some(e.description),
@@ -238,6 +267,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -261,6 +291,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -285,6 +316,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -299,6 +331,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -313,6 +346,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -327,6 +361,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -341,6 +376,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -364,6 +400,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -378,6 +415,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -397,6 +435,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -411,6 +450,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -425,6 +465,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -439,6 +480,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -453,6 +495,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -467,6 +510,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -481,6 +525,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -503,6 +548,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -517,6 +563,7 @@ fn book_specs() -> Vec<BookSpec> {
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,
+                    name_pi_line: e.name_pi_line,
                     school: e.school.map(|s| format!("{s:?}")),
                     level: e.level,
                     description: e.description,
@@ -704,7 +751,12 @@ pub fn generate(
         let mut current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
         for entry in &spec.entries {
-            let line = lines_by_name.get(entry.key).copied().unwrap_or(0);
+            // `decisions.md §24`: a renamed entry's `key` is ALREADY the
+            // Codex-generated neutral identity -- `lines_by_name` (built
+            // from the real `.lst` content by REAL spell name) cannot
+            // find it, so `name_pi_line` (set by `ingest_spells.rs`'s own
+            // rename branch) is used directly instead.
+            let line = entry.name_pi_line.unwrap_or_else(|| lines_by_name.get(entry.key).copied().unwrap_or(0));
             if line == 0 {
                 report.unresolved_citations.push(format!("{}:spell:{}", spec.book_id, entry.key));
                 continue;
@@ -714,19 +766,23 @@ pub fn generate(
             // the corpus's own `NAMEISPI:YES` declaration (`§53.5`) and
             // the shared 55-term blacklist sweep (`§52.3`). Defense in
             // depth -- the compiled `SPELL_LIST` table this generator
-            // dumps was already screened at ingest time
-            // (`ingest_occult_adventures_spells.rs` and siblings), so
-            // this is expected to drop nothing, but the production write
-            // path re-screens rather than trusting an upstream table.
+            // dumps was already screened (and renamed, `decisions.md
+            // §24`) at ingest time (`ingest_spells.rs`'s `pi_screen`), so
+            // this is expected to agree, but the production write path
+            // re-screens rather than trusting an upstream table.
             let declared = declared_pi_at(&lst_path, line).unwrap_or_default();
             let (name_license, ..) = pi_screening::classify_field("name", entry.key);
             let name_blacklisted = name_license != crate::rules_core::shape_b_v1::License::Ogl;
-            if declared.name || name_blacklisted {
-                report.name_pi_dropped.push(format!("{}:{}:{line} {}", spec.book_id, spec.spell_file, entry.key));
-                continue;
-            }
+            // A renamed entry's OWN key ("Codex-Named Unit (...)") never
+            // trips the blacklist itself; `declared.name` (read off the
+            // REAL corpus line via `line` above) is what still correctly
+            // flags it, since `entry.name_pi_line.is_some()` alone would
+            // also work but this keeps the check symmetric with an
+            // ordinary entry and mirrors `cache_gen::equipment_gap`'s own
+            // idempotent re-derivation.
+            let name_is_pi = declared.name || name_blacklisted;
 
-            let (license, pi_field, pi_marker, stored_description) =
+            let (mut license, mut pi_field, mut pi_marker, stored_description) =
                 description_classification(entry.description, declared.description);
 
             let (wiring_class, wiring_class_signals) =
@@ -734,12 +790,38 @@ pub fn generate(
 
             let completeness = if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
 
+            // `decisions.md §24` -- a name-PI entry is no longer dropped;
+            // it is written under a Codex-generated neutral name derived
+            // ONLY from `(kind, book, source_file, source_line)`. When
+            // `entry.key` was ALREADY renamed upstream (`ingest_spells.rs`),
+            // re-deriving here is a pure no-op (same coordinates, same
+            // output, `codex_neutral_name`'s own determinism proof).
+            let (record_key, codex_generated_name, rename_info) = if name_is_pi {
+                let codex_name = neutral_name("spell", spec.book_id, spec.spell_file, line);
+                report.name_pi_dropped.push(format!("{}:{}:{line} (renamed, decisions.md §24)", spec.book_id, spec.spell_file));
+                let mut redacted_fields: Vec<&str> = Vec::new();
+                if pi_field.as_deref() == Some("description") {
+                    redacted_fields.push("description");
+                }
+                redacted_fields.push("name");
+                license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                pi_field = Some(redacted_fields.join(","));
+                pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                let rename_info = Some(RenameInfo {
+                    reason: "name_pi_blocked".to_string(),
+                    coordinate: format!("{}:{}:{line}", spec.book_id, spec.spell_file),
+                });
+                (codex_name, true, rename_info)
+            } else {
+                (entry.key.to_string(), false, None)
+            };
+
             let record = CacheRecord {
                 population: Population::InScope,
                 completeness,
                 ingested_at: ingested_at.to_string(),
                 data: SpellData {
-                    key: entry.key.to_string(),
+                    key: record_key.clone(),
                     school: entry.school.clone(),
                     level: entry.level,
                     description: stored_description,
@@ -748,17 +830,19 @@ pub fn generate(
                     path: format!("{}/{}", spec.dir, spec.spell_file),
                     sha256: sha256.clone(),
                     line,
-                    record_key: entry.key.to_string(),
+                    record_key: record_key.clone(),
                 },
                 wiring_class,
                 wiring_class_signals,
                 license,
                 pi_field,
                 pi_marker,
+                codex_generated_name,
+                rename: rename_info,
             };
 
-            current_keys.insert(entry.key.to_string());
-            let slug = slugify(entry.key, &mut used_slugs);
+            current_keys.insert(record_key.clone());
+            let slug = slugify(&record_key, &mut used_slugs);
             write_json(&out_spell_dir, &slug, &record)?;
             report.spells_written += 1;
         }
@@ -913,8 +997,19 @@ mod tests {
     }
 
     #[test]
-    fn a_record_whose_row_declares_nameispi_is_dropped_not_published() {
+    fn a_record_whose_row_declares_nameispi_is_read_correctly() {
         // Synthetic corpus fixture -- proves the wiring, not the real book.
+        // `decisions.md §24` (SD-32): a `NAMEISPI:YES` row is no longer
+        // dropped by `generate()` -- it is written under a Codex-generated
+        // neutral name (see this module's own `resolve`/rename block and
+        // `ingest_spells.rs`'s end-to-end proof,
+        // `pi_screen_renames_a_record_whose_row_declares_nameispi_yes`).
+        // This test still only proves `declared_pi_at` reads the flag off
+        // the real corpus row -- `generate()`'s own loop reads
+        // `book_specs()`'s fixed, compiled tables and cannot take an
+        // injected fixture, so the rename branch's end-to-end proof is the
+        // real corpus regen + `shape_ledger.py` before/after diff (cycle
+        // receipt), not a unit test here.
         let tmp = std::env::temp_dir().join(format!(
             "spell_lane_dump_pi_test_{}_{}",
             std::process::id(),

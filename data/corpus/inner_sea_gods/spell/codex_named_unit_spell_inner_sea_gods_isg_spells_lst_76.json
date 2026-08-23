@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:40:06Z",
+  "data": {
+    "key": "Codex-Named Unit (spell_inner_sea_gods_isg_spells_lst_76)",
+    "school": "Enchantment",
+    "level": null,
+    "description": "You cause a work of art to emanate magical vibrations that attract either a specific kind of intelligent creature or creatures of a particular alignment, as defined by you."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68",
+    "line": 76,
+    "record_key": "Codex-Named Unit (spell_inner_sea_gods_isg_spells_lst_76)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -49,13 +49,19 @@ impl Pf1SchoolId {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpellListEntry {
     pub key: &'static str,
+    /// `decisions.md §24`: `Some(line)` ONLY when `key` above
+    /// is a Codex-generated neutral identity (the row's real
+    /// name is Product Identity) -- carries the real citation
+    /// line so `cache_gen::spell_lane_dump` can resolve it
+    /// without a name-based lookup. `None` for an ordinary entry.
+    pub name_pi_line: Option<u32>,
     pub school: Option<Pf1SchoolId>,
     pub level: Option<u8>,
     pub description: Option<&'static str>,
 }
 
 pub const SPELL_LIST: &[SpellListEntry] = &[
-    SpellListEntry { key: "Burst Fire Blast", school: Some(Pf1SchoolId::Evocation), level: Some(3), description: Some("Deals (min(10,CASTERLEVEL))d6 fire damage in 10 foot burst.") },
-    SpellListEntry { key: "Selected Ice Blast Life Leech", school: None, level: Some(6), description: Some("Deals (min(10,CASTERLEVEL))d6 cold damage, entangles target for 1d4 rounds, and gives 1d4 temporary negative levels.") },
-    SpellListEntry { key: "Selected Alignment Shield Enhance Form Grave Bane", school: None, level: Some(6), description: Some("Grants +2 to AC and saves when attacked by chosen alignment type, +4 Strength, Dexterity, or Constitution, and +4 on saves vs. death magic; subject cannot gain negative levels and is automatically stabilized.") },
+    SpellListEntry { key: "Burst Fire Blast", name_pi_line: None, school: Some(Pf1SchoolId::Evocation), level: Some(3), description: Some("Deals (min(10,CASTERLEVEL))d6 fire damage in 10 foot burst.") },
+    SpellListEntry { key: "Selected Ice Blast Life Leech", name_pi_line: None, school: None, level: Some(6), description: Some("Deals (min(10,CASTERLEVEL))d6 cold damage, entangles target for 1d4 rounds, and gives 1d4 temporary negative levels.") },
+    SpellListEntry { key: "Selected Alignment Shield Enhance Form Grave Bane", name_pi_line: None, school: None, level: Some(6), description: Some("Grants +2 to AC and saves when attacked by chosen alignment type, +4 Strength, Dexterity, or Constitution, and +4 on saves vs. death magic; subject cannot gain negative levels and is automatically stabilized.") },
 ];

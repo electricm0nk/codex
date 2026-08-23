@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_156)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_156)",
+    "cost_gp": 2600.0,
+    "weight_lbs": 0.0,
+    "description": "This gold ring is misshapen and uncomfortable to wear for long periods of time; inscribed on it is a crude symbol of a fire burning under an arch. Once per day, the wearer may use charm person. If Droskar is the wearer's patron deity, any time the wearer crafts a magic item, she may choose to pay half of the item's construction cost instead of the full cost. The wearer spends time working on the item normally, but at the time of completion there is a 50%% chance that the item turns out nonmagical and worthless. For example, if creating a magic bracer that normally costs 1,000 gp to craft, the wearer may craft it for only 500 gp, but there is a 50%% chance the wearer's shortcuts and cheap materials result in a valueless, nonfunctional item."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74",
+    "line": 156,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_156)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_equip.lst:156"
+  }
+}

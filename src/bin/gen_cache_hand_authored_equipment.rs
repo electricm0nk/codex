@@ -58,7 +58,7 @@ fn main() {
             }
             if !report.name_pi_excluded.is_empty() {
                 eprintln!(
-                    "NOTE: {} record(s) excluded whole (not redacted) for name-field PI: {:?}",
+                    "NOTE: {} record(s) ingested under a Codex-generated neutral name (decisions.md §24, name-field PI), by coordinate: {:?}",
                     report.name_pi_excluded.len(),
                     report.name_pi_excluded
                 );

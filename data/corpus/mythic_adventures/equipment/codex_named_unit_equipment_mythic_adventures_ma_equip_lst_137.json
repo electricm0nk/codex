@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_137)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_137)",
+    "cost_gp": null,
+    "weight_lbs": 1.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b",
+    "line": 137,
+    "record_key": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_137)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_7)",
+    "category": "ArmsArmor",
+    "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_7)",
+    "cost_gp": 1500.0,
+    "weight_lbs": 50.0,
+    "description": "This metal suit includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of Gray Maiden plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 x 100) gold pieces."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
+    "sha256": "003c6e783a46f7a8a12246c003a9f020b2aae51eebd26ab9b23751a5e320b955",
+    "line": 7,
+    "record_key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_7)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_equip_arms_armor.lst:7"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_23)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_23)",
+    "cost_gp": 2835.0,
+    "weight_lbs": null,
+    "description": "Level 10 Universalist; Protection - Average lock with arcane lock (DC 35), explosive runes (Reflex DC 16).; Spells - 5.break enchantment, mage's private sanctum, polymorph, treasure stitching; 4.charm monster, dimension door, greater invisibility, moonstruck, true form; 3.cloak of winds, explosive runes, haste, lightning bolt, nondetection, twilight knife; 2.acid arrow, burning gaze, dust of twilight, fog cloud, metabolize, protection from arrows, spider climb; 1.alter winds, ant haul, burning hands, cause fear, hold portal, identify, magic missile, sleep, stone fist, vanish"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 23,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_23)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:23"
+  }
+}
