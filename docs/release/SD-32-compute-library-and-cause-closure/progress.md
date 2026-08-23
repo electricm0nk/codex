@@ -4951,3 +4951,66 @@ from `COMPANION_BOOKS`, untouched by this cycle) — Gate-1 measurability only.
   `engine_book` gap; the `BONUS:ABILITYPOOL` 7th ownership shape (Gate-2/reachability, separate
   work); no unit tests yet for `scripts/ingest_companion.py`.
 - Commit: (recorded after push).
+
+## `card15-template-language-no-record-closure` — `template`+`language` `no_record` closure to ZERO (2026-08-23, `decisions.md §20`, card 15)
+
+**Scope:** `template` (assigned kind) + `language` (same-mechanism residual). Baseline re-derived at
+the rebased tip (after `af2f07f68`'s `source.path` repair, before this cycle's own writes):
+`template` 1,062, `language` 15 `no_record` — unchanged from the dispatch brief's `857eb85d0` figures
+despite two intervening cycles (`source.path` repair, `spell` closure) because both touched
+different records.
+
+**Investigation (mandatory per dispatch brief — search first):** wave 1's
+`scripts/ingest_simple_filename_kinds.py` already closed `template` 2,248→1,062 and `language`
+136→15, and its own receipt claimed only 12/1 remained after its own re-derive — stale against the
+live corpus. Two independent defects in that same script explain the gap, both fixed in place, no
+new mechanism (`decisions.md §17`):
+
+1. **`out_dir` never applied `shape_ledger.py`'s `BOOK_CORPUS_DIR_ALIASES`** (`bestiary`->
+   `beastiary`) — 1,050 `template` + 14 `language` `bestiary`-book records were written to
+   `data/corpus/bestiary/`, a directory the reader never joins for that book, permanently invisible.
+   The exact footgun 1 the dispatch brief named, refired by a second writer at 35x scale. Fixed via
+   `resolve_out_dir()`, importing the alias table directly from `shape_ledger` (no second copy).
+2. **Citation matching only checked the leading display-name column, never a row's own `KEY:`
+   token** — PCGen's real identifying field, already honoured elsewhere in this repo
+   (`ingest_races.rs`, `ingest_race_traits.rs`, `derive_monster_ability_save_dc_fixtures.py`). All 13
+   previously-named "citation mismatch" rows (wave 1's receipt named them honestly rather than
+   force-matching) have a `KEY:` value byte-identical to the inventory's `corpus_key` — e.g.
+   `ma_templates.lst:15`'s leading `Has Swim Speed` vs `KEY:Swimming Master ~ Has Swim`. Verified all
+   13 by hand against the pinned oracle. Fixed via `row_identity()`.
+
+**Rebase note:** this cycle originally also fixed `source.path`'s missing `pathfinder/` segment
+(footgun 2), but `git fetch`+`rebase` surfaced `af2f07f68` already landing the identical fix
+corpus-wide first. Rather than hand-resolve ~2,400 conflicting corpus-record hunks, discarded its own
+overlapping fix (`git reset --hard origin/tranche/12`), re-derived `template`/`language`'s
+`no_record` fresh against the new tip (confirmed unchanged by the repair), and re-applied only the
+two fixes above.
+
+**Result, re-derived after the write:** `template` 1,062 → **0**, `language` 15 → **0** — neither
+kind appears in the post-fix `no_record` Counter at all. Full before/after diff (all 13 other kinds):
+zero moved. Bundle-wide `no_record` at this cycle's own push: 8,092 → 7,015 (`-1,077`); confirmed
+still 0/0 for both kinds after the final rebase onto the concurrently-landed `companion` closure
+(`b645e1631`) and `decisions.md §23`, with no further movement.
+
+**PI/modifier-vs-object status (`decisions.md §15`/`§16`):** not re-litigated — `template`'s full
+2,343-unit disposition (object, not a modifier) was already settled by
+`artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md` §1; PI screening logic in `main()`
+untouched, redaction counts unchanged from wave 1 (`template` 39, `language` 19).
+
+**Tests:** `scripts.tests.test_ingest_simple_filename_kinds` 18/18 (+5 new, both new behaviours
+RED→GREEN mutation-proved, reverted). `scripts.tests.test_shape_ledger` 30/30 (unaffected sibling
+suite). Dual audit clean (`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`) on own diff.
+
+**Reachability:** not claimed — `template`/`language` remain `wiring_class: "display"` with no
+`reach_gate.rs` entry, unchanged from wave 1's own honest scoping. Gate-1 shape-measurability only.
+
+- **Status:** complete for both kinds.
+- **Kanban:** card 15 notes cell prepended; row stays `in-progress` per dispatch instruction (other
+  kind-unenumerable buckets — `class_feature` 18,231/15,439 disagreement, `ability_category:*`
+  5,886, `unclassified:<file>` 179 — remain open).
+- Receipt: `artifacts/gate-3-closure-invariant/card15-template-language-no-record-closure_cycle-1_cycle_receipt.md`.
+- **What remains bundle-wide (not this cycle's scope, reported per `decisions.md §12c`):**
+  `no_record` 7,015 across 13 kinds — `race_trait` 1,859, `monster_ability` 1,146, `feat` 901,
+  `ability` 576, `deity` 459, `spell` 339, `equipment` 316, `equipment_modifier` 237, `companion` 217,
+  `class_feature` 169, `class` 157, `race` 59, `monster` 28.
+- Commit: `0b33aa20a` (pushed clean, first attempt, `b645e1631..0b33aa20a`).

@@ -141,7 +141,7 @@ Neither kind appears in the post-fix `no_record` Counter output at all (zero, no
 **No regression check** — every other kind's `matched`/`no_formula_tokens`/`no_record` count diffed
 before vs after, full population (35,423 rows both runs): only `template` and `language` moved.
 Command: diff the two `/tmp/l*.json` outputs' `Counter` per `join_status` per `kind`; zero non-zero
-diffs for any of the other 12 kinds.
+diffs for any of the other 13 kinds.
 
 **PI / template-vs-object status (`decisions.md §15`/`§16`):** not re-litigated. `template`'s full
 2,343-unit disposition (object, not a modifier on an object already counted) was already settled by
@@ -185,5 +185,5 @@ shape-measurability only.
 - **Next-cycle plan:** card 15's other kind-unenumerable buckets (`class_feature` 18,231/15,439
   disagreement, `ability_category:*` 5,886, `unclassified:<file>` 179) remain open, per
   `decisions.md §12b`/§16 — out of this cycle's assigned kind (`template`). Bundle-wide `no_record`
-  is 7,015 across 12 remaining kinds (`race_trait` 1,859 down to `monster` 28) — reported here per
+  is 7,015 across 13 remaining kinds (`race_trait` 1,859 down to `monster` 28) — reported here per
   `decisions.md §12c`'s "state every population" rule, not this cycle's own scope to close.
