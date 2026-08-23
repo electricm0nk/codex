@@ -97,3 +97,18 @@ contract, not by `workflow-instruction.md`'s own local-file convention.
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: graphify succeeded
+
+- cycle_id: 2026-08-23T00:24:38Z
+  row_or_kind: merge_conflict:post_pr
+  bundle: SD-32
+  branch: tranche/12
+  integration_target: develop
+  branch_tip_before: e2bbbae7
+  branch_tip_after: e2bbbae7
+  outcome: unknown
+  conflict_files: []
+  pr_number: 375
+  wall_clock_seconds: 0.4
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: 0 conflict(s) found; loop self-heals
