@@ -3793,3 +3793,58 @@ catches a real uncovered object. 8/8 `BudgetProvenanceTest`, 49/49
 - **Kanban:** rows 5, 9 set to `complete`; rows 11, 15 left `in-progress` (per dispatch instruction).
 - Receipt: `artifacts/gate-3-closure-invariant/005_budget_repair_cycle-3_cycle_receipt.md`.
 - Commit: `64badfecf`.
+
+## Un-red `tests/feat_gap_tables.rs` (2026-08-23, T9 onboarding cycle)
+
+`origin/tranche/12` tip (`ca82102d8`) was red: `the_gap_rows_are_exactly_the_joined_catalog_minus_
+the_hand_authored_one` (`tests/feat_gap_tables.rs:164`) failed `left: 540, right (pinned): 531`. The
+test asserts against the checked-in generated table, never regenerating from the corpus, so the
+delta could only come from that generated file changing — `git log` names the cause:
+`a50b7da04` (AT-32-G0-003, SD-32 Gate 0 book onboarding) gave Inner Sea Taverns its first compiled
+`RuleSetId` via the feat-gap generator, landing 9 real `inner_sea_taverns` gap rows (531 + 9 = 540,
+exact). That commit's own message claims "feat gap lane 531->540" was updated wherever it landed,
+and `git show --stat a50b7da04` confirms every file it names as touched (`feat_catalog.rs`,
+`gen_feat_gap_tables.rs`, `feat_gap_tables.rs`, `v06_apg_acg_feat_catalog.rs`) — but
+`tests/feat_gap_tables.rs` was not among them, so this one pin was missed. **Disposition (a): the
+catalog legitimately grew**, not a join defect.
+
+Repinned the assertion to 540 with the ninth addend (`inner_sea_taverns`, 9, citing `a50b7da04`)
+named in the doc comment alongside the existing eight. Mutation-proved: reverting to 531 reproduces
+the identical RED (`left: 540, right: 531`); re-applying the fix returns GREEN.
+
+Swept for other stale pins from this wave's four sibling deltas (`Kind::Ability` +4,824,
+`class_feature` narrowing +2,593, duplicate-identity rescue +24, T9's `horror_adventures` spell
+family) — `Kind::Ability`/narrowing/rescue were already repinned by the prior two commits in this
+same lineage (`391993eee`, `64badfecf`, confirmed current in `scripts/shape_coverage_standing_gate.py`);
+`horror_adventures`'s spell-catalog totals were already repinned by `a50b7da04` itself (confirmed
+GREEN below). No other stale pin found.
+
+```
+$ cargo test --locked --test feat_gap_tables
+test result: ok. 8 passed; 0 failed
+
+$ cargo test --locked --lib
+test result: ok. 2409 passed; 0 failed; 13 ignored
+
+$ cargo test --locked --bin v06_work_inventory
+test result: ok. 335 passed; 0 failed
+
+$ cargo test --locked --test v06_apg_acg_feat_catalog --test sd27_known_spells_must_be_on_the_class_spell_list --test sd27_feat_prerequisite_enforcement
+test result: ok. 9 + 6 + 9 passed; 0 failed
+
+$ (cd apps/desktop/src-tauri && cargo test --locked)
+test result: ok. 518 passed; 0 failed
+
+$ scripts/verify.sh --only reach
+PASS  reach  (31 passed) — RESULT: PASS
+```
+
+Corpus oracle was empty in this fresh worktree; bootstrapped via `scripts/fetch-pcgen-oracle.sh`,
+confirmed at pin `7f818006e371188e5717fd18d74d18a420747fc6` before trusting any figure.
+
+- **Status:** complete.
+- **Kanban:** no numbered row (direct un-red fix, same shape as `unred-branch`/`unred-powers`); rows
+  11, 15 left `in-progress` (per dispatch instruction).
+- Receipt: `artifacts/gate-3-closure-invariant/unred-feat-gap_cycle-1_cycle_receipt.md`.
+- Retro: `docs/retro/events/t9-onboarding.jsonl`, id `1787477443224-t9-onboarding-07b453`.
+- Commit: (recorded after push).

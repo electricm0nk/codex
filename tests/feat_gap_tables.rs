@@ -179,8 +179,8 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
     // display-plumbing twins (PCGen's own duplicate-for-PDF-export rows,
     // never independently selectable): 358 -> 199.
     assert_eq!(
-        added, 531,
-        "the gap lane is 531 rows: 83 from the original 7-book lane \
+        added, 540,
+        "the gap lane is 540 rows: 83 from the original 7-book lane \
          (`SD31-E6-F8-001`) + 242 from the five books `SD31-E6-F8-002` added \
          (horror_adventures 61 + inner_sea_races 50 + occult_adventures 68 + \
          inner_sea_world_guide 31 + monster_codex 32) + 199 from Mythic \
@@ -189,7 +189,13 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
          already-compiled books `SD31-E6-F8-003` added (inner_sea_intrigue 6 \
          + book_of_the_damned_volume_2 1; neither carries a `NAMEISPI:YES` \
          record, unlike `inner_sea_world_guide`'s remaining 6 `not-ingested` \
-         feats, which all do and correctly stay dropped), verbatim from \
+         feats, which all do and correctly stay dropped) + 9 from \
+         `inner_sea_taverns` (`a50b7da04`, SD-32 Gate 0 book-onboarding \
+         precondition, AT-32-G0-003 -- Inner Sea Taverns' first compiled \
+         `RuleSetId` of any kind, feat as its first family via this same \
+         generalised generator; that commit's own message claims \
+         \"feat gap lane 531->540\" was updated everywhere but never touched \
+         this file, leaving this pin stale), verbatim from \
          `gen_feat_gap_tables`'s own stdout at the pinned oracle"
     );
 }
