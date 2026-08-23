@@ -1890,6 +1890,69 @@ and after this sweep (not "none found" without having run the commands).
   `AGENTS.md` Blocker Discipline disposition 2 (raise-hand, not deferral) — see the receipt's §2
   for the exact rulings needed.
 
+### Cycle category-internal-adjudication — Gate 0 / Card 15 `census-scope-closure` — settles `decisions.md §14c` item 4
+
+- **Card ID:** `census-scope-closure` (card 15). Bounded forensic cycle: adjudicates the 2,614
+  `CATEGORY:Internal` `_abilities_class.lst` rows the class_feature lane disposed as (B) and the
+  sibling `ability_category` lane's own 81.6%-(A) finding on a *different* population left in
+  tension (`decisions.md §14c` item 4). Row stays `in-progress` — this is one forensic settlement,
+  not card 15's own closure (enumeration work into `docs/work-inventory.json` still pending).
+- **Commit SHA:** `e79d508b4` (rebased onto `tranche/12` at push time).
+- **Files touched:** `scripts/census_independent.py` (narrowed the blanket exclusion to a proven
+  per-row test), `scripts/tests/test_census_independent.py` (4 new/replaced tests), new
+  `artifacts/gate-0-census-closure/15-card-15-category-internal-classify.py` (committed re-derive
+  script), `-rows.jsonl`, `-summary.md`, `-adjudication-memo.md`,
+  `15-category-internal-adjudication_cycle_receipt.md`; regenerated
+  `artifacts/gate-0-census-closure/diff.json` via its own designated command;
+  `docs/retro/events/category-internal-adjudication.jsonl` (1 correction).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
+- **Wired-integration audit result:** `OK_NO_TOKENS`
+- **Acceptance criterion:** `decisions.md §14c` item 4 — "Settle it by evidence before any of it is
+  enumerated or excluded."
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (this forensic cycle). Card 15's row stays `in-progress`.
+- **Summary:** Re-derived the 2,614 independently (unchanged, `self-check: MATCH`). Applied the
+  ability_category lane's own per-row classifier (content-field + gateway-target-resolution test)
+  directly to this population rather than the class_feature lane's file-kind-analogy shortcut.
+  **Final split: 2,371 (A, 90.7%) / 243 (B, 9.3%)** — 203 proven facets (gateway resolves to an
+  already-real, already-counted target) + 40 proven inert (zero content field, zero gateway
+  token). The class_feature memo's own two worked (B) examples ("Damage Reduction ~ All/Silver")
+  flip to (A) once the content test includes `DR:` — a real mechanical field a DEFINE:/BONUS:-only
+  test misses, exactly the AGENTS.md "grep filtered to BONUS/PRE hides STACK/MULT" hazard; the
+  content field list needed widening twice (14 fields → 30 fields, via a whole-record field
+  inventory, not a filtered grep) before the disposition stabilized. Reconciled against the
+  ability_category lane's 81.6% (685/839): **disjoint, non-overlapping populations** (839 = bare
+  `*abilities*.lst`/`_race`-excluded files; 2,614 = `_abilities_class.lst` files specifically) —
+  both skew (A), at different rates, because the content shapes differ by file context; neither
+  rate transfers to the other's rows. Confirmed 4 of the Opus verifier's 6 per-token counts exactly
+  (`SPELLKNOWN`/`DEFINE`/`TEMPBONUS`/`AUTO`); the other 2 (`BONUS` 675, `ABILITY` 512) reproduce
+  exactly once traced to a substring-match artifact (`TEMPBONUS:` counted into `BONUS:`,
+  `PREABILITY:` — a prerequisite gate, not content — counted into `ABILITY:`) — filed as a
+  correction (`docs/retro/events/category-internal-adjudication.jsonl`), not silently adjusted. The
+  verifier's 910-unresolved figure could not be reproduced by any join method tried (own `KEY:`
+  field, `docs/work-inventory.json`'s `corpus_key`, or bare identity, the last of which reintroduces
+  the shared-name hazard); this cycle's own KEY:-scoped resolution test found 55 unresolved after
+  within-population resolution, all traceable to `%LIST` runtime placeholders or an out-of-scope
+  target kind (`domain`), not orphaned references — reported as unreconciled, not adjusted to match.
+  **Code fix, deliberately conservative:** `census_independent.py`'s `row_dependent_class_feature`
+  branch now only reroutes the 40 provably-bare rows (no content field, no gateway token); the 203
+  proven-facet rows are NOT additionally excluded (cross-file target resolution is out of this
+  single-pass walker's current architecture) — they stay counted as `class_feature`, under-exclude
+  rather than over-exclude per `decisions.md §1a`/`§12b`'s burden of proof. `diff.json` regenerated:
+  `total_kind_unenumerable_units` unchanged (27,838, pure reshuffle), `class_feature`
+  15,617→18,191, `ability_category:Internal` 3,453→879. RED→GREEN: the pre-fix module (loaded from
+  the pre-fix commit's `scripts/census_independent.py` via `git show <sha>:...`) reroutes the
+  `DR:`-bearing test row to `ability_category:Internal`, confirmed failing for the intended reason;
+  16/16 tests pass post-fix (`python3 -m unittest scripts.tests.test_census_independent -v`).
+- **Discovery forwards:** one, filed below — `scripts/card15_reconcile.py` (line 96, hardcoded
+  `"units": 2614` disposed-B) and `15-reconcile.json` are now stale given this cycle's finding;
+  needs a follow-up cycle in card 15's own integration scope.
+- **Next-cycle plan:** the enumeration lane adds 2,574 real `class_feature` rows this cycle names
+  (2,371 A + 203 B-gateway-resolved-but-still-counted) to `docs/work-inventory.json`, alongside the
+  previously-identified 179-row residual, `ability` (5,108), `skill` (170), and the six other-kinds
+  candidates (3,551), then updates `scripts/card15_reconcile.py`'s stale assumptions and re-runs the
+  "sum the piles" reconciliation for card 15's real acceptance bar.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).

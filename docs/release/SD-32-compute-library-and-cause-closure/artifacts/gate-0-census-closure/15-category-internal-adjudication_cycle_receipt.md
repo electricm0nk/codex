@@ -1,7 +1,7 @@
 # Cycle category-internal-adjudication — Gate 0 (census-scope-closure) / Card 15, `decisions.md §14c` item 4
 
 - **Card ID:** 15 (`census-scope-closure`)
-- **Commit SHA:** (filled after commit, see progress.md entry for the final value)
+- **Commit SHA:** `e79d508b4`
 - **Files touched:**
   - `scripts/census_independent.py` — narrowed the `row_dependent_class_feature` blanket-exclusion
     to a proven per-row test (`_row_is_bare_internal_marker`)
