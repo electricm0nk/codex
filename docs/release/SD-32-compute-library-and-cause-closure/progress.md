@@ -5713,3 +5713,101 @@ pre-existing `CORPUS_KIND_NAMES` registration gap for other kinds (`ability`/`do
   correctly-excluded PI rows) — not this mechanism's remaining reach. `monster` kind (28 units)
   untouched, owned by a sibling lane.
 - Commit: (this cycle's commit — see push output).
+## Cycle epic-2-corpus-literal-sweep-24-redaction-exemption — `corpus_literal_sweep` §24-redaction collision closed (2026-08-23)
+
+**The collision named in the dispatch brief:** `decisions.md §24`'s redaction (a `§24`-renamed
+record's `raw_tokens` legitimately carry `[redacted PI]` on ANY key, not only `DESC`) and
+`corpus_literal_sweep`'s byte-equality bar (every shipped token must be byte-present in the oracle)
+directly conflicted, because the sweep had no way to recognise a `§24` redaction as an authorised
+divergence rather than a transcription defect.
+
+**Re-derived (`§17a`), not trusted.** The brief's "1,014 findings across 394 records" was one
+measurement at an earlier tip. This cycle's actual base is `c1505f6497` (the deity/class_feature
+`§24` ingestion commit — confirmed the real `origin/tranche/12` tip via `git merge-base`, and this
+IS the true tip: `git log --oneline HEAD..origin/tranche/12` empty). Against the freshly-bootstrapped
+pinned oracle (`7f818006e371188e5717fd18d74d18a420747fc6`, `scripts/fetch-pcgen-oracle.sh` — a fresh
+worktree's oracle slot starts empty, bootstrapped this cycle), `corpus_literal_sweep` reported **1
+finding**, not 1,014 — a sibling `source.path` fix (`af2f07f68`, visible in `git branch -vv`'s
+history at this cycle's start) had already landed on `tranche/12` ahead of this cycle's base and
+closed nearly all of the brief's figure. The one remaining finding was NOT even a `§24`
+naming-shape record: `data/corpus/inner_sea_magic/ability/diplomatic_student.json`
+(`codex_generated_name: false`, own name clean) carries `pi_field: "description,raw_tokens"` — a
+comma-joined list, because more than one field was redacted on the same record — which the
+pre-existing DESC-redaction exemption's EXACT-equality check (`pi_field == Some("description")`)
+never satisfies. Fixed alongside the `§24` exemption (same class of defect — the sweep not
+recognising a real, declared, already-audited redaction), matching
+`declared_pi_shipping_audit.rs`'s own precedent `split(',').any(|part| part == "description")`
+reading of the identical field.
+
+**What was built.** A third, narrow exemption in `compare_tokens`, gated on the record's own
+`data.codex_generated_name` field (never the filename — `codex_named_unit_*` is a convention, not
+proof): a token whose value is EXACTLY `[redacted PI]` on a record carrying `codex_generated_name:
+true` is exempt from the byte-match, on any key. Neither of the two pre-existing exemptions covered
+this shape: the DESC-only exemption requires `pi_redacted_description` (a bare `pi_field ==
+"description"`, false for `§24`'s `"description,name,raw_tokens"`); the non-DESC exemption requires
+the real corpus row's own same-key value to independently re-screen as blacklisted, which a
+non-PI phrase that merely restates the record's original name (`KEY:Trait ~ Guardian of the Forge`
+— "Guardian of the Forge" is not itself a blacklisted term) never will. **Counted, not silent**
+(`§22`/`§24b`-4): `SweepTally::codex_generated_name_tokens_exempted` /
+`codex_generated_name_records_exempted`, printed unconditionally (zero included) in the binary's
+summary line.
+
+**GREEN, real corpus, both before and after:**
+```
+# before
+corpus-literal-sweep: 46119 records examined of 49225 read, 379715 tokens compared (9 synthesized), 49212 digests checked, 1 findings
+corpus-literal-sweep: MISMATCH data/corpus/inner_sea_magic/ability/diplomatic_student.json: token not byte-present in corpus token closure: DESC:[redacted PI]
+corpus-literal-sweep: 1 findings across 1 records
+
+# after
+corpus-literal-sweep: 46119 records examined of 49225 read, 379715 tokens compared (9 synthesized), 49212 digests checked, 0 findings
+corpus-literal-sweep: 1145 tokens exempted under decisions.md §24 redaction across 406 codex_generated_name records
+corpus-literal-sweep: CLEAN
+```
+
+**RED, mutation-proved on the real corpus, then reverted** (`git diff --stat` on both files empty
+afterward):
+1. Corrupted a non-redacted token (`CATEGORY`) on a `§24`-marked record
+   (`codex_named_unit_ability_advanced_players_guide_apg_abilities_lst_230.json`) — still caught: a
+   `§24` record is not exempt from the sweep, only the redacted token in it is.
+2. Corrupted a token (`KEY`) on an unmarked record (`magical_lineage.json`,
+   `codex_generated_name: false`) — still caught: the exemption never fires without the record's
+   own marker.
+```
+corpus-literal-sweep: 46119 records examined of 49225 read, 379715 tokens compared (9 synthesized), 49212 digests checked, 2 findings
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/ability/codex_named_unit_ability_advanced_players_guide_apg_abilities_lst_230.json: token not byte-present in corpus token closure: CATEGORY:Corrupted Category Value
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/ability/magical_lineage.json: token not byte-present in corpus token closure: KEY:Trait ~ Magical Lineage_CORRUPTED
+corpus-literal-sweep: 2 findings across 2 records
+```
+A record cannot smuggle a token through by merely claiming `§24`: a record with
+`codex_generated_name: false` (absent) carrying the exact sentinel in some field is still a
+finding — pinned by the new unit test
+`an_unmarked_record_gets_no_24_exemption_for_the_sentinel_value`.
+
+**Unit tests:** `cargo test --locked --lib rules_core::corpus_literal_sweep` — 36 passed, 0 failed
+(7 new). `cargo test --locked --lib rules_core::codex_neutral_name` unaffected, still 5/5.
+
+**`no_record`, before and after (per dispatch instruction).** This cycle shipped zero
+`data/corpus/**` changes (the two files mutated for the RED proof were reverted byte-for-byte,
+confirmed empty `git diff --stat`) and touched no ingest script — only
+`src/rules_core/corpus_literal_sweep.rs` and `src/bin/corpus_literal_sweep.rs`. `no_record` is
+therefore unmoved BY THIS CYCLE. Campaign figure re-measured once (`python3 scripts/shape_ledger.py`):
+population 35,328, `no_record` **1,814** (5.1%) — different from the prior cycle's cited 2,664
+because sibling lanes continued landing `no_record`-closing work on the shared `tranche/12` branch
+between that entry and this cycle's base; not attributable to this cycle.
+
+**`§1a`/`§22` self-check:** the exemption is exactly as narrow as the ruling that created it —
+gated on the record's own marker (not filename), scoped to the exact sentinel value (not any absent
+token), counted every run (never silent), and every other token on a `§24` record still byte-matches
+exactly as before, proved by mutation on the real corpus.
+
+- **Status:** complete.
+- **Kanban:** row 11 entry prepended, stays `in-progress`. Row 15 untouched, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-corpus-literal-sweep-24-redaction-exemption_cycle-1_cycle_receipt.md`.
+- **Files touched:** `src/rules_core/corpus_literal_sweep.rs`, `src/bin/corpus_literal_sweep.rs`,
+  `kanban.md` (row 11), `progress.md` (this entry).
+- **Discovery forwards:** none.
+- **Next-cycle plan:** none outstanding for this defect — `corpus_literal_sweep` is CLEAN on the
+  real pinned oracle. `no_record` (1,814, campaign-wide) remains open scope for a future cycle,
+  dominated by `monster_ability`/`feat`/`spell`-adjacent kinds per the prior cycle's own note, not
+  re-verified per-kind this cycle (out of this cycle's scope, which was the sweep gate only).
