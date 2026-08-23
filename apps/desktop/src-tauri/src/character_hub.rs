@@ -7119,15 +7119,17 @@ mod tests {
             list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
                 .expect("listing should succeed");
 
-        // 1578 hand-authored + the 540 corpus gap rows (`SD31-E6-F8-001`'s
+        // 1578 hand-authored + the 649 corpus gap rows (`SD31-E6-F8-001`'s
         // original 83 + `SD31-E6-F8-002`'s 242 + `SD31-E6-F2-007`'s 199
         // Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159
         // VISIBLE:EXPORT display-plumbing twins from the original 358 --
         // + `SD31-E6-F8-003`'s 7 + SD-32 Gate 0 book-onboarding
-        // precondition's 9 inner_sea_taverns rows). This is the character
-        // sheet's own feat list, so this number moving is the evidence
-        // that the gap lane's rows reach a player and not only a table.
-        assert_eq!(response.entries.len(), 2118, "no record may be filtered away");
+        // precondition's 9 inner_sea_taverns rows + SD-32 T9 onboarding's
+        // (card 11) 109: inner_sea_combat 23 + inner_sea_gods 86). This is
+        // the character sheet's own feat list, so this number moving is
+        // the evidence that the gap lane's rows reach a player and not
+        // only a table.
+        assert_eq!(response.entries.len(), 2227, "no record may be filtered away");
         for entry in &response.entries {
             let eligibility = entry
                 .eligibility
@@ -7172,7 +7174,7 @@ mod tests {
     #[test]
     fn the_character_less_catalog_sends_no_eligibility_key() {
         let response = crate::feat_catalog::build_feat_catalog();
-        assert_eq!(response.entries.len(), 2118);
+        assert_eq!(response.entries.len(), 2227);
         assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
         let json = serde_json::to_string(&response.entries[0]).expect("serialises");
         assert!(!json.contains("eligibility"), "{json}");

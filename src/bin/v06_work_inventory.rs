@@ -3773,6 +3773,11 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "ISC" => "inner_sea_combat",
         "ISI" => "inner_sea_intrigue",
         "BOTD2" => "book_of_the_damned_volume_2",
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
+        // two more books extended into `equipment_gap_tables`, same
+        // narrow, additive-only shape as the arms immediately above.
+        "ISTEM" => "inner_sea_temples",
+        "ISM" => "inner_sea_magic",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \

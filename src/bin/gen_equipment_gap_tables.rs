@@ -161,6 +161,14 @@ const EQUIPMENT_BOOK_MYTHIC: &str = "MYTHIC";
 const EQUIPMENT_BOOK_ISC: &str = "ISC";
 const EQUIPMENT_BOOK_ISI: &str = "ISI";
 const EQUIPMENT_BOOK_BOTD2: &str = "BOTD2";
+// SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off -- two more
+// already-compiled books extended into this gap lane, same shape as the
+// arms immediately above. Both are genuine new-content books (not
+// previously in `equipment_book_slug_for`'s match at all), so a new
+// `equipment_book_slug_for` arm is needed for each -- see that function's
+// own edit note in `v06_work_inventory.rs`.
+const EQUIPMENT_BOOK_ISTEM: &str = "ISTEM";
+const EQUIPMENT_BOOK_ISM: &str = "ISM";
 
 /// Refuses to ship a description whose rendering the player would see as
 /// broken PCGen syntax -- an unsubstituted `%N`/`%<KEYWORD>` reference or a
@@ -439,6 +447,29 @@ const BOOK_INPUTS: &[BookInput] = &[
         code: EQUIPMENT_BOOK_BOTD2,
         slug: "book_of_the_damned_volume_2",
         files: &["pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_equip.lst"],
+    },
+    // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off. Three
+    // files per `docs/work-inventory.json`'s own `source_file` field over
+    // this book's `not-ingested` equipment population -- re-derived by
+    // direct read of `fresh_inventory.json`, not guessed from a directory
+    // glob.
+    BookInput {
+        code: EQUIPMENT_BOOK_ISTEM,
+        slug: "inner_sea_temples",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_magic_items.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_general.lst",
+        ],
+    },
+    // Same shape immediately above. `ism_equipmods.lst` is deliberately NOT
+    // named here: `docs/work-inventory.json` carries zero `not-ingested`
+    // equipment units for that file (re-derived directly), so citing it
+    // would assert a citation surface this book's gap table never uses.
+    BookInput {
+        code: EQUIPMENT_BOOK_ISM,
+        slug: "inner_sea_magic",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equip.lst"],
     },
 ];
 

@@ -820,7 +820,12 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // count is unchanged; this card's file grant never touches a
         // hand-authored table.
         assert_eq!(hand_authored_equipment_rows().len(), 6_146);
-        assert_eq!(rows.len(), 7_817);
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off: the
+        // gap lane's own row count grew by 49 (1,671 -> 1,720; two more
+        // already-compiled books, inner_sea_temples 43 + inner_sea_magic 6),
+        // so the total grows by the same 49 (7,817 -> 7,866). Hand-authored
+        // count is unchanged.
+        assert_eq!(rows.len(), 7_866);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.

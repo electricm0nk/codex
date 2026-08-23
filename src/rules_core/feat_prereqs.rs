@@ -499,17 +499,18 @@ mod prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        // 1578 hand-authored records + the 540 corpus gap rows the feat gap
+        // 1578 hand-authored records + the 649 corpus gap rows the feat gap
         // lane joined on (`SD31-E6-F8-001`'s original 83 + `SD31-E6-F8-002`'s
         // 242 + `SD31-E6-F2-007`'s 199 Mythic Adventures rows -- SD31-W10-
         // INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins
         // from the original 358 -- + `SD31-E6-F8-003`'s 7 + SD-32 Gate 0
-        // book-onboarding precondition's 9 inner_sea_taverns rows). Every gap
-        // row's own `PRE`-family tokens are carried verbatim into
-        // `FeatCatalogRecord::prerequisites`, so the new rows are evaluated
-        // by this gate exactly like every other record — they are not
-        // offered unconditionally.
-        assert_eq!(reports.len(), 2118);
+        // book-onboarding precondition's 9 inner_sea_taverns rows + SD-32 T9
+        // onboarding's (card 11) 109: inner_sea_combat 23 + inner_sea_gods
+        // 86). Every gap row's own `PRE`-family tokens are carried verbatim
+        // into `FeatCatalogRecord::prerequisites`, so the new rows are
+        // evaluated by this gate exactly like every other record — they are
+        // not offered unconditionally.
+        assert_eq!(reports.len(), 2227);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which

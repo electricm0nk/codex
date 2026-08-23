@@ -97,16 +97,55 @@ def corpus_root() -> str:
     )
 
 
+def _rebase_under_pcgen_corpus_root(stale_absolute_path: str) -> str:
+    """Strip whatever worktree-specific prefix a committed path carries up to
+    (and including) its own `.../data/` segment, and re-root the remainder
+    under this run's real `corpus_root()`.
+
+    `docs/work-inventory.json`'s `corpus_root` and `additional_book_dirs`
+    fields are both written as ABSOLUTE paths by whichever worktree last
+    regenerated the inventory -- exactly the "oracle cited by literal local
+    path" shape `AGENTS.md` forbids. Every fresh worktree's `PCGEN_CORPUS_ROOT`
+    points at that same `pcgen/data` directory under a DIFFERENT worktree
+    path, so the relative structure below `.../data/` is what actually
+    transfers; the absolute prefix above it never does.
+    """
+    marker = f"{os.sep}data{os.sep}"
+    idx = stale_absolute_path.find(marker)
+    if idx == -1:
+        # No `/data/` segment to rebase from (e.g. already relative, or a
+        # differently-shaped path) -- pass it through unchanged rather than
+        # guess.
+        return stale_absolute_path
+    relative_suffix = stale_absolute_path[idx + len(marker) :]
+    return os.path.join(corpus_root(), relative_suffix)
+
+
 def book_dirs() -> dict[str, str]:
-    """Book id -> its PCGen source directory, read from the inventory itself."""
+    """Book id -> its PCGen source directory.
+
+    **SD-32 T9-onboarding fix (`decisions.md §17a`-shaped correction):** this
+    used to read `inv["corpus_root"]` and `inv["additional_book_dirs"]`
+    literally -- both ABSOLUTE paths baked into `docs/work-inventory.json` by
+    whichever worktree last regenerated it, exactly the "oracle cited by
+    literal local path" shape `AGENTS.md` forbids. Every fresh worktree's
+    `PCGEN_CORPUS_ROOT` points somewhere that stale path does not (the oracle
+    slot is git-ignored and re-fetched per-worktree), so
+    `transcribe_companion_tables.py` raised `FileNotFoundError`
+    unconditionally on a fresh checkout. Both fields are now rebased under
+    this run's own `corpus_root()` (already `PCGEN_CORPUS_ROOT`-env-var-aware,
+    and already how the sibling `classify_monster_ability_rows.py::book_dirs`
+    resolves its root) via `_rebase_under_pcgen_corpus_root`.
+    """
     inv = json.load(open(INVENTORY, encoding="utf-8"))
     dirs: dict[str, str] = {}
-    root = inv["corpus_root"]
+    root = _rebase_under_pcgen_corpus_root(inv["corpus_root"])
     for entry in os.listdir(root):
         if os.path.isdir(os.path.join(root, entry)):
             dirs[entry] = os.path.join(root, entry)
     for extra in inv.get("additional_book_dirs", []):
-        dirs[os.path.basename(extra)] = extra
+        rebased = _rebase_under_pcgen_corpus_root(extra)
+        dirs[os.path.basename(rebased)] = rebased
     return dirs
 
 

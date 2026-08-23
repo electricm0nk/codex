@@ -83,6 +83,14 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     ("ISC", 65),
     ("ISI", 34),
     ("BOTD2", 5),
+    // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off: two
+    // more already-compiled books extended into the gap lane. Both figures
+    // are that book's `not-ingested` equipment population, re-derived
+    // directly against `fresh_inventory.json`, net of the generator's own
+    // declared-PI/blacklist screens (0 hits for either book -- confirmed
+    // via this generator's own stdout at the pinned oracle).
+    ("ISTEM", 43),
+    ("ISM", 6),
 ];
 
 #[test]
@@ -95,9 +103,11 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1671,
-        "1671 = 1190 + 481 new (5 books, `SD31-E6-F10-004`) - 35 declared-PI exclusions - \
-         9 blacklist name/key exclusions (both net of redactions, which keep the record)"
+        total, 1720,
+        "1720 = 1671 + 49 new (2 books, SD-32 T9 onboarding card 11: inner_sea_temples 43 + \
+         inner_sea_magic 6) = 1190 + 481 new (5 books, `SD31-E6-F10-004`) - 35 declared-PI \
+         exclusions - 9 blacklist name/key exclusions (both net of redactions, which keep \
+         the record)"
     );
 }
 

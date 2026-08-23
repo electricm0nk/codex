@@ -771,9 +771,15 @@ mod tests {
         assert_eq!(with_description("ISI"), 9);
         assert_eq!(with_description("BOTD2"), 3);
         // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
+        // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
+        // re-derived directly against the generated `equipment_gap_tables.rs`
+        // (counting non-`None` `description` fields, not hand-adjusted).
+        assert_eq!(with_description("ISTEM"), 33);
+        assert_eq!(with_description("ISM"), 4);
+        // 4618 + 37 (33 + 4) = 4655.
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4618
+            4655
         );
     }
 
@@ -883,6 +889,11 @@ mod tests {
         assert_eq!(count_by_book(&response, "ISC"), 65);
         assert_eq!(count_by_book(&response, "ISI"), 34);
         assert_eq!(count_by_book(&response, "BOTD2"), 5);
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
+        // two more already-compiled books; see `tests/equipment_gap_tables.rs`
+        // `EXPECTED_PER_BOOK` for the full citation.
+        assert_eq!(count_by_book(&response, "ISTEM"), 43);
+        assert_eq!(count_by_book(&response, "ISM"), 6);
 
         // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1613 + 26 + 552 + 224 + 127
         // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5 + 125 + 252 + 65 + 34 + 5.
@@ -897,8 +908,10 @@ mod tests {
         // PFS legality overlay rows this cycle's fixes also caught. The
         // further +481 (7336 -> 7817) is `SD31-E6-F10-004`'s 5-book
         // extension, net of 35 declared-PI name exclusions and 9 new
-        // per-record blacklist name/key exclusions corpus-wide.
-        assert_eq!(response.entries.len(), 7817);
+        // per-record blacklist name/key exclusions corpus-wide. The
+        // further +49 (7817 -> 7866) is SD-32 T9 onboarding's (card 11)
+        // 2-book extension: inner_sea_temples 43 + inner_sea_magic 6.
+        assert_eq!(response.entries.len(), 7866);
     }
 
     #[test]
@@ -1289,7 +1302,11 @@ mod tests {
         // `SD31-E6-F10-004`: +35 ArmsArmor rows across the 5 newly-extended
         // gap-lane books (1015 -> 1050), re-derived fresh from the built
         // catalog, not adjusted by a hand count.
-        assert_eq!(response.entries.len(), 1050);
+        // SD-32 T9 onboarding (card 11): +8 ArmsArmor rows, all from
+        // inner_sea_temples (ism contributes 0 -- its 6 rows are all
+        // `General`), re-derived directly against the generated
+        // `equipment_gap_tables.rs` (1050 -> 1058).
+        assert_eq!(response.entries.len(), 1058);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }

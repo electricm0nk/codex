@@ -201,13 +201,21 @@ fn the_pre_kind_census_is_the_real_one() {
         // how many skills each token names), PREVARGTEQ +1 (`Tavern
         // Regular`'s `PreStatScore_CHA` clause) --
         // re-derived directly against each of the 9 raw `.lst` rows.
+        // SD-32 T9 onboarding (card 11, `decisions.md §19` PI sign-off) adds
+        // 109 more gap rows (inner_sea_combat 23 + inner_sea_gods 86, the
+        // latter a deities book whose feats carry `PREDEITY:` heavily),
+        // re-derived from this test's own RED-run assertion output against
+        // the pinned oracle rather than hand-counted: PREABILITY +59,
+        // PREALIGN +2, PRECLASS +5, PREDEITY +77, PREMULT +45, PREPCLEVEL
+        // +2, PRESKILL +7, PRESPELLTYPE +6, PRESTAT +13, PRETEXT +108,
+        // PRETOTALAB +22, PREVARGTEQ +103, PREWEAPONPROF +2.
         ("!PREABILITY", 35),
         ("!PREALIGN", 6),
-        ("PREABILITY", 1604),
-        ("PREALIGN", 26),
+        ("PREABILITY", 1663),
+        ("PREALIGN", 28),
         ("PRECHECKBASE", 2),
-        ("PRECLASS", 130),
-        ("PREDEITY", 4),
+        ("PRECLASS", 135),
+        ("PREDEITY", 81),
         ("PREDEITYALIGN", 2),
         ("PREDOMAIN", 5),
         ("PREDR", 1),
@@ -217,8 +225,8 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRELEVEL", 40),
         ("PRELEVELMAX", 2),
         ("PREMOVE", 5),
-        ("PREMULT", 387),
-        ("PREPCLEVEL", 12),
+        ("PREMULT", 432),
+        ("PREPCLEVEL", 14),
         ("PREPROFWITHARMOR", 5),
         ("PREPROFWITHSHIELD", 9),
         ("PRERACE", 41),
@@ -226,24 +234,24 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRESIZEEQ", 2),
         ("PRESIZEGTEQ", 3),
         ("PRESIZELTEQ", 7),
-        ("PRESKILL", 346),
+        ("PRESKILL", 353),
         ("PRESPELL", 38),
         ("PRESPELLCAST", 13),
         ("PRESPELLDESCRIPTOR", 2),
         ("PRESPELLSCHOOL", 1),
         ("PRESPELLSCHOOLSUB", 2),
-        ("PRESPELLTYPE", 12),
-        ("PRESTAT", 244),
+        ("PRESPELLTYPE", 18),
+        ("PRESTAT", 257),
         ("PRETEMPLATE", 34),
-        ("PRETEXT", 152),
-        ("PRETOTALAB", 368),
+        ("PRETEXT", 260),
+        ("PRETOTALAB", 390),
         ("PREVAREQ", 12),
         ("PREVARGT", 9),
-        ("PREVARGTEQ", 963),
+        ("PREVARGTEQ", 1066),
         ("PREVARLT", 4),
         ("PREVARLTEQ", 2),
         ("PREVISION", 2),
-        ("PREWEAPONPROF", 19),
+        ("PREWEAPONPROF", 21),
     ]
     .into_iter()
     .map(|(kind, count)| (kind.to_owned(), count))
@@ -276,13 +284,13 @@ fn the_pre_kind_census_is_the_real_one() {
     // PRESKILL +2, PREVARGTEQ +1), 5 of which are modelled (all but
     // PREDEITY's +1, not in `MODELLED_KINDS`).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 4808);
+    assert_eq!(total, 5259);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 4441);
+    assert_eq!(modelled, 4697);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -310,7 +318,10 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // + 5 of SD-32 Gate 0 book-onboarding precondition's 9 inner_sea_taverns
     // rows (`Drunken God's Blessings`, `Drunken Sing-Along`, `Hardy Liver`,
     // `Read the Room`, `Tavern Regular`) carry a real `PRE`-family token.
-    assert_eq!(with_any, 1922, "of 2118");
+    // + 108 of SD-32 T9 onboarding's (card 11) 109 new rows (inner_sea_combat
+    // 23 + inner_sea_gods 86) carry a real `PRE`-family token -- re-derived
+    // via `feats_all::tests::the_per_book_prerequisite_coverage_is_the_real_one`.
+    assert_eq!(with_any, 2030, "of 2227");
 }
 
 // ---------------------------------------------------------------------------
@@ -507,7 +518,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 2118);
+        assert_eq!(reports.len(), 2227);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);
