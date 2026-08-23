@@ -561,3 +561,66 @@ PI-blocked share of T9 is 5% or 90%, and the two cases call for different ruling
 set is a named exclusion, while a large one changes what T9's closure can mean at all. Signing off
 a draft to unblock a lane, without knowing what the draft is being applied to, is the shape of
 decision this bundle has already had to reverse twice.
+
+## Decision 16 — T2b's population is largely classifier noise; the work is the classifier, not 26 book-onboarding cycles (2026-08-22)
+
+**Status:** Finding of record. Does **not** narrow `decisions.md §13` — the operator's ruling stands and
+every one of card 11's five shapes is still closed by doing the work. What changed is **what the work
+is**, established by evidence rather than by estimate.
+
+### The finding — four independent corroborations, same day
+
+T2b wave 1 dispatched four lanes across nine books. All four independently reached the same
+conclusion by different methods, in different books:
+
+| Lane | Books | Nominal units | Real T2b work found |
+|---|---|---:|---|
+| w1-a | bestiary_2, monster_codex, bestiary_6 | 268 | **18 closed**; ~235 are monster stat-block content; 8 not-work |
+| w1-b | bestiary_5, inner_sea_races, horror_adventures | 199 | **12 closed** (a stale regen, not new content); 4 template `.MOD`/`.COPY=` rows; 181 need new chassis/mechanisms |
+| w1-c | core_rulebook, advanced_players_guide, advanced_race_guide | 104 | **0**; 51/51 confirmed non-race PCGen plumbing; APG's 37 are Favored-Class-Bonus engine rows naming no race at all |
+| w1-d | bestiary_3 | 819 | **0**; the book declares **zero** playable races — every one of its ~261 `b3_races.lst` entries carries a `CR:` token (monster) |
+
+**Root cause:** `src/bin/v06_work_inventory.rs::refine_kind` matches on the TYPE token's **first
+segment only**, so monster and creature-template special-ability rows are typed `kind: race_trait`.
+The population T2b was sized against is therefore substantially not race content. This is the same
+defect class already recorded for `file_kind()` typing `.lst` files by filename.
+
+**30 units closed in wave 1** — 18 (Dhampir chassis + Ratfolk alternates) and 12 (`inner_sea_races`,
+which turned out to be a **stale regeneration**: `IN_SCOPE_RACES` widened 18→34 across three SD-31
+waves and the book was never re-run; the unmodified binary against the pinned oracle closed 12).
+
+### Two real defects found and fixed on the way
+
+1. `race_creation.rs::vision_reading()` read only the first `VISION:` value when PCGen states
+   multiple senses as one `|`-joined field (Dhampir's shape). Both shapes now resolve.
+2. A sibling lane's `inner_sea_races` regen landed 9 alternates without engine wiring and left
+   `cargo test --locked --lib` **red on `origin/tranche/12` itself**. The w1-a lane caught it on
+   rebase and fixed it, per §5's own instruction to verify tests before pushing. The shared-file
+   contention warning in the dispatch earned its place.
+
+### The corrected plan — three cycles, not twenty-six
+
+Dispatching sixteen more per-book onboarding waves would build race chassis for monster stat blocks.
+That is fabricating content to close a counter, which `decisions.md §1a` forbids. The real work:
+
+1. **Fix `refine_kind`.** Blast radius is corpus-wide and a naive fix is **known unsafe** — the w1-d
+   lane verified that every real race's `Favored Enemy ~ Humanoid (<Race>)` row shares an inner
+   `SpecialAttack` dot-segment with the monster-only facet vocabulary, so a first-segment-only
+   widening would wrongly reclassify genuine content in **every** book. This needs a tested,
+   adversarially-checked cycle.
+2. **Build the `Adoptive Parentage` / "Adopted Race" selector once.** It spans **five** books —
+   bestiary_2 (7), bestiary_3 (5), advanced_race_guide (7), bestiary_5 (1), bestiary_6 (1) — and
+   every lane that met it correctly refused to build a per-book shim.
+3. **Then re-measure T2b.** The residual after (1) and (2) is the real per-book work, and it is a
+   fraction of 2,325.
+
+### The guard rail on this decision
+
+Reclassification makes work **appear** to vanish, which is exactly the shape `decisions.md §1a`
+exists to refuse. This finding is accepted because four lanes reached it independently, by different
+methods, with committed commands — not because it is convenient.
+
+**The classifier cycle must therefore prove, by test, that it does not reclassify genuine race
+content**, and its result goes through adversarial verification before any unit is credited as
+"not work". A unit moved out of T2b is not a unit closed: it is a unit that belonged to a different
+kind all along, and the receipt must say which kind and prove it.
