@@ -5127,3 +5127,71 @@ on this cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. `data/corpus/**/*
 - Receipt: `artifacts/gate-1-shape-closure/004_equipment_class_no_record_closure_cycle_receipt.md`.
 - PI-skipped artifact: `artifacts/gate-3-closure-invariant/20-class-pi-skipped.json`.
 - Commit: (recorded after push).
+
+## 2026-08-23 — `Domain Power` closes via the upstream class link (`decisions.md §23a`)
+
+**Scope:** the 172-unit `Domain Power` label a prior T2a-residual cycle verified corpus-wide and
+deliberately left unmapped (`artifacts/gate-3-closure-invariant/epic-2-t2a-residual-alias-tier_
+cycle-1_cycle_receipt.md`, "Two labels deliberately NOT mapped"). Operator ruled option (a):
+extend the generator's inputs, rather than declaring "shared across domain-access classes" an
+acceptable disposition.
+
+**Found the upstream link before writing anything:** every `"Domain Power ~ <X>"` ability is
+granted to a character by a class-namespaced `"<Prefix> Domain ~ <domain>"` chooser record
+(`CATEGORY:Internal`) via an `ABILITY:...|AUTOMATIC|Domain Power ~ <X>|...` token. Verified
+directly against the class `.lst` files, not assumed from the prefix name: `"Core Domain ~"`
+resolves to `{Cleric, Paladin}` (`cr_classes.lst` `BONUS:DOMAIN|NUMBER` on both; Paladin's own
+`PaladinDomainCount` `DEFINE`s to 0 and is raised only by the Sacred Servant archetype ability,
+`apg_abilities_class.lst` `KEY:Sacred Servant ~ Spells`); `"Inquisitor Domain ~"` to
+`{Inquisitor}`. Some (mostly subdomain) books grant powers straight from a bare domain-named
+record with no class-prefixed wrapper at all — that record resolves through the same base
+`DOMAIN` facet an explicit `"Core Domain ~"` grant does, verified by reading the actual line
+(`bestiary_6/b6_domains.lst`'s `"Dragon Subdomain"`), not guessed.
+
+**Built generically** (`§17`): `scan_domain_power_owners` walks the oracle's ~2,900 `.lst` files
+once and resolves owners for every `"Domain Power ~ <X>"` target found anywhere, not a
+hand-authored table of 172 mappings. A new, independently re-runnable Python oracle
+(`scripts/derive_domain_power_classes.py`) carries the identical logic and cross-validates the
+Rust implementation.
+
+**Multi-owner shape, not forced into `CATEGORY_LABEL_ALIASES`** (`§1a`): a new
+`data.classes: Option<Vec<String>>` field records the full owning-class set, kept separate from
+`data.class` (unchanged for these 172 records) and from `category_label_alias_owner` (whose
+standing refusal test for `"Domain Power"` is untouched — this cycle did not need to amend it,
+since the new field is a separate resolution path, not a route through that function).
+
+**All 172 records resolve** (0 single-owner, 0 unresolved): 109 to `{Cleric, Paladin}`, 63 to
+`{Cleric, Inquisitor, Paladin}`. Regenerated against pinned oracle
+`7f818006e371188e5717fd18d74d18a420747fc6`; field-by-field diff of all 17,852 touched files
+confirms only `data.classes`/`ingested_at` moved on the 172 `Domain Power` records and nothing
+else corpus-wide. `corpus_literal_sweep`: CLEAN, 0 findings. RED→GREEN proved (mutated the
+resolution call to always-`None`, confirmed the new end-to-end test fails for the intended
+reason, reverted).
+
+**One pre-existing, unrelated red test observed and left as-is:**
+`rules_core::feat_prereqs::prerequisite_tests::a_starting_fighter_keeps_a_real_catalog_and_every_
+denial_states_why` (left: 755, right: 701) — confirmed via `git status --porcelain data/corpus`
+that this cycle touched zero `feat`-kind records and `feat_prereqs.rs` has no `class_feature`
+reference at all; this is branch drift from an earlier `feat`/`no_record` closure cycle, not
+caused by or fixed by this cycle.
+
+Suites: `cargo test --locked --lib cache_gen::class_feature::` 38/38 (4 new). `cargo test --locked
+--lib` (full): 2,435 passed, 1 failed (the pre-existing unrelated one above), 13 ignored. Dual
+audit on this cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+
+- **Status:** complete for the `Domain Power` label (172/172 units). `Demonic Obedience` (42
+  units, `§23b`, a `kind` re-typing) and the remaining ~525 T2a-residual labels (`§23c`) are NOT
+  this cycle's scope.
+- **Kanban:** row 11 stays `in-progress` (card 11's other four open sub-populations, `§13`,
+  are untouched by this cycle) — entry prepended.
+- Receipt:
+  `artifacts/gate-3-closure-invariant/epic-2-t2a-domain-power-classes_cycle-1_cycle_receipt.md`.
+- Files: `src/rules_core/cache_gen/class_feature.rs` (new `classes` field,
+  `scan_domain_power_owners`/`domain_power_owning_classes`/`effective_lst_key`, wired into
+  `generate()`, 4 new tests); `scripts/derive_domain_power_classes.py` (new);
+  `scripts/diff_check_regen.py`, `scripts/summarize_domain_power_classes.py` (new, re-derive
+  aids); `data/corpus/**/class_feature/**/*.json` (172 records gain `data.classes`; full-corpus
+  regen also refreshed `ingested_at` on all `class_feature` records, per this generator's existing
+  behaviour, and picked up 4 new records from `docs/work-inventory.json`'s current state,
+  unrelated to this cycle's scope).
+- Commit: `ecfb9986e` (pushed clean, first attempt, `033068f0c..ecfb9986e`).
