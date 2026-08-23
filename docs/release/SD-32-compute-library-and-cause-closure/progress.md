@@ -1017,6 +1017,49 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   remaining T4-shaped work, if a future cycle wants it. Card 11's other lanes (T2a+T12, T2b, T9,
   and a consolidation cycle once every lane reports) are other lanes' scope.
 
+### Cycle epic-2-t8/2 — Epic 2 / Card 11 `epic-2-cause-closure`, lane T8 — CLOSED (D13, write-scope grant applied)
+
+- **Card ID:** `epic-2-cause-closure` (one of several concurrent lanes; this lane's scope is T8
+  only, per `decisions.md §11`'s write-scope grant).
+- **Commit SHA:** `e3f3559dd` (supersedes an earlier same-cycle commit `3685bd15a` on this lane
+  that only added a visibility field — see the receipt's "Scope resolution" note).
+- **Files touched:** `scripts/observer/pf1e_dashboard_producer.py`,
+  `scripts/tests/test_pf1e_dashboard_producer.py`,
+  `docs/retro/events/epic-2-t8.jsonl` (new).
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001, "T8/T7 (16 units
+  together) close opportunistically" — plus `decisions.md §11`'s four conditions.
+- **Status:** T8 **complete**. This is the last non-`complete` condition Decision 11 named on
+  card 11; the row still stays `in-progress` overall (T2a/T2b/T9/T4/T12 remain, per prior lanes'
+  own cycle entries above — a consolidation cycle owns marking the whole row `complete`).
+- **Summary:** **T8 (D13, 12 units, `wiring_class`-vs-`status` classifier blind spot) closed.**
+  Re-derived the population independently against live `docs/work-inventory.json`: exactly 12
+  `core_rulebook` `class_feature` units (`wiring_class=='display' and status=='grounded'`),
+  matching D13's own named list and count exactly. Root cause: the classifier's single-hop
+  `no_magnitude_token` heuristic never considers that `status=='grounded'` is itself real,
+  independent evidence — all 12 carry `evidence: "explanation_id_observed_in_a_real_computation"`,
+  the compute pipeline's own trace of a live consumer already computing something from the record.
+  A rebase mid-cycle picked up the sibling `epic-2-t7-t8` lane's PROPOSED-not-applied diff
+  (commit `caaef7762`): a hardcoded 12-id allowlist reclassifying the same units `display`→
+  `computed` at tally-time, same root cause, same population (set-equal, not just count-equal).
+  This cycle generalises that into a predicate (kind/wiring_class/status/evidence, no literal
+  ids) so a future unit landing in the identical cell is caught automatically (Decision 11
+  condition 1). `doneness_verdict()` itself is untouched — the fix corrects the classifier INPUT
+  before that function ever runs, so the existing, unmodified `computed`+`grounded`→`DONE` rule
+  fires for these 12. Every moved figure re-derived before/after over the same corpus:
+  `corpus_wide.display` 14285→14273, `corpus_wide.computed` 9464→9476, `doneness.done`
+  13458→13470, `doneness.held` 1230→1218 — all four deltas exactly ±12. RED→GREEN proven
+  (`ClassifierReclassifiedUnitsTest`, 5 mutation-proof cases); confirmed via the real `main()`
+  entrypoint that the fix reaches `work_inventory.classifier_reclassified_units` in
+  `site/dashboard/PF1e-dashboard.json`'s own document shape (Decision 11 condition 2) — the
+  committed copy itself was already `STALE` for unrelated corpus drift before this cycle touched
+  anything (confirmed against the unmodified producer too) and is not regenerated here, logged as
+  a `scripts/retro.py deferral` rather than folded into this bounded fix. Full detail:
+  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-2_t8_cycle_receipt.md`.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** T8 needs no further work. Card 11's remaining lanes (T2a+T12, T2b, T9, T4,
+  and a consolidation cycle once every lane reports) are other lanes' scope, unchanged by this
+  cycle.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,

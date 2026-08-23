@@ -1,8 +1,8 @@
 # Cycle 2 — Epic 2 / Card 11 `epic-2-cause-closure` — T8 (D13) closure
 
 - **Card ID:** 11 (`epic-2-cause-closure`)
-- **Commit SHA:** `3685bd15a` (superseded same-cycle revision below; see the second commit SHA
-  recorded after push, both on this receipt's own lane)
+- **Commit SHA:** `e3f3559dd` (this lane's final, pushed state; supersedes an earlier same-cycle
+  commit `3685bd15a` that only added a visibility field — see the "Scope resolution" note below)
 - **Files touched:**
   - `scripts/observer/pf1e_dashboard_producer.py`
   - `scripts/tests/test_pf1e_dashboard_producer.py`
