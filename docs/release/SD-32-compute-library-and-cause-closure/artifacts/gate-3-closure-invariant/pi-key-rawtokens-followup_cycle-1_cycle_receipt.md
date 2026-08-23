@@ -31,7 +31,9 @@
   - `scripts/tests/test_declared_pi_shipping_defect2_regen.py` (new) —
     Defect 2 regression: the 28 originally-violating file paths no longer
     exist (moved to `codex_named_unit_*` siblings), plus an end-to-end
-    `cargo run --bin declared_pi_shipping_audit` CLEAN proof.
+    `cargo run --bin declared_pi_shipping_audit` zero-`NAME-PI-SHIPPED` proof
+    (scoped to this defect's own violation shape, not the audit's overall
+    verdict — see the Defect 2 notes below for why).
   - `data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json` —
     regenerated (deleted + `gen_cache_equipment_gap` + `enrich_equipment_
     raw_tokens`, both guarded generator paths) with the description and
@@ -124,7 +126,7 @@
   `language` key at all — command: `python3 scripts/pi_key_rawtokens_audit.py
   --json-out <path>`).
 
-  ## Defect 2 — root-caused and closed, all 28 (declared_pi_shipping_audit is now CLEAN)
+  ## Defect 2 — root-caused and closed, all 28 (zero `NAME-PI-SHIPPED` violations remain)
 
   Root cause: `scripts/ingest_simple_filename_kinds.py` served six kinds
   but only `deity` (`NAME_ALWAYS_PI_KINDS`) went through `decisions.md §24`'s
@@ -156,8 +158,24 @@
   first-pass `cargo run --bin declared_pi_shipping_audit` still failing
   after the regen.
 
-  **Verified: `cargo run --bin declared_pi_shipping_audit` → `CLEAN — no
-  shipped record contradicts its own corpus row's PI declaration`.**
+  **Verified: `cargo run --bin declared_pi_shipping_audit` reports zero
+  `NAME-PI-SHIPPED` violations** (all 28 originally-named + a re-scan for
+  any new ones — none). **Re-derived after this cycle's post-launch rebase
+  onto `origin/tranche/12`, not assumed stable across it**: the rebase
+  picked up sibling-lane commits that landed a DIFFERENT, unrelated
+  violation shape (`DESC-PI-SHIPPED-IN-RAW-TOKENS`, 82 instances across
+  `ability`/`feat_generic`/`race_trait_generic` — a record's `data.
+  description` is correctly redacted but `data.raw_tokens`' own `DESC`
+  entry still carries the real prose). **Confirmed pre-existing and out of
+  this cycle's scope**: `git show bd6e0b6968:<one flagged file>` (the
+  `origin/tranche/12` tip immediately before this cycle's rebase) shows the
+  identical leak already present, and that commit's own message
+  (`e5c53a6ab0`) already records this as a known, separately-discovered
+  defect. This cycle never touches `ability`/`feat_generic`/
+  `race_trait_generic`'s generators. `scripts/tests/test_declared_pi_
+  shipping_defect2_regen.py`'s audit test asserts `NAME-PI-SHIPPED` absence
+  specifically, not overall `CLEAN`, so it does not go red on this
+  unrelated, concurrently-landed defect.
 
   ## `no_record` — unaffected, by kind, before and after
 
@@ -222,6 +240,15 @@
     touched this cycle (`§19a`'s scheme is operator-approved and used
     corpus-wide — changing it is a bigger blast radius than this cycle's
     named scope).
+  - **Pre-existing, unrelated `DESC-PI-SHIPPED-IN-RAW-TOKENS` (82 instances,
+    `ability`/`feat_generic`/`race_trait_generic`)** surfaced by the post-
+    dispatch rebase onto `origin/tranche/12` — already present at that
+    tip's `bd6e0b6968` (confirmed via `git show`) and already recorded by
+    that lineage's own `e5c53a6ab0` commit as a known, separately-discovered
+    defect. Not this cycle's defect shape (`data.description` is correctly
+    redacted; `data.raw_tokens`'s own `DESC` entry is not), not touched, not
+    double-logged here beyond this cross-reference — the owning lane's own
+    commit is the record of it.
 - **Next-cycle plan:** a follow-up lane picks up the 9 named `feat_generic`/
   `monster_generic` leaks (needs a `no_record`-ledger-aware re-ingest path,
   not just the generator fix already landed) and separately an operator

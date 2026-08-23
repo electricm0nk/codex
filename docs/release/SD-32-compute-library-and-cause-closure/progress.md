@@ -5901,8 +5901,14 @@ regenerating) and removed via `git rm` (not hand-edited: cleanup of files the
 same guarded generator superseded, confirmed exact-count against the 60
 renames, not a guess).
 
-**Verified:** `cargo run --locked --bin declared_pi_shipping_audit` →
-`CLEAN — no shipped record contradicts its own corpus row's PI declaration`.
+**Verified:** `cargo run --locked --bin declared_pi_shipping_audit` → zero
+`NAME-PI-SHIPPED` violations (re-derived AFTER this cycle's own rebase onto
+`origin/tranche/12`, not assumed stable across it). The rebase picked up a
+DIFFERENT, unrelated, pre-existing violation shape from sibling lanes
+(`DESC-PI-SHIPPED-IN-RAW-TOKENS`, 82 instances, `ability`/`feat_generic`/
+`race_trait_generic`) — confirmed already present at the pre-rebase tip
+(`git show bd6e0b6968:<flagged file>`) and already recorded by that
+lineage's own `e5c53a6ab0` commit; not this cycle's defect shape or scope.
 `python3 scripts/pi_key_rawtokens_audit.py` → `domain`/`equipment`/`language`
 report zero confirmed hits (down from 4; `feat_generic`/`monster_generic`
 report 9, `spell` reports 1 confirmed-false-positive, both named above).
