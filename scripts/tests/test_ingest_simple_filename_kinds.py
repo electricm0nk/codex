@@ -70,6 +70,41 @@ class FreeTextAndPiScanTests(unittest.TestCase):
         self.assertIsNone(isfk.normalized_term_hit("A shrine sacred to nobody stands here."))
 
 
+class ComposeSourcePathTests(unittest.TestCase):
+    """Mechanical control for the SD-32 `decisions.md §20` defect: 3,124
+    records shipped with `source.path` missing its leading `pathfinder/`
+    segment because the caller joined `pcgen_root` with `"pathfinder"`
+    before taking the relpath, double-stripping the segment
+    `corpus_literal_sweep`'s `book_dir_of` shape check requires. This must
+    fail red if that mistake is ever reintroduced."""
+
+    def test_compose_source_path_keeps_leading_system_segment(self):
+        root = "/fake/pcgen/data"
+        file_path = "/fake/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst"
+        self.assertEqual(
+            isfk.compose_source_path(file_path, root),
+            "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+        )
+
+    def test_compose_source_path_rejects_a_pcgen_root_pre_joined_with_pathfinder(self):
+        """Reproduces the actual bug: passing `os.path.join(pcgen_root,
+        "pathfinder")` as the relpath base (the code shape this cycle
+        removed) strips the leading system segment and must be refused."""
+        root = "/fake/pcgen/data"
+        buggy_root = os.path.join(root, "pathfinder")
+        file_path = "/fake/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst"
+        with self.assertRaises(ValueError):
+            isfk.compose_source_path(file_path, buggy_root)
+
+    def test_compose_source_path_accepts_the_dreamscarred_press_shape(self):
+        root = "/fake/pcgen/data"
+        file_path = "/fake/pcgen/data/pathfinder/dreamscarred_press/dsp_book/dsp_x.lst"
+        self.assertEqual(
+            isfk.compose_source_path(file_path, root),
+            "pathfinder/dreamscarred_press/dsp_book/dsp_x.lst",
+        )
+
+
 class SlugifyTests(unittest.TestCase):
     def test_slugify_collapses_non_alnum_and_lowercases(self):
         self.assertEqual(

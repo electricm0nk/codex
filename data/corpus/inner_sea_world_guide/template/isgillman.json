@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "IsGillman",
     "name": "IsGillman",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/gillman/gillman_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gillman/gillman_templates.lst",
     "sha256": "cbb4b626c78d033d83b3349eb4560f1a9a5dd55beb2f31df7ba9cb582d139e98",
     "line": 5,
     "record_key": "IsGillman"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Bonus Language ~ Vishkanya",
     "name": "Bonus Language ~ Vishkanya",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_templates_language.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_templates_language.lst",
     "sha256": "573b62d4eb22fb1bd96eb1437dfa067ceb662ec5a6d0572cadbdd4db32a911c6",
     "line": 6,
     "record_key": "Bonus Language ~ Vishkanya"

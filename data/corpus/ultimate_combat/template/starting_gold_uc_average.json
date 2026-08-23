@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:44Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Starting Gold UC ~ Average",
     "name": "Starting Gold UC ~ Average",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/ultimate_combat/uc_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_templates.lst",
     "sha256": "007e24879101d7dae55cfe9e1f941456576542a452b10924768a87cef8534dff",
     "line": 14,
     "record_key": "Starting Gold UC ~ Average"

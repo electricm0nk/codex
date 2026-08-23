@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Common (cannot speak)",
     "name": "Common (cannot speak)",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary_5/b5_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_languages.lst",
     "sha256": "8f01eeb1b5112b40bf2bd60ff3e42677d827c1dad4e2c41fd8e669136e442892",
     "line": 5,
     "record_key": "Common (cannot speak)"

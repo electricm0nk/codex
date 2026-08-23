@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:41Z",
+  "ingested_at": "2026-08-23T12:11:32Z",
   "data": {
     "key": "IsHobgoblin",
     "name": "IsHobgoblin",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_templates.lst",
     "sha256": "c770005d7ebcdd1881979b5c3cf0633801c05a20baebfc206597191e9ae5d6d1",
     "line": 5,
     "record_key": "IsHobgoblin"

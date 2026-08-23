@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Race ~ Ratfolk",
     "name": "Ratfolk",
@@ -22,7 +22,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_templates.lst",
     "sha256": "411809f9b2afdbd081e39ebf95bdaa839b205c88e46d5b7f86dbfe200e18a45a",
     "line": 4,
     "record_key": "Race ~ Ratfolk"

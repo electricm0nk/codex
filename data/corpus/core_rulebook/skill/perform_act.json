@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Perform (Act)",
     "name": "Perform (Act)",
@@ -34,7 +34,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
     "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea",
     "line": 55,
     "record_key": "Perform (Act)"

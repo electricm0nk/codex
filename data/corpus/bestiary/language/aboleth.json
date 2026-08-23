@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Aboleth",
     "name": "Aboleth",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary/b1_languages_aboleth.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages_aboleth.lst",
     "sha256": "2f000c1a8e936bd2ac0f6a44d397280c6e1444020ddd95dca88dff643c824d3a",
     "line": 4,
     "record_key": "Aboleth"

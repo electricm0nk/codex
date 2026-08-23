@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:33:45Z",
+  "ingested_at": "2026-08-23T12:11:36Z",
   "data": {
     "key": "Leshy Subdomain",
     "name": "Leshy Subdomain",
@@ -42,7 +42,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
     "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112",
     "line": 9,
     "record_key": "Leshy Subdomain"

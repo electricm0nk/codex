@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:40Z",
+  "ingested_at": "2026-08-23T12:11:31Z",
   "data": {
     "key": "Death Slayer Bonus Feat",
     "name": "Death Slayer Bonus Feat",
@@ -22,7 +22,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
     "sha256": "5e9d10789d33dce65c644f7bf256c66287fbc40be2c91a3bf7c4983dbaf7026b",
     "line": 14,
     "record_key": "Death Slayer Bonus Feat"

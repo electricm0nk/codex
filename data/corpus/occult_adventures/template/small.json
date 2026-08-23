@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "SMALL",
     "name": "SMALL",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/occult_adventures/oa_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_templates.lst",
     "sha256": "e2ca879c13b5acf2829b6a55f9b88f7517087475136bc9a20a6bd1b102b8f2a6",
     "line": 5,
     "record_key": "SMALL"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Bog Nixie",
     "name": "Bog Nixie",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
     "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b",
     "line": 28,
     "record_key": "Bog Nixie"

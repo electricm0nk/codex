@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Arson Subdomain",
     "name": "Arson Subdomain",
@@ -74,7 +74,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
     "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
     "line": 6,
     "record_key": "Arson Subdomain"

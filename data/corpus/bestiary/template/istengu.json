@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:41Z",
+  "ingested_at": "2026-08-23T12:11:32Z",
   "data": {
     "key": "IsTengu",
     "name": "IsTengu",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/tengu/tengu_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_templates.lst",
     "sha256": "89fd75d386207b877c8ec2ded50a21fb440270ce793191f1d2043eee9ffbcbaf",
     "line": 5,
     "record_key": "IsTengu"

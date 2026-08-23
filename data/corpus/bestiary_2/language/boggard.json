@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Boggard",
     "name": "Boggard",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary_2/b2_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_languages.lst",
     "sha256": "5846bf0668c9f21689ebe870447b066632dfb3a322754f659a1f2dd6a8fabdb5",
     "line": 12,
     "record_key": "Boggard"

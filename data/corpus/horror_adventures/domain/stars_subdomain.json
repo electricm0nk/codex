@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Stars Subdomain",
     "name": "Stars Subdomain",
@@ -42,7 +42,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/horror_adventures/ha_domains.lst",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_domains.lst",
     "sha256": "b8c01136992e561c1fcb5fa29bb42e5fcd196fc608770b7e2c90e9bf00588c1b",
     "line": 7,
     "record_key": "Stars Subdomain"

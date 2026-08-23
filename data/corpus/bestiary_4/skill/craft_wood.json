@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Craft (Wood)",
     "name": "Craft (Wood)",
@@ -42,7 +42,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary_4/b4_skills.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_skills.lst",
     "sha256": "d85e7841d73065b1a8acf15bf780106c58c5ddff5549ba59f75cc07c85a44ada",
     "line": 7,
     "record_key": "Craft (Wood)"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Kasatha",
     "name": "Kasatha",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_languages.lst",
     "sha256": "bcc55f823c96778e107d6b5282f84e1893ad8549e2afe21875e51060fc46ab65",
     "line": 5,
     "record_key": "Kasatha"

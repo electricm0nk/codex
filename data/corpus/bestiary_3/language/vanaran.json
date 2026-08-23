@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Vanaran",
     "name": "Vanaran",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/vanara/vanara_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_languages.lst",
     "sha256": "490d713cb4abbf3b5b2c5be702f6764adb73e79d9efa0212b50e33d07d03c02f",
     "line": 6,
     "record_key": "Vanaran"

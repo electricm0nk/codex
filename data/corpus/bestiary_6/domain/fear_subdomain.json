@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Fear Subdomain",
     "name": "Fear Subdomain",
@@ -74,7 +74,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary_6/b6_domains.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_domains.lst",
     "sha256": "8bd9c25d265755949bbf401885e4e1e17621d4d5aed66544a8680dd442f85ed8",
     "line": 9,
     "record_key": "Fear Subdomain"

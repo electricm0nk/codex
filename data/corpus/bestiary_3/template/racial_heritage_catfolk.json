@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Racial Heritage ~ Catfolk",
     "name": "Catfolk",
@@ -26,7 +26,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_templates.lst",
     "sha256": "11f8dd4865d4c169ba8618c42f5b49343f409d4c2ca5fe3cab9f34b5880248dd",
     "line": 9,
     "record_key": "Racial Heritage ~ Catfolk"

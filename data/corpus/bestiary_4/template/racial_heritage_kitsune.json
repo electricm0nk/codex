@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Racial Heritage ~ Kitsune",
     "name": "Kitsune",
@@ -26,7 +26,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_templates.lst",
     "sha256": "4281a86134b9b88c1052031871ef52cf54b124e687511f28a970ee1736e6b9a7",
     "line": 9,
     "record_key": "Racial Heritage ~ Kitsune"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Catfolk",
     "name": "Catfolk",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_languages.lst",
     "sha256": "3c52848d2814fcff6b1f9d8da0faab1f55efdb0be9e68768c3767a620e4ceea6",
     "line": 6,
     "record_key": "Catfolk"

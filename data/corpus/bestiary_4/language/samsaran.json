@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Samsaran",
     "name": "Samsaran",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_languages.lst",
     "sha256": "184be4f6ec29f6fde0b7688b310ab63a1a39b0b343db9c5246b694eb729c7da0",
     "line": 6,
     "record_key": "Samsaran"

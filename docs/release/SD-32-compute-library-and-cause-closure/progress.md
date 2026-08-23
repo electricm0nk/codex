@@ -4814,3 +4814,99 @@ cycle's own diff: `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
   `artifacts/gate-0-census-closure/15-duplicate-identity-review_cycle_receipt.md`'s own opening
   note.
 - Commit: (recorded after push).
+
+## Cycle card15-source-path-repair — 2026-08-23
+
+**Fixed the `source.path` defect flagged above** (§20 unblocked). `scripts/ingest_simple_filename_
+kinds.py` composed `"path": os.path.relpath(file_path, os.path.join(args.pcgen_root, "pathfinder"))`
+— `args.pcgen_root` is already the PCGen data root (`PCGEN_CORPUS_ROOT`), the same convention
+`scripts/ingest_ability.py`'s `corpus_root()` + `os.path.relpath(path, root)` uses, so the extra
+`os.path.join(..., "pathfinder")` double-stripped the leading system segment. Verified the correct
+convention against the 38,234 correctly-shaped records (not one example) before fixing. Checked
+every other script that writes a corpus `source.path` (`ingest_ability.py`,
+`derive_monster_sla_spell_level_fixtures.py` reads only, `transcribe_monster_tables.py` reads only)
+— none share the defect; `census_independent.py`/`ground_truth_evidence_guard.py`/
+`card15_reconcile.py` also join a root with `"pathfinder"`, but only for their own internal
+book-relative `rel_path`, never for a written corpus record's `source.path`.
+
+**Re-derived the bad-record count (§17a)**, not trusted from the brief: a fresh Python walk of every
+`data/corpus/**/*.json` counting `source.path` not starting `pathfinder/` gives **3,124** — matches
+the orchestrator's figure at the top of this dispatch, not the discovering lane's 2,585 (one script,
+one defect; the discrepancy was staleness, not a second culprit).
+
+**Fix + regression test.** New `compose_source_path(file_path, pcgen_root)` helper (raises
+`ValueError` on the exact buggy shape) replaces the inline `os.path.relpath` call.
+`scripts/tests/test_ingest_simple_filename_kinds.py::ComposeSourcePathTests` (3 new tests) —
+RED proved live: disabled the shape guard (`is_shaped = True`), ran the suite,
+`test_compose_source_path_rejects_a_pcgen_root_pre_joined_with_pathfinder` failed for the intended
+reason (`AssertionError: ValueError not raised`); reverted, 13/13 GREEN.
+
+**Repaired all 3,124 records through the guarded generator**, never hand-edited:
+```
+python3 scripts/ingest_simple_filename_kinds.py --inventory docs/work-inventory.json \
+  --pcgen-root "$PCGEN_CORPUS_ROOT" --out-root data/corpus \
+  --kind template --kind power --kind domain --kind language --kind skill
+```
+`written_count: 3124` exactly — matches the re-derived bad-record count (the 13 citation-mismatch
+rows named in `card15-simple-filename-kinds-ingest_cycle-1_cycle_receipt.md` are still correctly
+skipped, unaffected). `git diff` on a sample record shows only `ingested_at` and `source.path`
+changed — no other field moved.
+
+**Gate reopened — proved corpus-wide:**
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-after.json
+# corpus-literal-sweep: 39378 records examined of 41371 read, 338506 tokens compared (9 synthesized), 41358 digests checked, 0 findings
+# corpus-literal-sweep: CLEAN   (exit 0; was exit 2)
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-after.json
+# derived-evaluator-fixture-check: 1836 unit(s) cleared over 2577 fixture row(s); 0 failed; 0 not ingested
+```
+
+**Regenerated `docs/work-inventory.json`** with both report env vars set (no `--allow-stamp-loss`):
+```
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-after.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-after.json \
+  cargo run --locked --bin v06_work_inventory
+```
+**Full status distribution diffed both directions:**
+
+| status | before | after | delta |
+|---|---:|---:|---:|
+| `literal-verified` | 6,506 | 6,506 | **0 — preserved exactly** |
+| `fixture-verified` | 1,741 | 1,741 | **0 — preserved exactly** |
+| `grounded` | 2,724 | 2,724 | 0 |
+| `text-complete` | 4,395 | 4,395 | 0 |
+| `ingested-magnitude` | 1,515 | 1,515 | 0 |
+| `not-ingested` | 28,312 | 28,314 | +2 |
+| `unknown` | 4,282 | 4,285 | +3 |
+| `deferred-with-reason` | 46 | 46 | 0 |
+| `not-started` | 19 | 19 | 0 |
+| **TOTAL** | **49,540** | **49,545** | **+5** |
+
+No verification provenance lost. The +5 net units and the `not-ingested`/`unknown` movement are
+concurrent sibling lanes' already-landed progress folded into the same regen (this cycle's own diff
+touches only `scripts/ingest_simple_filename_kinds.py` and its test file — no Rust source changed,
+proved by `git diff --stat` showing 0 `.rs` files touched).
+
+**Shape ledger `no_record` before/after** (§17a — before measured against the true HEAD-committed
+corpus via `git archive HEAD -- data/corpus`, not the already-repaired tree, so the comparison is
+honest):
+```
+python3 scripts/shape_ledger.py --inventory /tmp/work-inventory-before.json \
+  --corpus-root /tmp/corpus-before/data/corpus   # no_record: 8,434
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json   # no_record: 8,439
+```
+**8,434 → 8,439 (+5).** The path defect did **not** cause failed joins — `shape_ledger.py`'s join key
+is `(book, source_basename, source_line)`, never `source.path` — so this fix legitimately reduces
+nothing on its own; the +5 delta is the same concurrent-sibling-progress fold-in the status-
+distribution table shows. Reported as measured, not assumed, per the dispatch brief's own
+instruction to check rather than guess the direction.
+
+**Mechanical control added**, not a warning: `compose_source_path` refuses to write a `source.path`
+`corpus_literal_sweep`'s own `book_dir_of` shape check would reject, so a future re-introduction of
+this exact defect fails at the producer, before a single record ships, not 3,124 records later.
+
+Identifier/wired-integration audit (own diff, `scripts/ingest_simple_filename_kinds.py` +
+`scripts/tests/test_ingest_simple_filename_kinds.py`, `git diff --unified=0 HEAD`): `OK_NO_BUNDLE_
+TAGS`, `OK_NO_TOKENS`.
+
+Receipt: `artifacts/gate-3-closure-invariant/card15-source-path-repair_cycle-1_cycle_receipt.md`.
+Commit: (recorded after push).

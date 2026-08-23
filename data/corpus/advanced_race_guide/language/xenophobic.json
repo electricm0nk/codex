@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:40Z",
+  "ingested_at": "2026-08-23T12:11:31Z",
   "data": {
     "key": "Xenophobic",
     "name": "Xenophobic",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/advanced_race_guide/arg_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_languages.lst",
     "sha256": "6fcd0defc5719df01948e6661e6306d82996d3fed353ae9072089ee68000f64a",
     "line": 6,
     "record_key": "Xenophobic"

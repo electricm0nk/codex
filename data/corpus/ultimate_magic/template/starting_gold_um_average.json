@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:44Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Starting Gold UM ~ Average",
     "name": "Starting Gold UM ~ Average",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/ultimate_magic/um_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_templates.lst",
     "sha256": "ced96ede43c1ea1f7fc8bc1b5925a13682eceade32bef6f94e8693585454f13f",
     "line": 35,
     "record_key": "Starting Gold UM ~ Average"

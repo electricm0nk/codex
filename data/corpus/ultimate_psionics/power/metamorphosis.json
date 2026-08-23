@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:33:44Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Metamorphosis",
     "name": "Metamorphosis",
@@ -58,7 +58,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
     "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a",
     "line": 302,
     "record_key": "Metamorphosis"

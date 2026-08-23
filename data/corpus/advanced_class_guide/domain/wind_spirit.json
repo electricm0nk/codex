@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:40Z",
+  "ingested_at": "2026-08-23T12:11:31Z",
   "data": {
     "key": "Wind (Spirit)",
     "name": "Wind (Spirit)",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
     "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd",
     "line": 14,
     "record_key": "Wind (Spirit)"

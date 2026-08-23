@@ -94,6 +94,36 @@ TARGET_KINDS = ("template", "power", "domain", "language", "skill")
 FREE_TEXT_TAG_PREFIXES = ("DESC:", "BENEFIT:", "SPECIALS:", "SA:")
 
 
+def compose_source_path(file_path: str, pcgen_root: str) -> str:
+    """Compose a corpus record's `source.path` relative to the PCGen data
+    root, and refuse to produce a shape `scripts/corpus_literal_sweep` (the
+    Rust `book_dir_of` shape check, `src/bin/corpus_literal_sweep.rs`) would
+    reject.
+
+    A record's `source.path` is not cosmetic: `scripts/shape_ledger.py`
+    joins units to corpus records on `(book, source_basename, source_line)`,
+    and `corpus_literal_sweep`'s own `book_dir_of` requires the path keep
+    its leading `<system>/` segment (e.g. `pathfinder/...`) — at least 5
+    `/`-separated segments (4 for the `dreamscarred_press` publisher, which
+    has no `<line>` segment). `pcgen_root` must therefore be the PCGen data
+    root itself (`PCGEN_CORPUS_ROOT`, e.g. `.../pcgen/data`), NOT that root
+    joined with `"pathfinder"` — the exact defect this check exists to catch
+    mechanically rather than by a later sweep stage finding it downstream
+    (SD-32 `decisions.md §20`, 3,124 records shipped with the leading
+    `pathfinder/` segment missing before `corpus_literal_sweep` caught it).
+    """
+    rel = os.path.relpath(file_path, pcgen_root).replace(os.sep, "/")
+    segments = [s for s in rel.split("/") if s]
+    is_shaped = len(segments) >= 5 or (len(segments) == 4 and segments[1] == "dreamscarred_press")
+    if not is_shaped:
+        raise ValueError(
+            f"source.path {rel!r} is not <system>/<publisher>/<line>/<book>/<file>-shaped -- "
+            "pcgen_root must be the PCGen data root (PCGEN_CORPUS_ROOT), not that root joined "
+            "with a system segment such as 'pathfinder'"
+        )
+    return rel
+
+
 def slugify(name: str) -> str:
     s = re.sub(r"[^a-z0-9]+", "_", name.strip().lower())
     return s.strip("_") or "unnamed"
@@ -292,7 +322,7 @@ def main(argv: list[str] | None = None) -> int:
             },
             "source": {
                 "kind": "lst_token",
-                "path": os.path.relpath(file_path, os.path.join(args.pcgen_root, "pathfinder")),
+                "path": compose_source_path(file_path, args.pcgen_root),
                 "sha256": sha256_of(file_path),
                 "line": line_no,
                 "record_key": corpus_key,

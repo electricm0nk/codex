@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Magic School",
     "name": "Magic School",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/campaign_setting/inner_sea_magic/ism_templates.lst",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_templates.lst",
     "sha256": "76e6f759939e4b35d6292b8104908d561c36f01e90bd5aecfa66f244c627f5d7",
     "line": 7,
     "record_key": "Magic School"

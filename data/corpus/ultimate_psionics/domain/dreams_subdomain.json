@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:45Z",
+  "ingested_at": "2026-08-23T12:11:36Z",
   "data": {
     "key": "Dreams Subdomain",
     "name": "Dreams Subdomain",
@@ -74,7 +74,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "dreamscarred_press/ultimate_psionics/up_domains_apg.lst",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_domains_apg.lst",
     "sha256": "076aa3678ee044c7a623a57747b8c273681b09cd281817d57a18bc616ed46082",
     "line": 11,
     "record_key": "Dreams Subdomain"

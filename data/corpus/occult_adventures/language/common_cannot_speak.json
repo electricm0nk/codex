@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Common (cannot speak)",
     "name": "Common (cannot speak)",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/occult_adventures/oa_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_languages.lst",
     "sha256": "ec13031944f40c7f299fd3285ed0be38be4823017a66f487b082179975a62d4e",
     "line": 3,
     "record_key": "Common (cannot speak)"

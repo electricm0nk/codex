@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Ouat Weapon Proficiency",
     "name": "Ouat Weapon Proficiency",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/campaign_setting/inner_sea_combat/isc_templates.lst",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_templates.lst",
     "sha256": "9dc1553d9563e5d6144aa07c916c76d39d7579d96c164bb5a01ddc9c4e80a581",
     "line": 3,
     "record_key": "Ouat Weapon Proficiency"

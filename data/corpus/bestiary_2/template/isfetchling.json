@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "IsFetchling",
     "name": "IsFetchling",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_templates.lst",
     "sha256": "b31f7937abd5ef1dc49926179484d1831200d0960bc746a31f29e80ae1078670",
     "line": 5,
     "record_key": "IsFetchling"

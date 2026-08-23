@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Mythic",
     "name": "Mythic",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/mythic_adventures/ma_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_templates.lst",
     "sha256": "b8f0ee3a056b2302251f27bda2494492e59da70b3ee28c82c23082bca9cc1e9f",
     "line": 13,
     "record_key": "Mythic"

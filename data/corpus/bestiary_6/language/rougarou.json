@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Rougarou",
     "name": "Rougarou",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_languages.lst",
     "sha256": "50dc08c7bb53ceac18ec9f17677febab6f4dabcb453345cf2df40c785ecd5022",
     "line": 6,
     "record_key": "Rougarou"

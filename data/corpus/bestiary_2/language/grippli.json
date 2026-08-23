@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Grippli",
     "name": "Grippli",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/grippli/grippli_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_languages.lst",
     "sha256": "45975bf5941912279f51458679341ed7f7fb5d3112cb0cf2601b4d0b9afa616e",
     "line": 6,
     "record_key": "Grippli"

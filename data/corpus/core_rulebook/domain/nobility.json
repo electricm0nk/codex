@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Nobility",
     "name": "Nobility",
@@ -46,7 +46,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
     "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
     "line": 33,
     "record_key": "Nobility"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:41Z",
+  "ingested_at": "2026-08-23T12:11:32Z",
   "data": {
     "key": "Race ~ Goblin",
     "name": "Goblin",
@@ -22,7 +22,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/goblin/goblin_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_templates.lst",
     "sha256": "79dc5bf63610afcbe392e7ebc58265d84bf073618b2639c1be94d0ca3a6eee41",
     "line": 4,
     "record_key": "Race ~ Goblin"

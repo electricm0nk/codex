@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "IsHuman",
     "name": "IsHuman",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/human/human_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/human/human_templates.lst",
     "sha256": "be0661a776947cfec216914891b90bc26c10cc9e23c94c62425a1cecc5a6324d",
     "line": 5,
     "record_key": "IsHuman"

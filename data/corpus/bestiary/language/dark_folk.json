@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Dark Folk",
     "name": "Dark Folk",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary/b1_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages.lst",
     "sha256": "9ec59b85e940f9eb0d19aae7f7c85e87331d2fcaf946c1324b416bd495ec1847",
     "line": 5,
     "record_key": "Dark Folk"

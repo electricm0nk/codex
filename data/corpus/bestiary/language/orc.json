@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Orc",
     "name": "Orc",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/orc/orc_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_languages.lst",
     "sha256": "505d01c67d831aa2003a6dd7521383e7f6aa7de43577e0156873a3cf732e319b",
     "line": 6,
     "record_key": "Orc"

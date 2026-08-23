@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:41Z",
+  "ingested_at": "2026-08-23T12:11:31Z",
   "data": {
     "key": "Bonus Language ~ Boggard",
     "name": "Bonus Language ~ Boggard",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary/b1_templates_language_boggard.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates_language_boggard.lst",
     "sha256": "9ba9abff1d47bb167597d8a83ad4365b3bfd54e7a5f9fd0a6cf3c461a0c228e4",
     "line": 6,
     "record_key": "Bonus Language ~ Boggard"

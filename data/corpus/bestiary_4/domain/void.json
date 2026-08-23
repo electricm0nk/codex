@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Void",
     "name": "Void",
@@ -46,7 +46,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/bestiary_4/b4_domains.lst",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_domains.lst",
     "sha256": "eb8b3691d0dd1377e752304342599964193b50dbf4643ad30c7bee0adb9f7977",
     "line": 6,
     "record_key": "Void"

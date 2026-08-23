@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:42Z",
+  "ingested_at": "2026-08-23T12:11:33Z",
   "data": {
     "key": "Goblin",
     "name": "Goblin",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/goblin/goblin_languages.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_languages.lst",
     "sha256": "1ff9f79727981418ecfc5e084eec820ea29e607170bea286ecccd25acc4edb06",
     "line": 6,
     "record_key": "Goblin"

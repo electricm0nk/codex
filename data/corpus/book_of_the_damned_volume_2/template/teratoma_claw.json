@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Teratoma ~ Claw",
     "name": "Teratoma ~ Claw",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
     "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6",
     "line": 41,
     "record_key": "Teratoma ~ Claw"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Bonus Language ~ Elven",
     "name": "Bonus Language ~ Elven",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
     "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b",
     "line": 353,
     "record_key": "Bonus Language ~ Elven"

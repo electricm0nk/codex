@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:41Z",
+  "ingested_at": "2026-08-23T12:11:32Z",
   "data": {
     "key": "IsTiefling",
     "name": "IsTiefling",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_templates.lst",
     "sha256": "a6616531950e0d9aa400432ee6423aa89c859ff0de939056db861ab27c79926f",
     "line": 5,
     "record_key": "IsTiefling"

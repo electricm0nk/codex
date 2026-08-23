@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Perception (Dim Light)",
     "name": "Perception (Dim Light)",
@@ -38,7 +38,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst",
     "sha256": "8499c1fb92819e4eaa82546ccce6bf0dca714648cf45a5a0214bea8ad2bc47b3",
     "line": 6,
     "record_key": "Perception (Dim Light)"

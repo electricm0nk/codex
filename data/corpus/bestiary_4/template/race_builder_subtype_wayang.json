@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Race Builder Subtype ~ Wayang",
     "name": "Wayang",
@@ -26,7 +26,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/wayang/wayang_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_templates.lst",
     "sha256": "bdfb72b82612039f908d403ace1ab7affd680e3eb5bf31ffb1cfb521a7f5fce1",
     "line": 19,
     "record_key": "Race Builder Subtype ~ Wayang"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:45Z",
+  "ingested_at": "2026-08-23T12:11:36Z",
   "data": {
     "key": "Discipline Subdomain",
     "name": "Discipline Subdomain",
@@ -74,7 +74,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "dreamscarred_press/ultimate_psionics/up_domains_um.lst",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_domains_um.lst",
     "sha256": "637e91cfc2543485d0d2786b46faa543b4e48e55c570e9f5c696414abf4df84a",
     "line": 7,
     "record_key": "Discipline Subdomain"

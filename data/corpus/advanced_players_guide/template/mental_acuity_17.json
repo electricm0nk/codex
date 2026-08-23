@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:40Z",
+  "ingested_at": "2026-08-23T12:11:31Z",
   "data": {
     "key": "Mental Acuity 17",
     "name": "Mental Acuity 17",
@@ -26,7 +26,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/advanced_players_guide/apg_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_templates.lst",
     "sha256": "b6eb4cd001ab2ad02bfa2dc2f6935d539bd988d8538a1656518a52e402924e99",
     "line": 112,
     "record_key": "Mental Acuity 17"

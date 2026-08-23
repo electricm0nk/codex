@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:41Z",
+  "ingested_at": "2026-08-23T12:11:32Z",
   "data": {
     "key": "IsAasimar",
     "name": "IsAasimar",
@@ -18,7 +18,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_templates.lst",
     "sha256": "420db30c07b4944f3b2c7f9280293940e111e671d72c4d880d6e28fa1f0387a3",
     "line": 5,
     "record_key": "IsAasimar"

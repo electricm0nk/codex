@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:40Z",
+  "ingested_at": "2026-08-23T12:11:31Z",
   "data": {
     "key": "Aasimar ~ Archon-Blooded",
     "name": "Archon-Blooded",
@@ -22,7 +22,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_templates_subrace.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_templates_subrace.lst",
     "sha256": "7553aabc194aab8b8b548459d6de1f0548619b7501b862037a057634f13ff7ff",
     "line": 7,
     "record_key": "Aasimar ~ Archon-Blooded"

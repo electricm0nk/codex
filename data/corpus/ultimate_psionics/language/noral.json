@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:45Z",
+  "ingested_at": "2026-08-23T12:11:36Z",
   "data": {
     "key": "Noral",
     "name": "Noral",
@@ -14,7 +14,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "dreamscarred_press/ultimate_psionics/up_languages.lst",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_languages.lst",
     "sha256": "97367ecd9aea8d9b2e6cf610c9cf53990dcf3bbf1743dfdc916c322d41347062",
     "line": 11,
     "record_key": "Noral"

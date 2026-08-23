@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:43Z",
+  "ingested_at": "2026-08-23T12:11:34Z",
   "data": {
     "key": "Race ~ Half-Orc",
     "name": "Half-Orc",
@@ -22,7 +22,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "paizo/roleplaying_game/core_essentials/races/half_orc/halforc_templates.lst",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_templates.lst",
     "sha256": "531f54844c179df836dbf16339241749364c414642c73a84c68b45a3e42eda1d",
     "line": 2,
     "record_key": "Race ~ Half-Orc"

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T11:33:44Z",
+  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Knowledge (Psionics)",
     "name": "Knowledge (Psionics)",
@@ -30,7 +30,7 @@
   },
   "source": {
     "kind": "lst_token",
-    "path": "dreamscarred_press/ultimate_psionics/up_skills.lst",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_skills.lst",
     "sha256": "0f4493199e7e13bab58c63551160be3ef872e131fba5999d3996db197af5bd49",
     "line": 10,
     "record_key": "Knowledge (Psionics)"
