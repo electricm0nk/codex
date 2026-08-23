@@ -106,14 +106,16 @@ python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
 test "$(jq -r '.unclassified_count' artifacts/gate-1-shape-closure/ledger.json)" = "0"
 
 # AT-32-G1-004: the join-status split, not unclassified_count alone
-# (decisions.md §14b) -- expect matched=4802 no_formula_tokens=9720
-# no_record=13968 over population 28490 at the pinned corpus SHA (moved
-# from 4802/9723/10530 over 25055 when card 15 landed 5 new kinds via the
-# generic-enumeration data table -- Template/Deity/Power/Domain/Language,
-# 3447 real units, all no_record -- decisions.md §17 item 1's predicted
-# shape, see no_record_budget_provenance.jsonl repin 3; re-derive with the
-# command below, which always reflects the live population rather than a
-# frozen figure).
+# (decisions.md §14b) -- expect matched=4802 no_formula_tokens=9705
+# no_record=21521 over population 36028 at the pinned corpus SHA (moved
+# from 4802/9720/13968 over 28490 when a chain of card 15 landings added
+# Kind::Ability (4824 new-kind units, all no_record) plus 112 no_record
+# feat units surfaced by the same classifier, then narrowed
+# is_internal_category for Kind::ClassFeature (2617 more no_record rows),
+# then wired 15 class_feature units to text-complete -- see
+# no_record_budget_provenance.jsonl repin 4; re-derive with the command
+# below, which always reflects the live population rather than a frozen
+# figure).
 jq -r '.join_status_counts' artifacts/gate-1-shape-closure/ledger.json
 
 # Closed-on-empty proof

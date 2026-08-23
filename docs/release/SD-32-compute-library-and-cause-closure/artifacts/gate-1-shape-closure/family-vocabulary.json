@@ -1,10 +1,10 @@
 {
-  "population": 28490,
+  "population": 36028,
   "unclassified_count": 0,
   "join_status_counts": {
-    "no_record": 13968,
+    "no_record": 21521,
     "matched": 4802,
-    "no_formula_tokens": 9720
+    "no_formula_tokens": 9705
   },
   "canonical_families": [
     {
@@ -75,7 +75,7 @@
       "label": "No formula content (no DEFINE/BONUS token found for this unit)",
       "proof_width": "Covers a unit whose (book, source_file, source_line) join finds either no corpus record, or a corpus record whose data.raw_tokens carries no DEFINE/BONUS-prefixed key. Does not distinguish 'this unit genuinely has no computable magnitude' (a race description, a pure-text feat) from 'the join failed to find the record it should have' -- the `join_status` field on each ledger row (`no_record` vs `no_formula_tokens`) is what a reviewer checks to tell those apart; F0's own count does not.",
       "priority_rank": null,
-      "count": 23688
+      "count": 31226
     },
     {
       "id": "F8",
@@ -170,7 +170,7 @@
     {
       "id": "F0",
       "canonical_label": "No formula content (no DEFINE/BONUS token found for this unit)",
-      "canonical_count": 23688,
+      "canonical_count": 31226,
       "mt_label": null,
       "mt_count": null,
       "delta": null,

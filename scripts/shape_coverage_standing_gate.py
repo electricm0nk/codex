@@ -158,52 +158,54 @@ PIN_FILE = os.path.join(REPO_ROOT, "scripts", "pcgen-oracle-pin.env")
 # which lands no commit and logs no entry -- is still measured against
 # the last COMMITTED baseline, and fails it.
 #
-# Current baseline (repin 3, 2026-08-23): no_record 13968, population
-# 28490, evidence commit `8e98424eb56a66ee2ba38d7ec4e2bc2e5379fbe6` (card
-# 15's generic-enumeration landing of Kind::Template/Deity/Power/Domain/
-# Language through the data-table producer, decisions.md §17 item 1;
-# 3,447 new-kind units, all no_record for the same structural reason as
-# repin 2's Kind::Skill). Repin 2 (2026-08-23, `d904eceb6`) landed
-# no_record 10530 / population 25055. Repin 1 (2026-08-22, `965278926`)
-# established the invariant itself at no_record 10419 / population 24914.
+# Current baseline (repin 4, 2026-08-23): no_record 21521, population
+# 36028, evidence commit `004bbe8c2` (post-rebase work-inventory regen
+# closing out a chain of card-15 landings: `5b2c93270` lands Kind::Ability
+# via the ported per-row A/B classifier -- 4,824 new-kind units, all
+# no_record, plus 112 feat units surfaced by the same classifier pass;
+# `45012f6a9` narrows `is_internal_category` for Kind::ClassFeature,
+# surfacing 2,617 previously-excluded class_feature rows, all no_record;
+# `391993eee` gives duplicate-fallback class_feature rows a CATEGORY:-based
+# identity, churning 5 ids with no net population/no_record effect;
+# `9838c344d` (T12 generic class-feature roster mechanism) wires 15
+# class_feature units to `text-complete`, the source of this repin's
+# `departed_covered_count`). Repin 3 (2026-08-23, `8e98424eb`) landed
+# no_record 13968 / population 28490. Repin 2 (2026-08-23, `d904eceb6`)
+# landed no_record 10530 / population 25055. Repin 1 (2026-08-22,
+# `965278926`) established the invariant itself at no_record 10419 /
+# population 24914.
 #
-# `departed_covered_count` (new field, repin 3 on): the strict "no_record
-# delta never exceeds population delta" check (BudgetProvenanceTest) does
-# not by itself account for the population's other legitimate direction of
-# movement -- units that finish (leave the not-done population entirely)
-# between repins. A unit that was `matched`/`no_formula_tokens` and gets
-# wired to completion shrinks `population` without shrinking `no_record`,
-# which can make `no_record`'s delta exceed `population`'s delta even
-# though nothing drained INTO no_record. Verified for repin 3, not assumed:
-# every id in the repin-2-committed ledger absent from the repin-3 ledger
-# was checked against the current inventory; 864 reclassified from
-# `race_trait` to `monster_ability` (decisions.md §16's T2b classifier fix,
-# commit `6ae4a364b1e42ace9e25df047a2de70bdf4c4948`, net zero on this
-# check -- they left no_record and arrived no_record) and 11 were wired to
-# a done-family status (`grounded`/`text-complete`/`literal-verified`) by
-# unrelated concurrent work; of those 11, 10 were `no_formula_tokens` (not
-# no_record) at the time they left. `departed_covered_count` records that
-# 10 -- units that left the tracked population while NOT no_record -- so
-# the invariant can tell "population shrank because covered work finished"
-# from "population shrank/stayed flat while no_record grew," which is what
-# it exists to catch. Re-derive: compare `id` sets between the previously
-# committed `artifacts/gate-1-shape-closure/ledger.json` and a fresh
-# `shape_ledger.py` run; for ids present in the old set and absent from the
-# new set, look each up in the current `docs/work-inventory.json` -- those
-# still present (by id) left via a status change (count only the ones
-# whose OLD `join_status` was not `no_record`); those absent entirely were
-# reclassified (kind changed, so the id changed) and net to zero by
-# construction (an old no_record row leaving is arithmetically identical
-# to no_record row arriving under a new kind/id, so reclassification alone
-# can never move this check).
-#
-# Future cycles landing the remaining 3 new kinds (ability, kit is not a
-# real kind -- see the `generic-enumeration_cycle_receipt.md` -- so really
-# just `ability`) must each add their own provenance entry and repin these
-# constants in the SAME commit that lands the kind -- see
-# `no_record_budget_provenance.jsonl` and `read_budget_provenance()` below.
-NO_RECORD_BUDGET_COUNT = 13968
-NO_RECORD_BUDGET_POPULATION = 28490
+# `departed_covered_count` (repin 3 on): the strict "no_record delta never
+# exceeds population delta" check (BudgetProvenanceTest) does not by itself
+# account for the population's other legitimate direction of movement --
+# units that finish (leave the not-done population entirely) between
+# repins. A unit that was `matched`/`no_formula_tokens` and gets wired to
+# completion shrinks `population` without shrinking `no_record`, which can
+# make `no_record`'s delta exceed `population`'s delta even though nothing
+# drained INTO no_record. Verified for repin 4, not assumed: every id in
+# the repin-3-committed ledger absent from the repin-4 ledger was checked
+# against the current inventory. 20 ids departed total: 15 class_feature
+# ids (all `ultimate_magic`/`advanced_players_guide`/`ultimate_intrigue`
+# magus/antipaladin/vigilante rows) were `no_formula_tokens` and are still
+# present in `docs/work-inventory.json` at `text-complete` -- the T12
+# generic class-feature roster mechanism (commit `9838c344d`) wiring
+# exactly matches this count. `departed_covered_count` records those 15.
+# The remaining 5 departed ids are absent entirely from the current
+# inventory (2 `matched`, 2 `no_record`, 1 `no_formula_tokens`, all
+# class_feature) -- the CATEGORY:-based identity fix (`391993eee`)
+# rewrote their ids, so they arrive again under new ids inside this
+# repin's 7,558 new-id arrivals; like repin 3's race_trait reclassification,
+# this nets to zero on the check by construction and needs no credit.
+# Re-derive: compare `id` sets between the previously committed
+# `artifacts/gate-1-shape-closure/ledger.json` and a fresh `shape_ledger.py`
+# run; for ids present in the old set and absent from the new set, look
+# each up in the current `docs/work-inventory.json` -- those still present
+# (by id) left via a status change (count only the ones whose OLD
+# `join_status` was not `no_record`); those absent entirely were
+# reclassified/renamed (kind or fallback-identity changed, so the id
+# changed) and net to zero by construction.
+NO_RECORD_BUDGET_COUNT = 21521
+NO_RECORD_BUDGET_POPULATION = 36028
 
 BUDGET_PROVENANCE_PATH = os.path.join(
     REPO_ROOT,
