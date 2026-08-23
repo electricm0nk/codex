@@ -326,7 +326,15 @@ def run_gate(
     # join `build_ledger`'s caller is expected to, never a narrower one
     # that happens to compile.
     key_index = SL.build_corpus_key_index(corpus_root, books)
-    ledger = SL.build_ledger(units, corpus_index, key_index)
+    # `decisions.md §20` t9-onboarding straggler wave: the cross-book
+    # fallback (`build_cross_book_key_index`) recovers a unit whose real,
+    # already-ingested record lives under a DIFFERENT book than any of
+    # `units`' own books entirely (e.g. `occult_adventures:spell:repulsion`
+    # -> the record ships under `crb`), so this walk is deliberately NOT
+    # scoped to `books` -- same reasoning as `key_index` above: this gate
+    # must reuse the SAME join `build_ledger`'s caller is expected to.
+    cross_book_key_index = SL.build_cross_book_key_index(corpus_root)
+    ledger = SL.build_ledger(units, corpus_index, key_index, cross_book_key_index)
 
     return evaluate_ledger(ledger, no_record_budget_count, no_record_budget_population)
 

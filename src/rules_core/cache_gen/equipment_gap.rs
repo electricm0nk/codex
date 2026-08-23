@@ -275,7 +275,7 @@ fn find_by_key_field(lst_path: &Path, record_key: &str) -> Option<u32> {
     content
         .lines()
         .enumerate()
-        .find(|(_, line)| line.split('\t').any(|field| field == needle))
+        .find(|(_, line)| !is_disabled_line(line) && line.split('\t').any(|field| field == needle))
         .map(|(idx, _)| (idx + 1) as u32)
 }
 
@@ -285,8 +285,31 @@ fn find_exact_first_column(lst_path: &Path, record_name: &str) -> Option<u32> {
     content
         .lines()
         .enumerate()
-        .find(|(_, line)| line.split('\t').next().unwrap_or("") == record_name)
+        .find(|(_, line)| !is_disabled_line(line) && line.split('\t').next().unwrap_or("") == record_name)
         .map(|(idx, _)| (idx + 1) as u32)
+}
+
+/// `true` when `line` opens (after leading whitespace) with `#` -- PCGen's
+/// own comment marker for a row the maintainers explicitly disabled, per
+/// `Trap::DisabledLine` (`src/pcgen_import/corpus_traps.rs`) and this
+/// module's own [`disabled_identity_column`]. `find_citation`'s three
+/// finder strategies must never bind a citation to a disabled line while a
+/// live line for the same identity exists elsewhere in the search order --
+/// a disabled `KEY:` duplicate (kept in a `.lst` file purely as historical
+/// documentation, e.g. a pre-Ultimate-Equipment melee/ranged split PCGen's
+/// own maintainers commented out and superseded with a `.COPY=` alias of
+/// the merged record) must not mask that live alias's citation. Real
+/// incident: `advanced_players_guide/apg_equipmods.lst`'s disabled
+/// `#...KEY:CRRSVE_BRST_M` line (13) outranked its own file's live
+/// `Special Ability ~ Corrosive Burst ~ Weapon.COPY=CRRSVE_BRST_M` (59)
+/// under the old `KEY:`-before-`.COPY=` search order, and the identical
+/// shape recurs for `CRRSVE_BRST_R` (same file) and `ultimate_combat`'s
+/// `REACH` (`uc_equipmods.lst`, disabled line 7 vs. live `.COPY=` line 54).
+/// `disabled_identity_column` (used downstream, once a citation is already
+/// bound) stays in place as a residual guard for the case where the ONLY
+/// match for an identity is itself disabled.
+fn is_disabled_line(line: &str) -> bool {
+    line.trim_start().starts_with('#')
 }
 
 /// Finds a `.COPY=<record_name>` variant line's first column -- the same
@@ -301,7 +324,7 @@ fn find_copy_variant(lst_path: &Path, record_name: &str) -> Option<u32> {
     content
         .lines()
         .enumerate()
-        .find(|(_, line)| line.split('\t').next().unwrap_or("").ends_with(&needle))
+        .find(|(_, line)| !is_disabled_line(line) && line.split('\t').next().unwrap_or("").ends_with(&needle))
         .map(|(idx, _)| (idx + 1) as u32)
 }
 
@@ -1086,6 +1109,58 @@ mod tests {
         }
         assert_eq!(slug2, "intelligent_item_purpose_slay_all");
 
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// `decisions.md §20` t9-onboarding straggler: `advanced_players_guide/
+    /// apg_equipmods.lst` carries a DISABLED (`#`-prefixed) old-style row
+    /// declaring `KEY:CRRSVE_BRST_M` (line 13, commented out per PCGen's
+    /// own note that Ultimate Equipment merged the melee/ranged variants
+    /// into one modifier) AND a LIVE `.COPY=CRRSVE_BRST_M` alias of the
+    /// real, still-shipping base record ("Special Ability ~ Corrosive
+    /// Burst ~ Weapon", line 59) in the SAME file. `find_by_key_field`
+    /// matched the disabled line's `KEY:` field FIRST (checked before
+    /// `.COPY=`), so `find_citation` returned the disabled line -- which
+    /// `disabled_identity_column` then correctly refused to ship, but as a
+    /// silent total exclusion rather than falling through to the live
+    /// `.COPY=` mint that actually resolves the object. The real bug is
+    /// upstream of that guard: a disabled line must never win a citation
+    /// search at all when a live line for the same identity exists.
+    /// Reproduces the exact real-file shape (`uc_equipmods.lst`'s `REACH`
+    /// carries the identical pattern; `equipment_gap.rs`'s own doc comment
+    /// on `disabled_identity_column`'s call site already named all three
+    /// units this defect blocks: `CRRSVE_BRST_M`, `CRRSVE_BRST_R`, `REACH`).
+    #[test]
+    fn find_citation_skips_a_disabled_key_line_in_favor_of_a_live_copy_variant() {
+        let dir = std::env::temp_dir().join(format!("cgeq_test_disabled_key_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("apg_equipmods.lst"),
+            "#Corrosive Burst\tKEY:CRRSVE_BRST_M\tTYPE:Weapon.Melee\tPLUS:2\n\
+             Special Ability ~ Corrosive Burst ~ Weapon.COPY=CRRSVE_BRST_M\tVISIBLE:NO\n",
+        )
+        .unwrap();
+        let found = find_citation(&dir, "CRRSVE_BRST_M", "CRRSVE_BRST_M");
+        assert_eq!(
+            found,
+            Some((PathBuf::from("apg_equipmods.lst"), 2)),
+            "must skip the disabled #-prefixed KEY: line and resolve the live .COPY= mint"
+        );
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Negative control: when the ONLY match for an identity is itself a
+    /// disabled line (no live row exists anywhere), `find_citation` must
+    /// still return `None` rather than resolving to the disabled line --
+    /// `disabled_identity_column`'s downstream guard exists for the
+    /// residual case (a disabled row cited by nothing else), not as the
+    /// primary defense.
+    #[test]
+    fn find_citation_returns_none_when_the_only_match_is_disabled() {
+        let dir = std::env::temp_dir().join(format!("cgeq_test_disabled_only_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("book_equipmods.lst"), "#Widget\tKEY:Widget\tCOST:0\n").unwrap();
+        assert_eq!(find_citation(&dir, "Widget", "Widget"), None);
         std::fs::remove_dir_all(&dir).ok();
     }
 

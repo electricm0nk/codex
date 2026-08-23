@@ -715,6 +715,79 @@ mod kind_ability_tests {
         assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 1);
     }
 
+    /// `decisions.md §20` t9-onboarding straggler wave: a `<Name>.FORGET`
+    /// row (real example: `advanced_class_guide/_pfs/pfs_acg_equip.lst:6-7`,
+    /// marking "Dust Knuckles"/"False Face" removed from Pathfinder-Society-
+    /// legal play) is a removal DIRECTIVE, not a declared item -- the same
+    /// shape `.MOD` already gets special handling for, but `.FORGET` had
+    /// none at all, so it was enumerated as an ordinary unit. That unit can
+    /// never have a corpus record (no item was ever declared at that line),
+    /// making it permanently, unfixably `no_record` (decisions.md §20's
+    /// Gate-1 consequence). Generic across every `Kind`, not equipment-only
+    /// -- `equipment_gap.rs::generate()`'s own `.FORGET` guard already
+    /// excludes the shape downstream for the one kind that generator
+    /// handles; this is the upstream fix so no kind's enumeration ever
+    /// mints the directive as a unit in the first place.
+    #[test]
+    fn forget_directive_row_is_dropped_not_enumerated_as_a_unit() {
+        let text = "Dust Knuckles.FORGET\tTYPE:PFSNotLegal\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("pfs_acg_equip.lst"),
+            "advanced_class_guide",
+            Kind::Equipment,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+        assert_eq!(*out.trap_hits.get("forget_directive").unwrap_or(&0), 1);
+    }
+
+    /// A `.FORGET` row for a NON-equipment kind is dropped identically --
+    /// the fix is generic, not equipment-specific.
+    #[test]
+    fn forget_directive_row_is_dropped_for_every_kind() {
+        let text = "Some Ability.FORGET\tTYPE:PFSNotLegal\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("pfs_something.lst"),
+            "some_book",
+            Kind::Ability,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+        assert_eq!(*out.trap_hits.get("forget_directive").unwrap_or(&0), 1);
+    }
+
+    /// An ordinary (non-`.FORGET`) row is entirely unaffected by this fix.
+    #[test]
+    fn non_forget_row_is_unaffected_by_this_fix() {
+        let text = "Dust Knuckles\tKEY:Dust Knuckles\tCOST:0\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("pfs_acg_equip.lst"),
+            "advanced_class_guide",
+            Kind::Equipment,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(*out.trap_hits.get("forget_directive").unwrap_or(&0), 0);
+    }
+
     /// A gateway-only row (`ABILITY:...|AUTOMATIC|<target>`, no content
     /// field) stays counted as `class_feature` -- the shipped rule
     /// deliberately does not attempt cross-file gateway-target resolution
@@ -788,6 +861,17 @@ const TRAP_RULES: &[TrapRule] = &[
         description:
             "A line whose first field is an ALL-CAPS `TOKEN:` directive (SOURCELONG, SOURCEPAGE, \
              CAMPAIGN, ...) rather than a record name. File metadata, never a unit.",
+    },
+    TrapRule {
+        id: "forget_directive",
+        description:
+            "A `<Name>.FORGET` record is a removal DIRECTIVE (real example: \
+             `advanced_class_guide/_pfs/pfs_acg_equip.lst:6-7`, marking \"Dust Knuckles\"/\"False \
+             Face\" removed from Pathfinder-Society-legal play), not a declared item. It \
+             un-declares an already-existing record rather than declaring a new one -- counting \
+             it as a unit makes it permanently, unfixably `no_record` (decisions.md §20's Gate-1 \
+             consequence: no corpus record was ever meant to exist at its line). Generic across \
+             every `Kind`, mirroring `.MOD`'s own special handling above. Never a unit.",
     },
     TrapRule {
         id: "mod_record",
@@ -4026,6 +4110,18 @@ fn enumerate_file(
         let visible = !fields.iter().any(|f| f.trim() == "VISIBLE:NO");
         if !visible {
             *out.trap_hits.entry("invisible_record").or_default() += 1;
+        }
+
+        // `decisions.md §20` t9-onboarding straggler wave: `.FORGET` is a
+        // removal DIRECTIVE (un-declares an already-existing record), not a
+        // declared item -- see the `forget_directive` TRAP_RULES entry.
+        // Checked before `.MOD` (disjoint suffixes; order does not matter
+        // for correctness, but this mirrors the doc ordering above) and
+        // applies uniformly regardless of `kind`, matching the brief's "fix
+        // it generically, not per-kind" instruction.
+        if first.ends_with(".FORGET") {
+            *out.trap_hits.entry("forget_directive").or_default() += 1;
+            continue;
         }
 
         // `.MOD` is resolved corpus-wide after enumeration; stash it.

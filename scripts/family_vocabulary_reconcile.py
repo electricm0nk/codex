@@ -457,7 +457,12 @@ def main(argv: list[str] | None = None) -> int:
     # fallback (`build_corpus_key_index`) so this reconciliation's own
     # join_status split cannot silently disagree with the CLI's.
     key_index = SL.build_corpus_key_index(args.corpus_root, books)
-    ledger = SL.build_ledger(units, corpus_index, key_index)
+    # `decisions.md §20` t9-onboarding straggler wave: the cross-book
+    # fallback recovers a unit whose real record ships under a DIFFERENT
+    # book entirely (not scoped to `books`, for the same reason `key_index`
+    # above is reused rather than re-derived).
+    cross_book_key_index = SL.build_cross_book_key_index(args.corpus_root)
+    ledger = SL.build_ledger(units, corpus_index, key_index, cross_book_key_index)
 
     canonical = canonical_family_table(ledger)
     mapping = mt_mapping_table(canonical)

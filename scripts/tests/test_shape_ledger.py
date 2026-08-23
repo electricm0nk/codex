@@ -434,6 +434,135 @@ class ClassifyUnitTest(unittest.TestCase):
         row = SL.classify_unit(unit, corpus_index={})
         self.assertEqual(row["join_status"], "no_record")
 
+    def test_cross_book_fallback_matches_when_book_scoped_fallback_also_misses(self):
+        """SD-32 t9-onboarding straggler wave (`decisions.md §20`): a book's
+        `.MOD`/widening row deliberately does not re-declare a spell/trait/
+        equipment-modifier that ALREADY exists under a DIFFERENT book's own
+        citation -- `ingest_spells.rs`'s own `already_ingested_oa`/
+        `already_ingested_uc` is the documented example ("a handful of rows
+        exist only to widen an existing spell's class access"). Real case:
+        `occult_adventures:spell:repulsion` cites `oa_spells.lst:464`, but
+        "Repulsion" is never (re-)ingested for `occult_adventures` -- the
+        real, already-shipped record lives under `crb`'s own citation. Both
+        the primary (book, source_file, source_line) join AND the same-book
+        (book, kind, key) fallback miss (different book); the THIRD tier,
+        keyed on (kind, key) alone across every book, recovers it."""
+        unit = _unit(
+            "occult_adventures:spell:repulsion",
+            "spell",
+            "occult_adventures",
+            "not-started",
+            "static",
+            "oa_spells.lst",
+            464,
+            corpus_key="Repulsion",
+        )
+        cross_book_key_index = {("spell", "Repulsion"): ("crb", [{"key": "DEFINE", "value": "Foo|0"}])}
+        row = SL.classify_unit(unit, corpus_index={}, key_index={}, cross_book_key_index=cross_book_key_index)
+        self.assertEqual(row["join_status"], "matched")
+        self.assertEqual(row["family"], "F1")
+
+    def test_cross_book_fallback_never_fires_when_the_same_book_key_index_already_covers_it(self):
+        """The cross-book tier is a LAST resort -- when the same-book
+        `key_index` fallback already resolves it, the coarser book-agnostic
+        tier is never consulted."""
+        unit = _unit(
+            "b:equipment:x", "equipment", "b", "not-started", "static", "overlay.lst", 1, corpus_key="Widget"
+        )
+        key_index = {("b", "equipment", "Widget"): []}
+        cross_book_key_index = {("equipment", "Widget"): ("other_book", [{"key": "DEFINE", "value": "Foo|0"}])}
+        row = SL.classify_unit(
+            unit, corpus_index={}, key_index=key_index, cross_book_key_index=cross_book_key_index
+        )
+        self.assertEqual(row["join_status"], "no_formula_tokens")
+
+    def test_cross_book_fallback_declines_an_ambiguous_key_marked_none(self):
+        """`build_cross_book_key_index` marks a (kind, key) pair `None` when
+        two DIFFERENT books' records collide on the identical key with
+        different content -- an ambiguous cross-book match must never guess
+        which book a third book's reference means (`decisions.md §1a`:
+        under-include rather than invent)."""
+        unit = _unit(
+            "third_book:spell:x", "spell", "third_book", "not-started", "static", "f.lst", 1, corpus_key="Widget"
+        )
+        cross_book_key_index = {("spell", "Widget"): None}
+        row = SL.classify_unit(unit, corpus_index={}, key_index={}, cross_book_key_index=cross_book_key_index)
+        self.assertEqual(row["join_status"], "no_record")
+
+    def test_cross_book_fallback_never_fires_across_a_different_kind(self):
+        unit = _unit(
+            "third_book:spell:x", "spell", "third_book", "not-started", "static", "f.lst", 1, corpus_key="Widget"
+        )
+        cross_book_key_index = {("equipment", "Widget"): ("other_book", [{"key": "DEFINE", "value": "Foo|0"}])}
+        row = SL.classify_unit(unit, corpus_index={}, key_index={}, cross_book_key_index=cross_book_key_index)
+        self.assertEqual(row["join_status"], "no_record")
+
+    def test_no_cross_book_key_index_argument_is_backward_compatible(self):
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "missing.lst", 1, corpus_key="Widget")
+        row = SL.classify_unit(unit, corpus_index={}, key_index={})
+        self.assertEqual(row["join_status"], "no_record")
+
+
+class BuildCrossBookKeyIndexTest(unittest.TestCase):
+    def test_indexes_by_kind_key_across_books(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "crb", "spell")
+            os.makedirs(book_dir)
+            record = {
+                "data": {"key": "Repulsion", "raw_tokens": [{"key": "DEFINE", "value": "Foo|0"}]},
+                "source": {"path": "crb_spells.lst", "line": 217},
+            }
+            with open(os.path.join(book_dir, "repulsion.json"), "w") as fh:
+                json.dump(record, fh)
+
+            index = SL.build_cross_book_key_index(tmp)
+            self.assertIn(("spell", "Repulsion"), index)
+            book, tokens = index[("spell", "Repulsion")]
+            self.assertEqual(book, "crb")
+            self.assertEqual(tokens, [{"key": "DEFINE", "value": "Foo|0"}])
+
+    def test_two_different_books_with_the_same_key_and_different_content_is_ambiguous(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for book, tokens in (("book_a", []), ("book_b", [{"key": "DEFINE", "value": "Foo|0"}])):
+                book_dir = os.path.join(tmp, book, "spell")
+                os.makedirs(book_dir)
+                record = {
+                    "data": {"key": "Collides", "raw_tokens": tokens},
+                    "source": {"path": "f.lst", "line": 1},
+                }
+                with open(os.path.join(book_dir, "collides.json"), "w") as fh:
+                    json.dump(record, fh)
+
+            index = SL.build_cross_book_key_index(tmp)
+            self.assertIsNone(index[("spell", "Collides")])
+
+    def test_two_different_books_with_the_same_key_and_identical_content_is_not_ambiguous(self):
+        """Two books legitimately restating the identical record (same
+        formula tokens) is not the collision hazard this guards against --
+        only content DIVERGENCE is ambiguous."""
+        with tempfile.TemporaryDirectory() as tmp:
+            for book in ("book_a", "book_b"):
+                book_dir = os.path.join(tmp, book, "spell")
+                os.makedirs(book_dir)
+                record = {
+                    "data": {"key": "Same", "raw_tokens": [{"key": "DEFINE", "value": "Foo|0"}]},
+                    "source": {"path": "f.lst", "line": 1},
+                }
+                with open(os.path.join(book_dir, "same.json"), "w") as fh:
+                    json.dump(record, fh)
+
+            index = SL.build_cross_book_key_index(tmp)
+            self.assertIsNotNone(index[("spell", "Same")])
+
+    def test_record_with_no_data_key_is_not_indexed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "test_book", "equipment")
+            os.makedirs(book_dir)
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump({"data": {"raw_tokens": []}, "source": {"path": "f.lst", "line": 1}}, fh)
+            index = SL.build_cross_book_key_index(tmp)
+            self.assertEqual(index, {})
+
 
 class BuildCorpusKeyIndexTest(unittest.TestCase):
     def test_indexes_by_book_kind_data_key(self):

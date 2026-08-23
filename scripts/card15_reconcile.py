@@ -92,7 +92,12 @@ def main(argv: list[str] | None = None) -> int:
     # `decisions.md §20`/§17a: reuse the citation-redirect fallback so this
     # reconciliation's ledger cannot silently disagree with the CLI's own.
     key_index = SL.build_corpus_key_index(os.path.join(REPO_ROOT, "data", "corpus"), books)
-    ledger = SL.build_ledger(not_done, corpus_index, key_index)
+    # `decisions.md §20` t9-onboarding straggler wave: the cross-book
+    # fallback recovers a unit whose real record ships under a DIFFERENT
+    # book entirely (not scoped to `books`, for the same reason `key_index`
+    # above is reused rather than re-derived).
+    cross_book_key_index = SL.build_cross_book_key_index(os.path.join(REPO_ROOT, "data", "corpus"))
+    ledger = SL.build_ledger(not_done, corpus_index, key_index, cross_book_key_index)
 
     # -- Card 15 disposition status of the census's kind_unenumerable set --
     # (B) proven-not-an-object. `ce__sizes.lst` (9 units) is REMOVED from

@@ -521,6 +521,121 @@ def build_corpus_key_index(corpus_root: str, books: set[str] | None = None) -> d
     return index
 
 
+def build_cross_book_key_index(corpus_root: str, books: set[str] | None = None) -> dict:
+    """Walks `data/corpus/<book>/<kind>/*.json` and indexes every record's
+    `DEFINE`/`BONUS*` formula tokens by `(kind, data.key)` alone -- no book
+    in the key at all. This is the THIRD, coarsest fallback `classify_unit`
+    consults only when BOTH the primary `(book, source_file, source_line)`
+    join and the same-book `(book, kind, key)` fallback (`build_corpus_key_
+    index`) miss.
+
+    `decisions.md §20` t9-onboarding straggler wave: a book's row can
+    deliberately NOT (re-)declare a record that already exists under a
+    DIFFERENT book entirely -- `ingest_spells.rs`'s own `already_ingested_
+    oa`/`already_ingested_uc` is the documented, already-shipped example
+    ("a handful of rows exist only to widen an existing spell's class
+    access"; `occult_adventures:spell:repulsion` cites `oa_spells.lst:464`
+    but "Repulsion" is never re-ingested for `occult_adventures` -- the
+    real record ships under `crb`'s own citation entirely). The same shape
+    recurs for `ability` (a book's `.MOD` PFS-legality overlay restricting
+    a trait originally declared, and already ingested, under a DIFFERENT
+    book) and `equipment_modifier`. Neither the primary join (different
+    file) nor the same-book key fallback (different book) can ever resolve
+    these; only a book-agnostic `(kind, key)` lookup can.
+
+    A PCGen `KEY:` token is meant to be a globally unique identifier within
+    its category, so a same-key match across two DIFFERENT books' records
+    for the SAME kind is expected to be the literal same game object, not a
+    coincidence -- unlike `data.name` (`gen_equipment_gap_tables.rs`'s
+    `held`-map name-collision hazard this module's `build_corpus_key_index`
+    already documents), which is a display string with no such uniqueness
+    guarantee. Still, "expected" is not "proven": when two DIFFERENT books'
+    records under the identical `(kind, key)` carry DIFFERENT formula
+    tokens, this is recorded as an explicit `None` -- an ambiguous
+    collision the fallback must decline rather than guess at
+    (`decisions.md §1a`: under-include rather than invent). Two books
+    legitimately restating the SAME record (identical formula tokens) is
+    not that hazard and resolves normally.
+
+    Returns `{(kind, key): (book, formula_tokens) | None}` -- `None` marks
+    an ambiguous collision; a present `(book, formula_tokens)` tuple names
+    which book's record the fallback would actually attribute the match to
+    (for receipts/audits), same value shape as `build_corpus_key_index`
+    otherwise."""
+    # (kind, key) -> {book: formula_tokens} while building, so a genuine
+    # collision (two DIFFERENT books, DIFFERENT tokens) can be detected
+    # before collapsing to the public return shape.
+    seen: dict[tuple[str, str], dict[str, list[dict]]] = {}
+    if books is not None:
+        search_roots = []
+        for b in sorted(books):
+            aliased = BOOK_CORPUS_DIR_ALIASES.get(b)
+            if aliased and aliased != b:
+                search_roots.append((b, os.path.join(corpus_root, aliased)))
+                search_roots.append((b, os.path.join(corpus_root, b)))
+            else:
+                search_roots.append((b, os.path.join(corpus_root, b)))
+    else:
+        search_roots = [(None, corpus_root)]
+    for book_override, root in search_roots:
+        if not os.path.isdir(root):
+            continue
+        for path in glob.glob(os.path.join(root, "**", "*.json"), recursive=True):
+            if os.path.basename(path) == "LICENSE.json":
+                continue
+            try:
+                with open(path, "r", encoding="utf-8") as fh:
+                    rec = json.load(fh)
+            except (OSError, json.JSONDecodeError):
+                continue
+            data = rec.get("data") or {}
+            record_key = data.get("key")
+            if not isinstance(record_key, str) or not record_key:
+                continue
+            rel = os.path.relpath(path, root)
+            parts = rel.split(os.sep)
+            if len(parts) < 2:
+                continue
+            # When `books` is given, `root` is already the single book's own
+            # directory, so `parts[0]` is the KIND subdirectory and `book`
+            # is the known override. When `books` is None (whole-corpus
+            # walk), `root` is `corpus_root` itself, so `parts[0]` is the
+            # BOOK directory and the kind is `parts[1]`.
+            if book_override is not None:
+                book = book_override
+                kind = parts[0]
+            else:
+                book = parts[0]
+                if len(parts) < 3:
+                    continue
+                kind = parts[1]
+            raw_tokens = data.get("raw_tokens") or []
+            formula_tokens = [
+                t
+                for t in raw_tokens
+                if isinstance(t, dict)
+                and isinstance(t.get("key"), str)
+                and (t["key"] == "DEFINE" or t["key"].startswith("BONUS"))
+            ]
+            seen.setdefault((kind, record_key), {})[book] = formula_tokens
+
+    index: dict[tuple[str, str], tuple[str, list[dict]] | None] = {}
+    for (kind, key), by_book in seen.items():
+        books_here = list(by_book.items())
+        if len(books_here) == 1:
+            index[(kind, key)] = books_here[0]
+            continue
+        # Multiple books share this (kind, key). Not ambiguous if every
+        # book's formula tokens are identical (a legitimate restatement);
+        # ambiguous the moment any two diverge.
+        first_book, first_tokens = books_here[0]
+        if all(tokens == first_tokens for _b, tokens in books_here[1:]):
+            index[(kind, key)] = (first_book, first_tokens)
+        else:
+            index[(kind, key)] = None
+    return index
+
+
 def extract_formula_segment(key: str, value: str) -> str | None:
     """Extracts the formula-bearing segment from one DEFINE/BONUS raw
     token, per this module's docstring 'Extraction method'.
@@ -555,7 +670,12 @@ def classify_formula(formula: str) -> str:
     return FAMILY_F8_OTHER
 
 
-def classify_unit(unit: dict, corpus_index: dict, key_index: dict | None = None) -> dict:
+def classify_unit(
+    unit: dict,
+    corpus_index: dict,
+    key_index: dict | None = None,
+    cross_book_key_index: dict | None = None,
+) -> dict:
     """Classifies one not-done unit. Returns a ledger row dict with the
     unit's id/kind/book, its `family` (always non-null -- see
     classify_formula/FAMILY_F0_NO_FORMULA), and `join_status` so a
@@ -569,7 +689,15 @@ def classify_unit(unit: dict, corpus_index: dict, key_index: dict | None = None)
     ingested corpus record under its own `corpus_key`, cited from a
     DIFFERENT physical file the primary join never looks at. Omitting
     `key_index` (or passing `None`) keeps every existing caller's behavior
-    byte-for-byte unchanged."""
+    byte-for-byte unchanged.
+
+    `cross_book_key_index` (`build_cross_book_key_index`'s output, `(kind,
+    key) -> (book, formula_tokens) | None`) is a THIRD, coarsest fallback
+    consulted only when BOTH the primary join and `key_index` miss -- the
+    shape where a record is already ingested under a DIFFERENT book than
+    the one this unit's row happens to live in (see that function's
+    docstring). A `None` value marks an ambiguous cross-book key collision
+    and is never treated as a match."""
     book = unit.get("book")
     kind = unit.get("kind")
     basename = unit.get("source_file")
@@ -587,6 +715,14 @@ def classify_unit(unit: dict, corpus_index: dict, key_index: dict | None = None)
         corpus_key = unit.get("corpus_key")
         if book and kind and corpus_key:
             formula_tokens = key_index.get((book, kind, corpus_key))
+
+    if formula_tokens is None and cross_book_key_index:
+        kind = unit.get("kind")
+        corpus_key = unit.get("corpus_key")
+        if kind and corpus_key:
+            hit = cross_book_key_index.get((kind, corpus_key))
+            if hit is not None:
+                _matched_book, formula_tokens = hit
 
     if formula_tokens is None:
         join_status = "no_record"
@@ -634,7 +770,12 @@ def _family_metadata() -> dict:
     return meta
 
 
-def build_ledger(units: list[dict], corpus_index: dict, key_index: dict | None = None) -> dict:
+def build_ledger(
+    units: list[dict],
+    corpus_index: dict,
+    key_index: dict | None = None,
+    cross_book_key_index: dict | None = None,
+) -> dict:
     """Returns {'population', 'rows', 'families', 'unclassified_count',
     'join_status_counts'}. `unclassified_count` is structurally always 0
     for a non-empty population -- classify_unit never returns a null
@@ -654,7 +795,7 @@ def build_ledger(units: list[dict], corpus_index: dict, key_index: dict | None =
     caller (this script's own printed output, the standing gate, the
     family-vocabulary reconciliation, and every AT-32-G1-* criterion that
     quotes a coverage figure) must surface alongside it."""
-    rows = [classify_unit(u, corpus_index, key_index) for u in units]
+    rows = [classify_unit(u, corpus_index, key_index, cross_book_key_index) for u in units]
     meta = _family_metadata()
     counts: dict[str, int] = {}
     join_status_counts: dict[str, int] = {}
@@ -706,7 +847,12 @@ def main(argv: list[str] | None = None) -> int:
     books = {u.get("book") for u in units if u.get("book")}
     corpus_index = build_corpus_index(args.corpus_root, books)
     key_index = build_corpus_key_index(args.corpus_root, books)
-    ledger = build_ledger(units, corpus_index, key_index)
+    # Whole-corpus walk (no `books` restriction): the cross-book fallback's
+    # entire purpose is finding a record ingested under a DIFFERENT book
+    # than any of the not-done units' own books, so restricting the walk to
+    # `books` would make it structurally unable to ever find anything.
+    cross_book_key_index = build_cross_book_key_index(args.corpus_root)
+    ledger = build_ledger(units, corpus_index, key_index, cross_book_key_index)
 
     print(f"population (not-done units considered): {ledger['population']}")
     print(f"unclassified: {ledger['unclassified_count']}")
