@@ -1680,6 +1680,57 @@ and after this sweep (not "none found" without having run the commands).
   `core_rulebook` 14-unit sentinel-row flag before assuming all of it is real content. Re-run
   `scripts/t2b_race_trait_census.py` after each book lands as a regression guard.
 
+### Cycle t2a-residual-census — Epic 2 / Card 11 `epic-2-cause-closure`, lane T2a-residual — measurement cycle per `decisions.md §13`
+
+- **Card ID:** `epic-2-cause-closure` (T2a-residual lane; measurement only, per the dispatch brief
+  and `decisions.md §13` — "measurement... does not substitute for the work... a precursor to it").
+  Card 11's row status is **not** touched by this cycle.
+- **Actor:** `t2a-residual-census`
+- **Base:** `8b8e00c0d` (pinned; footgun 1 fired — stray `site-publish` merge with no `docs/`/
+  `data/`/`scripts/` tree — self-healed via `git reset --hard 8b8e00c0d`), rebased to
+  `origin/tranche/12` before starting, and again before pushing (sibling T2b/T9-census lanes landed
+  concurrently — both rebases were clean, no conflicts).
+- **Files touched:** `scripts/sd32-t2a-residual-census.py` (new — committed re-derive script),
+  `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/card11-t2a-residual-census-census.md`
+  (new — full per-label census memo), `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/epic-2-t2a-residual-census_cycle-1_cycle_receipt.md`
+  (new — cycle receipt), `docs/retro/events/t2a-residual-census.jsonl` (new — 1 correction, 1
+  deferral), `docs/release/SD-32-compute-library-and-cause-closure/progress.md` (this entry).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 — cause closure by class,
+  not by instance (T2a-residual, ~2,775 per `decisions.md §13`'s table). This cycle sizes, not
+  closes, the work per `decisions.md §13`'s explicit authorization of a measurement-first step.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (as a measurement cycle — 0 units banked, standing lesson 6).
+- **Summary:** Re-derived the T2a-residual population fresh: **2,640**, not `decisions.md §13`'s
+  tilde-marked "~2,775" (logged as a `scripts/retro.py correction`). The population is **547
+  distinct category labels across 18 books**, heavily long-tailed (266 singletons, 398 labels with
+  ≤3 records; top 50 labels cover 54% of units). Confirmed **zero overlap** with
+  `CLASS_FEATURE_POOLS`'s 27 registered entries (every group's `registered` is `false`). Audited
+  every remaining `data.class` reader in the codebase for the consumer-conflict shape the T2a+T12
+  cycle found in `class_feature_pool_catalog.rs` (already fixed there) — **no new hazard found**;
+  the three other readers (`class_feature_descriptions.rs`, `class_feature_grant_consumer.rs`,
+  `class_feature_feat_bridge.rs`) all benefit from a more accurate mapping rather than conflict with
+  one. Sampled 10 top labels' `TYPE:`/`PRE*:` tokens (the same discipline `CLASS_FEATURE_POOLS`'
+  own 27 entries were built through): several resolve in one token read to an already-dispatched
+  class (`Ki Power`→Monk, `Master of Many Styles`→Monk, `Pack Lord`→Druid, `Adaptation`→Ranger,
+  `Favored Enemy Bonus`→Ranger — 239 quick-win units); several resolve only to an
+  undispatched-but-real class (`Wild Talent`→Kineticist, `Implement School Focus Power`→Occultist —
+  closes T2a-residual but lands in the T2a∩T12 overlap shape, a separate T12 dependency); and two
+  need real care — `Domain Power` (172 units, the single largest group) is genuinely multi-owner
+  (shared `DomainLawLVL`-shaped variables across several domain-granting classes; a naive
+  single-class table entry would relabel, not close, per `decisions.md §1a`), and `Demonic
+  Obedience` (42 units) is likely not class-owned at all and should be confirmed as correctly
+  unmapped rather than forced into a class. Full memo, every command:
+  `artifacts/gate-3-closure-invariant/card11-t2a-residual-census-census.md`.
+- **Discovery forwards:** none requiring a new card — the `Domain Power`/`Demonic Obedience`
+  findings are logged as work-lane inputs in the census memo, not new blocker shapes.
+- **Next-cycle plan:** dispatch work-lane cycles against the census memo's group list — quick-win
+  clean-to-dispatched-class labels first, `Domain Power` and `Demonic Obedience` last given their
+  extra verification care. Extend `POOL_TO_DISPATCHED_CLASS`-shape tier 2 (or teach tier 4 label
+  aliasing) to target undispatched-but-corpus-declared classes, needed for the `Wild Talent`/
+  `Implement School Focus Power`-shaped quick wins.
+
 ## DISCOVERED
 
 <!-- Work found mid-cycle that does not fit the claimed card (kanban.md `DISCOVERED-forked`).
