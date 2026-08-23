@@ -1539,174 +1539,56 @@ still passes (`no_record` sits exactly at the committed baseline, not above it).
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
      card id, what failed, the command that shows it, named owner. Empty at launch. -->
 
-### Card 11 `epic-2-cause-closure` — remaining blocker shapes (filed at closure-epilogue final-acceptance scan, 2026-08-22)
+### Card 11 `epic-2-cause-closure` — remaining blocker shapes (filed 2026-08-22) — RESOLVED, removed 2026-08-23
 
-- **Cycle:** Cycle 1 (`gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`),
-  filed under Open blockers by the Closure epilogue cycle (card 13) per
-  `workflow-instruction.md §13` step 1 / `acceptance-and-verification.md` AT-32-CLOSE-001 ("every
-  Epic 1-5 card complete or filed under `## Open blockers` with a named owner").
-- **What failed / what remains:** Card 11's own cycle closed T1 corpus-wide and cited T5/T3; it
-  explicitly did not attempt T2a (8,243 units), T2b (2,472 units), T9 (2,651 units), T4 (up to
-  2,763 units, needs re-derivation), T12 (overlaps T2a by 1,354–2,124 units — cannot close
-  independently), T7 (4 units, fix site identified, not implemented), or T8 (12 units, blocked on
-  an operator ruling). Each of T2a/T2b/T9/T4/T12 is independently a multi-thousand-unit population
-  needing its own measurement+close cycle (Gate 2's own cards 6/7/8 precedent: three cycles for a
-  narrower ten-family scope) — not attemptable inside a single closure-epilogue cycle without
-  fabricating numbers, which the no-stub doctrine refuses.
-- **Command that shows it:** `grep -A2 '^| 11 ' docs/release/SD-32-compute-library-and-cause-closure/kanban.md`
-  (status `returned-to-backlog`); full per-shape reasoning in
-  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`.
-- **Named owner:** a successor SD-N bundle (`forward-scope-register.md` C2.5). T8 additionally
-  needs an operator ruling on write-scope for `scripts/observer/pf1e_dashboard_producer.py` before
-  any cycle can touch it; T2a and T12 need one combined cycle, not two independent half-measures.
-- **Retro event:** `scripts/retro.py deferral` (`docs/retro/events/closure-epilogue.jsonl`).
-- **Does this block bundle closure?** No — `decisions.md §2` / `kanban.md` line 4: closure fires
-  on the Definition of Done, the four gates (G0-G3), all of which are met
-  (`progress.md` Cycles 2/3, Gate 1 Cycle 1, Gate 2 Cycles, Gate 3 Cycle 1, below). AT-32-CLOSE-001's
-  "complete or filed under Open blockers" condition is satisfied by this filing, not by closing the
-  card's remaining scope.
+Superseded by `decisions.md §10` (operator rejected this filing's forward-scope-deferral premise —
+the entry's own addendum already recorded that) and `§13` (operator ruling, 2026-08-22: all five
+named sub-populations — T2a, T2b, T9, T12, T4 — close by doing the work; none moves to
+`forward-scope-register.md`). Every shape named here has since closed or been substantially closed
+by class: T1/T7/T8/T4-L8/T2a-cause closed same-day (as the entry's own addendum already recorded);
+T2b/T9/T12/T2a-residual/T4-L9 then closed through the 2026-08-23 `decisions.md §20` `no_record`
+campaign (bundle-wide `no_record` 20,889 → 982 as of this reconciliation cycle, re-derived
+`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`, corpus SHA
+`7f818006e371188e5717fd18d74d18a420747fc6`). See `kanban.md` row 11's note history for the full
+per-shape commit trail.
 
-**Addendum (post `decisions.md §10`, superseded — this filing is no longer the governing
-disposition):** the operator rejected this filing's premise outright (`decisions.md §10`: "Filing
-under `## Open blockers` is a request for an operator ruling, not a disposition and not a closure
-path. It pauses the bundle."). Six lanes were subsequently dispatched against card 11's row to
-actually close the named shapes rather than defer them. As of this addendum: **T1** closed (this
-cycle, above); **T7** closed corpus-wide (`epic-2-t7-t8/1`); **T8** closed (`epic-2-t8/2`,
-`epic-2-t8/3`); **T4** closed for its L8 population (`epic-2-t4/1`); **T2a and T12** closed at the
-cause, corpus-wide, with an honest residual (`epic-2-t2a-t12/1`); **T2b** and **T9** each ran a
-real, re-derivable measurement cycle that banked zero units and requested an operator ruling on how
-to proceed (both logged, neither fabricated a close). The "each is not attemptable without
-fabricating numbers" claim this entry made has not held up — every shape WAS attempted, and most
-closed. This entry is left in place as the historical record of what card 13's closure epilogue
-filed and why the operator rejected it, not edited to look retroactively correct; see each lane's
-own cycle entry above (and `kanban.md` row 11) for the current, real state.
+### Card 11 `epic-2-cause-closure` — reopened, ruling needed on four shapes (reclosure-epilogue cycle 2, 2026-08-22) — RESOLVED, removed 2026-08-23
 
-### Card 11 `epic-2-cause-closure` — reopened, ruling needed on four shapes (reclosure-epilogue cycle 2, 2026-08-22)
+Answered directly by `decisions.md §13` (operator ruling, 2026-08-22): T2b, T9, T12, T2a-residual,
+and T4-L9 all close by doing the work; none moves to `forward-scope-register.md`. T2b and T9
+subsequently closed largely via the generic-verbatim-ingest mechanism `decisions.md §17`/`§20`
+authorized (not the per-book chassis work this filing anticipated) — see the two entries that were
+immediately below this one (now themselves resolved, see below) and `kanban.md` row 11's note
+history for the commit trail.
 
-- **Cycle:** `closure-epilogue` cycle 2 (`reclosure-epilogue`), acting on an adversarial closure
-  review that found the consolidation cycle above (the one this file's addendum, immediately
-  above, treats as settled) closed row 11 to `complete` without an operator ruling, in the same
-  substance `decisions.md §10` already rejected once in PR #375 — this time re-filed under a
-  self-cited `decisions.md §11` condition 4 rather than under `## Open blockers`.
-- **What failed / what remains:** `decisions.md §11` condition 4 ("T8 closing removes the last
-  non-`complete` condition on card 11") is scoped to the T8 classifier fix and was committed
-  **before**, not after, the T2b and T9 lane reports that explicitly asked for a ruling —
-  `for c in c72e8a606 00c62e134 b440d1680; do git show -s --format='%ci %h %s' $c; done | sort`
-  shows Decision 11 (`c72e8a606`, 2026-08-22 20:45:47) landing 8 and 13 minutes before the T9
-  (`00c62e134`, 20:53:13) and T2b (`b440d1680`, 20:58:30) lane commits, so it cannot have already
-  answered questions asked afterward. The consolidation cycle's chronology claim in `kanban.md` row
-  11 (superseded text, retained below) asserted the reverse. Four shapes remain genuinely open:
-  T2b (0 of 2,472 fixed — real cause is a two-part ingestion gap, not a matcher fix), T9 (0 of
-  2,712 fixed — 114 forensically checked, ~2,598 not yet), T12 (2,453 unchanged, classifier still
-  never reads `data.class`), and T2a's own ~2,775-record residual (the T2a lane's own receipt:
-  "if the operator wants T2a driven further toward zero before the row is marked `complete`").
-  T4's L9 (471 units) is separately not closed, named by the T4 lane's own receipt as needing a
-  feat-held, not class-held, reachability gate.
-- **Command that shows it:** `sed -n '/^| 11 /p' docs/release/SD-32-compute-library-and-cause-closure/kanban.md`
-  (status `in-progress`, correction note prepended); per-shape figures in
-  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`,
-  `epic-2-t2a-t12_cycle-1_cycle_receipt.md`, `epic-2-t4_cycle-1_cycle_receipt.md`,
-  `epic-2-cause-closure_cycle-2_epic-2-t2b_cycle_receipt.md`,
-  `epic-2-t9_cycle-1_cycle_receipt.md`.
-- **Named owner:** the operator. `decisions.md §10` item 2: "Only an operator ruling may move scope
-  out of a card and into `forward-scope-register.md`." The exact ruling needed: for each of
-  T2b/T9/T12/T2a's-residual, does a zero-units-fixed, cause-disproven-or-unchanged measurement
-  cycle count as that shape's own closure (standing lesson 6), or does the operator authorize
-  moving the named residual population to `forward-scope-register.md` as successor-bundle scope?
-  For T4's L9, does the row close with L9 named as out-of-lane residual, or must the feat-held
-  reachability gate land first?
-- **Retro event:** `scripts/retro.py correction --subject "kanban row 11 consolidation cycle"
-  --claimed "decisions.md §11 cond.4 committed after T2b/T9 lane reports, authorizing closure"
-  --actual "committed 8-13 minutes before both lane commits, scoped to T8 only" --verified-by
-  "git show -s --format='%ci %h %s' c72e8a606 00c62e134 b440d1680"`.
-- **Does this block bundle closure?** **Yes.** `decisions.md §10` item 1: "A card at
-  `returned-to-backlog`, `in-progress`, or `DISCOVERED-forked` blocks closure." Row 11 is back to
-  `in-progress`. Row 15 (`census-scope-closure`) also remains `in-progress` independently — see
-  that row's own note — and `decisions.md §12` binds it to closure the same way. No PR may open
-  while either row is short of `complete`.
+### Card 11 `epic-2-cause-closure`, T2b — `inner_sea_races` 45-unit residual — RESOLVED, removed 2026-08-23
 
-### Card 11 `epic-2-cause-closure`, T2b — `inner_sea_races` 45-unit residual needs a scope ruling (lane `epic-2-t2b-w1b`, 2026-08-23)
+Closed by the generic-verbatim-ingest mechanism `decisions.md §17`/`§20` authorized after this
+filing, not by the chassis-wiring path this filing (correctly) refused to attempt without a ruling.
+`race_trait` `no_record` closed corpus-wide via `scripts/ingest_race_trait_generic.py` (commit
+`75ea0c9109`, "race_trait no_record closure via generic verbatim ingest, 1,883 -> 5") and
+`scripts/ingest_generic_kind.py` (commit `eba2fd7f04`, "race/monster/class/race_trait no_record
+closure, 114 -> 0"), both of which ingest every `no_record` unit **verbatim, without requiring the
+chassis wiring** this filing correctly identified as out of its own granted scope —
+`decisions.md §20` rules that ingestion (Gate 1 shape-measurement) and chassis reachability are
+separate concerns, and only the former is `no_record`'s bar. Re-derived 2026-08-23:
+`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` → `race_trait` `no_record`
+**0**, corpus-wide, all books including `inner_sea_races` (corpus SHA
+`7f818006e371188e5717fd18d74d18a420747fc6`). The underlying Dhampir/Changeling/Skinwalker
+heritage-selector mechanism and the 15 chassis-less races this filing named remain genuinely
+unbuilt — that is a chassis/reachability gap, not a Gate 1 `no_record` blocker, and this closure
+does not claim otherwise.
 
-- **Cycle:** `epic-2-t2b-w1b/1` (`artifacts/gate-3-closure-invariant/
-  epic-2-t2b-w1b-inner_sea_races_cycle_receipt.md`). This lane's dispatch brief scoped
-  `inner_sea_races` as "ingest-tool extension only... no chassis-load wiring needed," following
-  `card11-t2b-census-census.md`'s characterization of the book's 59 open units as uniform
-  never-transcribed content.
-- **What failed / what remains:** 14 of 59 units closed or confirmed not-work within the granted
-  scope (12 closed by re-running the existing ingest binary; 1 confirmed correctly excluded). The
-  remaining **45** are NOT the shape the brief described: they belong to races with no chassis
-  this project has ever built (Android, Changeling, Dhampir + its 4 subrace families, Gathlain,
-  Geneiekin, Ghoran, Kasatha, Lashunta, Samsaran, Skinwalker, Syrinx, Triaxian, Trox, Wyrwood,
-  Wyvaran), or need the Dhampir/Changeling/Skinwalker heritage-selector mechanism this project has
-  already, repeatedly, deliberately deferred elsewhere (`ingest_races.rs`'s own `skinwalker` doc
-  comment: "a genuinely new mechanism, deferred (not stubbed) to a follow-on batch"). Both are
-  chassis-load wiring — explicitly out of this lane's granted scope, and adding a race to
-  `ingest_race_traits.rs`'s `IN_SCOPE_RACES` without a matching chassis in `ingest_races.rs`
-  would ship records `RaceCorpus::chassis()` never populates ("loaded but permanently
-  unreachable," the same file's own module doc), which this lane refuses to do to satisfy a
-  counter.
-- **Command that shows it:** `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
-  u=[x for x in d['units'] if x['book']=='inner_sea_races' and x['kind']=='race_trait' and
-  x['evidence']=='race_trait_race_not_modelled']; print(len(u))"` → 59 before this cycle;
-  `find data/corpus/inner_sea_races/race_trait -name '*.json' | wc -l` → 94 after (was 82); the
-  45-unit remainder's race list is enumerated in the receipt above.
-- **Named owner:** the operator. The exact ruling needed: (a) widen this T2b lane's scope to
-  include chassis wiring for the 15 races named above (decomposed into its own cycle(s), per
-  `AGENTS.md` Blocker Discipline — "a blocker bigger than one cycle is a sequencing problem, not
-  an exemption"), or (b) authorize a dedicated follow-on cycle scoped specifically to the
-  Dhampir/Changeling/Skinwalker heritage-selector mechanism first (closes ~23 of the 45 —
-  Dhampir's own 7 units plus its 4 subrace families' 4 units each — without touching the other 8
-  chassis-less races), or (c) some other explicit sequencing. Per `decisions.md §13`, "no matter
-  what... I want the work done" — this filing is not proposing the 45 move to
-  `forward-scope-register.md`; it is asking which shape of cycle does the work next.
-- **Retro event:** `scripts/retro.py correction --subject t2b-census --claimed "inner_sea_races:
-  59 never-transcribed per-record units, ingest-tool extension" --actual "12 close by re-running
-  the existing binary (stale regen); 1 correctly not-work; 45 need new race chassis or a deferred
-  heritage-selector mechanism, both out of ingest-tool-extension scope" --verified-by "ls
-  data/corpus/inner_sea_races/race_trait/ before/after cargo run --bin ingest_race_traits --
-  inner_sea_races"`.
-- **Does this block bundle closure?** Yes, transitively — it is part of card 11's T2b population,
-  already covered by the standing blocker immediately above (T2b: 0 of 2,472 fixed at that
-  filing's time; this lane's own 12-unit close is the first real progress against that count, not
-  a new independent blocker on top of it).
+### Card 11 `epic-2-cause-closure`, T2b — `bestiary_5` fully out of ingest-tool-extension scope — RESOLVED, removed 2026-08-23
 
-### Card 11 `epic-2-cause-closure`, T2b — `bestiary_5` fully out of ingest-tool-extension scope (lane `epic-2-t2b-w1b`, 2026-08-23)
-
-- **Cycle:** `epic-2-t2b-w1b/3` (`artifacts/gate-3-closure-invariant/
-  epic-2-t2b-w1b-bestiary_5_cycle_receipt.md`). Dispatch brief scoped `bestiary_5` identically to
-  `inner_sea_races`/`horror_adventures`: "ingest-tool extension only... no chassis-load wiring
-  needed, ~3 files."
-- **What failed / what remains:** 0 of 136 real open units close within that scope. By class:
-  **61** need 8 new race/entity chassis (Shabti 12, Reptoid 10, Deep One Hybrid 9, Orang-Pendak 9,
-  Astomoi 8, Caligni 7, Clockwork Familiar 5, Esipil 1) — `ingest_races.rs`'s `bestiary_5`
-  `IN_SCOPE_RACES` names only `skinwalker`; none of these 8 have a `RaceSpec` entry, and no
-  stale-regen shortcut exists (re-ran `ingest_races.rs`, confirmed timestamp-only diff, reverted).
-  **72** need Skinwalker's own heritage-selector mechanism — already named, by
-  `ingest_races.rs`'s own `skinwalker` doc comment, as "a genuinely new mechanism, deferred (not
-  stubbed) to a follow-on batch." **1** (`Adopted Race ~ Skinwalker`) needs the cross-book
-  `Adopted Race` selector a sibling lane (`epic-2-t2b-w1-c`) already found spans 4 books and
-  recommended building once. **2 further units checked, correctly not counted**: `Favored Enemy ~
-  Humanoid (Skinwalker)` (a Ranger class-feature-shaped grant, wrong TYPE shape for this tool) and
-  `Psychic Magic` (sourced from a conditionally-loaded `_oa.lst` support file, the same hazard
-  `ingest_race_traits.rs`'s `horror_adventures` doc comment already names for a sibling book).
-- **Command that shows it:** `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
-  u=[x for x in d['units'] if x['book']=='bestiary_5' and x['kind']=='race_trait' and
-  x['evidence']=='race_trait_race_not_modelled']; from collections import Counter; print(Counter(
-  k.split(' ~ ')[0] for k in (x['corpus_key'] for x in u)))"` → the per-race/entity breakdown in
-  the receipt above.
-- **Named owner:** the operator. Exact ruling needed: sequence and assign Class A (8-race chassis
-  batch, 61 units, largest single win at zero shared-mechanism cost), Class B (Skinwalker
-  heritage-selector mechanism, 72 units — the single largest block, and benefits every other book
-  with the same heritage shape once built, e.g. Dhampir/Changeling in `inner_sea_races` above),
-  and Class C (cross-book `Adopted Race` selector, 9 units total across 4 books — build once, not
-  per-book) as follow-on cycles. None fits inside "ingest-tool extension" as scoped.
-- **Retro event:** `scripts/retro.py correction --subject t2b-census --claimed "bestiary_5: 136
-  real work units, ingest-tool extension, ~3 files" --actual "0 bankable within scope -- 61 need
-  new chassis, 72 need a deferred heritage mechanism, 1 needs a cross-book selector mechanism"
-  --verified-by "python3 -c ... Counter(...) over docs/work-inventory.json"`.
-- **Does this block bundle closure?** Yes, transitively — part of card 11's T2b population,
-  already covered by the standing blocker above; no new units closed against that count from this
-  book this cycle (0 of 136).
+Same resolution as `inner_sea_races` immediately above, same two commits (`75ea0c9109`,
+`eba2fd7f04`), same re-derivation: `race_trait` `no_record` is corpus-wide **0**
+(`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`, corpus SHA
+`7f818006e371188e5717fd18d74d18a420747fc6`). The 8-race chassis batch (Shabti/Reptoid/Deep One
+Hybrid/Orang-Pendak/Astomoi/Caligni/Clockwork Familiar/Esipil), the Skinwalker heritage-selector
+mechanism, and the cross-book `Adopted Race` selector this filing named remain genuinely unbuilt —
+reachability/chassis scope, not a Gate 1 `no_record` blocker, and this closure does not claim
+otherwise.
 
 ## Closure epilogue — full worktree/branch sweep (card 13, `workflow-instruction.md §13` step 3)
 
@@ -2281,6 +2163,12 @@ and after this sweep (not "none found" without having run the commands).
   vocabulary, or state explicitly what Gate 0's per-kind counting scope excludes. Proposed target:
   Gate 1 shape closure (card 5) or a standalone operator ruling before Gate 1 opens. Full breakdown:
   `artifacts/gate-0-census-closure/object-definition-rules.md`.
+  **RESOLVED, `decisions.md §12` (operator ruling, 2026-08-22):** ruled these 27,847 units in scope
+  (§12b), added kanban cards 14/15 to close them, and separately ruled the shape-family vocabulary
+  fork (§12a). Card 15's own campaign has since ingested most of the named buckets (`ability` 4,824,
+  `template` 2,248, `deity` 459, `domain` 183, `language` 136, etc. — `decisions.md §20`'s table);
+  `class_feature` remains tracked as its own kind, not folded into the ten-kind list, per card 15's
+  ongoing `in-progress` row.
 - 2026-08-22, Cycle 2 (`gate-0-census-closure`): the "158-book PCGen oracle directory tree" figure
   (`acceptance-and-verification.md` AT-32-G0-001, `technical-design.md`, `scope-draft.md`) and the
   "38,372 units" denominator (`acceptance-and-verification.md` AT-32-G0-002) both carry no
@@ -2351,6 +2239,16 @@ and after this sweep (not "none found" without having run the commands).
   already-shipped record's `key`/`raw_tokens` — not only `name`/`description` — against an expanded
   deity/proper-noun vocabulary beyond the 60-term list, across `ability` and likely other kinds,
   before any remediation is designed.
+  **PARTIALLY RESOLVED, Cycle `pi-key-rawtokens-screen` (commit `95348a92e`), 2026-08-23:** built
+  and ran the proposed generic audit (`scripts/pi_key_rawtokens_audit.py`, `decisions.md §17`, one
+  tool, every kind, 24,051 records scanned) — the audit's own `§17a` self-correction found the
+  original 503 figure over-counted records already carrying a `[redacted PI]` marker as fresh
+  leaks; the real, confirmed-against-the-signed-off-60-term-list count is **6** (2 already fixed
+  this cycle, 4 more newly found in `domain`/`equipment`/`language`/`spell` — named, not yet
+  remediated, `scripts/retro.py deferral 1787493585450-t9-onboarding-bcf0ca`). The audit tool
+  itself is the proposed target and has landed; the 4 outstanding leaks are real, still-open PI
+  work for the next cycle touching those 4 kinds' generators — **not** closed by this note. Full
+  table: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-corpus-report.md`.
 
 ## Cycle `t9-pi-audit/1` — Card 11, shape T9 — Product-Identity exposure audit, `decisions.md §15`
 
