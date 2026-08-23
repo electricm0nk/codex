@@ -1082,3 +1082,61 @@ inconvenient.
 evaluator never reads. Where Codex deliberately diverges from the oracle, **the fixture records the
 Codex value and the comment records the oracle value and the reason** — so the divergence is pinned,
 not drifting.
+
+## Decision 23 — `Domain Power` closes by reading the upstream class link; `Demonic Obedience` is re-typed (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. Closes the two labels a T2a-residual cycle verified and deliberately
+left unmapped (`artifacts/gate-3-closure-invariant/epic-2-t2a-residual-alias-tier_cycle-1_cycle_receipt.md`).
+**Sets the precedent for the remaining ~525 unverified labels** — see 23c.
+
+### 23a — `Domain Power` (172 units): option (a), extend the generator's inputs
+
+The label is **genuinely multi-owner** and the corpus says so, verified corpus-wide rather than
+sampled: 158 of 172 records' `DESC` names no class at all; the 14 that do split 13 Cleric-only and 1
+Cleric+Druid; and the `PRE:`/`TYPE:` tokens (`DomainLawLVL`, `SpecialQuality.DomainPower`) are
+generic across every class with domain access — Cleric, Inquisitor's Inquisition, Warpriest's
+Blessing-domain hybrid, Paladin's Sacred Servant archetype.
+
+**Ruled: close it by reading the source the generator does not currently read** — which specific
+class build each domain-power-granting deity/domain entry attaches to in the PCGen source tree.
+
+The operator rejected the cheaper option (b), "rule that *shared across domain-access classes* is
+itself an acceptable disposition", because it closes the counter without learning which class grants
+what — a gap that surfaces again the moment an engine tries to compute these values. **This is a real
+mechanism extension, deliberately chosen over a definitional shortcut.**
+
+`CATEGORY_LABEL_ALIASES`' single-label-to-single-class shape does **not** fit here and must not be
+forced (`§1a`: that is a relabelled shape, not a closed one). The standing test
+`category_label_alias_owner_refuses_the_known_multi_owner_and_not_class_owned_labels` pins that
+refusal; it may only be amended by a cycle that has actually built the upstream link, and the
+amendment must be visible in the diff.
+
+### 23b — `Demonic Obedience` (42 units): re-type out of `class_feature`
+
+**Not class-owned at all**, and the evidence is one-directional with no exceptions: every one of the
+42 records' `PRE:` tokens names a **demon lord** (`Shivaska`, `Jubilex`, …), never a class or a
+class-shaped variable. It is a deity-obedience feat line, structurally outside any PC class chassis —
+comparable to a boon feat.
+
+**Ruled: re-type it.** These units sit under `class_feature` because that is where the category label
+landed, not because they belong there. The closure is a `kind` correction, not a class mapping.
+
+This is a `§16` movement, so it binds: **a unit re-typed out of `class_feature` is not a unit closed.**
+Name the kind it moves to, prove the move, and report closure and reclassification as separate
+numbers. If the correct target kind does not exist, say so rather than forcing it into the nearest
+one.
+
+### 23c — The precedent this sets
+
+**1,612 units across roughly 525 more category labels remain individually unverified.** The two
+labels ruled here are the two shapes that population will keep producing, and this decision is how
+each is handled:
+
+| Shape | Disposition |
+|---|---|
+| **Multi-owner** — a real class feature whose owning class is not determinable from the generator's current inputs | Extend the inputs and read the real link (23a). Do **not** pick one owner, and do **not** define the ambiguity away. |
+| **Not class-owned** — the units are not class features at all | Re-type them (23b), reporting the movement per `§16`. |
+| **Single-owner** | The existing `CATEGORY_LABEL_ALIASES` path, verified across all a label's records (the 21 labels / 814 units already closed that way). |
+
+A cycle working the remaining labels applies this table rather than re-escalating each one. Only a
+label that fits **none** of the three shapes is a new escalation.
