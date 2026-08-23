@@ -4726,4 +4726,4 @@ framing) — not claimed.
 Receipt: `artifacts/gate-1-shape-closure/003_class_feature_no_record_closure_cycle_receipt.md`.
 Remaining bundle-wide `no_record` (15,425, 17 other kinds) is sibling-cycle scope per `decisions.md
 §20`'s per-kind table.
-- Commit: (recorded after push).
+- Commit: 649c072ae.

@@ -1,7 +1,7 @@
 # Cycle 003 — Gate 1 / `class_feature` `no_record` closure (decisions.md §20)
 
 - **Card ID:** `gate-1-shape-closure` (row 5) — `no_record` ingestion mandate, `decisions.md §20`
-- **Commit SHA:** (recorded after push)
+- **Commit SHA:** 649c072ae
 - **Files touched:**
   - `src/rules_core/cache_gen/class_feature.rs` (scope widening + `foreign_citations` guard)
   - `data/corpus/**/class_feature/**/*.json` (12,384 refreshed `ingested_at`/citation-path stamps
