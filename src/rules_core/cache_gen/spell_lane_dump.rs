@@ -62,9 +62,9 @@ use crate::rules_core::pi_screening::{
 };
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 use crate::rules_core::rules_tables::{
-    adventurers_guide, horror_adventures, inner_sea_faiths, inner_sea_gods, inner_sea_magic,
-    inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic,
-    ultimate_wilderness,
+    adventurers_guide, bestiary, bestiary_4, horror_adventures, inner_sea_faiths, inner_sea_gods,
+    inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
+    ultimate_magic, ultimate_wilderness,
 };
 
 // ---------------------------------------------------------------------
@@ -311,6 +311,43 @@ fn book_specs() -> Vec<BookSpec> {
             dir: "pathfinder/paizo/roleplaying_game/horror_adventures",
             spell_file: "ha_spells.lst",
             entries: horror_adventures::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        // SD-32 `decisions.md §20`: `bestiary`/`bestiary_4`'s custom
+        // spell-variant declarations, re-derived to be real dedicated
+        // `.lst` content (`decisions.md §17a` re-derivation) rather than
+        // the "monster-intrinsic, no dedicated `.lst`" a prior cycle
+        // reported without checking. `bestiary`'s file physically lives
+        // under the shared `core_essentials` directory -- same split
+        // `cache_gen::equipment_gap::book_routing`'s own doc comment names
+        // for this book's equipment rows; the shipped book id stays
+        // `"bestiary"`.
+        BookSpec {
+            book_id: "bestiary",
+            dir: "pathfinder/paizo/roleplaying_game/core_essentials",
+            spell_file: "ce_spells.lst",
+            entries: bestiary::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        BookSpec {
+            book_id: "bestiary_4",
+            dir: "pathfinder/paizo/roleplaying_game/bestiary_4",
+            spell_file: "b4_spells_modified.lst",
+            entries: bestiary_4::spell_list::SPELL_LIST
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,

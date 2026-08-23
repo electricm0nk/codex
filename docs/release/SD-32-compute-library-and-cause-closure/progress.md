@@ -5454,3 +5454,57 @@ term array is the canonical blacklist source and legitimately contains the real 
 - Receipt: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-screen_cycle-1_cycle_receipt.md`.
 - Report: `artifacts/gate-3-closure-invariant/pi-key-rawtokens-corpus-report.md`.
 - Commit: `95348a92e` — pushed clean, first attempt (`97594f3e7..a3d9f066a`).
+
+## Cycle: `spell`/`companion`/`equipment`/`equipment_modifier` `no_record` (`decisions.md §20`)
+
+`§17a` re-derivation confirmed the dispatch brief's figures exactly (`spell` 339, `companion` 217,
+`equipment_modifier` 175, `equipment` 170).
+
+**`spell` (339 → 285, -54).** A prior cycle's "`bestiary`/`bestiary_4` monster-intrinsic, no
+dedicated `.lst`" claim was **wrong** — re-derived directly: both books carry a real, dedicated
+spell `.lst` (`core_essentials/ce_spells.lst`, `bestiary_4/b4_spells_modified.lst`), full
+`TYPE:`/`SCHOOL:`/`DESC:`-bearing base declarations. Widened two existing generic paths, no new
+logic: `src/bin/ingest_spells.rs`'s config (+2 `BookInput`) and
+`src/rules_core/cache_gen/spell_lane_dump.rs`'s `book_specs()` (+2 entries). `bestiary_4`'s own
+`pi_screen` correctly dropped `Summon Monster IX (Cthulhu)` (declared `NAMEISPI:YES` on this book's
+row, matching `§19b`'s recorded oracle inconsistency). 167 new corpus records written
+(`data/corpus/bestiary{,_4}/spell/*.json`), no `raw_tokens` yet (a later enrichment pass, same
+precedent every other book on this generator went through).
+
+**⚠ Live corpus-regeneration hazard found, escalated, NOT shipped.** `gen_cache_spell_lane_dump`
+shares `data/corpus/<book>/spell/` with a sibling generator, `cache_gen::spell_mod_access` (a prior
+cycle's `.MOD`-row dump into the SAME directories). `spell_lane_dump`'s per-book
+`remove_stale_owned_files` call has no knowledge of that sibling's records and staged **1,580
+deletions** across `occult_adventures`/`ultimate_magic` on this run (1,417 + 163 real `.MOD`
+records it does not own, judged "stale"). Caught via `git status --porcelain -- data/corpus`
+*before* commit, reverted with `git checkout -- data/corpus/{occult_adventures,ultimate_magic}`.
+**The next cycle that touches `spell_lane_dump`, `spell_mod_access`, or
+`cache_gen::ultimate_equipment::remove_stale_owned_files` must fix this collision (or back up both
+directories) before re-running `gen_cache_spell_lane_dump`.**
+
+**`companion` (217, unchanged, re-verified).** Re-ran the classifier; all 217 residual units
+confirmed `still_undecidable` under the operator-approved PI classifier (0 `blocked`) — a named
+`§15`/`§18`/`§19c` stop, not a mechanism gap. No code change; not re-closable without an
+operator-named allowlist widening.
+
+**`equipment`/`equipment_modifier` (170/175, unchanged, gap named).** `gen_cache_equipment_gap`
+run fresh against the pinned oracle: 0 new writes, 1,810 already-shipped, 5 non-content-excluded —
+**everything the compiled `equipment_gap_tables.rs` table currently knows about is already on
+disk.** The residual is rows that table's OWN generator (`gen_equipment_gap_tables.rs`) never
+captured. Traced one concretely: `ultimate_psionics:up_equipmods.lst:21`
+(`Material ~ Crystal / Deep ~ Item`) is a real, full base-material declaration that
+`work-inventory.json` enumerates as `no_record`, but the compiled table only holds its `.COPY=`
+shorthand alias (`CRYS_DEEP_ITEM`) instead. No code change attempted this cycle — the fix site is
+real (`gen_equipment_gap_tables.rs`'s `parse_lst`/dedup selection) but the exact defect needs a
+dedicated read.
+
+- **Status:** complete (this cycle's own scope — `spell` closure + `companion`/`equipment*`
+  investigation and gap-naming; card 11's shared row stays `in-progress`).
+- **Kanban:** row 11 entry prepended, stays `in-progress`.
+- Receipt: `artifacts/gate-3-closure-invariant/epic-2-spell-companion-equipment-no-record_cycle-1_cycle_receipt.md`.
+- **What remains:** the `spell_lane_dump`/`spell_mod_access` directory-collision fix (blocks future
+  `gen_cache_spell_lane_dump` re-runs); `raw_tokens` enrichment for `bestiary`/`bestiary_4`;
+  `gen_equipment_gap_tables.rs`'s row-selection re-derivation; `companion`'s operator-scoped
+  allowlist widening.
+- `no_record` totals (all 12 open kinds): 3,263 → 3,209 (-54). Corpus SHA
+  `7f818006e371188e5717fd18d74d18a420747fc6`.

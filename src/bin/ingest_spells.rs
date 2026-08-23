@@ -208,6 +208,38 @@ const BOOKS: &[BookInput] = &[
         already_ingested: None,
         dedup_within_book: false,
     },
+    // SD-32 `decisions.md §20`, card 11 next-cycle-plan item 1: a prior
+    // cycle reported `bestiary`'s 109 and `bestiary_4`'s 56 `no_record`
+    // `spell` units as "monster-intrinsic with no dedicated `.lst`" without
+    // re-verifying. Re-derived: BOTH books carry a real, dedicated spell
+    // `.lst` file of custom variant declarations (restricted-form recasts
+    // of existing spells used by monster spell-like abilities, e.g. "Blur
+    // (self only)", "Charm Monster (elementals only)") -- each row carries
+    // its own `TYPE:`/`SCHOOL:`/`DESC:` tokens, the identical shape every
+    // other book's base spell declaration has. The prior finding was wrong;
+    // named per `decisions.md §17a`, not silently corrected.
+    //
+    // `bestiary`'s file physically lives under the shared `core_essentials`
+    // directory (the same B1/`core_essentials` split
+    // `cache_gen::equipment_gap::book_routing`'s own doc comment names for
+    // this book's equipment rows) -- `lst_rel` points at the real file, the
+    // shipped book id stays `"bestiary"`.
+    BookInput {
+        id: "bestiary",
+        display_name: "Bestiary (custom spell-like-ability variants)",
+        lst_rel: "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
+        out_path: "src/rules_core/rules_tables/bestiary/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
+    BookInput {
+        id: "bestiary_4",
+        display_name: "Bestiary 4 (modified spell variants)",
+        lst_rel: "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+        out_path: "src/rules_core/rules_tables/bestiary_4/spell_list.rs",
+        already_ingested: None,
+        dedup_within_book: false,
+    },
 ];
 
 /// Referenced so `cargo build`/`clippy` see these modules as used -- their
@@ -725,13 +757,19 @@ mod tests {
     }
 
     #[test]
-    fn books_table_names_exactly_the_ten_spell_bearing_books_this_binary_replaces() {
+    fn books_table_names_exactly_the_twelve_spell_bearing_books_this_binary_replaces() {
         // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): +1,
         // `horror_adventures` -- this module's own doc comment's "seven
         // near-identical binaries plus the already-config-driven ISF/ISM/
         // ISTEM trio" (nine total, hence the old test name) plus this
         // cycle's tenth entry, which was never a per-book binary at all --
         // it was added directly to this shared config.
+        //
+        // SD-32 `decisions.md §20` (`§17a` re-derivation): +2,
+        // `bestiary`/`bestiary_4` -- a prior cycle's "monster-intrinsic, no
+        // dedicated `.lst`" claim for these two books' `no_record` spell
+        // population was checked and found wrong; both carry a real,
+        // dedicated `.lst` file of custom spell-variant declarations.
         let ids: Vec<&str> = BOOKS.iter().map(|b| b.id).collect();
         assert_eq!(
             ids,
@@ -746,6 +784,8 @@ mod tests {
                 "inner_sea_magic",
                 "inner_sea_temples",
                 "horror_adventures",
+                "bestiary",
+                "bestiary_4",
             ]
         );
     }

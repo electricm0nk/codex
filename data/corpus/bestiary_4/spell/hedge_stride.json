@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Hedge Stride",
+    "school": "Conjuration",
+    "level": null,
+    "description": "When you cast this spell, you gain the ability to step into a hedge, magically infusing yourself with the plant."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+    "sha256": "312f9985c63265cc827a6b622e9c5f326c3b6460170e7aa289c687019c37b7cd",
+    "line": 18,
+    "record_key": "Hedge Stride"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
