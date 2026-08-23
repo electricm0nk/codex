@@ -2186,19 +2186,23 @@ mod tests {
     /// `BookSource`s ingested, correctly book-coded, and none flagged
     /// malformed (every real oracle row's `CHOOSE:` token parses).
     ///
-    /// **13 of 14 resolve a real grant.** `trait_pool::load_trait_pool`'s
-    /// `ability/`-fallback (that module's own doc comment) finds real,
-    /// already-shipped `TYPE:Trait.RaceTrait.<X> Race Trait` content in
-    /// `inner_sea_races` for every target race except Rougarou --
-    /// re-confirming `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own
-    /// "inner_sea_races alone gives real content for 13 of the 14" finding,
-    /// this time end-to-end through the real menu command rather than a
-    /// standalone census script. Rougarou is honestly 0: cycle 1's own
-    /// corpus-wide scan proved no book anywhere grants a Rougarou Race Trait
-    /// (`race_resolver.rs`'s own `rougarou` chassis comment: no
-    /// `Rougarou_Replace*` flag is ever set `True` anywhere in the pinned
-    /// oracle), so an empty pool here is the correct, upstream-proven answer,
-    /// not a gap this cycle left open.
+    /// **13 of 14 resolve a real grant, via a real `kind: trait` write.**
+    /// `epic-6-kind-trait` cycle 2 built this resolver against a temporary
+    /// `ability/`-directory fallback because `shape_ledger.py`'s kind-blind
+    /// join blocked the real `--kind trait` ingest. Cycle 3 (this cycle): a
+    /// sibling cycle fixed that join and ran `ingest_generic_kind.py --kind
+    /// trait` for real; `trait_pool::load_trait_pool`'s fallback is retired
+    /// (see that module's own doc comment), and this test now proves the 13
+    /// real grants resolve from `data/corpus/inner_sea_races/trait_generic/`
+    /// -- the modelled `kind: trait` schema `decisions.md §25` specifies --
+    /// with no fallback read anywhere in the path. Rougarou is honestly 0:
+    /// cycle 1's own corpus-wide scan proved no book anywhere grants a
+    /// Rougarou Race Trait (`race_resolver.rs`'s own `rougarou` chassis
+    /// comment: no `Rougarou_Replace*` flag is ever set `True` anywhere in
+    /// the pinned oracle), re-confirmed this cycle by re-running the same
+    /// scan against the freshly-bootstrapped oracle (§0 below / this cycle's
+    /// receipt) -- a hard impossibility of source data (`decisions.md §27b`),
+    /// not a gap.
     #[test]
     fn the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_with_real_grants() {
         let menu = menu();

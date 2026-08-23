@@ -2863,14 +2863,18 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
 /// rather than relaxed. See
 /// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
 const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
-    // SD-32 `decisions.md §25` cycle 2 (2026-08-23): `Adopted Race ~
+    // SD-32 `decisions.md §25` cycle 2/3 (2026-08-23): `Adopted Race ~
     // Rougarou`, the one target race of the 14 whose Trait pool is
-    // genuinely, corpus-wide empty. `trait_pool::load_trait_pool` finds
-    // real content (via its `ability/`-fallback -- that module's own doc
-    // comment) for the other 13, so this is the only entry: re-confirms
-    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own "Rougarou has
-    // zero hits corpus-wide" finding at the reach-gate layer, not a gap this
-    // cycle left open. See `race_trait_picker.rs`'s own
+    // genuinely, corpus-wide empty. `trait_pool::load_trait_pool` finds real
+    // `kind: trait` content (`data/corpus/*/trait_generic/`, no fallback --
+    // that module's own doc comment) for the other 13, so this is the only
+    // entry: re-confirms `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own
+    // "Rougarou has zero hits corpus-wide" finding at the reach-gate layer,
+    // and the pinned oracle itself types Rougarou's own `AdoptiveRace` row
+    // `TYPE:Rougarou Race Trait|CATEGORY=Special Ability|No Race Trait
+    // Available.MOD` (`rougarou_abilities_race.lst:30`) -- a hard
+    // impossibility of source data (`decisions.md §27b`), not a gap. See
+    // `race_trait_picker.rs`'s own
     // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
     // with_real_grants`.
     ("bestiary_6", "race_traits", &["Adopted Race ~ Rougarou"]),

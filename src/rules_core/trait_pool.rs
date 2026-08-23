@@ -24,6 +24,23 @@
 //! doc comment states); this loader only indexes them by the `TYPE:` third
 //! dot-segment so [`resolve_adopted_race_options`] can look one up by the
 //! exact string an Adopted-Race selector's `CHOOSE:` token names.
+//!
+//! **The `ability/` fallback this module carried through `epic-6-kind-trait`
+//! cycle 2 has been retired.** That cycle's own `§4`/`§6` named the reason it
+//! existed: `shape_ledger.py`'s `(book, source_file, source_line)` join was
+//! kind-blind, so `ingest_generic_kind.py --kind trait` could never see the
+//! 487-unit `kind: trait` census population as `no_record` -- every one of
+//! them collided with a pre-existing `kind: ability` record at the identical
+//! coordinate. A sibling cycle fixed that join (`shape_ledger.py` made
+//! kind-aware) and ran the real `--kind trait` ingest for real, producing
+//! `data/corpus/*/trait_generic/*.json` records corpus-wide. This loader was
+//! re-verified against the resulting corpus (`scripts/compare_pools.py`-shape
+//! check, re-run this cycle) to confirm **zero** `RaceTrait`-tagged keys exist
+//! under any book's `ability/` directory that are absent from `trait_generic/`
+//! -- the fallback's population is now a strict, exact duplicate of the real
+//! `kind: trait` write, not a source of content unavailable any other way.
+//! Reading only `trait_generic/` is therefore both correct (the modelled
+//! `kind: trait` schema `decisions.md §25` specifies) and lossless.
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -97,46 +114,28 @@ impl TraitPool {
 /// --kind trait` run against it.
 pub fn load_trait_pool(roots: &[BookCorpusRoot<'_>]) -> TraitPool {
     let mut pool = TraitPool::default();
-    // Two source directories per book, `trait_generic/` preferred over
-    // `ability/`, deduplicated by the record's own `key`.
-    //
-    // **Why `ability/` too.** `ingest_generic_kind.py --kind trait`'s
-    // `no_record`-ledger-gated design cannot yet see this population:
-    // `shape_ledger.py`'s `(book, source_file, source_line)` join is
-    // kind-blind, and a prior ingest pass (predating `Kind::Trait`,
-    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`) already wrote these
-    // SAME LST rows under `kind: ability` -- so the join finds THAT record at
-    // the same coordinate and reports `matched`/`no_formula_tokens`, never
-    // `no_record`, even though no `kind: trait` record exists anywhere.
-    // Confirmed directly: `data/corpus/inner_sea_races/ability/loner_of_the_
-    // rocks.json` carries `TYPE:Trait.RaceTrait.Oread Race Trait` verbatim,
-    // the exact real content `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`
-    // named (`isr_abilities.lst:78`) -- genuinely on disk, correctly shaped
-    // (identical `key`/`name`/`description`/`raw_tokens` schema to a generic-
-    // kind record), just filed under the wrong content-kind directory by an
-    // ingest pass this cycle did not run and does not own. Reading it here is
-    // NOT a corpus write (`data/corpus/**` stays hand-untouched) and is not a
-    // claim that the `ability` filing is correct -- it is this loader
-    // refusing to leave real, already-shipped, correctly-parseable content
-    // invisible to the resolver merely because a housekeeping re-file has not
-    // happened yet. `trait_generic/` is checked FIRST and wins on a key
-    // collision, so the moment a future cycle runs the generic-kind ingest
-    // (or retires these `ability` duplicates), this loader needs no change.
+    // Single source directory per book -- `trait_generic/`, the real
+    // `kind: trait` write `ingest_generic_kind.py --kind trait` produces
+    // (`decisions.md §25`). The `ability/` fallback this loader carried
+    // through `epic-6-kind-trait` cycle 2 is retired (see this module's own
+    // doc comment): a sibling cycle fixed `shape_ledger.py`'s kind-blind join
+    // and ran the real ingest, and the resulting `trait_generic/` population
+    // was verified to be a strict superset (in fact an exact duplicate key
+    // set) of what `ability/` ever carried for `RaceTrait`-tagged rows, so no
+    // content is lost by reading only the modelled directory.
     for root in roots {
-        for dir_name in ["trait_generic", "ability"] {
-            let dir = root.dir.join(dir_name);
-            if !dir.is_dir() {
+        let dir = root.dir.join("trait_generic");
+        if !dir.is_dir() {
+            continue;
+        }
+        for path in find_json_files(&dir) {
+            let Some(record) = read_trait_record(root.book_id, &path) else { continue };
+            let Some(pool_key) = record.race_trait_pool().map(str::to_string) else { continue };
+            let bucket = pool.by_pool.entry(pool_key).or_default();
+            if bucket.iter().any(|existing| existing.key == record.key) {
                 continue;
             }
-            for path in find_json_files(&dir) {
-                let Some(record) = read_trait_record(root.book_id, &path) else { continue };
-                let Some(pool_key) = record.race_trait_pool().map(str::to_string) else { continue };
-                let bucket = pool.by_pool.entry(pool_key).or_default();
-                if bucket.iter().any(|existing| existing.key == record.key) {
-                    continue;
-                }
-                bucket.push(record);
-            }
+            bucket.push(record);
         }
     }
     for records in pool.by_pool.values_mut() {
@@ -360,40 +359,28 @@ mod tests {
         assert!(resolved[0].grants.is_empty());
     }
 
-    /// Integration: loads the REAL, on-disk `bestiary_2/race_trait/` +
-    /// `trait_generic/` state. As of this cycle no `trait_generic/`
-    /// directory exists anywhere in the committed corpus yet
-    /// (`docs/work-inventory.json` regen still blocked -- see
-    /// `epic-6-kind-trait_cycle-1_cycle_receipt.md §3`), so this proves the
-    /// loader does not panic against that real, current, contentless state
-    /// -- the same "nonexistent dir contributes nothing" guarantee
+    /// Integration: loads the REAL, on-disk `bestiary_2/` state. `bestiary_2`
+    /// itself carries no `trait_generic/` directory (the pool content its
+    /// selectors resolve against lives in `inner_sea_races`, proven by the
+    /// next test) -- this proves the "nonexistent dir contributes nothing,
+    /// no panic" half of the loader's contract, the same guarantee
     /// `corpus_loader.rs`'s own test proves for `load_equipment_corpus`.
     #[test]
-    fn loading_the_real_corpus_today_finds_no_trait_generic_content_yet_without_panicking() {
-        // `bestiary_2` carries neither a `trait_generic/` directory nor any
-        // `ability/*.json` record whose TYPE names a `RaceTrait` pool -- it
-        // is not one of the 6 books `epic-6-kind-trait_cycle-1_cycle_
-        // receipt.md §1` found real Trait content in. This proves the
-        // "nothing here, no panic" half of the loader's contract; the next
-        // test proves the "real content, found and resolved" half.
+    fn loading_a_book_with_no_trait_generic_directory_finds_nothing_without_panicking() {
         let roots =
             [BookCorpusRoot { book_id: "bestiary_2", dir: Path::new("data/corpus/bestiary_2") }];
         let pool = load_trait_pool(&roots);
-        assert_eq!(pool.total_records(), 0, "bestiary_2 carries no Trait pool content of either shape");
+        assert_eq!(pool.total_records(), 0, "bestiary_2 carries no kind: trait directory of its own");
     }
 
-    /// Integration: `inner_sea_races/ability/loner_of_the_rocks.json` is a
-    /// REAL, already-shipped, on-disk corpus record (predates this cycle,
-    /// filed under `kind: ability` by an ingest pass that ran before
-    /// `Kind::Trait` existed) carrying `TYPE:Trait.RaceTrait.Oread Race
-    /// Trait` verbatim -- the exact record
-    /// `epic-6-kind-trait_cycle-1_cycle_receipt.md §1` names
-    /// (`isr_abilities.lst:78`). This proves the loader's `ability/`
-    /// fallback (this module's own doc comment on `load_trait_pool`) finds
-    /// and correctly pools REAL corpus content today, without waiting on
-    /// `ingest_generic_kind.py --kind trait`'s still-blocked `no_record`
-    /// discovery (`shape_ledger.py`'s kind-blind join already reports this
-    /// exact row `matched`, so that path alone would never surface it).
+    /// Integration: `inner_sea_races/trait_generic/trait_loner_of_the_rocks.json`
+    /// is a REAL `kind: trait` corpus record -- the product of a sibling
+    /// cycle's `shape_ledger.py` kind-aware-join fix and a real
+    /// `ingest_generic_kind.py --kind trait` run (`epic-6-kind-trait` cycle 3;
+    /// the `ability/` fallback cycle 2 built to route around the then-blocked
+    /// join is retired, see this module's own doc comment). This proves the
+    /// loader finds and correctly pools real, modelled `kind: trait` content
+    /// without any fallback read.
     #[test]
     fn loading_the_real_inner_sea_races_corpus_finds_the_real_oread_pool_member() {
         let roots = [BookCorpusRoot {
@@ -401,7 +388,7 @@ mod tests {
             dir: Path::new("data/corpus/inner_sea_races"),
         }];
         let pool = load_trait_pool(&roots);
-        assert!(pool.total_records() > 0, "inner_sea_races must carry real, already-shipped Trait content");
+        assert!(pool.total_records() > 0, "inner_sea_races must carry real kind: trait content");
         let oread_pool = pool.pool_for("Oread Race Trait");
         assert!(
             oread_pool.iter().any(|r| r.key == "Trait ~ Loner of the Rocks"),
