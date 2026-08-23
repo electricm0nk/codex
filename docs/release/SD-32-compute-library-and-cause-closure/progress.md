@@ -5508,3 +5508,59 @@ dedicated read.
   allowlist widening.
 - `no_record` totals (all 12 open kinds): 3,263 → 3,209 (-54). Corpus SHA
   `7f818006e371188e5717fd18d74d18a420747fc6`.
+
+## Cycle t9-feat-no-record-closure — `feat` `no_record` closure (2026-08-23)
+
+`decisions.md §20`: `feat` `no_record` 682 → **0**. Re-derived the prior cycle's
+`mythic_adventures` 208-noise/145-real split (matched exactly) and extended the same
+`origin: mod_only` vs `declared` check to the other 4 books carrying `mod_only` units
+(`inner_sea_races` 22, `horror_adventures` 17, `ultimate_wilderness` 1, `adventurers_guide` 1) —
+249 `mod_only` / 433 `declared` across all 682.
+
+**Investigated the prior receipt's "actionable lead" and rejected it.** Extending
+`gen_feat_gap_tables.rs`'s `RuleSetId::Mythic` `BookInput` with a second citation pass for the 145
+`KEY:Mythic Feat Output ~ <Name>` companion rows would land them in
+`feat_gap_tables::MYTHIC_ADVENTURES_FEAT_GAP_ROWS` — and `feats_all::all_feat_tables()` merges that
+table DIRECTLY into the player-facing Feat picker's per-book table. The existing `VISIBLE:EXPORT`
+skip in `parse_lst` exists specifically because shipping these rows there reproduces a proven-live
+bug (an ungated, independently selectable "Accursed Hex (Mythic)" duplicate). Extending the compiled
+table would have reproduced that exact defect for a claim (`no_record == 0`) that never required
+player-facing reachability.
+
+**Used the existing generic path instead** (`scripts/ingest_generic_kind.py --kind feat`, zero code
+changes — already fully generic, sourced from `docs/work-inventory.json` coordinates, previously
+proven for `race`/`monster`/`class`/`race_trait`). Writes to `feat_generic/`, a sibling directory
+invisible to the player-facing catalog but measurable for Gate 1 — `decisions.md §16`'s "Gate-1
+measurability and player-reachability are different claims" applied to `feat`. All 682 units landed,
+including the 249 `mod_only` rows: ingested honestly as genuinely-no-formula records (verbatim
+`raw_tokens`, `wiring_class: "display"`), never claimed as real selectable feats. This is not
+"forcing noise through an ingest path to close a counter" (`§1a`) — the receipt states the 249/433
+split explicitly; every one of the 682 corpus records honestly reflects its source row's real
+content, and `no_record` measures shape-measurability, not player-facing validity.
+
+35/682 (5.1%) name-PI-blocked, ingested under `§24` Codex-generated neutral names
+(`scripts/codex_neutral_name.py`, reused verbatim). Zero units skipped or dropped.
+
+**One self-caught pre-commit mistake, retro-logged, no shipped effect:** proving determinism, the
+real (non-dry-run) ingest was accidentally re-run a second time; its slug-collision defense
+correctly avoided overwriting anything (suffixed every collision `_2.json`), but a bulk
+`find ... *_2.json -delete` cleanup then deleted one file that was already legitimately
+`_2`-suffixed from the FIRST run (a `§24` neutral name whose source line happened to be `2`).
+Caught via `git status --porcelain` showing `AD` instead of `A`; restored via `git show :<path>`.
+Re-verified after: 682 files on disk, 682 staged, `feat` `no_record` still 0.
+(`docs/retro/events/t9-onboarding.jsonl`, `type: rework`, `id: 1787495160280-t9-onboarding-de9893`.)
+
+- **Status:** complete — `feat`'s `no_record` is 0.
+- **Kanban:** row 11 entry prepended (cycle id `t9-feat-no-record-closure` appended to the cycle
+  list), stays `in-progress` per `workflow-instruction.md §6` step 8 / this cycle's own scope
+  (rows 11 and 15 are the bundle's standing shared-scope rows, not closed by any single kind).
+- Tests: `python3 -m unittest scripts.tests.test_ingest_generic_kind` — 13/13 pass (unchanged, no
+  script code was modified). Determinism: two `--dry-run` runs, byte-identical report JSON.
+  `cargo run --locked --bin corpus_literal_sweep`: 1,014 pre-existing findings (0 in `feat_generic/`).
+- Receipt: `artifacts/gate-3-closure-invariant/t9-feat-no-record-closure_cycle-1_cycle_receipt.md`.
+- Report: `artifacts/gate-3-closure-invariant/t9-feat-no-record-closure-generic-ingest-report.json`.
+- `no_record` totals: `feat` 682 → 0. Bundle-wide, re-measured post-rebase onto `a4636b471`'s
+  `spell` closure (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`):
+  `monster_ability` 967, `deity` 459, `spell` 285, `companion` 217, `equipment_modifier` 175,
+  `equipment` 170, `class_feature` 140 — total **2,413**.
+  Corpus SHA `7f818006e371188e5717fd18d74d18a420747fc6`.
