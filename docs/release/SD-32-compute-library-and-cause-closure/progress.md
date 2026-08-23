@@ -1060,6 +1060,67 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   and a consolidation cycle once every lane reports) are other lanes' scope, unchanged by this
   cycle.
 
+### Cycle 002 — Gate 1 / Card 14 `family-vocabulary-reconciliation` (`decisions.md §12a`)
+
+- **Card ID:** `family-vocabulary-reconciliation` (kanban `#14`)
+- **Commit SHA:** `f70cc7d94`
+- **Files touched:** `scripts/family_vocabulary_reconcile.py` (new),
+  `scripts/tests/test_family_vocabulary_reconcile.py` (new, 8 tests),
+  `artifacts/gate-1-shape-closure/{family-vocabulary.json,family-vocabulary.md}` (new),
+  `artifacts/gate-1-shape-closure/ledger.json` (regenerated, byte-identical — no content diff),
+  `acceptance-and-verification.md`, `epic-breakdown.md`, `kanban.md` (cards 6/7/8),
+  `release-notes.md`, `technical-design.md`, `technical-requirements.md`,
+  `src/rules_core/pilot_compute/bonus_stack_reader.rs` (doc comments only),
+  `src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs` (doc comment only),
+  `docs/retro/events/card-14-family-vocabulary.jsonl` (new correction event).
+- **Identifier/wired-integration audit:** `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS` (own files scoped
+  clean; the three `placeholder` hits against the wide `BASE_BRANCH...HEAD` diff are pre-existing
+  doctrine text from earlier cycles, not introduced here — see receipt).
+- **Ruling: `scripts/shape_ledger.py`'s eleven families (F0-F10) are canonical.** Committed/
+  re-runnable (SD-31's own hand-walk was explicitly "not re-committed as a script",
+  `MEASURE-TWICE.md §7`) and total over the full 24,914-unit not-done population — MT's ten
+  families only ever partitioned the 4,948-unit formula-bearing subset, so F0 (20,113 units, "no
+  formula content") has no MT counterpart at all. New `scripts/family_vocabulary_reconcile.py`
+  reads the canonical table live from `shape_ledger.FAMILIES`/`_family_metadata()` (drift-guard
+  test proves it — RED→GREEN by monkeypatching a label then reverting) and writes the full
+  MT-to-canonical mapping (counts + deltas per family) to
+  `artifacts/gate-1-shape-closure/family-vocabulary.md` §2.
+- **Three defects fixed (`decisions.md §12a`):**
+  1. AT-32-G1-003's cross-check command retargeted from the nonexistent "F1..F10 table in
+     `epic-breakdown.md`" to `family-vocabulary.md` §1.
+  2. **F10/F4 label collision.** `bonus_stack_reader.rs` targets canonical **F4**
+     ("named-counter/pool variable"), not F10 (an unrelated 3-unit level-threshold step-count
+     family `formula_interpreter.rs` already evaluates directly) — `shape_ledger.py`'s own F4
+     proof-width text already said this correctly; every other document calling it "F10" (kanban
+     card 7's title, doc comments in both engine files, `acceptance-and-verification.md`,
+     `epic-breakdown.md`, `technical-design.md`, `technical-requirements.md`, `release-notes.md`)
+     is fixed. Retro correction: `docs/retro/events/card-14-family-vocabulary.jsonl`, id
+     `1787447193084-card-14-family-vocabulary-e41771`.
+  3. **Engine-coverage reconciliation.** Independently re-derived, corpus-wide, the population of
+     distinct F4-shaped bare-identifier formula segments and how many resolve via
+     `bonus_stack_reader.rs`'s producer-chain mechanism: **390 of 422 (92.4%)** — a real, narrower
+     denominator than MT's identifier-wide 1,156/893 (77.2%, `MEASURE-TWICE.md §3.1`) and card 8's
+     corpus-wide-run 4,736/3,519 (every `BONUS:VAR` write target, a broader population). All three
+     now named together wherever quoted, per `decisions.md §12c`.
+- **No unit count moved.** This cycle changed labels, doc comments, and cross-check targets only —
+  `shape_ledger.py`'s `FAMILIES` predicates/priority order are unchanged. Re-ran after the change:
+  ```
+  $ python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output artifacts/gate-1-shape-closure/ledger.json
+  population (not-done units considered): 24914
+  unclassified: 0
+  $ scripts/verify.sh --only shape-coverage-standing-gate
+  PASS  shape-coverage-standing-gate  (population=24914 unclassified=0 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+  RESULT: PASS
+  ```
+- **RED→GREEN:** `EngineCoverageReconciliationTest` caught a real bug in
+  `_producer_targets`'s BONUS:VAR-subtype detection (checked `key` for a `:VAR` suffix that never
+  occurs — PCGen's subtype lives in the VALUE's first field, mirroring
+  `shape_ledger.extract_formula_segment`'s own BONUS branch). Fixed; all 8 new tests + existing
+  28-test `test_shape_ledger.py` suite GREEN.
+- **Discovery forwards:** none requiring a new card.
+- **Next-cycle plan:** Card 15 (`census-scope-closure`) is unblocked. Receipt:
+  `artifacts/gate-1-shape-closure/002_cycle_receipt.md`.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
