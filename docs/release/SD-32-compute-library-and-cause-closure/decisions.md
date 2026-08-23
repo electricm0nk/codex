@@ -1482,3 +1482,39 @@ reaches zero (`§27`), because a shape cannot be categorized for an object that 
 scope-narrowing question by widening it (`§20`, `§25`, `§27`, and this). Cycles should stop treating
 cost, awkwardness, or "this needs a new mechanism" as grounds for a narrower reading, and should
 present the plan and its size instead of an opt-out.
+
+## Decision 27b — **EVERYTHING.** No carve-outs survive. (operator ruling 2026-08-23)
+
+`§27a` settled the categorization pass at *"all the shapes. every book. 100%"*. The orchestrator then
+left **two dispositions flagged for re-examination rather than closed** — `occult_adventures`' 5
+`monster_ability` units (excluded by a negated `PRECAMPAIGN` gate this repo's campaign set fails) and
+`companion`'s 2 units (an adjudicated reachability exclusion).
+
+**Ruling, verbatim:**
+
+> ***"EVERYTHING"***
+
+**There are no remaining carve-outs, and no lane may open a new one.**
+
+1. **`occult_adventures`' 5 units are IN SCOPE.** "Not applicable to the modelled campaign set" is a
+   *reachability* statement, not an *ingest* statement. The objects exist in the book; they are
+   ingested and their shapes are measured like every other object. Whether a given campaign set can
+   reach them is a separate question answered separately (`§16` keeps reachability its own number).
+   This disposition had been re-confirmed four times across four cycles; it is now overturned.
+2. **`companion`'s 2 units are IN SCOPE.** Same reasoning. An adjudicated reachability exclusion does
+   not exempt an object from being ingested and measured.
+3. **`F0`/no-formula-content reached by fallthrough is not an answer.** Every shape assignment is
+   derived by measurement or it is not done (`§1a`).
+4. **A book holding uncategorized units gets onboarded.** No "unregistered book" exemption.
+5. **The only admissible reason for a unit not to close is a hard impossibility** — the source data does
+   not exist, or licensing forbids shipping it in any form (and `§24` already removes the PI-name case
+   from that list by giving those units neutral names). **Cost, awkwardness, novelty of shape, "needs a
+   new mechanism", and "no consumer reaches it" are NONE of them.** A cycle that believes it has found
+   a genuine impossibility escalates it by coordinate for an operator ruling — it does not write its
+   own exemption (`docs/governance/blocker-closure-doctrine.md`).
+
+**Standing note for the orchestrator, recorded against itself.** This is the **fifth** consecutive time
+in this bundle the operator has answered a scope question by widening it (`§20`, `§25`, `§27`, `§27a`,
+and this). The recurring error is not escalating too often — it is **presenting a narrowing as an
+option, or leaving an inherited exclusion "flagged for re-examination" instead of simply closing it.**
+Where the doctrine already supplies the answer, apply it. Bring the plan and its size, never the exit.
