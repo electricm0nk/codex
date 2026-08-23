@@ -2,7 +2,7 @@
 
 - **Card ID:** `epic-2-cause-closure` (T4 lane — one of six concurrent lanes closing card 11's
   remaining blocker shapes; do not set the card row to `complete` from this lane alone)
-- **Commit SHA:** _filled in after push, see `progress.md`_
+- **Commit SHA:** `4911a9b33`
 - **Files touched:**
   - `apps/desktop/src/characterHub/classFeaturesModel.ts` (new export
     `unmatchedClassFeatureDescriptions`)
