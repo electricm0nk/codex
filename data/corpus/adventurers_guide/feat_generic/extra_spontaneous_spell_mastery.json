@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
+  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
     "key": "Extra Spontaneous Spell Mastery",
     "name": "Extra Spontaneous Spell Mastery",
@@ -17,7 +17,7 @@
       },
       {
         "key": "PREABILITY",
-        "value": "1,CATEGORY=Special Ability,Magaambyan Arcanist ~ Spontaneous Spell Mastery"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
@@ -60,9 +60,9 @@
   "wiring_class_signals": [
     "static:has_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null
 }

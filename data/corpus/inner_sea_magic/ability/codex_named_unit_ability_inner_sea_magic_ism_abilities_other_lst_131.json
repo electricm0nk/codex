@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
+  "ingested_at": "2026-08-23T16:00:10Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_131)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_131)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You gain the Blessing of Civilization, a ritual that bolsters several skills while you are in the chosen settlement. You gain a +2 circumstance bonus on Bluff, Diplomacy, and Knowledge (local) checks made within that city."
+        "value": "[redacted PI]"
       },
       {
         "key": "MULT",

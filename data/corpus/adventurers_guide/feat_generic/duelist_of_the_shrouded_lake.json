@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
+  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
     "key": "Duelist of the Shrouded Lake",
     "name": "Duelist of the Shrouded Lake",
@@ -17,7 +17,7 @@
       },
       {
         "key": "PREABILITY",
-        "value": "1,CATEGORY=FEAT,Aldori Dueling Disciple"
+        "value": "[redacted PI]"
       },
       {
         "key": "PRETOTALAB",
@@ -37,7 +37,7 @@
       },
       {
         "key": "BENEFIT",
-        "value": "When attempting to bull rush or reposition a foe, you gain a +1 insight bonus on the combat maneuver check and a +4 dodge bonus to your AC against attacks of opportunity you provoke. You also gain a +1 insight bonus to your CMD against bull rush and reposition attempts. When you attempt a dueling dodge during a duel, your bonus to AC increases to +6. To gain these benefits, you must be wielding only an Aldori dueling sword (not using a shield, an off-hand weapon, armor spikes, unarmed strikes, or natural weapons)."
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -53,7 +53,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null

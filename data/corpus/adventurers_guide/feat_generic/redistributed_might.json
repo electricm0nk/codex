@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
+  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
     "key": "Redistributed Might",
     "name": "Redistributed Might",
@@ -17,7 +17,7 @@
       },
       {
         "key": "PREABILITY",
-        "value": "2,CATEGORY=FEAT,Exotic Weapon Proficiency (Aldori dueling sword),Iron Will"
+        "value": "[redacted PI]"
       },
       {
         "key": "PRETOTALAB",
@@ -52,9 +52,9 @@
   "wiring_class_signals": [
     "display:no_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null
 }

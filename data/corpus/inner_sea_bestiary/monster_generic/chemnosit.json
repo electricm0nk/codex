@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:38Z",
+  "ingested_at": "2026-08-23T15:57:29Z",
   "data": {
     "key": "Chemnosit",
     "name": "Chemnosit",
@@ -89,7 +89,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Chemnosit ~ Hungry Gaze|Chemnosit ~ Spines|Immunity to Cold|Spawn of Rovagug ~ Damage Reduction|Spawn of Rovagug ~ Frightful Presence|Spawn of Rovagug ~ Hibernation|Spawn of Rovagug ~ Immunities|Spawn of Rovagug ~ Regeneration|Spawn of Rovagug ~ Spell Resistance|Spawn of Rovagug ~ Unstoppable Force|Swallow Whole"
+        "value": "[redacted PI]"
       },
       {
         "key": "LEGS",
@@ -144,9 +144,9 @@
   "wiring_class_signals": [
     "static:has_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null
 }

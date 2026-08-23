@@ -227,6 +227,250 @@ def load_units(no_record_ids: set[str], kind: str) -> list[dict]:
     return [u for u in units if u.get("kind") == kind and u.get("id") in no_record_ids]
 
 
+def load_inventory_coordinate_index() -> dict[tuple[str, str, int], dict]:
+    """`(book, source_basename, source_line) -> unit`, the exact join key
+    `scripts/shape_ledger.py` already uses. Used ONLY by `--remediate` to
+    reconstruct a renamed record's original `name`/`key` for re-scrubbing --
+    the reconstructed values are used to build the redaction needle set and
+    are NEVER written into the record (`decisions.md §24b`-1/-4 hold: the PI
+    original never appears anywhere that ships, including this remediation
+    path)."""
+    with open(INVENTORY_PATH, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    units = doc["units"] if isinstance(doc, dict) and "units" in doc else doc
+    idx: dict[tuple[str, str, int], dict] = {}
+    for u in units:
+        idx[(u["book"], u["source_file"], u["source_line"])] = u
+    return idx
+
+
+def find_owned_generic_files(kind: str, book_filter: str | None) -> list[str]:
+    """Every `data/corpus/<book>/<kind>_generic/*.json` file that carries the
+    `codex_generated_name` key -- the structural ownership marker THIS
+    script (and only this script) stamps on every record it writes,
+    regardless of whether that particular record was renamed. A file in the
+    SAME directory lacking that key was written by a different generator
+    (e.g. `scripts/ingest_race_trait_generic.py` shares the physical
+    `race_trait_generic/` directory with this script -- one of the two
+    dormant shared-directory pairs the dispatch brief names) and is never
+    touched here -- `--remediate` is scoped to records this script owns,
+    never a blanket rewrite of a shared directory."""
+    out: list[str] = []
+    kind_dir_name = f"{kind}_generic"
+    corpus_root_dir = os.path.join(REPO_ROOT, "data/corpus")
+    for dirpath, _dirnames, filenames in os.walk(corpus_root_dir):
+        if os.path.basename(dirpath) != kind_dir_name:
+            continue
+        book_dir = os.path.basename(os.path.dirname(dirpath))
+        if book_filter and book_dir != book_filter:
+            continue
+        for fn in sorted(filenames):
+            if not fn.endswith(".json"):
+                continue
+            path = os.path.join(dirpath, fn)
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    rec = json.load(fh)
+            except (OSError, json.JSONDecodeError):
+                continue
+            if "codex_generated_name" not in rec:
+                continue  # not this script's record -- never touched
+            out.append(path)
+    return out
+
+
+def remediate(kind: str, root: str, book_filter: str | None, dry_run: bool, out_path: str | None) -> int:
+    """`decisions.md §17`'s gap-close for the structural defect the
+    `pi-key-rawtokens-followup` cycle named: `ingest_generic_kind.py`'s
+    ordinary writer is `no_record`-ledger-gated and therefore can never
+    re-touch a record it already shipped, even when the current (fixed)
+    scrub logic would produce different output for it. This mode re-derives
+    every already-shipped, SELF-OWNED (`codex_generated_name` key present)
+    `<kind>_generic` record from the SAME pinned oracle citation it already
+    carries, re-runs the CURRENT redaction pipeline over it, and rewrites
+    the file in place only if the content actually changed.
+
+    Never widens scope beyond records this script owns
+    (`find_owned_generic_files`), never guesses a book/kind it isn't told to
+    remediate, and never fabricates or reads a PI original from anywhere
+    other than the pinned oracle bytes at the record's own cited coordinate.
+    """
+    paths = find_owned_generic_files(kind, book_filter)
+    inv_idx: dict[tuple[str, str, int], dict] | None = None
+    ingested_at = ingested_at_now()
+
+    report = {
+        "kind": kind,
+        "mode": "remediate",
+        "book_filter": book_filter,
+        "scanned": len(paths),
+        "changed": 0,
+        "unchanged": 0,
+        "renamed_newly": 0,
+        "unresolved": [],
+        "changed_paths": [],
+        "renamed_records": [],
+    }
+
+    for path in paths:
+        with open(path, encoding="utf-8") as fh:
+            rec = json.load(fh)
+
+        src_rel = rec["source"]["path"]
+        src_line = rec["source"]["line"]
+        src_path = os.path.join(root, src_rel)
+        book_dir = os.path.basename(os.path.dirname(os.path.dirname(path)))
+        # Reverse the write-side alias so the book NAME (not the physical
+        # directory) is what gets passed to `neutral_name`/inventory lookups
+        # -- the alias is a directory-naming detail, not part of a unit's
+        # coordinate.
+        book = next((b for b, d in CORPUS_WRITE_DIR_ALIASES.items() if d == book_dir), book_dir)
+
+        raw_line = read_row(src_path, src_line)
+        tokens = row_tokens(raw_line)
+        name_declared, desc_declared = declared_pi(tokens)
+
+        was_renamed = bool(rec.get("codex_generated_name"))
+        if was_renamed:
+            if inv_idx is None:
+                inv_idx = load_inventory_coordinate_index()
+            source_basename = os.path.basename(src_rel)
+            unit = inv_idx.get((book, source_basename, src_line))
+            if unit is None:
+                report["unresolved"].append(path)
+                continue
+            orig_name = unit["name"]
+            orig_key = unit.get("corpus_key") or unit.get("key") or unit["name"]
+        else:
+            orig_name = rec["data"]["name"]
+            orig_key = rec["data"]["key"]
+
+        name_hit = normalized_term_hit(orig_name) or normalized_term_hit(orig_key)
+        name_is_pi = name_declared or bool(name_hit)
+
+        description = desc_value(tokens)
+        free_text = extract_free_text(raw_line)
+        desc_hit = normalized_term_hit(free_text) if free_text else None
+        pi_redacted = desc_declared or bool(desc_hit)
+        stored_description = description
+        if pi_redacted and description is not None:
+            stored_description = REDACTED_PI_MARKER
+            for t in tokens:
+                if t["key"] == "DESC":
+                    t["value"] = REDACTED_PI_MARKER
+
+        has_formula_token = any(t["key"] == "DEFINE" or t["key"].startswith("BONUS") for t in tokens)
+        wiring_class = "static" if has_formula_token else "display"
+        wiring_signals = (
+            ["static:has_magnitude_token"] if has_formula_token else ["display:no_magnitude_token"]
+        )
+
+        blacklist_extra_redacted = False
+        scrubbed = []
+        for t in tokens:
+            value = t["value"]
+            if pi_redacted and t["key"] == "DESC" and value == REDACTED_PI_MARKER:
+                scrubbed.append(dict(t))
+                continue
+            if value and blacklist_term_hit_including_concatenated(value):
+                scrubbed.append({"key": t["key"], "value": REDACTED_PI_MARKER})
+                blacklist_extra_redacted = True
+            else:
+                scrubbed.append(dict(t))
+        tokens = scrubbed
+
+        fields_redacted: list[str] = []
+        if pi_redacted:
+            fields_redacted.append("description")
+        if blacklist_extra_redacted:
+            fields_redacted.append("raw_tokens")
+
+        newly_renamed = name_is_pi and not was_renamed
+
+        if name_is_pi:
+            codex_name = neutral_name(kind, book, src_rel, src_line)
+            codex_key = neutral_key(kind, book, src_rel, src_line)
+            scrubbed_tokens, extra_redacted = scrub_name_pi_tokens(tokens, orig_name, orig_key)
+            record_name = codex_name
+            record_key = codex_key
+            record_tokens = scrubbed_tokens
+            codex_generated_name = True
+            rename_info = {
+                "reason": "name_pi_blocked" if not newly_renamed else "name_pi_blocked_remediation",
+                "coordinate": f"{book}:{os.path.basename(src_rel)}:{src_line}",
+            }
+            fields_redacted.append("name")
+            if extra_redacted and "raw_tokens" not in fields_redacted:
+                fields_redacted.append("raw_tokens")
+        else:
+            record_name = rec["data"]["name"]
+            record_key = rec["data"]["key"]
+            record_tokens = tokens
+            codex_generated_name = False
+            rename_info = None
+
+        license_value = "PI-REDACTED" if fields_redacted else "OGL"
+
+        new_record = {
+            "population": rec.get("population", "in_scope"),
+            "completeness": "full" if stored_description else "chassis_only",
+            "ingested_at": rec.get("ingested_at"),
+            "data": {
+                "key": record_key,
+                "name": record_name,
+                "description": stored_description,
+                "raw_tokens": record_tokens,
+            },
+            "source": rec["source"],
+            "wiring_class": wiring_class,
+            "wiring_class_signals": wiring_signals,
+            "license": license_value,
+            "pi_field": ",".join(fields_redacted) if fields_redacted else None,
+            "pi_marker": PI_MARKER_REDACTED if fields_redacted else None,
+            "codex_generated_name": codex_generated_name,
+            "rename": rename_info,
+        }
+
+        old_compare = {k: v for k, v in rec.items() if k != "ingested_at"}
+        new_compare = {k: v for k, v in new_record.items() if k != "ingested_at"}
+        if old_compare == new_compare and not newly_renamed:
+            report["unchanged"] += 1
+            continue
+
+        new_record["ingested_at"] = ingested_at
+        out_dir = os.path.dirname(path)
+        if newly_renamed:
+            used = {fn[: -len(".json")] for fn in os.listdir(out_dir) if fn.endswith(".json")}
+            new_slug = slugify(codex_name, used)
+            new_path = os.path.join(out_dir, f"{new_slug}.json")
+            report["renamed_newly"] += 1
+            report["renamed_records"].append(
+                divergence_entry(kind, book, src_rel, src_line, reason="name_pi_blocked_remediation")
+            )
+            if not dry_run:
+                with open(new_path, "w", encoding="utf-8") as fh:
+                    json.dump(new_record, fh, indent=2, ensure_ascii=False)
+                    fh.write("\n")
+                if new_path != path and os.path.exists(path):
+                    os.remove(path)
+            report["changed"] += 1
+            report["changed_paths"].append(new_path)
+        else:
+            if not dry_run:
+                with open(path, "w", encoding="utf-8") as fh:
+                    json.dump(new_record, fh, indent=2, ensure_ascii=False)
+                    fh.write("\n")
+            report["changed"] += 1
+            report["changed_paths"].append(path)
+
+    text = json.dumps(report, indent=2)
+    print(text)
+    if out_path:
+        with open(out_path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+    return 0
+
+
 def main() -> int:
     dry_run = "--dry-run" in sys.argv
     out_path = None
@@ -237,16 +481,30 @@ def main() -> int:
         return 1
     kind = sys.argv[sys.argv.index("--kind") + 1]
 
+    root = corpus_root()
+    if not os.path.isdir(root):
+        print(f"PCGEN_CORPUS_ROOT ({root}) is not a directory", file=sys.stderr)
+        return 1
+
+    if "--remediate" in sys.argv:
+        # `decisions.md §17` structural gap-close: the ordinary writer below
+        # is `no_record`-ledger-gated and can never re-touch a record it
+        # already shipped. `--remediate` re-derives every already-shipped,
+        # SELF-OWNED `<kind>_generic` record (never a blanket rewrite --
+        # `find_owned_generic_files`'s `codex_generated_name`-key ownership
+        # check) from the pinned oracle and re-applies the CURRENT scrub
+        # pipeline, in place. `--ledger` is not needed in this mode -- it
+        # never consults `no_record` status at all.
+        book_filter = None
+        if "--book" in sys.argv:
+            book_filter = sys.argv[sys.argv.index("--book") + 1]
+        return remediate(kind, root, book_filter, dry_run, out_path)
+
     ledger_path = None
     if "--ledger" in sys.argv:
         ledger_path = sys.argv[sys.argv.index("--ledger") + 1]
     if ledger_path is None:
         print("--ledger <shape_ledger_output.json> is required", file=sys.stderr)
-        return 1
-
-    root = corpus_root()
-    if not os.path.isdir(root):
-        print(f"PCGEN_CORPUS_ROOT ({root}) is not a directory", file=sys.stderr)
         return 1
 
     no_record_ids = load_no_record_ids(ledger_path, kind)

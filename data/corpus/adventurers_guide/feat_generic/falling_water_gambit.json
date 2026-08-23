@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
+  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
     "key": "Falling Water Gambit",
     "name": "Falling Water Gambit",
@@ -17,7 +17,7 @@
       },
       {
         "key": "PREABILITY",
-        "value": "3,CATEGORY=FEAT,Aldori Dueling Disciple,Duelist of the Roaring Falls,Duelist of the Shrouded Lake"
+        "value": "[redacted PI]"
       },
       {
         "key": "PRETOTALAB",
@@ -37,7 +37,7 @@
       },
       {
         "key": "BENEFIT",
-        "value": "When attacking a creature denied its Dexterity bonus to AC because of your successful feint, you increase the threat range of your Aldori dueling sword by 1 (typically to 18-20/x2), and gain a +2 bonus on attack rolls to confirm critical hits. After you make a dueling dodge or succeed at a dueling parry during a duel, you can make an attack of opportunity against the foe who attacked you if that foe is shaken, frightened, or panicked. To gain these benefits, you must be wielding only an Aldori dueling sword (not using a shield, an off-hand weapon, armor spikes, unarmed strikes, or natural weapons)."
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -53,7 +53,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null

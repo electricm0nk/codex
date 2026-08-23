@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
+  "ingested_at": "2026-08-23T16:00:10Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_142)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_142)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You gain the Inheritor's Grace whenever you are clad in full plate and carry a longsword and shield. This grants you a +2 sacred bonus on all mind-affecting saving throws."
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

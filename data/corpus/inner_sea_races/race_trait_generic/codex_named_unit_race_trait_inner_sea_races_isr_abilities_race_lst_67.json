@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T13:41:37Z",
+  "ingested_at": "2026-08-23T15:57:29Z",
   "data": {
     "key": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)",
     "name": "Codex-Named Unit (race_trait_inner_sea_races_isr_abilities_race_lst_67)",
@@ -33,7 +33,7 @@
       },
       {
         "key": "DESC",
-        "value": "Elves who come from the ancient elven civilization of Sovyrian are steeped in lore older than most civilizations. They gain a +2 racial bonus on Knowledge (history), Knowledge (local), and Spellcraft checks."
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
+  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
     "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_17)",
     "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_17)",
@@ -53,7 +53,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description,name,raw_tokens",
+  "pi_field": "description,raw_tokens,name",
   "pi_marker": "redacted",
   "codex_generated_name": true,
   "rename": {

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
+  "ingested_at": "2026-08-23T16:00:10Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_148)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_148)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "Once per week, you can pray to psychopomps-spirits that aid in escorting souls to the Boneyard-to supernaturally mark the body of a creature that died in the last 10 minutes. If the creature is restored to life within the next 24 hours, it does not gain a negative level as part of coming back to life."
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

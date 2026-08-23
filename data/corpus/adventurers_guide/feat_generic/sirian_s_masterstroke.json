@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
+  "ingested_at": "2026-08-23T15:57:27Z",
   "data": {
     "key": "Sirian's Masterstroke",
     "name": "Sirian's Masterstroke",
@@ -17,7 +17,7 @@
       },
       {
         "key": "PREABILITY",
-        "value": "2,CATEGORY=FEAT,Exotic Weapon Proficiency (Aldori dueling sword),Weapon Focus (Aldori dueling sword)"
+        "value": "[redacted PI]"
       },
       {
         "key": "PRETOTALAB",
@@ -37,7 +37,7 @@
       },
       {
         "key": "BENEFIT",
-        "value": "Once per round when you hit a foe you have successfully feinted against via a melee attack using an Aldori dueling sword, you deal an extra 2d6 points of precision damage. When your base attack bonus reaches +11, this damage bonus increases to +3d6, and at base attack bonus +16, it increases to +4d6. This precision damage does not stack with damage from sneak attack, a vigilante's sudden strike, or similar effects. Any effect which protects against sneak attack damage also protects against this additional damage."
+        "value": "[redacted PI]"
       }
     ]
   },
@@ -53,7 +53,7 @@
     "display:no_magnitude_token"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "codex_generated_name": false,
   "rename": null

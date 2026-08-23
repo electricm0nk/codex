@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
+  "ingested_at": "2026-08-23T16:00:10Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_154)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_154)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You undergo the Embrace of Shadows, a week-long ritual involving torture and painful bondage. You gain a +2 profane bonus on all Charisma-based checks when in dim light."
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",

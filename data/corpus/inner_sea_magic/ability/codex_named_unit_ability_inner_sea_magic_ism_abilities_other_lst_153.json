@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
+  "ingested_at": "2026-08-23T16:00:10Z",
   "data": {
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_153)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_153)",
@@ -29,7 +29,7 @@
       },
       {
         "key": "DESC",
-        "value": "You undergo the Ritual of Pallid Whispers and gain the negative energy affinity ability-negative and positive energy affect you as if you were undead."
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
