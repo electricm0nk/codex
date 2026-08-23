@@ -832,6 +832,20 @@ fn gen_pathfinder_unchained() {
     fs::write(&license_path, serde_json::to_string_pretty(&license_json).unwrap() + "\n")
         .unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
     println!("  LICENSE.json written to {}", license_path.display());
+
+    // `decisions.md §20` no_record-to-zero, round 4: this book's own
+    // `monster`/`monster_ability` family, previously unwired because its CLI
+    // dispatch special-cases this function (`main()`'s own `match`, above the
+    // generic `monster_book_spec` arm) rather than reaching the
+    // `MonsterBookSpec`-driven `gen_monster_book` path every other book here
+    // uses. `pathfinder_unchained` is now a registered `MonsterBookSpec`
+    // (zero monster rows, 72 owner-less ability rows) -- reuse the SAME
+    // mechanism, unmodified, rather than duplicating its write/PI-screen/
+    // stale-file-clear logic here.
+    gen_monster_book(
+        monster_book_spec("pathfinder_unchained")
+            .expect("pathfinder_unchained must be registered in MONSTER_BOOK_SPECS"),
+    );
 }
 
 /// SD-27 Cycle E2.1 -- Advanced Race Guide. Extends this shared binary's
@@ -1208,6 +1222,15 @@ fn gen_advanced_race_guide() {
         println!("  feats UNATTRIBUTED: {feat_unattributed:?}");
     }
     println!("  LICENSE.json written to {}", license_path.display());
+
+    // `decisions.md §20` no_record-to-zero, round 4: this book's own
+    // `monster`/`monster_ability` family, previously unwired for the same
+    // reason `gen_pathfinder_unchained` above names -- reuse the SAME
+    // `MonsterBookSpec`-driven mechanism rather than duplicating it.
+    gen_monster_book(
+        monster_book_spec("advanced_race_guide")
+            .expect("advanced_race_guide must be registered in MONSTER_BOOK_SPECS"),
+    );
 }
 
 /// The Bonus Bestiary corpus cache -- SD-29 Epic 5's pilot, and the first
@@ -2602,6 +2625,35 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc declares ISOGL:YES at line 25, carries 8 COPYRIGHT lines and a real 7,806-byte OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s (see that book's own entry); `b5_abilities_race_oa.lst` is loaded by the same `_bestiary_5.pcc` (ABILITY line, no PRECAMPAIGN gate on that token).",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section; zero rows of the abilities files declare NAMEISPI:YES. One owned row (`Traits Output ~ Sahkil`, `b5_abilities_race.lst:96`) is a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped by this cycle.",
         classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    // `decisions.md §20` no_record-to-zero, round 4. Reached via
+    // `gen_pathfinder_unchained`'s own call to `gen_monster_book` (this
+    // book's CLI dispatch special-cases its own generator function in
+    // `main()`, above the generic `monster_book_spec` arm, so this spec is
+    // never reached through that arm directly -- only through the explicit
+    // call the generator function makes). `pu_abilities_race.lst` loads
+    // UNGATED at the book's own `.pcc` root (line 43, no `PRECAMPAIGN`).
+    MonsterBookSpec {
+        corpus_book: "pathfinder_unchained",
+        book_relative: "pathfinder/paizo/roleplaying_game/pathfinder_unchained",
+        races_lsts: &[],
+        abilities_lsts: &["pu_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _pathfinder_unchained.pcc declares ISOGL:YES at line 19 and carries 7 COPYRIGHT lines and a real 7,429-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Pathfinder Unchained, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R4",
+    },
+    // `decisions.md §20` no_record-to-zero, round 4. Reached via
+    // `gen_advanced_race_guide`'s own call to `gen_monster_book`, the same
+    // shape as `pathfinder_unchained` above. `arg_abilities_race.lst` loads
+    // UNGATED at the book's own `.pcc` root (line 57, no `PRECAMPAIGN`).
+    MonsterBookSpec {
+        corpus_book: "advanced_race_guide",
+        book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
+        races_lsts: &[],
+        abilities_lsts: &["arg_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own advanced_race_guide.pcc declares ISOGL:YES at line 20 and carries 11 COPYRIGHT lines and a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Advanced Race Guide, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R4",
     },
 ];
 

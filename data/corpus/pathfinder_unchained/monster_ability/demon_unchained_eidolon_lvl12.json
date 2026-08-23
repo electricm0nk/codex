@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Demon ~ Unchained Eidolon LVL12",
+    "delivery": null,
+    "description": "At 12th level, demon eidolons gain DR 5/good. They also gain the ability increase evolution in an ability score of the summoner's choice.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl12",
+    "name": "Eidolon Progession Lv.12",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "DemonLVL12"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 136,
+    "record_key": "Demon ~ Unchained Eidolon LVL12"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:dr"
+  ]
+}

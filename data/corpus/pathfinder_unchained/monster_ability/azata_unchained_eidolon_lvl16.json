@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Azata ~ Unchained Eidolon LVL16",
+    "delivery": null,
+    "description": "At 16th level, azata eidolons lose the resistance (electricity) evolution, and instead gain the immunity (electricity) evolution. They also gain the ability increase evolution, applied to an ability score of the summoner's choice.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl16",
+    "name": "Eidolon Progession Lv.16",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "AzataLVL16"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 123,
+    "record_key": "Azata ~ Unchained Eidolon LVL16"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

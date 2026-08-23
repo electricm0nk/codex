@@ -1655,6 +1655,17 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_5", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("bestiary_5", "B5"))
         }
+        // `decisions.md §20` no_record-to-zero, round 4. The last two of the
+        // original 8 ZERO-monster books -- same shape as round 3 immediately
+        // above: no `("book", "monsters")` claim, only `monster_abilities`,
+        // under the wire code each book already serves its OTHER families
+        // with (`monster_catalog::BOOK_PU`/`BOOK_ARG`).
+        ("pathfinder_unchained", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("pathfinder_unchained", "PU"))
+        }
+        ("advanced_race_guide", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("advanced_race_guide", "ARG"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by
@@ -2794,6 +2805,8 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("ultimate_magic", "monster_abilities", "Gap: all 13 of Ultimate Magic's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("bestiary_6", "monster_abilities", "Gap: all 16 of Bestiary 6's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("bestiary_5", "monster_abilities", "Gap: all 39 of Bestiary 5's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("pathfinder_unchained", "monster_abilities", "Gap: 69 of Pathfinder Unchained's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 4) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. A further 3 of the book's 72 orphan candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped this round, and NOT counted in this Gap figure (they stay `no_record`, not owner-less-shipped). Remedy: none needed for the 69 that ship -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -4477,6 +4490,113 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "bestiary_5:monster_ability:wysp_resonance",
             "bestiary_5:monster_ability:wysp_servitor",
             "bestiary_5:monster_ability:xiao_sla",
+        ],
+    ),
+    (
+        "pathfinder_unchained",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 4: 69 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- pathfinder_unchained has
+        // ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. A further 3 of the book's 72 orphan
+        // candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a
+        // multi-DESC: shape `parse_desc` refuses rather than mistranscribes --
+        // real per-record work, not shipped this round, NOT in this list.
+        // Re-derive: `python3 scripts/transcribe_monster_tables.py pathfinder_unchained 2>&1 >/dev/null`.
+        &[
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl20",
+        ],
+    ),
+    (
+        "advanced_race_guide",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 4: the 1 `monster_ability`
+        // record this book contributes SHIPS with `owners: &[]` --
+        // advanced_race_guide has ZERO monster rows of its own
+        // (`scripts/classify_monster_ability_rows.py`'s "ZERO-monster books"
+        // line), so nothing in this book can ever own it, and it is shipped
+        // anyway per `decisions.md §20`: an un-ingested row's shape cannot be
+        // measured, and Gate 1's DoD needs every unit's shape measured.
+        // Pinned by exact key rather than by count so a NEW silent non-reach
+        // still fails here. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py advanced_race_guide 2>&1 >/dev/null`.
+        &[
+            "advanced_race_guide:monster_ability:grippli_toxic_skin_grippli_poison",
         ],
     ),
     (

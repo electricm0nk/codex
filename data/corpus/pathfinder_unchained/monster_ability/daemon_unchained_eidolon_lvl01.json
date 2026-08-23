@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Daemon ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "Starting at 1st level, daemon eidolons gain the resistance (acid) evolution as well as a +4 bonus on saving throws against death effects, disease, and poison.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "DaemonLVL1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 126,
+    "record_key": "Daemon ~ Unchained Eidolon LVL01"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

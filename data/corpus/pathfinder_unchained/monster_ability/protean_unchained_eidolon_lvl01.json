@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Protean ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "At 1st level, protean eidolons gain the resistance (acid) evolution as well as the grab evolution, tied to an attack type of the summoner's choice. Whenever the summoner changes the protean eidolon's evolutions, he can also change the attack type for grab.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "ProteanLVL1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 168,
+    "record_key": "Protean ~ Unchained Eidolon LVL01"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

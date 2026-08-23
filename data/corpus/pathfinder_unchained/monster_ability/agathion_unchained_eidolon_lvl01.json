@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Agathion ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "Starting at 1st level, agathion eidolons gain the resistance (electricity) evolution. They also gain a +4 bonus on saving throws against poison and petrification.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "AgathionLVL1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 98,
+    "record_key": "Agathion ~ Unchained Eidolon LVL01"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

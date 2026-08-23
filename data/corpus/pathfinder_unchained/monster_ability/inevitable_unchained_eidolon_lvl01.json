@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Inevitable ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "At 1st level, inevitable eidolons count as both constructs and outsiders for the purpose of effects such as the bane weapon special ability and the favored enemy class feature. They gain a +4 bonus on saving throws against death effects, disease, necromancy effects, paralysis, poison, sleep, and stun.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "InevitableLVL1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 161,
+    "record_key": "Inevitable ~ Unchained Eidolon LVL01"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

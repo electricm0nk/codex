@@ -221,16 +221,9 @@ BOOKS = {
     # rows.py` shows 171 orphan rows across 8 unregistered books with zero
     # monster rows of their own, so nothing can ever own them and every row
     # ships owner-less by construction, the identical shape this script
-    # already handles generically). `pathfinder_unchained` (72 rows) and
-    # `advanced_race_guide` (1 row) are NOT added here: both already have a
-    # dedicated hand-rolled `gen_book_cache.rs` function
-    # (`gen_pathfinder_unchained`/`gen_advanced_race_guide`) for their OTHER
-    # families, so wiring their monster tables needs that function extended
-    # to also call `gen_monster_book`, not just a `MonsterBookSpec` row --
-    # named as remaining scope in this cycle's receipt, not built here.
-    # `mythic_adventures` (21 rows) also deferred: its `rules_tables/` module
-    # directory does not exist yet and needs real scaffolding, not just a
-    # registry row.
+    # already handles generically). `mythic_adventures` (21 rows) is deferred
+    # here still: its `rules_tables/` module directory does not exist yet and
+    # needs real scaffolding, not just a registry row.
     #
     # Zero Product Identity rows in the abilities file for 4 of 5 (`grep -c
     # 'NAMEISPI:YES\|DESCISPI:YES' <file>` -> 0); `ultimate_wilderness`
@@ -242,6 +235,23 @@ BOOKS = {
     "ultimate_magic": "pathfinder/paizo/roleplaying_game/ultimate_magic",
     "bestiary_6": "pathfinder/paizo/roleplaying_game/bestiary_6",
     "bestiary_5": "pathfinder/paizo/roleplaying_game/bestiary_5",
+    # `decisions.md §20` no_record-to-zero, round 4: the two remaining
+    # zero-monster books of the original 8, now registered. Both already have
+    # a dedicated hand-rolled `gen_book_cache.rs` function
+    # (`gen_pathfinder_unchained`/`gen_advanced_race_guide`) that emits their
+    # OTHER families (feats, equipment, ...); this transcription is unaffected
+    # by that and still only writes `monster_data.rs` -- the generator
+    # function itself is extended (round 4) to also call `gen_monster_book`
+    # after its existing writes, reusing the identical `MonsterBookSpec`-driven
+    # mechanism every other book here uses. `pu_abilities_race.lst` (72 rows)
+    # and `arg_abilities_race.lst` (1 row) both load UNGATED at their book's
+    # own `.pcc` root (`grep -n 'ABILITY:pu_abilities_race.lst'
+    # _pathfinder_unchained.pcc` -> line 43, no `PRECAMPAIGN`; `grep -n
+    # 'ABILITY:arg_abilities_race.lst' advanced_race_guide.pcc` -> line 57, no
+    # `PRECAMPAIGN`). Zero Product Identity rows in either file (`grep -c
+    # NAMEISPI:YES pu_abilities_race.lst arg_abilities_race.lst` -> 0, 0).
+    "pathfinder_unchained": "pathfinder/paizo/roleplaying_game/pathfinder_unchained",
+    "advanced_race_guide": "pathfinder/paizo/roleplaying_game/advanced_race_guide",
 }
 
 # Books part of whose monster rows another compiled table of THIS repo already

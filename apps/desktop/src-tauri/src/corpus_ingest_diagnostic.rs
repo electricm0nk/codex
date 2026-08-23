@@ -1271,8 +1271,20 @@ mod tests {
             // They are corpus-only by construction -- `decisions.md §24` rules out the
             // formula interpreter a compiled race-trait table would need, so they are
             // served off disk and this diagnostic's `rules_tables` half cannot see them.
-            ("advanced_race_guide", "advanced_race_guide", 1072u32),
-            ("pathfinder_unchained", "pathfinder_unchained", 0),
+            // 1072 -> 1073 by `decisions.md §20` no_record-to-zero round 4 (2026-08-23):
+            // `gen_advanced_race_guide()` extended to also call `gen_monster_book`, adding
+            // this book's 1 owner-less `monster_ability` record. Corpus-only for the same
+            // reason as every other family above: no `rules_tables` module counts
+            // `monster`/`monster_ability` for this book, only `advanced_race_guide::feats`/
+            // `spell_list`/`equipment_tables` (`advanced_race_guide_counts()`).
+            ("advanced_race_guide", "advanced_race_guide", 1073u32),
+            // 0 -> 69 by `decisions.md §20` no_record-to-zero round 4 (2026-08-23):
+            // `gen_pathfinder_unchained()` extended to also call `gen_monster_book`, adding
+            // this book's 69 owner-less `monster_ability` records (72 orphan candidates, 3
+            // refused as an unscreenable multi-DESC: shape). Corpus-only for the same
+            // reason: `pathfinder_unchained_counts()` above tracks `classes`/
+            // `class_features`/`feats`/`equipment` only, never `monster_abilities`.
+            ("pathfinder_unchained", "pathfinder_unchained", 69u32),
         ] {
             let response = build_corpus_ingest_diagnostic();
             let book = response

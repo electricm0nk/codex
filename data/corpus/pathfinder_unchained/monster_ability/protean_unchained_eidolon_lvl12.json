@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "data": {
+    "corpus_key": "Protean ~ Unchained Eidolon LVL12",
+    "delivery": null,
+    "description": "At 12th level, protean eidolons gain DR 5/lawful. They also gain the blindsense evolution and the ability to fly without wings with perfect maneuverability, as the flight evolution with 4 points spent.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl12",
+    "name": "Eidolon Progession Lv.12",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "ProteanLVL12"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 171,
+    "record_key": "Protean ~ Unchained Eidolon LVL12"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:dr"
+  ]
+}

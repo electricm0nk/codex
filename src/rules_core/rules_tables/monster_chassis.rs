@@ -590,12 +590,9 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
     // zero-monster books `decisions.md §17a`'s re-derive found unregistered
     // (`scripts/classify_monster_ability_rows.py`'s own "ZERO-monster books"
     // line): every ability row in each ships owner-less by construction,
-    // since no monster row of the book exists to own it. `pathfinder_unchained`
-    // (72 rows) and `advanced_race_guide` (1 row) are deferred -- both already
-    // have a dedicated `gen_book_cache.rs` generator function for their OTHER
-    // families that this round did not touch. `mythic_adventures` (21 rows)
-    // is also deferred -- its `rules_tables/` module directory does not exist
-    // yet.
+    // since no monster row of the book exists to own it. `mythic_adventures`
+    // (21 rows) is still deferred -- its `rules_tables/` module directory
+    // does not exist yet.
     MonsterBook {
         corpus_book: "ultimate_wilderness",
         monsters: super::ultimate_wilderness::monsters_static(),
@@ -624,6 +621,24 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_5",
         monsters: super::bestiary_5::monsters_static(),
         monster_abilities: super::bestiary_5::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    // `decisions.md §20` no_record-to-zero, round 4: the last two of the
+    // original 8 zero-monster books, now registered. Both already have a
+    // dedicated `gen_book_cache.rs` generator function for their OTHER
+    // families (`gen_pathfinder_unchained`/`gen_advanced_race_guide`),
+    // extended this round to also call `gen_monster_book` after its existing
+    // writes.
+    MonsterBook {
+        corpus_book: "pathfinder_unchained",
+        monsters: super::pathfinder_unchained::monsters_static(),
+        monster_abilities: super::pathfinder_unchained::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "advanced_race_guide",
+        monsters: super::advanced_race_guide::monsters_static(),
+        monster_abilities: super::advanced_race_guide::monster_abilities_static(),
         cross_table_owner_names: &[],
     },
 ];
@@ -955,7 +970,7 @@ mod tests {
 
         assert_eq!(
             triples.len(),
-            3613,
+            3683,
             "the number of currently-shipped monster_ability records changed — re-derive \
              this pin (and the digest below) only from a real corpus regen, never to make a \
              facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
@@ -973,10 +988,16 @@ mod tests {
              (`ultimate_wilderness` +2, `ultimate_intrigue` +6, `ultimate_magic` +13, \
              `bestiary_6` +16, `bestiary_5` +39) — structurally cannot reclassify an existing \
              record's facet, since no pre-existing `MonsterBook` entry was modified, only new \
-             ones added"
+             ones added. 3613 -> 3683 (`decisions.md §20` round 4, +70): the last 2 of the \
+             original 8 unregistered zero-monster books, `pathfinder_unchained` (+69, 3 of the \
+             72 orphan candidates refused during transcription as an unscreenable multi-DESC: \
+             shape — see `pathfinder_unchained/monster_data.rs`'s own header) and \
+             `advanced_race_guide` (+1) — again structurally additive only, reached via each \
+             book's own `gen_book_cache.rs` generator function extended to also call \
+             `gen_monster_book`."
         );
         assert_eq!(
-            digest, 0x5c2e_e608_7da2_63c9,
+            digest, 0x2fa5_c457_8c02_67bb,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -993,7 +1014,10 @@ mod tests {
              moves because the sorted triple set gains 76 new members from 5 newly-registered \
              books — zero reclassification, since every pre-existing `MonsterBook` entry (and \
              every triple it contributes) is byte-unchanged; only new `MonsterBook` rows were \
-             appended to `MONSTER_BOOKS`"
+             appended to `MONSTER_BOOKS`. 0x5c2ee6087da263c9 -> 0x2fa5c4578c0267bb \
+             (`decisions.md §20` round 4): the sorted triple set gains 70 new members from 2 \
+             newly-registered books (`pathfinder_unchained`/`advanced_race_guide`) — zero \
+             reclassification, same reasoning as round 3, only new `MonsterBook` rows appended"
         );
     }
 }
