@@ -708,6 +708,25 @@ impl RaceCorpus {
         out
     }
 
+    /// Every trait record, across every loaded race, carrying `token` as one
+    /// of its (possibly several) `TYPE:` components, sorted by key.
+    ///
+    /// [`traits_by_category`]'s sibling seam: the Adopted-Race selector shape
+    /// (`decisions.md §25`, [`adopted_race_choose_selectors`]) shares its
+    /// `CATEGORY:Special Ability` with countless ordinary standard traits, so
+    /// `traits_by_category` alone cannot select it — its own `TYPE:AdoptiveRace`
+    /// component is the one thing no other trait in this corpus carries.
+    pub fn traits_by_type_token(&self, token: &str) -> Vec<&RaceTraitRecord> {
+        let mut out: Vec<&RaceTraitRecord> = self
+            .traits
+            .values()
+            .flatten()
+            .filter(|t| t.data.type_tokens.iter().any(|tt| tt == token))
+            .collect();
+        out.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+        out
+    }
+
     /// Matches a loose race identifier — a bare key (`"Half-Elf"`), a
     /// `race:`-prefixed character-input token (`"race:half-elf"`), or either
     /// in any case — to a loaded race key. `None` when nothing matches; a
@@ -1064,6 +1083,68 @@ pub fn adoptive_parentage_options(corpus: &RaceCorpus) -> Vec<AdoptiveParentageO
             description: record.data.description.clone(),
             grants,
             unresolved_grants,
+        });
+    }
+    out.sort_by(|a, b| a.key.cmp(&b.key));
+    out
+}
+
+/// PCGen's `TYPE:` value marking the "Adopted Race" selector shape
+/// (`decisions.md §25`): `TYPE:AdoptiveRace`, no dot-components, distinct
+/// from every other `TYPE:` this corpus carries. Public so
+/// `ingest_race_traits.rs` and this module read the identical literal rather
+/// than each carrying its own copy.
+pub const ADOPTED_RACE_SELECTOR_TYPE: &str = "AdoptiveRace";
+
+/// The literal `CHOOSE:` prefix an Adopted-Race selector row's pool token
+/// carries; the pool's `<X> Race Trait` suffix follows verbatim.
+pub const ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX: &str = "ABILITYSELECTION|Special Ability|TYPE=";
+
+/// One "Adopted Race" selector (`decisions.md §25`): available to a
+/// character of the race it names' own type (the row itself, e.g. Oread's,
+/// carries no further race restriction beyond being filed under that race),
+/// and — when selected — grants ONE trait from a named other content kind's
+/// pool: PF1e's chargen Trait mechanic (`kind: trait`,
+/// [`crate::rules_core::trait_pool`]), never this corpus's own race-trait
+/// population. Structurally the closest existing shape is
+/// [`AdoptiveParentageOption`] (any-race-selectable, names a target), but the
+/// target pool is a different content kind entirely, which is why this is a
+/// distinct struct rather than a variant of that one.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AdoptedRaceSelector {
+    pub key: String,
+    pub name: String,
+    pub book_id: String,
+    /// The race this selector is filed under and adopts.
+    pub adopted_race: String,
+    /// The `CHOOSE:` token's pool suffix, e.g. `"Oread Race Trait"` — matched
+    /// against a `kind: trait` record's own `TYPE:Trait.RaceTrait.<X> Race
+    /// Trait` third dot-segment by [`crate::rules_core::trait_pool`]. `None`
+    /// for a malformed row this project refuses to guess at rather than
+    /// resolving against nothing.
+    pub pool_type_suffix: Option<String>,
+}
+
+/// Every "Adopted Race" selector in a loaded corpus (`decisions.md §25`'s
+/// 14-unit population), read the same way [`adoptive_parentage_options`] reads
+/// its own shape: nothing here is resolved against the Trait pool itself —
+/// that is [`crate::rules_core::trait_pool`]'s job, kept separate because the
+/// pool is a different content kind this module does not load.
+pub fn adopted_race_choose_selectors(corpus: &RaceCorpus) -> Vec<AdoptedRaceSelector> {
+    let mut out = Vec::new();
+    for record in corpus.traits_by_type_token(ADOPTED_RACE_SELECTOR_TYPE) {
+        let pool_type_suffix = record
+            .data
+            .raw_tokens
+            .iter()
+            .find(|t| t.key == "CHOOSE" && t.value.trim_start().starts_with(ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX))
+            .map(|t| t.value.trim_start()[ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX.len()..].to_string());
+        out.push(AdoptedRaceSelector {
+            key: record.data.key.clone(),
+            name: record.data.name.clone(),
+            book_id: record.book_id.clone(),
+            adopted_race: record.data.race_key.clone(),
+            pool_type_suffix,
         });
     }
     out.sort_by(|a, b| a.key.cmp(&b.key));
@@ -2254,6 +2335,31 @@ mod tests {
         assert_eq!(
             unclassified,
             vec![
+                // SD-32 `decisions.md §25` cycle 2, all 14: the "Adopted
+                // Race" selector shape (`ingest_race_traits.rs`'s new
+                // `selector_only` `BookSource`s). Same *kind* of residue as
+                // the 7 Adoptive-Parentage-pool rows below -- gated by their
+                // OWN `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X> Race
+                // Trait` pool, resolved by
+                // `adopted_race_choose_selectors`/`crate::rules_core::
+                // trait_pool::resolve_adopted_race_options`, never by a
+                // readable `PREFACT`/default gate this classifier would
+                // otherwise apply them by. Sorted by key, exactly as
+                // `unclassified_traits()` sorts every other entry here.
+                ("Catfolk", "Adopted Race ~ Catfolk"),
+                ("Dhampir", "Adopted Race ~ Dhampir"),
+                ("Fetchling", "Adopted Race ~ Fetchling"),
+                ("Grippli", "Adopted Race ~ Grippli"),
+                ("Ifrit", "Adopted Race ~ Ifrit"),
+                ("Oread", "Adopted Race ~ Oread"),
+                ("Ratfolk", "Adopted Race ~ Ratfolk"),
+                ("Rougarou", "Adopted Race ~ Rougarou"),
+                ("Skinwalker", "Adopted Race ~ Skinwalker"),
+                ("Suli", "Adopted Race ~ Suli"),
+                ("Sylph", "Adopted Race ~ Sylph"),
+                ("Undine", "Adopted Race ~ Undine"),
+                ("Vanara", "Adopted Race ~ Vanara"),
+                ("Vishkanya", "Adopted Race ~ Vishkanya"),
                 ("Drow", "Drow"),
                 ("Dwarf", "Dwarf"),
                 ("Elf", "Elf"),
@@ -2492,10 +2598,20 @@ mod tests {
         // and `link_automatic_grants` cannot promote them either, because
         // its per-race grouping never crosses from `Human`'s trait group
         // into theirs.
-        assert_eq!(count(TraitRole::Unclassified), 10);
+        // 10 -> 24 by SD-32 `decisions.md §25` cycle 2 (2026-08-23): the 14
+        // "Adopted Race" selector rows (`ingest_race_traits.rs`'s new
+        // `selector_only` `BookSource`s -- bestiary_2 7, bestiary_3 5,
+        // bestiary_5 1, bestiary_6 1). Same *kind* of residue as the 7
+        // Adoptive-Parentage-pool members immediately above: no readable
+        // gate of their own by design, gated instead by their OWN
+        // `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X> Race Trait`,
+        // resolved by `adopted_race_choose_selectors`/
+        // `crate::rules_core::trait_pool::resolve_adopted_race_options`, not
+        // by this classifier.
+        assert_eq!(count(TraitRole::Unclassified), 24);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            831,
+            845,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2520,7 +2636,9 @@ mod tests {
              (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted \
              Mediator (Unclassified) = 12 (812 -> 824) + this cycle's 7 `Human ~ Adoptive \
              Parentage` CHOOSE-pool members (Unclassified: Drow, Dwarf, Elf, Gnome, \
-             Grippli, Halfling, Orc; `decisions.md §16` item 2, 2026-08-23; 824 -> 831)"
+             Grippli, Halfling, Orc; `decisions.md §16` item 2, 2026-08-23; 824 -> 831) \
+             + `decisions.md §25` cycle 2's 14 Adopted-Race selector records (Unclassified: \
+             bestiary_2 7, bestiary_3 5, bestiary_5 1, bestiary_6 1; 2026-08-23; 831 -> 845)"
         );
     }
 
@@ -3133,6 +3251,49 @@ mod tests {
                 option.key
             );
         }
+    }
+
+    /// SD-32 `decisions.md §25` cycle 2: `adopted_race_choose_selectors`
+    /// finds the real, on-disk 14-unit population this cycle's new
+    /// `selector_only` `BookSource`s ingested -- the exact population named
+    /// in the epic's own acceptance criterion (bestiary_2 7, bestiary_3 5,
+    /// bestiary_5 1, bestiary_6 1).
+    #[test]
+    fn adopted_race_choose_selectors_finds_the_real_fourteen_unit_population() {
+        let corpus = all_books();
+        let selectors = adopted_race_choose_selectors(&corpus);
+        let races: Vec<&str> = selectors.iter().map(|s| s.adopted_race.as_str()).collect();
+        assert_eq!(
+            races,
+            vec![
+                "Catfolk", "Dhampir", "Fetchling", "Grippli", "Ifrit", "Oread", "Ratfolk", "Rougarou",
+                "Skinwalker", "Suli", "Sylph", "Undine", "Vanara", "Vishkanya",
+            ],
+            "exactly the 14 target races, sorted by key (\"Adopted Race ~ <Race>\")"
+        );
+        assert_eq!(selectors.len(), 14, "decisions.md §25's own population figure");
+        for selector in &selectors {
+            assert_eq!(selector.key, format!("Adopted Race ~ {}", selector.adopted_race));
+            assert_eq!(
+                selector.pool_type_suffix.as_deref(),
+                Some(format!("{} Race Trait", selector.adopted_race)).as_deref(),
+                "{:?}: every real oracle row's CHOOSE: pool suffix is \"<Race> Race Trait\", read, \
+                 never guessed",
+                selector.key
+            );
+        }
+        // All 14 target races now resolve to a real chassis record --
+        // `ingest_races.rs` has since given Dhampir/Skinwalker/Rougarou their
+        // own chassis (SD-31 wave-24 and SD-32 card-11 T2b, both landed after
+        // `epic-6-kind-trait_cycle-1_cycle_receipt.md §2` wrote the "three
+        // races with no chassis" finding this test corrects). The selector
+        // shape itself still needs no chassis to be admitted -- its pool
+        // resolves against `crate::rules_core::trait_pool`, never
+        // `RaceCorpus::traits_for` -- so `ingest_book`'s bypass stays even
+        // though it currently has nothing left to bypass for.
+        let without_chassis: Vec<&str> =
+            selectors.iter().filter(|s| corpus.chassis(&s.adopted_race).is_none()).map(|s| s.adopted_race.as_str()).collect();
+        assert!(without_chassis.is_empty(), "re-derive this test if a future book removes a chassis: {without_chassis:?}");
     }
 
     /// An option's target race resolving is not enough on its own —

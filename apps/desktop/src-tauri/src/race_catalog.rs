@@ -105,6 +105,15 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     // oracle) -- same shape as Bestiary 2/5 above, not the Dhampir-style
     // heritage gap an earlier note wrongly grouped it with.
     "bestiary_6",
+    // Bestiary 3, SD-32 `decisions.md §25` cycle 2: 5 Adopted-Race selector
+    // records (`ingest_race_traits.rs`'s new `selector_only` `BookSource`).
+    // Loaded, unlike Bestiary 2/5/6, purely for its 5 selector rows -- this
+    // book contributes zero chassis and zero standard-tier traits of its own
+    // (its 5 target races' chassis are ARG-native, already loaded under
+    // `advanced_race_guide`), so it never appears in `RACE_CATALOG_BOOKS`
+    // below, the same way ARG/APG/MC/ISR/HA are loaded here without
+    // contributing catalog rows.
+    "bestiary_3",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -147,6 +156,11 @@ const BOOK_B5: &str = "B5";
 /// `ingest_races` files Rougarou's chassis and standard-tier traits here,
 /// so it DOES contribute catalog rows (see `RACE_CATALOG_BOOKS` below).
 const BOOK_B6: &str = "B6";
+/// Bestiary 3. SD-32 `decisions.md §25` cycle 2: 5 Adopted-Race selector
+/// records only (see `RACE_CORPUS_BOOKS`'s own doc comment above) -- it
+/// contributes no catalog rows, so unlike `BOOK_B2`/`BOOK_B5`/`BOOK_B6` it is
+/// never added to `RACE_CATALOG_BOOKS` below.
+const BOOK_B3: &str = "B3";
 
 /// Every book code this catalog can emit. As of SD-31-E6-F4-002
 /// (2026-08-16) ARG DOES contribute catalog rows: `ingest_races` filed 6
@@ -177,6 +191,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "bestiary_2" => BOOK_B2.to_string(),
         "bestiary_5" => BOOK_B5.to_string(),
         "bestiary_6" => BOOK_B6.to_string(),
+        "bestiary_3" => BOOK_B3.to_string(),
         other => other.to_string(),
     }
 }

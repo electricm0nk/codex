@@ -114,8 +114,10 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
 use codex::rules_core::race_resolver::{
-    adoptive_parentage_options, load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole,
+    adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus, RaceCorpus, RaceTraitRecord,
+    TraitRole,
 };
+use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 
 use crate::authoring_workbench::codex_repo_root;
 use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};
@@ -267,6 +269,45 @@ pub struct AdoptiveParentageOptionDto {
     pub grants: Vec<AdoptiveParentageGrantDto>,
 }
 
+/// One Trait this [`AdoptedRaceOptionDto`] can grant, resolved against the
+/// real `kind: trait` pool (`codex::rules_core::trait_pool`) rather than
+/// this corpus's own race-trait population.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptedRaceTraitGrantDto {
+    pub key: String,
+    pub name: String,
+    pub description: Option<String>,
+    pub book: String,
+}
+
+/// One "Adopted Race" selector (`decisions.md §25`): a character of the
+/// named race's own type may pick ONE trait from that race's real Trait
+/// pool. Structurally the closest existing row is
+/// [`AdoptiveParentageOptionDto`] (any-race-selectable, names a target), but
+/// the pool here is a different content kind entirely (`kind: trait`, never
+/// this corpus's own `race_trait` population) -- hence a separate DTO rather
+/// than folding this into that one.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptedRaceOptionDto {
+    pub key: String,
+    pub name: String,
+    pub book: String,
+    pub adopted_race: String,
+    /// The real Trait pool this option offers. Empty is a legitimate,
+    /// honestly-reported answer for a race whose Trait pool this project has
+    /// not (yet) ingested — never papered over with a fabricated trait. See
+    /// `codex::rules_core::trait_pool` module doc comment for the current
+    /// ingest status.
+    pub grants: Vec<AdoptedRaceTraitGrantDto>,
+    /// `true` for a row whose own `CHOOSE:` token this project could not
+    /// read a pool suffix from at all — a malformed-row finding surfaced
+    /// rather than silently treated as "empty pool". Never true for any of
+    /// the 14 real oracle rows this cycle ingested.
+    pub malformed_choose_token: bool,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AlternateRacialTraitsResponse {
@@ -274,6 +315,10 @@ pub struct AlternateRacialTraitsResponse {
     /// `Human ~ Adoptive Parentage`'s CHOOSE pool, resolved. See
     /// [`AdoptiveParentageOptionDto`].
     pub adoptive_parentage_options: Vec<AdoptiveParentageOptionDto>,
+    /// The 14 "Adopted Race" selectors (`decisions.md §25`), resolved
+    /// against the real Trait pool. See [`AdoptedRaceOptionDto`]. Additive
+    /// field — a consumer that does not read it is unaffected.
+    pub adopted_race_options: Vec<AdoptedRaceOptionDto>,
     /// Corpus files that could not be read, plus any failure to locate the
     /// corpus at all. Empty in a healthy checkout.
     pub diagnostics: Vec<String>,
@@ -747,13 +792,56 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
         })
         .collect();
 
+    // SD-32 `decisions.md §25` cycle 2: `codex_repo_root()` gives the same
+    // corpus root the race corpus itself just loaded from, so the Trait pool
+    // and the selectors it resolves against are read from the identical
+    // on-disk state, not two different checkouts.
+    let adopted_race_options: Vec<AdoptedRaceOptionDto> = match codex_repo_root() {
+        Ok(root) => {
+            let corpus_root = root.join("data/corpus");
+            let dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
+            let pool_roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
+                .iter()
+                .zip(dirs.iter())
+                .map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() })
+                .collect();
+            let trait_pool = load_trait_pool(&pool_roots);
+            let selectors = adopted_race_choose_selectors(corpus);
+            resolve_adopted_race_options(&selectors, &trait_pool)
+                .into_iter()
+                .map(|option| AdoptedRaceOptionDto {
+                    key: option.key,
+                    name: option.name,
+                    book: book_code(&option.book_id),
+                    adopted_race: option.adopted_race,
+                    grants: option
+                        .grants
+                        .into_iter()
+                        .map(|grant| AdoptedRaceTraitGrantDto {
+                            key: grant.key,
+                            name: grant.name,
+                            description: grant.description,
+                            book: book_code(&grant.book_id),
+                        })
+                        .collect(),
+                    malformed_choose_token: option.malformed_choose_token,
+                })
+                .collect()
+        }
+        // The corpus root could not be located at all -- `diagnostics` below
+        // already reports this same failure for the rest of the response, so
+        // this half degrades to an honest empty list rather than a second,
+        // differently-worded error.
+        Err(_) => Vec::new(),
+    };
+
     let diagnostics =
         corpus.diagnostics().iter().map(|diagnostic| format!("{}: {}", diagnostic.path, diagnostic.message)).collect();
 
     let mut findings = multi_flag_gate_findings(corpus);
     findings.extend(preability_guard_findings(corpus));
 
-    AlternateRacialTraitsResponse { races, adoptive_parentage_options, diagnostics, findings }
+    AlternateRacialTraitsResponse { races, adoptive_parentage_options, adopted_race_options, diagnostics, findings }
 }
 
 /// Resolves one race against a chosen alternate set, by calling
@@ -925,6 +1013,7 @@ fn menu_or_error() -> AlternateRacialTraitsResponse {
         Err(err) => AlternateRacialTraitsResponse {
             races: Vec::new(),
             adoptive_parentage_options: Vec::new(),
+            adopted_race_options: Vec::new(),
             diagnostics: vec![format!("race corpus unavailable: {err}")],
             findings: Vec::new(),
         },
@@ -2090,5 +2179,54 @@ mod tests {
             let grant_names: Vec<&str> = option.grants.iter().map(|g| g.name.as_str()).collect();
             assert_eq!(grant_names, vec!["Weapon Familiarity", "Languages"]);
         }
+    }
+
+    /// SD-32 `decisions.md §25` cycle 2: the menu command carries all 14 real
+    /// "Adopted Race" selectors this cycle's new `selector_only`
+    /// `BookSource`s ingested, correctly book-coded, and none flagged
+    /// malformed (every real oracle row's `CHOOSE:` token parses).
+    ///
+    /// `grants` is honestly empty for every one of them today -- the real
+    /// Trait pool content (`inner_sea_races/isr_abilities.lst` etc.,
+    /// `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`) is not yet ingested
+    /// into `data/corpus/<book>/trait_generic/`, blocked on
+    /// `docs/work-inventory.json`'s regen (`§3`). This test pins that state
+    /// honestly rather than asserting a resolved grant this repo cannot yet
+    /// back with a real record — the moment the pool is ingested this
+    /// assertion must be revisited to expect real grants instead.
+    #[test]
+    fn the_menu_command_carries_all_fourteen_adopted_race_options_with_no_pool_content_ingested_yet() {
+        let menu = menu();
+        let keys: Vec<&str> = menu.adopted_race_options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(
+            keys,
+            vec![
+                "Adopted Race ~ Catfolk",
+                "Adopted Race ~ Dhampir",
+                "Adopted Race ~ Fetchling",
+                "Adopted Race ~ Grippli",
+                "Adopted Race ~ Ifrit",
+                "Adopted Race ~ Oread",
+                "Adopted Race ~ Ratfolk",
+                "Adopted Race ~ Rougarou",
+                "Adopted Race ~ Skinwalker",
+                "Adopted Race ~ Suli",
+                "Adopted Race ~ Sylph",
+                "Adopted Race ~ Undine",
+                "Adopted Race ~ Vanara",
+                "Adopted Race ~ Vishkanya",
+            ]
+        );
+        for option in &menu.adopted_race_options {
+            assert!(!option.malformed_choose_token, "{:?}: every real oracle row must parse cleanly", option.key);
+            assert!(
+                option.grants.is_empty(),
+                "{:?}: honest today -- no kind:trait pool content is ingested yet, see this \
+                 test's own doc comment",
+                option.key
+            );
+        }
+        let books: BTreeSet<&str> = menu.adopted_race_options.iter().map(|o| o.book.as_str()).collect();
+        assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6"]));
     }
 }

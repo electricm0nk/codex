@@ -96,7 +96,9 @@ use sha2::{Digest, Sha256};
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula;
-use codex::rules_core::race_resolver::ADOPTIVE_PARENTAGE_CATEGORY;
+use codex::rules_core::race_resolver::{
+    ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX, ADOPTED_RACE_SELECTOR_TYPE, ADOPTIVE_PARENTAGE_CATEGORY,
+};
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, Population, RaceTraitCacheData, RawBonusChain, RawToken,
 };
@@ -132,6 +134,38 @@ struct BookSource {
     /// The book's own directory under the PCGen `data/` root, which the
     /// wiring-class index scans for the row's magnitude signals.
     pcgen_book_relative: &'static str,
+    /// SD-32 `decisions.md §25` cycle-2 -- `true` for a `BookSource` whose
+    /// `lst_relatives` are shared `core_essentials/races/<race>/` files this
+    /// binary does NOT otherwise own for that race. `ingest_races.rs` already
+    /// writes `is_racial_default: true` standard-trait content for every race
+    /// in [`Self::lst_relatives`] under Bestiary 2/5/6 into this SAME
+    /// `<corpus_book>/race_trait/<race>/` output directory (its own
+    /// `IN_SCOPE_RACES` table); Bestiary 3's five races (Catfolk/Ratfolk/
+    /// Suli/Vanara/Vishkanya) are simultaneously in THIS binary's own
+    /// `IN_SCOPE_RACES` and already ingested from `advanced_race_guide`'s own
+    /// `arg_abilities_race.lst`, not from this file. Admitting every row in
+    /// these shared files the ordinary way (`in_scope.contains(race_key)`)
+    /// would re-parse and re-write that same standard-trait content a second
+    /// time under a DIFFERENT `corpus_book`, which is not a write collision
+    /// (different output path) but IS duplicate, unowned content this binary
+    /// has no business emitting. `selector_only: true` restricts the scope
+    /// filter to `row.is_adopted_race_choose_selector` alone, so these four
+    /// `BookSource`s can only ever admit the one selector row per race
+    /// (`decisions.md §25`'s 14-unit population) and never the standard-trait
+    /// rows physically living in the same file. See `ingest_book`'s scope
+    /// filter and `clear_own_alternate_trait_files`'s ownership test (still
+    /// exact: this binary only ever writes `is_racial_default: false`).
+    selector_only: bool,
+    /// Race display names (as `TYPE:<Race> Racial Trait`/selector rows spell
+    /// them) whose output subdirectory under this `BookSource`'s
+    /// `corpus_book` needs THIS binary's own scoped-by-ownership clear, but
+    /// which are not in [`IN_SCOPE_RACES`] (so the ordinary `IN_SCOPE_RACES`-
+    /// driven clear loop would never visit them). Populated only for the
+    /// three `decisions.md §25` target races this project has no chassis
+    /// for and which therefore never join `IN_SCOPE_RACES` (Dhampir,
+    /// Skinwalker, Rougarou) -- Bestiary 3's five selector-only races are
+    /// already covered by `IN_SCOPE_RACES` and need no entry here.
+    extra_clear_races: &'static [&'static str],
 }
 
 /// Every book whose alternate racial traits this binary ingests.
@@ -205,6 +239,8 @@ const BOOK_SOURCES: &[BookSource] = &[
             "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
         ],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
+        selector_only: false,
+        extra_clear_races: &[],
     },
     // Advanced Player's Guide -- INVESTIGATED and deliberately NOT added as a
     // `BookSource`, SD-31 Epic 6-F4 (2026-08-15). `docs/work-inventory.json`
@@ -247,6 +283,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relatives: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst"],
         subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
+        selector_only: false,
+        extra_clear_races: &[],
     },
     // Inner Sea Races, SD-29's race-trait lane round 2. The single largest
     // alternate-racial-trait contribution after ARG's own: 68 of its 72
@@ -261,6 +299,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relatives: &["pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst"],
         subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/campaign_setting/inner_sea_races",
+        selector_only: false,
+        extra_clear_races: &[],
     },
     // Horror Adventures, SD-29's race-trait lane round 3. 41 of its 43
     // in-scope rows in the book's main `_abilities_race.lst` set a
@@ -291,6 +331,87 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relatives: &["pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst"],
         subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
+        selector_only: false,
+        extra_clear_races: &[],
+    },
+    // SD-32 `decisions.md §25` cycle 2 -- the four books whose "Adopted Race"
+    // selector rows (`decisions.md §25`'s 14-unit population) this binary was
+    // blocked on at cycle 1 (`epic-6-kind-trait_cycle-1_cycle_receipt.md §2`):
+    // `bestiary_2/3/5/6`'s selector rows physically live in
+    // `core_essentials/races/<race>/<race>_abilities_race.lst`, the SAME file
+    // `ingest_races.rs` (Bestiary 2/5/6) or this binary's own
+    // `advanced_race_guide` `BookSource` above (Bestiary 3's five races,
+    // already ARG-native chassis) already reads for STANDARD-trait content.
+    // `selector_only: true` is what makes admitting these four safe: the
+    // scope filter below never applies `in_scope.contains(...)` for a
+    // `selector_only` book, so only the exact selector row (`TYPE:AdoptiveRace`
+    // + the `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=...` pool token) is
+    // ever admitted -- every standard-trait row physically alongside it in the
+    // same file is silently skipped (counted in `skipped`), never re-parsed,
+    // never re-written. Verified corpus-wide before adding: `grep -c
+    // 'TYPE:AdoptiveRace' <file>` is exactly 1 for each of the 14 files below.
+    BookSource {
+        corpus_book: "bestiary_2",
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/ifrit/ifrit_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/oread/oread_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/sylph/sylph_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/undine/undine_abilities_race.lst",
+        ],
+        subrace_globalvar_relatives: &[],
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/bestiary_2",
+        selector_only: true,
+        // Fetchling/Grippli/Ifrit/Oread/Sylph/Undine are already in
+        // `IN_SCOPE_RACES` (their standard-trait content is owned by
+        // `ingest_races.rs`, unaffected -- `selector_only` never admits their
+        // standard rows here). Dhampir is not (no chassis, `ingest_races.rs`'s
+        // own doc comment), so its `bestiary_2/race_trait/dhampir/` output
+        // needs its own scoped-clear entry or a stale selector record from a
+        // prior run's different scope would never be removed.
+        extra_clear_races: &["Dhampir"],
+    },
+    BookSource {
+        corpus_book: "bestiary_3",
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+        ],
+        subrace_globalvar_relatives: &[],
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/bestiary_3",
+        selector_only: true,
+        // All five (Catfolk/Ratfolk/Suli/Vanara/Vishkanya) are ARG-native
+        // chassis already in `IN_SCOPE_RACES`; no extra entry needed.
+        extra_clear_races: &[],
+    },
+    BookSource {
+        corpus_book: "bestiary_5",
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
+        ],
+        subrace_globalvar_relatives: &[],
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
+        selector_only: true,
+        // Skinwalker is deliberately excluded from `IN_SCOPE_RACES`
+        // (`ingest_race_traits.rs`'s own header doc comment) even though
+        // `ingest_races.rs` gave it a chassis.
+        extra_clear_races: &["Skinwalker"],
+    },
+    BookSource {
+        corpus_book: "bestiary_6",
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_abilities_race.lst",
+        ],
+        subrace_globalvar_relatives: &[],
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/bestiary_6",
+        selector_only: true,
+        // Rougarou is not in `IN_SCOPE_RACES` either.
+        extra_clear_races: &["Rougarou"],
     },
 ];
 
@@ -382,14 +503,15 @@ const MOD_MARKER: &str = ".MOD";
 /// Race Trait` pool reference, resolved against the new `Kind::Trait`
 /// population by [`codex::rules_core::trait_pool`], not against this
 /// corpus's own already-loaded standard traits.
-const ADOPTED_RACE_SELECTOR_TYPE: &str = "AdoptiveRace";
-
-/// The literal `CHOOSE:` prefix an Adopted-Race selector row's pool token
-/// carries; the pool's `<X> Race Trait` suffix follows verbatim (`X` is the
-/// adopted race's own display name, matching `race_key`/`name` on this same
-/// row -- PCGen names the option after the race it adopts, the same
-/// convention [`ADOPTIVE_PARENTAGE_CATEGORY`]'s shape uses).
-const ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX: &str = "ABILITYSELECTION|Special Ability|TYPE=";
+///
+/// Cycle 2: moved to `race_resolver.rs` as `pub const
+/// ADOPTED_RACE_SELECTOR_TYPE`/`ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX` and
+/// imported (see this file's own `use codex::rules_core::race_resolver::...`
+/// near the top), the same precedent `ADOPTIVE_PARENTAGE_CATEGORY` already
+/// set -- `codex::rules_core::race_resolver::adopted_race_choose_selectors`
+/// reads the identical row shape at the resolver layer and a second,
+/// drifting copy of these two literals is exactly the duplication
+/// `decisions.md §17` warns will recur.
 
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
@@ -1244,7 +1366,14 @@ struct SourcedRow {
 }
 
 fn ingest_book(book: &BookSource) {
-    let BookSource { corpus_book, lst_relatives, subrace_globalvar_relatives, pcgen_book_relative } = *book;
+    let BookSource {
+        corpus_book,
+        lst_relatives,
+        subrace_globalvar_relatives,
+        pcgen_book_relative,
+        selector_only,
+        extra_clear_races,
+    } = *book;
     let data_root = pcgen_data_root();
 
     let out_root =
@@ -1315,7 +1444,20 @@ fn ingest_book(book: &BookSource) {
             // shape `IN_SCOPE_RACES` gates. Admitted here even for the three
             // in-scope target races this project has not modelled a chassis
             // for (Dhampir, Skinwalker, Rougarou).
-            if in_scope.contains(row.race_key.as_str()) || row.is_adopted_race_choose_selector {
+            //
+            // `selector_only` books (`BookSource`'s own doc comment) never
+            // consult `in_scope` at all -- their `lst_relatives` are files
+            // this binary shares with another tool's already-shipped
+            // standard-trait content, and admitting by `in_scope.contains`
+            // there would re-parse and re-write that content a second time
+            // under a different `corpus_book`. Only the exact selector row
+            // shape may ever cross a `selector_only` book's filter.
+            let admit = if selector_only {
+                row.is_adopted_race_choose_selector
+            } else {
+                in_scope.contains(row.race_key.as_str()) || row.is_adopted_race_choose_selector
+            };
+            if admit {
                 rows.push(SourcedRow { row, lst_relative, sha256: sha256.clone() });
             } else {
                 *skipped.entry(row.race_key.clone()).or_default() += 1;
@@ -1439,8 +1581,16 @@ fn ingest_book(book: &BookSource) {
     // either direction). [`clear_own_alternate_trait_files`] clears by that
     // real, already-shipped field instead of by directory, so each binary's
     // rebuild only ever removes files it could itself have written.
+    //
+    // SD-32 `decisions.md §25` cycle 2: `extra_clear_races` widens this to
+    // the `selector_only` books' own target races that are NOT in
+    // `IN_SCOPE_RACES` (Dhampir/Skinwalker/Rougarou -- see `BookSource`'s own
+    // doc comment) -- without it a selector record whose scope changed
+    // between runs (e.g. a row later dropped as PI) would never be cleared,
+    // since the ordinary `IN_SCOPE_RACES` loop never visits their race dirs
+    // at all.
     if out_root.exists() {
-        for race_name in IN_SCOPE_RACES {
+        for race_name in IN_SCOPE_RACES.iter().copied().chain(extra_clear_races.iter().copied()) {
             let race_dir = out_root.join(slugify(race_name));
             if race_dir.exists() {
                 clear_own_alternate_trait_files(&race_dir);
@@ -1658,8 +1808,16 @@ fn ingest_book(book: &BookSource) {
     // (e.g. `monster_codex` writes for a handful, not all 30), so a race
     // this book's rows never mentioned has no subdirectory here at all --
     // that is 0 records, not a missing-directory error.
+    // SD-32 `decisions.md §25` cycle 2: widened by `extra_clear_races`, the
+    // same set the clearing step above adds -- otherwise a `selector_only`
+    // book's Dhampir/Skinwalker/Rougarou records (admitted into `rows`, so
+    // counted in `written`) would never be found here (their race dirs are
+    // outside `IN_SCOPE_RACES`), and this assertion would fail on every run
+    // that reaches one of the four new `BookSource`s.
     let on_disk: usize = IN_SCOPE_RACES
         .iter()
+        .copied()
+        .chain(extra_clear_races.iter().copied())
         .map(|race_name| {
             let race_dir = out_root.join(slugify(race_name));
             if race_dir.exists() { count_own_json(&race_dir) } else { 0 }
@@ -2234,6 +2392,25 @@ mod tests {
                 ("monster_codex", 11),
                 ("inner_sea_races", 94),
                 ("horror_adventures", 43),
+                // SD-32 `decisions.md §25` cycle 2 -- the four `selector_only`
+                // `BookSource`s. This test walks the WHOLE `<book>/race_trait/`
+                // directory (no ownership filter, unlike `ingest_book`'s own
+                // `count_own_json` self-check), so -- exactly like
+                // `advanced_race_guide`'s 421 above -- each figure is this
+                // binary's own selector records PLUS `ingest_races.rs`'s
+                // already-shipped standard-trait content sharing the same
+                // directory: bestiary_2 = 7 selector (Dhampir/Fetchling/
+                // Grippli/Ifrit/Oread/Sylph/Undine) + 69 standard (`find
+                // data/corpus/bestiary_2/race_trait -name '*.json' | wc -l`);
+                // bestiary_3 = 5 selector + 0 standard (`ingest_races.rs`
+                // does not write into bestiary_3 at all -- it is not in that
+                // binary's own book-clear list); bestiary_5 = 1 selector + 9
+                // Skinwalker standard; bestiary_6 = 1 selector + 8 Rougarou
+                // standard.
+                ("bestiary_2", 76),
+                ("bestiary_3", 5),
+                ("bestiary_5", 10),
+                ("bestiary_6", 9),
             ]
                 .into_iter()
                 .collect();
@@ -2242,6 +2419,16 @@ mod tests {
             BOOK_SOURCES.len(),
             "every book this binary writes must be counted here"
         );
+        // SD-32 `decisions.md §25` cycle 2: the Adopted-Race selector row
+        // itself carries no `DESC:` token in the pinned oracle (verified --
+        // `adopted_race_choose_selector_row_resolves_to_the_race_it_names`
+        // pins `description: None` on the real Oread row) -- the ONLY known,
+        // named exception to "every record must carry a description" below.
+        // Named per book and pinned to the exact selector count (never a
+        // blanket allowance) so a future record silently losing its
+        // description elsewhere still fails loudly.
+        let expected_without_description: BTreeMap<&str, usize> =
+            [("bestiary_2", 7usize), ("bestiary_3", 5), ("bestiary_5", 1), ("bestiary_6", 1)].into_iter().collect();
 
         let mut total = 0usize;
         for book in BOOK_SOURCES {
@@ -2280,23 +2467,33 @@ mod tests {
                 "{} record count on disk",
                 book.corpus_book
             );
-            // Every record carries prose. A redacted one carries the PI marker
-            // rather than nothing, so this holds for Inner Sea Races' 12 and
-            // Core Essentials' 8 redactions too — which is the point of a
+            // Every record carries prose, with the one named exception above
+            // (the Adopted-Race selector shape, which the oracle itself gives
+            // no `DESC:` token). A redacted one carries the PI marker rather
+            // than nothing, so this holds for Inner Sea Races' 12 and Core
+            // Essentials' 8 redactions too — which is the point of a
             // schema-preserving redaction and is worth asserting rather than
             // assuming.
+            let allowed_without_description = expected_without_description.get(book.corpus_book).copied().unwrap_or(0);
             assert_eq!(
-                with_description,
-                checked,
-                "{}: every record must carry a description",
+                checked - with_description,
+                allowed_without_description,
+                "{}: every record must carry a description, except the named Adopted-Race \
+                 selector count",
                 book.corpus_book
             );
             total += checked;
         }
         assert_eq!(
             total,
-            569,
-            "421 ARG (of which 7 are SD-32 card-11 T2b's Adoptive Parentage CHOOSE-pool \
+            669,
+            "569 (see below) + 100 across the four SD-32 `decisions.md §25` cycle-2 \
+             `selector_only` books (bestiary_2 76, bestiary_3 5, bestiary_5 10, bestiary_6 9 -- \
+             see the per-book map's own comment: each figure is 14's worth of this binary's own \
+             new Adopted-Race selector records (7+5+1+1) PLUS 86 pre-existing `ingest_races.rs` \
+             standard-trait records this binary shares the directory with but never writes) \
+             = 669. \
+             421 ARG (of which 7 are SD-32 card-11 T2b's Adoptive Parentage CHOOSE-pool \
              members, 2026-08-23, and 414 are the rest -- 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
              from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
@@ -2324,6 +2521,54 @@ mod tests {
              fixing one assertion reveals the next one below it, which is the whole reason \
              the test states both"
         );
+    }
+
+    #[test]
+    fn selector_only_book_sources_are_exactly_the_four_new_cycle_2_entries() {
+        // SD-32 `decisions.md §25` cycle 2: the four books whose selector rows
+        // physically share a file with another tool's already-owned
+        // standard-trait content must be `selector_only`, and no PRE-EXISTING
+        // book may accidentally flip to `selector_only` (which would silently
+        // stop admitting its ordinary in-scope alternate-trait rows).
+        let selector_only_books: Vec<&str> =
+            BOOK_SOURCES.iter().filter(|b| b.selector_only).map(|b| b.corpus_book).collect();
+        assert_eq!(selector_only_books, vec!["bestiary_2", "bestiary_3", "bestiary_5", "bestiary_6"]);
+        let non_selector_only_books: Vec<&str> =
+            BOOK_SOURCES.iter().filter(|b| !b.selector_only).map(|b| b.corpus_book).collect();
+        assert_eq!(
+            non_selector_only_books,
+            vec!["advanced_race_guide", "monster_codex", "inner_sea_races", "horror_adventures"]
+        );
+    }
+
+    #[test]
+    fn a_selector_only_book_never_admits_the_standard_trait_row_sharing_its_own_file() {
+        // The exact hazard `BookSource::selector_only`'s doc comment names:
+        // `oread_abilities_race.lst` carries BOTH the Adopted-Race selector
+        // row (line 30, admitted) and Oread's own standard-trait rows
+        // (`ingest_races.rs`'s content, which must stay skipped here even
+        // though "Oread" is a real member of `IN_SCOPE_RACES`).
+        let standard_oread_trait = concat!(
+            "Earth Affinity\t",
+            "KEY:Oread ~ Earth Affinity\t",
+            "CATEGORY:Special Ability\t",
+            "TYPE:RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality\t",
+            "DESC:Oreads with the earth subtype cast conjuration spells at +1 caster level.",
+        );
+        let row = parse_row(12, standard_oread_trait).expect("a real standard-trait row parses");
+        assert_eq!(row.race_key, "Oread");
+        assert!(!row.is_adopted_race_choose_selector, "a standard-trait row is never the selector shape");
+        assert!(
+            IN_SCOPE_RACES.contains(&"Oread"),
+            "precondition: Oread must be in scope for this test to prove anything"
+        );
+        // The scope filter itself, mirrored exactly (see `ingest_book`):
+        // a `selector_only` book's admit test ignores `in_scope` entirely.
+        let selector_only = true;
+        let in_scope_would_normally_admit = IN_SCOPE_RACES.contains(&row.race_key.as_str());
+        assert!(in_scope_would_normally_admit, "Oread IS in scope -- a non-selector-only book would admit this row");
+        let admitted = if selector_only { row.is_adopted_race_choose_selector } else { true };
+        assert!(!admitted, "a selector_only book must refuse the standard-trait row despite Oread being in scope");
     }
 
     #[test]

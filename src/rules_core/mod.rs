@@ -41,3 +41,4 @@ pub mod spell_resolver;
 pub mod wiring_class;
 pub mod spellbook;
 pub mod support_state_matrix;
+pub mod trait_pool;

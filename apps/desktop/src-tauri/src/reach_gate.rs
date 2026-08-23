@@ -1389,6 +1389,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // pinned oracle (confirmed: no `*_subrace.lst` file), so there is no
         // separate alternate-trait claim to add here.
         ("bestiary_6", "race_traits") => Some(race_traits_reach("B6", "bestiary_6")),
+        // SD-32 `decisions.md §25` cycle 2 (2026-08-23). Bestiary 3's 5
+        // "Adopted Race" selector records, filed under `bestiary_3` by
+        // `ingest_race_traits.rs`'s new `selector_only` `BookSource` -- the
+        // book contributes no standard-tier trait content of its own (its
+        // five races' chassis are ARG-native), so unlike `bestiary_2/5/6`
+        // this claim's whole `ingested` set is these 5 selector records.
+        ("bestiary_3", "race_traits") => Some(race_traits_reach("B3", "bestiary_3")),
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
@@ -2156,6 +2163,28 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
         }
     }
 
+    // SD-32 `decisions.md §25` cycle 2's "Adopted Race" selector rows -- the
+    // same top-level-field shape the Adoptive Parentage block above uses, for
+    // the identical reason (picking one is not a trait *of* the race it
+    // names). **Honestly `identity_only` for all 14 today**: the real
+    // `kind: trait` pool content this option's `grants` resolves against is
+    // not yet ingested anywhere in this repo (blocked on
+    // `docs/work-inventory.json`'s regen,
+    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §3`) -- see
+    // `race_trait_picker.rs`'s own
+    // `the_menu_command_carries_all_fourteen_adopted_race_options_with_no_pool_content_ingested_yet`.
+    // This is not a bug in the reach measurement; it is the measurement
+    // correctly reporting that this shape is ingested and selector-parsed
+    // but not yet player-reachable. Re-derive this claim once the pool
+    // regenerates.
+    for option in menu.adopted_race_options.iter().filter(|option| option.book == wire_book) {
+        if option.grants.is_empty() {
+            identity_only.insert(option.key.clone());
+        } else {
+            with_payload.insert(option.key.clone());
+        }
+    }
+
     assess(
         "list_alternate_racial_traits + resolve_race_alternate_selection",
         &ingested,
@@ -2835,7 +2864,49 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
 /// preserved verbatim; only the content is filled), so the entry was deleted
 /// rather than relaxed. See
 /// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
-const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[];
+const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
+    // SD-32 `decisions.md §25` cycle 2 (2026-08-23): the 14 "Adopted Race"
+    // selector records this cycle's new `selector_only` `BookSource`s
+    // ingested. Each reaches `list_alternate_racial_traits`'s new
+    // `adoptedRaceOptions` field carrying only its own key -- `grants` is
+    // honestly empty because the real `kind: trait` pool content it would
+    // resolve against is not yet ingested anywhere in this repo (blocked on
+    // `docs/work-inventory.json`'s regen,
+    // `epic-6-kind-trait_cycle-1_cycle_receipt.md §3`). This is not a stub:
+    // the record, the selector-row parser and the resolver are all real and
+    // tested (`race_resolver.rs`'s `adopted_race_choose_selectors_finds_the_
+    // real_fourteen_unit_population`, `trait_pool.rs`'s resolver tests,
+    // `race_trait_picker.rs`'s `the_menu_command_carries_all_fourteen_
+    // adopted_race_options_with_no_pool_content_ingested_yet`) -- only the
+    // Trait pool content itself is pending. Delete these entries once that
+    // pool is ingested and each option's `grants` carries real members.
+    (
+        "bestiary_2",
+        "race_traits",
+        &[
+            "Adopted Race ~ Dhampir",
+            "Adopted Race ~ Fetchling",
+            "Adopted Race ~ Grippli",
+            "Adopted Race ~ Ifrit",
+            "Adopted Race ~ Oread",
+            "Adopted Race ~ Sylph",
+            "Adopted Race ~ Undine",
+        ],
+    ),
+    (
+        "bestiary_3",
+        "race_traits",
+        &[
+            "Adopted Race ~ Catfolk",
+            "Adopted Race ~ Ratfolk",
+            "Adopted Race ~ Suli",
+            "Adopted Race ~ Vanara",
+            "Adopted Race ~ Vishkanya",
+        ],
+    ),
+    ("bestiary_5", "race_traits", &["Adopted Race ~ Skinwalker"]),
+    ("bestiary_6", "race_traits", &["Adopted Race ~ Rougarou"]),
+];
 
 /// Ingested records that appear in **no** response at all, for a family whose
 /// other records do reach a player.
