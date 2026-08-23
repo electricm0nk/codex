@@ -3398,3 +3398,68 @@ totals (38,540/41,987).
   `_ROW_CONTENT_FIELD_RE` field list (not this cycle's narrower `_ABILITY_CONTENT_RE`) since that is
   the population's own already-adjudicated rule. Not yet attempted.
 - Receipt: `artifacts/gate-0-census-closure/15-ability_cycle_receipt.md`.
+
+## Cycle t9-pi-signoff-application (2026-08-23) — apply decisions.md §19 to ogl-pi-blacklist.md, re-derive T9 disposition
+
+**Card 11, T9. `decisions.md §19` (commit `9ae023e63`) is the operator sign-off this cycle
+executes.** `docs/governance/ogl-pi-blacklist.md` status moved `DRAFT -> SIGNED-OFF` (dated
+2026-08-23, citing `decisions.md §19`); its DRAFT banner's standing "stop and ask the operator"
+instruction survives unchanged (`§19d` item 1). **Report explicitly:** flag to the operator if
+this sign-off is read more broadly than T9's own four amendments + two ruled questions.
+
+- **Amendments 3a-3d applied verbatim** to `ogl-pi-blacklist.md §2.3`/`§2.3a`/`§2.3b`/`§2.3c`/`§4`
+  from `t9-pi-signoff-package.md §3` (companion/monster_ability field rows; normalization rule;
+  `.COPY=`/`.MOD` inheritance rule; `Aldori`/`Magaambya`/`Magaambyan` term additions).
+- **3b/3c ported into the committed scanner**, `scripts/sd32_t9_pi_review_feat_equipment.py`: fixed
+  a live bare-substring (non-word-bounded) bug in its normalized re-check — the exact
+  `Nex`/`next`-class defect the sign-off package warns about, still present in this one script
+  (the companion+monsterability and spell scripts already had the guard). New test suite
+  `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py`, 11 tests: catches both
+  recorded incidents (`Cayden CaiLean`, `lrori`), does not match `Nex` inside `next` (RED-proved
+  live by removing the guard, confirmed 2 failures for the intended reason, reverted), and proves
+  all 5 known equipment items (`Gelugon Plate` et al.) resolve `blocked` via `.COPY=` base
+  inheritance on a scratch fixture (no oracle dependency).
+- **§19b applied:** `monster_ability`'s 954-unit embedded-creature-name problem resolves `clear`
+  (row's own PCGen declaration governs). Re-derived (not trusted): 954 units moved
+  `still_undecidable -> clear` exactly, confirmed independently against the pinned oracle. Caveat
+  (Cthulhu spell-vs-monster_ability declaration inconsistency) recorded once, not re-litigated.
+- **§19c applied:** widened `sd32_t9_pi_review_companion_monsterability.py`'s generic-mechanic
+  allowlist by ~90 named tokens across 6 stated categories (mechanic vocabulary, published PF1e
+  familiar/companion archetype names, false-positive ordinary-English words, SRD-open spell names
+  cited by Imp Companion Trick rows, feat/citation/PCGen-boilerplate tokens, and the two
+  brief-named equipment materials `Adamantine`/`Mithral`). `Shaitan` left OFF the allowlist,
+  named, per the binding condition. Companion's `still_undecidable` fell 360 -> 206 (re-derived).
+- **Final T9 disposition re-derived** (new `scripts/sd32_t9_pi_final_disposition.py` aggregates all
+  four kind scripts): **268 blocked / 3,096 clear / 209 still_undecidable** (population 3,573).
+  **Supersedes the pre-ruling 266/1,988/1,319 — do not quote those as final** (`decisions.md §19d`
+  item 3). **20 of 29 books now fully resolved** (`still_undecidable`=0), up from 11 (816 units):
+  `bestiary`, `bestiary_2`, `bestiary_3`, `bestiary_4`, `bestiary_5`, `book_of_the_damned_volume_2`,
+  `horror_adventures`, `inner_sea_bestiary`, `inner_sea_combat`, `inner_sea_faiths`,
+  `inner_sea_gods`, `inner_sea_intrigue`, `inner_sea_magic`, `inner_sea_temples`,
+  `inner_sea_world_guide`, `mythic_adventures`, `occult_adventures`, `ultimate_combat`,
+  `ultimate_equipment`, `ultimate_psionics` — **3,036 units, this is the T9 onboarding dispatch
+  list.** The largest single gain: `bestiary`/`bestiary_2`/`bestiary_3` (955 units) moved from
+  majority-undecidable to fully clear purely from §19b resolving `monster_ability`.
+- **Full per-kind and per-book tables, every figure with its command:**
+  `artifacts/gate-3-closure-invariant/t9-pi-signoff-application_cycle-1_cycle_receipt.md`.
+- **Still gated, named:** `Mantis Blade` (equipment, adventurers_guide — SPROP flavor text citing
+  an OGL-published class name, §4.3, not covered by §19), `Bleaching Resistance` (spell,
+  inner_sea_races), `Gift of the Deep` (spell, monster_codex) — both §4.3 named individual cases
+  unaffected by §19b/§19c; `Shaitan`-flagged companion row; and companion's residual 206.
+- **Read-only, as required:** no corpus data transcribed, ingested, or redacted; `data/corpus/**`
+  untouched; `LICENSE.json` not written for any book.
+- **Kanban:** row 11 stays `in-progress` (note prepended with the figures above). Row 15
+  untouched, stays `in-progress`.
+- **Dual-audit (this cycle's own diff):** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`.
+- **Scoped tests:** `python3 -m unittest scripts.tests.test_sd32_t9_pi_normalization_and_
+  inheritance -v` 11/11 OK; all five `sd32_t9_pi_*.py` scripts re-run clean against a
+  freshly-bootstrapped oracle (`PCGEN_ORACLE_SHA 7f818006e371188e5717fd18d74d18a420747fc6`). Full
+  unscoped `cargo test` not run (box contention, per dispatch brief); no Rust source changed this
+  cycle.
+- **Discovery forwards:** none requiring a new card — the two residual gaps (§4.4's 6 untraced
+  companion/monster_ability `.COPY=` targets; companion's 206 still_undecidable) are named as
+  next-cycle options in the receipt, not filed as blockers (neither blocks T9's Definition of Done
+  scope for this cycle — they narrow, not block, the onboarding dispatch list above).
+- **Next-cycle plan:** T9 onboarding (separate cycle, out of this cycle's read-only scope)
+  transcribes the 20 fully-resolved books per this disposition.
+- Receipt: `artifacts/gate-3-closure-invariant/t9-pi-signoff-application_cycle-1_cycle_receipt.md`.

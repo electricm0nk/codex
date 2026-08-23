@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from collections import defaultdict
 
 PI_BLACKLIST_TERMS = [
@@ -49,12 +50,14 @@ PI_BLACKLIST_TERMS = [
     "Jarn",
     "Cayden CaiLean",
     "lrori",
+    # decisions.md §19a amendment 3d (operator-approved 2026-08-23): a citation of a
+    # PI term in a mechanical PREABILITY prerequisite field redacts the citing record
+    # too, per the sign-off package §3d / §4.3's two named feat units.
+    "Aldori",
+    "Magaambya",
+    "Magaambyan",
 ]
-assert len(PI_BLACKLIST_TERMS) == 57
-
-# Golarion-specific proper nouns this lane found cited (in PREABILITY/prerequisite
-# fields) that are NOT in PI_BLACKLIST_TERMS -- proposed additions, not applied here.
-PROPOSED_TERM_ADDITIONS = ["Aldori", "Magaambya", "Magaambyan"]
+assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan"
 
 SOFT_HYPHEN = "­"
 
@@ -75,33 +78,69 @@ def token_value(row: str, prefix: str) -> str | None:
     return None
 
 
-def casefold_hit(row: str, terms: list[str]) -> list[str]:
-    rowcf = row.casefold()
-    return [t for t in terms if t.casefold() in rowcf]
+FREE_TEXT_TAG_PREFIXES = ("DESC:", "BENEFIT:", "SPECIALS:", "SA:")
 
 
-def ocr_variants(term: str) -> set[str]:
-    variants = set()
-    for i, ch in enumerate(term):
-        if ch == "l":
-            variants.add(term[:i] + "I" + term[i + 1:])
-        if ch == "I":
-            variants.add(term[:i] + "l" + term[i + 1:])
-    if "rn" in term:
-        variants.add(term.replace("rn", "m"))
-    if "m" in term:
-        variants.add(term.replace("m", "rn"))
-    variants.discard(term)
-    return variants
+def extract_free_text(row: str) -> str:
+    """Scope the normalized scan to prose tags only, not the whole raw row.
+
+    The whole row also carries `KEY:`/`DEFINE:`/`BONUS:` camelCase variable-name
+    soup (e.g. `...damageBonus`) that, once case-folded, produces false hits for
+    short blacklist terms (`Geb` inside `damageBonus`) -- the same false-positive
+    class `sd32_t9_pi_review_companion_monsterability.py::normalized_scan`
+    documents and fixes the same way. PI (OGL §1(e)) lives in flavour prose, not
+    in a schema's own internal variable names.
+    """
+    parts = []
+    for tok in row.split("\t"):
+        tok = tok.strip()
+        for prefix in FREE_TEXT_TAG_PREFIXES:
+            if tok.upper().startswith(prefix):
+                # `|` is PCGen's own field/sub-value delimiter, not prose -- stop
+                # at the first one so a `DESC:text|Var1|Var2` row's trailing
+                # substitution-variable names don't get scanned as if they were
+                # sentence content either.
+                parts.append(tok[len(prefix):].split("|", 1)[0])
+    return " ".join(parts).strip()
 
 
-def ocr_hit(row: str, terms: list[str]) -> list[tuple[str, str]]:
-    out = []
-    for t in terms:
-        for v in ocr_variants(t):
-            if v in row:
-                out.append((t, v))
-    return out
+# decisions.md §19a amendment 3b (operator-approved 2026-08-23), verbatim rule:
+# case-fold + a BOUNDED OCR-confusion table (l/I/1/! -> one canonical char, 0/o
+# collapsed, rn -> m), WORD-BOUNDARY matching (not bare substring), and the PCGen
+# field delimiter "|" is NEVER folded (folding it produces a false NEGATIVE on the
+# Cayden CaiLean incident itself -- confirmed by direct test, see the test suite).
+_FOLD_TABLE = str.maketrans({"l": "i", "1": "i", "!": "i", "0": "o"})
+
+
+def canonicalize(s: str) -> str:
+    s = s.casefold().replace(SOFT_HYPHEN, "-")
+    s = s.replace("rn", "m")
+    return s.translate(_FOLD_TABLE)
+
+
+_CANON_TERMS = [(t, canonicalize(t)) for t in PI_BLACKLIST_TERMS]
+
+
+def normalized_term_hit(free_text: str) -> str | None:
+    """First blacklist term whose canonicalized form appears, WORD-BOUNDED, in the
+    canonicalized free text. Word-boundary matching is mandatory, not optional: a
+    case-fold-only scan without it collides the 3-letter term "Nex" with the
+    ordinary English word "next" -- decisions.md §19a's own recorded trap, found
+    independently by two of the three T9 review lanes. See
+    `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py` for the RED
+    proof (word-boundary guard removed -> "next" false-positives) and the GREEN
+    fix, plus both recorded incident strings (`Cayden CaiLean`, `lrori`) still
+    resolving correctly with the guard in place.
+    """
+    if not free_text.strip():
+        return None
+    canon_text = canonicalize(free_text)
+    for term, canon_term in _CANON_TERMS:
+        if not canon_term:
+            continue
+        if re.search(r"(?<![a-z0-9])" + re.escape(canon_term) + r"(?![a-z0-9])", canon_text):
+            return term
+    return None
 
 
 def find_base_item_pi(corpus_root: str, book_dir_hint: str, base_name: str, index_cache: dict) -> str | None:
@@ -159,31 +198,23 @@ def main() -> None:
         for b in ("blocked", "clear", "uncertain"):
             print(f"{k}/{b}: {len(by_kb[k][b])}")
 
-    # --- 1. normalized re-check of clear buckets ---
+    # --- 1. normalized (decisions.md §19a amendment 3b) re-check of clear buckets ---
     print()
-    print("=== normalized (case-fold + OCR 1-edit) re-check of clear buckets ===")
+    print("=== normalized (case-fold + bounded OCR-confusion, word-boundary) re-check of clear buckets ===")
     total_newly_blocked = 0
-    total_newly_uncertain = 0
     for k in ("feat", "equipment", "monster"):
         clear = by_kb[k]["clear"]
-        nb, nu = [], []
+        nb = []
         for r in clear:
             row = read_row(r["resolved_path"], r["source_line"])
-            cf = casefold_hit(row, PI_BLACKLIST_TERMS)
-            if cf:
-                nb.append((r["book"], r["name"], cf))
-                continue
-            ocr = ocr_hit(row, PI_BLACKLIST_TERMS)
-            if ocr:
-                nu.append((r["book"], r["name"], ocr))
-        print(f"{k}: rechecked={len(clear)} newly_blocked={len(nb)} newly_uncertain={len(nu)}")
+            hit = normalized_term_hit(extract_free_text(row))
+            if hit:
+                nb.append((r["book"], r["name"], hit))
+        print(f"{k}: rechecked={len(clear)} newly_blocked={len(nb)}")
         for row in nb:
             print("   BLOCKED:", row)
-        for row in nu:
-            print("   UNCERTAIN:", row)
         total_newly_blocked += len(nb)
-        total_newly_uncertain += len(nu)
-    print(f"TOTAL newly_blocked={total_newly_blocked} newly_uncertain={total_newly_uncertain}")
+    print(f"TOTAL newly_blocked={total_newly_blocked}")
 
     # --- 2. .COPY/.MOD base-item PI inheritance trace, feat+equipment clear+uncertain ---
     print()
@@ -212,8 +243,8 @@ def main() -> None:
         print("  ", row)
 
     print()
-    print("=== proposed term-list additions found by this lane (not applied) ===")
-    for t in PROPOSED_TERM_ADDITIONS:
+    print("=== term-list additions applied this cycle (decisions.md §19a amendment 3d) ===")
+    for t in ("Aldori", "Magaambya", "Magaambyan"):
         print(f"  {t}")
 
 

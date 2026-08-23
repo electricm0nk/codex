@@ -90,11 +90,17 @@ EVIDENCE_FAMILIES = {
     "monster": re.compile(r"^monster_absent_from_"),
 }
 
-# Byte-identical to `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS`
-# (57 terms: 20 deities + 34 place/nation names + "Jarn" + "Cayden CaiLean"
-# + "lrori"). Kept as a literal copy rather than parsed out of the Rust
-# source so this script has no build dependency; `--verify-term-list`
-# re-checks the two stay in sync.
+# Was byte-identical to `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS` (57
+# terms: 20 deities + 34 place/nation names + "Jarn" + "Cayden CaiLean" + "lrori").
+# Kept as a literal copy rather than parsed out of the Rust source so this script
+# has no build dependency. As of `decisions.md §19a` amendment 3d (operator-approved
+# 2026-08-23) this script's own copy carries 3 more terms than the Rust production
+# constant does -- see `docs/governance/ogl-pi-blacklist.md §2.3c` for why the
+# production constant is deliberately NOT bumped in this cycle (bumping it triggers
+# corpus regeneration across every already-shipped book, out of scope for a
+# read-only sign-off-application cycle). This script's own re-derivation of T9's
+# disposition is correct with the wider list; production screening for already-
+# shipped, non-T9 books is unaffected until a future cycle applies the bump there.
 PI_BLACKLIST_TERMS = [
     "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
     "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
@@ -105,8 +111,12 @@ PI_BLACKLIST_TERMS = [
     "Jarn",
     "Cayden CaiLean",
     "lrori",
+    # decisions.md §19a amendment 3d (operator-approved 2026-08-23):
+    "Aldori",
+    "Magaambya",
+    "Magaambyan",
 ]
-assert len(PI_BLACKLIST_TERMS) == 57, "term list drifted from pi_screening.rs -- re-copy it"
+assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan (decisions.md §19a 3d)"
 
 # `ogl-pi-blacklist.md §2.3`'s named per-record-judgment tags, widened (see
 # module docstring "Limits") to every T9 kind's free-text-shaped PCGen tags.

@@ -161,7 +161,32 @@ _GENERIC_CAPWORDS = set(
     Soulbound Plant Aligned Camouflage Bestiary GM's Beast Speech Photosynthesis
     Persuasive Nimble's
     """.split()
-)
+) | {
+    # --- decisions.md §19c widening (2026-08-23), named by category ---
+    # (4) SRD-open spell names cited by "Imp Companion Trick" (book_of_the_damned_volume_1)
+    #     rows that grant the imp a spell-like use of a core spell -- OGL per §2.2's own
+    #     "spell level names" exclusion; "Imp" itself is the classic SRD-open devil monster
+    #     name (same posture as Bestiary 1's "Owlbear"/"Goblin", ogl-pi-blacklist.md §2.1).
+    "Detect", "Evil", "Law", "Doom", "Ghost", "Sound", "Mage", "Message", "Close", "Open",
+    "Prestidigitation", "Curse", "Water", "Disk", "Floating", "Grease", "Hold", "Portal",
+    "Identify", "Image", "Silent", "Servant", "Unseen", "Ventriloquism", "Bleed",
+    "Deathwatch", "Imp",
+    # (5) feat/ability names, page-citation and PCGen-boilerplate tokens read in full
+    #     row context -- none is a Golarion proper noun:
+    "Chapter", "Blow", "Intercept", "Granted", "Disruptive", "Antagonize", "Ferocious",
+    "Intimidating", "Prowess", "Hunter", "Tenacious", "Harvesting", "Poisons", "Expertise",
+    "Power", "Familiar", "Heal", "Core", "Pathfinder", "RPG", "Rulebook", "Acrobatic",
+    "Steps", "CHANGES", "RANK", "Focus", "APG", "NOT", "IMPLEMENTED",
+    # (6) equipment materials named explicitly in decisions.md §19c -- SRD-open crafting
+    #     materials, not PI:
+    "Adamantine", "Mithral",
+}
+# Left deliberately OFF this allowlist (decisions.md §19c: "if a flagged row turns on a
+# token you are not willing to allowlist, leave it undecidable and say which"):
+#   "Shaitan" -- `advanced_race_guide:Stone Curse`'s PRERACE field
+#   (RACETYPE=Shaitan Binder Eidolon). Shaitan is a genie-kin creature subtype; whether
+#   it is Golarion/Paizo-specific or public-domain-mythological (as with "imp") was not
+#   resolved by this pass. Stays `still_undecidable`.
 
 # lowercase words that precede a creature-species mention but are not
 # themselves species names (generic role/anatomy/mechanic nouns) -- used
@@ -178,7 +203,27 @@ _GENERIC_LOWER_NOUNS = set(
     number amount duration range effect source target user wielder
     creature's animal's companion's master's handler's
     """.split()
-)
+) | {
+    # --- decisions.md §19c widening (2026-08-23), named by category, verified against
+    # full row context (scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py
+    # does not re-derive this list mechanically -- it is a documented human read, per
+    # the sign-off package §4.2's own recommendation "(b) a human reads the flagged
+    # subset directly") ---
+    # (1) core save/ability-score/movement/class mechanic vocabulary (OGL §2.2, already
+    #     game-mechanical), not proper nouns:
+    "reflex", "swim", "eidolon", "intelligence", "undead", "magus", "draconic", "nonanimal",
+    # (2) published PF1e Familiar/Companion Archetype names (Ultimate Wilderness) -- OGL
+    #     mechanic subclass names, not Golarion place/deity/NPC proper nouns:
+    "ambassador", "bodyguard", "daredevil", "egotist", "emissary", "infiltrator", "mascot",
+    "mauler", "pilferer", "prankster", "protector", "totem", "valet",
+    # (3) ordinary English function/qualifier words the "a/an/the <noun>" species-reference
+    #     heuristic false-positives on -- read in full row context, none is a species name:
+    "successful", "purpose", "long", "opponent", "tricks", "black", "pair", "bull",
+    "additional", "same", "total", "chosen", "single", "start", "particular", "arcane",
+    "different", "time", "augmented", "gore", "skilled", "climb", "normal", "overrun",
+    "aberrant", "deathtouched", "feytouched", "verdant", "combat-trained", "full-round",
+    "following", "specific", "saving", "effects", "armor", "touch", "bite", "spells",
+}
 
 
 def strip_pcgen_vars(value: str) -> str:
@@ -199,6 +244,10 @@ def extract_free_text(row: str) -> str:
 
 _CAPWORD_RE = re.compile(r"\b[A-Z][a-zA-Z']+\b")
 _SPECIES_REF_RE = re.compile(r"\b(?:a|an|the)\s+([a-z][a-z\-]{3,})\b")
+# Roman numerals (spell-level suffixes: "beast shape III", "summon monster IX") are not
+# proper nouns -- decisions.md §19c widening, same fix `sd32_t9_pi_review_spell.py`
+# already applies for the `spell` kind.
+_ROMAN_NUMERAL_ONLY_RE = re.compile(r"^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")
 # Sentences within one DESC/SPECIALS value are period/!/?-delimited; the
 # FIRST word of the whole text and of every sentence after one of these is
 # capitalized by ordinary English convention and is not evidence of a
@@ -228,7 +277,10 @@ def classify_uncertain_content(free_text: str) -> tuple[str, str]:
         return "still_undecidable", "free-text tag present but resolved value empty -- cannot read content"
 
     scan_text = " ".join(_non_initial_words(free_text))
-    capwords = [w for w in _CAPWORD_RE.findall(scan_text) if w.strip("'") not in _GENERIC_CAPWORDS]
+    capwords = [
+        w for w in _CAPWORD_RE.findall(scan_text)
+        if w.strip("'") not in _GENERIC_CAPWORDS and not _ROMAN_NUMERAL_ONLY_RE.match(w)
+    ]
     if capwords:
         return "still_undecidable", f"capitalized token(s) outside generic allowlist: {sorted(set(capwords))[:6]}"
 
@@ -287,6 +339,22 @@ def main() -> None:
                 newly_blocked.append({**u, "reason": final_reason})
             else:
                 newly_blocked.append({**u, "reason": final_reason, "was": "uncertain"})
+        elif exact_bucket == "uncertain" and u["kind"] == "monster_ability":
+            # decisions.md §19b (operator ruling, 2026-08-23): a monster_ability row
+            # carrying no PI declaration and no term-list hit is not PI merely because
+            # its text names a Paizo-original creature -- the row's own declaration
+            # governs, not the content classifier's embedded-creature-name heuristic.
+            # This resolves the 954-unit "embedded-creature-name problem" (sign-off
+            # package §4.1) to `clear`, superseding this script's own prior
+            # `classify_uncertain_content` disposition for this kind only (`companion`
+            # is unaffected -- §19c's allowlist widening, not §19b's declaration rule,
+            # governs that kind).
+            final_bucket = "clear"
+            final_reason = (
+                "decisions.md §19b: monster_ability row's own PCGen declaration governs; "
+                "no NAMEISPI/DESCISPI declaration and no term-list hit found -- not PI by "
+                "association with an embedded creature name alone"
+            )
         elif exact_bucket == "uncertain":
             content_bucket, content_reason = classify_uncertain_content(free_text_for_scan)
             final_bucket, final_reason = content_bucket, content_reason
