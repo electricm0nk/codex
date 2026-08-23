@@ -3070,3 +3070,73 @@ verdicts (each lane owned a disjoint kind set).
   `v06_work_inventory.rs`'s `is_internal_category` trap the same way `census_independent.py`'s
   own `row_dependent_class_feature` branch already was; (3) re-run `card15_reconcile.py` after
   each; card 15 reaches `complete` when `total_kind_unenumerable_units` reaches 0.
+
+## Cycle `generic-ledger-rerun` — `decisions.md §17` item 3, honest current state
+
+**Measurement only, per the dispatch brief.** No engine code, corpus data, or pinned count changed.
+Two prior same-bundle cycles' self-reported figures (generic-enumeration `8e98424eb`,
+generic-spell-ingest `dcbcd803f`) were re-derived independently, not trusted.
+
+- **Shape ledger re-run:** population 24,914→28,490 confirmed exactly, `unclassified_count: 0`,
+  join-status split matched=4,802 (16.9%) / no_formula_tokens=9,720 (34.1%) / no_record=13,968
+  (49.0%). Command: `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+  --corpus-root data/corpus --output <path>`.
+- **`card15_reconcile.py` re-run:** `census_tracked_kind_population` 31,758,
+  `census_kind_unenumerable_population` 24,117, `inventory_all_units_population` 41,987 (the last
+  two independently cross-checked, not just quoted). `remaining_undisposed: 0` — arithmetic
+  checked by hand, reconciles. **Card 15's own acceptance bar (`decisions.md §12b`) is NOT met**
+  — 24,117 units still carry no family despite the honest arithmetic. Row 15 stays `in-progress`.
+  Double-counting check done explicitly: `docs/work-inventory.json` unit-id diff against the T2a/
+  T12 lane's own baseline (`985e24c1e`) shows 0 removed, 3,596 added — no unit lost identity.
+- **Card 11's five shapes, re-derived against the current inventory (all corpus SHA
+  `7f818006e371188e5717fd18d74d18a420747fc6`):**
+  - **T2b: 1,578** (unchanged since the classifier fix — no code has touched it since). Genuinely-
+    open work 1,333 (35 `Adopted Race` real units blocked on an operator ruling + 1,298 per-book
+    "other"); 238 not-work; 7 stale-ledger (substantively closed, ledger just not regenerated).
+    Full decomposition already at maximum rigor in a same-day sibling memo
+    (`card11-t2b-remeasure.md`); top-line number re-derived independently, not the full 380-line
+    breakdown.
+  - **T9: 3,573** (was 2,712 — the T2b classifier fix moved 864 `race_trait`→`monster_ability`
+    units, which are simultaneously T9 population; not new content). 266 blocked (PI), 1,988 clear
+    (pending an operator sign-off on `decisions.md §18`'s 4 proposed blacklist amendments — not
+    yet signed off), 1,319 still undecidable (needs operator answers to 2 named questions).
+  - **T12: 2,515** (was 2,453, **+62**, traced to the unit-id level: all 62 new, 0 removed, all in
+    `inner_sea_magic`, caused by that book's Gate-0 onboarding in a concurrent commit `fd6339ce4`
+    — legitimate corpus-wide growth, not a T12-specific regression; the generator that produces
+    `data.class` is unchanged since the T2a/T12 lane's own closure). Fully open, no engine
+    mechanism built yet.
+  - **T2a residual: 2,716** (was ≈2,775, **−59** — purely the T12 overlap growing, not any unit
+    individually resolving; T2a's own total, 4,284, is unchanged, same untouched generator).
+  - **T4-L9: confirmed closed and held** — `git log` on `class_feature_feat_bridge.rs` shows
+    exactly 2 commits ever, its SD-31 origin and this bundle's own closure (`e8762d846`); no commit
+    has touched it since.
+- **Gate 3:** confirmed RED (`no_record_budget_exceeded=True`, 13,968/28,490 vs. the still-pinned
+  10,530/25,055 baseline) — the already-escalated `decisions.md §14` tension, unchanged in shape,
+  **not touched** per the explicit dispatch instruction.
+- **Discovery — a pre-existing red on branch tip, confirmed still red, not this cycle's:**
+  `ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status` FAILs at this cycle's own
+  tip (own `cargo test` run, not re-quoted), caused by `8e98424eb` landing `up_powers.lst` into a
+  real tracked kind rather than the pre-§17 `files_not_enumerated` deferral a pinned test still
+  expects — already named by a concurrent lane's own receipt (`unred-branch_cycle-1_cycle_receipt.md`),
+  pulled in by this cycle's own rebase. `Kind`/`refine_kind` machinery is a concurrent lane's
+  scope; named here again for visibility, not fixed. Does not affect any figure in this cycle's
+  memo — the underlying data is correct, only the test assertion is stale.
+- **Replacement work estimate (dispatch brief item 5) — 11 named mechanisms, not books:** largest
+  two are `Kind::Ability` (5,886 units: 5,108 pending-A + 778 pending-B, reusing the already-built
+  and proven `ability_category` per-row classifier) and `is_internal_category` narrowing in
+  `v06_work_inventory.rs` (2,574 units, reusing `census_independent.py`'s own already-narrowed
+  adjudication). Full table with files and populations in the memo §7. **The withdrawn 98-cycle
+  estimate is not reinstated in any form** — this table sizes by mechanism, matching
+  `decisions.md §17`'s own ruling.
+- **Corpus SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`.
+- **Status:** complete (this cycle's own measurement scope). No card closed.
+- **Files:** `scripts/generic_pass_state_rederive.py` (new, committed re-derive script — one command
+  reproduces every figure above); `artifacts/gate-0-census-closure/generic-pass-state.md` (the
+  full memo, self-contained); `artifacts/gate-0-census-closure/generic-ledger-rerun_cycle_receipt.md`.
+- **Suites:** `python3 -m unittest scripts.tests.test_shape_ledger
+  scripts.tests.test_shape_coverage_standing_gate` 48/48 (sanity only — no code changed by this
+  cycle). No full `cargo test` re-run (no `.rs` file touched by this cycle) beyond the single
+  targeted red-confirmation above.
+- **Next-cycle plan:** dispatch against the memo §7 mechanism table — `Kind::Ability` and the
+  `is_internal_category` narrowing are the two highest-leverage items (7,660 units between them,
+  both reusing already-proven classifiers, neither needing new investigation).
