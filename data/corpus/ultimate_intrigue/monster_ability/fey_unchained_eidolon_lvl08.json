@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:09Z",
+  "data": {
+    "corpus_key": "Fey ~ Unchained Eidolon LVL08",
+    "delivery": null,
+    "description": "At 8th level, fey eidolons gain the ability to use either charm person, entangle, grease, silent image, obscuring mist, or vanish APG as a spell-like ability three times per day, and they can select an additional spell-like ability from the 1st-level list.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl08",
+    "name": "Eidolon Progession Lv.8",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "FeyLVL8"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_race_pu.lst",
+    "sha256": "5d762d17873a619855f04941f28b762dd4414148270857b0c40769553352b652",
+    "line": 15,
+    "record_key": "Fey ~ Unchained Eidolon LVL08"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:09Z",
+  "data": {
+    "corpus_key": "Fey ~ Unchained Eidolon LVL04",
+    "delivery": null,
+    "description": "At 4th level, fey eidolons gain woodland stride (as the druid ability).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl04",
+    "name": "Eidolon Progession Lv.4",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "FeyLVL4"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_race_pu.lst",
+    "sha256": "5d762d17873a619855f04941f28b762dd4414148270857b0c40769553352b652",
+    "line": 14,
+    "record_key": "Fey ~ Unchained Eidolon LVL04"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

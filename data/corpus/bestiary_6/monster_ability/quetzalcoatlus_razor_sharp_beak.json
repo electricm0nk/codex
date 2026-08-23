@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Quetzalcoatlus ~ Razor-Sharp Beak",
+    "delivery": "Extraordinary",
+    "description": "A quetzalcoatlus's bite attack has a critical multiplier of x3.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:quetzalcoatlus_razor_sharp_beak",
+    "name": "Razor-Sharp Beak",
+    "owners": [],
+    "source_page": "p.95",
+    "traits": [
+      "QuetzalcoatlusRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 32,
+    "record_key": "Quetzalcoatlus ~ Razor-Sharp Beak"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

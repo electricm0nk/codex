@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:09Z",
+  "data": {
+    "corpus_key": "Animated Object ~ Augmented Critical Multiplier",
+    "delivery": null,
+    "description": "Increase critical multiplier for melee attacks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_magic:monster_ability:animated_object_augmented_critical_multiplier",
+    "name": "Augmented Critical (Multiplier/1 CP)",
+    "owners": [],
+    "source_page": "p.111",
+    "traits": [
+      "AnimatedObjectAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_race.lst",
+    "sha256": "b3c584d7f0a08fcebf18eec699ed8a95e5c57d7ef4958b588b9889ef05655e8b",
+    "line": 9,
+    "record_key": "Animated Object ~ Augmented Critical Multiplier"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

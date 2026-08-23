@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Mokele-Mbembe ~ Whip Tail",
+    "delivery": "Extraordinary",
+    "description": "When not submerged, a mokele-mbembe can crack its tail like a whip as a standard action, creating a sonic boom in a 5-foot burst up to 20 feet away. Any creature in the burst's area must succeed at a DC %1 Fortitude save or be stunned for 1 round. Mokele-mbembes are immune to this sonic effect.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:mokele_mbembe_whip_tail",
+    "name": "Whip Tail",
+    "owners": [],
+    "source_page": "p.190",
+    "traits": [
+      "MokeleMbembeRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 29,
+    "record_key": "Mokele-Mbembe ~ Whip Tail"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Giant Raven ~ Scavenger",
+    "delivery": "Extraordinary",
+    "description": "Giant ravens are hardy birds that often feed on carrion or even undead flesh. As a direct result of this unusual dietary habit, they gain a +4 bonus on saves to resist ingested diseases.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:giant_raven_scavenger",
+    "name": "Scavenger",
+    "owners": [],
+    "source_page": "p.240",
+    "traits": [
+      "GiantRavenRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 35,
+    "record_key": "Giant Raven ~ Scavenger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

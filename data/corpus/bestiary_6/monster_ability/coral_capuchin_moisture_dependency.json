@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Coral Capuchin ~ Moisture Dependency",
+    "delivery": "Extraordinary",
+    "description": "A coral capuchin can breathe both air and water and survive indefinitely on land, but the creature must regularly be either submerged in water or thoroughly wetted down, or else it dries out. A coral capuchin can remain out of water for %1 hours before it suffers any negative effects. After this time, the creature takes 1d6 points of damage for every hour it remains dry. Bathing the creature in water of any sort resets this time frame.",
+    "description_variables": [
+      "CONSCORE"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:coral_capuchin_moisture_dependency",
+    "name": "Moisture Dependency",
+    "owners": [],
+    "source_page": "p.66",
+    "traits": [
+      "CoralCapuchinRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 6,
+    "record_key": "Coral Capuchin ~ Moisture Dependency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -586,6 +586,46 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monster_abilities: super::horror_adventures::monster_abilities_static(),
         cross_table_owner_names: &[],
     },
+    // `decisions.md §20` no_record-to-zero, round 3. Five of the eight
+    // zero-monster books `decisions.md §17a`'s re-derive found unregistered
+    // (`scripts/classify_monster_ability_rows.py`'s own "ZERO-monster books"
+    // line): every ability row in each ships owner-less by construction,
+    // since no monster row of the book exists to own it. `pathfinder_unchained`
+    // (72 rows) and `advanced_race_guide` (1 row) are deferred -- both already
+    // have a dedicated `gen_book_cache.rs` generator function for their OTHER
+    // families that this round did not touch. `mythic_adventures` (21 rows)
+    // is also deferred -- its `rules_tables/` module directory does not exist
+    // yet.
+    MonsterBook {
+        corpus_book: "ultimate_wilderness",
+        monsters: super::ultimate_wilderness::monsters_static(),
+        monster_abilities: super::ultimate_wilderness::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "ultimate_intrigue",
+        monsters: super::ultimate_intrigue::monsters_static(),
+        monster_abilities: super::ultimate_intrigue::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "ultimate_magic",
+        monsters: super::ultimate_magic::monsters_static(),
+        monster_abilities: super::ultimate_magic::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "bestiary_6",
+        monsters: super::bestiary_6::monsters_static(),
+        monster_abilities: super::bestiary_6::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "bestiary_5",
+        monsters: super::bestiary_5::monsters_static(),
+        monster_abilities: super::bestiary_5::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
 ];
 
 /// The registered book with this corpus directory id.

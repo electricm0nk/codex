@@ -2526,6 +2526,83 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for three generic hive-insect species rather than named personae",
         classified_by_cycle: "SD29-E5-F2-012",
     },
+    // `decisions.md §20` no_record-to-zero, round 3. Five zero-monster books
+    // `decisions.md §17a`'s re-derive found unregistered
+    // (`scripts/classify_monster_ability_rows.py`'s "ZERO-monster books"
+    // line). Every one has `races_lsts: &[]` -- no monster row of the book
+    // exists to own any ability, so every transcribed row ships owner-less by
+    // construction, the same shape the `bestiary_2`/`bestiary_3`/`bestiary_4`
+    // core_essentials-fallback entries already ship a subset of.
+    //
+    // Provenance verified against each file directly (not copied from the row
+    // above): `grep -c NAMEISPI:YES <abilities_lst>` -> 0 for all five;
+    // `ultimate_wilderness` alone carries 1 `NAMEISPI:YES`/`DESCISPI:YES` hit
+    // elsewhere in its 296-line abilities file (screened per-record by this
+    // generator's own PI_BLACKLIST_TERMS scan, not assumed clear).
+    MonsterBookSpec {
+        corpus_book: "ultimate_wilderness",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
+        races_lsts: &[],
+        abilities_lsts: &["uw_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_wilderness.pcc declares ISOGL:YES at line 27, carries 16 COPYRIGHT lines and a real 9,214-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Wilderness, OGL §15 Product Identity section; the abilities file's own screen runs per-record on every emitted value",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    MonsterBookSpec {
+        corpus_book: "ultimate_intrigue",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_intrigue",
+        races_lsts: &[],
+        abilities_lsts: &["ui_abilities_race_pu.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_intrigue.pcc declares ISOGL:YES at line 18, carries 18 COPYRIGHT lines and a real 9,728-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Intrigue, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    MonsterBookSpec {
+        corpus_book: "ultimate_magic",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_magic",
+        races_lsts: &[],
+        abilities_lsts: &["um_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_magic.pcc declares ISOGL:YES at line 19, carries 29 COPYRIGHT lines and a real 10,158-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Magic, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    // `ce_abilities_race.lst` -- one owner-less row (`Universal Monster Rule ~
+    // Ferocity`) physically lives under `core_essentials`'s own directory,
+    // the identical shape `bestiary`/`bestiary_2`/`bestiary_3`/`bestiary_4`'s
+    // matching entries already register for this file, reached via the same
+    // `load_corpus_file_rel_with_fallback` core_essentials fallback. Found by
+    // this generator's own citation refusal, not assumed.
+    MonsterBookSpec {
+        corpus_book: "bestiary_6",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_6",
+        races_lsts: &[],
+        abilities_lsts: &["b6_abilities_race.lst", "ce_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_6.pcc declares ISOGL:YES at line 23, carries 23 COPYRIGHT lines and a real 10,687-byte OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s -- see that book's own MonsterBookSpec entry -- verified identical (same PCGen `_core_essentials.pcc` OGL declaration governs every file it loads).",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 6, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    // `b5_abilities_race_oa.lst` -- `_bestiary_5.pcc:66` loads
+    // `support/b5_abilities_race_oa.lst|PRECAMPAIGN:1,Occult Adventures`: this
+    // repo has NOT registered `occult_adventures` as an included book, so
+    // PCGen's own chargen would not load this file for a `bestiary_5`-only
+    // campaign. Registered here anyway, deliberately: `docs/work-inventory.json`
+    // independently attributes these 3 rows to `book: "bestiary_5"` (the
+    // census walker reads a book's own `.pcc` ABILITY lines regardless of
+    // PRECAMPAIGN, which governs optional chargen inclusion, not which book
+    // physically owns the file) -- Gate 0's census already counted them as
+    // this book's content, and `decisions.md §20` requires their shape be
+    // measured, so this generator ingests what the census already scoped
+    // rather than re-litigating it. Found by this generator's own citation
+    // refusal, not assumed.
+    MonsterBookSpec {
+        corpus_book: "bestiary_5",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
+        races_lsts: &[],
+        abilities_lsts: &["b5_abilities_race.lst", "ce_abilities_race.lst", "b5_abilities_race_oa.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc declares ISOGL:YES at line 25, carries 8 COPYRIGHT lines and a real 7,806-byte OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s (see that book's own entry); `b5_abilities_race_oa.lst` is loaded by the same `_bestiary_5.pcc` (ABILITY line, no PRECAMPAIGN gate on that token).",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section; zero rows of the abilities files declare NAMEISPI:YES. One owned row (`Traits Output ~ Sahkil`, `b5_abilities_race.lst:96`) is a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped by this cycle.",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

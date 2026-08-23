@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "data": {
+    "corpus_key": "Wysp ~ Resonance",
+    "delivery": "Extraordinary",
+    "description": "A wysp's natural resonance strengthens the power of its element. The wysp grants a +2 competence bonus on attack rolls and damage rolls to all creatures within 30 feet with an elemental subtype that matches the wysp's, and to the DCs of all racial spell-like, supernatural, and extraordinary abilities of such creatures (as usual, this does not include creatures assuming an elemental form). Kineticists within 30 feet who share the wysp's element gain a +1 competence bonus on attack rolls and damage rolls. The wysp's statistics already include these bonuses.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:wysp_resonance",
+    "name": "Resonance",
+    "owners": [],
+    "source_page": "p.282",
+    "traits": [
+      "WyspRacialTrait",
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c",
+    "line": 71,
+    "record_key": "Wysp ~ Resonance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

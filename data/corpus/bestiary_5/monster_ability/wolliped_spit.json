@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "data": {
+    "corpus_key": "Wolliped ~ Spit",
+    "delivery": "Extraordinary",
+    "description": "Once per hour, a wolliped can regurgitate the contents of its stomach, spitting the foul slurry at a single target within 10 feet as a ranged touch attack. On a successful hit, the target must succeed at a DC %1 Fortitude save or be sickened for 1d4 rounds.",
+    "description_variables": [
+      "12+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:wolliped_spit",
+    "name": "Spit",
+    "owners": [],
+    "source_page": "p.279",
+    "traits": [
+      "WollipedRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c",
+    "line": 67,
+    "record_key": "Wolliped ~ Spit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

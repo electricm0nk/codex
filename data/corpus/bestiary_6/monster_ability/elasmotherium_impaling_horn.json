@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Elasmotherium ~ Impaling Horn",
+    "delivery": "Extraordinary",
+    "description": "An elasmotherium's immense horn can fully impale a creature that is two or more size categories smaller than the elasmotherium (a Medium or smaller creature for the typical elasmotherium). This ability effectively adds the grab universal monster ability to the elasmotherium's gore attack against such a creature, but if the elasmotherium successfully \"grabs\" a foe in this manner by impaling it on the horn, the elasmotherium does not gain the grappled condition. An elasmotherium's options while grappling a foe in this way are limited-it can either move while grappling the foe, or it can whip its head and attempt to fling the foe as if using the Awesome Blow feat (the damage dealt by this is equal to its gore damage). An elasmotherium can impale only one creature at a time with its horn, but can continue to attack normally with its gore.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:elasmotherium_impaling_horn",
+    "name": "Impaling Horn",
+    "owners": [],
+    "source_page": "p.185",
+    "traits": [
+      "ElasmotheriumRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 18,
+    "record_key": "Elasmotherium ~ Impaling Horn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

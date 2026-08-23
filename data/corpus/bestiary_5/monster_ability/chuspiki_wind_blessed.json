@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "data": {
+    "corpus_key": "Chuspiki ~ Wind Blessed",
+    "delivery": "Supernatural",
+    "description": "A chuspiki is treated as a Large creature for the purposes of determining the effects wind has upon it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:chuspiki_wind_blessed",
+    "name": "Wind Blessed",
+    "owners": [],
+    "source_page": "p.56",
+    "traits": [
+      "ChuspikiRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142",
+    "line": 17,
+    "record_key": "Chuspiki ~ Wind Blessed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

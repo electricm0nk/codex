@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:09Z",
+  "data": {
+    "corpus_key": "Fey ~ Unchained Eidolon LVL20",
+    "delivery": null,
+    "description": "At 20th level, fey eidolons increase their DR to DR 10/cold iron. They gain the ability to use either mass suggestion, mislead, programmed image, or veil as a spell-like ability once per day. They also can select an additional spell-like ability from the 1st-level list, the 8th-level list, or the 16th-level list.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl20",
+    "name": "Eidolon Progession Lv.20",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "FeyLVL20"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_race_pu.lst",
+    "sha256": "5d762d17873a619855f04941f28b762dd4414148270857b0c40769553352b652",
+    "line": 18,
+    "record_key": "Fey ~ Unchained Eidolon LVL20"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

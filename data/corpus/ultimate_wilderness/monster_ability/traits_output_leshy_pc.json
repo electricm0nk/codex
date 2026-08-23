@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:03Z",
+  "data": {
+    "corpus_key": "Traits Output ~ Leshy (PC)",
+    "delivery": "Extraordinary",
+    "description": "A leshy is a nature spirit that inhabits the body of a specially grown plant.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:monster_ability:traits_output_leshy_pc",
+    "name": "Leshy Traits",
+    "owners": [],
+    "source_page": "p.307",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 27,
+    "record_key": "Traits Output ~ Leshy (PC)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

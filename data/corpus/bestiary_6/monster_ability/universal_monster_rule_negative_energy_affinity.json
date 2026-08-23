@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:23:06Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Negative Energy Affinity",
+    "delivery": "Extraordinary",
+    "description": "The creature is alive but reacts to positive and negative energy as if it were undead--positive energy harms it, negative energy heals it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:universal_monster_rule_negative_energy_affinity",
+    "name": "Negative Energy Affinity",
+    "owners": [],
+    "source_page": "p.296",
+    "traits": [
+      "Universal Monster Rule",
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2447,
+    "record_key": "Universal Monster Rule ~ Negative Energy Affinity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

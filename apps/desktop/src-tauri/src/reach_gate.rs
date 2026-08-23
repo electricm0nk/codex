@@ -1631,6 +1631,30 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("horror_adventures", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("horror_adventures", "HA"))
         }
+        // `decisions.md §20` no_record-to-zero, round 3. Five previously-
+        // unregistered ZERO-monster books (`scripts/classify_monster_ability_
+        // rows.py`'s "ZERO-monster books" line): no `("book", "monsters")`
+        // claim exists because none has a `data/corpus/<book>/monster/`
+        // directory at all (`monster_chassis::MONSTER_BOOKS`'s
+        // `races_lsts: &[]` for each -- `monster_chassis.rs`), only
+        // `monster_ability`. Each wire code is the one this app already
+        // serves the book's OTHER families under (`monster_catalog::BOOK_UW`/
+        // `BOOK_UI`/`BOOK_UM`/`BOOK_B6`/`BOOK_B5`).
+        ("ultimate_wilderness", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_wilderness", "UW"))
+        }
+        ("ultimate_intrigue", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_intrigue", "UI"))
+        }
+        ("ultimate_magic", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_magic", "UM"))
+        }
+        ("bestiary_6", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_6", "B6"))
+        }
+        ("bestiary_5", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_5", "B5"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by
@@ -2765,6 +2789,11 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("inner_sea_gods", "monster_abilities", "Gap: 2 of Inner Sea Gods's 158 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("inner_sea_world_guide", "monster_abilities", "Gap: 13 of Inner Sea World Guide's 27 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("ultimate_psionics", "monster_abilities", "Gap: 64 of Ultimate Psionics's 191 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("ultimate_wilderness", "monster_abilities", "Gap: all 2 of Ultimate Wilderness's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("ultimate_intrigue", "monster_abilities", "Gap: all 6 of Ultimate Intrigue's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("ultimate_magic", "monster_abilities", "Gap: all 13 of Ultimate Magic's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("bestiary_6", "monster_abilities", "Gap: all 16 of Bestiary 6's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("bestiary_5", "monster_abilities", "Gap: all 39 of Bestiary 5's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -4287,6 +4316,167 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "horror_adventures:monster_ability:unknown_hallucinatory_camouflage",
             "horror_adventures:monster_ability:unknown_spell_like_abilities",
             "horror_adventures:monster_ability:unknown_victimize",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 2 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- ultimate_wilderness has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py ultimate_wilderness 2>&1 >/dev/null`.
+        &[
+            "ultimate_wilderness:monster_ability:plant_traits_output_pc",
+            "ultimate_wilderness:monster_ability:traits_output_leshy_pc",
+        ],
+    ),
+    (
+        "ultimate_intrigue",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 6 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- ultimate_intrigue has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py ultimate_intrigue 2>&1 >/dev/null`.
+        &[
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl01",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl04",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl08",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl12",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl16",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl20",
+        ],
+    ),
+    (
+        "ultimate_magic",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 13 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- ultimate_magic has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py ultimate_magic 2>&1 >/dev/null`.
+        &[
+            "ultimate_magic:monster_ability:animated_object_augmented_critical_multiplier",
+            "ultimate_magic:monster_ability:animated_object_augmented_critical_range",
+            "ultimate_magic:monster_ability:animated_object_exceptional_reach",
+            "ultimate_magic:monster_ability:animated_object_exceptional_reach_all",
+            "ultimate_magic:monster_ability:animated_object_improved_attack_melee",
+            "ultimate_magic:monster_ability:animated_object_improved_attack_ranged",
+            "ultimate_magic:monster_ability:animated_object_piercing_attack",
+            "ultimate_magic:monster_ability:animated_object_piercing_attack_all",
+            "ultimate_magic:monster_ability:animated_object_ranged_attack",
+            "ultimate_magic:monster_ability:animated_object_ranged_attack_all",
+            "ultimate_magic:monster_ability:animated_object_slashing_attack",
+            "ultimate_magic:monster_ability:animated_object_slashing_attack_all",
+            "ultimate_magic:monster_ability:animated_object_trip",
+        ],
+    ),
+    (
+        "bestiary_6",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 16 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- bestiary_6 has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py bestiary_6 2>&1 >/dev/null`.
+        &[
+            "bestiary_6:monster_ability:coral_capuchin_cursed_bite",
+            "bestiary_6:monster_ability:coral_capuchin_moisture_dependency",
+            "bestiary_6:monster_ability:deinotherium_sweep",
+            "bestiary_6:monster_ability:devil_monkey_puncture_armor",
+            "bestiary_6:monster_ability:dunkleosteus_gulp",
+            "bestiary_6:monster_ability:elasmotherium_impaling_horn",
+            "bestiary_6:monster_ability:giant_raven_scavenger",
+            "bestiary_6:monster_ability:kentrosaurus_defensive_spikes",
+            "bestiary_6:monster_ability:kentrosaurus_impaling_strike",
+            "bestiary_6:monster_ability:mockingfey_mock",
+            "bestiary_6:monster_ability:mockingfey_sla",
+            "bestiary_6:monster_ability:mokele_mbembe_whip_tail",
+            "bestiary_6:monster_ability:quetzalcoatlus_razor_sharp_beak",
+            "bestiary_6:monster_ability:universal_monster_rule_ferocity",
+            "bestiary_6:monster_ability:universal_monster_rule_negative_energy_affinity",
+            "bestiary_6:monster_ability:universal_monster_rule_scent",
+        ],
+    ),
+    (
+        "bestiary_5",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 39 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- bestiary_5 has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py bestiary_5 2>&1 >/dev/null`.
+        &[
+            "bestiary_5:monster_ability:aether_wysp_lesser_telekinesis",
+            "bestiary_5:monster_ability:blue_whale_hold_breath",
+            "bestiary_5:monster_ability:brain_mole_brain_drain",
+            "bestiary_5:monster_ability:brain_mole_second_sight",
+            "bestiary_5:monster_ability:brain_mole_shrouded_mind",
+            "bestiary_5:monster_ability:brain_mole_sla",
+            "bestiary_5:monster_ability:cameroceras_pressure_adaptation",
+            "bestiary_5:monster_ability:chuspiki_air_blast",
+            "bestiary_5:monster_ability:chuspiki_basic_aerokinesis",
+            "bestiary_5:monster_ability:chuspiki_sla",
+            "bestiary_5:monster_ability:chuspiki_wind_blessed",
+            "bestiary_5:monster_ability:chuspiki_wind_form",
+            "bestiary_5:monster_ability:digmaul_ball_tail",
+            "bestiary_5:monster_ability:esipil_bewildering_assault",
+            "bestiary_5:monster_ability:esipil_look_of_fear",
+            "bestiary_5:monster_ability:esipil_sla",
+            "bestiary_5:monster_ability:feather_fall_constant",
+            "bestiary_5:monster_ability:kaprosuchus_ramming_snout",
+            "bestiary_5:monster_ability:liminal_sprite_repartee",
+            "bestiary_5:monster_ability:liminal_sprite_sla",
+            "bestiary_5:monster_ability:liminal_sprite_versatile_performance",
+            "bestiary_5:monster_ability:narwhal_hold_breath",
+            "bestiary_5:monster_ability:narwhal_tusk",
+            "bestiary_5:monster_ability:plesiosaurus_ambush_attack",
+            "bestiary_5:monster_ability:sahkil_easy_to_call",
+            "bestiary_5:monster_ability:sahkil_emotional_focus",
+            "bestiary_5:monster_ability:sahkil_look_of_fear",
+            "bestiary_5:monster_ability:sahkil_skip_between",
+            "bestiary_5:monster_ability:sahkil_spirit_touch",
+            "bestiary_5:monster_ability:therizinosaurus_sprint",
+            "bestiary_5:monster_ability:therizinosaurus_sweeping_strike",
+            "bestiary_5:monster_ability:troodon_easily_trained",
+            "bestiary_5:monster_ability:universal_monster_rule_unnatural_aura",
+            "bestiary_5:monster_ability:water_wysp_drench",
+            "bestiary_5:monster_ability:wolliped_spit",
+            "bestiary_5:monster_ability:wysp_living_battery",
+            "bestiary_5:monster_ability:wysp_resonance",
+            "bestiary_5:monster_ability:wysp_servitor",
+            "bestiary_5:monster_ability:xiao_sla",
         ],
     ),
     (

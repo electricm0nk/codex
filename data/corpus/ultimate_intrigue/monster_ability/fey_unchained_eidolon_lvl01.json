@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:09Z",
+  "data": {
+    "corpus_key": "Fey ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "Starting at 1st level, fey eidolons gain the low-light vision evolution, the skilled evolution (selecting one class skill), and the ability to use either dancing lights, detect magic, ghost sound, or prestidigitation at will as a spell-like ability. Once the summoner selects this and any other spell-like abilities for his fey eidolon, the selection cannot be changed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "FeyLVL1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_race_pu.lst",
+    "sha256": "5d762d17873a619855f04941f28b762dd4414148270857b0c40769553352b652",
+    "line": 13,
+    "record_key": "Fey ~ Unchained Eidolon LVL01"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

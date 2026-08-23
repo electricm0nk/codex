@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:03Z",
+  "data": {
+    "corpus_key": "Plant Traits Output (PC)",
+    "delivery": "Extraordinary",
+    "description": "Plants breathe and eat, but do not sleep.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:monster_ability:plant_traits_output_pc",
+    "name": "Plant Traits",
+    "owners": [],
+    "source_page": "p.309",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 25,
+    "record_key": "Plant Traits Output (PC)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Unnatural Aura",
+    "delivery": "Supernatural",
+    "description": "Animals do not willingly approach the creature unless the animal's master succeeds at a DC %1 Handle Animal, Ride, or wild empathy check.",
+    "description_variables": [
+      "UMR_UnnaturalAura_DC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:universal_monster_rule_unnatural_aura",
+    "name": "Unnatural Aura",
+    "owners": [],
+    "source_page": "p.301",
+    "traits": [
+      "Universal Monster Rule",
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2439,
+    "record_key": "Universal Monster Rule ~ Unnatural Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

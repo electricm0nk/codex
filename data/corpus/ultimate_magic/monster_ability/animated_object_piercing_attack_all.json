@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:09Z",
+  "data": {
+    "corpus_key": "Animated Object ~ Piercing Attack All",
+    "delivery": null,
+    "description": "Replace all melee attacks with an attack that does the same amount of piercing damage and has a x3 multiplier.  Object abilities that specify slam attacks do not work on piercing attacks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_magic:monster_ability:animated_object_piercing_attack_all",
+    "name": "Piercing Attack (All Attacks/2 CP)",
+    "owners": [],
+    "source_page": "p.111",
+    "traits": [
+      "AnimatedObjectAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_race.lst",
+    "sha256": "b3c584d7f0a08fcebf18eec699ed8a95e5c57d7ef4958b588b9889ef05655e8b",
+    "line": 15,
+    "record_key": "Animated Object ~ Piercing Attack All"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

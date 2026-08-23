@@ -32,10 +32,25 @@
 //! line and a `grep PRECAMPAIGN` over the `.lst` itself returns nothing.
 
 mod companion_data;
+mod monster_data;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
     NaturalAttack, Speed, StatAdjustment,
+};
+
+// `decisions.md §20` no_record-to-zero, round 3: this book's own
+// `monster_ability` orphans (`monster_data.rs`'s own header derives the
+// count, including the one row `parse_desc` refused). Zero monster rows of
+// its own, so every transcribed row ships owner-less by construction -- see
+// `monster_data.rs`'s header for the exact keys and `reach_gate.rs::
+// UNREACHED_RECORD_FINDINGS` for the pinned non-reach.
+// `NaturalAttack`/`Speed`/`StatAdjustment` are deliberately NOT re-imported
+// from `monster_chassis` here -- this module already imports the companion
+// chassis' own same-named types above (`bestiary_2`'s module doc names the
+// ambiguity hazard of doing both).
+pub use super::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
 };
 
 /// Every companion creature this book defines, in corpus row order.
@@ -56,6 +71,16 @@ pub fn companions() -> &'static [CompanionRecord] {
 /// Every companion ability record this book defines, in corpus row order.
 pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
     companion_abilities_static()
+}
+
+/// Every monster stat block this book defines (0 rows -- see `monster_data.rs`).
+pub const fn monsters_static() -> &'static [MonsterStatBlock] {
+    monster_data::MONSTERS
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
+    monster_data::MONSTER_ABILITIES
 }
 
 #[cfg(test)]

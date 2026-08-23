@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Coral Capuchin ~ Cursed Bite",
+    "delivery": "Supernatural",
+    "description": "A coral capuchin's bite bestows some of the creature's benefits and weaknesses upon the victim unless the victim succeeds at a DC %1 Constitution check. The curse delivered by this bite persists for 1d6 hours, and cannot affect the same creature more than once in a 24-hour period. Affected creatures can hold their breath for double the normal amount of time, but begin drying out when exposed to air. Victims take 1d6 points of damage for every 10 minutes they are out of water, though spending a full-round action to bathe the victim in any sort of water halts this damage.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:coral_capuchin_cursed_bite",
+    "name": "Cursed Bite",
+    "owners": [],
+    "source_page": "p.66",
+    "traits": [
+      "CoralCapuchinRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 5,
+    "record_key": "Coral Capuchin ~ Cursed Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}
