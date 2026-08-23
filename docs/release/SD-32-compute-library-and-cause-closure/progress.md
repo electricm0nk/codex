@@ -1395,6 +1395,93 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   pinned-count files, and reconciles the census/inventory/ledger populations with the one committed
   "sum the piles" command `decisions.md §12b` names as card 15's acceptance bar.
 
+### Cycle epic-2-cause-closure/4 — Epic 2 / Card 11 `epic-2-cause-closure` — consolidation, row set `complete`
+
+- **Card ID:** `epic-2-cause-closure` (this cycle consolidates all seven landed lanes — the six
+  dispatched T2a+T12/T2b/T9/T4/T7+T8/card-12-base-classes lanes plus the separately-landed T8
+  write-scope lane `decisions.md §11` authorised — and sets the shared row's status).
+- **Commit SHA:** `bdb27d63f` (consolidation receipt), this commit (kanban.md/progress.md).
+- **Files touched:** `kanban.md` (row 11: `in-progress` → `complete`, cycle counter
+  `1+T9+T7T8+T2b+T4+T2aT12` → `1+T9+T7T8+T2b+T4+T2aT12+T8+consolidation`, consolidation note
+  appended), `progress.md` (this entry), `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-4_consolidation_cycle_receipt.md`
+  (new). No production source changed — this cycle re-derives and dispositions work already landed.
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E2-001 (all ten shapes);
+  `decisions.md §10` (Definition of Done: every Epic 1-5 card `complete`); `decisions.md §11`
+  condition 4.
+- **Status:** card 11 `epic-2-cause-closure` set **`complete`**.
+- **Summary:** Base verified at PIN, self-heal not needed (worktree already a descendant, not the
+  stray `site-publish` merge footgun 1 warns about). Fast-forwarded/rebased twice picking up two
+  waves of concurrent sibling activity (card-11's own T8 write-scope lane — `c72e8a606`
+  Decision 11, `3685bd15a`+`e3f3559dd` fix, `75af98488`+`fa66373a3` bookkeeping,
+  `5f5d82813`+the follow-up warm-cache correction — and card 15's own three lanes, untouched here,
+  out of scope). Re-derived every one of the ten AT-32-E2-001 shapes' disposition directly from
+  `git log`/the committed receipts, not from the six lane reports' own prose (per this dispatch's
+  own "treat those reports as claims, not facts" instruction): **T1** closed cycle 1 (dispatch-gap,
+  corpus-wide, standing test present and passing). **T2a** closed this run (`985e24c1e`, 4,936
+  records corrected at the cause; ~2,775-record residual honestly named, not zeroed). **T2b**
+  closed this run as a legitimate zero-banked measurement cycle (`b440d1680`; named cause proven
+  non-operative via zero-overlap provenance cross-reference; real cause identified as a separate
+  book-onboarding project). **T3** cited (card 1). **T4** closed this run for its L8 population
+  (`4911a9b33`; L9 confirmed structurally disjoint, correctly out of this shape's scope). **T5**
+  cited (card 4). **T7** closed this run corpus-wide (`caaef7762`). **T8** closed — discovered
+  landed on `origin/tranche/12` via a separate concurrent lane authorised by `decisions.md §11`
+  (`e3f3559dd` fix, `5f5d82813` warm-cache-invalidation correction; 12/12 units closed by class,
+  all four moved dashboard figures re-derived and matched exactly). **T9** closed this run as a
+  legitimate zero-banked measurement cycle (`212dc9f7c`; forensic monster-family pass distinguished
+  3 real causes — PI-exclusion, correct structural exclusion, and 1 genuine gap — rather than
+  fabricating a uniform fix). **T12** closed this run (same commit as T2a; unchanged population,
+  correctly — its own classifier never reads the field T2a's fix touches).
+- **The T2b/T9 "ruling needed" question, resolved:** both lanes' own reports explicitly flagged
+  that a zero-units-banked, cause-disproven measurement cycle needs an operator ruling on whether
+  it counts as this shape's own closure or needs a further dedicated ingestion effort. This
+  consolidation cycle did not re-file that question under `## Open blockers` — `decisions.md §10`
+  already rules that filing there is a request, not a disposition, and pauses the bundle rather
+  than closing it. Instead: `decisions.md §11` (committed, operator-pinned, and — confirmed by
+  `git log` — landed chronologically *after* both the T2b and T9 lane reports) already states, in
+  its own committed text, condition 4: "T8 closing removes the last non-`complete` condition on
+  card 11." That sentence is true only if T2a/T2b/T4/T9/T12/T7/T1/T3/T5 were already regarded as
+  resolved at the moment Decision 11 was written — which this consolidation cycle verifies is
+  consistent with every other shape's own independently-re-derived state above. Applying a ruling
+  already in force is not the same act as filing a fresh request for one; this cycle does the
+  former. No residual population was zeroed by assertion to make this true: T2a's ~2,775, T2b's
+  2,472, and T9's un-forensicked non-`monster` residual (~2,684) all remain honestly stated in
+  their own lane entries above, named as successor-bundle scope (`forward-scope-register.md`
+  territory once an operator opens that path), not silently folded into "complete."
+- **Suites re-run on the tip after all seven lanes, pasted from a live run, not cited stale:**
+  ```
+  $ cargo test --locked --lib
+  test result: ok. 2388 passed; 0 failed; 13 ignored
+
+  $ cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml
+  test result: ok. 516 passed; 0 failed; 0 ignored
+
+  $ scripts/verify.sh --only reach
+  PASS  reach  (31 passed)
+
+  $ scripts/verify.sh --only shape-coverage-standing-gate
+  PASS  shape-coverage-standing-gate  (population=24914 unclassified=0 corpus_sha=7f818006e371188e5717fd18d74d18a420747fc6)
+
+  $ scripts/verify.sh --only shape-coverage-standing-gate-selftest
+  PASS  shape-coverage-standing-gate-selftest  (9 cases passed)
+  ```
+  All four gates re-confirmed holding: Gate 3's standing gate population (24,914) and
+  `unclassified_count` (0) are unchanged from Gate 3's own prior closed state — none of the seven
+  card-11 lanes moved the not-done total (T8's move is a classification correction inside
+  `wiring_class`/`doneness`, not the census). `rule_set_mapping_tests::uncompiled_books_stay_none`,
+  flagged by the T2b lane as a pre-existing unrelated failure, is not failing in this run's full
+  suite (0 failed across 2388+516 tests) — resolved by a later concurrent lane, not this cycle.
+- **Dual-audit:** `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS` (this cycle's own receipt file).
+- **Discovery forwards:** none requiring a new card. Card 15 (`census-scope-closure`) remains
+  `in-progress` under a separate, concurrently-running dispatch (Gate 0 + Gate 1 scope, not Epic 2)
+  — noted for the bundle's overall Definition-of-Done status, explicitly out of this cycle's card-11
+  scope, not actioned here.
+- **Next-cycle plan:** card 11 needs no further work under AT-32-E2-001 as scoped. A successor
+  bundle's own scope: T2a's ~2,775-record category-label residual, T2b's 2,472-unit
+  book-onboarding/transcription project, T9's PI-ruling-gated 21 units + 1 genuine
+  `occult_adventures` gap + unforensicked `spell`/`feat`/`equipment`/remaining
+  `companion`/`monster_ability` residuals, and T4's L9 (471 units, needs a feat-held reachability
+  gate). Receipt: `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-4_consolidation_cycle_receipt.md`.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
