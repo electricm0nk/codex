@@ -150,25 +150,25 @@ class DonenessVerdictGridTest(unittest.TestCase):
             producer.doneness_verdict("ambiguous", "bogus-status-word", "spell")
 
 
-class ClassifierReexaminationQueueTest(unittest.TestCase):
+class ClassifierReclassifiedUnitsTest(unittest.TestCase):
     """SD-32 Epic 2 T8 (D13, `docs/release/SD-31-corpus-closure-grind/todo/defects.md`
     D13): `class_feature` units sitting in the `wiring_class='display'` +
     `status='grounded'` cross-tab cell are the classifier's own documented
-    blind spot (`_doneness_verdict_uncapped`'s `display` branch, `held`
-    rationale) -- a real consumer computed something from a unit the
-    determinator's single-row `no_magnitude_token` heuristic classified as
-    text-only. `doneness_verdict()` already routes them to `held` (correct,
-    conservative), but nothing named this population anywhere the dashboard
-    JSON exposes it, so it sat un-re-examined (D13's own title: "never
-    re-examined once stamped held"). `compute_wiring_class_summary()` must
-    surface it as a standing, generically-derived (not hardcoded-by-id)
-    population: kind=='class_feature' AND wiring_class=='display' AND
-    status=='grounded', EXCLUDED_BOOKS applied the same as every other
-    corpus-wide figure on this cache.
+    blind spot -- the determinator's single-row `no_magnitude_token`
+    heuristic never considers that `status=='grounded'` is itself real,
+    independent evidence a live consumer already computed something from the
+    unit. `compute_wiring_class_summary()` now reclassifies exactly the
+    units where that independent evidence exists (`evidence ==
+    'explanation_id_observed_in_a_real_computation'`) from `display` to
+    `computed`, BEFORE every corpus-wide rollup reads `wiring_class` --
+    so `doneness_verdict('computed', 'grounded', kind)` (unmodified) fires
+    DONE for them. A generic PREDICATE, not a hardcoded id list, so this is
+    provably a by-CLASS fix (Decision 11 condition 1), and `doneness_verdict()`
+    itself is untouched.
 
-    Mutation-proof: five units, one of each shape that must NOT count
-    (wrong kind, wrong wiring_class, wrong status, excluded book) sit beside
-    two that must."""
+    Mutation-proof: six units, one of each shape that must NOT reclassify
+    (wrong kind, wrong wiring_class, wrong status, missing the corroborating
+    evidence, excluded book) sit beside two that must."""
 
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
@@ -182,37 +182,66 @@ class ClassifierReexaminationQueueTest(unittest.TestCase):
             json.dump(doc, f)
         return doc_path
 
-    def test_only_class_feature_display_grounded_non_excluded_units_counted(self):
+    _EVIDENCE = "explanation_id_observed_in_a_real_computation"
+
+    def test_only_evidence_corroborated_display_grounded_class_features_reclassify(self):
         units = [
-            # Two genuine blind-spot units -- must count.
+            # Two genuine blind-spot units -- must reclassify to `computed`
+            # and reach DONE.
             {"id": "core_rulebook:class_feature:monk_evasion", "book": "core_rulebook",
-             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded",
+             "evidence": self._EVIDENCE},
             {"id": "core_rulebook:class_feature:rogue_evasion", "book": "core_rulebook",
-             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
-            # Wrong kind -- must NOT count.
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded",
+             "evidence": self._EVIDENCE},
+            # Wrong kind -- must NOT reclassify.
             {"id": "core_rulebook:spell:fab_spell", "book": "core_rulebook",
-             "kind": "spell", "wiring_class": "display", "status": "grounded"},
-            # Wrong wiring_class -- must NOT count.
+             "kind": "spell", "wiring_class": "display", "status": "grounded",
+             "evidence": self._EVIDENCE},
+            # Wrong wiring_class -- must NOT reclassify (already computed).
             {"id": "core_rulebook:class_feature:fab_computed", "book": "core_rulebook",
-             "kind": "class_feature", "wiring_class": "computed", "status": "grounded"},
-            # Wrong status -- must NOT count.
+             "kind": "class_feature", "wiring_class": "computed", "status": "grounded",
+             "evidence": self._EVIDENCE},
+            # Wrong status -- must NOT reclassify.
             {"id": "core_rulebook:class_feature:fab_textcomplete", "book": "core_rulebook",
-             "kind": "class_feature", "wiring_class": "display", "status": "text-complete"},
-            # Excluded book -- must NOT count even though it otherwise matches.
+             "kind": "class_feature", "wiring_class": "display", "status": "text-complete",
+             "evidence": self._EVIDENCE},
+            # Missing the corroborating evidence -- must NOT reclassify, even
+            # though kind/wiring_class/status all match. This is the guard
+            # that keeps the predicate from silently widening past D13's own
+            # scope.
+            {"id": "core_rulebook:class_feature:fab_no_evidence", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded",
+             "evidence": "some_other_evidence_string"},
+            # Excluded book -- must NOT reclassify even though it otherwise matches.
             {"id": "beginner_box:class_feature:fab_excluded", "book": "beginner_box",
-             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded",
+             "evidence": self._EVIDENCE},
         ]
         summary = producer.compute_wiring_class_summary(
             doc_path=self._doc(units), cache_path=self.cache_path
         )
-        queue = summary.get("classifier_reexamination_queue")
-        self.assertIsNotNone(queue, "classifier_reexamination_queue missing from the cache")
-        self.assertEqual(queue["count"], 2)
+        record = summary.get("classifier_reclassified_units")
+        self.assertIsNotNone(record, "classifier_reclassified_units missing from the cache")
+        self.assertEqual(record["reclassified_to"], "computed")
+        self.assertEqual(record["count"], 2)
         self.assertEqual(
-            sorted(queue["units"]),
+            sorted(record["units"]),
             ["core_rulebook:class_feature:monk_evasion",
              "core_rulebook:class_feature:rogue_evasion"],
         )
+        # The reclassification must actually land in the rollups, not just
+        # the audit-trail field: `display` drops by 2, `computed` gains 2,
+        # and the two units now count toward `done` via the UNMODIFIED
+        # computed+grounded rule.
+        self.assertEqual(summary["corpus_wide"].get("display", 0), 4)  # spell + text-complete + no-evidence + excluded
+        self.assertEqual(summary["corpus_wide"].get("computed", 0), 3)  # fab_computed + the 2 reclassified
+        # DONE = the 2 reclassified (computed+grounded) + fab_computed
+        # (already computed+grounded) + fab_textcomplete (display's own
+        # text-complete->DONE rule, unrelated to this fix) = 4.
+        self.assertEqual(summary["doneness"].get(producer.DONENESS_DONE, 0), 4)
+        # fab_computed was already computed+grounded, plus the 2 reclassified = 3.
+        self.assertEqual(summary["mechanically_confirmed_by_kind"].get("class_feature", 0), 3)
 
     def test_empty_case_is_a_real_zero_not_an_absent_field(self):
         """Decision 1a's anti-gaming doctrine: the empty case must fail
@@ -223,28 +252,39 @@ class ClassifierReexaminationQueueTest(unittest.TestCase):
         summary = producer.compute_wiring_class_summary(
             doc_path=self._doc(units), cache_path=self.cache_path
         )
-        queue = summary.get("classifier_reexamination_queue")
-        self.assertIsNotNone(queue)
-        self.assertEqual(queue["count"], 0)
-        self.assertEqual(queue["units"], [])
+        record = summary.get("classifier_reclassified_units")
+        self.assertIsNotNone(record)
+        self.assertEqual(record["count"], 0)
+        self.assertEqual(record["units"], [])
+
+    def test_doneness_verdict_itself_is_unchanged(self):
+        """This fix reclassifies `wiring_class` at tally-time -- it must NOT
+        touch `doneness_verdict()`'s own table. `display`+`grounded` still
+        maps to `held`, exactly as before, for any unit this predicate does
+        not reclassify."""
+        self.assertEqual(
+            producer.doneness_verdict("display", "grounded", "class_feature"),
+            producer.DONENESS_HELD,
+        )
 
     def test_reaches_work_inventory_panel(self):
         """The published panel (`work_inventory_panel()`) must carry the
-        field through from the cache -- this is the seam
+        audit-trail field through from the cache -- this is the seam
         `build_pf1e_dashboard`/`main()` writes into the actual published
         JSON from, per `decisions.md §11` condition 2."""
         units = [
             {"id": "core_rulebook:class_feature:monk_evasion", "book": "core_rulebook",
-             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded",
+             "evidence": self._EVIDENCE},
         ]
         summary = producer.compute_wiring_class_summary(
             doc_path=self._doc(units), cache_path=self.cache_path
         )
         inventory = {"totals": {"units": 1, "by_status": {}, "by_kind": {}}, "books": []}
         panel = producer.work_inventory_panel(inventory, wiring=summary)
-        queue = panel.get("classifier_reexamination_queue")
-        self.assertIsNotNone(queue, "classifier_reexamination_queue did not reach work_inventory_panel()")
-        self.assertEqual(queue["count"], 1)
+        record = panel.get("classifier_reclassified_units")
+        self.assertIsNotNone(record, "classifier_reclassified_units did not reach work_inventory_panel()")
+        self.assertEqual(record["count"], 1)
 
 
 class BuildUnitShardsPiRedactionTest(unittest.TestCase):

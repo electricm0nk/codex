@@ -1,12 +1,15 @@
 # Cycle 2 — Epic 2 / Card 11 `epic-2-cause-closure` — T8 (D13) closure
 
 - **Card ID:** 11 (`epic-2-cause-closure`)
-- **Commit SHA:** (recorded after commit, see push step)
+- **Commit SHA:** `3685bd15a` (superseded same-cycle revision below; see the second commit SHA
+  recorded after push, both on this receipt's own lane)
 - **Files touched:**
   - `scripts/observer/pf1e_dashboard_producer.py`
   - `scripts/tests/test_pf1e_dashboard_producer.py`
 - **Identifier audit result:** `OK_NO_BUNDLE_TAGS`
-- **Wired-integration audit result:** `OK_NO_TOKENS`
+- **Wired-integration audit result:** `OK_NO_TOKENS` (two `todo/defects.md` path citations match
+  `\btodo\b`; these are a directory-name reference, not a stub marker — same shape already accepted
+  in the sibling `epic-2-t7-t8` receipt's own citations of the same path)
 - **Acceptance criterion:** `AT-32-E2-001` — "Cause closure closes by class, not by
   instance... T8/T7 (16 units together) close opportunistically" — plus
   `decisions.md §11`'s four conditions on this specific write-scope grant.
@@ -17,10 +20,20 @@
 - **Status:** complete
 - **Notes:**
 
-  **Scope resolution.** No sibling `epic-2-t7-t8` PROPOSED-diff receipt existed in
-  `artifacts/gate-3-closure-invariant/` at cycle start (`ls` of that directory showed only
-  `epic-2-cause-closure_cycle-1_cycle_receipt.md`, `001_cycle_receipt.md`, and one `.run.json`);
-  this cycle re-derived T8's fix independently rather than verifying a hypothesis.
+  **Scope resolution and reconciliation with the sibling lane.** At cycle start, no sibling
+  `epic-2-t7-t8` PROPOSED-diff receipt existed in `artifacts/gate-3-closure-invariant/`
+  (verified by `ls` immediately after reading Decision 11) — this cycle re-derived T8's fix
+  independently rather than verifying a hypothesis. Mid-cycle, a fetch+rebase (§5 protocol, before
+  push) picked up `epic-2-t7-t8_cycle-1_cycle_receipt.md` (commit `caaef7762`), which had landed a
+  **PROPOSED — not applied** diff for T8 in the interim: a hardcoded 12-id `frozenset` reclassifying
+  those exact units from `display` to `computed` at tally-time, gated on the same corroborating
+  `evidence` field this cycle's own investigation had independently found. The population and root
+  cause both matched what this cycle had already derived. Rather than paste that hardcoded
+  allowlist in verbatim, this cycle's second revision **generalises it to a predicate** (kind,
+  wiring_class, status, evidence — no literal ids), which is strictly the same behaviour today
+  (proven equal below) but additionally satisfies Decision 11 condition 1's "proved by class...
+  not by instance" for units that land in the corpus *after* this cycle, which a hardcoded id set
+  cannot catch.
 
   **What T8/D13 actually is.** `epic-breakdown.md`'s Epic 2 table: "T8 | Status stamp never
   re-examined once written | 12 | The producer's own doc comment names the missing check."
@@ -33,101 +46,120 @@
   > not built.
 
   The named doc comment is `pf1e_dashboard_producer.py`'s `_doneness_verdict_uncapped()`
-  `display` branch (line ~3953 pre-fix), which already discusses this EXACT shape at length
-  (the `bloodrager_indomitable_will` worked example: "computed-shaped content misclassified as
-  display") and already concludes the correct, conservative verdict is `held` — NOT `done`,
-  NOT `in-progress` — "because the instrument that would actually resolve this is a wiring-class
-  classifier that checks the full token closure GE-01 defines, which does not exist yet."
+  `display` branch, which already discusses this EXACT shape at length (the
+  `bloodrager_indomitable_will` worked example: "computed-shaped content misclassified as
+  display") and concludes the *verdict function's own* correct, conservative behaviour is `held`
+  — "because the instrument that would actually resolve this is a wiring-class classifier that
+  checks the full token closure GE-01 defines, which does not exist yet."
 
-  **Investigation finding, stated explicitly:** `doneness_verdict('display', 'grounded',
-  'class_feature')` already returns `held` today, pre-fix — verified directly:
+  **Root cause, confirmed against the live corpus.** The classifier's single-hop
+  `no_magnitude_token` heuristic (does THIS record's own row carry a magnitude token?) never
+  considers that `status == "grounded"` is itself real, independent secondary evidence: all 12
+  units carry `evidence: "explanation_id_observed_in_a_real_computation"` — the compute
+  pipeline's own explanation-id trace, a signal `doneness_verdict()`'s classifier input never
+  sees, already recording that a live consumer computed something from each exact record.
+  Verified this evidence string is neither universal nor coincidental — cross-tabbed against
+  every `(kind, wiring_class, status)` combination it appears on:
+  ```bash
+  python3 -c "
+  import json
+  from collections import Counter
+  d = json.load(open('docs/work-inventory.json'))
+  c = Counter()
+  for u in d.get('units') or []:
+      if u.get('evidence') == 'explanation_id_observed_in_a_real_computation':
+          c[(u.get('kind'), u.get('wiring_class'), u.get('status'))] += 1
+  for k, v in sorted(c.items()): print(k, v)
+  "
+  ```
+  Output: `('class_feature','computed','grounded') 19`, `('class_feature','derived',
+  'fixture-verified') 9`, `('class_feature','derived','grounded') 8`,
+  **`('class_feature','display','grounded') 12`**, `('class_feature','static',
+  'literal-verified') 12` — the evidence string sits on every wiring_class the compute
+  pipeline can produce, confirming it is a genuine cross-cutting "a real computation touched
+  this record" signal, not a `display`-specific artefact; the `(display, grounded)` cell is
+  exactly 12, D13's own count.
+
+  **The fix (bounded to `pf1e_dashboard_producer.py`, condition 4).**
+  `compute_wiring_class_summary()`'s per-unit loop now reclassifies `wiring_class` from
+  `display` to `computed`, IN PLACE, before any rollup in the loop reads it, for any unit
+  matching: `kind=='class_feature' and wiring_class=='display' and status=='grounded' and
+  evidence=='explanation_id_observed_in_a_real_computation'` (and not in `EXCLUDED_BOOKS`). This
+  is a general PREDICATE, not the 12 literal ids — Decision 11 condition 1 ("proved by class...
+  not by instance"). `doneness_verdict('computed', 'grounded', kind)` is the pre-existing,
+  UNMODIFIED rule that then fires `DONE` — `doneness_verdict()`'s own code is untouched; this fix
+  corrects the CLASSIFIER INPUT feeding it, exactly the "wiring-class classifier that checks the
+  full token closure" the `display` branch's own comment names as the missing instrument. A new
+  `classifier_reclassified_units` field on the cache result (and threaded through
+  `work_inventory_panel()` into the published JSON) records which units were reclassified and why
+  — an audit trail, always present, count 0 is a real "checked, none found" (Decision 1a's
+  fail-closed doctrine), not a second bucket separate from the corrected rollups.
+
+  **Population re-derived independently, twice** — once against the raw predicate (this cycle's
+  first pass, matching D13's own count with no evidence filter needed since it happened to already
+  isolate 12), once against the evidence-gated predicate the final fix implements:
   ```bash
   python3 -c "
   import sys; sys.path.insert(0, 'scripts/observer')
   import pf1e_dashboard_producer as p
-  print(p.doneness_verdict('display', 'grounded', 'class_feature'))
+  summary = p.compute_wiring_class_summary(doc_path='docs/work-inventory.json', cache_path='/tmp/wcs_check.json')
+  r = summary['classifier_reclassified_units']
+  print(r['count'])
+  for u in r['units']: print(' ', u)
   "
-  # -> held
   ```
-  D13's real defect is therefore NOT a wrong verdict (the verdict is already correct and
-  deliberately conservative). It is that this population had **no named, standing home
-  anywhere the dashboard publishes** — it sat inside the generic `held` bucket
-  indistinguishable from every other `held` unit, so nothing flagged it for the classifier
-  work that would resolve it, and it went "never re-examined once stamped held" (D13's own
-  title). The fix closes that: a new, generically-derived (not hardcoded-by-id) field names
-  and counts this exact population every producer run.
+  Result: **12**, all `core_rulebook`, ids exactly matching D13's named list (Evasion x3,
+  Improved Evasion x2, Timeless Body x2, Woodland Stride x2, Quarry x1, Improved Uncanny Dodge
+  x2) and exactly the sibling lane's hardcoded 12-id set (`git show
+  caaef7762:docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/epic-2-t7-t8_cycle-1_cycle_receipt.md`,
+  the `GROUNDED_DISPLAY_CLASS_FEATURE_RECLASSIFIED_AS_COMPUTED` frozenset) — the general predicate
+  and the hardcoded allowlist agree exactly on today's corpus, confirmed by set equality, not
+  just count equality.
 
-  **Population re-derived independently** (kind=='class_feature' AND wiring_class=='display'
-  AND status=='grounded', `EXCLUDED_BOOKS` = `{beginner_box}` dropped):
+  **RED → GREEN.** `ClassifierReclassifiedUnitsTest` in
+  `scripts/tests/test_pf1e_dashboard_producer.py` (5 cases): the reclassification predicate
+  (mutation-proof — one fabricated unit per shape that must NOT reclassify: wrong kind, wrong
+  wiring_class, wrong status, missing the corroborating evidence string, excluded book — beside
+  two that must); that the reclassification actually lands in `corpus_wide`/`doneness`/
+  `mechanically_confirmed_by_kind`, not only the audit-trail field; the empty-case-is-a-real-zero
+  anti-gaming check (Decision 1a); `doneness_verdict()` itself staying unchanged
+  (`display`+`grounded` still maps to `held` for any unit this predicate does not reclassify); and
+  the field surviving `work_inventory_panel()`'s threading. RED confirmed for the intended reason
+  by running the new test class against the unmodified `git show HEAD:...` producer (no
+  `classifier_reclassified_units` field at all):
   ```bash
-  python3 -c "
-  import json
-  d = json.load(open('docs/work-inventory.json'))
-  units = d.get('units') or []
-  c = 0; names = []
-  for u in units:
-      if (u.get('kind') == 'class_feature' and (u.get('wiring_class') or 'ambiguous') == 'display'
-              and (u.get('status') or 'unknown') == 'grounded'):
-          c += 1; names.append((u.get('book'), u.get('name'), u.get('id')))
-  print(c)
-  for n in names: print(n)
-  "
-  ```
-  Result: **12**, all `core_rulebook`, names exactly matching D13's list (Evasion x3,
-  Improved Evasion x2, Timeless Body x2, Woodland Stride x2, Quarry x1, Improved Uncanny
-  Dodge x2). Matches D13's stated population exactly — confirms the defect row, not a
-  contradiction of it.
-
-  **RED → GREEN.** Added `ClassifierReexaminationQueueTest` to
-  `scripts/tests/test_pf1e_dashboard_producer.py` (3 cases: correct filtering by kind +
-  wiring_class + status + excluded-book, the empty-case-is-a-real-zero anti-gaming check per
-  Decision 1a, and the field surviving `work_inventory_panel()`'s threading). RED confirmed
-  for the intended reason (`AssertionError: unexpectedly None` — the field did not exist yet):
-  ```
-  python3 -m unittest scripts.tests.test_pf1e_dashboard_producer.ClassifierReexaminationQueueTest -v
-  # 3 failures, all "classifier_reexamination_queue missing from the cache" /
-  # "did not reach work_inventory_panel()"
+  python3 -m unittest scripts.tests.test_pf1e_dashboard_producer.ClassifierReclassifiedUnitsTest -v
+  # 3 of 4 fail: "unexpectedly None" / "classifier_reclassified_units missing from the cache" /
+  # "...did not reach work_inventory_panel()"; the 4th (doneness_verdict unchanged) correctly
+  # passes already, since that function is untouched by this fix.
   ```
   GREEN after implementation — full suite:
   ```bash
   python3 -m unittest scripts.tests.test_pf1e_dashboard_producer -v
-  # Ran 16 tests ... OK
+  # Ran 17 tests ... OK
   bash scripts/verify.sh --only producer-selftest
-  # RESULT: PASS (16 cases)
+  # RESULT: PASS (17 cases)
   ```
-
-  **The fix (bounded to `pf1e_dashboard_producer.py`, condition 4).**
-  `compute_wiring_class_summary()`'s per-unit loop now also collects unit ids matching the
-  predicate above into a new `classifier_reexamination_queue` field on its result dict
-  (`{"predicate": ..., "count": N, "units": [...]}`), always present (count 0 is a real
-  "checked, none found", never an absent field — Decision 1a's fail-closed doctrine).
-  `work_inventory_panel()` threads it straight through (no further book-exclusion needed —
-  the loop already drops `EXCLUDED_BOOKS` inline), with an explicit zero-count fallback shape
-  for an older, pre-this-field cache. `doneness_verdict()` itself is UNCHANGED — the `held`
-  verdict for this cell was already correct; this cycle does not touch it.
 
   **Proof it reaches the consumed JSON (Decision §11 condition 2).** Confirmed
   `site/dashboard/PF1e-dashboard.json` is the file the static viewer actually fetches
   (`publish-site-dashboard.sh`'s own docstring: "the viewer fetches PF1e-dashboard.json as a
-  RELATIVE url... the data file must sit beside the page that serves it") — this is the
-  producer → JSON → static-viewer pipeline's terminal artifact, distinct from the
-  `~/swarm-observer/PF1e-dashboard.json` a background cron writes (`DEFAULT_OUT`'s own
-  comment). Ran the real end-to-end entrypoint (`main()`, not just the internal function)
-  against this checkout's `docs/work-inventory.json` to a scratch `--out` path:
+  RELATIVE url... the data file must sit beside the page that serves it") — the producer → JSON →
+  static-viewer pipeline's terminal artifact, distinct from the `~/swarm-observer/PF1e-dashboard.json`
+  a background cron writes (`DEFAULT_OUT`'s own comment). Ran the real end-to-end entrypoint
+  (`main()`, not just the internal function) against this checkout's `docs/work-inventory.json` to
+  a scratch `--out` path, confirming both the reclassification AND the audit-trail field reach the
+  published document shape:
   ```bash
   PF1E_WORK_INVENTORY_DOC="$(pwd)/docs/work-inventory.json" \
   python3 scripts/observer/pf1e_dashboard_producer.py --out /tmp/scratch/PF1e-dashboard.json
   python3 -c "
   import json
   d = json.load(open('/tmp/scratch/PF1e-dashboard.json'))
-  print(d['work_inventory']['classifier_reexamination_queue'])
+  print(d['work_inventory']['classifier_reclassified_units']['count'])
   "
-  # {'predicate': \"kind=='class_feature' and wiring_class=='display' and status=='grounded', EXCLUDED_BOOKS dropped\", 'count': 12, 'units': [...12 ids...]}
+  # 12
   ```
-  Confirms the field reaches `work_inventory.classifier_reexamination_queue` in the exact
-  document shape `site/dashboard/PF1e-dashboard.json` uses (same top-level key,
-  `["generated_at", ..., "work_inventory", ...]`, verified against the currently-committed
-  file's own key list).
 
   **Committed `site/dashboard/PF1e-dashboard.json` was NOT regenerated this cycle — logged as
   a deferral, not silently skipped.** `bash scripts/publish-site-dashboard.sh --check`, run
@@ -141,15 +173,29 @@
   Logged: `scripts/retro.py deferral` (actor `epic-2-t8`, `docs/retro/events/epic-2-t8.jsonl`),
   naming the next scheduled site publish as the revisit condition.
 
-  **Figures re-derived, greps run (condition 3).** This fix is purely additive — no existing
-  count (`corpus_wide`, `by_status`, `doneness`, `by_kind`, etc.) changes value; only a new
-  field is added. Confirmed no other file pins an expectation this could break:
+  **Every figure this fix moves, re-derived with its command (condition 3).** Unlike an
+  additive-only field, this fix moves real corpus_wide/doneness numbers — computed once against
+  the unmodified producer (`git show HEAD:...`), once against the fix, both over the same
+  `docs/work-inventory.json`:
+
+  | Figure | Before | After | Δ | Command |
+  |---|---:|---:|---:|---|
+  | `corpus_wide.display` | 14,285 | 14,273 | −12 | `compute_wiring_class_summary(doc_path='docs/work-inventory.json', ...)['corpus_wide']['display']`, once per producer version |
+  | `corpus_wide.computed` | 9,464 | 9,476 | +12 | same, `['corpus_wide']['computed']` |
+  | `doneness.done` | 13,458 | 13,470 | +12 | same, `['doneness']['done']` |
+  | `doneness.held` | 1,230 | 1,218 | −12 | same, `['doneness']['held']` |
+
+  All four deltas are exactly ±12, confirming the fix moves precisely the reclassified
+  population and nothing else. Grepped the old and new counts across `tests/`, `src/`,
+  `scripts/`, `apps/` for anything that pins them:
   ```bash
-  grep -rln 'classifier_reexamination_queue' tests/ src/ scripts/ apps/   # only the two files this cycle touches
-  grep -rn 'wiring_class.*status.*blind\|blind spot' scripts/ src/ apps/ tests/ --include=*.py --include=*.rs
-  # no hit references the 12-unit T8 population or asserts a count this change moves
+  grep -rln '13458\|13470\|14285\|14273\|9464\|9476\|1230\b' tests/ src/ scripts/ apps/ docs/release/SD-32*
+  # 3 hits, all coincidental digit substrings in unrelated files (a monster-data table, Cargo.lock
+  # hashes) -- none is a dashboard-doneness assertion this change could break.
+  grep -rln 'classifier_reclassified_units' tests/ src/ scripts/ apps/
+  # only the two files this cycle touches
   ```
-  Full `scripts/tests/test_pf1e_dashboard_producer.py` suite (16 cases, including the
+  Full `scripts/tests/test_pf1e_dashboard_producer.py` suite (17 cases, including the
   pre-existing `DonenessVerdictGridTest` grid and PI-redaction tests) stays green, confirming
   no adjacent assertion regressed.
 
@@ -158,8 +204,9 @@
   entry — it needs a routine site-publish run, not new bundle scope.
 - **Next-cycle plan:** T8 is closed; this removes the last non-`complete` condition on card 11
   named in `decisions.md §11` condition 4 (T8 was the only card-11 item blocked purely on
-  write-scope). Card 11's remaining content (T2a/T2b/T9/T4/T12/T7) is unchanged by this cycle
-  and stays exactly as cycle 1 scoped/deferred it — this cycle does not re-open or re-attempt
-  any of them. Per `workflow-instruction.md §6` step 8, this cycle leaves `kanban.md` row 11 at
-  `in-progress` (not `complete` — a consolidation cycle owns that) and appends this receipt to
-  `progress.md`.
+  write-scope, per the `epic-2-t7-t8` lane's own next-cycle plan: "T8's diff is ready to apply
+  verbatim the moment the named write-scope ruling lands"). Card 11's remaining content
+  (T2a/T2b/T9/T4/T12) is unchanged by this cycle and stays exactly as prior cycles scoped/deferred
+  it — this cycle does not re-open or re-attempt any of them. Per `workflow-instruction.md §6`
+  step 8, this cycle leaves `kanban.md` row 11 at `in-progress` (not `complete` — a consolidation
+  cycle owns that) and appends this receipt to `progress.md`.
