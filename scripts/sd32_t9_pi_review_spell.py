@@ -75,41 +75,33 @@ audit = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
 _spec.loader.exec_module(audit)  # reuse its EVIDENCE_FAMILIES / PI_BLACKLIST_TERMS / classify_row / resolve_source_file / read_row verbatim
 
+sys.path.insert(0, str(_HERE))
+from pi_scrub import normalized_term_hits as _shared_normalized_term_hits  # noqa: E402
 
 # ---------------------------------------------------------------------------
-# Normalized (case-fold + bounded OCR-confusion) term scan
+# Normalized (case-fold + bounded OCR-confusion + word-boundary) term scan
 # ---------------------------------------------------------------------------
-
-def ocr_normalize(s: str) -> str:
-    s = s.casefold()
-    s = s.replace(audit.SOFT_HYPHEN, "")
-    # l (lowercase L) / 1 (digit one) both commonly OCR-confused with
-    # lowercase i in scanned-PDF-derived serif text -- the recorded
-    # incident class (lrori/Irori). "|" is deliberately NOT in this set;
-    # see module docstring.
-    for ch in ("l", "1"):
-        s = s.replace(ch, "i")
-    # rn/m ligature confusion, another common scan artifact.
-    s = s.replace("rn", "m")
-    return s
-
-
-_NORM_TERMS = [(t, ocr_normalize(t)) for t in audit.PI_BLACKLIST_TERMS]
+#
+# `decisions.md §26`: this file previously carried its own `ocr_normalize`
+# fold and its own bare-substring-then-word-boundary re-implementation of
+# the scan (drifted from `sd32_t9_pi_review_feat_equipment.py`'s and
+# `sd32_t9_pi_review_companion_monsterability.py`'s copies -- the exact
+# duplication shape `decisions.md §17` names, and the live cause of the
+# `bard_s_escape.json` false positive this cycle found: the drifted copy
+# had no guard against the "Jarn"->"jam" OCR-fold collision with an
+# ordinary English word). The fold + word-boundary matcher now lives in
+# the shared `pi_scrub.normalized_term_hit`, imported above. This function
+# keeps ONLY what is genuinely this call site's own: reporting hits that
+# are NEW versus the exact-substring scan `sd32_t9_pi_exposure_audit.py`
+# already ran, not every hit.
 
 
 def normalized_term_hits(row: str) -> list[str]:
     """Blacklist terms hit under the normalized scan but NOT already an
     exact-substring hit -- i.e. genuinely NEW findings the production
     scan (and the audit's classify_row) would miss today."""
-    norm_row = ocr_normalize(row)
     exact_hits = {t for t in audit.PI_BLACKLIST_TERMS if t in row}
-    hits = []
-    for orig, norm_t in _NORM_TERMS:
-        if orig in exact_hits:
-            continue
-        if re.search(r"(?<![a-z0-9])" + re.escape(norm_t) + r"(?![a-z0-9])", norm_row):
-            hits.append(orig)
-    return hits
+    return [t for t in _shared_normalized_term_hits(row) if t not in exact_hits]
 
 
 # ---------------------------------------------------------------------------

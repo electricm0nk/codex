@@ -44,23 +44,157 @@ Every ingest path that redacts a record's raw tokens for Product Identity
 must import `scrub_name_pi_tokens` from HERE — never re-define it locally.
 `decisions.md §17` names this exact duplication-drift shape as the failure
 `§24b`'s screen must not repeat.
+
+**`decisions.md §26` (2026-08-23): this module is now also the ONE shared
+home for `PI_BLACKLIST_TERMS`, `canonicalize`, and `normalized_term_hit`** —
+the case-fold + bounded-OCR-confusion + word-boundary blacklist scan that
+`decisions.md §19a` amendment 3b mandates. Before this cycle, three review
+scripts (`sd32_t9_pi_review_companion_monsterability.py`,
+`sd32_t9_pi_review_feat_equipment.py`, `sd32_t9_pi_review_spell.py`) plus
+`sd32_t9_pi_exposure_audit.py` each carried an independent copy of the term
+list and/or the fold function — a duplication-drift shape identical to the
+one this module's `scrub_name_pi_tokens` was already extracted to fix. All
+four now import from here; none re-defines it.
 """
 from __future__ import annotations
 
-import os
 import re
-import sys
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sd32_t9_pi_review_feat_equipment import (  # noqa: E402
-    PI_BLACKLIST_TERMS,
-    normalized_term_hit,
-)
 
 # `src/rules_core/shape_b_v1.rs::REDACTED_PI_MARKER` / `PI_MARKER_REDACTED` —
 # the same literal every generator in this program uses.
 REDACTED_PI_MARKER = "[redacted PI]"
 PI_MARKER_REDACTED = "redacted"
+
+# ---------------------------------------------------------------------------
+# Shared blacklist term list + normalized (case-fold + bounded-OCR-confusion +
+# word-boundary) scan. `decisions.md §19a` amendment 3b / `§26`.
+# ---------------------------------------------------------------------------
+
+# Script-side copy, byte-identical across the four call sites this module now
+# unifies (verified before the merge: `sd32_t9_pi_exposure_audit.py` and
+# `sd32_t9_pi_review_feat_equipment.py` both asserted `len == 60` over an
+# identical ordered list). `ogl-pi-blacklist.md §2.3c`: the Rust production
+# constant `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS` is a
+# deliberately separate, currently-61-term copy — out of this module's scope
+# (bumping it triggers corpus regeneration across every shipped book).
+PI_BLACKLIST_TERMS = [
+    "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
+    "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
+    "Golarion", "Absalom", "Cheliax", "Varisia", "Andoran", "Taldor", "Osirion", "Katapesh", "Ustalav", "Numeria",
+    "Mwangi", "Tian Xia", "Avistan", "Garund", "Sarkoris", "Worldwound", "Vudra", "Kyonin", "Molthune", "Nidal",
+    "Nirmathas", "Qadira", "Razmiran", "Rahadoum", "Galt", "Isger", "Lastwall", "Brevoy", "Druma", "Irrisen",
+    "Jalmeray", "Thuvia", "Geb", "Nex",
+    "Jarn",
+    "Cayden CaiLean",
+    "lrori",
+    # decisions.md §19a amendment 3d (operator-approved 2026-08-23):
+    "Aldori",
+    "Magaambya",
+    "Magaambyan",
+]
+assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan (decisions.md §19a 3d)"
+
+SOFT_HYPHEN = "­"
+
+# decisions.md §19a amendment 3b, verbatim rule: case-fold + a BOUNDED
+# OCR-confusion table (l/I/1/! -> one canonical char, 0/o collapsed, rn -> m),
+# WORD-BOUNDARY matching (not bare substring). The PCGen field delimiter "|"
+# is NEVER folded (folding it produces a false NEGATIVE on the Cayden
+# CaiLean incident itself — confirmed by direct test).
+_FOLD_TABLE = str.maketrans({"l": "i", "1": "i", "!": "i", "0": "o"})
+
+# `decisions.md §26`: "Jarn" is the ONLY blacklist term containing the
+# substring "rn", so it is the ONLY term the rn->m fold ever applies to
+# today. Folded, "Jarn" canonicalizes to "jam" — an ordinary, extremely
+# common English word that occurs constantly in genuine OGL prose ("...out
+# of a tight jam...", by coordinate:
+# `data/corpus/advanced_players_guide/spell/bard_s_escape.json`
+# `data.raw_tokens[DESC]`, a `license: OGL` record with no PI content).
+# Word-boundary matching does NOT prevent this: "jam" is itself a
+# boundary-clean whole word, so the false positive survives the
+# word-boundary guard that fixes the unrelated "Nex"/"next" class.
+#
+# "Jarn" has never been recorded as a scanned-OCR artifact (unlike
+# Irori/lrori, Cayden Cailean/CaiLean, `ogl-pi-blacklist.md §4`) — it was
+# found as a correctly, plainly spelled NPC name in ACG's own prose
+# (`ogl-pi-blacklist.md §4`, ACG override entry). No known corpus
+# occurrence depends on the rn->m fold to catch "Jarn"; disabling that one
+# substitution for this one term therefore removes no proven real-OCR
+# coverage. Case-fold and the l/1/!/0 fold still apply to "Jarn" — a
+# plainly-spelled, mixed-case, or punctuation-noised occurrence still
+# hits. Only the rn->m substitution is skipped, and ONLY when comparing
+# against this specific term (the haystack's OWN rn->m fold is likewise
+# skipped for this one comparison, so a literal, un-OCR'd "Jarn" in text
+# still canonicalizes to "jarn", not "jam", and still matches).
+_RN_FOLD_EXEMPT_TERMS_CASEFOLD = {"jarn"}
+
+
+def canonicalize(s: str, *, apply_rn_fold: bool = True) -> str:
+    """Case-fold + bounded OCR-confusion fold. `apply_rn_fold=False` skips
+    ONLY the rn->m substitution — used for the `_RN_FOLD_EXEMPT_TERMS_CASEFOLD`
+    carve-out (`decisions.md §26`); every other fold still applies."""
+    s = s.casefold().replace(SOFT_HYPHEN, "-")
+    if apply_rn_fold:
+        s = s.replace("rn", "m")
+    return s.translate(_FOLD_TABLE)
+
+
+def _term_needs_rn_fold(term: str) -> bool:
+    return term.casefold() not in _RN_FOLD_EXEMPT_TERMS_CASEFOLD
+
+
+_CANON_TERMS: list[tuple[str, str, bool]] = [
+    (term, canonicalize(term, apply_rn_fold=_term_needs_rn_fold(term)), _term_needs_rn_fold(term))
+    for term in PI_BLACKLIST_TERMS
+]
+
+
+def normalized_term_hit(free_text: str) -> str | None:
+    """First blacklist term whose canonicalized form appears, WORD-BOUNDED, in
+    the canonicalized free text. Word-boundary matching is mandatory, not
+    optional: a case-fold-only scan without it collides the 3-letter term
+    "Nex" with the ordinary English word "next" — `decisions.md §19a`'s
+    recorded trap, found independently by two of the three T9 review lanes.
+
+    Each term is matched against a haystack canonicalized with THAT term's
+    own `apply_rn_fold` policy (see `_RN_FOLD_EXEMPT_TERMS_CASEFOLD` above) —
+    not one shared haystack — so exempting "Jarn" from the rn->m fold cannot
+    silently also un-fold the haystack for every OTHER term's comparison,
+    and a literal, un-OCR'd "Jarn" in text is still folded consistently with
+    the term side (both un-rn-folded), so the plain-spelling catch this term
+    was added for (`ogl-pi-blacklist.md §4`, ACG override) still works.
+
+    See `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py` for
+    the RED proof (word-boundary guard removed -> "next" false-positives;
+    rn->m exemption removed -> "a tight jam" false-positives) and the GREEN
+    fix, plus the recorded incident strings (`Cayden CaiLean`, `lrori`)
+    still resolving correctly with both guards in place.
+    """
+    hits = normalized_term_hits(free_text)
+    return hits[0] if hits else None
+
+
+def normalized_term_hits(free_text: str) -> list[str]:
+    """Every blacklist term whose canonicalized form appears, WORD-BOUNDED, in
+    the canonicalized free text — the same scan `normalized_term_hit` runs,
+    but reporting every hit rather than only the first. A caller that needs
+    "is this row blocked at all" wants `normalized_term_hit`; a caller that
+    reports which terms hit (e.g. for a human-facing receipt) wants this."""
+    if not free_text.strip():
+        return []
+    text_casefold = free_text.casefold().replace(SOFT_HYPHEN, "-")
+    canon_text_by_rn_fold = {
+        True: text_casefold.replace("rn", "m").translate(_FOLD_TABLE),
+        False: text_casefold.translate(_FOLD_TABLE),
+    }
+    hits = []
+    for term, canon_term, needs_rn_fold in _CANON_TERMS:
+        if not canon_term:
+            continue
+        canon_text = canon_text_by_rn_fold[needs_rn_fold]
+        if re.search(r"(?<![a-z0-9])" + re.escape(canon_term) + r"(?![a-z0-9])", canon_text):
+            hits.append(term)
+    return hits
 
 # The minimum normalized-character length a needle/term must reach before the
 # alphanumeric-normalized (no-separator) check applies to it. Below this

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import unittest
 
@@ -98,31 +99,45 @@ class TheFourOriginallyReportedRecordsTest(unittest.TestCase):
 
 
 class SpellFalsePositiveTest(unittest.TestCase):
-    """`§17a` self-correction: the fourth originally-reported record
-    (`advanced_players_guide/spell/bard_s_escape.json`) is NOT a real leak.
-    `normalized_term_hit` flags it only because its OCR-confusion fold
-    (`rn` -> `m`) canonicalizes one blacklist term to the same string as an
-    ordinary English word that appears in this record's genuine, OGL prose
-    -- confirmed by direct inspection: the flagged term does not appear
-    anywhere in the record's actual bytes. Documented, not fixed here (the
-    fold table itself is `decisions.md §19a`'s own approved scheme, out of
-    this cycle's scope to change; `ogl-pi-blacklist.md`'s per-book-override
-    section is where a future cycle would record either a term-specific
-    carve-out or a §19a amendment)."""
+    """`§17a` self-correction, then `decisions.md §26`'s fix: the fourth
+    originally-reported record (`advanced_players_guide/spell/bard_s_escape.json`)
+    was NEVER a real leak. `normalized_term_hit` used to flag it only
+    because its OCR-confusion fold (`rn` -> `m`) canonicalized the
+    blacklist term "Jarn" to "jam" -- the same string as an ordinary
+    English word that appears in this record's genuine, OGL prose ("...out
+    of a tight jam..."). `decisions.md §26` fixed this at the cause
+    (`pi_scrub.py`'s `_RN_FOLD_EXEMPT_TERMS_CASEFOLD`): the scan no longer
+    flags this record at all. `test_pi_key_rawtokens_defect1_regen.py` no
+    longer needs to document a live false positive as tolerated -- it
+    proves the fix directly."""
 
-    def test_the_record_carries_none_of_its_own_flagged_term_literally(self):
+    def test_the_record_no_longer_false_positives_under_the_fixed_scan(self):
         record = _load("data/corpus/advanced_players_guide/spell/bard_s_escape.json")
-        flat = json.dumps(record)
-        hit = normalized_term_hit(record["data"]["description"])
-        self.assertIsNotNone(hit, "sanity: the normalized scan must still flag this record")
-        # The literal flagged term (case-insensitive) is not actually
-        # present anywhere in the record's real bytes -- the hit is an
-        # artifact of the OCR-fold canonicalization colliding with
-        # ordinary prose, not a real Product Identity leak.
-        self.assertNotIn(hit.lower(), flat.lower())
-        # This record was never touched by this cycle's fix and correctly
-        # remains OGL.
+        _assert_record_carries_no_blacklist_hit(self, record)
+        # This record was never touched by any cycle's fix and correctly
+        # remains OGL -- the fix was to the SCAN, never to the corpus.
         self.assertEqual(record["license"], "OGL")
+
+    def test_reproduces_the_false_positive_against_an_unfixed_matcher(self):
+        """Confirms the defect this test class documents was real, without
+        depending on the corpus record's exact bytes staying identical
+        forever: an unfixed (no rn-fold exemption) re-implementation of the
+        same canonicalize+word-boundary scan still flags the record's real
+        description text, exactly as the pre-`§26` shared function did."""
+        record = _load("data/corpus/advanced_players_guide/spell/bard_s_escape.json")
+        description = record["data"]["description"]
+        unfixed_canon_text = description.casefold().replace("rn", "m")
+        unfixed_canon_jarn = "jarn".replace("rn", "m")  # "jam", no exemption
+        self.assertRegex(
+            unfixed_canon_text,
+            r"(?<![a-z0-9])" + re.escape(unfixed_canon_jarn) + r"(?![a-z0-9])",
+            "sanity: an unfixed matcher must still reproduce the false positive "
+            "this test class exists to guard against",
+        )
+        # And the flagged term is not actually present anywhere in the
+        # record's real bytes -- confirming the (reproduced) hit was always
+        # an artifact of the fold, never a real Product Identity leak.
+        self.assertNotIn("jarn", json.dumps(record).lower())
 
 
 if __name__ == "__main__":

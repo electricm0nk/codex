@@ -90,32 +90,16 @@ EVIDENCE_FAMILIES = {
     "monster": re.compile(r"^monster_absent_from_"),
 }
 
-# Was byte-identical to `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS` (57
-# terms: 20 deities + 34 place/nation names + "Jarn" + "Cayden CaiLean" + "lrori").
-# Kept as a literal copy rather than parsed out of the Rust source so this script
-# has no build dependency. As of `decisions.md §19a` amendment 3d (operator-approved
-# 2026-08-23) this script's own copy carries 3 more terms than the Rust production
-# constant does -- see `docs/governance/ogl-pi-blacklist.md §2.3c` for why the
-# production constant is deliberately NOT bumped in this cycle (bumping it triggers
-# corpus regeneration across every already-shipped book, out of scope for a
-# read-only sign-off-application cycle). This script's own re-derivation of T9's
-# disposition is correct with the wider list; production screening for already-
-# shipped, non-T9 books is unaffected until a future cycle applies the bump there.
-PI_BLACKLIST_TERMS = [
-    "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
-    "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
-    "Golarion", "Absalom", "Cheliax", "Varisia", "Andoran", "Taldor", "Osirion", "Katapesh", "Ustalav", "Numeria",
-    "Mwangi", "Tian Xia", "Avistan", "Garund", "Sarkoris", "Worldwound", "Vudra", "Kyonin", "Molthune", "Nidal",
-    "Nirmathas", "Qadira", "Razmiran", "Rahadoum", "Galt", "Isger", "Lastwall", "Brevoy", "Druma", "Irrisen",
-    "Jalmeray", "Thuvia", "Geb", "Nex",
-    "Jarn",
-    "Cayden CaiLean",
-    "lrori",
-    # decisions.md §19a amendment 3d (operator-approved 2026-08-23):
-    "Aldori",
-    "Magaambya",
-    "Magaambyan",
-]
+# `decisions.md §26`: imported from `pi_scrub.py`, the ONE shared home for
+# this list (was byte-identical to `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS`,
+# 57 terms, plus 3 more added by `decisions.md §19a` amendment 3d -- see
+# `pi_scrub.py`'s own docstring for the full provenance note, and
+# `ogl-pi-blacklist.md §2.3c` for why the separate 61-term Rust production
+# constant is not bumped here). Previously a second literal copy of this list
+# lived in this file -- removed as part of `§26`'s duplication-drift fix.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pi_scrub import PI_BLACKLIST_TERMS  # noqa: E402
+
 assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan (decisions.md §19a 3d)"
 
 # `ogl-pi-blacklist.md §2.3`'s named per-record-judgment tags, widened (see

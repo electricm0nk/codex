@@ -43,6 +43,12 @@ fe = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
 _spec.loader.exec_module(fe)
 
+_PI_SCRUB_PATH = pathlib.Path(__file__).resolve().parent.parent / "pi_scrub.py"
+_scrub_spec = importlib.util.spec_from_file_location("pi_scrub", _PI_SCRUB_PATH)
+pi_scrub = importlib.util.module_from_spec(_scrub_spec)
+assert _scrub_spec.loader is not None
+_scrub_spec.loader.exec_module(pi_scrub)
+
 
 class Scratch:
     def __init__(self, name: str):
@@ -174,6 +180,130 @@ class NormalizationRuleTests(unittest.TestCase):
             fe.canonicalize(free_text_adjacent),
             r"(?<![a-z0-9])" + re.escape(canon_nex) + r"(?![a-z0-9])",
         )
+
+
+# ---------------------------------------------------------------------------
+# decisions.md §26 -- the "Jarn"/"jam" false positive (bard_s_escape.json),
+# and why word-boundary matching alone (already present in this file's
+# `normalized_term_hit` before this cycle) did NOT prevent it.
+# ---------------------------------------------------------------------------
+
+class Section26JarnJamFoldCollisionTests(unittest.TestCase):
+    """`decisions.md §26`. The operator's ruling was "add the word
+    boundary" -- but `sd32_t9_pi_review_feat_equipment.py`'s
+    `normalized_term_hit` (imported here as `fe.normalized_term_hit`, now
+    re-exported from the shared `pi_scrub.py`) was ALREADY word-bounded
+    before this cycle. Reproducing the `bard_s_escape.json` false positive
+    against that already-word-bounded function proves the word-boundary
+    guard alone does not kill it: "Jarn" canonicalizes (rn -> m) to "jam",
+    an ordinary whole word, so the collision survives word-boundary
+    matching. The real fix is `pi_scrub._RN_FOLD_EXEMPT_TERMS_CASEFOLD`.
+    """
+
+    def test_reproduces_the_bard_s_escape_false_positive_pre_fix(self):
+        """Direct reproduction against the real corpus text (the OGL prose
+        from `data/corpus/advanced_players_guide/spell/bard_s_escape.json`
+        `data.raw_tokens[DESC]`, license: OGL, correctly untouched)."""
+        free_text = (
+            "You whisk yourself and willing allies out of a tight jam, or "
+            "instantly transfer yourselves to another location to achieve "
+            "greater strategic positioning."
+        )
+        self.assertIsNone(
+            fe.normalized_term_hit(free_text),
+            "the record is genuinely OGL -- the fold-collision false positive "
+            "must not survive",
+        )
+
+    def test_word_boundary_alone_does_not_prevent_the_collision(self):
+        """RED proof for the DIAGNOSIS, not just the fix: an already-
+        word-bounded reimplementation of the scan (boundary regex intact,
+        rn->m exemption removed) STILL false-positives on "jam" -- proving
+        the operator's "add the word boundary" ruling, alone, does not
+        close this specific false positive. `§26` records this as a
+        correction to the dispatch brief's lead hypothesis."""
+        free_text = "You whisk yourself out of a tight jam."
+        canon_text = free_text.casefold().replace("rn", "m")
+        canon_jarn_full_fold = "jarn".replace("rn", "m")  # "jam"
+        # Word-bounded, exactly like the real (pre-§26) function -- and it
+        # still matches, because the collision is itself a whole word.
+        self.assertRegex(
+            canon_text,
+            r"(?<![a-z0-9])" + re.escape(canon_jarn_full_fold) + r"(?![a-z0-9])",
+            "word-boundary matching alone does not prevent the Jarn/jam "
+            "fold collision -- this is what the real fix must additionally "
+            "guard against",
+        )
+
+    def test_mutation_proof_removing_the_rn_fold_exemption_reopens_the_false_positive(self):
+        """Mutation-proves `_RN_FOLD_EXEMPT_TERMS_CASEFOLD` is load-bearing:
+        with it emptied, the real shared function false-positives on the
+        same text the fixed function correctly clears."""
+        original = pi_scrub._RN_FOLD_EXEMPT_TERMS_CASEFOLD
+        try:
+            pi_scrub._RN_FOLD_EXEMPT_TERMS_CASEFOLD = set()
+            pi_scrub._CANON_TERMS = [
+                (
+                    term,
+                    pi_scrub.canonicalize(term, apply_rn_fold=pi_scrub._term_needs_rn_fold(term)),
+                    pi_scrub._term_needs_rn_fold(term),
+                )
+                for term in pi_scrub.PI_BLACKLIST_TERMS
+            ]
+            free_text = "You whisk yourself out of a tight jam."
+            self.assertEqual(
+                pi_scrub.normalized_term_hit(free_text),
+                "Jarn",
+                "mutation (emptying the rn-fold exemption) must reopen the "
+                "false positive -- confirming the guard is load-bearing, not "
+                "decorative",
+            )
+        finally:
+            pi_scrub._RN_FOLD_EXEMPT_TERMS_CASEFOLD = original
+            pi_scrub._CANON_TERMS = [
+                (
+                    term,
+                    pi_scrub.canonicalize(term, apply_rn_fold=pi_scrub._term_needs_rn_fold(term)),
+                    pi_scrub._term_needs_rn_fold(term),
+                )
+                for term in pi_scrub.PI_BLACKLIST_TERMS
+            ]
+            # Confirm the real (unmutated) function is GREEN again.
+            self.assertIsNone(pi_scrub.normalized_term_hit("You whisk yourself out of a tight jam."))
+
+    def test_literal_plainly_spelled_term_is_still_caught_despite_the_exemption(self):
+        """The exemption must not silently also break the ORIGINAL catch
+        "Jarn" was added for: a plainly, correctly spelled occurrence in
+        prose (ogl-pi-blacklist.md §4, ACG override entry). Only the
+        rn->m-fold-INDUCED collision is exempted -- a literal spelling
+        still hits."""
+        free_text = "This tale follows Jarn on his journey home."
+        self.assertEqual(fe.normalized_term_hit(free_text), "Jarn")
+
+    def test_genuine_rn_to_m_ligature_fold_still_catches_a_synthetic_ocr_term(self):
+        """The rn->m fold mechanism itself (not the "Jarn"-specific
+        exemption) must still catch a genuine OCR ligature artifact for any
+        OTHER term. Uses a synthetic, throwaway term substituted into the
+        module's own canonicalized-term table for the duration of the test
+        -- never a real Product Identity string -- because "Jarn" is
+        currently the ONLY real blacklist term containing "rn", and it is
+        now (correctly) exempt from this exact fold."""
+        original_terms = pi_scrub._CANON_TERMS
+        try:
+            synthetic_term = "Kaernos"  # synthetic OCR-affected proper noun
+            pi_scrub._CANON_TERMS = [
+                (synthetic_term, pi_scrub.canonicalize(synthetic_term), True)
+            ]
+            # A scanner ligature-confuses "rn" for "m": "Kaernos" -> "Kaemos".
+            free_text = "The old road to Kaemos was long forgotten."
+            self.assertEqual(
+                pi_scrub.normalized_term_hit(free_text),
+                synthetic_term,
+                "the rn->m fold mechanism must still catch a genuine OCR "
+                "ligature artifact for terms other than the exempted 'Jarn'",
+            )
+        finally:
+            pi_scrub._CANON_TERMS = original_terms
 
 
 # ---------------------------------------------------------------------------

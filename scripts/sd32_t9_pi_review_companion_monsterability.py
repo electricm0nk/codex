@@ -71,25 +71,18 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import sd32_t9_pi_exposure_audit as audit  # noqa: E402  (reuse, not re-type)
+from pi_scrub import normalized_term_hit  # noqa: E402
 
 KINDS_IN_SCOPE = ("companion", "monster_ability")
 
 # --- normalized re-scan (decisions.md §18 item 2 / §4's recorded incident) ---
-
-_FOLD_TABLE = str.maketrans({"l": "i", "1": "i", "!": "i", "0": "o"})
-
-
-def canonicalize(s: str) -> str:
-    """Case-fold + a small OCR-confusion fold, matching ogl-pi-blacklist.md
-    §4's recorded error class (l/I/1 confusion: 'lrori' for 'Irori';
-    case drift: 'CaiLean' for 'Cailean' -- casefold alone gets that one).
-    `rn` -> `m` handled separately (two-char substitution)."""
-    s = s.casefold().replace(audit.SOFT_HYPHEN, "-")
-    s = s.replace("rn", "m")
-    return s.translate(_FOLD_TABLE)
-
-
-_CANON_TERMS = [(t, canonicalize(t)) for t in audit.PI_BLACKLIST_TERMS]
+#
+# `decisions.md §26`: the fold + word-boundary matcher itself
+# (`canonicalize`/`normalized_term_hit`, formerly this file's own local
+# `canonicalize`/`_CANON_TERMS`/loop) moved to the shared `pi_scrub.py` --
+# this file no longer defines its own copy. `normalized_scan` below keeps
+# ONLY the narrowing that is genuinely this call site's own: scoping the
+# scan to prose tags, never the whole raw row.
 
 
 def normalized_scan(free_text: str) -> str | None:
@@ -119,16 +112,18 @@ def normalized_scan(free_text: str) -> str | None:
        itself exposed to the identical whole-word-vs-substring risk for
        short terms, which this review surfaces as its own finding (see
        memo) rather than silently working around only in the new script.
+       Word-boundary matching alone is not always sufficient -- see
+       `pi_scrub.py`'s own `_RN_FOLD_EXEMPT_TERMS_CASEFOLD` for the
+       "Jarn"/"jam" collision `decisions.md §26` found and fixed, which
+       survives word-boundary matching because the fold-collision IS a
+       whole word.
+
+    Narrowing 2 (word-boundary matching, plus the `§26` "Jarn"/"jam" fold
+    guard) now lives in the shared `pi_scrub.normalized_term_hit`, imported
+    above. This function keeps ONLY narrowing 1 (the prose-scoping) --
+    callers pass ALREADY-extracted free text, never a raw row.
     """
-    if not free_text.strip():
-        return None
-    canon_text = canonicalize(free_text)
-    for term, canon_term in _CANON_TERMS:
-        if not canon_term:
-            continue
-        if re.search(r"(?<![a-z0-9])" + re.escape(canon_term) + r"(?![a-z0-9])", canon_text):
-            return term
-    return None
+    return normalized_term_hit(free_text)
 
 
 # --- per-record content classifier for surviving `uncertain` rows ---

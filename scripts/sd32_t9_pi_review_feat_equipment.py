@@ -38,28 +38,28 @@ import argparse
 import json
 import os
 import re
+import sys
 from collections import defaultdict
 
-PI_BLACKLIST_TERMS = [
-    "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
-    "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
-    "Golarion", "Absalom", "Cheliax", "Varisia", "Andoran", "Taldor", "Osirion", "Katapesh", "Ustalav", "Numeria",
-    "Mwangi", "Tian Xia", "Avistan", "Garund", "Sarkoris", "Worldwound", "Vudra", "Kyonin", "Molthune", "Nidal",
-    "Nirmathas", "Qadira", "Razmiran", "Rahadoum", "Galt", "Isger", "Lastwall", "Brevoy", "Druma", "Irrisen",
-    "Jalmeray", "Thuvia", "Geb", "Nex",
-    "Jarn",
-    "Cayden CaiLean",
-    "lrori",
-    # decisions.md §19a amendment 3d (operator-approved 2026-08-23): a citation of a
-    # PI term in a mechanical PREABILITY prerequisite field redacts the citing record
-    # too, per the sign-off package §3d / §4.3's two named feat units.
-    "Aldori",
-    "Magaambya",
-    "Magaambyan",
-]
-assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan"
+# `decisions.md §26`: `PI_BLACKLIST_TERMS`, `canonicalize`, and
+# `normalized_term_hit` moved to the shared `pi_scrub.py` (this file's own
+# copies drifted from `sd32_t9_pi_review_companion_monsterability.py`'s and
+# `sd32_t9_pi_review_spell.py`'s independent copies -- the exact duplication
+# shape `decisions.md §17` names). Re-exported here unchanged (by name) so
+# every existing importer of this module (`ingest_ability.py`,
+# `ingest_class.py`, `ingest_generic_kind.py`, `ingest_race_trait_generic.py`,
+# `ingest_simple_filename_kinds.py`, `regen_all_renamed_pi_scrub.py`,
+# `pi_key_rawtokens_audit.py`, `sd32_t9_pi_final_disposition.py`, `pi_scrub.py`
+# itself) keeps working with no changes.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pi_scrub import (  # noqa: E402
+    PI_BLACKLIST_TERMS,
+    SOFT_HYPHEN,
+    canonicalize,
+    normalized_term_hit,
+)
 
-SOFT_HYPHEN = "­"
+assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan"
 
 
 def read_row(path: str, line_no: int) -> str:
@@ -104,43 +104,10 @@ def extract_free_text(row: str) -> str:
     return " ".join(parts).strip()
 
 
-# decisions.md §19a amendment 3b (operator-approved 2026-08-23), verbatim rule:
-# case-fold + a BOUNDED OCR-confusion table (l/I/1/! -> one canonical char, 0/o
-# collapsed, rn -> m), WORD-BOUNDARY matching (not bare substring), and the PCGen
-# field delimiter "|" is NEVER folded (folding it produces a false NEGATIVE on the
-# Cayden CaiLean incident itself -- confirmed by direct test, see the test suite).
-_FOLD_TABLE = str.maketrans({"l": "i", "1": "i", "!": "i", "0": "o"})
-
-
-def canonicalize(s: str) -> str:
-    s = s.casefold().replace(SOFT_HYPHEN, "-")
-    s = s.replace("rn", "m")
-    return s.translate(_FOLD_TABLE)
-
-
-_CANON_TERMS = [(t, canonicalize(t)) for t in PI_BLACKLIST_TERMS]
-
-
-def normalized_term_hit(free_text: str) -> str | None:
-    """First blacklist term whose canonicalized form appears, WORD-BOUNDED, in the
-    canonicalized free text. Word-boundary matching is mandatory, not optional: a
-    case-fold-only scan without it collides the 3-letter term "Nex" with the
-    ordinary English word "next" -- decisions.md §19a's own recorded trap, found
-    independently by two of the three T9 review lanes. See
-    `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py` for the RED
-    proof (word-boundary guard removed -> "next" false-positives) and the GREEN
-    fix, plus both recorded incident strings (`Cayden CaiLean`, `lrori`) still
-    resolving correctly with the guard in place.
-    """
-    if not free_text.strip():
-        return None
-    canon_text = canonicalize(free_text)
-    for term, canon_term in _CANON_TERMS:
-        if not canon_term:
-            continue
-        if re.search(r"(?<![a-z0-9])" + re.escape(canon_term) + r"(?![a-z0-9])", canon_text):
-            return term
-    return None
+# `canonicalize`/`normalized_term_hit` (decisions.md §19a amendment 3b's
+# case-fold + bounded-OCR-confusion + word-boundary scan, plus `§26`'s
+# "Jarn"/"jam" collision guard) now live in `pi_scrub.py` and are imported
+# above -- this file no longer defines its own copy.
 
 
 def find_base_item_pi(corpus_root: str, book_dir_hint: str, base_name: str, index_cache: dict) -> str | None:

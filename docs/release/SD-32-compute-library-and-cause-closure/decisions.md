@@ -1237,3 +1237,158 @@ whether that belongs in SD-32's DoD or moves to a successor bundle.
 the population by coordinate, priced both answers honestly, and refused to write its own deferral. The
 error to avoid is not "escalating too much"; it is recommending a deferral where the doctrine already
 supplies the answer.
+
+## Decision 26 — Word-boundary the PI-review OCR fold; unify three divergent copies into `pi_scrub.py`; the false-positive class the word boundary does NOT close (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. Answers the escalation over the PI review scripts' OCR-confusion fold
+producing two false positives: `Nex` matching inside `next`, and a hit on
+`data/corpus/advanced_players_guide/spell/bard_s_escape.json` (`license: OGL`, correctly untouched).
+
+### The question
+
+Three options were put to the operator: keep the fold and hand-audit every hit, drop the fold, or
+require a word boundary on the match.
+
+### The ruling
+
+> *"add the word boundary"*
+
+### What verification found before implementing (`§17a` — validate before trusting a lead)
+
+The dispatch's own lead hypothesis was that the three PI-review scripts
+(`sd32_t9_pi_review_companion_monsterability.py`, `sd32_t9_pi_review_feat_equipment.py`,
+`sd32_t9_pi_review_spell.py`) were three **divergent** implementations of the fold, one of which —
+the spell script — lacked word-boundary matching, correlated with the `bard_s_escape.json` hit
+having landed on a `spell` record.
+
+**Reproducing the false positive against the code disproved that correlation.** All three scripts'
+matchers were ALREADY word-bounded (`(?<![a-z0-9])term(?![a-z0-9])`) before this cycle — including
+`sd32_t9_pi_review_feat_equipment.py`'s `normalized_term_hit`, the function
+`pi_key_rawtokens_audit.py` (the tool that actually produced the `bard_s_escape.json` hit) imports
+and calls. Running that already-word-bounded function directly against the record's real prose still
+returns a hit:
+
+```
+python3 -c "
+import sys; sys.path.insert(0,'scripts')
+from sd32_t9_pi_review_feat_equipment import normalized_term_hit
+print(normalized_term_hit('You whisk yourself and willing allies out of a tight jam, or instantly transfer'))
+"
+# -> Jarn
+```
+
+**Root cause: the OCR-confusion fold's `rn` -> `m` substitution, not a missing word boundary.**
+"Jarn" is the ONLY one of the 60 blacklist terms containing the substring `rn`. Folded, it
+canonicalizes to `jam` — an ordinary, extremely common English word that occurs in genuine OGL prose
+("...out of a tight **jam**..."). Word-boundary matching does not help here: `jam` IS a whole,
+boundary-clean word. This is a distinct false-positive class from `Nex`/`next` (a short term
+substring-matching inside a longer word, which word-boundary matching does fix) — logged as
+`scripts/retro.py correction` `1787503175474-t9-onboarding-08cab4` (subject: the dispatch brief's lead hypothesis; claimed: the spell
+script lacks word-boundary narrowing, causally linked to the `bard_s_escape.json` hit; actual: all
+three scripts were already word-bounded, and word-boundary matching does not prevent this specific
+collision; verified-by: the reproduction command above).
+
+### What was actually implemented
+
+1. **Word-boundary matching is retained** (it was already present and correct for the `Nex`/`next`
+   class — `decisions.md §19a` amendment 3b's own standing requirement, unchanged).
+2. **A term-specific fold exemption closes the `Jarn`/`jam` collision**: `pi_scrub.py`'s
+   `_RN_FOLD_EXEMPT_TERMS_CASEFOLD` skips ONLY the `rn`->`m` substitution, and ONLY for "Jarn" —
+   case-fold and the `l`/`1`/`!`/`0` fold still apply to it. Symmetric on both sides of the
+   comparison (term and haystack use the same fold policy per term), so a literal, plainly-spelled
+   "Jarn" in prose — the shape it was originally added for, `ogl-pi-blacklist.md §4`'s ACG override
+   — still hits. "Jarn" has never been recorded as an OCR-scanned artifact (unlike Irori/lrori,
+   Cayden Cailean/CaiLean); it was found as a correctly-spelled literal string, so this removes no
+   proven real-OCR coverage.
+3. **The three review scripts' independently-drifted fold implementations are unified into
+   `scripts/pi_scrub.py`** as the one shared home for `PI_BLACKLIST_TERMS`, `canonicalize`, and
+   `normalized_term_hit`/`normalized_term_hits`. `sd32_t9_pi_exposure_audit.py` (the term list's
+   other independent literal copy) and all three review scripts now import from `pi_scrub.py`;
+   none re-defines it. `sd32_t9_pi_review_feat_equipment.py` re-exports the imported names
+   unchanged so its wide existing importer graph (`ingest_ability.py`, `ingest_class.py`,
+   `ingest_generic_kind.py`, `ingest_race_trait_generic.py`, `ingest_simple_filename_kinds.py`,
+   `regen_all_renamed_pi_scrub.py`, `pi_key_rawtokens_audit.py`, `sd32_t9_pi_final_disposition.py`)
+   needs no changes. This is the exact duplication-drift shape `decisions.md §17` names for the
+   duplicated `scrub_name_pi_tokens` that leaked 368 records — three (four, counting the audit
+   script's term-list copy) independent copies of the same fold, one of which had not yet drifted
+   into a bug only because nothing had exercised its specific gap.
+4. **Legitimate per-script narrowings survive unchanged**, as separate functions layered on top of
+   the shared matcher, never folded into it: `sd32_t9_pi_review_feat_equipment.py`'s
+   `extract_free_text` (prose-tag scoping) and `sd32_t9_pi_review_companion_monsterability.py`'s
+   `normalized_scan` (same scoping) still run first; `sd32_t9_pi_review_spell.py`'s
+   `normalized_term_hits` still reports only NEW hits versus the exact-substring scan.
+
+### Verification (`§1a` — a weakened detector is worse than a noisy one)
+
+**Genuine catches still hit**, proven by fixture:
+`scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py`
+`test_catches_lrori_ocr_incident_string`, `test_catches_cayden_cailean_incident_string` (both
+pre-existing, unchanged, still green), plus a new
+`test_genuine_rn_to_m_ligature_fold_still_catches_a_synthetic_ocr_term` — synthetic term (no live
+blacklist term besides the now-exempt "Jarn" contains `rn`), proving the fold MECHANISM survives the
+one-term carve-out — and `test_literal_plainly_spelled_term_is_still_caught_despite_the_exemption`,
+proving "Jarn"'s own original plain-spelling catch is not collateral damage.
+
+**Both false positives confirmed gone**: `test_does_not_match_nex_inside_next` (pre-existing,
+unchanged) and new `test_reproduces_the_bard_s_escape_false_positive_pre_fix` (direct reproduction
+against the real record's own prose).
+
+**Mutation-proved RED, then reverted**:
+`test_mutation_proof_removing_the_rn_fold_exemption_reopens_the_false_positive` empties
+`_RN_FOLD_EXEMPT_TERMS_CASEFOLD`, asserts the real shared function reproduces the false positive
+(RED), then restores it in a `finally` block and asserts GREEN again — repeatable, not a one-shot
+manual check. Separately, `test_word_boundary_alone_does_not_prevent_the_collision` proves the
+NEGATIVE claim directly: an already-word-bounded reimplementation still matches "jam", confirming
+the fix could not have been "add the word boundary" alone.
+
+Full suite after the change: `python3 -m unittest scripts.tests.test_pi_scrub
+scripts.tests.test_sd32_t9_pi_normalization_and_inheritance
+scripts.tests.test_sd32_companion_allowlist_widening scripts.tests.test_pi_key_rawtokens_audit
+scripts.tests.test_pi_key_rawtokens_defect1_regen
+scripts.tests.test_ingest_ability_raw_tokens_pi_screen` — **49 tests, all green**.
+
+### PI audit surface, before and after (`§12c` — population + command)
+
+**`python3 scripts/pi_key_rawtokens_audit.py`**, scanning `data/corpus/**` (all kinds), same corpus
+state both runs (no corpus write in this cycle — confirmed by `git status --porcelain` showing zero
+changes under `data/corpus/**` throughout):
+
+| | scanned | confirmed | candidate (unratified, informational) |
+|---|---:|---:|---:|
+| Before (pre-fix scripts, run via `git show HEAD:scripts/...` copies against the live corpus) | 26,768 | **1** | 24,883 |
+| After (this cycle's fix) | 26,768 | **0** | 24,884 |
+
+**The one record that stopped being confirmed, named by coordinate**:
+`data/corpus/advanced_players_guide/spell/bard_s_escape.json` (term that had matched: "Jarn").
+Confirmed clean by eye: `license: "OGL"`, `pi_field: null`, the term "Jarn" (any case) does not occur
+anywhere in the record's actual bytes (`grep -i` over the file's raw JSON: zero matches), and the
+matching text is ordinary OGL-mechanical spell-description prose ("...out of a tight jam...", "this
+spell otherwise functions as dimension door"). This is the only record the drop touches — no other
+record moved buckets between runs. It moved to the candidate (unratified-vocabulary, informational
+only, no action taken on candidates per standing policy) bucket, which is why candidate total rose
+by 1 (24,883 -> 24,884) as confirmed dropped by 1 (1 -> 0).
+
+**`cargo run --locked --bin declared_pi_shipping_audit`** (Rust; untouched by this cycle's diff,
+which is Python-only): **65 violations**, unchanged before and after — all `DESC-PI-SHIPPED` in
+`data/corpus/bestiary_4/monster_ability/**`, the monster_ability lane's own named territory, not this
+cycle's scope. Not re-run "before" separately since no Rust source changed; the count is invariant
+to this diff by construction (verified: `git diff --stat` for this cycle touches only files under
+`scripts/` and `docs/release/SD-32-compute-library-and-cause-closure/`).
+
+**Gate 3's `no_record` budget constants**: not touched. `NO_RECORD_BUDGET_COUNT`/`POPULATION` in
+`scripts/verify.sh` are unchanged by this cycle's diff (`git diff --stat` confirms no change to
+`scripts/verify.sh`).
+
+### Consequences
+
+1. `pi_scrub.py` is now the single source of truth for the blacklist term list and the fold/match
+   function, closing the exact duplication-drift shape `§17` warns will recur if not generalised.
+2. The `bard_s_escape.json`-class false positive (a blacklist term's OCR-folded canonical form
+   colliding with an ordinary English word, independent of word-boundary matching) is a **named,
+   recurring risk class**, not just a one-off fix: any future blacklist term addition containing
+   `rn`, or any future OCR-fold rule, must be checked against common-English-word collisions before
+   being trusted, the same way `ogl-pi-blacklist.md §4` already records the `Nex`/`next` class.
+3. `docs/governance/ogl-pi-blacklist.md §2.3a`'s normalization rule text (word-boundary, bounded OCR
+   fold, `|` never folded) is unchanged and still accurate — it does not claim word-boundary matching
+   alone is sufficient, and this decision does not amend it. `§26` records an implementation-level
+   finding (a specific term's fold-induced collision), not a policy change.
