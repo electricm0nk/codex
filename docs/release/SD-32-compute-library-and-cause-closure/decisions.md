@@ -1392,3 +1392,46 @@ to this diff by construction (verified: `git diff --stat` for this cycle touches
    fold, `|` never folded) is unchanged and still accurate — it does not claim word-boundary matching
    alone is sufficient, and this decision does not amend it. `§26` records an implementation-level
    finding (a specific term's fold-induced collision), not a policy change.
+
+## Decision 27 — A delivery-only `TYPE:` row defaults to `SpecialQuality`, but ONLY as a provisional ingest-time default that a final categorization pass must retire (operator ruling 2026-08-23)
+
+**Question put to the operator.** Round 6 of the `monster_ability` refusal-group work
+(`artifacts/gate-3-closure-invariant/t9-monster-ability-per-record-refusal-groups-round6_cycle-1_cycle_receipt.md`,
+commit `05b87cc276`) found rows whose `TYPE:` declares only a **delivery mechanism** with **no facet
+segment at all** — a bare `SpellLike`, or `ModifyHP.Supernatural`. The cycle correctly refused to
+invent a default facet unilaterally, citing `§1a`, and asked whether such a row defaults to
+`SpecialQuality`.
+
+**Ruling, verbatim:**
+
+> *"yes, but only to the degree that when all ingestion is complete we categorize all the shapes."*
+
+**What this ruling does and does not grant.**
+
+1. **It unblocks ingest.** A delivery-only row may be ingested with `SpecialQuality` as its facet, so
+   these units stop being `no_record` and their shapes become measurable. The default exists to get the
+   object *into* the corpus, nothing more.
+2. **It does NOT settle the object's real shape.** The default is **provisional**. The operator granted
+   a placeholder, not a classification, and the second clause is the binding half of the sentence.
+3. **Every defaulted unit must be MARKED as defaulted**, distinguishably from a unit whose source
+   genuinely declares `SpecialQuality`. An unmarked default is indistinguishable from a real answer and
+   would silently become one — the exact failure `§1a` exists to prevent. **A cycle applying this
+   default must emit a machine-countable marker** (a field on the record and/or a ledger flag), and
+   must report the count of units it defaulted as a distinct number.
+4. **A final categorization pass is now a closure obligation.** Before SD-32 closes, every unit
+   carrying the provisional default must be revisited and given its real shape, and the marked
+   population must reach **zero**. This is a `§10` obligation: the bundle does not close while
+   provisionally-defaulted units remain. It gets a kanban card.
+
+**Sequencing.** The pass is explicitly gated on *"when all ingestion is complete"* — it runs after
+`no_record` reaches zero (`§20`), not before, because a shape cannot be categorized for an object that
+has not been ingested. Until then, cycles apply the default, mark it, and count it.
+
+**Scope note.** The ruling is stated generally — *"categorize all the shapes"*, not "categorize the
+delivery-only monster rows". The final pass therefore covers **every** provisionally-classified or
+defaulted shape assignment in the bundle, not only the `monster_ability` facet gaps that prompted the
+question. Any cycle that has applied a placeholder classification anywhere should expect to be revisited
+by it, and should be marking those units now so the pass can find them.
+
+**`§16` unchanged.** A unit ingested under a provisional default is **not** a unit whose shape is
+measured. Report it in its own bucket; do not book it as closure of Gate 1's shape-measurement DoD.
