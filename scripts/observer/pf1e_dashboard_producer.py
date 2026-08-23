@@ -1014,6 +1014,19 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
             (wiring or {}).get("mechanically_confirmed_by_kind", {}),
             (wiring or {}).get("mechanically_confirmed_by_kind_by_book", {}),
             excluded),
+        # SD-32 Epic 2 T8 (D13) -- computed pre-excluded in
+        # `compute_wiring_class_summary()` itself (the per-unit loop checks
+        # `book not in EXCLUDED_BOOKS` inline), unlike the other fields on
+        # this panel, because it is a unit-id list rather than a count
+        # dict -- there is no per-book breakdown to subtract from here.
+        # Falls back to an explicit zero-count shape (never absent) so an
+        # older, pre-this-field cache still reports "checked, none found"
+        # rather than a viewer-side `undefined`.
+        "classifier_reexamination_queue": (wiring or {}).get(
+            "classifier_reexamination_queue",
+            {"predicate": "kind=='class_feature' and wiring_class=='display' "
+                          "and status=='grounded', EXCLUDED_BOOKS dropped",
+             "count": 0, "units": []}),
         "doneness_unmapped": (wiring or {}).get("doneness_unmapped", {}),
         # Single-sourced with the producer's own `NO_GROUNDING_PROBE` (round 8,
         # SD-29 QA finding, 2026-08-12) -- the viewer reads this instead of
@@ -4129,6 +4142,31 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
     # viewer for the >= done case this also has to distinguish, the same
     # "every rung renders including zero" rule GE-09 applies elsewhere).
     all_kinds_seen: set[str] = set()
+    # SD-32 Epic 2 T8 (`decisions.md §11`; D13,
+    # `docs/release/SD-31-corpus-closure-grind/todo/defects.md`): the
+    # `wiring_class`-vs-`status` classifier blind spot. `_doneness_verdict_uncapped`'s
+    # `display` branch already routes `display`+`grounded` to `held` -- the
+    # right, conservative call, unchanged by this fix -- because a real
+    # consumer computed something from a unit the determinator's single-row
+    # `no_magnitude_token` heuristic classified as text-only (the
+    # `bloodrager_indomitable_will` case in that branch's own doc comment),
+    # and "the instrument that would actually resolve this is a wiring-class
+    # classifier that checks the full token closure GE-01 defines... does not
+    # exist yet." D13's actual defect is not the verdict (correct) but that
+    # this population had no named, standing home anywhere this dashboard
+    # publishes -- it sat inside `held` indistinguishably from every other
+    # `held` unit, so nothing flagged it for the classifier work that would
+    # close it, and it went unexamined ("never re-examined once stamped
+    # held"). Scoped to `class_feature` only, matching D13's measured
+    # population (12 units, all CRB, all named individually in that defect
+    # row) -- `monster_ability` carries shape-alike siblings D13 itself
+    # flags as "not yet swept", explicitly out of this population, so this
+    # predicate does not widen to every kind. A generic PREDICATE, not the
+    # 12 literal ids, so a future unit landing in the same cell is caught
+    # automatically (Decision 11 condition 1: "proved by class... not by
+    # instance"). `EXCLUDED_BOOKS` applied inline, matching every other
+    # corpus-wide figure this function/`work_inventory_panel()` produces.
+    classifier_reexamination_queue_units: list[str] = []
     for unit in doc.get("units") or []:
         # No wiring_class on a unit is itself a gap, not a zero -- report it
         # under "ambiguous" rather than dropping the unit from the count.
@@ -4155,6 +4193,12 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
             mechanically_confirmed_by_kind_by_book.setdefault(book, {})
             mechanically_confirmed_by_kind_by_book[book][kind] = (
                 mechanically_confirmed_by_kind_by_book[book].get(kind, 0) + 1)
+        # T8 (D13) blind-spot population -- see the block comment above the
+        # loop for the full rationale.
+        if (kind == "class_feature" and wc == "display" and st == "grounded"
+                and book not in EXCLUDED_BOOKS):
+            unit_id = unit.get("id") or f"{book}:{kind}:{unit.get('name')}"
+            classifier_reexamination_queue_units.append(unit_id)
         try:
             verdict = doneness_verdict(wc, st, kind)
         except ValueError:
@@ -4206,6 +4250,16 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
         # the one tier that proves more than "filed correctly".
         "mechanically_confirmed_by_kind": mechanically_confirmed_by_kind,
         "mechanically_confirmed_by_kind_by_book": mechanically_confirmed_by_kind_by_book,
+        # SD-32 Epic 2 T8 (D13) -- see the block comment above the main loop
+        # for the full rationale. Always present, count 0 is a real "checked,
+        # none found" (Decision 1a: the empty case must fail closed, never
+        # read as "the field doesn't exist" / "this run didn't check").
+        "classifier_reexamination_queue": {
+            "predicate": "kind=='class_feature' and wiring_class=='display' "
+                         "and status=='grounded', EXCLUDED_BOOKS dropped",
+            "count": len(classifier_reexamination_queue_units),
+            "units": sorted(classifier_reexamination_queue_units),
+        },
         # Empty is the expected state. Non-empty means a wiring_class or status
         # word appeared that doneness_verdict() has no bar for, and those units
         # are absent from every doneness rollup above -- so the ladder will not

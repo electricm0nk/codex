@@ -150,6 +150,103 @@ class DonenessVerdictGridTest(unittest.TestCase):
             producer.doneness_verdict("ambiguous", "bogus-status-word", "spell")
 
 
+class ClassifierReexaminationQueueTest(unittest.TestCase):
+    """SD-32 Epic 2 T8 (D13, `docs/release/SD-31-corpus-closure-grind/todo/defects.md`
+    D13): `class_feature` units sitting in the `wiring_class='display'` +
+    `status='grounded'` cross-tab cell are the classifier's own documented
+    blind spot (`_doneness_verdict_uncapped`'s `display` branch, `held`
+    rationale) -- a real consumer computed something from a unit the
+    determinator's single-row `no_magnitude_token` heuristic classified as
+    text-only. `doneness_verdict()` already routes them to `held` (correct,
+    conservative), but nothing named this population anywhere the dashboard
+    JSON exposes it, so it sat un-re-examined (D13's own title: "never
+    re-examined once stamped held"). `compute_wiring_class_summary()` must
+    surface it as a standing, generically-derived (not hardcoded-by-id)
+    population: kind=='class_feature' AND wiring_class=='display' AND
+    status=='grounded', EXCLUDED_BOOKS applied the same as every other
+    corpus-wide figure on this cache.
+
+    Mutation-proof: five units, one of each shape that must NOT count
+    (wrong kind, wrong wiring_class, wrong status, excluded book) sit beside
+    two that must."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.cache_path = os.path.join(self._tmp.name, "fab-wiring-cache.json")
+
+    def _doc(self, units):
+        doc = {"generated_at": "2026-08-22T00:00:00Z", "units": units}
+        doc_path = os.path.join(self._tmp.name, "fab-work-inventory.json")
+        with open(doc_path, "w", encoding="utf-8") as f:
+            json.dump(doc, f)
+        return doc_path
+
+    def test_only_class_feature_display_grounded_non_excluded_units_counted(self):
+        units = [
+            # Two genuine blind-spot units -- must count.
+            {"id": "core_rulebook:class_feature:monk_evasion", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+            {"id": "core_rulebook:class_feature:rogue_evasion", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+            # Wrong kind -- must NOT count.
+            {"id": "core_rulebook:spell:fab_spell", "book": "core_rulebook",
+             "kind": "spell", "wiring_class": "display", "status": "grounded"},
+            # Wrong wiring_class -- must NOT count.
+            {"id": "core_rulebook:class_feature:fab_computed", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "computed", "status": "grounded"},
+            # Wrong status -- must NOT count.
+            {"id": "core_rulebook:class_feature:fab_textcomplete", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "display", "status": "text-complete"},
+            # Excluded book -- must NOT count even though it otherwise matches.
+            {"id": "beginner_box:class_feature:fab_excluded", "book": "beginner_box",
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+        ]
+        summary = producer.compute_wiring_class_summary(
+            doc_path=self._doc(units), cache_path=self.cache_path
+        )
+        queue = summary.get("classifier_reexamination_queue")
+        self.assertIsNotNone(queue, "classifier_reexamination_queue missing from the cache")
+        self.assertEqual(queue["count"], 2)
+        self.assertEqual(
+            sorted(queue["units"]),
+            ["core_rulebook:class_feature:monk_evasion",
+             "core_rulebook:class_feature:rogue_evasion"],
+        )
+
+    def test_empty_case_is_a_real_zero_not_an_absent_field(self):
+        """Decision 1a's anti-gaming doctrine: the empty case must fail
+        closed -- an absent field reads identically to a broken run, a
+        present field with count 0 reads as 'checked, none found'."""
+        units = [{"id": "core_rulebook:spell:fab_spell", "book": "core_rulebook",
+                   "kind": "spell", "wiring_class": "display", "status": "grounded"}]
+        summary = producer.compute_wiring_class_summary(
+            doc_path=self._doc(units), cache_path=self.cache_path
+        )
+        queue = summary.get("classifier_reexamination_queue")
+        self.assertIsNotNone(queue)
+        self.assertEqual(queue["count"], 0)
+        self.assertEqual(queue["units"], [])
+
+    def test_reaches_work_inventory_panel(self):
+        """The published panel (`work_inventory_panel()`) must carry the
+        field through from the cache -- this is the seam
+        `build_pf1e_dashboard`/`main()` writes into the actual published
+        JSON from, per `decisions.md §11` condition 2."""
+        units = [
+            {"id": "core_rulebook:class_feature:monk_evasion", "book": "core_rulebook",
+             "kind": "class_feature", "wiring_class": "display", "status": "grounded"},
+        ]
+        summary = producer.compute_wiring_class_summary(
+            doc_path=self._doc(units), cache_path=self.cache_path
+        )
+        inventory = {"totals": {"units": 1, "by_status": {}, "by_kind": {}}, "books": []}
+        panel = producer.work_inventory_panel(inventory, wiring=summary)
+        queue = panel.get("classifier_reexamination_queue")
+        self.assertIsNotNone(queue, "classifier_reexamination_queue did not reach work_inventory_panel()")
+        self.assertEqual(queue["count"], 1)
+
+
 class BuildUnitShardsPiRedactionTest(unittest.TestCase):
     """Decision 12 (2026-08-17): `build_unit_shards` must withhold a unit's
     NAME when its own (book, source_file, source_line) row declares
