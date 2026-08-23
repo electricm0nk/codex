@@ -73,10 +73,27 @@ PI_MARKER_REDACTED = "redacted"
 # Script-side copy, byte-identical across the four call sites this module now
 # unifies (verified before the merge: `sd32_t9_pi_exposure_audit.py` and
 # `sd32_t9_pi_review_feat_equipment.py` both asserted `len == 60` over an
-# identical ordered list). `ogl-pi-blacklist.md §2.3c`: the Rust production
-# constant `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS` is a
-# deliberately separate, currently-61-term copy — out of this module's scope
-# (bumping it triggers corpus regeneration across every shipped book).
+# identical ordered list). `ogl-pi-blacklist.md §2.3c`: this list used to lag
+# the Rust production constant `src/rules_core/pi_screening.rs::
+# PI_BLACKLIST_TERMS` by one term (`§12b`'s twin-implementation divergence,
+# found by the `class_feature` lane and closed here, `decisions.md §12b`/
+# `§20`): that copy's trailing per-book addition (`ogl-pi-blacklist.md`'s
+# Inner Sea Gods equipment per-book-override, added by the
+# `pi-key-rawtokens-screen` follow-up cycle) had been folded into the Rust
+# copy only, deliberately deferred here because bumping the RUST list
+# triggers corpus regeneration for the writer paths that import it — but this
+# module is a READ-ONLY review/audit tool, not a generator, so folding the
+# term in here carries none of that risk and closes the divergence rather
+# than perpetuating it (`decisions.md §22`: an inherited inconsistency is
+# ours to resolve). Re-scanned corpus-wide before folding in (both the
+# shipped `data/corpus/**` and the pinned PCGen oracle, case-sensitive,
+# lowercase-possessive form only — the properly-capitalized form is already
+# caught by the base "Gozreh" entry at index 9): **zero** hits beyond the one
+# `isg_equip.lst:232` leak the Rust-side addition's own verification already
+# found and which is already redacted on disk
+# (`data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json`). Widening
+# this list therefore changes no review-script output on the current corpus;
+# it only prevents recurrence.
 PI_BLACKLIST_TERMS = [
     "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
     "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
@@ -91,8 +108,13 @@ PI_BLACKLIST_TERMS = [
     "Aldori",
     "Magaambya",
     "Magaambyan",
+    # `ogl-pi-blacklist.md`'s Inner Sea Gods equipment per-book-override
+    # (`pi-key-rawtokens-screen` follow-up cycle, 2026-08-23): the pinned
+    # oracle's own lowercase-possessive spelling of the deity name at index 9,
+    # byte-identical to `pi_screening.rs::PI_BLACKLIST_TERMS`'s trailing entry.
+    "gozreh's",
 ]
-assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan (decisions.md §19a 3d)"
+assert len(PI_BLACKLIST_TERMS) == 61, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan + the ISG equipment lowercase-possessive addition (decisions.md §19a 3d, §12b)"
 
 SOFT_HYPHEN = "­"
 
@@ -295,7 +317,7 @@ def scrub_name_pi_tokens(
 
     Four independent checks run per token value, any one of which redacts it:
 
-    1. The word-bounded, OCR-normalized 60-term blacklist scan
+    1. The word-bounded, OCR-normalized 61-term blacklist scan
        (`normalized_term_hit`) — catches an ordinary, separated occurrence of
        a blacklisted deity/place name.
     2. A space-preserving case-insensitive substring check against the
@@ -310,7 +332,7 @@ def scrub_name_pi_tokens(
        checked in a fully alphanumeric-normalized form (`[^a-z0-9]` stripped)
        against the same normalization of the value, bounded to needles of at
        least `_MIN_NORMALIZED_NEEDLE_LEN` normalized characters.
-    4. **Identifier-form check for the 60-term blacklist.** The identical
+    4. **Identifier-form check for the 61-term blacklist.** The identical
        concatenation shape, but for a BLACKLISTED term rather than the
        record's own identity — e.g. a `TYPE:` token naming a choice-ability
        variable `"<Deity>AspectChoice"` with no separator. `normalized_term_hit`

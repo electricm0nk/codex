@@ -59,7 +59,7 @@ from pi_scrub import (  # noqa: E402
     normalized_term_hit,
 )
 
-assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan"
+assert len(PI_BLACKLIST_TERMS) == 61, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan + the ISG equipment lowercase-possessive addition (decisions.md §19a 3d, §12b)"
 
 
 def read_row(path: str, line_no: int) -> str:

@@ -6955,3 +6955,43 @@ Dual audit on `git diff -- apps/desktop/src-tauri/src/corpus_ingest_diagnostic.r
   (and structurally the same unscoped-predicate shape appears on `pathfinder_unchained`'s feat
   sync too) is a real, general hazard, not fixed here — named for a future cycle.
 - Commit: (this cycle's commit — see push output).
+
+## Cycle sd32-integrity-sweep-stale-pair-scan-and-pi-blacklist-sync (2026-08-23)
+
+**Stale-pair scan, corpus-wide, generic (`decisions.md §17`):** the `class_feature` lane's
+"generator writes fresh record alongside stale one" defect scan (group by `(kind, book,
+source.path, source.line)`, flag groups >1) run across **every kind, every book** — 50,655
+records, 24 kind directories. **7 coordinate-collision groups total, zero
+`stale_leftover_candidate`s.** The two `class_feature` groups found are the same two pairs that
+lane already classified legitimate; the other 5 (1 `feat`, 4 `spell`) are all verified genuine
+multi-citation shapes (distinct `data` blocks or distinct keys sharing one PCGen source line,
+individually confirmed, not assumed from a label). No file touched, no deletion warranted
+anywhere.
+
+**`decisions.md §12b` — Rust/Python PI-blacklist twin divergence, closed:** established by
+index (never by writing the term) that the two `PI_BLACKLIST_TERMS` copies differed at exactly
+one position, the Rust copy's trailing (61st) entry. Checked against
+`docs/governance/ogl-pi-blacklist.md`'s own per-book-override section (added by an earlier
+`pi-key-rawtokens-screen` cycle): the term is legitimate, verified PI, already causing one real
+corpus record to be redacted. **The Python side was under-screening by that one term.** Re-scanned
+corpus + pinned oracle before folding it in: **zero new hits** (the one real occurrence anywhere
+is the coordinate the earlier cycle already found and already redacted). Folded into
+`scripts/pi_scrub.py` (60 → 61) — safe because that copy backs read-only review scripts, not a
+corpus generator, so no regen risk the Rust copy's own deferral comment was guarding against.
+Added `tests/pi_blacklist_terms_rust_python_agree.rs`, a cross-language regression test (shells to
+a live `python3` import, diffs by length and set, never prints term content), mutation-proved RED
+then GREEN.
+
+**Discovery, unrelated to either task:** the corpus-wide term re-scan surfaced 3 pre-existing
+`feat` records (`inner_sea_combat`) carrying an unredacted hit against a term already in BOTH
+lists before this cycle — confirmed pre-existing via `git log`, not caused by this cycle's diff,
+not fixed here (out of this cycle's two named tasks). Named by coordinate in the receipt, logged
+as an incident.
+
+Dual audit `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS` on the scoped diff (the `sd32_*` regex hits are
+diff-header filenames only, confirmed zero content-line hits).
+
+- Receipt: `artifacts/gate-3-closure-invariant/sd32-integrity-sweep-stale-pair-scan-and-pi-blacklist-sync_cycle-1_cycle_receipt.md`.
+- Retro: `docs/retro/events/t9-onboarding.jsonl` — one `correction`, one `incident`.
+- **What remains:** the discovered `inner_sea_combat`/`feat` leak (a future cycle's to fix).
+- Commit: (this cycle's commit — see push output).

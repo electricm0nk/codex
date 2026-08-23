@@ -131,11 +131,14 @@ pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>
 // review/ingest scripts give (word-boundary + OCR fold with the length-bound
 // concatenated fallback), not a replacement for `classify_field`'s callers.
 //
-// This is the SAME 61-term `PI_BLACKLIST_TERMS` above (deliberately one term
-// ahead of `pi_scrub.py`'s 60-term signed-off list -- see that module's own
-// comment on its copy of the list for why the two counts are allowed to
-// differ). Every OTHER behaviour (fold table, word-boundary rule,
-// concatenated-match bound) is a byte-identical port.
+// This is the SAME 61-term `PI_BLACKLIST_TERMS` above. `decisions.md §12b`
+// (found by the `class_feature` lane, closed by the SD-32 integrity-sweep
+// cycle, 2026-08-23): this copy and `pi_scrub.py`'s used to disagree by one
+// term -- `pi_scrub.py`'s copy now carries the same trailing per-book
+// addition this array does, and `tests/pi_blacklist_terms_rust_python_agree.rs`
+// fails the build if the two ever diverge again. Every OTHER behaviour (fold
+// table, word-boundary rule, concatenated-match bound) is a byte-identical
+// port.
 
 const SOFT_HYPHEN: char = '\u{ad}';
 

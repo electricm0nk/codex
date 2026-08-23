@@ -100,7 +100,7 @@ EVIDENCE_FAMILIES = {
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pi_scrub import PI_BLACKLIST_TERMS  # noqa: E402
 
-assert len(PI_BLACKLIST_TERMS) == 60, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan (decisions.md §19a 3d)"
+assert len(PI_BLACKLIST_TERMS) == 61, "term list drifted -- expected 57 + Aldori/Magaambya/Magaambyan + the ISG equipment lowercase-possessive addition (decisions.md §19a 3d, §12b)"
 
 # `ogl-pi-blacklist.md §2.3`'s named per-record-judgment tags, widened (see
 # module docstring "Limits") to every T9 kind's free-text-shaped PCGen tags.
