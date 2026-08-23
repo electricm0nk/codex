@@ -104,4 +104,7 @@ pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
 pub mod archetype_tables;
 pub mod equipment_tables;
 pub mod feat_tables;
+// SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
+// Magus, this book's single magnitude-bearing class.
+pub mod magus_features;
 pub mod spell_list;

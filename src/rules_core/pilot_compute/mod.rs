@@ -26109,6 +26109,24 @@ fn compute_class_chassis(
             ground_vitalist_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:wilder" {
             ground_wilder_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:kineticist" {
+            ground_kineticist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:medium" {
+            ground_medium_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:mesmerist" {
+            ground_mesmerist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:occultist" {
+            ground_occultist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:psychic" {
+            ground_psychic_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:spiritualist" {
+            ground_spiritualist_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:magus" {
+            ground_magus_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:shifter" {
+            ground_shifter_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:vigilante" {
+            ground_vigilante_class_features(class_level.level, ability_modifiers, explanations);
         }
 
         Some((base_attack_bonus, base_saves))
@@ -27553,6 +27571,694 @@ fn ground_wilder_class_features(level: u8, explanations: &mut Vec<ComputationExp
             detail: format!(
                 "Wilder level {level} Surging Euphoria: {duration} rounds duration (equal to \
                  the current Wild Surge bonus)"
+            ),
+        });
+    }
+}
+
+/// Grounds Kineticist's six magnitude-bearing features
+/// (`rules_tables::occult_adventures::kineticist_features`) — SD-32 card 11
+/// (T12), cycle 4, the first of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_kineticist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::kineticist_features as kf;
+    let con = ability_modifiers.constitution;
+
+    if let Some(v) = kf::burn_max_points(level, con) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.burn.max_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Burn: {v} maximum points of burn (3 + Constitution \
+                 modifier {con})"
+            ),
+        });
+    }
+    if let Some(v) = kf::elemental_focus_level_base(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.elemental_focus.level_base".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Elemental Focus: effective level {v} \
+                 (max(1,floor(level/2)))"
+            ),
+        });
+    }
+    if let Some(v) = kf::infusion_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.infusion.pool".to_owned(),
+            value: v,
+            detail: format!("Kineticist level {level} Infusion: {v} infusions known"),
+        });
+    }
+    if let Some(v) = kf::kinetic_blast_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.kinetic_blast.range_feet".to_owned(),
+            value: v,
+            detail: format!("Kineticist level {level} Kinetic Blast: {v}-foot range (flat)"),
+        });
+    }
+    if let Some(v) = kf::wild_talents_dc(level, con) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.wild_talents.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Wild Talents: DC {v} (10 + level/2 + Constitution \
+                 modifier {con})"
+            ),
+        });
+    }
+    if let Some(v) = kf::expanded_element_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.expanded_element.pool".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Expanded Element: {v} expanded elements (1 + \
+                 (level>=15))"
+            ),
+        });
+    }
+}
+
+/// Grounds Medium's magnitude-bearing features
+/// (`rules_tables::occult_adventures::medium_features`) — SD-32 card 11
+/// (T12), cycle 4, the second of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_medium_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::medium_features as mf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = mf::spirit_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.spirit.bonus".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Spirit: +{v} spirit bonus (1+level/4)"),
+        });
+    }
+    if let Some(v) = mf::spirit_surge_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.spirit_surge.dice".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Spirit Surge: {v}d6 (6+2*floor(level/10))"
+            ),
+        });
+    }
+    if let Some(v) = mf::haunt_channeler_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.haunt_channeler.dice".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Haunt Channeler: {v}d6 (level/2)"),
+        });
+    }
+    if let Some(v) = mf::haunt_channeler_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.haunt_channeler.dc".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Haunt Channeler: DC {v} (20+level/2)"),
+        });
+    }
+    if let Some(v) = mf::location_channel_duration_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.location_channel.duration_rounds".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Location Channel: {v} rounds (equal to level)"),
+        });
+    }
+    if let Some(v) = mf::location_channel_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.location_channel.dc".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Location Channel: DC {v} (20+level/2)"),
+        });
+    }
+    if let Some(v) = mf::ask_the_spirits_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.ask_the_spirits.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Ask the Spirits: DC {v} (15 + Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::astral_journey_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.astral_journey.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Astral Journey: DC {v} (19 + Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::trance_of_three_duration_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.trance_of_three.duration_rounds".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Trance of Three: {v} rounds (equal to level)"
+            ),
+        });
+    }
+}
+
+/// Grounds Mesmerist's ten magnitude-bearing features
+/// (`rules_tables::occult_adventures::mesmerist_features`) — SD-32 card 11
+/// (T12), cycle 4, the third of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_mesmerist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::mesmerist_features as mf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = mf::consummate_liar_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.consummate_liar.bonus".to_owned(),
+            value: v,
+            detail: format!("Mesmerist level {level} Consummate Liar: +{v} Bluff (max(level/2,1))"),
+        });
+    }
+    if let Some(v) = mf::hypnotic_stare_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.hypnotic_stare.penalty".to_owned(),
+            value: v,
+            detail: format!("Mesmerist level {level} Hypnotic Stare: -{v} penalty"),
+        });
+    }
+    if let Some(v) = mf::mesmerist_tricks_uses(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.uses".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: {v} uses per day (max(level/2,1) + \
+                 Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::mesmerist_trick_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.range_feet".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: {v}-foot range (100+level*10)"
+            ),
+        });
+    }
+    if let Some(v) = mf::mesmerist_trick_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: DC {v} (10+level/2+Charisma modifier \
+                 {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::mesmerist_tricks_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.known".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: {v} tricks known (level/2+1)"
+            ),
+        });
+    }
+    if let Some(v) = mf::painful_stare_damage(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.painful_stare.damage".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Painful Stare: +{v} damage (max(level/2,1))"
+            ),
+        });
+    }
+    if let Some(v) = mf::painful_stare_bonus_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.painful_stare.bonus_dice".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Painful Stare: {v} bonus dice (level/3)"
+            ),
+        });
+    }
+    if let Some(v) = mf::towering_ego_bonus(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.towering_ego.bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Towering Ego: +{v} bonus (Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::bold_stares_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.bold_stare.known".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Bold Stare: {v} known ((level+1)/4)"
+            ),
+        });
+    }
+    if let Some(v) = mf::touch_treatment_uses(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.touch_treatment.uses".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Touch Treatment: {v} uses per day (3 + Charisma \
+                 modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::manifold_tricks_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.manifold_tricks.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Manifold Tricks: {v} (2+(level-5)/4)"
+            ),
+        });
+    }
+    if let Some(v) = mf::mental_potency_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mental_potency.bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mental Potency: +{v} (min(level/5,4))"
+            ),
+        });
+    }
+    if let Some(v) = mf::glib_lie_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.glib_lie.dc".to_owned(),
+            value: v,
+            detail: format!("Mesmerist level {level} Glib Lie: DC {v} (15+level)"),
+        });
+    }
+}
+
+/// Grounds Occultist's magnitude-bearing features
+/// (`rules_tables::occult_adventures::occultist_features`) — SD-32 card 11
+/// (T12), cycle 4, the fourth of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_occultist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::occultist_features as of;
+    let int = ability_modifiers.intelligence;
+
+    if let Some(v) = of::focus_powers_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.focus_powers.count".to_owned(),
+            value: v,
+            detail: format!("Occultist level {level} Focus Powers: {v} known ((level+1)/2)"),
+        });
+    }
+    if let Some(v) = of::focus_powers_dc(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.focus_powers.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Focus Powers: DC {v} (10+level/2+Intelligence modifier \
+                 {int})"
+            ),
+        });
+    }
+    if let Some(v) = of::implements_school_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.implements.school_count".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Implements: {v} (2+((level+2)/4))"
+            ),
+        });
+    }
+    if let Some(v) = of::mental_focus(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.mental_focus.value".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Mental Focus: {v} points (level + Intelligence \
+                 modifier {int})"
+            ),
+        });
+    }
+    if let Some(v) = of::magic_item_skill_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.magic_item_skill.bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Magic Item Skill: +{v} Use Magic Device (level/2)"
+            ),
+        });
+    }
+    if let Some(v) = of::outside_contact_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.outside_contact.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Outside Contact: {v} (1+(level-8)/4)"
+            ),
+        });
+    }
+    if let Some(v) = of::binding_circles_dc(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.binding_circles.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Binding Circles: DC {v} (10+level/2+Intelligence \
+                 modifier {int})"
+            ),
+        });
+    }
+}
+
+/// Grounds Psychic's four magnitude-bearing features
+/// (`rules_tables::occult_adventures::psychic_features`) — SD-32 card 11
+/// (T12), cycle 4, the fifth of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`. `Phrenic Pool`'s ability term is discipline-
+/// dependent (see that function's own doc comment); this dispatch supplies
+/// Charisma, the modifier four of the corpus's nine disciplines use.
+fn ground_psychic_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::psychic_features as pf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = pf::phrenic_amplifications_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.phrenic_amplifications.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic level {level} Phrenic Amplifications: {v} known (1+((level-1)/4))"
+            ),
+        });
+    }
+    if let Some(v) = pf::phrenic_pool(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.phrenic_pool.value".to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic level {level} Phrenic Pool: {v} points (level/2 + discipline ability \
+                 modifier, here Charisma {cha})"
+            ),
+        });
+    }
+    if let Some(v) = pf::psychic_discipline_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.psychic_discipline.pool".to_owned(),
+            value: v,
+            detail: format!("Psychic level {level} Psychic Discipline: {v} chosen (flat)"),
+        });
+    }
+    if let Some(v) = pf::major_amplifications_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.major_amplifications.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic level {level} Major Amplifications: {v} known (1+((level-11)/4))"
+            ),
+        });
+    }
+}
+
+/// Grounds Spiritualist's three magnitude-bearing features
+/// (`rules_tables::occult_adventures::spiritualist_features`) — SD-32 card
+/// 11 (T12), cycle 4, the sixth and last of the six `occult_adventures`
+/// classes sharing `oa_abilities_class.lst`, closing the whole source file.
+fn ground_spiritualist_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::occult_adventures::spiritualist_features as sf;
+
+    if let Some(v) = sf::phantom_master_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.spiritualist.phantom.master_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Spiritualist level {level} Phantom: master level {v} (equal to class level)"
+            ),
+        });
+    }
+    if let Some(v) = sf::shared_consciousness_focus_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.spiritualist.shared_consciousness.focus_pool".to_owned(),
+            value: v,
+            detail: format!(
+                "Spiritualist level {level} Shared Consciousness: {v} emotional focus chosen \
+                 (flat)"
+            ),
+        });
+    }
+    if let Some(v) = sf::calm_spirit_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.spiritualist.calm_spirit.uses_per_day".to_owned(),
+            value: v,
+            detail: format!(
+                "Spiritualist level {level} Calm Spirit: {v} uses per day (1+(level-7)/4)"
+            ),
+        });
+    }
+}
+
+/// Grounds Magus's six magnitude-bearing features
+/// (`rules_tables::ultimate_magic::magus_features`) — SD-32 card 11 (T12),
+/// cycle 4, `ultimate_magic`'s single magnitude-bearing class.
+fn ground_magus_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_magic::magus_features as mf;
+    let int = ability_modifiers.intelligence;
+
+    if let Some(v) = mf::arcane_pool(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.arcane_pool.value".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Arcane Pool: {v} points (max(floor(level/2),1) + \
+                 Intelligence modifier {int})"
+            ),
+        });
+    }
+    if let Some(v) = mf::arcane_pool_enhancement_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.arcane_pool.enhancement_bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Arcane Pool: +{v} maximum enhancement bonus \
+                 (min(1+((level-1)/4),5))"
+            ),
+        });
+    }
+    if let Some(v) = mf::armor_proficiency_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.armor_proficiency.level".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Armor Proficiency: tracked level {v} (equal to class \
+                 level)"
+            ),
+        });
+    }
+    if let Some(v) = mf::magus_arcana_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.magus_arcana.pool".to_owned(),
+            value: v,
+            detail: format!("Magus level {level} Magus Arcana: {v} known (level/3)"),
+        });
+    }
+    if let Some(v) = mf::bonus_feats_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.bonus_feats.pool".to_owned(),
+            value: v,
+            detail: format!("Magus level {level} Bonus Feats: {v} ((level+1)/6)"),
+        });
+    }
+    if let Some(v) = mf::fighter_training_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.fighter_training.level".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Fighter Training: effective fighter level {v} (level/2)"
+            ),
+        });
+    }
+}
+
+/// Grounds Shifter's magnitude-bearing features
+/// (`rules_tables::ultimate_wilderness::shifter_features`) — SD-32 card 11
+/// (T12), cycle 4, `ultimate_wilderness`'s single magnitude-bearing class.
+/// `Shifter Claws`' base value is keyed on the character's resolved size
+/// (`race_size_for_race_token`), the same size-resolution mechanism the
+/// combat baseline already uses.
+fn ground_shifter_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_wilderness::shifter_features as sf;
+    let wis = ability_modifiers.wisdom;
+    let size = race_size_for_race_token(&input.chosen.race_id);
+
+    if let Some(v) = sf::shifter_aspect_minutes(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.shifter_aspect.minutes".to_owned(),
+            value: v,
+            detail: format!("Shifter level {level} Shifter Aspect: {v} minutes (level+3)"),
+        });
+    }
+    if let Some(v) = sf::shifter_aspect_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.shifter_aspect.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Shifter Aspect: {v} aspects (1+min(3,level/5))"
+            ),
+        });
+    }
+    if let Some(v) = sf::shifter_claw_damage(level, size) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.shifter_claws.damage".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Shifter Claws: {v} tracked claw damage value (size- and \
+                 level-keyed)"
+            ),
+        });
+    }
+    if let Some(v) = sf::defensive_instinct_ac_bonus(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.defensive_instinct.ac_bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Defensive Instinct: +{v} AC (min(level/4,5) + Wisdom \
+                 modifier {wis}/2)"
+            ),
+        });
+    }
+    if let Some(v) = sf::shifter_track_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.track.level".to_owned(),
+            value: v,
+            detail: format!("Shifter level {level} Track: tracked level {v} (equal to level)"),
+        });
+    }
+    if let Some(v) = sf::wild_shape_count(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.wild_shape.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Wild Shape: {v} uses per day (level + Wisdom modifier \
+                 {wis})"
+            ),
+        });
+    }
+}
+
+/// Grounds Vigilante's seven magnitude-bearing features
+/// (`rules_tables::ultimate_intrigue::vigilante_features`) — SD-32 card 11
+/// (T12), cycle 4, `ultimate_intrigue`'s single magnitude-bearing class.
+fn ground_vigilante_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_intrigue::vigilante_features as vf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = vf::seamless_guise_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.seamless_guise.bonus".to_owned(),
+            value: v,
+            detail: format!("Vigilante level {level} Seamless Guise: +{v} (flat)"),
+        });
+    }
+    if let Some(v) = vf::social_talent_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.social_talent.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Social Talent: {v} known ((level+1)/2)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vigilante_specialization_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.vigilante_specialization.pool".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Vigilante Specialization: {v} chosen (flat)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vigilante_talent_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.vigilante_talent.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Vigilante Talent: {v} known (level/2)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vigilante_talent_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.vigilante_talent.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Vigilante Talent: DC {v} (10+level/2+Charisma modifier \
+                 {cha})"
+            ),
+        });
+    }
+    if let Some(v) = vf::unshakable_dc_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.unshakable.dc_bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Unshakable: +{v} DC bonus (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = vf::frightening_appearance_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.frightening_appearance.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Frightening Appearance: DC {v} \
+                 (10+level/2+Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = vf::stunning_appearance_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.stunning_appearance.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Stunning Appearance: DC {v} \
+                 (10+level/2+Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = vf::stunning_appearance_hd_threshold(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.stunning_appearance.hd_threshold".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Stunning Appearance: {v} HD threshold (equal to level)"
             ),
         });
     }
@@ -48534,6 +49240,238 @@ mod untabled_base_class_feature_roster_wiring_tests {
         );
     }
 
+    /// SD-32 card 11 (T12), cycle 4: proves `ground_kineticist_class_features`,
+    /// `ground_medium_class_features`, `ground_mesmerist_class_features`,
+    /// `ground_occultist_class_features`, `ground_psychic_class_features`,
+    /// and `ground_spiritualist_class_features` really run through the real
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` dispatch
+    /// site, at level 20 with real ability scores overridden away from the
+    /// fixture's default (10, modifier 0) -- closing all six classes
+    /// sharing `oa_abilities_class.lst`.
+    #[test]
+    fn kineticist_level_20_reaches_every_real_magnitude_with_a_real_constitution_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:kineticist".to_owned();
+        input.chosen.ability_scores.constitution = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.kineticist.burn.max_points"), 6); // 3+3
+        assert_eq!(value("class_feature.untabled.kineticist.elemental_focus.level_base"), 10);
+        assert_eq!(value("class_feature.untabled.kineticist.infusion.pool"), 8);
+        assert_eq!(value("class_feature.untabled.kineticist.kinetic_blast.range_feet"), 30);
+        assert_eq!(value("class_feature.untabled.kineticist.wild_talents.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.kineticist.expanded_element.pool"), 2);
+    }
+
+    #[test]
+    fn medium_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:medium".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.medium.spirit.bonus"), 6);
+        assert_eq!(value("class_feature.untabled.medium.spirit_surge.dice"), 10);
+        assert_eq!(value("class_feature.untabled.medium.haunt_channeler.dice"), 10);
+        assert_eq!(value("class_feature.untabled.medium.haunt_channeler.dc"), 30);
+        assert_eq!(value("class_feature.untabled.medium.location_channel.duration_rounds"), 20);
+        assert_eq!(value("class_feature.untabled.medium.location_channel.dc"), 30);
+        assert_eq!(value("class_feature.untabled.medium.ask_the_spirits.dc"), 18); // 15+3
+        assert_eq!(value("class_feature.untabled.medium.astral_journey.dc"), 22); // 19+3
+        assert_eq!(value("class_feature.untabled.medium.trance_of_three.duration_rounds"), 20);
+    }
+
+    #[test]
+    fn mesmerist_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:mesmerist".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.mesmerist.consummate_liar.bonus"), 10);
+        assert_eq!(value("class_feature.untabled.mesmerist.hypnotic_stare.penalty"), 1);
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.uses"), 13); // 10+3
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.range_feet"), 300);
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.known"), 11);
+        assert_eq!(value("class_feature.untabled.mesmerist.painful_stare.damage"), 10);
+        assert_eq!(value("class_feature.untabled.mesmerist.painful_stare.bonus_dice"), 6);
+        assert_eq!(value("class_feature.untabled.mesmerist.towering_ego.bonus"), 3);
+        assert_eq!(value("class_feature.untabled.mesmerist.bold_stare.known"), 5);
+        assert_eq!(value("class_feature.untabled.mesmerist.touch_treatment.uses"), 6); // 3+3
+        assert_eq!(value("class_feature.untabled.mesmerist.manifold_tricks.count"), 5);
+        assert_eq!(value("class_feature.untabled.mesmerist.mental_potency.bonus"), 4);
+        assert_eq!(value("class_feature.untabled.mesmerist.glib_lie.dc"), 35);
+    }
+
+    #[test]
+    fn occultist_level_20_reaches_every_real_magnitude_with_a_real_intelligence_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:occultist".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.occultist.focus_powers.count"), 10);
+        assert_eq!(value("class_feature.untabled.occultist.focus_powers.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.occultist.implements.school_count"), 7);
+        assert_eq!(value("class_feature.untabled.occultist.mental_focus.value"), 23); // 20+3
+        assert_eq!(value("class_feature.untabled.occultist.magic_item_skill.bonus"), 10);
+        assert_eq!(value("class_feature.untabled.occultist.outside_contact.count"), 4);
+        assert_eq!(value("class_feature.untabled.occultist.binding_circles.dc"), 23); // 10+10+3
+    }
+
+    #[test]
+    fn psychic_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.psychic.phrenic_amplifications.count"), 1 + 19 / 4);
+        assert_eq!(value("class_feature.untabled.psychic.phrenic_pool.value"), 13); // 10+3
+        assert_eq!(value("class_feature.untabled.psychic.psychic_discipline.pool"), 1);
+        assert_eq!(value("class_feature.untabled.psychic.major_amplifications.count"), 1 + 9 / 4);
+    }
+
+    #[test]
+    fn spiritualist_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:spiritualist".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.spiritualist.phantom.master_level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.spiritualist.shared_consciousness.focus_pool"),
+            1
+        );
+        assert_eq!(value("class_feature.untabled.spiritualist.calm_spirit.uses_per_day"), 4);
+    }
+
+    /// SD-32 card 11 (T12), cycle 4: proves `ground_magus_class_features`,
+    /// `ground_shifter_class_features`, and `ground_vigilante_class_features`
+    /// really run through the real dispatch site -- the three single-class
+    /// single-book tails cycle 3 named.
+    #[test]
+    fn magus_level_20_reaches_every_real_magnitude_with_a_real_intelligence_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:magus".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.magus.arcane_pool.value"), 13); // 10+3
+        assert_eq!(value("class_feature.untabled.magus.arcane_pool.enhancement_bonus"), 5);
+        assert_eq!(value("class_feature.untabled.magus.armor_proficiency.level"), 20);
+        assert_eq!(value("class_feature.untabled.magus.magus_arcana.pool"), 6);
+        assert_eq!(value("class_feature.untabled.magus.bonus_feats.pool"), 3);
+        assert_eq!(value("class_feature.untabled.magus.fighter_training.level"), 10);
+    }
+
+    #[test]
+    fn shifter_level_20_reaches_every_real_magnitude_with_a_real_wisdom_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:shifter".to_owned();
+        input.chosen.ability_scores.wisdom = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.shifter.shifter_aspect.minutes"), 23);
+        assert_eq!(value("class_feature.untabled.shifter.shifter_aspect.count"), 4);
+        // Fixture's default race resolves Medium: base 4, +2 at 7, +2 at 11, +2 at 13.
+        assert_eq!(value("class_feature.untabled.shifter.shifter_claws.damage"), 10);
+        assert_eq!(value("class_feature.untabled.shifter.defensive_instinct.ac_bonus"), 6); // 5+1
+        assert_eq!(value("class_feature.untabled.shifter.track.level"), 20);
+        assert_eq!(value("class_feature.untabled.shifter.wild_shape.count"), 23); // 20+3
+    }
+
+    #[test]
+    fn vigilante_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:vigilante".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.vigilante.seamless_guise.bonus"), 20);
+        assert_eq!(value("class_feature.untabled.vigilante.social_talent.count"), 10);
+        assert_eq!(
+            value("class_feature.untabled.vigilante.vigilante_specialization.pool"),
+            1
+        );
+        assert_eq!(value("class_feature.untabled.vigilante.vigilante_talent.count"), 10);
+        assert_eq!(value("class_feature.untabled.vigilante.vigilante_talent.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.vigilante.unshakable.dc_bonus"), 20);
+        assert_eq!(
+            value("class_feature.untabled.vigilante.frightening_appearance.dc"),
+            23
+        );
+        assert_eq!(value("class_feature.untabled.vigilante.stunning_appearance.dc"), 23);
+        assert_eq!(
+            value("class_feature.untabled.vigilante.stunning_appearance.hd_threshold"),
+            20
+        );
+    }
+
     /// Below each class's own highest-gated magnitude's `min_level`, that
     /// specific id must be absent -- the same "absent means not yet
     /// granted" contract proven for Antipaladin above, spot-checked at
@@ -48543,7 +49481,7 @@ mod untabled_base_class_feature_roster_wiring_tests {
     /// does not apply generically here).
     #[test]
     fn each_new_class_lacks_its_highest_gated_magnitude_one_level_early() {
-        let cases: [(&str, u8, &str); 9] = [
+        let cases: [(&str, u8, &str); 18] = [
             (
                 "class:cryptic",
                 18,
@@ -48588,6 +49526,51 @@ mod untabled_base_class_feature_roster_wiring_tests {
                 "class:wilder",
                 4,
                 "class_feature.untabled.wilder.surging_euphoria.duration_rounds",
+            ),
+            (
+                "class:kineticist",
+                7,
+                "class_feature.untabled.kineticist.expanded_element.pool",
+            ),
+            (
+                "class:medium",
+                15,
+                "class_feature.untabled.medium.trance_of_three.duration_rounds",
+            ),
+            (
+                "class:mesmerist",
+                11,
+                "class_feature.untabled.mesmerist.glib_lie.dc",
+            ),
+            (
+                "class:occultist",
+                12,
+                "class_feature.untabled.occultist.binding_circles.dc",
+            ),
+            (
+                "class:psychic",
+                11,
+                "class_feature.untabled.psychic.major_amplifications.count",
+            ),
+            (
+                "class:spiritualist",
+                7,
+                "class_feature.untabled.spiritualist.calm_spirit.uses_per_day",
+            ),
+            (
+                "class:magus",
+                10,
+                "class_feature.untabled.magus.fighter_training.level",
+            ),
+            (
+                "class:shifter",
+                4,
+                "class_feature.untabled.shifter.wild_shape.count",
+            ),
+            (
+                "class:vigilante",
+                17,
+                "class_feature.untabled.vigilante.stunning_appearance.hd_threshold",
             ),
         ];
         for (class_id, min_level, gated_id) in cases {

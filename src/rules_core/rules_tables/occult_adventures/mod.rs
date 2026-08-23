@@ -19,6 +19,15 @@ pub mod spell_list;
 
 mod monster_data;
 
+// SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
+// six classes sharing `oa_abilities_class.lst`.
+pub mod kineticist_features;
+pub mod medium_features;
+pub mod mesmerist_features;
+pub mod occultist_features;
+pub mod psychic_features;
+pub mod spiritualist_features;
+
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
 };
