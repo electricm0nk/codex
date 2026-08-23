@@ -1140,3 +1140,64 @@ each is handled:
 
 A cycle working the remaining labels applies this table rather than re-escalating each one. Only a
 label that fits **none** of the three shapes is a new escalation.
+
+## Decision 24 — PI-name-blocked units are ingested under a Codex-generated neutral name (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. Closes the last structural blocker on `no_record == 0` (`§20`).
+Licensing-sensitive; the conditions in 24b are not optional.
+
+### The ruling
+
+> **Operator: ingest them with a Codex-generated neutral name.**
+
+**Population: ~1,179 units** whose *name itself* is Product Identity — `ability` 576,
+`deity` 459, `class_feature` 144 (re-derive; these move as siblings land). A description can be
+redacted; a name cannot, so these were `§15` stops with no path forward. They are now ingested,
+under a name Codex generates.
+
+### 24a — Why this needs a specific design, not just "make up a name"
+
+A neutral name **derived from the PI name** is obfuscation, not removal. A reversible transform, a
+lightly-mangled spelling, or a hash all still carry the original — a hash in particular is a
+fingerprint that confirms a guess. **None of those is acceptable.**
+
+The name must also be **deterministic and stable across regenerations**, or every regen churns ids
+and breaks every downstream pin.
+
+Those two requirements are satisfied together by deriving identity from the record's **non-PI
+coordinates** — `(book, source_file, source_line)` — which are already `shape_ledger.py`'s join key,
+are stable, and carry no Product Identity.
+
+### 24b — Binding conditions
+
+1. **The neutral name is derived ONLY from non-PI coordinates.** `(book, source_file, source_line)`,
+   and optionally the record's `kind`. **Never** from the PI name — not transformed, not truncated,
+   not hashed. A test proves the generator's output is unchanged when the PI name is replaced with a
+   different string.
+2. **The PI original appears nowhere that ships.** Not in `data/corpus/**`, not in
+   `src/rules_core/rules_tables/**`, not in a fixture, not in a test, not in any committed artifact
+   under `docs/release/**`. The existing `§15` skip-lists that currently name these records
+   (`17-ability-pi-skipped.json` and siblings) must be **reduced to coordinates** as part of this
+   work — they were correct as a stop-list and become a leak the moment the records ship.
+3. **The record is visibly renamed.** A field marks it as carrying a Codex-generated name, so no
+   reader or player mistakes it for the printed name. A renamed record that looks native is worse
+   than an un-ingested one.
+4. **`§22`'s divergence-recording applies, with one refinement that overrides the general rule:**
+   record **that** a rename happened, its coordinates, and why — **never the original string.**
+   `§22` requires divergence be visible; here visibility stops at the coordinate. This is the one
+   place in this bundle where "record the divergence" must not mean "record both values."
+5. **`§3` fixture discipline holds, adapted:** the fixture pins the Codex name and the record's
+   mechanical content transcribed from oracle bytes. The comment records the rename and the
+   coordinate, not the original name.
+6. **Determinism is proved, not assumed.** Regenerate twice and diff: identical output. A test fails
+   if the generator is non-deterministic.
+
+### 24c — What this does not license
+
+This is **not** a general licence to rename. It applies only to units whose *name* is the PI content
+and which therefore cannot ship otherwise. A record whose name is clean and whose *description*
+carries PI is redacted, as before — `ogl-pi-blacklist.md` as amended by `§19` governs that, unchanged.
+
+`§1a` is unchanged: this ruling makes previously-unshippable records shippable; it does not make an
+unmeasured shape measured. A unit ingested under a neutral name is closed **only** once its shape is
+actually classified like any other.
