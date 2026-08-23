@@ -161,6 +161,79 @@ class BuildCorpusIndexTest(unittest.TestCase):
             self.assertEqual(len(toks), 2)
             self.assertTrue(all(t["key"] in ("BONUS", "DEFINE") for t in toks))
 
+    def test_equipment_modifier_records_nested_under_equipment_equipmods_index_as_equipment_modifier(self):
+        """`decisions.md §20` t9-onboarding straggler wave, discovery-forward
+        from the concurrent `epic-6-kind-trait_cycle-2` kind-aware-join fix:
+        EVERY `equipment_modifier` record in this corpus lives at
+        `<book>/equipment/equipmods/*.json` (`equipment_gap.rs::generate()`'s
+        own write path, `book_out.join("equipmods")` where `book_out =
+        <book>/equipment` -- confirmed corpus-wide, zero bare
+        `equipment_modifier/` directories exist anywhere). The kind-aware
+        join's `parts[0]`-only derivation reads this as kind `"equipment"`,
+        not `"equipment_modifier"` -- a real, corpus-wide regression (1,003
+        `equipment_modifier` units, essentially the WHOLE kind, went
+        `no_record` the moment the join became kind-aware), not the genuine
+        `equipment_modifier`->`equipment` COLLISION shape the kind-aware fix
+        was built to catch (a record ACTUALLY filed directly under
+        `equipment/*.json` with no `equipmods` subdirectory, wrongly
+        satisfying an `equipment_modifier` unit's old kind-blind join).
+        `equipmods` is the ONLY `equipment/<X>/` subdirectory that means a
+        different kind -- `arms_armor`/`general`/`magic_items` are ordinary
+        `equipment`-kind sub-groupings (confirmed corpus-wide: exactly these
+        4 subdirectory names exist under any book's `equipment/`), so a
+        directory name check, not a blanket two-level rule, is required."""
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "test_book", "equipment", "equipmods")
+            os.makedirs(book_dir)
+            record = {
+                "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                "source": {"path": "test_equipmods.lst", "line": 5},
+            }
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump(record, fh)
+
+            index = SL.build_corpus_index(tmp, books={"test_book"})
+            key = ("test_book", "equipment_modifier", "test_equipmods.lst", 5)
+            self.assertIn(key, index, f"expected key not in index: {list(index.keys())}")
+
+    def test_equipment_records_directly_under_equipment_still_index_as_equipment(self):
+        """A record filed directly under `equipment/*.json` (no `equipmods`
+        subdirectory) still indexes as plain `equipment` -- the fix is
+        specific to the `equipmods` directory name, not a blanket "always
+        descend one more level" rule that would misclassify ordinary
+        `equipment` sub-groupings like `arms_armor`/`general`/`magic_items`."""
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "test_book", "equipment")
+            os.makedirs(book_dir)
+            record = {
+                "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                "source": {"path": "test_equip.lst", "line": 5},
+            }
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump(record, fh)
+
+            index = SL.build_corpus_index(tmp, books={"test_book"})
+            key = ("test_book", "equipment", "test_equip.lst", 5)
+            self.assertIn(key, index, f"expected key not in index: {list(index.keys())}")
+
+    def test_equipment_sub_grouping_directory_still_indexes_as_equipment(self):
+        """A real ordinary `equipment`-kind sub-grouping directory (e.g.
+        `arms_armor`) must NOT be treated as denoting a different kind --
+        only the specific `equipmods` name does."""
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "test_book", "equipment", "arms_armor")
+            os.makedirs(book_dir)
+            record = {
+                "data": {"raw_tokens": [{"key": "BONUS", "value": "VAR|Foo|WIS"}]},
+                "source": {"path": "test_arms.lst", "line": 5},
+            }
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump(record, fh)
+
+            index = SL.build_corpus_index(tmp, books={"test_book"})
+            key = ("test_book", "equipment", "test_arms.lst", 5)
+            self.assertIn(key, index, f"expected key not in index: {list(index.keys())}")
+
     def test_bestiary_book_walks_the_beastiary_corpus_directory(self):
         """`data/corpus/`'s core Bestiary output lives under the historical
         `beastiary` spelling (see `scripts/transcribe_monster_tables.py`'s

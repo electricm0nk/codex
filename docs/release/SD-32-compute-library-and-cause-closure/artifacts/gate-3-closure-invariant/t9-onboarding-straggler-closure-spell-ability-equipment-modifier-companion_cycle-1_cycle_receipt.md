@@ -431,3 +431,68 @@ line, never invented.
 df -h /
 ```
 (see final message)
+
+## Post-rebase addendum (`§17a`) — a real regression found in a concurrent sibling commit, fixed as part of this cycle
+
+`git fetch origin tranche/12 && git rebase origin/tranche/12` (§5 protocol) landed
+`11a84bced5` ("shape_ledger.py kind-aware join; run ingest_generic_kind --kind trait"), a concurrent
+sibling fix making `build_corpus_index`/`build_corpus_key_index`'s join key include `kind` (fixing a
+real cross-kind collision: `trait`→`ability` 487, `class_feature`→`race_trait_generic` 25). Re-running
+this cycle's own re-derivation immediately after the rebase surfaced a **second, unrelated regression**
+introduced by that same commit: `equipment_modifier` `no_record` jumped to **1,003** (from this
+cycle's own pre-rebase 1) — not a genuine collision, but a **real, corpus-wide false negative**. Every
+`equipment_modifier` record in this ENTIRE corpus lives at `<book>/equipment/equipmods/*.json`
+(`equipment_gap.rs::generate()`'s own write path; confirmed by direct search — **zero** bare
+`equipment_modifier/` directories exist anywhere), but the sibling fix's kind derivation ("the
+directory one level under book") read that as kind `"equipment"`, not `"equipment_modifier"` — so
+EVERY `equipment_modifier` record's own join now failed, including this cycle's own 3 freshly-ingested
+records.
+
+**Fixed as part of this cycle** (my own deliverable depended on it; `decisions.md §22`, fix the source):
+new `kind_from_path_parts` helper (`scripts/shape_ledger.py`) — a directory-NAME check (only
+`equipment/equipmods/` maps to kind `equipment_modifier`; the other 3 real `equipment/<X>/`
+sub-groupings that exist corpus-wide — `arms_armor`/`general`/`magic_items` — correctly stay kind
+`equipment`, confirmed these are the only 4 subdirectory names that exist under any book's
+`equipment/`), composed with the existing `normalize_kind_dir`'s `_generic`-suffix handling. Used at
+all 3 kind-derivation call sites (`build_corpus_index`, `build_corpus_key_index`, and this cycle's own
+`build_cross_book_key_index`). 3 new tests (the real `equipmods`-nesting case; a negative control for a
+plain `equipment/*.json` record; a negative control for a real `equipment` sub-grouping directory like
+`arms_armor`), RED confirmed before the fix (`AssertionError: ... not found in {(...'equipment'...)}`),
+GREEN after. **53/53 `test_shape_ledger.py`.**
+
+### Result — the true, corrected `equipment_modifier` state, re-derived not assumed
+
+```bash
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/ledger.json
+```
+`equipment_modifier` `no_record`: 1,003 → **19**. My own 3 closures (`crrsve_brst_m`/`crrsve_brst_r`/
+`reach`) and 1 PI-blocked unit (`ag_equipmods.lst:1`, sibling `§24` scope) are among that 19's
+complement/inclusion as expected — but the fix also un-masks **18 units this cycle's own scope never
+named**, previously hidden by the pre-existing kind-blind join's own false-positive matches:
+`advanced_class_guide` ×14, `pathfinder_unchained` ×4 (all `special_ability_*` armor/weapon/ammunition/
+shield modifiers). **Not investigated or closed this cycle** — genuinely new, real `equipment_modifier`
+work this cycle's own dispatch scope did not include, discovered only as a byproduct of fixing the
+regression that blocked my own 3 closures from registering. Named here per `§16`/`§17a`, not silently
+absorbed into this cycle's own closure count.
+
+### Bundle-wide `no_record`, final, this cycle's real net effect
+
+| Kind | Cycle start (227 total) | This cycle's own scope closed | Post-rebase kind-fix (out of my scope, sibling's own commit) | Final |
+|---|---:|---:|---:|---:|
+| `ability` | 5 | -4 (instrument) | 0 | 1 |
+| `spell` | 29 | -3 (instrument) | 0 | 26 |
+| `equipment_modifier` | 4 | -3 (closure) | +18 (newly un-masked, not this cycle's scope) | 19 |
+| `equipment` | 87 | -8 (instrument) | 0 | 79 |
+| `companion` | 2 | 0 | 0 | 2 |
+| `monster_ability` | 100 | 0 (out of scope) | 0 | 100 |
+| `class_feature` | 0 | — (not this cycle's kind at all) | +25 (sibling's own reported discovery) | 25 |
+| **Total** | **227** | | | **252** |
+
+Bundle-wide `no_record` moved 227→252 net — **up**, not down, because the corrected, kind-aware
+instrument (a mix of the sibling's own fix and this cycle's `equipmods`-nesting correction) is more
+honest than what it replaced, surfacing 43 previously-hidden real gaps (18 `equipment_modifier` + 25
+`class_feature`) against this cycle's own 18-unit reduction (3 closed + 15 instrument-corrected in the
+kinds this cycle was actually scoped to). Standing gate still passes:
+`no_record budget: 252/34631 vs. baseline 21521/36028 -- exceeded: False`. This is `decisions.md §20`'s
+own point made concrete: a more accurate measurement can legitimately raise the count, and that is not
+a regression to hide — it is the gate doing its job.

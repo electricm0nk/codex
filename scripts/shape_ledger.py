@@ -339,6 +339,48 @@ def normalize_kind_dir(raw_kind: str) -> str:
     return raw_kind
 
 
+# The ONE `equipment/<X>/` subdirectory name that denotes a DIFFERENT kind
+# (`equipment_modifier`) rather than an ordinary `equipment`-kind
+# sub-grouping. `equipment_gap.rs::generate()`'s own write path
+# (`book_out.join("equipmods")` where `book_out = <book>/equipment`) is the
+# ONLY place any `equipment_modifier` record is ever written -- confirmed
+# corpus-wide, zero bare `equipment_modifier/` directories exist anywhere.
+_EQUIPMENT_MODIFIER_SUBDIR = "equipmods"
+
+
+def kind_from_path_parts(parts: list[str]) -> str:
+    """Resolves the real `kind` for a corpus record from its path parts
+    relative to the book directory (`parts[0]` is the top-level kind
+    directory, `parts[1:]` are further nesting). Two normalizations, in
+    order:
+
+    1. `equipment/equipmods/...` -> `equipment_modifier` (see
+       `_EQUIPMENT_MODIFIER_SUBDIR`'s docstring). A DIRECTORY-NAME check,
+       not a blanket "always descend one more level" rule -- `arms_armor`/
+       `general`/`magic_items` are ordinary `equipment`-kind sub-groupings
+       under the SAME `equipment/<X>/` shape (confirmed corpus-wide: these
+       are the only 4 subdirectory names that exist under any book's
+       `equipment/`) and must stay `equipment`.
+    2. `normalize_kind_dir` — strips a trailing `_generic` sibling suffix
+       (`ingest_generic_kind.py`/`ingest_race_trait_generic.py`'s own
+       deliberate design, see that function's docstring).
+
+    `decisions.md §20` t9-onboarding straggler wave: making the join
+    kind-aware (the concurrent `epic-6-kind-trait_cycle-2` fix) turned
+    EVERY `equipment_modifier` record's real, universal directory
+    convention into a false collision -- 1,003 units (essentially the
+    entire kind) went `no_record` the moment the join started comparing
+    `parts[0]` (`"equipment"`) against the unit's own `kind`
+    (`"equipment_modifier"`) with no knowledge of this corpus's own nesting
+    convention. This is the SAME shape `normalize_kind_dir`'s `_generic`
+    suffix handling already exists to fix for other kinds -- extended here
+    for the one kind whose real subdirectory convention is a NAME, not a
+    suffix."""
+    if len(parts) >= 2 and parts[0] == "equipment" and parts[1] == _EQUIPMENT_MODIFIER_SUBDIR:
+        return "equipment_modifier"
+    return normalize_kind_dir(parts[0])
+
+
 def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
     """Walks `data/corpus/<book>/<kind>/*.json` (excluding LICENSE.json) and
     indexes every record's raw_tokens by (book, kind, source_basename,
@@ -422,7 +464,7 @@ def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
             parts = rel.split(os.sep)
             if len(parts) < 2:
                 continue
-            kind = normalize_kind_dir(parts[0])
+            kind = kind_from_path_parts(parts)
             raw_tokens = (rec.get("data") or {}).get("raw_tokens") or []
             formula_tokens = [
                 t
@@ -508,7 +550,7 @@ def build_corpus_key_index(corpus_root: str, books: set[str] | None = None) -> d
             parts = rel.split(os.sep)
             if len(parts) < 2:
                 continue
-            kind = normalize_kind_dir(parts[0])
+            kind = kind_from_path_parts(parts)
             raw_tokens = data.get("raw_tokens") or []
             formula_tokens = [
                 t
@@ -603,12 +645,12 @@ def build_cross_book_key_index(corpus_root: str, books: set[str] | None = None) 
             # BOOK directory and the kind is `parts[1]`.
             if book_override is not None:
                 book = book_override
-                kind = parts[0]
+                kind = kind_from_path_parts(parts)
             else:
                 book = parts[0]
                 if len(parts) < 3:
                     continue
-                kind = parts[1]
+                kind = kind_from_path_parts(parts[1:])
             raw_tokens = data.get("raw_tokens") or []
             formula_tokens = [
                 t
