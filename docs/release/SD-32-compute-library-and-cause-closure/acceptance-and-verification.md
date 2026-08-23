@@ -27,8 +27,22 @@ Then the per-book diff against the inventory's 37-book roster reaches zero-unexp
 excluded directory is named and justified as scope (not oversight) in
 `artifacts/gate-0-census-closure/excluded-directories.md`.
 
+> **Derivation command (added `t9-onboarding`, 2026-08-23, closing the `## DISCOVERED` finding that
+> this figure carried no reproducible command):** `python3 scripts/census_independent.py
+> --pcgen-root "$PCGEN_CORPUS_ROOT" --inventory docs/work-inventory.json --output <path>` →
+> `discovered_book_dirs` in the JSON output. Re-run against the pinned oracle 2026-08-23:
+> `discovered=186`. The `158` above is Gate 0's frozen launch-time figure and is **not** re-stated
+> as current — 186 is the live, reproducible count; both numbers coexist deliberately (`decisions.md
+> §12c`: name the population, never quote a bare total).
+
 **AT-32-G0-002.** Given the inventory's current `docs/work-inventory.json` denominator of `38,372`
 units (re-derived at Gate 0's first cycle, never transcribed from a prior wave).
+
+> **Derivation command (added `t9-onboarding`, 2026-08-23, same finding as above):**
+> `jq '.totals.units' docs/work-inventory.json`. Re-run 2026-08-23: **49,490** — the inventory has
+> grown substantially since Gate 0's launch (card 15's `no_record`-closure campaign, `decisions.md
+> §20`). `38,372` is frozen launch-time history, not current; do not quote either number without
+> re-running the command above and naming the date, per `decisions.md §12c`.
 
 When an honest object-definition rule is written for each kind (`feat`, `class`, `spell`,
 `monster`, `monster_ability`, `equipment`, `equipment_modifier`, `companion`, `race`,
