@@ -174,6 +174,33 @@ ADDED_KINDS = (
     "power",  # 421 units, `up_powers.lst` (Ultimate Psionics only) -- memo §3.
     "domain",  # 183 units, `*_domains.lst` (the domain HEADER record) -- memo §4.
     "language",  # 143 units, `*_languages.lst`, 100% text-only (F0) -- memo §5.
+    # SD-32 card 15 (`decisions.md §12b`, largest remaining bucket): a bare
+    # (non-`_race`, non-`_class`, non-`_companion`/`_familiar`)
+    # `*abilities*.lst` row whose `CATEGORY:` tag is not `FEAT`. Unlike the
+    # six kinds above, this is NOT a filename-only rule -- the same file
+    # mixes real, distinct objects with facets/pick-list entries/duplicates
+    # of content already counted elsewhere, so the per-row disposition test
+    # ported from `15-card-15-ability-category-classify.py` (see
+    # `_ABILITY_CONTENT_RE`/`_ABILITY_GATEWAY_RE` and `count_objects`'s
+    # `row_dependent` branch) decides kind-vs-not-an-object per row, not
+    # per file. See `15-card-15-ability-category-memo.md` for the disposition
+    # rules this ports. The memo's own headline figure (5,108 A / 778 B of
+    # 5,886) does NOT reproduce live: re-deriving at this cycle's pin found
+    # `ability_category:Internal` had grown 839->879 (an unrelated,
+    # already-landed reroute, `decisions.md §14c`) AND a real
+    # census/inventory disagreement the memo never caught -- 6 in-scope
+    # `*_abilities_familiar*.lst` files (97 rows) that `src/bin/
+    # v06_work_inventory.rs`'s `file_kind` already routes to the tracked
+    # `companion` kind were falling into this branch here, so the memo's
+    # 5,108/778 unknowingly double-counted them against `companion`. Fixed
+    # by routing `_companion`/`_familiar` abilities files to `kind:companion`
+    # (matching Rust's own order) BEFORE this branch runs. Live figure at
+    # the card-15-ability cycle's pin: **5,028 (A) / 801 (B)** of 5,829
+    # (5,926 minus the 97 companion rows) -- re-derive with
+    # `python3 scripts/census_independent.py ...`; `counts_by_kind['ability']`
+    # / `sum(v for k,v in kind_unenumerable.items() if
+    # k.startswith('ability_category:'))`.
+    "ability",
 )
 
 ALL_KINDS = TEN_KINDS + ADDED_KINDS
@@ -370,6 +397,19 @@ def _classify_kind_by_filename(basename: str, book_id: str):
             # `artifacts/gate-0-census-closure/
             # 15-card-15-category-internal-classify.py` / `-summary.md`.
             return ("row_dependent_class_feature", None)
+        # SD-32 card 15-ability (`decisions.md §12b`): `src/bin/
+        # v06_work_inventory.rs`'s `file_kind` checks `_abilities_companion`/
+        # `_abilities_familiar` BEFORE falling through to a bare-abilities
+        # kind, so those files' rows are already counted under the tracked
+        # `companion` kind (e.g. `b3_abilities_familiar.lst`,
+        # `ce_abilities_familiar_cr.lst`) -- discovered as a real
+        # census/inventory disagreement this cycle (97 rows across 6
+        # in-scope files were falling into `row_dependent` here while Rust
+        # already enumerated them as `companion`). Matched to Rust's own
+        # order so the two walkers agree per this card's acceptance bar,
+        # not because companion abilities are a new finding.
+        if "_companion" in b or "_familiar" in b:
+            return ("kind", "companion")
         # bare abilities file: row-level CATEGORY: tag decides (handled by caller)
         return ("row_dependent", None)
 
@@ -475,6 +515,88 @@ def _row_category_tag(line: str) -> Optional[str]:
     return None
 
 
+def _key_field(line: str) -> Optional[str]:
+    for field_ in line.split("\t"):
+        f = field_.strip()
+        if f.upper().startswith("KEY:"):
+            return f.split(":", 1)[1].strip()
+    return None
+
+
+# SD-32 card 15-ability (`decisions.md §12b`): ported unchanged from
+# `artifacts/gate-0-census-closure/15-card-15-ability-category-classify.py`
+# (the memo lane's own adjudicated per-row classifier for the bare
+# `*abilities*.lst` -> `ability_category:*` population -- NOT the same
+# population as `_ROW_CONTENT_FIELD_RE` above, which classifies the
+# DIFFERENT, already-resolved `_abilities_class.lst` `CATEGORY:Internal`
+# reroute). Deliberately the memo's own narrower field list, not
+# `_ROW_CONTENT_FIELD_RE`'s wider one -- the memo's per-bucket rulings
+# (`15-card-15-ability-category-memo.md`) were reviewed and written against
+# these exact patterns (e.g. `Ability Focus`'s 272-row B-picklist ruling
+# rests on "zero fields beyond CATEGORY:/TYPE:" under this list); porting a
+# wider list would silently redecide rulings no decision document approved.
+_ABILITY_CONTENT_RE = re.compile(
+    r"DEFINE:|BONUS[A-Z]*:|DESC:|ASPECT:|CSKILL:|MOVE:|AUTO:|TEMPLATE:|SPROP:|QUALITY:|SR:|DR:|SAB:|VISION:"
+)
+_ABILITY_GATEWAY_RE = re.compile(r"ABILITY:[^\t]+\|AUTOMATIC\|")
+
+# Tracked kinds the ability-category duplicate check joins against -- exactly
+# the memo's own list (`15-card-15-ability-category-classify.py`'s Pass 1).
+_ABILITY_DUPLICATE_CHECK_KINDS = frozenset(
+    {
+        "feat",
+        "class",
+        "spell",
+        "monster",
+        "monster_ability",
+        "equipment",
+        "equipment_modifier",
+        "companion",
+        "race",
+        "race_trait",
+    }
+)
+
+
+def _collect_tracked_keys(pathfinder_root: str, in_scope: List[BookDir]) -> Dict[str, set]:
+    """KEY: field values for every unit already counted under one of
+    `_ABILITY_DUPLICATE_CHECK_KINDS`, used ONLY for the ability_category
+    B-duplicate join (`15-card-15-ability-category-memo.md` "the shared-name
+    hazard" -- KEY:-field-only, never a bare-identity fallback: a shared
+    *display name* is not proof of a shared *thing*). Ported from
+    `15-card-15-ability-category-classify.py`'s own Pass 1, unchanged."""
+    tracked: Dict[str, set] = defaultdict(set)
+    for bd in in_scope:
+        book_dir = os.path.join(pathfinder_root, bd.rel_path)
+        for dirpath, _dirnames, filenames in os.walk(book_dir):
+            for fn in sorted(filenames):
+                if not fn.lower().endswith(".lst"):
+                    continue
+                full = os.path.join(dirpath, fn)
+                bucket, key = _classify_kind_by_filename(fn, bd.book_id)
+                if bucket == "row_dependent":
+                    for identity, raw in _parse_lst_rows(full):
+                        cat = _row_category_tag(raw)
+                        if cat and cat.upper() == "FEAT":
+                            ident_upper = identity.upper()
+                            if ident_upper.endswith((".FORGET", ".MOD")):
+                                continue
+                            kf = _key_field(raw)
+                            if kf:
+                                tracked["feat"].add(kf)
+                    continue
+                if bucket != "kind" or key not in _ABILITY_DUPLICATE_CHECK_KINDS:
+                    continue
+                for identity, raw in _parse_lst_rows(full):
+                    ident_upper = identity.upper()
+                    if ident_upper.endswith((".FORGET", ".MOD")):
+                        continue
+                    kf = _key_field(raw)
+                    if kf:
+                        tracked[key].add(kf)
+    return tracked
+
+
 def _parse_lst_rows(path: str):
     """Yields (identity, raw_line) for every real object row in an LST
     file, per the comment/blank/directive-line skip rule in the module
@@ -509,6 +631,12 @@ def count_objects(pathfinder_root: str, in_scope: List[BookDir]) -> dict:
     non_object_files: List[str] = []
     files_by_kind_example: Dict[str, str] = {}
 
+    # SD-32 card 15-ability: built once, up front -- the `row_dependent`
+    # branch's B-duplicate disposition needs every tracked kind's KEY: set
+    # before it can classify a single ability_category row. See
+    # `_collect_tracked_keys`'s own docstring.
+    tracked_keys = _collect_tracked_keys(pathfinder_root, in_scope)
+
     for bd in in_scope:
         book_dir = os.path.join(pathfinder_root, bd.rel_path)
         for dirpath, _dirnames, filenames in os.walk(book_dir):
@@ -528,10 +656,34 @@ def count_objects(pathfinder_root: str, in_scope: List[BookDir]) -> dict:
                         if cat and cat.upper() == "FEAT":
                             row_bucket, row_key = "kind", "feat"
                         else:
-                            row_bucket, row_key = (
-                                "kind_unenumerable",
-                                f"ability_category:{cat or 'UNKNOWN'}",
-                            )
+                            # SD-32 card 15-ability (`decisions.md §12b`):
+                            # ported per-row A/B disposition, not a filename
+                            # rule -- see `_ABILITY_CONTENT_RE`'s doc
+                            # comment and `15-card-15-ability-category-memo.md`.
+                            # Priority order matches the memo exactly:
+                            # B-duplicate (KEY: collides with an
+                            # already-tracked kind) beats A (independent
+                            # content) beats B-gateway (resolves to another
+                            # real row) beats B-picklist (neither).
+                            kf = _key_field(raw_line)
+                            collided = False
+                            if kf:
+                                for tk_kind, tk_keys in tracked_keys.items():
+                                    if kf in tk_keys:
+                                        collided = True
+                                        break
+                            if collided:
+                                row_bucket, row_key = (
+                                    "kind_unenumerable",
+                                    f"ability_category:{cat or 'UNKNOWN'}",
+                                )
+                            elif _ABILITY_CONTENT_RE.search(raw_line):
+                                row_bucket, row_key = "kind", "ability"
+                            else:
+                                row_bucket, row_key = (
+                                    "kind_unenumerable",
+                                    f"ability_category:{cat or 'UNKNOWN'}",
+                                )
                     elif bucket == "row_dependent_class_feature":
                         cat = _row_category_tag(raw_line)
                         if cat and cat.upper() == "INTERNAL" and _row_is_bare_internal_marker(

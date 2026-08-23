@@ -71,6 +71,13 @@ def main(argv: list[str] | None = None) -> int:
     census = CI.count_objects(pathfinder_root, scope.in_scope)
     census_tracked_total = sum(census["counts_by_kind"].values())
     census_unenumerable_total = census["total_kind_unenumerable_units"]
+    # SD-32 card 15-ability: live-derived, not hand-copied -- every
+    # `ability_category:<tag>` unit still in `kind_unenumerable` after the
+    # ported per-row A/B classifier runs (see `disposed_b_applied`'s own
+    # `ability_category_b_disposed` entry below for what this includes).
+    ability_category_b_disposed_total = sum(
+        v for k, v in census["kind_unenumerable"].items() if k.startswith("ability_category:")
+    )
 
     # -- Population 2: the inventory's all-origins population --
     inventory_total = len(inventory.get("units") or [])
@@ -87,25 +94,56 @@ def main(argv: list[str] | None = None) -> int:
     # -- Card 15 disposition status of the census's kind_unenumerable set --
     # (B) proven-not-an-object. `ce__sizes.lst` (9 units) is REMOVED from
     # total_kind_unenumerable_units entirely (a `non_object_file`, not
-    # counted anywhere). The CATEGORY:Internal bare-marker reroute (40
-    # units, post-adjudication -- narrowed from the original lane's blanket
-    # 2,614) is still counted in the live total: it only moves bucket, from
-    # `class_feature` to `ability_category:Internal` (837 -> 879). Only the
-    # 9 actually shrink `total_this_run` below.
+    # counted anywhere).
+    #
+    # SD-32 card 15-ability: the `ability_category_b_disposed` entry below
+    # is now the LIVE, re-derived count of every `ability_category:<tag>`
+    # unit remaining in `kind_unenumerable` after `census_independent.py`'s
+    # `row_dependent` branch applies the ported per-row A/B classifier
+    # (`_ABILITY_CONTENT_RE`) -- this SUBSUMES the CATEGORY:Internal
+    # bare-marker reroute this entry used to track standalone (40 units,
+    # `decisions.md §14c` item 4): those 40 rows land in the SAME
+    # `ability_category:Internal` bucket key the row_dependent branch
+    # writes to, so counting them separately here would double-count them
+    # against the fresh `ability_category_b_disposed` total below. Their
+    # own proof/provenance is unchanged and still applies -- see
+    # `15-card-15-category-internal-adjudication-memo.md` -- only the
+    # bookkeeping of where they are summed moved.
     disposed_b_applied = {
-        "class_feature_category_internal_bare_marker_reroute": {
-            "units": 40,
+        "ability_category_b_disposed": {
+            "units": ability_category_b_disposed_total,
             "still_counted_in_total_this_run": True,
             "proof": "artifacts/gate-0-census-closure/"
-            "15-card-15-category-internal-adjudication-memo.md (decisions.md "
-            "§14c item 4) -- only a CATEGORY:Internal row with neither a "
-            "content field nor a resolved ABILITY:...|AUTOMATIC| gateway "
-            "reroutes; narrowed from the original lane's blanket 2,614 "
-            "after per-row adjudication found that blanket rule wrong for "
-            "90.7% of the population",
+            "15-card-15-ability-category-memo.md's per-row disposition "
+            "rules (B-duplicate/B-gateway/B-picklist), ported unchanged "
+            "into scripts/census_independent.py's `row_dependent` branch "
+            "this cycle (card-15-ability). INCLUDES the 40-unit "
+            "CATEGORY:Internal bare-marker reroute from the "
+            "`row_dependent_class_feature` branch (decisions.md §14c item "
+            "4, 15-card-15-category-internal-adjudication-memo.md) -- both "
+            "code paths write to the same `ability_category:<tag>` bucket "
+            "keys, so their union is what this figure counts.",
             "applied_in": "scripts/census_independent.py "
-            "_row_is_bare_internal_marker + count_objects "
-            "row_dependent_class_feature branch",
+            "_ABILITY_CONTENT_RE / _collect_tracked_keys / count_objects "
+            "row_dependent branch (card-15-ability); "
+            "_row_is_bare_internal_marker + row_dependent_class_feature "
+            "branch (category-internal-adjudication, unchanged)",
+        },
+        "abilities_familiar_companion_routing_fixed": {
+            "units": 97,
+            "still_counted_in_total_this_run": False,
+            "proof": "SD-32 card 15-ability: 6 in-scope "
+            "`*_abilities_familiar*.lst` files (b2/b3/pfs_b2/ce x3) were "
+            "falling into census's `row_dependent` branch even though "
+            "`src/bin/v06_work_inventory.rs`'s `file_kind` already routes "
+            "them to the tracked `companion` kind (checked before the bare "
+            "`abilit` fallback) -- a real census/inventory disagreement "
+            "this cycle found and fixed by matching Rust's own filename "
+            "order, not a new content ruling. Moves the FULL 97 rows (not "
+            "just the A-disposed ones) to `kind:companion`, matching "
+            "companion's own unconditional-per-row-count convention.",
+            "applied_in": "scripts/census_independent.py "
+            "_classify_kind_by_filename's abilit branch",
         },
         "ce__sizes_lst_engine_covered": {
             "units": 9,
@@ -162,14 +200,13 @@ def main(argv: list[str] | None = None) -> int:
             "not attempted this cycle -- flagged forward, not silently "
             "skipped",
         },
-        "ability_category_disposition_a": {
-            "units": 5108,
-            "memo": "15-card-15-ability-category-memo.md",
-            "why_not_applied": "requires a new Kind::Ability variant across "
-            "src/bin/v06_work_inventory.rs (enum, file_kind, enumerate_file, "
-            "refine_kind, duplicate-identity handling) -- too large a surface "
-            "to land safely in this cycle's remaining budget",
-        },
+        # `ability_category_disposition_a` (formerly pending here, 5,108
+        # units at the memo's own stale pin) is REMOVED as of card
+        # 15-ability: `Kind::Ability` landed this cycle (enum + file_kind +
+        # refine_kind + has_classifying_token, `src/bin/v06_work_inventory.rs`)
+        # and moved to `already_tracked_a` below with its live, re-derived
+        # figure -- the memo's number did not reproduce (see that entry's
+        # own note for why).
     }
     # (A) already applied: the 15,438 class_feature rows the census walk
     # agrees with docs/work-inventory.json on (physical book/source_file/
@@ -235,6 +272,42 @@ def main(argv: list[str] | None = None) -> int:
             "disposed_b_applied.kit_filename_collision_fixed.",
             "counts_toward_total_this_run": False,
         },
+        "ability_landed_this_cycle": {
+            "units": 4824,
+            "census_raw_count": 5028,
+            "note": "SD-32 card 15-ability: `Kind::Ability` landed through "
+            "the census's own row_dependent branch (content/gateway test "
+            "ported from 15-card-15-ability-category-memo.md into "
+            "_ABILITY_CONTENT_RE) plus a row-level CATEGORY:FEAT redirect "
+            "(refine_kind) matching the same rule. The 204-unit gap "
+            "between census's raw 5,028 and the real inventory's 4,824 is "
+            "the `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` deletion "
+            "(289 new core_essentials-sourced ability residuals, "
+            "decisions.md §16 -- ce_abilities.lst's book-wide shared "
+            "lookup tables have no per-race path signal and no resolvable "
+            "SOURCELONG:, same disposition every prior kind's unattributable "
+            "core_essentials content gets) minus a +85 gain from a "
+            "PRE-EXISTING Rust/census disagreement this cycle's `abilit` "
+            "fallback incidentally fixed: 3 in-scope "
+            "`*_abilities_feat.lst` files (inner_sea_gods/inner_sea_combat/"
+            "inner_sea_faiths) were never enumerated by "
+            "src/bin/v06_work_inventory.rs's old file_kind at all (no "
+            "`_abilities_feat` branch existed), so their 111 real "
+            "CATEGORY:FEAT feat rows + 3 ability rows were invisible to "
+            "the inventory even though census already counted them as "
+            "`feat` via its looser `\"feat\" in b` substring match -- now "
+            "correctly split 111 feat / 3 ability by refine_kind's own "
+            "CATEGORY:FEAT test. `docs/work-inventory.json`'s `feat` kind "
+            "grew 2,610 -> 2,722 (+112 = 111 + the 1 apg_abilities.lst row "
+            "the memo already named) as the direct side effect -- verified "
+            "by id-diff, 0 pre-existing feat units removed. NOTE: census's "
+            "own `\"feat\" in b` check still counts all 114 rows in those "
+            "3 files as `feat` unconditionally (no per-row CATEGORY: test "
+            "at that branch) -- 3 units (the ability-disposed ones) are a "
+            "small, real, NOT-fixed census/inventory disagreement this "
+            "cycle found and is reporting, not silently absorbing.",
+            "counts_toward_total_this_run": False,
+        },
     }
     already_tracked_total = sum(
         v["units"] for v in already_tracked_a.values() if v["counts_toward_total_this_run"]
@@ -242,15 +315,11 @@ def main(argv: list[str] | None = None) -> int:
     pending_a_total = sum(v["units"] for v in pending_a.values())
 
     # (B) real dispositions a measurement lane proposed but NOT yet applied
-    # in code (still counted as kind_unenumerable):
-    pending_b_unapplied = {
-        "ability_category_gateway_picklist_duplicate": {
-            "units": 210 + 560 + 8,
-            "memo": "15-card-15-ability-category-summary.md",
-            "why_not_applied": "no per-row exclusion rule written in "
-            "census_independent.py yet; also blocked on the same tension below",
-        },
-    }
+    # in code (still counted as kind_unenumerable). Empty as of card
+    # 15-ability: `ability_category_gateway_picklist_duplicate` (formerly
+    # here) is now APPLIED (`disposed_b_applied.ability_category_b_disposed`
+    # above, live-derived, not the memo's stale 778 figure).
+    pending_b_unapplied = {}
     pending_b_total = sum(v["units"] for v in pending_b_unapplied.values())
 
     # The class_feature-lane-vs-ability_category-lane CATEGORY:Internal
@@ -278,13 +347,12 @@ def main(argv: list[str] | None = None) -> int:
     }
 
     # Units of `total_this_run` accounted for by SOME disposition, applied
-    # or not: the 40 Internal-bare-marker rows are STILL counted in the
-    # total (relabeled into `ability_category:Internal`, not removed --
-    # `disposed_b_still_counted_total`), the 15,438 already-tracked
-    # class_feature rows are still counted (see `already_tracked_a` note),
-    # `skill` (149 landed + 21 residual-deleted, 170 total) moved OUT of
-    # `kind_unenumerable` entirely this cycle and is excluded here, plus
-    # every pending (A)/(B) bucket.
+    # or not: `ability_category_b_disposed` (live, includes the 40
+    # Internal-bare-marker rows -- see its own note) is STILL counted in
+    # the total, the 15,438 already-tracked class_feature rows are still
+    # counted (see `already_tracked_a` note), `skill`/`ability`/the other
+    # landed kinds moved OUT of `kind_unenumerable` entirely this cycle and
+    # are excluded here, plus every remaining pending (A)/(B) bucket.
     accounted_total = (
         disposed_b_still_counted_total + already_tracked_total + pending_a_total + pending_b_total
     )
@@ -334,18 +402,24 @@ def main(argv: list[str] | None = None) -> int:
                 "skill_this_cycle": 170,
                 "other_kinds_generic_enumeration_cycle": 3550,
                 "kit_filename_collision_fixed": 1,
+                "ability_landed_card_15_ability_cycle": 5028,
+                "abilities_familiar_companion_routing_fixed_card_15_ability_cycle": 97,
                 "note": "27,847 (pre-any-card-15-cycle) - 9 (ce__sizes.lst, "
                 "non_object_file) - 170 (skill moved to a real kind, "
                 "Kind::Skill) - 3,550 (template/deity/power/domain/language "
                 "moved to real kinds, generic-enumeration cycle, "
                 "decisions.md §17) - 1 (kit, census filename false-positive "
                 "on kitsune_races.lst fixed, folded into the existing race "
-                "count) = 24,117 (total_this_run, above). "
-                "The CATEGORY:Internal reroute (originally 2,614, narrowed "
-                "to 40 by adjudication) never leaves total_this_run at all "
-                "-- it only moves bucket (class_feature <-> "
-                "ability_category:Internal), so it does not appear in this "
-                "subtraction.",
+                "count) - 5,028 (ability moved to a real kind, Kind::Ability, "
+                "card-15-ability cycle) - 97 (*_abilities_familiar*.lst rows "
+                "routed to the tracked companion kind, matching Rust's own "
+                "file_kind order, card-15-ability cycle) = "
+                f"{census_unenumerable_total} (total_this_run, above; live, "
+                "not hand-copied). The CATEGORY:Internal reroute (originally "
+                "2,614, narrowed to 40 by adjudication) never leaves "
+                "total_this_run at all -- it only moves bucket (class_feature "
+                "<-> ability_category:Internal), so it does not appear in "
+                "this subtraction.",
             },
             "b_disposed_applied": {
                 "total_still_counted_in_total_this_run": disposed_b_still_counted_total,
@@ -373,26 +447,25 @@ def main(argv: list[str] | None = None) -> int:
                 "disposed_b_still_counted_plus_already_tracked_plus_pending_a_plus_pending_b": accounted_total,
                 "equals_total_this_run": accounted_total == census_unenumerable_total,
                 "remaining_undisposed": remaining_undisposed,
-                "note": "every unit in total_this_run (24,117) is accounted "
-                "for by exactly one row above: 40 (Internal bare-marker "
-                "reroute, disposed B, still counted -- moved into "
-                "ability_category:Internal) + 15,438 (class_feature, "
-                "already tracked) + 179 (class_feature residual, original, "
-                "pending A) + 2,574 (class_feature Internal-adjudicated, "
-                "pending A) + 5,108 (ability pending-A) + 778 "
-                "(ability_category pending-B) = 24,117. `skill` (149), "
-                "`template`/`deity`/`power`/`domain`/`language` (3,550, "
-                "landed this cycle via generic-enumeration) and `kit` (1, "
-                "disposed B -- census filename collision fixed, not real "
-                "content) are NOT in this sum: all three moved OUT of "
+                "note": f"every unit in total_this_run ({census_unenumerable_total}) is "
+                "accounted for by exactly one row above: "
+                f"{ability_category_b_disposed_total} (ability_category_b_disposed, "
+                "live-derived, INCLUDES the 40-unit Internal bare-marker "
+                "reroute) + 15,438 (class_feature, already tracked) + 179 "
+                "(class_feature residual, original, pending A) + 2,574 "
+                "(class_feature Internal-adjudicated, pending A) = "
+                f"{ability_category_b_disposed_total + 15438 + 179 + 2574}. "
+                "`skill` (149), `template`/`deity`/`power`/`domain`/"
+                "`language` (3,550, generic-enumeration cycle) `kit` (1, "
+                "disposed B) `ability` (4,824 real inventory units off a "
+                "5,028 live census count) and the 97-row companion routing "
+                "fix are NOT in this sum: all moved OUT of "
                 "kind_unenumerable entirely (see already_tracked_a and "
                 "disposed_b_applied's own `counts_toward_total_this_run`/"
-                "`still_counted_in_total_this_run` flags) -- the "
-                "27,668 -> 24,117 drop across this cycle IS that movement. "
-                "`ability` (5,108) is the only remaining disposition-(A) "
-                "new-kind bucket -- landing it needs a per-row A/B split "
-                "first (15-card-15-ability-category-memo.md), not the "
-                "filename-only mechanism this cycle used.",
+                "`still_counted_in_total_this_run` flags). Card 15's "
+                "remaining scope is unchanged in shape by this cycle: the "
+                "class_feature residual (179 + 2,574) is the only "
+                "disposition-(A) population still pending integration.",
             },
         },
         "gate_3_standing_gate_still_passes": None,  # filled by caller/report consumer

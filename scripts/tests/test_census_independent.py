@@ -420,6 +420,162 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
                 counts["kind_unenumerable"].get("ability_category:Special Quality"), 1
             )
 
+    def test_content_bearing_ability_row_is_enumerated_as_kind_ability(self):
+        # SD-32 card 15-ability (`decisions.md §12b`): a bare abilities row
+        # carrying independent mechanical content (here `DEFINE:`) is
+        # disposition (A) per `15-card-15-ability-category-memo.md` and
+        # must land in `counts_by_kind["ability"]`, not `kind_unenumerable`.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities.lst"),
+                "Lay on Hands\tCATEGORY:Special Ability\tDEFINE:LayOnHandsLVL|0\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["counts_by_kind"].get("ability"), 1)
+            self.assertNotIn(
+                "ability_category:Special Ability", counts["kind_unenumerable"]
+            )
+
+    def test_bare_picklist_ability_row_stays_excluded_not_swallowed_as_ability(self):
+        # The (B)-picklist shape from the memo's "Ability Focus" bucket: a
+        # row with nothing beyond CATEGORY:/TYPE: -- must NOT be counted as
+        # `ability`.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities.lst"),
+                "Breath Weapon\tCATEGORY:Ability Focus\tTYPE:Ability Focus\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertNotIn("ability", counts["counts_by_kind"])
+            self.assertEqual(
+                counts["kind_unenumerable"].get("ability_category:Ability Focus"), 1
+            )
+
+    def test_gateway_only_ability_row_stays_excluded_not_swallowed_as_ability(self):
+        # The (B)-gateway shape: no content field, but an
+        # `ABILITY:...|AUTOMATIC|<target>` wrapper -- a facet, not a new
+        # object, even though it would otherwise look content-bearing.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities.lst"),
+                "Add a Class Skill\tCATEGORY:Special Ability"
+                "\tABILITY:Class Skill|AUTOMATIC|%LIST\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertNotIn("ability", counts["counts_by_kind"])
+            self.assertEqual(
+                counts["kind_unenumerable"].get("ability_category:Special Ability"), 1
+            )
+
+    def test_ability_row_whose_key_collides_with_a_tracked_kind_is_a_duplicate_not_new(
+        self,
+    ):
+        # The (B)-duplicate shape ("the shared-name hazard"): a KEY:-field
+        # exact match against an already-tracked kind (here `feat`) means
+        # this row is cross-book content reuse, not a new object -- even
+        # though it carries real content of its own.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_feats.lst"),
+                "Ability Focus\tKEY:Ability Focus\tCATEGORY:FEAT\tTYPE:General\n",
+            )
+            _touch(
+                os.path.join(root, book, "cr_abilities.lst"),
+                "Ability Focus\tKEY:Ability Focus\tCATEGORY:Special Ability"
+                "\tDEFINE:AbilityFocusLVL|0\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertNotIn("ability", counts["counts_by_kind"])
+            self.assertEqual(counts["counts_by_kind"].get("feat"), 1)
+            self.assertEqual(
+                counts["kind_unenumerable"].get("ability_category:Special Ability"), 1
+            )
+
+    def test_abilities_familiar_file_routes_to_companion_not_ability_category(self):
+        # SD-32 card 15-ability: `src/bin/v06_work_inventory.rs`'s
+        # `file_kind` already routes `*_abilities_familiar*.lst`/
+        # `*_abilities_companion*.lst` to the tracked `companion` kind
+        # (checked BEFORE the bare-abilities fallback) -- the census must
+        # agree, or the two walkers' `ability_category:*` figures
+        # double-count against `companion` (a real defect this cycle found:
+        # 97 rows across 6 in-scope files).
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/bestiary_3"
+            _touch(os.path.join(root, book, "bestiary_3.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "b3_abilities_familiar.lst"),
+                "Empathic Link\tCATEGORY:Special Ability\tDEFINE:EmpathicLinkLVL|0\n",
+            )
+            bd = CI.BookDir(book, "bestiary_3", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["counts_by_kind"].get("companion"), 1)
+            self.assertNotIn("ability", counts["counts_by_kind"])
+            self.assertNotIn(
+                "ability_category:Special Ability", counts["kind_unenumerable"]
+            )
+
+    def test_exclusion_rule_mutation_proof_widening_it_swallows_a_real_object(self):
+        # `decisions.md §16`/dispatch brief item 4: a test that FAILS if the
+        # (B) exclusion rule ever starts eating (A) rows. Proven red/green
+        # live, not asserted: widen `_ABILITY_CONTENT_RE` to additionally
+        # treat a bare `TYPE:` field as "content" (a plausible-looking but
+        # WRONG widening -- `TYPE:` is present on picklist rows too) and
+        # confirm a genuine (B)-picklist fixture (no independent content)
+        # gets wrongly counted as `ability`; then revert and confirm the
+        # correct, narrower rule excludes it again.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities.lst"),
+                "Breath Weapon\tCATEGORY:Ability Focus\tTYPE:Ability Focus\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+
+            original_re = CI._ABILITY_CONTENT_RE
+            try:
+                # A deliberately wrong widening: "content" now includes any
+                # bare TYPE: field, which every picklist row also carries.
+                CI._ABILITY_CONTENT_RE = __import__("re").compile(
+                    original_re.pattern + r"|TYPE:"
+                )
+                counts = CI.count_objects(root, [bd])
+                # RED: the widened rule wrongly swallows the picklist row.
+                self.assertEqual(
+                    counts["counts_by_kind"].get("ability"),
+                    1,
+                    "widened rule failed to reproduce the swallowing bug "
+                    "this test exists to catch",
+                )
+            finally:
+                CI._ABILITY_CONTENT_RE = original_re
+
+            # GREEN: reverted to the real rule, the picklist row is excluded
+            # again, exactly like `test_bare_picklist_ability_row_stays_excluded_not_swallowed_as_ability`.
+            counts = CI.count_objects(root, [bd])
+            self.assertNotIn("ability", counts["counts_by_kind"])
+            self.assertEqual(
+                counts["kind_unenumerable"].get("ability_category:Ability Focus"), 1
+            )
+
 
 class EndToEndTest(unittest.TestCase):
     def test_run_writes_diff_json_and_excluded_directories_md_with_zero_unexplained(self):

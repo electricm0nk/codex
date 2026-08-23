@@ -217,6 +217,20 @@ enum Kind {
     /// zero-magnitude class features. See `15-card-15-other-kinds-memo.md`
     /// §5.
     Language,
+    /// SD-32 card 15-ability (`decisions.md §12b`, the largest remaining
+    /// kind-unenumerable bucket): a bare (non-`_race`, non-`_class`,
+    /// non-`_companion`/`_familiar`) `*abilities*.lst` row whose
+    /// `CATEGORY:` tag is not `FEAT`. Unlike every kind above, this is NOT
+    /// a filename-only rule -- the same file mixes real, distinct objects
+    /// with facets/gateways/pick-list entries, so a per-row disposition
+    /// test (`has_classifying_token`'s `Kind::Ability` arm; the row-level
+    /// `CATEGORY:FEAT` redirect in [`refine_kind`]) decides object-vs-not
+    /// per row. Ported from `15-card-15-ability-category-classify.py`'s own
+    /// adjudicated content/gateway test
+    /// (`artifacts/gate-0-census-closure/15-card-15-ability-category-memo.md`),
+    /// not re-derived. See `scripts/census_independent.py`'s
+    /// `_ABILITY_CONTENT_RE` for the exact, shared field list.
+    Ability,
 }
 
 impl Kind {
@@ -239,6 +253,7 @@ impl Kind {
             Kind::Power => "power",
             Kind::Domain => "domain",
             Kind::Language => "language",
+            Kind::Ability => "ability",
         }
     }
 
@@ -262,6 +277,7 @@ impl Kind {
         Kind::Power,
         Kind::Domain,
         Kind::Language,
+        Kind::Ability,
     ];
 }
 
@@ -298,6 +314,21 @@ fn file_kind(basename: &str) -> Option<Kind> {
     }
     if basename.contains("_abilities_companion") || basename.contains("_abilities_familiar") {
         return Some(Kind::Companion);
+    }
+    // SD-32 card 15-ability (`decisions.md §12b`): every remaining `abilit`
+    // basename (`abilities_rowpg.lst`, `ability_acg.lst`, `cr_abilities.lst`,
+    // `um_abilities_wordsofpower.lst`, ...) is a bare, non-`_race`/`_class`/
+    // `_companion`/`_familiar` abilities file -- content genuinely mixed
+    // with facets/gateways/pick-lists row by row, so per-row disposition
+    // (`has_classifying_token`'s `Kind::Ability` arm, `refine_kind`'s
+    // `Kind::Ability` arm) decides object-vs-not, not this filename check
+    // alone. Positioned to match `scripts/census_independent.py`'s own
+    // `"abilit" in b` fallback order: after every `_race`/`_class`/
+    // `_companion`/`_familiar` carve-out, before every other kind -- the
+    // two walkers must agree (`decisions.md §12b`'s acceptance bar). See
+    // `Kind::Ability`'s own doc comment for the memo this ports.
+    if basename.contains("abilit") {
+        return Some(Kind::Ability);
     }
     if basename.contains("_races_companion") || basename.contains("_races_familiar") {
         return Some(Kind::Companion);
@@ -426,6 +457,153 @@ mod file_kind_skill_tests {
         const FABRICATED: &[(&str, Kind)] = &[("_totallyfakekindfixture", Kind::Language)];
         let hit = FABRICATED.iter().find(|(t, _)| "cr_totallyfakekindfixture.lst".contains(t));
         assert_eq!(hit.map(|(_, k)| *k), Some(Kind::Language));
+    }
+}
+
+#[cfg(test)]
+mod kind_ability_tests {
+    use super::*;
+
+    /// SD-32 card 15-ability: bare (non-`_race`/`_class`/`_companion`/
+    /// `_familiar`) `*abilit*.lst` basenames resolve to `Kind::Ability`,
+    /// same real-corpus set `scripts/census_independent.py`'s
+    /// `_classify_kind_by_filename` routes to `row_dependent`.
+    #[test]
+    fn bare_abilities_basenames_resolve_to_kind_ability() {
+        for basename in [
+            "cr_abilities.lst",
+            "ability_acg.lst",
+            "abilities_rowpg.lst",
+            "um_abilities_wordsofpower.lst",
+            "uca_abilities_retraining.lst",
+        ] {
+            assert_eq!(file_kind(basename), Some(Kind::Ability), "{basename}");
+        }
+    }
+
+    /// Ordering guard: the `_race`/`_class`/`_companion`/`_familiar`
+    /// abilities carve-outs checked earlier in `file_kind` must still win
+    /// over the new bare-`abilit` fallback.
+    #[test]
+    fn ability_check_does_not_shadow_earlier_abilities_branches() {
+        assert_eq!(file_kind("cr_abilities_class.lst"), Some(Kind::ClassFeature));
+        assert_eq!(file_kind("mc_abilities_race.lst"), Some(Kind::RaceTrait));
+        assert_eq!(file_kind("ce_abilities_familiar_cr.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("isi_abilities_companion.lst"), Some(Kind::Companion));
+    }
+
+    /// `refine_kind`: a bare-abilities row tagged `CATEGORY:FEAT` redirects
+    /// to `Kind::Feat`, matching `census_independent.py`'s own row_dependent
+    /// FEAT special-case (one real corpus row at the pinned oracle SHA:
+    /// `apg_abilities.lst`'s "Magical Lineage ~ Metamagic").
+    #[test]
+    fn category_feat_row_redirects_to_feat() {
+        let fields = ["Magical Lineage", "KEY:Magical Lineage ~ Metamagic", "CATEGORY:FEAT", "TYPE:Metamagic"];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty), Kind::Feat);
+    }
+
+    /// A non-FEAT bare-abilities row stays `Kind::Ability` under `refine_kind`.
+    #[test]
+    fn non_feat_ability_row_stays_ability_under_refine_kind() {
+        let fields = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty), Kind::Ability);
+    }
+
+    /// `has_classifying_token`: only content-bearing (A) rows pass; a
+    /// gateway-only or bare picklist row (B) does not, ported unchanged
+    /// from `15-card-15-ability-category-memo.md`'s disposition rules.
+    #[test]
+    fn has_classifying_token_gates_on_content_only() {
+        let content = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
+        assert!(has_classifying_token(Kind::Ability, &content));
+
+        let gateway = [
+            "Add a Class Skill",
+            "CATEGORY:Special Ability",
+            "ABILITY:Class Skill|AUTOMATIC|%LIST",
+        ];
+        assert!(!has_classifying_token(Kind::Ability, &gateway));
+
+        let picklist = ["Breath Weapon", "CATEGORY:Ability Focus", "TYPE:Ability Focus"];
+        assert!(!has_classifying_token(Kind::Ability, &picklist));
+    }
+
+    /// `is_bonus_token`: the `BONUS[A-Z]*:` pattern matches `BONUS:` and any
+    /// all-caps `BONUS<suffix>:` field, but not an unrelated field that
+    /// merely starts with the letters "BONUS" followed by something else.
+    #[test]
+    fn bonus_token_matcher_matches_bonus_and_suffixed_bonus_fields() {
+        assert!(is_bonus_token("BONUS:VAR|X|1"));
+        assert!(is_bonus_token("BONUSFEAT:GENERAL|1"));
+        assert!(!is_bonus_token("BONUSaVAR|X|1")); // lowercase before ':' -- not a real token
+        assert!(!is_bonus_token("DESC:Bonus text"));
+    }
+
+    /// Integration: a content-bearing `CATEGORY:Internal` bare-abilities row
+    /// must NOT be dropped by the file-wide `internal_namespace` trap --
+    /// the `decisions.md §14c`-adjudicated shape (90.7% of the analogous
+    /// class_feature population was real content, not bookkeeping) applies
+    /// here too, and this is the carve-out that lets `has_classifying_token`
+    /// make that call instead of a blanket drop.
+    #[test]
+    fn content_bearing_internal_ability_row_is_enumerated_not_dropped_by_internal_trap() {
+        let text = "Aspect Combat Bonus ~ Low Profile\tCATEGORY:Internal\tASPECT:CombatBonus|+1 dodge bonus to AC against ranged attacks|LowProfile\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities.lst"),
+            "core_rulebook",
+            Kind::Ability,
+            text,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(out.units[0].kind, Kind::Ability);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
+
+    /// A bare `CATEGORY:Internal` marker with no content and no gateway
+    /// still correctly produces zero units (via `has_classifying_token`,
+    /// not the file-wide trap) -- the carve-out does not turn Internal
+    /// bookkeeping rows into phantom `ability` units.
+    #[test]
+    fn bare_internal_ability_marker_produces_no_unit() {
+        let text = "Elemental Fist ~ Acid\tCATEGORY:Internal\tTYPE:Choice\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities.lst"),
+            "core_rulebook",
+            Kind::Ability,
+            text,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+    }
+
+    /// Every OTHER kind's `internal_namespace` trap behaviour is unchanged:
+    /// a `Kind::ClassFeature` row carrying `CATEGORY:Internal` is still
+    /// dropped by the file-wide trap exactly as before this cycle -- the
+    /// `kind != Kind::Ability` guard is scoped to `Ability` alone.
+    #[test]
+    fn class_feature_internal_row_is_still_dropped_by_the_blanket_trap() {
+        let text = "Panache Tracker\tCATEGORY:Internal\tDEFINE:PanacheLVL|0\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 1);
     }
 }
 
@@ -1610,8 +1788,57 @@ fn refine_kind(file_kind: Kind, fields: &[&str], book_monster_race_names: &BTree
             }
             Kind::RaceTrait
         }
+        // SD-32 card 15-ability: `census_independent.py`'s `row_dependent`
+        // branch special-cases `CATEGORY:FEAT` before its own A/B
+        // disposition test runs (one real corpus row at the pinned oracle
+        // SHA: `apg_abilities.lst`'s "Magical Lineage" ~ Metamagic,
+        // `KEY:Magical Lineage ~ Metamagic`, `TYPE:Metamagic`,
+        // `ADDSPELLLEVEL:-1` -- a genuine feat, distinct from the
+        // `CATEGORY:Special Ability` "Trait ~ Magical Lineage" row in the
+        // same file that grants it). Ported here so the two walkers agree.
+        Kind::Ability => {
+            if token_value(fields, "CATEGORY:").is_some_and(|c| c.eq_ignore_ascii_case("FEAT")) {
+                Kind::Feat
+            } else {
+                Kind::Ability
+            }
+        }
         other => other,
     }
+}
+
+/// SD-32 card 15-ability (`decisions.md §12b`): whether a bare-abilities row
+/// carries independent mechanical or narrative content of its own -- ported,
+/// not re-derived, from `15-card-15-ability-category-classify.py`'s own
+/// `CONTENT_RE` (and `census_independent.py`'s `_ABILITY_CONTENT_RE`, kept
+/// byte-identical to this list across both languages). Deliberately the
+/// memo's own narrower field list, not the wider one
+/// `_row_is_bare_internal_marker`'s Python sibling uses for the unrelated
+/// `_abilities_class.lst` `CATEGORY:Internal` population -- the memo's
+/// per-bucket rulings (`15-card-15-ability-category-memo.md`) were written
+/// and reviewed against this exact list.
+const ABILITY_CONTENT_PREFIXES: &[&str] = &[
+    "DEFINE:", "DESC:", "ASPECT:", "CSKILL:", "MOVE:", "AUTO:", "TEMPLATE:", "SPROP:", "QUALITY:",
+    "SR:", "DR:", "SAB:", "VISION:",
+];
+
+/// `BONUS[A-Z]*:` -- `BONUS:`, `BONUSFEAT:`, or any other all-caps
+/// `BONUS<suffix>:` field. A manual matcher rather than a `regex` crate
+/// dependency (unused elsewhere in this binary) for one narrow pattern.
+fn is_bonus_token(field: &str) -> bool {
+    let Some(rest) = field.strip_prefix("BONUS") else { return false };
+    let upper_len = rest
+        .char_indices()
+        .find(|(_, c)| !c.is_ascii_uppercase())
+        .map(|(i, _)| i)
+        .unwrap_or(rest.len());
+    rest[upper_len..].starts_with(':')
+}
+
+fn ability_row_has_content(fields: &[&str]) -> bool {
+    fields
+        .iter()
+        .any(|f| ABILITY_CONTENT_PREFIXES.iter().any(|p| f.starts_with(p)) || is_bonus_token(f))
 }
 
 #[cfg(test)]
@@ -1911,6 +2138,12 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
     match kind {
         Kind::Feat => has_token(fields, "TYPE:"),
         Kind::Spell => has_token(fields, "SCHOOL:") || has_token(fields, "CLASSES:"),
+        // SD-32 card 15-ability: only disposition-(A) rows (independent
+        // content) are enumerable; (B)-gateway and (B)-picklist rows both
+        // fall through here to `false` and land in the generic
+        // `missing_classifying_token` trap, same as every other excluded
+        // row in this file -- see `ability_row_has_content`'s doc comment.
+        Kind::Ability => ability_row_has_content(fields),
         _ => true,
     }
 }
@@ -2442,7 +2675,28 @@ mod drop_core_essentials_native_restatements_tests {
 /// unchanged) + 30 (`Kind::Template`, new) + 3 (`Kind::Language`, new) =
 /// 170, plus this constant's own established 1-unit downstream-rescue
 /// margin = 171.
-const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 171;
+///
+/// **SD-32 card 15-ability raised this from 171 to 460**, the same
+/// non-widening exception again: landing `Kind::Ability` makes
+/// `core_essentials/ce_abilities.lst` (a book-wide shared ability library --
+/// `Age`/`Flight Speed ~ <N>`/`Walk ~ <N>`/`Legs ~ <N>`/size-letter/
+/// condition-tag lookup rows, `CATEGORY:Internal`, no per-race `KEY:`
+/// prefix at all) and 7 `*_abilities_globalvar.lst` "Racial Traits ~ <Race>"
+/// tracker rows enumerable for the first time. Unlike every prior kind's
+/// residual growth, none of this is per-race chassis content -- it lives at
+/// `core_essentials/`'s own top level (`ce_abilities.lst`), not under
+/// `races/<slug>/`, so it carries neither a per-race path signal nor any
+/// resolvable `SOURCELONG:` directive by construction, landing in the SAME
+/// book-agnostic-bookkeeping category the pre-existing 116/21/30/3 already
+/// document. Re-derive with `DEBUG_RESIDUAL=1
+/// PCGEN_CORPUS_ROOT=<pinned oracle path> cargo run --locked --bin
+/// v06_work_inventory -- --allow-stamp-loss 2>&1 | grep '^RESIDUAL' | cut
+/// -f2 | sort | uniq -c`: 116 (`race`/`race_trait`/`monster_ability`,
+/// unchanged) + 21 (`ce_skills.lst`, unchanged) + 30 (`Kind::Template`,
+/// unchanged) + 3 (`Kind::Language`, unchanged) + 289 (`Kind::Ability`, new)
+/// = 459, plus this constant's own established 1-unit downstream-rescue
+/// margin = 460.
+const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 460;
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
 fn enumerate_file(
@@ -2549,8 +2803,24 @@ fn enumerate_file(
         // tables already excluded (`Armor Aptitude 7th Level`,
         // `Thoughtsinger ~ Wild Talent`), found independently a second
         // time via a different check.
-        let is_internal_category = first.starts_with("CATEGORY=Internal|")
-            || fields.iter().any(|f| f.trim() == "CATEGORY:Internal");
+        // SD-32 card 15-ability (`decisions.md §12b`): for `Kind::Ability`
+        // specifically, this blunt "any CATEGORY:Internal row is bookkeeping"
+        // rule is exactly the blanket-(B) error `decisions.md §14c`'s
+        // adjudication already found wrong for 90.7% of the analogous
+        // `_abilities_class.lst` population -- ability_category:Internal's
+        // own per-row test (`census_independent.py`'s `row_dependent`
+        // branch) never special-cases `Internal` at all; the SAME
+        // content-or-not test applies to every category tag. Carving
+        // `Kind::Ability` out of this trap and letting `has_classifying_token`
+        // below decide is required so a real, content-bearing Internal
+        // ability row (`685`-ish of the `879`-unit `ability_category:Internal`
+        // bucket, `15-card-15-ability-category-memo.md`) is not silently
+        // dropped before ever reaching that test. Every other kind's
+        // behaviour is byte-for-byte unchanged (the `kind != Kind::Ability`
+        // guard is new; the rest of this rule is not).
+        let is_internal_category = kind != Kind::Ability
+            && (first.starts_with("CATEGORY=Internal|")
+                || fields.iter().any(|f| f.trim() == "CATEGORY:Internal"));
         if is_internal_category {
             *out.trap_hits.entry("internal_namespace").or_default() += 1;
             continue;
@@ -7736,6 +8006,7 @@ fn classify(
         Kind::Power => not_ingested("power_content_has_no_engine_table"),
         Kind::Domain => not_ingested("domain_content_has_no_engine_table"),
         Kind::Language => not_ingested("language_content_has_no_engine_table"),
+        Kind::Ability => not_ingested("ability_content_has_no_engine_table"),
     }
 }
 
@@ -16340,6 +16611,27 @@ mod core_essentials_book_attribution_tests {
     /// real `core_essentials` rows enumerable, all belonging to slugs
     /// already documented as ambiguous/carved-out. Full accounting in
     /// `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment.
+    ///
+    /// **SD-32 card 15-ability raised this pin from 171 to 448.** This raw
+    /// single-book walk's own count (448) is 11 lower than `main`'s real,
+    /// cross-book-pipeline count (459, `CORE_ESSENTIALS_RESIDUAL_DELETION_
+    /// CEILING`'s own doc comment) -- a gap that did not exist before this
+    /// cycle (both were 170). Investigated, not asserted away: this test
+    /// calls `enumerate_book` directly on ONLY `core_essentials`'s own
+    /// directory and applies a same-book `(kind, key)` dedup, which is
+    /// exactly what it did for the prior `Kind::Template` raise too; the
+    /// residual `Kind::Ability` population (`ce_abilities.lst`'s book-wide
+    /// tables) is large enough and varied enough in its per-row `key`
+    /// shapes that the two measurement paths' pre-existing small structural
+    /// difference (this test's own comment above already documents one:
+    /// `main` runs `drop_core_essentials_native_restatements` before
+    /// counting, this raw call does not) now produces a visible 11-unit gap
+    /// rather than the earlier 4-unit one. Both figures are real,
+    /// independently re-derived counts of the SAME underlying content, not
+    /// a predicate change -- `is_core_essentials_residual`'s body stays
+    /// byte-for-byte unchanged; tracked as two separate pins exactly as
+    /// this file's own precedent already does (170/171), not reconciled to
+    /// one number under time pressure.
     #[test]
     fn core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline() {
         let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -16373,7 +16665,7 @@ mod core_essentials_book_attribution_tests {
         let mut seen: BTreeSet<(Kind, String)> = BTreeSet::new();
         enumeration.units.retain(|u| seen.insert((u.kind, u.key.clone())));
         let residual = enumeration.units.iter().filter(|u| u.book == "core_essentials").count();
-        const PINNED_BASELINE: usize = 170;
+        const PINNED_BASELINE: usize = 448;
         assert!(
             residual <= PINNED_BASELINE,
             "core_essentials residual GREW to {residual} (pinned baseline {PINNED_BASELINE}) -- \
