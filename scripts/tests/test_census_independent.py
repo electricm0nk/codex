@@ -159,11 +159,14 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
             self.assertEqual(counts["kind_unenumerable"].get("class_feature"), 1)
             self.assertNotIn("class_feature", counts["counts_by_kind"])
 
-    def test_class_feature_internal_rows_reroute_to_ability_category_internal(self):
-        # Card 15 (`decisions.md §12b`): a `_abilities_class.lst` row
-        # carrying `CATEGORY:Internal` is PCGen bookkeeping, not a
-        # class_feature, and should land in the same bucket the bare
-        # `abilit` branch already uses for this exact marker.
+    def test_bare_internal_tracker_reroutes_to_ability_category_internal(self):
+        # Card 15 (`decisions.md §14c` item 4): a `_abilities_class.lst`
+        # row carrying `CATEGORY:Internal` AND no content field AND no
+        # gateway token is a genuine PCGen bookkeeping marker with zero
+        # payload of its own -- proven by class (40/2,614 at the pinned
+        # oracle SHA), not asserted for the whole population. It reroutes
+        # to the same bucket the bare `abilit` branch already uses for
+        # this exact marker.
         with tempfile.TemporaryDirectory() as tmp:
             root = os.path.join(tmp, "pathfinder")
             book = "paizo/roleplaying_game/core_rulebook"
@@ -171,7 +174,7 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
             _touch(
                 os.path.join(root, book, "cr_abilities_class.lst"),
                 "Rage\tCATEGORY:Special Ability\n"
-                "Damage Reduction ~ All\tCATEGORY:Internal\tDR:ClassFeatureDR_ALL/-\n",
+                "Panache Tracker\tCATEGORY:Internal\n",
             )
             bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
             counts = CI.count_objects(root, [bd])
@@ -180,6 +183,76 @@ class ObjectDefinitionRulesTest(unittest.TestCase):
                 counts["kind_unenumerable"].get("ability_category:Internal"), 1
             )
             self.assertNotIn("class_feature", counts["counts_by_kind"])
+
+    def test_content_bearing_internal_row_stays_class_feature_not_excluded(self):
+        # Card 15 §14c item 4 -- the reopening finding itself: the
+        # class_feature memo's own worked (B) example, "Damage Reduction ~
+        # All" (`DR:ClassFeatureDR_ALL/-`), is real content (the engine's
+        # DR-tracking machinery reads the `DR:` variable this row names) --
+        # a narrower DEFINE:/BONUS:-only test misses it, exactly the
+        # AGENTS.md "grep filtered to BONUS/PRE hides STACK/MULT" hazard.
+        # This is the test that proves the exclusion rule does NOT swallow
+        # a real object: it must stay counted as `class_feature`, never
+        # rerouted, even though it carries `CATEGORY:Internal`.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities_class.lst"),
+                "Damage Reduction ~ All\tCATEGORY:Internal\tDR:ClassFeatureDR_ALL/-\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["kind_unenumerable"].get("class_feature"), 1)
+            self.assertNotIn(
+                "ability_category:Internal", counts["kind_unenumerable"]
+            )
+
+    def test_gateway_only_internal_row_stays_class_feature_not_excluded(self):
+        # A row with no content field of its own but a real
+        # `ABILITY:...|AUTOMATIC|<target>` gateway token is a proven facet
+        # of something else, not a bare marker -- `_row_is_bare_internal_marker`
+        # must return False for it (the gateway-field check), so it stays
+        # counted as `class_feature` rather than being silently excluded.
+        # Whether the gateway's target itself resolves is a cross-file
+        # question this row-local exclusion deliberately does not attempt
+        # (see the module comment above `_ROW_CONTENT_FIELD_RE`) -- the
+        # conservative default is to count, not exclude, when in doubt
+        # (decisions.md §12b's burden of proof is on (B)).
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities_class.lst"),
+                "Improved Claws\tKEY:Feral Heart ~ Improved Claws\tCATEGORY:Internal"
+                "\tABILITY:FEAT|AUTOMATIC|Improved Natural Attack (Claw)\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["kind_unenumerable"].get("class_feature"), 1)
+            self.assertNotIn(
+                "ability_category:Internal", counts["kind_unenumerable"]
+            )
+
+    def test_non_internal_class_feature_row_is_unaffected(self):
+        # Sanity: a plain (non-CATEGORY:Internal) class_feature row must
+        # never be routed through the bare-marker check at all.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "pathfinder")
+            book = "paizo/roleplaying_game/core_rulebook"
+            _touch(os.path.join(root, book, "core_rulebook.pcc"), "x\n")
+            _touch(
+                os.path.join(root, book, "cr_abilities_class.lst"),
+                "Rage\tCATEGORY:Special Ability\n",
+            )
+            bd = CI.BookDir(book, "core_rulebook", "paizo/roleplaying_game")
+            counts = CI.count_objects(root, [bd])
+            self.assertEqual(counts["kind_unenumerable"].get("class_feature"), 1)
+            self.assertNotIn(
+                "ability_category:Internal", counts["kind_unenumerable"]
+            )
 
     def test_ce_sizes_file_is_non_object_not_kind_unenumerable(self):
         # Card 15 §7b: PF1e's fixed 9-variant size table, already covered

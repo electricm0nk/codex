@@ -306,7 +306,7 @@
     "ability_category:Eldritch Heritage Bloodline": 31,
     "ability_category:Equipment": 21,
     "ability_category:Intelligent Item": 100,
-    "ability_category:Internal": 3453,
+    "ability_category:Internal": 879,
     "ability_category:Mythic Weapon Training": 16,
     "ability_category:Natural Attack": 1,
     "ability_category:Path Dabbling": 128,
@@ -318,7 +318,7 @@
     "ability_category:Spell-Like Ability": 165,
     "ability_category:UNKNOWN": 15,
     "ability_category:Words of Power": 369,
-    "class_feature": 15617,
+    "class_feature": 18191,
     "deity": 460,
     "domain": 183,
     "kit": 1,
@@ -341,36 +341,36 @@
       "ability_category:Arcanist Bloodline Development": 8,
       "ability_category:Blood Arcanist Bloodline": 2,
       "ability_category:Class": 10,
-      "ability_category:Internal": 299,
+      "ability_category:Internal": 18,
       "ability_category:Raging Blood Feat Bloodline": 10,
       "ability_category:Special Ability": 87,
-      "class_feature": 2448,
+      "class_feature": 2729,
       "domain": 10,
       "template_row": 22
     },
     "advanced_players_guide": {
       "ability_category:Class": 15,
-      "ability_category:Internal": 331,
+      "ability_category:Internal": 61,
       "ability_category:Special Ability": 139,
       "ability_category:Spell-Like Ability": 18,
-      "class_feature": 2069,
+      "class_feature": 2339,
       "domain": 71,
       "template_row": 38
     },
     "advanced_race_guide": {
       "ability_category:Builder": 24,
-      "ability_category:Internal": 147,
+      "ability_category:Internal": 84,
       "ability_category:Racial Traits": 27,
       "ability_category:Special Ability": 251,
-      "class_feature": 656,
+      "class_feature": 719,
       "language": 2,
       "template_row": 47
     },
     "adventurers_guide": {
       "ability_category:Archetype": 2,
-      "ability_category:Internal": 84,
+      "ability_category:Internal": 29,
       "ability_category:Special Ability": 108,
-      "class_feature": 700,
+      "class_feature": 755,
       "template_row": 10
     },
     "bestiary": {
@@ -391,8 +391,7 @@
       "template_row": 26
     },
     "bestiary_4": {
-      "ability_category:Internal": 2,
-      "class_feature": 4,
+      "class_feature": 6,
       "domain": 3,
       "language": 22,
       "template_row": 140,
@@ -402,8 +401,7 @@
       "language": 3
     },
     "bestiary_6": {
-      "ability_category:Internal": 4,
-      "class_feature": 18,
+      "class_feature": 22,
       "deity": 22,
       "domain": 11
     },
@@ -435,11 +433,11 @@
       "ability_category:Condition": 2,
       "ability_category:Equipment": 20,
       "ability_category:Intelligent Item": 100,
-      "ability_category:Internal": 660,
+      "ability_category:Internal": 91,
       "ability_category:Natural Attack": 1,
       "ability_category:Special Ability": 123,
       "ability_category:Spell-Like Ability": 142,
-      "class_feature": 980,
+      "class_feature": 1549,
       "deity": 21,
       "domain": 34,
       "language": 22,
@@ -447,9 +445,9 @@
       "unclassified:cr_skills.lst": 110
     },
     "horror_adventures": {
-      "ability_category:Internal": 30,
+      "ability_category:Internal": 19,
       "ability_category:Special Ability": 546,
-      "class_feature": 419,
+      "class_feature": 430,
       "domain": 4,
       "language": 2,
       "template_row": 28
@@ -459,8 +457,7 @@
       "unclassified:isb_skills.lst": 4
     },
     "inner_sea_combat": {
-      "ability_category:Internal": 1,
-      "class_feature": 314,
+      "class_feature": 315,
       "template_row": 1
     },
     "inner_sea_faiths": {
@@ -476,14 +473,13 @@
       "template_row": 3
     },
     "inner_sea_intrigue": {
-      "ability_category:Internal": 16,
-      "class_feature": 169,
+      "ability_category:Internal": 1,
+      "class_feature": 184,
       "template_row": 6
     },
     "inner_sea_magic": {
-      "ability_category:Internal": 6,
       "ability_category:Special Ability": 152,
-      "class_feature": 218,
+      "class_feature": 224,
       "template_row": 3,
       "unclassified:ism_skills.lst": 1
     },
@@ -501,17 +497,15 @@
     },
     "inner_sea_world_guide": {
       "ability_category:Background": 64,
-      "ability_category:Internal": 5,
-      "class_feature": 171,
+      "class_feature": 176,
       "deity": 63,
       "domain": 6,
       "language": 17,
       "template_row": 77
     },
     "monster_codex": {
-      "ability_category:Internal": 4,
       "ability_category:Spell-Like Ability": 1,
-      "class_feature": 72,
+      "class_feature": 76,
       "language": 2
     },
     "mythic_adventures": {
@@ -523,15 +517,15 @@
       "template_row": 15
     },
     "occult_adventures": {
-      "ability_category:Internal": 45,
-      "class_feature": 993,
+      "ability_category:Internal": 1,
+      "class_feature": 1037,
       "language": 1,
       "template_row": 4
     },
     "pathfinder_unchained": {
-      "ability_category:Internal": 26,
+      "ability_category:Internal": 1,
       "ability_category:Special Ability": 364,
-      "class_feature": 577,
+      "class_feature": 602,
       "template_row": 12,
       "unclassified:pu_skills.lst": 24
     },
@@ -542,9 +536,9 @@
     },
     "ultimate_combat": {
       "ability_category:Class": 3,
-      "ability_category:Internal": 127,
+      "ability_category:Internal": 7,
       "ability_category:Spell-Like Ability": 1,
-      "class_feature": 1418,
+      "class_feature": 1538,
       "template_row": 7,
       "unclassified:uc_skills.lst": 2
     },
@@ -556,8 +550,7 @@
       "unclassified:ue_skills.lst": 1
     },
     "ultimate_intrigue": {
-      "ability_category:Internal": 155,
-      "class_feature": 779,
+      "class_feature": 934,
       "template_row": 4
     },
     "ultimate_magic": {
@@ -565,20 +558,20 @@
       "ability_category:Archetype": 13,
       "ability_category:Class": 1,
       "ability_category:Eldritch Heritage Bloodline": 31,
-      "ability_category:Internal": 814,
+      "ability_category:Internal": 102,
       "ability_category:Special Ability": 17,
       "ability_category:Spell-Like Ability": 3,
       "ability_category:Words of Power": 369,
-      "class_feature": 1088,
+      "class_feature": 1800,
       "domain": 13,
       "template_row": 23
     },
     "ultimate_psionics": {
       "ability_category:Afflictions": 2,
       "ability_category:Archetype": 10,
-      "ability_category:Internal": 194,
+      "ability_category:Internal": 43,
       "ability_category:Special Ability": 270,
-      "class_feature": 1422,
+      "class_feature": 1573,
       "domain": 4,
       "language": 5,
       "power": 421,
@@ -586,8 +579,8 @@
       "unclassified:up_skills.lst": 5
     },
     "ultimate_wilderness": {
-      "ability_category:Internal": 83,
-      "class_feature": 869,
+      "ability_category:Internal": 2,
+      "class_feature": 950,
       "deity": 9,
       "domain": 6,
       "language": 5,

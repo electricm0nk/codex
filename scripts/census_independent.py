@@ -109,6 +109,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
@@ -323,14 +324,20 @@ def _classify_kind_by_filename(basename: str, book_id: str):
                 return ("kind", "monster_ability")
             return ("kind", "race_trait")
         if "_class" in b:
-            # SD-32 card 15 (`decisions.md §12b`): a `_abilities_class.lst`
-            # row carrying `CATEGORY:Internal` is the same PCGen bookkeeping
-            # marker the bare-`abilit` branch below already excludes via the
-            # `row_dependent` path -- this file kind just never re-checked it
-            # per row, so 2,614 `CATEGORY:Internal` rows were mis-bucketed as
-            # `class_feature` instead of `ability_category:Internal`. Proven
-            # by class in `artifacts/gate-0-census-closure/
-            # 15-card-15-class-feature-memo.md` §2/§5.
+            # SD-32 card 15 (`decisions.md §14c` item 4): a
+            # `_abilities_class.lst` row carrying `CATEGORY:Internal` is
+            # NOT uniformly PCGen bookkeeping -- the class_feature memo's
+            # original blanket-exclusion claim (all 2,614 -> "not an
+            # object") was tested by class and found wrong for 90.7% of the
+            # population (2,371/2,614 carry independent content or a
+            # resolved gateway token). Row-level disposition happens in
+            # `count_objects()`'s `row_dependent_class_feature` branch via
+            # `_row_is_bare_internal_marker()`; only a bare tracker row
+            # (no content, no gateway) reroutes to
+            # `ability_category:Internal` -- everything else stays counted
+            # as `class_feature`. Full per-row proof:
+            # `artifacts/gate-0-census-closure/
+            # 15-card-15-category-internal-classify.py` / `-summary.md`.
             return ("row_dependent_class_feature", None)
         # bare abilities file: row-level CATEGORY: tag decides (handled by caller)
         return ("row_dependent", None)
@@ -355,6 +362,50 @@ def _classify_kind_by_filename(basename: str, book_id: str):
         return ("kind", "race")
 
     return ("kind_unenumerable", f"unclassified:{basename}")
+
+
+# SD-32 card 15 (`decisions.md §14c` item 4): the class_feature lane's
+# original blanket rule -- every `_abilities_class.lst` row carrying
+# `CATEGORY:Internal` is "not an object" -- was tested by class against the
+# same per-row disposition method the sibling `ability_category` lane used
+# on the *other* `ability_category:Internal` rows (bare `*abilities*.lst`
+# files) and found wrong for the great majority: of the 2,614 such rows,
+# 2,371 (90.7%) carry independent mechanical/narrative content of their own
+# or a gateway (`ABILITY:...|AUTOMATIC|<target>`) token that resolves to an
+# already-real object -- proven by class, not asserted (re-derive command
+# and full per-row breakdown:
+# `artifacts/gate-0-census-closure/15-card-15-category-internal-classify.py`
+# / `-summary.md`). Only a row that is `CATEGORY:Internal` AND carries none
+# of the fields below AND carries no `ABILITY:...|AUTOMATIC|` gateway token
+# is a genuine PCGen bookkeeping marker with zero payload of its own -- 40
+# of the 2,614, all bare "<Name> Tracker" / "<Name> Qualifier" rows whose
+# only fields are `CATEGORY:`/`KEY:`/`TYPE:`/`VISIBLE:`/`SOURCEPAGE:`.
+#
+# This field list is deliberately wide (AGENTS.md concurrency rule: "a grep
+# filtered to BONUS/PRE hides STACK/MULT and other application-governing
+# fields") -- a narrower DEFINE:/BONUS:-only test (`shape_ledger`'s formula
+# extraction, the class_feature memo's original standard) misses real
+# non-formula payload such as `DR:` (names a class-feature-specific
+# damage-reduction variable the engine's DR machinery reads) or `SPELLLEVEL:`
+# (a class-level-to-spell mapping) -- both present on rows the original memo
+# cited as its own worked (B) examples.
+_ROW_CONTENT_FIELD_RE = re.compile(
+    r"DEFINE:|BONUS[A-Z]*:|DESC:|ASPECT:|CSKILL:|MOVE:|AUTO:|TEMPLATE:|SPROP:|QUALITY:|SR:|DR:|SAB:|VISION:|"
+    r"SPELLKNOWN[A-Z]*:|TEMPBONUS:|CHOOSE:|NATURALATTACKS:|COMPANIONLIST:|ADD:|FOLLOWERS:|UDAM:|UMULT:|"
+    r"SELECT:|COST:|MOVECLONE:|SPELLS:|SERVESAS:|DEFINESTAT:|UNENCUMBEREDMOVE:|BENEFIT:|SPELLLEVEL:|CMB:"
+)
+_ROW_GATEWAY_FIELD_RE = re.compile(r"ABILITY:[^\t]+\|AUTOMATIC\|")
+
+
+def _row_is_bare_internal_marker(line: str) -> bool:
+    """True only for a `CATEGORY:Internal` row that carries neither a
+    content-bearing field nor a gateway (`ABILITY:...|AUTOMATIC|`) token --
+    the narrow, provable (B) class. See the comment above
+    `_ROW_CONTENT_FIELD_RE` for the re-derive command and the count this
+    excludes (40 of 2,614 at the pinned oracle SHA)."""
+    return not _ROW_CONTENT_FIELD_RE.search(line) and not _ROW_GATEWAY_FIELD_RE.search(
+        line
+    )
 
 
 def _row_category_tag(line: str) -> Optional[str]:
@@ -424,16 +475,26 @@ def count_objects(pathfinder_root: str, in_scope: List[BookDir]) -> dict:
                             )
                     elif bucket == "row_dependent_class_feature":
                         cat = _row_category_tag(raw_line)
-                        if cat and cat.upper() == "INTERNAL":
-                            # Card 15 §2: PCGen bookkeeping record, not a
-                            # player-facing class feature -- file it under
-                            # the same bucket the bare-`abilit` branch above
-                            # already uses for this exact marker.
+                        if cat and cat.upper() == "INTERNAL" and _row_is_bare_internal_marker(
+                            raw_line
+                        ):
+                            # Card 15 §14c item 4: a genuine PCGen bookkeeping
+                            # marker -- CATEGORY:Internal with no content
+                            # field and no gateway token of its own (proven
+                            # by class, not by the blanket file-kind rule;
+                            # see `_row_is_bare_internal_marker`'s docstring).
+                            # File it under the same bucket the bare-`abilit`
+                            # branch above already uses for this marker.
                             row_bucket, row_key = (
                                 "kind_unenumerable",
                                 "ability_category:Internal",
                             )
                         else:
+                            # Either not CATEGORY:Internal at all, or
+                            # CATEGORY:Internal but carrying real content or
+                            # a resolved gateway -- a real class_feature
+                            # object (or a proven facet of one), per card
+                            # 15's per-row classifier.
                             row_bucket, row_key = "kind_unenumerable", "class_feature"
                     else:
                         row_bucket, row_key = bucket, key
