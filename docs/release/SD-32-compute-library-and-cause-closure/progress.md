@@ -6819,3 +6819,31 @@ silent-drop behavior reproduced); reverted, GREEN = 2 records written. 2 new uni
   moved it to 100 in the meantime; see that cycle's own entry above), untouched, sibling lanes'
   scope.
 - Commit: (this cycle's commit — see push output).
+
+### Post-rebase re-derivation (`§17a`)
+
+Rebasing onto `origin/tranche/12` landed a concurrent sibling commit
+(`978d2152270c3ab0623c3be0c8ad39ed6cce57cc`, "shape_ledger.py citation-redirect instrument fix —
+`equipment` no_record 113->87, `spell` 57->32") — an INSTRUMENT correction (`§16`/`§17a`, same class
+as the earlier `bestiary` alias-walk fix), not new content: it added a `(book, kind, data.key)`
+fallback join for units whose citation was correctly resolved to a content-free PFS-legality-overlay
+row while the real record cites the base `.lst` row. This commit is BEFORE mine in the rebased
+history, so its `spell` baseline of 32 already reflects that correction; this cycle's own `-3` (Words
+of Power, genuinely new content with no prior record anywhere for the key_index fallback to have
+found) composes cleanly on top: `32 - 3 = 29`, matching the re-derived ledger below exactly. No
+double-count, no overlap — `equipment_modifier` was untouched by the sibling commit (not in its
+scope), so this cycle's `6 -> 4` stands unchanged.
+
+```bash
+python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/ledger.json
+python3 -c "import json,collections; d=json.load(open('/tmp/ledger.json')); \
+  c=collections.Counter(r['kind'] for r in d['rows'] if r['join_status']=='no_record'); \
+  print(c.most_common())"
+```
+→ `monster_ability 100, equipment 87, spell 29, ability 5, equipment_modifier 4, companion 2` —
+`ability`'s 5 is new since this cycle started (from `b137c098f7`'s work-inventory regen, unrelated
+to this cycle's scope, not investigated here). **Bundle `no_record` total: 227.** `cargo test
+--locked --lib rules_core::cache_gen::spell_lane_dump` (9/9) and `rules_core::cache_gen::
+equipment_gap` (18/18, 1 pre-existing ignored) re-run post-rebase per the standing footgun-2
+instruction, both green. `git status --porcelain -- data/corpus` post-rebase: additive-only, zero
+deletions.

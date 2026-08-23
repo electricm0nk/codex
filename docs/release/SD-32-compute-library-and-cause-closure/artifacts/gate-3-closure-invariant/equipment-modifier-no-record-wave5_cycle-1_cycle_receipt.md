@@ -201,3 +201,14 @@ none attempted this cycle; not the same slug-collision shape (none showed up in 
 df -h /
 ```
 (see cycle report below)
+
+## Post-rebase addendum (`§17a`)
+
+`git rebase origin/tranche/12` (§5 protocol) landed several concurrent sibling commits, none of
+which touch `equipment_modifier` (the `shape_ledger.py` citation-redirect instrument fix,
+`978d2152270c3ab0623c3be0c8ad39ed6cce57cc`, scopes only `equipment`/`spell`; the
+`monster_ability`-round-5 commit is unrelated). `equipment_modifier`'s `6 -> 4` stands unchanged,
+confirmed by a fresh `shape_ledger.py` run post-rebase (`equipment_modifier: 4`). `cargo test
+--locked --lib rules_core::cache_gen::equipment_gap` re-run post-rebase: 18/18 (1 pre-existing
+ignored), unchanged. See `progress.md`'s own "Post-rebase re-derivation" section for the full
+bundle-wide figure.

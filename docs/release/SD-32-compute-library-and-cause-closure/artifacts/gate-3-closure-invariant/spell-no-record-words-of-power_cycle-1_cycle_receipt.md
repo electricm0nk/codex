@@ -186,3 +186,15 @@ unchanged by this cycle, not re-litigated here.
 df -h /
 ```
 (see cycle report below)
+
+## Post-rebase addendum (`§17a`)
+
+`git rebase origin/tranche/12` (§5 protocol) landed a concurrent sibling commit,
+`978d2152270c3ab0623c3be0c8ad39ed6cce57cc` ("shape_ledger.py citation-redirect instrument fix —
+`equipment` 113->87, `spell` 57->32"), BEFORE this cycle's commit in the rebased history. Its `spell`
+baseline of 32 already includes that instrument correction; this cycle's own `-3` (genuinely new
+content, `um_spells_wordsofpower.lst` had no prior corpus record anywhere for that fix's
+`(book, kind, data.key)` fallback to have found) composes cleanly on top: `32 - 3 = 29`, confirmed by
+a fresh `shape_ledger.py` run post-rebase. `cargo test --locked --lib
+rules_core::cache_gen::spell_lane_dump` re-run post-rebase: 9/9, unchanged. See `progress.md`'s own
+"Post-rebase re-derivation" section for the full bundle-wide figure.
