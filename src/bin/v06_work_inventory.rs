@@ -4476,6 +4476,15 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         // narrow, additive-only shape as the arms immediately above.
         "ISTEM" => "inner_sea_temples",
         "ISM" => "inner_sea_magic",
+        // SD-32 (this cycle, `epic-2-t2a-residual-demonic-obedience-retype`): one more book
+        // extended into `equipment_gap_tables` since the last regen -- same narrow,
+        // additive-only shape as every arm above. This function's own panic (below) otherwise
+        // hard-crashes `v06_work_inventory` for every caller the moment
+        // `equipment_resolver::equipment_catalog_rows()` carries this code, which happened on
+        // this cycle's rebase (out of this cycle's own scope, but blocking its own regen).
+        // 1-line match-arm append only, self-verified by this file's own pre-existing
+        // `equipment_book_slug_for_covers_every_catalog_book` test.
+        "AG" => "adventurers_guide",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \

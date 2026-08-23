@@ -216,6 +216,25 @@ python3 scripts/shape_coverage_standing_gate.py --inventory docs/work-inventory.
 are **untouched** — huge headroom (7,487 vs a 21,521 budget), no repin needed, no
 `no_record_budget_provenance.jsonl` entry required.
 
+## A real blocker found and fixed in-scope: unmapped `"AG"` equipment book code
+
+Rebasing onto `origin/tranche/12`'s tip (which had moved — two sibling `decisions.md §23a`/`§20`
+cycles landed concurrently) surfaced a hard panic in `v06_work_inventory`'s own
+`equipment_book_slug_for`, unrelated to this cycle's own diff:
+`equipment_resolver::equipment_catalog_rows() now carries an unmapped book code "AG"`. This
+hard-crashes the regen for every caller, blocking this cycle's own ability to prove its 42-unit
+move against the current tip. Same narrow, additive-only, self-verified fix as every prior
+occurrence of this exact failure mode already documented in this function's own comments
+(`SD31-E6-F10-003`, `SD31-E6-F10-004`, the T9-onboarding `ISTEM`/`ISM` arms): one match-arm line,
+`"AG" => "adventurers_guide"`, verified by the function's own pre-existing
+`equipment_book_slug_for_covers_every_catalog_book` test. Re-running the full regen with this fix
+applied changed 0 unit ids and 0 `by_kind` totals — only 159 `adventurers_guide`
+`equipment`/`equipment_modifier` records' `status`/`evidence` fields, which had been silently stuck
+at `not-ingested`/`equipment_key_absent_from_equipment_tables` by the crash, now resolve to their
+real values (`ingested-magnitude`, `unknown`, etc.) — a correctness fix, not scope creep on this
+cycle's own 42-unit move (verified: `git diff --stat HEAD -- src/bin/v06_work_inventory.rs
+docs/work-inventory.json` before committing this addendum).
+
 ## `decisions.md §22` — no divergence from the oracle recorded
 
 This cycle does not diverge from PCGen's own data; it corrects Codex's OWN kind classification of a
