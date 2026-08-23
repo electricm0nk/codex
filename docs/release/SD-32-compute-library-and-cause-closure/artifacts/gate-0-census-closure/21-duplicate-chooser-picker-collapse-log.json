@@ -1,0 +1,1914 @@
+{
+  "decision": "decisions.md Decision 21 (operator ruling 2026-08-23)",
+  "predicate": "every member row carries a TYPE:*Choice facet AND the group's rows partition by real ABILITY:AUTOMATIC grant target (TYPE= self-tags excluded) into subgroups of size >= 2 -- every row has a partner granting the identical target",
+  "groups_covered": 39,
+  "rows_in_covered_groups": 113,
+  "residual_rows_removed_from_ledger": 74,
+  "groups_not_covered_left_alone": 0,
+  "covered_groups": [
+    {
+      "book": "advanced_class_guide",
+      "key": "Aberrant Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 156,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Aberrant"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 566,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Aberrant Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Aberrant"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2412,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Aberrant"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2754,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Aberrant Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Aberrant"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 156
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 566
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2412
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2754
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Abyssal Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 157,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Abyssal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 592,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Abyssal Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Abyssal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2413,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Abyssal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2755,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Abyssal Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Abyssal"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 157
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 592
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2413
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2755
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Accursed Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 178,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Accursed"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2434,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Accursed"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 178
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2434
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Aquatic Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 167,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Aquatic"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2423,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Aquatic"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 167
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2423
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Arcane Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 158,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Arcane"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 618,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Arcane Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Arcane"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2414,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Arcane"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2756,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Arcane Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Arcane"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 158
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 618
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2414
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2756
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Boreal Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 168,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Boreal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2424,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Boreal"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 168
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2424
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Celestial Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 159,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Celestial"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 644,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Celestial Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Celestial"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2415,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Celestial"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2757,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Celestial Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Celestial"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 159
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 644
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2415
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2757
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Deep Earth Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 169,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Deep Earth"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2425,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Deep Earth"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 169
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2425
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Destined Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 160,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Destined"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 670,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Destined Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Destined"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2416,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Destined"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2758,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Destined Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Destined"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 160
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 670
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2416
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2758
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Djinni Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 179,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Djinni"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2435,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Djinni"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 179
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2435
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Draconic Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 161,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Draconic"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 700,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Draconic Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Draconic"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2417,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Draconic"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2759,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Draconic Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Draconic"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 161
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 700
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2417
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2759
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Dreamspun Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 170,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Dreamspun"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2426,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Dreamspun"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 170
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2426
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Efreeti Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 180,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Efreeti"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2436,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Efreeti"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 180
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2436
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Elemental Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 162,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Elemental"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 761,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Elemental Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Elemental"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2418,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Elemental"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2760,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Elemental Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Elemental"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 162
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 761
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2418
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2760
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Fey Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 163,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Fey"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 810,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Fey Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Fey"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2419,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Fey"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2761,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Fey Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Fey"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 163
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 810
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2419
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2761
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Infernal Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 164,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Infernal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 836,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Infernal Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Infernal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2420,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Infernal"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2762,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Infernal Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Infernal"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 164
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 836
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2420
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2762
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Maestro Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 181,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Maestro"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2437,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Maestro"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 181
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2437
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Marid Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 182,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Marid"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2438,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Marid"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 182
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2438
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Protean Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 171,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Protean"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2427,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Protean"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 171
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2427
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Rakshasa Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 183,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Rakshasa"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2439,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Rakshasa"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 183
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2439
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Serpentine Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 172,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Serpentine"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2428,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Serpentine"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 172
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2428
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Shadow Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 173,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Shadow"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2429,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Shadow"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 173
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2429
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Shaitan Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 184,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Shaitan"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2440,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Shaitan"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 184
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2440
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Starsoul Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 174,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Starsoul"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2430,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Starsoul"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 174
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2430
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stormborn Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 175,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Stormborn"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2431,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Stormborn"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 175
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2431
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Undead Bloodline",
+      "row_count": 4,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 165,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Undead"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 862,
+          "category": "Bloodrager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Undead Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Undead"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2421,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Undead"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2763,
+          "category": "Crossblooded Rager Bloodline",
+          "type": "BloodragerBloodlineChoice",
+          "grant_targets": [
+            "Undead Bloodrager Bloodline ~ Feat Tracker",
+            "Bloodrager Bloodline ~ Undead"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 165
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 862
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2421
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2763
+        }
+      ]
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Verdant Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 176,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Verdant"
+          ]
+        },
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2432,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Verdant"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "acg_abilities_class.lst",
+        "line": 176
+      },
+      "residual_rows_removed": [
+        {
+          "file": "acg_abilities_class.lst",
+          "line": 2432
+        }
+      ]
+    },
+    {
+      "book": "advanced_race_guide",
+      "key": "Imperious Bloodline",
+      "row_count": 5,
+      "members": [
+        {
+          "file": "arg_abilities_class.lst",
+          "line": 13,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Imperious Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Imperious"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 8,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Imperious"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 9,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Imperious"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 8,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Imperious Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Imperious"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 15,
+          "category": "Eldritch Heritage Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Imperious"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "arg_abilities_class.lst",
+        "line": 13
+      },
+      "residual_rows_removed": [
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 8
+        },
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 9
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 8
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "book": "advanced_race_guide",
+      "key": "Kobold Bloodline",
+      "row_count": 5,
+      "members": [
+        {
+          "file": "arg_abilities_class.lst",
+          "line": 631,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Kobold Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Kobold"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 11,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Kobold"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 12,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Kobold"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 10,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Kobold Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Kobold"
+          ]
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 17,
+          "category": "Eldritch Heritage Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Kobold"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "arg_abilities_class.lst",
+        "line": 631
+      },
+      "residual_rows_removed": [
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 11
+        },
+        {
+          "file": "arg_abilities_class_acg.lst",
+          "line": 12
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 10
+        },
+        {
+          "file": "arg_abilities_class_um.lst",
+          "line": 17
+        }
+      ]
+    },
+    {
+      "book": "monster_codex",
+      "key": "Ghoul Bloodline",
+      "row_count": 5,
+      "members": [
+        {
+          "file": "mc_abilities_class.lst",
+          "line": 131,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Ghoul Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Ghoul"
+          ]
+        },
+        {
+          "file": "mc_abilities_class_acg.lst",
+          "line": 8,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Ghoul"
+          ]
+        },
+        {
+          "file": "mc_abilities_class_acg.lst",
+          "line": 9,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Ghoul"
+          ]
+        },
+        {
+          "file": "mc_abilities_class_um.lst",
+          "line": 8,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Ghoul Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Ghoul"
+          ]
+        },
+        {
+          "file": "mc_abilities_class_um.lst",
+          "line": 13,
+          "category": "Eldritch Heritage Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Ghoul"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "mc_abilities_class.lst",
+        "line": 131
+      },
+      "residual_rows_removed": [
+        {
+          "file": "mc_abilities_class_acg.lst",
+          "line": 8
+        },
+        {
+          "file": "mc_abilities_class_acg.lst",
+          "line": 9
+        },
+        {
+          "file": "mc_abilities_class_um.lst",
+          "line": 8
+        },
+        {
+          "file": "mc_abilities_class_um.lst",
+          "line": 13
+        }
+      ]
+    },
+    {
+      "book": "occult_adventures",
+      "key": "Ectoplasm Bloodline",
+      "row_count": 5,
+      "members": [
+        {
+          "file": "oa_abilities_class.lst",
+          "line": 1854,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Ectoplasm Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Ectoplasm"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 8,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Ectoplasm"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 9,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Ectoplasm"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 8,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Ectoplasm Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Ectoplasm"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 14,
+          "category": "Eldritch Heritage Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Ectoplasm"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "oa_abilities_class.lst",
+        "line": 1854
+      },
+      "residual_rows_removed": [
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 8
+        },
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 9
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 8
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 14
+        }
+      ]
+    },
+    {
+      "book": "occult_adventures",
+      "key": "Psychic Bloodline",
+      "row_count": 5,
+      "members": [
+        {
+          "file": "oa_abilities_class.lst",
+          "line": 1872,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Psychic Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Psychic"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 10,
+          "category": "Arcanist Bloodline Development",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Psychic"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 11,
+          "category": "Blood Arcanist Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Psychic"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 9,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Psychic Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Psychic"
+          ]
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 15,
+          "category": "Eldritch Heritage Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Sorcerer Bloodline ~ Psychic"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "oa_abilities_class.lst",
+        "line": 1872
+      },
+      "residual_rows_removed": [
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 10
+        },
+        {
+          "file": "oa_abilities_class_acg.lst",
+          "line": 11
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 9
+        },
+        {
+          "file": "oa_abilities_class_um.lst",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Accursed Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 566,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Accursed Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Accursed"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2070,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Accursed Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Accursed"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 566
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2070
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Djinni Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 584,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Djinni Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Djinni"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2071,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Djinni Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Djinni"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 584
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2071
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Efreeti Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 602,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Efreeti Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Efreeti"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2072,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Efreeti Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Efreeti"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 602
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2072
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Maestro Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 620,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Maestro Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Maestro"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2073,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Maestro Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Maestro"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 620
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2073
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Marid Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 638,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Marid Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Marid"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2074,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Marid Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Marid"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 638
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2074
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Rakshasa Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 656,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Rakshasa Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Rakshasa"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2075,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Rakshasa Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Rakshasa"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 656
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2075
+        }
+      ]
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Shaitan Bloodline",
+      "row_count": 2,
+      "members": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 674,
+          "category": "Sorcerer Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Shaitan Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Shaitan"
+          ]
+        },
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2076,
+          "category": "Crossblooded Bloodline",
+          "type": "SorcererBloodlineChoice",
+          "grant_targets": [
+            "Shaitan Bloodline ~ Feat Tracker",
+            "Sorcerer Bloodline ~ Shaitan"
+          ]
+        }
+      ],
+      "disposition": "duplicate_chooser_picker_group_collapsed",
+      "survivor": {
+        "file": "um_abilities_class.lst",
+        "line": 674
+      },
+      "residual_rows_removed": [
+        {
+          "file": "um_abilities_class.lst",
+          "line": 2076
+        }
+      ]
+    }
+  ],
+  "not_covered_groups": []
+}
