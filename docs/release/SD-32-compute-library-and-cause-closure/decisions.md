@@ -1028,3 +1028,57 @@ evidence Decision 17 itself used to confirm its original 33. The class rule gene
 The residual risk the operator accepted is real and named here: a future group matching this
 predicate collapses without a human reading it. Condition 21b-2 is the mitigation — such a collapse
 is enumerated in a committed artifact, so it is visible in review even though it was automatic.
+
+## Decision 22 — Upstream data bugs are inherited, not perpetuated (operator ruling 2026-08-23)
+
+**Status:** Operator-pinned. General doctrine, arising from the Decision 21 chooser-collapse but
+**not limited to it**.
+
+> *"If they are identically named, they are bugged already in pcgen. If those few things cause a
+> breakage, I would rather carry a new bug into Codex that we can fix than perpetuate bad data."*
+
+### The rule
+
+**Where the PCGen corpus is internally inconsistent, Codex resolves the inconsistency rather than
+faithfully reproducing it.** A defect we introduce in our own code is one we can find, test, and
+fix. A defect we inherit by mirroring bad upstream data is permanent, invisible, and indistinguishable
+from correct behaviour.
+
+**A downstream breakage caused by resolving an upstream defect is an acceptable, expected cost**, and
+is treated as an ordinary bug in Codex — not as evidence the resolution was wrong.
+
+### What this settles
+
+1. **Decision 21's collapse proceeds even where a consumer depends on the duplicate rows.** Two
+   identically-named `class_feature` rows granting the same target are a PCGen data defect. If
+   collapsing them breaks a picker, a count, or a test, **fix the consumer** — do not preserve the
+   duplicate to keep the consumer quiet.
+2. **The oracle's own PI inconsistency is a data-quality finding, not a policy question.** The T9 PI
+   review found `Summon Monster IX (Cthulhu)` declared `NAMEISPI:YES` as a *spell* while three
+   `Star-Spawn of Cthulhu` *monster_ability* rows for the identical creature carry no declaration
+   (`§19b`). That is the same shape: an upstream inconsistency. `§19b`'s ruling stands on the policy
+   question; this decision records that the inconsistency itself is Codex's to resolve where it
+   affects our output, not to mirror.
+3. **Corpus typos are fixed at ingest, and named.** A monster-ability cycle found 2 corpus typos and a
+   comma-delimiter anomaly among its 86 unmodelled units. Under this decision those are candidates
+   for correction at the ingest boundary — **provided the correction is recorded**, so a reader can
+   see Codex diverging from the oracle and why.
+
+### The binding condition — divergence must be visible
+
+**Every deliberate divergence from the oracle is recorded where a reader will find it**: in the
+ingesting code's own comment, in the cycle receipt, and — where it changes a shipped record — in a
+committed artifact naming the records. Silent divergence is worse than faithful reproduction, because
+it makes the corpus untrustworthy in an undetectable way.
+
+This does **not** license loosening a gate, fabricating content, or "fixing" data that is merely
+unfamiliar. `§1a` is unchanged: under-include rather than invent. The rule is about *inconsistency*
+the corpus cannot itself resolve — two rows that cannot both be right — not about data we find
+inconvenient.
+
+### Relationship to fixture discipline
+
+`§3` is unchanged and still governs: an emitted value's fixture is transcribed from bytes the
+evaluator never reads. Where Codex deliberately diverges from the oracle, **the fixture records the
+Codex value and the comment records the oracle value and the reason** — so the divergence is pinned,
+not drifting.
