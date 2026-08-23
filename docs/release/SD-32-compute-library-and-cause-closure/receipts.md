@@ -83,3 +83,17 @@ contract, not by `workflow-instruction.md`'s own local-file convention.
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: no architecture impact — diff is outside architecture scope
+
+- cycle_id: 2026-08-22T23:58:55Z
+  row_or_kind: graphify:update
+  bundle: SD-32
+  branch: 0721aabddfbd569d3546d74f96dacba082f750a5
+  integration_target: develop
+  branch_tip: 0721aabd
+  graphify_exit_code: 0
+  outcome: success
+  wall_clock_seconds: 1489.5
+  log_path: graphify-out/.truth-up-run-2026-08-22T23:58:55Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify succeeded
