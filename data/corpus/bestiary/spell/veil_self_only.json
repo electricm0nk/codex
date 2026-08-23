@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:41:18Z",
+  "data": {
+    "key": "Veil (self only)",
+    "school": "Illusion",
+    "level": 6,
+    "description": "You instantly change the appearance of the subjects and then maintain that appearance for the spell's duration."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
+    "sha256": "e7e55cf92a9e94909f085392ce48a7b41c4d2243cd8cf974ac13708204a27195",
+    "line": 49,
+    "record_key": "Veil (self only)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -604,7 +604,20 @@ fn base_declaration_lines(lst_path: &Path) -> std::io::Result<BTreeMap<String, u
     let raw_lines: Vec<&str> = raw_text.split('\n').collect();
     let mut out = BTreeMap::new();
     for record in &parsed.records {
-        if record.name.ends_with(".MOD") || record.name.contains(".COPY=") {
+        if record.name.ends_with(".MOD") {
+            continue;
+        }
+        // `decisions.md §17`: a `.COPY=` row IS a real, citable corpus row
+        // (`ingest_spells.rs::copy_variant_split`'s fix gives it its own
+        // new identity, the part after `.COPY=`) -- it must resolve to ITS
+        // OWN line, not be dropped as though it named nothing. Mirrors
+        // `cache_gen::equipment_gap::find_citation`'s `.COPY=` fallback for
+        // the identical corpus shape (real example:
+        // `core_essentials/ce_spells.lst:49`,
+        // `"Veil.COPY=Veil (self only)"` -- `entry.key` is `"Veil (self
+        // only)"`, resolvable only by indexing the variant name here).
+        if let Some((_, variant)) = record.name.split_once(".COPY=") {
+            out.entry(variant.to_string()).or_insert(record.line_number as u32);
             continue;
         }
         out.entry(record.name.clone()).or_insert(record.line_number as u32);
@@ -1069,6 +1082,38 @@ mod tests {
         let mut used = std::collections::BTreeSet::new();
         assert_eq!(slugify("Akashic Form", &mut used), "akashic_form");
         assert_eq!(slugify("Akashic Form", &mut used), "akashic_form-2");
+    }
+
+    /// RED before this cycle's fix: a `.COPY=` row was excluded from
+    /// `base_declaration_lines` the same way a `.MOD` row is, so its own
+    /// new identity (the name after `.COPY=`) never resolved a citation
+    /// line -- `generate()` reported it `unresolved_citations` even though
+    /// `ingest_spells.rs`'s own `.COPY=` fix (this same cycle) had already
+    /// given it real `level`/`school`/`description`. GREEN after: the
+    /// variant name resolves to the `.COPY=` row's OWN line (not the base
+    /// record's line).
+    #[test]
+    fn base_declaration_lines_indexes_a_copy_rows_own_variant_name() {
+        let tmp = std::env::temp_dir().join(format!(
+            "spell_lane_dump_copy_variant_test_{}",
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir_all(&tmp).unwrap();
+        let f = tmp.join("t_spells.lst");
+        std::fs::write(
+            &f,
+            "Veil\tCLASSES:Bard,Sorcerer,Wizard=6\tSCHOOL:Illusion\tDESC:base prose\n\
+             Veil.COPY=Veil (self only)\t\tCLASSES:.CLEARALL\tDESC:variant prose\n",
+        )
+        .unwrap();
+        let lines = base_declaration_lines(&f).unwrap();
+        assert_eq!(lines.get("Veil"), Some(&1), "the base record still resolves under its own name");
+        assert_eq!(
+            lines.get("Veil (self only)"),
+            Some(&2),
+            "the .COPY= row's own variant name must resolve to ITS OWN line, not the base's"
+        );
+        std::fs::remove_dir_all(&tmp).ok();
     }
 
     #[test]
