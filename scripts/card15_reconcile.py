@@ -89,7 +89,10 @@ def main(argv: list[str] | None = None) -> int:
     not_done = CL.not_done_population(inventory)
     books = {u.get("book") for u in not_done if u.get("book")}
     corpus_index = SL.build_corpus_index(os.path.join(REPO_ROOT, "data", "corpus"), books)
-    ledger = SL.build_ledger(not_done, corpus_index)
+    # `decisions.md §20`/§17a: reuse the citation-redirect fallback so this
+    # reconciliation's ledger cannot silently disagree with the CLI's own.
+    key_index = SL.build_corpus_key_index(os.path.join(REPO_ROOT, "data", "corpus"), books)
+    ledger = SL.build_ledger(not_done, corpus_index, key_index)
 
     # -- Card 15 disposition status of the census's kind_unenumerable set --
     # (B) proven-not-an-object. `ce__sizes.lst` (9 units) is REMOVED from

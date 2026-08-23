@@ -376,6 +376,89 @@ def build_corpus_index(corpus_root: str, books: set[str] | None = None) -> dict:
     return index
 
 
+def build_corpus_key_index(corpus_root: str, books: set[str] | None = None) -> dict:
+    """Walks `data/corpus/<book>/<kind>/*.json` (excluding LICENSE.json) and
+    indexes every record's `DEFINE`/`BONUS*` formula tokens by
+    `(book, kind, data.key)` -- the record's own declared identity, never
+    its `name` (`gen_equipment_gap_tables.rs`'s `held` map already
+    documents the name-collision hazard: an early version inserted display
+    names too and silently suppressed 28 unrelated records that happened
+    to share one).
+
+    This is the FALLBACK join `classify_unit` consults only when the
+    primary `(book, source_file, source_line)` join misses. `decisions.md
+    §20`/§17a: `ultimate_magic`'s 11 `equipment` units traced this cycle
+    are not a gap at all -- `docs/work-inventory.json`'s own equipment
+    enumeration mints exactly one unit per corpus_key, and for several
+    `.COPY=`-aliased spellbooks that key's surviving unit cites
+    `_pfs/pfs_um_equip_general.lst`'s PFS-legality-overlay row (no new
+    content, just a `TYPE:PFSNotLegal` restatement of an existing item)
+    rather than the base `um_equip_general.lst` row the real, already-
+    ingested corpus record was actually generated from and cites. The
+    primary join is exactly right to fail on that mismatched citation --
+    the record it names truly was never written -- but the corpus record
+    for the SAME key, cited from the OTHER file, already exists. This
+    index recovers that: a corpus_key match within the same (book, kind)
+    is the record, addressed by its own real identity rather than by the
+    LST row this particular inventory unit happened to be minted from.
+
+    Returns {(book, kind, key): [ {"key":..., "value":...}, ... ]} -- same
+    value shape as `build_corpus_index`, so `classify_unit` can classify a
+    fallback hit exactly like a primary one (including `no_formula_tokens`
+    when the record legitimately carries none, which is the TRUE
+    classification for a pregenerated spellbook: real record, no BONUS/
+    DEFINE token, not a gap in our work)."""
+    index: dict[tuple[str, str, str], list[dict]] = {}
+    if books is not None:
+        search_roots = []
+        for b in sorted(books):
+            aliased = BOOK_CORPUS_DIR_ALIASES.get(b)
+            if aliased and aliased != b:
+                search_roots.append((b, os.path.join(corpus_root, aliased)))
+                search_roots.append((b, os.path.join(corpus_root, b)))
+            else:
+                search_roots.append((b, os.path.join(corpus_root, b)))
+    else:
+        search_roots = [(None, corpus_root)]
+    for book_override, root in search_roots:
+        if not os.path.isdir(root):
+            continue
+        book = book_override if book_override is not None else os.path.relpath(root, corpus_root).split(os.sep)[0]
+        for path in glob.glob(os.path.join(root, "**", "*.json"), recursive=True):
+            if os.path.basename(path) == "LICENSE.json":
+                continue
+            try:
+                with open(path, "r", encoding="utf-8") as fh:
+                    rec = json.load(fh)
+            except (OSError, json.JSONDecodeError):
+                continue
+            data = rec.get("data") or {}
+            record_key = data.get("key")
+            if not isinstance(record_key, str) or not record_key:
+                continue
+            # kind = the directory one level under the book directory this
+            # record physically lives in (e.g. `.../ultimate_magic/equipment/
+            # book_of_harms.json` -> kind "equipment") -- never guessed from
+            # the inventory unit's own `kind` field, so a book-kind
+            # directory the corpus does not actually carry can never mint a
+            # phantom index entry.
+            rel = os.path.relpath(path, root)
+            parts = rel.split(os.sep)
+            if len(parts) < 2:
+                continue
+            kind = parts[0]
+            raw_tokens = data.get("raw_tokens") or []
+            formula_tokens = [
+                t
+                for t in raw_tokens
+                if isinstance(t, dict)
+                and isinstance(t.get("key"), str)
+                and (t["key"] == "DEFINE" or t["key"].startswith("BONUS"))
+            ]
+            index[(book, kind, record_key)] = formula_tokens
+    return index
+
+
 def extract_formula_segment(key: str, value: str) -> str | None:
     """Extracts the formula-bearing segment from one DEFINE/BONUS raw
     token, per this module's docstring 'Extraction method'.
@@ -410,16 +493,32 @@ def classify_formula(formula: str) -> str:
     return FAMILY_F8_OTHER
 
 
-def classify_unit(unit: dict, corpus_index: dict) -> dict:
+def classify_unit(unit: dict, corpus_index: dict, key_index: dict | None = None) -> dict:
     """Classifies one not-done unit. Returns a ledger row dict with the
     unit's id/kind/book, its `family` (always non-null -- see
     classify_formula/FAMILY_F0_NO_FORMULA), and `join_status` so a
-    reviewer can tell "genuinely no formula" apart from "join failed"."""
+    reviewer can tell "genuinely no formula" apart from "join failed".
+
+    `key_index` (`build_corpus_key_index`'s output, `(book, kind, key) ->
+    formula_tokens`) is a FALLBACK consulted only when the primary
+    `(book, source_file, source_line)` join misses -- never in place of
+    it. `decisions.md §20`/§17a: a unit whose inventory citation points at
+    a content-free legality-overlay row can still have a real, already-
+    ingested corpus record under its own `corpus_key`, cited from a
+    DIFFERENT physical file the primary join never looks at. Omitting
+    `key_index` (or passing `None`) keeps every existing caller's behavior
+    byte-for-byte unchanged."""
     book = unit.get("book")
     basename = unit.get("source_file")
     line = unit.get("source_line")
     key = (book, basename, line) if (book and basename and line is not None) else None
     formula_tokens = corpus_index.get(key) if key is not None else None
+
+    if formula_tokens is None and key_index:
+        kind = unit.get("kind")
+        corpus_key = unit.get("corpus_key")
+        if book and kind and corpus_key:
+            formula_tokens = key_index.get((book, kind, corpus_key))
 
     if formula_tokens is None:
         join_status = "no_record"
@@ -467,7 +566,7 @@ def _family_metadata() -> dict:
     return meta
 
 
-def build_ledger(units: list[dict], corpus_index: dict) -> dict:
+def build_ledger(units: list[dict], corpus_index: dict, key_index: dict | None = None) -> dict:
     """Returns {'population', 'rows', 'families', 'unclassified_count',
     'join_status_counts'}. `unclassified_count` is structurally always 0
     for a non-empty population -- classify_unit never returns a null
@@ -487,7 +586,7 @@ def build_ledger(units: list[dict], corpus_index: dict) -> dict:
     caller (this script's own printed output, the standing gate, the
     family-vocabulary reconciliation, and every AT-32-G1-* criterion that
     quotes a coverage figure) must surface alongside it."""
-    rows = [classify_unit(u, corpus_index) for u in units]
+    rows = [classify_unit(u, corpus_index, key_index) for u in units]
     meta = _family_metadata()
     counts: dict[str, int] = {}
     join_status_counts: dict[str, int] = {}
@@ -538,7 +637,8 @@ def main(argv: list[str] | None = None) -> int:
 
     books = {u.get("book") for u in units if u.get("book")}
     corpus_index = build_corpus_index(args.corpus_root, books)
-    ledger = build_ledger(units, corpus_index)
+    key_index = build_corpus_key_index(args.corpus_root, books)
+    ledger = build_ledger(units, corpus_index, key_index)
 
     print(f"population (not-done units considered): {ledger['population']}")
     print(f"unclassified: {ledger['unclassified_count']}")

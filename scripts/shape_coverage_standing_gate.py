@@ -319,7 +319,14 @@ def run_gate(
 
     books = {u.get("book") for u in units if u.get("book")}
     corpus_index = SL.build_corpus_index(corpus_root, books)
-    ledger = SL.build_ledger(units, corpus_index)
+    # `decisions.md §20`/§17a (T9-onboarding, citation-redirect fallback):
+    # without `key_index`, this gate's own no_record figure silently
+    # disagrees with `shape_ledger.py`'s own CLI output the moment the
+    # fallback recovers a unit -- the standing gate must reuse the SAME
+    # join `build_ledger`'s caller is expected to, never a narrower one
+    # that happens to compile.
+    key_index = SL.build_corpus_key_index(corpus_root, books)
+    ledger = SL.build_ledger(units, corpus_index, key_index)
 
     return evaluate_ledger(ledger, no_record_budget_count, no_record_budget_population)
 

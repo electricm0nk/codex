@@ -265,6 +265,120 @@ class ClassifyUnitTest(unittest.TestCase):
         self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
         self.assertEqual(row["join_status"], "no_record")
 
+    def test_citation_redirect_fallback_matches_by_book_kind_key_when_primary_join_misses(self):
+        """`ultimate_magic`'s 11 `equipment` units this cycle traced
+        (`decisions.md §20`/§17a): `docs/work-inventory.json`'s own equipment
+        enumeration mints exactly one unit per corpus_key, and for a
+        `.COPY=`-aliased spellbook whose key is ALSO restated (with no new
+        content) by `ultimate_magic/_pfs/pfs_um_equip_general.lst`'s PFS
+        legality overlay, the surviving unit's `source_file`/`source_line`
+        cite the OVERLAY row -- while the real, already-ingested corpus
+        record (e.g. `data/corpus/ultimate_magic/equipment/book_of_harms.json`)
+        was generated from and cites the BASE `um_equip_general.lst` row.
+        The primary (book, source_file, source_line) join therefore misses a
+        record that genuinely exists. `key_index`, keyed on the corpus
+        record's own `(book, kind, data.key)` identity -- never on `name`
+        alone, matching `equipment_gap.rs`'s own documented `held`-map
+        name-collision hazard -- recovers it as `matched`/`no_formula_tokens`
+        rather than a false `no_record`."""
+        unit = _unit(
+            "ultimate_magic:equipment:book_of_harms",
+            "equipment",
+            "ultimate_magic",
+            "not-started",
+            "static",
+            "pfs_um_equip_general.lst",
+            8,
+            corpus_key="Book of Harms",
+        )
+        key_index = {("ultimate_magic", "equipment", "Book of Harms"): []}
+        row = SL.classify_unit(unit, corpus_index={}, key_index=key_index)
+        self.assertEqual(row["join_status"], "no_formula_tokens")
+        self.assertEqual(row["family"], SL.FAMILY_F0_NO_FORMULA)
+
+    def test_citation_redirect_fallback_still_classifies_real_formula_tokens(self):
+        unit = _unit(
+            "b:equipment:x",
+            "equipment",
+            "b",
+            "not-started",
+            "static",
+            "overlay.lst",
+            1,
+            corpus_key="Widget",
+        )
+        key_index = {("b", "equipment", "Widget"): [{"key": "BONUS", "value": "VAR|Foo|WIS"}]}
+        row = SL.classify_unit(unit, corpus_index={}, key_index=key_index)
+        self.assertEqual(row["join_status"], "matched")
+        self.assertEqual(row["family"], "F3")
+
+    def test_citation_redirect_fallback_never_fires_across_a_different_kind(self):
+        """The fallback is keyed on `(book, kind, key)`, never `(book, key)`
+        alone -- a same-named key in a DIFFERENT kind directory (e.g. an
+        `equipment_modifier` record) must never satisfy an `equipment`
+        unit's join, the same discipline `equipment_gap.rs`'s own `held`
+        map already applies per-book."""
+        unit = _unit(
+            "b:equipment:x", "equipment", "b", "not-started", "static", "overlay.lst", 1, corpus_key="Widget"
+        )
+        key_index = {("b", "equipment_modifier", "Widget"): [{"key": "BONUS", "value": "VAR|Foo|WIS"}]}
+        row = SL.classify_unit(unit, corpus_index={}, key_index=key_index)
+        self.assertEqual(row["join_status"], "no_record")
+
+    def test_primary_join_wins_over_key_index_fallback_when_both_present(self):
+        """The fallback is a LAST resort -- when the primary (book,
+        source_file, source_line) join already finds the record, the
+        fallback path (and its coarser identity) is never consulted."""
+        unit = _unit(
+            "b:equipment:x", "equipment", "b", "not-started", "static", "f.lst", 1, corpus_key="Widget"
+        )
+        corpus_index = {("b", "f.lst", 1): [{"key": "DEFINE", "value": "Foo|0"}]}
+        key_index = {("b", "equipment", "Widget"): []}
+        row = SL.classify_unit(unit, corpus_index, key_index=key_index)
+        self.assertEqual(row["join_status"], "matched")
+        self.assertEqual(row["family"], "F1")
+
+    def test_no_key_index_argument_is_backward_compatible(self):
+        unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "missing.lst", 1)
+        row = SL.classify_unit(unit, corpus_index={})
+        self.assertEqual(row["join_status"], "no_record")
+
+
+class BuildCorpusKeyIndexTest(unittest.TestCase):
+    def test_indexes_by_book_kind_data_key(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "test_book", "equipment")
+            os.makedirs(book_dir)
+            record = {
+                "data": {
+                    "key": "Book of Harms",
+                    "raw_tokens": [
+                        {"key": "DESC", "value": "irrelevant, not a formula token"},
+                        {"key": "BONUS", "value": "VAR|Foo|WIS"},
+                    ],
+                },
+                "source": {"path": "um_equip_general.lst", "line": 16},
+            }
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump(record, fh)
+            with open(os.path.join(book_dir, "LICENSE.json"), "w") as fh:
+                json.dump({"data": {"key": "SHOULD_NOT_APPEAR", "raw_tokens": []}}, fh)
+
+            index = SL.build_corpus_key_index(tmp, books={"test_book"})
+            key = ("test_book", "equipment", "Book of Harms")
+            self.assertIn(key, index)
+            self.assertEqual(len(index[key]), 1)
+            self.assertEqual(index[key][0]["key"], "BONUS")
+
+    def test_record_with_no_data_key_is_not_indexed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            book_dir = os.path.join(tmp, "test_book", "equipment")
+            os.makedirs(book_dir)
+            with open(os.path.join(book_dir, "unit.json"), "w") as fh:
+                json.dump({"data": {"raw_tokens": []}, "source": {"path": "f.lst", "line": 1}}, fh)
+            index = SL.build_corpus_key_index(tmp, books={"test_book"})
+            self.assertEqual(index, {})
+
 
 class BuildLedgerTest(unittest.TestCase):
     def test_unclassified_count_is_always_zero_for_nonempty_population(self):

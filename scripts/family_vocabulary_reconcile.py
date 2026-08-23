@@ -453,7 +453,11 @@ def main(argv: list[str] | None = None) -> int:
 
     books = {u.get("book") for u in units if u.get("book")}
     corpus_index = SL.build_corpus_index(args.corpus_root, books)
-    ledger = SL.build_ledger(units, corpus_index)
+    # `decisions.md §20`/§17a: reuse `shape_ledger.py`'s citation-redirect
+    # fallback (`build_corpus_key_index`) so this reconciliation's own
+    # join_status split cannot silently disagree with the CLI's.
+    key_index = SL.build_corpus_key_index(args.corpus_root, books)
+    ledger = SL.build_ledger(units, corpus_index, key_index)
 
     canonical = canonical_family_table(ledger)
     mapping = mt_mapping_table(canonical)
