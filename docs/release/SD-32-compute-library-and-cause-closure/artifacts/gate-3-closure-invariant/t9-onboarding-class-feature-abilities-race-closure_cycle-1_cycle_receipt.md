@@ -182,3 +182,17 @@ cycle's own contribution is the closure that finding named as future work, not a
 
 Single-cycle turn; pushed once via the §5 retry protocol (see push log). No rebase mid-cycle was
 needed.
+
+## 10. Post-rebase re-derivation (`§17a`)
+
+`git fetch origin tranche/12 && git rebase origin/tranche/12` picked up sibling lanes' own
+concurrent closures (spell/ability/equipment_modifier/companion/equipment stragglers,
+monster_ability round 6, PI-neutral-name closures). Re-derived, not assumed: `class_feature`'s own
+`no_record` is still **0** after the rebase (unaffected — no sibling lane touches `class_feature`).
+Bundle-wide `no_record` moved further, past this cycle's own contribution, to **132**/34,631
+(siblings' own closures, not this cycle's). `ledger.json`/`family-vocabulary.{md,json}` regenerated
+fresh against the post-rebase combined corpus state (not merged from conflict markers — the git
+auto-merge on these two files produced valid JSON but was not trusted; regenerated for real via
+`shape_ledger.py`/`family_vocabulary_reconcile.py` instead). Gate 3: `132/34,631` vs. baseline
+`21,521/36,028`, `exceeded: False`. `cargo test --locked --lib rules_core::cache_gen::class_feature`
+re-run post-rebase: 70/70 GREEN, unchanged.
