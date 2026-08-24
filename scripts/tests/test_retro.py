@@ -405,6 +405,75 @@ class TestSummary(RetroTestCase):
         self.assertEqual(len(json.loads(proc.stdout)), 4)
 
 
+class TestDeferralResolution(RetroTestCase):
+    """Regression coverage for the defect this fix closes: `deferrals.open`
+    used to be `deferrals[-limit:]` -- the last N deferrals emitted, in
+    emission order -- which meant it had never measured openness at all.
+    `--limit 3` reported 3 'open' deferrals, `--limit 29` reported 29 of the
+    same total, and a closure lane that read the default `--limit 10` as the
+    bundle's whole deferral list left the other 19 of 29 real deferrals in
+    the SD-32 window unchecked.
+    """
+
+    def resolve(self, actor: str, event_id: str, how: str) -> None:
+        self.run_retro(
+            "resolution", "--actor", actor, "--resolves", event_id, "--how", how,
+        )
+
+    def test_unresolved_deferral_counts_as_open(self) -> None:
+        self.run_retro(
+            "deferral", "--actor", "scout",
+            "--what", "widen equipment coverage", "--reason", "not this cycle",
+        )
+        doc = json.loads(self.run_retro("summary", "--json").stdout)
+        self.assertEqual(doc["deferrals"]["total"], 1)
+        self.assertEqual(doc["deferrals"]["open"], 1)
+        self.assertEqual(doc["deferrals"]["resolved"], 0)
+
+    def test_resolved_deferral_is_not_open(self) -> None:
+        proc = self.run_retro(
+            "deferral", "--actor", "scout",
+            "--what", "widen equipment coverage", "--reason", "not this cycle",
+        )
+        deferral_id = self.events()[0]["id"]
+        self.resolve("closer", deferral_id, "cargo run gen_equipment; verified 0 gaps")
+        doc = json.loads(self.run_retro("summary", "--json").stdout)
+        self.assertEqual(doc["deferrals"]["total"], 1)
+        self.assertEqual(doc["deferrals"]["open"], 0)
+        self.assertEqual(doc["deferrals"]["resolved"], 1)
+
+    def test_open_count_does_not_vary_with_limit(self) -> None:
+        # 29 deferrals, none resolved -- the exact SD-32-window shape that
+        # exposed the defect. `open` must read 29 regardless of --limit.
+        for i in range(29):
+            self.run_retro(
+                "deferral", "--actor", "scout",
+                "--what", f"item {i}", "--reason", "not this cycle",
+            )
+        for limit in (3, 10, 29):
+            doc = json.loads(
+                self.run_retro("summary", "--json", "--limit", str(limit)).stdout
+            )
+            self.assertEqual(
+                doc["deferrals"]["open"], 29,
+                f"open should be the true unresolved count (29) at --limit {limit}, "
+                f"not a tail slice sized by --limit",
+            )
+
+    def test_open_items_list_is_not_capped_by_limit(self) -> None:
+        for i in range(15):
+            self.run_retro(
+                "deferral", "--actor", "scout",
+                "--what", f"item {i}", "--reason", "not this cycle",
+            )
+        doc = json.loads(self.run_retro("summary", "--json", "--limit", "3").stdout)
+        self.assertEqual(len(doc["deferrals"]["open_items"]), 15)
+
+    def test_resolution_requires_resolves_and_how(self) -> None:
+        proc = self.run_retro("resolution", "--actor", "closer", expect=2)
+        self.assertIn("resolves", proc.stderr)
+
+
 class TestDeriveGit(RetroTestCase):
     def make_repo(self) -> Path:
         tmp = tempfile.TemporaryDirectory(prefix="retro-git-")
