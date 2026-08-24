@@ -8993,3 +8993,37 @@ closed.
 
 Full receipt: `artifacts/gate-3-closure-invariant/t12-class-feature-pool-population_cycle-21_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+### Cycle — Row 11 (`epic-2-cause-closure`) closed; Row 13 (`closure-epilogue`) run, stays `in-progress`
+
+Full detail in `artifacts/epic-5-protective-sweep/row11-row13-final-closure_cycle-1_cycle_receipt.md`
+and `kanban.md` rows 11/13's own entries. Summary:
+
+- **Row 11 → `complete`.** Every one of its 8 named blocker shapes re-confirmed closed live
+  (`shape-coverage-standing-gate` → `no_record=0 unclassified=0`; `row17_census.py --check` →
+  `ROW 17 HONEST SIZE 0`; desktop workspace 548/0; root-scoped suites all green; PI clean). Rows 18
+  and 19, row 11's own named blockers, both confirmed `complete`.
+- **Found and fixed one live gate failure not named in the dispatch brief:** `pi-sweep` FAILED on
+  the unmodified pinned commit — `src/rules_core/rules_tables/feat_gap_tables.rs`, a GENERATED
+  file, shipped 3 unredacted PI hits from a stale-since-blacklist-grew artifact. Fixed via the
+  file's own sanctioned regeneration command (0 hand edits); `pi-sweep` now PASSES (10 hits, 10
+  pre-existing baseline rows, unchanged).
+- **All 10 of the retro log's structured `deferrals.open` entries independently re-verified
+  resolved** (distinct check from the usual prose "deferred"/"discovery forward" sweep — cross-
+  checked this cycle for the first time). Zero remain open.
+- **Row 13 stays `in-progress`.** Steps 1/2/5 of `workflow-instruction.md §13` run this cycle
+  (final-acceptance scan; retrospective corrected with a new closing section;
+  `release-notes.md`/`references/README.md` corrected). **Step 3 (worktree/branch sweep) could not
+  execute**: a dry-run found 128 of 142 registered worktrees safely removable, but this session's
+  tool-permission classifier refuses `git worktree remove` outright for a worktree-isolated
+  dispatched agent (confirmed on both a bulk script and one bare command). Escalated by name per
+  `docs/governance/blocker-closure-doctrine.md` for the orchestrating session to execute directly.
+  Step 4 (PR/graphify/arch-docs) deliberately not run — `decisions.md §10` forbids opening a PR
+  while any Epic card is short of `complete`, and row 13 itself is short on step 3.
+
+**`decisions.md §10` verdict: SD-32 does not yet meet the Definition of Done.** All four gates met;
+21 of 22 Epic cards `complete`; row 13 is the one card short, on the worktree-sweep step named
+above.
+
+Full receipt: `artifacts/epic-5-protective-sweep/row11-row13-final-closure_cycle-1_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).
