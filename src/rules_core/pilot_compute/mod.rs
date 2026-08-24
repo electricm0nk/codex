@@ -16402,6 +16402,27 @@ fn ground_or_block_oracle_class_features(
     }
 
     ground_or_block_oracle_mystery(input, explanations, diagnostics);
+
+    // SD-32 T12 Epic 8 row 18 cycle 5: `push_generic_pool_group_selection_
+    // magnitude` was tried here and DELIBERATELY WITHDRAWN, not merely
+    // "not attempted". Unlike Domain/Bloodline (whose powers are ALL
+    // automatically granted once the group is chosen -- confirmed by this
+    // file's own existing Cleric/Sorcerer wiring, which never requires a
+    // second budgeted pick), Oracle Mystery members are mostly
+    // REVELATIONS -- a genuinely budgeted PF1 sub-choice this codebase
+    // already, correctly, gates on an explicit `ORACLE_REVELATION_CHOICE_ID`
+    // pick (see `oracle_level_with_revelation`'s own doc comment). A
+    // group-selection-grants-everything pass is WRONG for this pool: it
+    // was caught live by this file's own regression suite
+    // (`oracle_dispatch_widening_safety_tests::
+    // a_mystery_pick_alone_grounds_no_tier_one_revelation`, which failed
+    // when this was wired -- a bare `mystery:lore` pick started grounding
+    // Sidestep Secret with no revelation pick recorded at all). Reverted
+    // rather than weakening that test (`decisions.md §1a`). Mystery
+    // therefore stays wired ONLY through the pre-existing 10-mystery hand
+    // model above; the other 11 real mystery groups are a genuine,
+    // named "cannot be wired without a budgeted-choice-aware mechanism"
+    // gap, not a silently skipped one.
     ground_oracle_tier_one_revelations(input, explanations);
     ground_or_block_oracle_curse(input, level, explanations, diagnostics);
 
@@ -18904,6 +18925,25 @@ fn ground_or_block_warpriest_class_features(
 
     ground_warpriest_fervor_channel_and_sacred_armor(level, ability_modifiers, explanations);
 
+    // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE blessing,
+    // inherit every one of its real corpus powers" pass, covering the
+    // other 36 real Warpriest blessing groups (111 real records total,
+    // `census_class_feature_pool_group_names.py`) beyond Destruction and
+    // Strength this file already hand-models by name below -- purely
+    // additive.
+    push_generic_pool_group_selection_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        WARPRIEST_BLESSING_CHOICE_ID,
+        "Warpriest",
+        "Blessing",
+        "blessing:",
+        "class_feature.acg.warpriest.blessing.generic",
+        1,
+        explanations,
+    );
+
     let blessing_selections: Vec<&str> = input
         .chosen
         .selected_choices
@@ -21257,6 +21297,24 @@ fn ground_or_block_shaman_class_features(
         .filter(|c| c.choice_set_id == SHAMAN_SPIRIT_CHOICE_ID)
         .map(|c| c.selection_id.as_str())
         .collect();
+
+    // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE spirit,
+    // inherit every one of its real corpus powers" pass, covering the
+    // other 4 real Shaman spirit groups (73 real records total,
+    // `census_class_feature_pool_group_names.py`) beyond the 10 this file
+    // already hand-models by name below -- purely additive.
+    push_generic_pool_group_selection_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        SHAMAN_SPIRIT_CHOICE_ID,
+        "Shaman",
+        "Spirit",
+        "spirit:",
+        "class_feature.acg.shaman.spirit.generic",
+        1,
+        explanations,
+    );
 
     let spirit_recognized;
 
@@ -38952,10 +39010,28 @@ fn pool_header_record_by_normalized_suffix<'a>(
     }
     let prefix = format!("{class} ~ ");
     let normalized_target = pool_group.trim_end_matches('s');
-    table.iter().find_map(|(key, header)| {
+    if let Some(header) = table.iter().find_map(|(key, header)| {
         let suffix = key.strip_prefix(&prefix)?;
         (suffix.trim_end_matches('s') == normalized_target).then_some(header)
-    })
+    }) {
+        return Some(header);
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 5: a SECOND real corpus header shape,
+    // confirmed by direct inspection of `data/corpus/core_rulebook/
+    // class_feature/air/air.json` (key `"Air Domain"`, class `"Cleric"`,
+    // real `BONUS:VAR|DomainAirDC|10+(DomainAirLVL/2)+CHA`) and
+    // `.../aberrant_bloodline/aberrant_bloodline.json` (key
+    // `"Aberrant Bloodline"`) -- unlike Alchemist Discovery/Witch Hex/
+    // Slayer Talent's `"<class> ~ <pool word(s)>"` header key, the
+    // Domain/Bloodline/Mystery/Blessing/Spirit "select ONE, inherit
+    // everything" pool family keys its own header record with the BARE
+    // group name (no `"<class> ~ "` prefix, no `" ~ "` separator at all)
+    // -- the exact string `pool_group` already names (`"Air Domain"`,
+    // `"Aberrant Bloodline"`). Class-checked before returning (never
+    // trusted from the bare key alone) so a same-named group owned by a
+    // DIFFERENT class can never be picked up by mistake. Tried last so it
+    // changes nothing for any pool the two checks above already served.
+    table.get(pool_group).filter(|header| header.class == class)
 }
 
 pub(crate) fn resolve_pool_member_sole_magnitude(
@@ -39106,6 +39182,136 @@ fn push_generic_pool_choice_magnitude(
             ),
         });
     }
+}
+
+/// The "select ONE named group, then inherit every one of its members"
+/// pool shape (Cleric Domain, Oracle Mystery, Warpriest Blessing, Shaman
+/// Spirit, Sorcerer/Bloodrager Bloodline) -- the sibling of
+/// [`push_generic_pool_choice_magnitude`]'s "select individual members
+/// from one flat pool" shape (Discovery, Hex, Slayer Talent). `registered_name`
+/// is the bare pool word (`"Domain"`, `"Mystery"`, `"Bloodline"`) a
+/// selection's own slug is matched against; the real corpus GROUP a given
+/// selection resolves to (`"Air Domain"`, `"Battle Mystery"`,
+/// `"Draconic Bloodline"`) is found generically by
+/// [`real_pool_group_for_selection_slug`] -- never a per-group lookup
+/// table (`decisions.md §17`/`§1a`). Once the real group is known, EVERY
+/// one of its own `"<group> ~ <member>"` corpus records is resolved
+/// through the SAME [`resolve_pool_member_sole_magnitude`] used by the
+/// flat-pool shape; a member this resolver cannot ground (multi-terminal,
+/// dice notation, no BONUS/DEFINE token) is silently skipped, never
+/// fabricated. Purely additive: an already hand-modelled selection (e.g.
+/// Cleric's Good/War/Strength/Destruction/Glory/Healing domains, Oracle's
+/// ten hand-picked mysteries, Shaman's ten hand-picked spirits) keeps
+/// emitting its own, differently-named explanation id unchanged -- the
+/// same "cannot collide, may legitimately overlap" contract cycle 4's own
+/// Slayer Talent/Foil Scrutiny wiring already established.
+fn push_generic_pool_group_selection_magnitude(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    choice_set_id: &str,
+    class: &str,
+    registered_name: &str,
+    namespace: &str,
+    id_prefix: &str,
+    min_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < min_level {
+        return;
+    }
+    for selection_id in input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+    {
+        let Some(slug) = selection_id.strip_prefix(namespace) else { continue };
+        let Some(group) = real_pool_group_for_selection_slug(class, registered_name, slug) else {
+            continue;
+        };
+        let prefix = format!("{group} ~ ");
+        let group_slug = class_feature_id_slug(&group);
+        for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe()
+            .iter()
+        {
+            let Some(member_name) = key.strip_prefix(&prefix) else { continue };
+            let Some((target, value)) =
+                resolve_pool_member_sole_magnitude(key, &group, level, ability_modifiers)
+            else {
+                continue;
+            };
+            let Ok(value) = i16::try_from(value) else { continue };
+            let member_slug = class_feature_id_slug(member_name);
+            let target_slug = class_feature_id_slug(&target);
+            explanations.push(ComputationExplanation {
+                id: format!("{id_prefix}.{group_slug}.{member_slug}.{target_slug}"),
+                value,
+                detail: format!(
+                    "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                     {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                     function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                     seeded with this character's real class level and real ability modifiers, \
+                     after resolving the recorded {choice_set_id} -> {selection_id} selection to \
+                     its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
+                     pool-group-selection magnitude resolver)."
+                ),
+            });
+        }
+    }
+}
+
+/// Resolves a `push_generic_pool_group_selection_magnitude` selection's
+/// bare slug (e.g. `"air"`, `"draconic"`) to the real corpus group name it
+/// names (e.g. `"Air Domain"`, `"Draconic Bloodline"`), generically: scans
+/// every `class_feature` record's own `" ~ "`-qualified group, tallies
+/// each group's OWNER by corpus-read majority `class` across its own
+/// member records (never assumed from text -- the same guard
+/// `census_class_feature_pool_group_names.py` and
+/// `pool_header_record_by_normalized_suffix` both use), keeps only groups
+/// majority-owned by the requested `class`, matches the group's own
+/// trailing word-boundary suffix against `registered_name` (exact, or
+/// after stripping one trailing `s` from each side -- singular/plural
+/// insensitive, identical to `pool_header_record_by_normalized_suffix`'s
+/// own rule), and returns the one whose remaining leading adjective slugs
+/// (via `class_feature_id_slug`) to exactly `slug`. `None` for an invented
+/// or unrecognised slug -- never guessed.
+fn real_pool_group_for_selection_slug(
+    class: &str,
+    registered_name: &str,
+    slug: &str,
+) -> Option<String> {
+    let table = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+    let mut owner_tally: std::collections::BTreeMap<String, std::collections::BTreeMap<String, u32>> =
+        std::collections::BTreeMap::new();
+    for (key, record) in table.iter() {
+        if let Some((group, _member)) = key.split_once(" ~ ") {
+            *owner_tally.entry(group.to_string()).or_default().entry(record.class.clone()).or_default() +=
+                1;
+        }
+    }
+    let normalized_registered = registered_name.trim_end_matches('s');
+    owner_tally.into_iter().find_map(|(group, owners)| {
+        let majority_class = owners.iter().max_by_key(|(_, count)| **count).map(|(c, _)| c.clone())?;
+        if majority_class != class {
+            return None;
+        }
+        let adjective = if let Some(adjective) = group.strip_suffix(&format!(" {registered_name}")) {
+            adjective
+        } else {
+            let (last_word_start, last_word) = group
+                .rmatch_indices(' ')
+                .next()
+                .map(|(idx, _)| (idx + 1, &group[idx + 1..]))
+                .unwrap_or((0, group.as_str()));
+            if last_word.trim_end_matches('s') != normalized_registered {
+                return None;
+            }
+            group[..last_word_start].trim_end()
+        };
+        (class_feature_id_slug(adjective) == slug).then(|| group.clone())
+    })
 }
 
 fn explain_rogue_level1_chassis(
@@ -39790,6 +39996,26 @@ fn explain_sorcerer_level1_spell_baseline(
         let bloodline_selection = choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID);
         let recognized_arcane_bloodline =
             bloodline_selection == Some(ARCANE_BLOODLINE_SELECTION_ID);
+
+        // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE
+        // bloodline, inherit every one of its real corpus powers" pass,
+        // covering the other 51 real Sorcerer bloodline groups (391 real
+        // records total, `census_class_feature_pool_group_names.py`) this
+        // file has never hand-modelled by name -- purely additive
+        // alongside the Arcane/Draconic hand-modelled branches below.
+        push_generic_pool_group_selection_magnitude(
+            input,
+            sorcerer_level,
+            ability_modifiers,
+            SORCERER_BLOODLINE_CHOICE_ID,
+            "Sorcerer",
+            "Bloodline",
+            "bloodline:",
+            "class_feature.sorcerer.bloodline.generic",
+            1,
+            explanations,
+        );
+
         let bloodline_class_skill_selection =
             choice_selection(input, SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID);
         let recognized_bloodline_class_skill_name = bloodline_class_skill_selection
@@ -43013,6 +43239,25 @@ fn explain_cleric_level1_spell_baseline(
             .collect();
         let good_domain_chosen = domain_selections_top.contains(&GOOD_DOMAIN_SELECTION);
         let healing_domain_chosen = domain_selections_top.contains(&HEALING_DOMAIN_SELECTION);
+
+        // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE domain,
+        // inherit every one of its real corpus powers" pass, covering the
+        // other 67 real Cleric domain groups (310 real records total,
+        // `census_class_feature_pool_group_names.py`) beyond the six this
+        // file already hand-models via `DOMAIN_POWER_CATALOG` -- purely
+        // additive alongside the hand-modelled branches below.
+        push_generic_pool_group_selection_magnitude(
+            input,
+            cleric_level,
+            ability_modifiers,
+            CLERIC_DOMAIN_CHOICE_ID,
+            "Cleric",
+            "Domain",
+            "domain:",
+            "class_feature.cleric.domain.generic",
+            1,
+            explanations,
+        );
         // SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20): widened
         // from the Good-only gate above to every OTHER `domain_power::
         // DOMAIN_POWER_CATALOG` entry -- Inquisitor's own
@@ -73361,5 +73606,206 @@ mod apg_canonical_choice_path_a_tests {
             "no class-owned record may be fabricated on a Fighter: {:?}",
             receipt.computation.explanations
         );
+    }
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 5 (`decisions.md §27b`): the
+/// "select-ONE-group, inherit-every-member" pool shape
+/// (`push_generic_pool_group_selection_magnitude`), wired at Sorcerer
+/// Bloodline, Cleric Domain, Oracle Mystery, Warpriest Blessing and Shaman
+/// Spirit -- the five largest pools cycle 4's name census resolved
+/// (`t12-class-feature-pool-population_cycle-4_cycle_receipt.md` §1).
+/// Proves, per class, that a selection this codebase has NEVER
+/// hand-modelled by name now resolves at least one real corpus member
+/// through the shared resolver, and that an invented/unrecognized
+/// selection resolves nothing (the same "refuse rather than fabricate"
+/// contract every prior cycle's own wiring proves).
+#[cfg(test)]
+mod generic_pool_group_selection_wiring_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, ORACLE_CLASS_ID, ORACLE_MYSTERY_CHOICE_ID,
+        SHAMAN_CLASS_ID, SHAMAN_SPIRIT_CHOICE_ID, SORCERER_BLOODLINE_CHOICE_ID, SORCERER_CLASS_ID,
+        WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{SelectedChoice, load_character_input_fixture};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn class_input(class_id: &str, level: u8, choice_set_id: &str, selection_id: &str) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        });
+        input
+    }
+
+    fn generic_explanation_count(input: &CharacterInput, id_prefix: &str) -> usize {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.starts_with(id_prefix))
+            .count()
+    }
+
+    /// Celestial is a real Sorcerer bloodline (`data/corpus/advanced_class_guide/
+    /// class_feature/celestial_bloodline/*.json`, 53 real bloodline groups total
+    /// per the cycle-4 census) this codebase has never hand-modelled by name --
+    /// only Arcane and Draconic are. Its "Ascension" member (`Sorcerer_
+    /// CelestialAscension_ResistanceBonus|10`, verified directly against the
+    /// corpus) is a flat constant needing no external chain var, so it resolves
+    /// through the shared resolver without any hand-picked `ground_sorcerer_*`
+    /// function. (A direct corpus survey this cycle ran across all 53 real
+    /// Bloodline groups found only 15 -- Aquatic, Arcane, Boreal, Celestial,
+    /// Destined, Dreamspun, Empyreal, Infernal, Protean, Sage, Serpentine,
+    /// Shadow, Starsoul, Stormborn, Verdant -- carry a member resolvable
+    /// WITHOUT the missing per-bloodline header chain; the other 38 correctly
+    /// refuse, see this cycle's receipt.)
+    #[test]
+    fn sorcerer_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline() {
+        let input =
+            class_input(SORCERER_CLASS_ID, 5, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:celestial");
+        let count = generic_explanation_count(&input, "class_feature.sorcerer.bloodline.generic");
+        assert!(
+            count > 0,
+            "Celestial Bloodline must ground at least one real corpus member generically"
+        );
+    }
+
+    /// Plant is a real Cleric domain this codebase's `DOMAIN_POWER_CATALOG`
+    /// does NOT hand-model (only Good/War/Strength/Destruction/Glory/Healing
+    /// are), one of the 67 remaining real domain groups the cycle-4 census
+    /// names. Its "Wooden Fist" member (`WoodenFistRounds|3+WIS`) needs only
+    /// an ability modifier, resolving without the missing per-domain header
+    /// chain. (A direct corpus survey found only 5 of the 67 remaining real
+    /// Domain groups -- Heresy, Oblivion, Plant, Tactics, Wolf -- carry such a
+    /// member; the rest correctly refuse, see this cycle's receipt.)
+    #[test]
+    fn cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain() {
+        let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:plant");
+        let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
+        assert!(count > 0, "Plant Domain must ground at least one real corpus member generically");
+    }
+
+    /// Oracle Mystery is DELIBERATELY NOT wired to
+    /// `push_generic_pool_group_selection_magnitude` (see the withdrawal
+    /// comment at `ground_or_block_oracle_class_features`'s own call site):
+    /// unlike Domain/Bloodline, most Mystery members are budgeted
+    /// REVELATIONS this codebase already, correctly, gates on an explicit
+    /// `ORACLE_REVELATION_CHOICE_ID` pick -- a blanket "selecting the
+    /// mystery alone grants every member" pass is factually wrong for this
+    /// pool. Wiring it live tripped this file's own pre-existing regression
+    /// (`oracle_dispatch_widening_safety_tests::
+    /// a_mystery_pick_alone_grounds_no_tier_one_revelation`), which is
+    /// authoritative and was correctly left unweakened. This test proves
+    /// the withdrawal: no `class_feature.apg.oracle.mystery.generic`
+    /// explanation is ever emitted, on a mystery this file has never
+    /// hand-modelled by name (Ancestor) or one it has (Lore).
+    #[test]
+    fn oracle_generic_mystery_pass_is_deliberately_not_wired() {
+        for selection in ["mystery:ancestor", "mystery:lore"] {
+            let input = class_input(ORACLE_CLASS_ID, 5, ORACLE_MYSTERY_CHOICE_ID, selection);
+            let count = generic_explanation_count(&input, "class_feature.apg.oracle.mystery.generic");
+            assert_eq!(
+                count, 0,
+                "Oracle Mystery must never emit a generic group-selection explanation for \
+                 {selection} -- the mechanism is withdrawn for this pool, not merely quiet"
+            );
+        }
+    }
+
+    /// Air is a real Warpriest blessing this file's Destruction/Strength
+    /// hand-modelling does not cover, one of the 36 remaining real blessing
+    /// groups the cycle-4 census names. Unlike Bloodline/Domain/Mystery,
+    /// Blessing genuinely closes NOTHING new: a direct corpus survey across
+    /// all 38 real Blessing groups found not one single-terminal member whose
+    /// formula avoids both the missing per-blessing header chain AND a
+    /// `classlevel("Warpriest")` call this resolver deliberately refuses to
+    /// bank through (`formula_interpreter.rs`'s own documented cross-class
+    /// gap). This is the honest "cannot be wired without extending the
+    /// resolver itself" case the brief asks to name rather than force --
+    /// proven here as a safe, unweakened refusal, not silently skipped.
+    #[test]
+    fn warpriest_generic_blessing_pass_correctly_refuses_every_unmodelled_blessing() {
+        let input = class_input(WARPRIEST_CLASS_ID, 5, WARPRIEST_BLESSING_CHOICE_ID, "blessing:air");
+        let count = generic_explanation_count(&input, "class_feature.acg.warpriest.blessing.generic");
+        assert_eq!(
+            count, 0,
+            "Air Blessing is a real, recognized selection with real corpus members -- this must \
+             be a genuine, safe refusal (no resolvable single-terminal member exists yet), not a \
+             silent miss on a selection this pool fails to recognize at all"
+        );
+    }
+
+    /// Wood is a real Shaman spirit beyond this file's ten hand-picked spirits
+    /// (Life/Battle/Bones/Flame/Heavens/Lore/Nature/Stone/Waves/Wind), one of
+    /// the 4 remaining real spirit groups the cycle-4 census names (Mammoth,
+    /// Wood, and two internal `Shaman(...)Spirit` dispatcher groups). A direct
+    /// corpus survey found none of the 4 carry a member resolvable without the
+    /// missing per-spirit header chain -- same honest "cannot close without
+    /// extending the resolver" finding as Blessing, proven as a safe refusal.
+    #[test]
+    fn shaman_generic_spirit_pass_correctly_refuses_every_unmodelled_spirit() {
+        let input = class_input(SHAMAN_CLASS_ID, 5, SHAMAN_SPIRIT_CHOICE_ID, "spirit:wood");
+        let count = generic_explanation_count(&input, "class_feature.acg.shaman.spirit.generic");
+        assert_eq!(
+            count, 0,
+            "Wood Spirit is a real, recognized selection with real corpus members -- this must be \
+             a genuine, safe refusal, not a silent miss on a selection this pool fails to \
+             recognize at all"
+        );
+    }
+
+    /// Safety: an invented selection resolves to nothing, on any of the five
+    /// wired pools -- the same "refuse rather than fabricate" contract every
+    /// prior cycle's own generic resolver already proves.
+    #[test]
+    fn invented_selections_ground_nothing_on_any_wired_pool() {
+        let cases: &[(&str, u8, &str, &str, &str)] = &[
+            (
+                SORCERER_CLASS_ID,
+                5,
+                SORCERER_BLOODLINE_CHOICE_ID,
+                "bloodline:not_a_real_bloodline",
+                "class_feature.sorcerer.bloodline.generic",
+            ),
+            (
+                CLERIC_CLASS_ID,
+                5,
+                CLERIC_DOMAIN_CHOICE_ID,
+                "domain:not_a_real_domain",
+                "class_feature.cleric.domain.generic",
+            ),
+            (
+                WARPRIEST_CLASS_ID,
+                5,
+                WARPRIEST_BLESSING_CHOICE_ID,
+                "blessing:not_a_real_blessing",
+                "class_feature.acg.warpriest.blessing.generic",
+            ),
+            (
+                SHAMAN_CLASS_ID,
+                5,
+                SHAMAN_SPIRIT_CHOICE_ID,
+                "spirit:not_a_real_spirit",
+                "class_feature.acg.shaman.spirit.generic",
+            ),
+        ];
+        for (class_id, level, choice_set_id, selection_id, id_prefix) in cases {
+            let input = class_input(class_id, *level, choice_set_id, selection_id);
+            assert_eq!(
+                generic_explanation_count(&input, id_prefix),
+                0,
+                "an invented selection ({choice_set_id} -> {selection_id}) must never ground \
+                 anything"
+            );
+        }
     }
 }
