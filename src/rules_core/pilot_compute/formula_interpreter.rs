@@ -201,11 +201,15 @@
 //!   class — SD-32 T12 Epic 8 row 18 cycle 6 closed the same-class case (see the refusal list
 //!   above); a caller that tracks more than one class's level at once and could therefore bind
 //!   more than one `CLASSLEVEL::` key does not exist yet in this codebase.
-//! - `classlevel("X", "APPLIEDAS=NONEPIC")` — a real 2-argument form (confirmed present in the
-//!   corpus, e.g. Monk unarmed-damage formulas) this module has not investigated; refuses today as
-//!   a parse error (`expected RParen, got Some(Comma)`), not silently mishandled, but its oracle
-//!   semantics are unverified — found during wave 26, out of this lane's four named shapes, not
-//!   attempted.
+//! - `classlevel("X", "APPLIEDAS=NONEPIC")` — SD-32 T12 Epic 8 row 18 cycle 14: implemented.
+//!   Verified against `plugin/jepcommands/ClassLevelCommand.java`'s `run`: the qualifier caps the
+//!   class level read at the game mode's non-epic ceiling
+//!   (`cl += ";BEFORELEVEL=" + (maxNonEpicLevel+1)`), a cap that can never bind because this
+//!   engine never models epic levels and every class chassis already gates its own level at its
+//!   corpus-derived `max_level` (<= 20 for every real base class) — so the form is
+//!   observationally identical to `classlevel("X")` for every character this engine represents.
+//!   Any qualifier value other than the literal `APPLIEDAS=NONEPIC` still refuses, matching the
+//!   oracle's own `ParseException` for an unrecognised `APPLIEDAS=` value.
 //! - `skillinfo(...)`'s five other first-argument keywords (`modifier`, `rank`, `total`, `stat`,
 //!   `misc`) — verified against `SkillInfoCommand.java` (same citation as `TOTALRANK`). CORRECTION
 //!   (wave 26 integration cycle): two of the five (`rank`, `total`) ARE corpus-exercised (4 and 1
@@ -596,8 +600,50 @@ impl<'a> Parser<'a> {
                 }
                 match self.bump() {
                     Some(Tok::Str(s)) => {
-                        self.expect(&Tok::RParen)?;
-                        Ok(Expr::ClassLevel(s))
+                        // SD-32 T12 Epic 8 row 18 cycle 14: the real 2-argument form,
+                        // `classlevel("<class>","APPLIEDAS=NONEPIC")` (confirmed live corpus
+                        // shape, e.g. `core_rulebook/class_feature/monk/standard_monk.json`'s
+                        // `classlevel("Monk","APPLIEDAS=NONEPIC")` BASEAB/SAVE formulas, and
+                        // `pathfinder_unchained/class_feature/monk/unchained_monk.json`'s same
+                        // shape). Verified against the real oracle
+                        // (`plugin/jepcommands/ClassLevelCommand.java`'s `run`): a second
+                        // string argument starting `APPLIEDAS=` is parsed as a qualifier, not a
+                        // second class name; `NONEPIC` is the only qualifier value the oracle
+                        // recognises (any other value throws `ParseException("Did not
+                        // understand APPLIEDAS=" + applied)` — refused there, refused here
+                        // identically). Its real semantic effect is
+                        // `cl += ";BEFORELEVEL=" + (mode.getMaxNonEpicLevel() + 1)` — the class
+                        // level is capped at the game mode's non-epic level ceiling before
+                        // being read. This engine never models epic levels at all (every class
+                        // chassis this codebase resolves already gates its own level at that
+                        // class's own corpus-derived `max_level`, `untabled_base_class_chassis.
+                        // rs`/`generic_class_chassis.rs`, which for every real Pathfinder base
+                        // class is <= 20, the same non-epic ceiling PCGen's own default game
+                        // mode uses) — so the cap can never actually bind for any level this
+                        // engine ever resolves, and `classlevel("<class>","APPLIEDAS=NONEPIC")`
+                        // is observationally identical to `classlevel("<class>")` for every
+                        // character this engine can represent. Reusing the SAME
+                        // `Expr::ClassLevel` binding (not a new AST node) is therefore correct,
+                        // not a shortcut around the real semantics — the qualifier is checked
+                        // and REFUSED if it is anything other than the one value the oracle
+                        // itself accepts, never silently ignored.
+                        if let Some(Tok::Comma) = self.peek() {
+                            self.bump();
+                            match self.bump() {
+                                Some(Tok::Str(q)) if q.eq_ignore_ascii_case("APPLIEDAS=NONEPIC") => {
+                                    self.expect(&Tok::RParen)?;
+                                    Ok(Expr::ClassLevel(s))
+                                }
+                                other => Err(FormulaEvalError(format!(
+                                    "classlevel({s:?}, ...)'s second argument must be the \
+                                     literal qualifier \"APPLIEDAS=NONEPIC\" (the only value the \
+                                     real oracle's ClassLevelCommand.java accepts), got {other:?}"
+                                ))),
+                            }
+                        } else {
+                            self.expect(&Tok::RParen)?;
+                            Ok(Expr::ClassLevel(s))
+                        }
                     }
                     other => Err(FormulaEvalError(format!(
                         "classlevel(...) expects a string literal class name or no argument, got \
@@ -1049,6 +1095,45 @@ mod tests {
         // And a bound NAMED class must never leak into the unnamed lookup.
         let v = vars(&[("CLASSLEVEL::Summoner", 7)]);
         assert!(e.evaluate("classlevel()", &v).is_err());
+    }
+
+    #[test]
+    fn classlevel_two_argument_appliedas_nonepic_form_reads_the_same_binding() {
+        // SD-32 T12 Epic 8 row 18 cycle 14: the real 2-argument corpus shape,
+        // `classlevel("Monk","APPLIEDAS=NONEPIC")` (`core_rulebook/class_feature/monk/
+        // standard_monk.json`, `pathfinder_unchained/class_feature/monk/unchained_monk.json`
+        // BASEAB/SAVE formulas). Verified against `ClassLevelCommand.java`: the qualifier caps
+        // the level read at the non-epic ceiling, a cap this engine's own per-class `max_level`
+        // gate already makes unreachable — so it reads the SAME `CLASSLEVEL::Monk` binding as
+        // the 1-argument form.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Monk", 9)]);
+        assert_eq!(e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")", &v).unwrap(), 9);
+        assert_eq!(
+            e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")*3/4", &v).unwrap(),
+            6
+        );
+    }
+
+    #[test]
+    fn classlevel_two_argument_form_still_refuses_an_unbound_or_wrong_class() {
+        // The widening must not leak into answering for a class it has no binding for, exactly
+        // like the 1-argument form's own refusal.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Monk", 9)]);
+        assert!(e.evaluate("classlevel(\"Fighter\",\"APPLIEDAS=NONEPIC\")", &v).is_err());
+        assert!(e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")", &BTreeMap::new()).is_err());
+    }
+
+    #[test]
+    fn classlevel_two_argument_form_refuses_an_unrecognised_appliedas_qualifier() {
+        // The real oracle's `ClassLevelCommand.java` throws `ParseException("Did not understand
+        // APPLIEDAS=" + applied)` for any value other than `NONEPIC` — this module refuses
+        // identically rather than silently accepting an unverified qualifier.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Monk", 9)]);
+        assert!(e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=EPIC\")", &v).is_err());
+        assert!(e.evaluate("classlevel(\"Monk\",\"Fighter\")", &v).is_err());
     }
 
     // -- 1b. wave 26 shape closure: comparisons/`&&` as first-class numeric values, and
