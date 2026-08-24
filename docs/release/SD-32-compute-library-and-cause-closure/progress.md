@@ -8655,10 +8655,10 @@ Full `apps/desktop/src-tauri` suite re-run: `cargo test --locked --bin codex-des
 
 Own-diff (`git diff --unified=0 HEAD` over the 8 touched files): `OK_NO_BUNDLE_TAGS` (zero
 `sd[0-9]+_`/`t_[0-9a-f]{8,}` hits), `OK_NO_TOKENS` (zero `todo!`/`unimplemented!` hits). PI scrub
-(`pi_scrub.normalized_term_hits()`, imported not copied) initially found ONE hit: `Nethys` inside
-a doc comment's "Archives of Nethys" (the deity name is a blacklist term; `aonprd.com`, already
-used throughout this file since cycle 5, is not) — corrected to `aonprd.com` before pushing,
-re-scrubbed clean. No `data/corpus/` write this cycle.
+(`pi_scrub.normalized_term_hits()`, imported not copied) initially found ONE hit, on a site-name
+long form this module's own doc comment briefly used instead of the `aonprd.com` short form every
+other reference in this file already uses (the long form's own second word is a PF1 deity name, a
+blacklist term) — corrected to `aonprd.com` before pushing, re-scrubbed clean. No `data/corpus/` write this cycle.
 
 ### Territory
 

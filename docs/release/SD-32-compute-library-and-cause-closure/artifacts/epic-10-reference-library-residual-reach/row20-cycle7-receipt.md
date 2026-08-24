@@ -26,9 +26,10 @@
   function is called from all three production companion-grounding sites, and a real request
   field feeds it through the real character-creation request path.
 - **PI scrub:** `pi_scrub.normalized_term_hits()` (imported, not copied) over the own-diff — found
-  ONE hit on first pass (`Nethys`, inside a doc comment's "Archives of Nethys"; the deity name is
-  a blacklist term, `aonprd.com` is not) — corrected to `aonprd.com` (already used throughout this
-  file since cycle 5) before pushing; re-scrubbed clean, zero hits.
+  ONE hit on first pass (a site-name phrase this module's own doc comment briefly used instead of
+  the `aonprd.com` short form every other reference in this file already uses — the long form's
+  own second word is a PF1 deity name, a blacklist term) — corrected to `aonprd.com` (already used
+  throughout this file since cycle 5) before pushing; re-scrubbed clean, zero hits.
 - **Corpus SHA:** oracle bootstrapped fresh this worktree (slot was empty), pinned at
   `7f818006e371188e5717fd18d74d18a420747fc6` — the same commit prior cycles used, confirmed via
   `scripts/verify.sh --only preflight-oracle` (FAIL before bootstrap, PASS after).
@@ -247,9 +248,10 @@ source.
 - Same scope, `grep -cE 'todo!|unimplemented!|TODO stub|FIXME stub'` — zero hits
   (`OK_NO_TOKENS`).
 - `pi_scrub.normalized_term_hits()` (imported from `scripts/pi_scrub.py`, never copied) over the
-  own-diff — found ONE hit on first pass: `Nethys`, inside a doc comment's "Archives of Nethys"
-  (the deity name is a blacklist term; `aonprd.com`, already used throughout this file since
-  cycle 5, is not). Corrected to `aonprd.com` before pushing; re-scrubbed, zero hits.
+  own-diff — found ONE hit on first pass, on the site-name long form this module's own doc
+  comment briefly used instead of the `aonprd.com` short form every other reference in this file
+  already uses (the long form's own second word is a PF1 deity name, a blacklist term).
+  Corrected to `aonprd.com` before pushing; re-scrubbed, zero hits.
 - No `data/corpus/` write this cycle (both touched compute modules read-only at runtime; the
   `companion_base_stat_table.rs` entries are hand-authored Rust constants, not corpus records).
 
