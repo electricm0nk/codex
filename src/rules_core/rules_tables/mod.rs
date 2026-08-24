@@ -209,18 +209,21 @@ pub enum RuleSetId {
     /// no lane at all. This is the lane that owns them.
     Isi,
     /// Bestiary 5. SD-29 Epic 7 round 2 (companion lane, extend;
-    /// `rules_tables::bestiary_5`, 33 companion creatures + 22 companion
-    /// abilities). A "bestiary" with **zero** monsters — its pcc's `CAMPAIGN`
-    /// line says "Only Player Options Implemented" — so this rule set exists
-    /// for its companion rows and no other family.
+    /// `rules_tables::bestiary_5`, 35 companion creatures + 22 companion
+    /// abilities — all 57 of the book's `companion` units). A "bestiary" with
+    /// **zero** monsters — its pcc's `CAMPAIGN` line says "Only Player
+    /// Options Implemented" — so this rule set exists for its companion rows
+    /// and no other family.
     ///
-    /// **Two of the book's 57 `companion` units are out of this rule set's
-    /// scope by construction.** `_bestiary_5.pcc:69` loads
-    /// `support/b5_races_companion_oa.lst` under
-    /// `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested, so
-    /// `Familiar (Brain Mole)` and `Familiar (Chuspiki)` are not ingested — the
-    /// same ruling `RuleSetId::Ha` records for the same gate on `race_trait`
-    /// (`decisions.md §47.2`).
+    /// Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): through
+    /// 2026-08-23, `_bestiary_5.pcc:69`'s `support/b5_races_companion_oa.lst`
+    /// load under `PRECAMPAIGN:1,Occult Adventures` excluded `Familiar (Brain
+    /// Mole)` and `Familiar (Chuspiki)` on the premise that Occult Adventures
+    /// was an uningested book (the same ruling `RuleSetId::Ha` records for
+    /// the same gate on `race_trait`, `decisions.md §47.2`). That premise is
+    /// now false — Occult Adventures is ingested (`RuleSetId::Oa`) — and
+    /// `decisions.md §27b` separately overturned this exact exclusion shape,
+    /// so both rows are now transcribed.
     B5,
     /// Bestiary 6. SD-29 Epic 7 round 2 (companion lane, extend;
     /// `rules_tables::bestiary_6`, 14 companion creatures + 12 companion

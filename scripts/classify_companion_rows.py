@@ -244,7 +244,22 @@ def resolve_source_file(directory: str, source_file: str) -> str:
 # What is out of scope is a gate naming a campaign this repo has not ingested.
 # `decisions.md §47.2` already ruled exactly this for Horror Adventures'
 # `ha_abilities_race_oa.lst`, and `RuleSetId::Ha`'s doc comment records it.
-UNINGESTED_CAMPAIGN_GATES = ("Occult Adventures",)
+#
+# Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): Occult Adventures
+# left this tuple 2026-08-24 -- it IS an ingested book now
+# (`reach_gate.rs::CORPUS_BOOK_IDS` carries `("occult_adventures",
+# "occult_adventures")`, landed by an SD-31 wave-4 lane; `RuleSetId::Oa`
+# drives real `feats`/`spells`/`class_feature` reach claims). Its own
+# module doc comments (e.g. `bestiary_5/companion_data.rs`) that cited "not
+# ingested" as the reason for a PRECAMPAIGN exclusion were stale the moment
+# that landed; `decisions.md §27b` ("EVERYTHING", 2026-08-23) separately
+# overturned "not applicable to the modelled campaign set" as an INGEST
+# disposition for this exact shape (occult_adventures-gated monster_ability
+# units) -- the same reasoning applies here. Leave this tuple EMPTY, not
+# repopulated with a different name, unless a future book is genuinely
+# unmodelled by this repo's ingest roster; check `CORPUS_BOOK_IDS` before
+# adding one back.
+UNINGESTED_CAMPAIGN_GATES: tuple[str, ...] = ()
 
 _PCC_LOAD = re.compile(r"^[A-Z]+:(?P<path>[^|\t]+\.lst)\|(?P<rest>.*)$")
 

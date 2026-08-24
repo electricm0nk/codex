@@ -645,7 +645,16 @@ mod tests {
         // the chain) -- the resolver's cross-book dedup (SD-31 wave-24,
         // first-chained wins) keeps only UW's copy, so only 70 of HA's 72
         // reach the SERVED catalog. 2113 -> 2183.
-        assert_eq!(response.entries.len(), 2183);
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): the T12
+        // census/class-feature lanes' corpus growth landed +14 more spells
+        // corpus-wide with no regen of this pin (`decisions.md §17a`
+        // re-derivation, not a loosening -- every book's own count is
+        // re-checked below, not just the total). Re-derived via a one-shot
+        // debug print of `book_entries(..).len()` for all 15 books,
+        // confirmed to sum to the new total: ISG +4 (92 -> 96), AG +4
+        // (45 -> 49), ISF +1 (2 -> 3), ISM +5 (34 -> 39); the other eleven
+        // books are unchanged. 2183 -> 2197.
+        assert_eq!(response.entries.len(), 2197);
         assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -654,11 +663,11 @@ mod tests {
         assert_eq!(book_entries(BOOK_UM).len(), 269);
         assert_eq!(book_entries(BOOK_OA).len(), 144);
         assert_eq!(book_entries(BOOK_UC).len(), 146);
-        assert_eq!(book_entries(BOOK_ISG).len(), 92);
+        assert_eq!(book_entries(BOOK_ISG).len(), 96);
         assert_eq!(book_entries(BOOK_UW).len(), 61);
-        assert_eq!(book_entries(BOOK_AG).len(), 45);
-        assert_eq!(book_entries(BOOK_ISF).len(), 2);
-        assert_eq!(book_entries(BOOK_ISM).len(), 34);
+        assert_eq!(book_entries(BOOK_AG).len(), 49);
+        assert_eq!(book_entries(BOOK_ISF).len(), 3);
+        assert_eq!(book_entries(BOOK_ISM).len(), 39);
         assert_eq!(book_entries(BOOK_ISTEM).len(), 21);
         // 70, not 72: "Green Caress"/"Verminous Transformation" serve under
         // BOOK_UW (earlier in the chain), not BOOK_HA -- see the comment

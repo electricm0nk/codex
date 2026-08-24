@@ -16,20 +16,29 @@
 //!     GATED  Familiar (Chuspiki) — b5_races_companion_oa.lst loaded under PRECAMPAIGN:1,Occult Adventures
 //! ```
 //!
-//! # Two of the book's 57 companion units are deliberately not here
+//! # All 57 of the book's companion units are here (row-19 update, 2026-08-24)
 //!
 //! `docs/work-inventory.json` counts 57 `companion` units for this book. Two of
 //! them — `Familiar (Brain Mole)` and `Familiar (Chuspiki)` — live in
 //! `support/b5_races_companion_oa.lst`, which `_bestiary_5.pcc:69` loads as
 //! `RACE:support/b5_races_companion_oa.lst|PRECAMPAIGN:1,Occult Adventures`.
-//! Occult Adventures is not an ingested book, so those two rows are out of this
-//! rule set's scope **by construction, not by omission** — the ruling
-//! `decisions.md §47.2` made for Horror Adventures' Occult-Adventures-gated
-//! race-trait file, applied to the same gate on a different kind.
+//! They were excluded through 2026-08-23 on the premise that Occult
+//! Adventures was not an ingested book (`decisions.md §47.2`, applied here
+//! the same way it was to Horror Adventures' Occult-Adventures-gated
+//! race-trait file). **That premise is now false**: `reach_gate.rs::
+//! CORPUS_BOOK_IDS` carries `("occult_adventures", "occult_adventures")`
+//! (an SD-31 wave-4 lane), and `decisions.md §27b` ("EVERYTHING",
+//! 2026-08-23) separately overturned "not applicable to the modelled
+//! campaign set" as an exclusion reason for this exact shape. Both rows
+//! were re-transcribed into `companion_data.rs` (`scripts/
+//! transcribe_companion_tables.py bestiary_5`,
+//! `classify_companion_rows.UNINGESTED_CAMPAIGN_GATES` now empty) and all
+//! 57 units ship.
 //!
-//! The exclusion is derived, never hardcoded: `classify_companion_rows`'s
-//! `precampaign_gates` reads the pcc load line, because the gate is on the pcc
-//! line and a `grep PRECAMPAIGN` over the `.lst` itself returns nothing.
+//! The gate that used to exclude them is derived, never hardcoded:
+//! `classify_companion_rows`'s `precampaign_gates` reads the pcc load line,
+//! because the gate is on the pcc line and a `grep PRECAMPAIGN` over the
+//! `.lst` itself returns nothing.
 
 mod companion_data;
 mod monster_data;
@@ -87,25 +96,34 @@ pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
 mod tests {
     use super::*;
 
-    /// From `docs/work-inventory.json`'s own units for this book, minus the two
-    /// the pcc gates on Occult Adventures: 57 units, 55 in this rule set's
-    /// scope, 33 creature rows and 22 ability rows.
+    /// From `docs/work-inventory.json`'s own units for this book: all 57
+    /// units, 35 creature rows and 22 ability rows. Row-19 desktop
+    /// reach/catalog reds (SD-32, 2026-08-24): 33 -> 35 -- see `mod.rs`'s
+    /// own module doc comment for why the two Occult-Adventures-gated
+    /// familiars are no longer excluded.
     #[test]
-    fn the_book_defines_thirty_three_companions_and_twenty_two_abilities() {
-        assert_eq!(companions().len(), 33);
+    fn the_book_defines_thirty_five_companions_and_twenty_two_abilities() {
+        assert_eq!(companions().len(), 35);
         assert_eq!(companion_abilities().len(), 22);
     }
 
-    /// The Occult-Adventures-gated rows are absent BY NAME, not by a count that
-    /// any two missing records would satisfy. A future transcriber change that
-    /// started following `support/` unconditionally fails here.
+    /// The formerly-Occult-Adventures-gated rows are now present BY NAME,
+    /// not by a count that any two other records would satisfy. Row-19
+    /// desktop reach/catalog reds (SD-32, 2026-08-24): this test used to
+    /// assert their ABSENCE (`decisions.md §47.2`); that premise is now
+    /// false (`reach_gate.rs::CORPUS_BOOK_IDS` carries `occult_adventures`,
+    /// and `decisions.md §27b` separately overturned this exact exclusion
+    /// shape) so the assertion inverts rather than being deleted -- a
+    /// future transcriber change that dropped `support/` rows again fails
+    /// here, by name, same as before.
     #[test]
-    fn the_occult_adventures_gated_familiars_are_not_in_this_rule_set() {
+    fn the_formerly_occult_adventures_gated_familiars_are_in_this_rule_set() {
         for key in ["Familiar (Brain Mole)", "Familiar (Chuspiki)"] {
             assert!(
-                companions().iter().all(|c| c.key != key),
-                "{key} is loaded only under PRECAMPAIGN:1,Occult Adventures and is out of \
-                 this rule set's scope (decisions.md §47.2)"
+                companions().iter().any(|c| c.key == key),
+                "{key} was loaded only under PRECAMPAIGN:1,Occult Adventures, but Occult \
+                 Adventures is now an ingested book (`decisions.md §27b`) and this row \
+                 should be transcribed"
             );
         }
     }

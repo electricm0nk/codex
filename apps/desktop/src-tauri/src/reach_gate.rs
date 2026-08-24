@@ -690,6 +690,18 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // same-name pairing, matching every other book above with no
     // diagnostic entry.
     ("mythic_adventures", "mythic_adventures"),
+    // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): four books the
+    // T12 census/class-feature lanes wrote `data/corpus/` directories for
+    // without ever registering here. Same-name pairing, matching every
+    // other book above; `corpus_ingest_diagnostic.rs` already spells all
+    // four this way (`ultimate_campaign`/`inner_sea_faiths`/
+    // `inner_sea_temples` each appear as literal book ids there;
+    // `core_essentials` has no diagnostic entry, so it gets the no-entry
+    // same-name pairing the comments above use for that case).
+    ("ultimate_campaign", "ultimate_campaign"),
+    ("inner_sea_faiths", "inner_sea_faiths"),
+    ("inner_sea_temples", "inner_sea_temples"),
+    ("core_essentials", "core_essentials"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -712,17 +724,69 @@ const CORPUS_KIND_NAMES: &[(&str, &str)] = &[
     // `RECORD_TYPE_FAMILIES` for why.
     ("companion", "companions"),
     ("spell", "spells"),
+    // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24). Twelve more
+    // content-kind directories the census/class-feature lanes populated
+    // with no classifier entry at all -- `corpus_inventory` panicked
+    // before any reach test could even collect its family list.
+    // Verified by direct inspection (not assumed): each holds real,
+    // named, described records distinct from the primary kind sharing
+    // its book (e.g. `beastiary/race_generic/hydra_pyrohydra.json` is a
+    // genuine Pyrohydra variant, not a duplicate of `beastiary/race/`'s
+    // rows; `ultimate_psionics/ability/deafening_static.json` carries the
+    // real key `Dissonance ~ Deafening Static` with its own mechanical
+    // description, not an internal grant). None of the twelve has a
+    // `reach_of` arm yet -- each surfaces in
+    // `every_ingested_family_is_accounted_for` per book below, which is
+    // this bundle's forward-scope register entry for the new-catalog
+    // work each one needs (`decisions.md §16`: naming a kind is not the
+    // same disposition as closing its reach).
+    ("ability", "abilities"),
+    ("class_generic", "class_variants"),
+    ("deity", "deities"),
+    ("domain", "domains"),
+    ("feat_generic", "generic_feats"),
+    ("language", "languages"),
+    ("monster_generic", "monster_variants"),
+    ("power", "powers"),
+    ("race_generic", "race_variants"),
+    ("skill", "skills"),
+    ("template", "templates"),
+    ("trait_generic", "named_traits"),
 ];
 
 /// Directories under a corpus book that hold no player-facing records. Listed
 /// with the reason, for the same reason [`SUPPORTING_RECORD_TYPES`] is: an
 /// unexplained exclusion is how a gate quietly stops covering something.
-const NON_CONTENT_CORPUS_DIRS: &[(&str, &str)] = &[(
-    "_parity",
-    "an ingest-verification artifact (a book's parity report against its \
-     upstream LST), not game content: nothing in it describes a rule, and a \
-     player is not meant to read it",
-)];
+const NON_CONTENT_CORPUS_DIRS: &[(&str, &str)] = &[
+    (
+        "_parity",
+        "an ingest-verification artifact (a book's parity report against its \
+         upstream LST), not game content: nothing in it describes a rule, and a \
+         player is not meant to read it",
+    ),
+    (
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24). Verified
+        // across every book that writes this directory (core_rulebook,
+        // beastiary, bestiary_2/3/4/5/6, and every other monster-bearing
+        // book): every sampled record carries `VISIBLE:NO` and a
+        // `CATEGORY:Special Ability` grant whose sole job is composing a
+        // creature TYPE's universal traits (`Chaotic Traits`, `Fire
+        // Traits`, `Aquatic Traits`) into the monster chassis compute --
+        // e.g. `core_rulebook/race_trait_generic/chaotic_traits.json`
+        // grants `Aligned (Chaotic)` with `VISIBLE:NO`, the PCGen idiom
+        // for "never render this row directly." A player never picks or
+        // reads one of these; they reach the sheet already folded into
+        // the monster's stat block by the chassis compute this record
+        // feeds. Distinct from `ability`/`trait_generic` above, both of
+        // which carry real named, player-legible records under the same
+        // `_generic` naming convention -- this directory's contents were
+        // checked and are not.
+        "race_trait_generic",
+        "hidden (VISIBLE:NO) universal-monster-type trait grants that feed \
+         the monster chassis compute directly; not a player-legible record \
+         and never rendered on its own",
+    ),
+];
 
 /// Every `(book, kind)` with at least one Shape B v1 record on disk, plus any
 /// directory this module cannot name.
@@ -6018,14 +6082,18 @@ mod tests {
     /// `for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures
     /// bestiary_5 bestiary_6 bestiary_2; do echo -n "$b ";
     /// ls data/corpus/$b/companion/*.json | wc -l; done`
-    /// -> 10, 15, 11, 2, 55, 26, 16 — which reproduce `docs/work-inventory.json`'s
-    /// own companion-unit counts for the same books exactly, with ONE stated
-    /// exception: Bestiary 5's inventory count is 57, and the two extra units
-    /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) live in
-    /// `support/b5_races_companion_oa.lst`, which the book's pcc loads only
-    /// under `PRECAMPAIGN:1,Occult Adventures`. Out of this rule set's scope by
-    /// construction, not by omission — `decisions.md §47.2`, and
-    /// `rules_tables::bestiary_5` pins their absence by name.
+    /// -> 10, 15, 11, 2, 57, 26, 16 — which reproduce `docs/work-inventory.json`'s
+    /// own companion-unit counts for the same books exactly.
+    ///
+    /// Bestiary 5's two `support/b5_races_companion_oa.lst` units
+    /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) were excluded
+    /// through 2026-08-23 on the premise that their `PRECAMPAIGN:1,Occult
+    /// Adventures` gate named an uningested book (`decisions.md §47.2`).
+    /// Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): that premise
+    /// is now false (`CORPUS_BOOK_IDS` carries `occult_adventures`) and
+    /// `decisions.md §27b` separately overturned this exact exclusion
+    /// shape; both rows are now transcribed
+    /// (`rules_tables::bestiary_5::companion_data`) and reach the wire.
     #[test]
     fn every_ingested_companion_book_reaches_the_catalog_record_by_record() {
         let expected: &[(&str, &str, usize)] = &[
@@ -6033,7 +6101,7 @@ mod tests {
             ("monster_codex", "MC", 15),
             ("inner_sea_intrigue", "ISI", 11),
             ("horror_adventures", "HA", 2),
-            ("bestiary_5", "B5", 55),
+            ("bestiary_5", "B5", 57),
             ("bestiary_6", "B6", 26),
             ("bestiary_2", "B2", 16),
         ];

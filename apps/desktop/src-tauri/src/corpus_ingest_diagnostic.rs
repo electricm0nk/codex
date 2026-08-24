@@ -1459,7 +1459,13 @@ mod tests {
             // having drifted uncorrected across however many prior sibling-lane commits
             // landed corpus-only content for this book without anyone re-deriving this
             // literal against a live count in the meantime -- `decisions.md §17a`.
-            ("advanced_race_guide", "advanced_race_guide", 1699u32),
+            // 1699 -> 1701 by the row-19 desktop reach/catalog reds cycle (SD-32,
+            // 2026-08-24): re-derived fresh again against `live_on_disk_record_count`
+            // (`2207`) with `reported` unchanged (`506` -- this cycle's diff touches no
+            // compiled `rules_tables` module for ARG), `2207 - 506 = 1701`. The +2 is
+            // more T12 census/class-feature-lane corpus growth landing between the two
+            // re-derivations, not a new defect.
+            ("advanced_race_guide", "advanced_race_guide", 1701u32),
             // 0 -> 69 by `decisions.md §20` no_record-to-zero round 4 (2026-08-23):
             // `gen_pathfinder_unchained()` extended to also call `gen_monster_book`, adding
             // this book's 69 owner-less `monster_ability` records (72 orphan candidates, 3
@@ -1481,7 +1487,13 @@ mod tests {
             // engine does not model) plus subsequent `§20` no_record closure landed the
             // rest corpus-only, same shape as `ability`/`skill`/`race_trait_generic`/
             // `template`, none of which this diagnostic's `rules_tables` half compiles.
-            ("pathfinder_unchained", "pathfinder_unchained", 1137u32),
+            // 1137 -> 1144 by the row-19 desktop reach/catalog reds cycle (SD-32,
+            // 2026-08-24): re-derived fresh again (this loop only ever reaches this
+            // branch once the ARG branch above it stops panicking first -- same shape
+            // as the RED-branch note above) against `live_on_disk_record_count`
+            // (`1271`) with `reported` unchanged (`127`), `1271 - 127 = 1144`. +7 more
+            // T12 census/class-feature-lane corpus growth, not a new defect.
+            ("pathfinder_unchained", "pathfinder_unchained", 1144u32),
         ] {
             let response = build_corpus_ingest_diagnostic();
             let book = response

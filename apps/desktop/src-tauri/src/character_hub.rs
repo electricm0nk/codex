@@ -6292,7 +6292,14 @@ mod tests {
         // `SD31-E6-F10-004`: +148 further corpus gap-lane Equipmods rows,
         // across 5 further already-compiled books (1683 -> 1831),
         // re-derived fresh from the built picker, not adjusted by delta.
-        assert_eq!(offered.len(), 1831, "the picker's real offered-row count");
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): +63 more,
+        // re-derived fresh from the built picker again (not adjusted by
+        // delta, same discipline as the prior re-derivation) after the T12
+        // census/class-feature lanes' corpus growth (1831 -> 1894). The
+        // assertion this test exists for is the `refused` check below, not
+        // this count -- it still runs against the fresh 1894 and still
+        // passes empty.
+        assert_eq!(offered.len(), 1894, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()

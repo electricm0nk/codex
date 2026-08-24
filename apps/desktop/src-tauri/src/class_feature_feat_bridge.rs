@@ -458,17 +458,19 @@ mod tests {
     }
 
     /// T4-L9 (`decisions.md §13`) -- closed by class, not by instance: every
-    /// one of the 471 records this module serves must carry `granted_feat`,
+    /// one of the 613 records this module serves must carry `granted_feat`,
     /// not merely the sampled `Golden Legionnaire ~ Swift Aid` case above.
     /// A record reaching this DTO with `granted_feat: None` would be
     /// invisible to the feat-held reachability gate
     /// (`unmatchedClassFeatureDescriptions` in `classFeaturesModel.ts`) the
     /// same way the class-held gate already misses it -- this proves the
-    /// fix covers the whole population, corpus-wide.
+    /// fix covers the whole population, corpus-wide. 471 -> 613: see
+    /// `class_feature_feat_bridge_serves_the_full_corpus_wide_population`'s
+    /// own comment for the re-derivation.
     #[test]
     fn every_bridged_record_corpus_wide_carries_its_granted_feat() {
         let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
-        assert_eq!(descriptions.len(), 471);
+        assert_eq!(descriptions.len(), 613);
         let missing: Vec<&str> = descriptions
             .iter()
             .filter(|d| d.granted_feat.is_none())
@@ -552,9 +554,23 @@ mod tests {
     #[test]
     fn class_feature_feat_bridge_serves_the_full_corpus_wide_population() {
         let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): 471 -> 613.
+        // The T12 census/class-feature lanes' corpus growth (most sharply
+        // Pathfinder Unchained's `class_feature` population, 64 -> 604 on
+        // disk -- see `pathfinder_unchaineds_class_features_are_claimed_
+        // per_corpus_record`) added 142 more records matching this
+        // module's exact filter shape (a lone `ABILITY:FEAT|...` grant with
+        // no other engine-effect token). `granted_feat` is `Some(..)` by
+        // construction for every record this loader returns
+        // (`load_class_feature_feat_bridge_descriptions`'s last push
+        // literally sets it from the same `feat_target` the filter already
+        // matched), so this re-derivation and
+        // `every_bridged_record_corpus_wide_carries_its_granted_feat`
+        // below are the same structural guarantee, not two independent
+        // pins that could drift apart.
         assert_eq!(
             descriptions.len(),
-            471,
+            613,
             "the full corpus-wide bridge population -- exceeds the wave-28 census's own \
              type_facet-scoped 406 because that census's substring filter undercounts; see this \
              module's own doc comment"
