@@ -8251,3 +8251,71 @@ arm, each disabled, confirmed RED for the intended reason, then reverted).
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle1-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row20-cycle2 (2026-08-24) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+**Both bundle-wide unowned reds fixed with evidence, mutation-proved.** Named by at least three
+prior cycles as pre-existing and unrelated to their own diffs — `decisions.md §27b` does not accept
+"pre-existing" as a disposition, so this cycle reproduced both, investigated each to a decision, and
+fixed both. Worktree started on a stale lineage (`1bb523773d`, the PR #374 merge) far behind `$PIN`;
+recovered via `git reset --hard $PIN` (origin/tranche/12's own tip equals `$PIN`, cycle 1's commit).
+Oracle slot empty on this fresh worktree; a first `verify.sh --only preflight-oracle` call silently
+passed against `$HOME/workspace/repos/pcgen` (the script's undocumented fallback) before
+`PCGEN_REPO_DIR` was exported — caught before trusting any figure, re-bootstrapped explicitly with
+`--dest`.
+
+**Red 1** (`e14_harness_tests::a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read`):
+re-derived against the pinned oracle rather than trusting the standing doc comment's "65 colliding
+keys, spot-checked Dogslicer" claim. `ue_equip_arms_armor.lst:126` (`SOURCEPAGE:p.131`) proves UE's
+own "Celestial Shield" is a real, different light shield (`COST:4020`, `BONUS:COMBAT|AC|1`) from
+ARG's heavy-shield reprint (`COST:13170`, feather-fall) — the hand table's blanket 65-key exclusion
+was itself the defect, and `gen_equipment_gap_tables.rs`'s complement pass correctly re-surfaces it
+book-scoped to UE (the MORE correct behavior under `decisions.md §27b`). Retargeted the stale
+negative assertion to a genuinely-absent book (`inner_sea_taverns`, confirmed via `comm -23` over
+every `data/corpus/*/equipment` dir) and added the now-proven positive UE assertion.
+
+**Red 2** (`race_trait_grounding_tests::the_t2b_residual_population_is_never_ingested_not_a_matcher_miss`):
+the test's own failure message named the cause — `fetchling_abilities_race.lst:32` really was
+ingested by a prior generic-ingest cycle (`completeness: "full"`, real `raw_tokens`, not a stub).
+Corpus-wide re-scan of all 51 `KEY:Adopted Race ~` rows across `core_essentials/races/**` found 14 of
+51 now closed, 37 still not; retargeted the sample to `tiefling_abilities_race.lst:37` (confirmed
+still absent), other two samples re-verified unchanged.
+
+Both mutation-proved (assertion/coordinate swapped to a known-true-opposite → failed for the
+intended reason → reverted → green); neither loosens a bar, both retarget to a proven-live fact
+(`decisions.md §1a`/`§16`). `v06_work_inventory` binary: **359 passed, 0 failed** (full binary, both
+reds closed, nothing else moved). `apps/desktop/src-tauri` re-confirmed: **538 passed, 0 failed**
+(unchanged — this cycle's diff never touches `apps/desktop`).
+
+**Item (a) re-derived (`§17a`):** fresh scan of `reach_gate.rs`'s `UNREACHED_RECORD_FINDINGS`
+confirms exactly 17 `classes` families (107 records) and `ultimate_psionics`'s `class_features`
+exactly 1,573 — matches cycle 1 and the brief precisely. Sampled the smallest single-record book
+(`horror_adventures`, "Undead Phantom") — its corpus record carries only `MAXLEVEL: 20`, no BAB/
+saves/skills, suggesting some of the 17 may not be conventional player-facing base classes at all.
+Needs a per-family read before any chassis build, not a uniform estimate. Not built.
+
+**Item (b) advanced (not built):** read `pilot_compute`'s `CharacterInput`/`choice_selection` seam
+and `class_feature_grant_consumer.rs` (1,901 lines) per the brief. Confirmed it IS a real, proven,
+reusable character-scoped consumer pattern (`PcgenFormulaEvaluator` + `resolve_pcgen_var_chain` +
+`ability_modifier_seed_vars`, already wired into `pilot_compute`'s main entry points) — not
+something to duplicate. But `companion_catalog.rs::list_companion_catalog()` takes **zero
+parameters** — no `CharacterInput` reaches companions anywhere. The seam exists; wiring it to
+companions is real, scoped, un-started work with a concrete remedy path now named (mirror
+`class_feature_grant_consumer.rs`'s pattern into a companion-ability grant consumer). Read-only in
+row 18's territory this cycle (no sibling activity on these files since `$PIN`, confirmed at start).
+
+**Item (c) coordinated against row 21, re-sized:** confirmed the 4 remaining `beastiary1` `origin:
+mod_only` fragments are NOT row 21's token-collision defect (row 21: appended `BONUS:VAR` vanishes,
+1-2 raw tokens left; these 4 each carry a real, intact `ASPECT` token). Read the oracle source
+directly: "Universal Monster Rule ~ Poison/Disease/Change Shape" base declarations are modified by
+MANY different creatures' own `.MOD` rows, each with its own creature-specific description (Viper's
+poison text differs entirely from the Imp's) — no single canonical description exists to delta-merge
+onto a context-free catalog browse view. **Corrected disposition: this is the SAME shape as item
+(b)**, not a delta-merge mechanism — both need a real creature/character context. Cycle 1's "needs a
+base-record delta-merge mechanism" sizing is superseded by this finding.
+
+**Row 20 stays `in-progress`** (`decisions.md §10`) — all three cycle-1 residuals remain real,
+sized, unbuilt; items (b) and (c) are now known to be the SAME residual, one surface to build.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle2-receipt.md`.
+Commit: (this cycle's commit -- see push output).

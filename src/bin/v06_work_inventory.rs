@@ -12473,20 +12473,33 @@ mod e14_harness_tests {
     /// the name-coincidence defect `modelled_race_of_race_trait` already
     /// records for `race_trait`.
     ///
-    /// **UE now has a real `data/corpus/ultimate_equipment/equipment/`
-    /// directory** (`cache_gen::ultimate_equipment`, dumping
-    /// `rules_tables::ultimate_equipment::equipment_tables`), but that
-    /// table's own doc comment documents 65 keys (55 equipment + 10
-    /// equipmods) deliberately EXCLUDED as cross-book republished items --
-    /// `Celestial Shield` is one of them (`Dogslicer` is the module's own
-    /// spot-checked example of the same exclusion). So the assertion below
-    /// still holds, now for the *correct*, book-scoped reason (UE's real
-    /// corpus was read and genuinely does not carry this key) rather than
-    /// the earlier, weaker reason (UE had no corpus to read at all).
+    /// **Correction (SD-32 T12 row20 cycle2, re-derived against the pinned
+    /// PCGen oracle, not assumed).** `ue::equipment_tables()`'s own doc
+    /// comment blanket-labels 65 keys "cross-book republished items,
+    /// deliberately excluded", spot-checking only `Dogslicer` as proof of a
+    /// byte-identical reprint. That spot-check does not generalise to
+    /// `Celestial Shield`: the oracle line UE's own corpus record transcribes
+    /// (`ue_equip_arms_armor.lst:126`, `SOURCEPAGE:p.131`) carries
+    /// `PROFICIENCY:SHIELD|Shield (Light)`, `COST:4020`, `ACCHECK:-1`,
+    /// `SPELLFAILURE:5`, `BONUS:COMBAT|AC|1` -- a real, distinct, cited magic
+    /// item that only *shares a display name* with ARG's heavy shield
+    /// (`COST:13170`, feather-fall/overland-flight ability, no `BONUS:COMBAT`
+    /// token at all). This is exactly the "shared name is not a shared
+    /// thing" shape `modelled_race_of_race_trait` already records for
+    /// `race_trait` -- the doc comment two paragraphs up already knew the two
+    /// rows differ mechanically and drew the wrong conclusion from it.
     ///
-    /// This pins the *attribution*, and it is a strictly HIGHER bar than the
-    /// bare-key form it replaced: it can only ever withhold a grounding, never
-    /// grant one.
+    /// The hand table's exclusion of this key was itself the defect: it
+    /// dropped a real, oracle-confirmed UE item rather than shipping it
+    /// under UE's own book scope. `gen_equipment_gap_tables.rs`'s complement
+    /// pass (`held` = `hand_authored_equipment_rows()`'s own per-book key
+    /// set) does not know about that hand-curated exclusion and correctly
+    /// re-surfaces the record as `equipment_gap_tables::ULTIMATE_EQUIPMENT_
+    /// GAP_ROWS`'s own `"Celestial Shield"` row, book-scoped to `"UE"` --
+    /// which is the *more* correct behaviour under `decisions.md §27b`
+    /// ("EVERYTHING" -- no unit is dropped because it is inconvenient), not
+    /// a bug. The assertion below is retargeted to the now-proven truth
+    /// instead of the stale exclusion.
     #[test]
     fn a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read() {
         let wired = probe_equipment_effect_wiring(&repo_root());
@@ -12498,12 +12511,22 @@ mod e14_harness_tests {
             "ARG owns a real corpus record for this key and must still ground"
         );
         assert!(
-            !wired.contains(&(
+            wired.contains(&(
                 "ultimate_equipment".to_string(),
                 "Celestial Shield".to_string()
             )),
-            "Ultimate Equipment has no corpus directory at all -- nothing observed \
-             ITS record, so nothing may claim it"
+            "UE owns its OWN real, oracle-confirmed corpus record for this key \
+             (ue_equip_arms_armor.lst:126, SOURCEPAGE:p.131) -- a genuinely \
+             different light shield, not ARG's heavy shield, and must ground \
+             under its own book scope"
+        );
+        assert!(
+            !wired.contains(&(
+                "inner_sea_taverns".to_string(),
+                "Celestial Shield".to_string()
+            )),
+            "Inner Sea Taverns has no equipment corpus directory at all -- \
+             nothing observed ANY record for it, so nothing may claim this key"
         );
         // Structural, not just this one pair: no book without a
         // `data/corpus/<book>/equipment` directory may appear at all.
@@ -13129,13 +13152,33 @@ mod race_trait_grounding_tests {
     /// selector row) as a standing regression: if any of them is EVER
     /// ingested, this test starts asserting against the wrong population and
     /// must be re-derived, not silently patched around.
+    ///
+    /// **Correction (SD-32 T12 row20 cycle2), re-derived, not assumed.** The
+    /// prior "Adopted Race ~" sample, `fetchling_abilities_race.lst:32`, DID
+    /// get genuinely ingested by a real generic-ingest cycle (`data/corpus/
+    /// bestiary_2/race_trait/fetchling/adopted_race_fetchling.json`,
+    /// `completeness: "full"`, real transcribed `raw_tokens`, not a stub) --
+    /// exactly the scenario this test's own failure message predicted. A
+    /// corpus-wide scan (51 `KEY:Adopted Race ~` rows across `core_essentials/
+    /// races/**/*_abilities_race.lst`) found 14 of 51 now genuinely ingested
+    /// by that same cycle, 37 still not. Retargeted to
+    /// `tiefling_abilities_race.lst:37` ("Adopted Race ~ Tiefling"),
+    /// confirmed still absent from `data/corpus/*/race_trait` by the same
+    /// scan -- the "Adopted Race ~" ingestion-gap CAUSE this test pins is
+    /// still real and still un-ingested for the great majority of its
+    /// population; only this one specific coordinate needed to move. Not a
+    /// loosening: this raises no bar and drops no coverage, it moves one
+    /// pinned coordinate off a cause that partially closed onto one that has
+    /// not (`decisions.md §1a`/`§16`: a unit that really moved out of a
+    /// shape is not a unit closed, but the test asserting against it must
+    /// track the truth, not the stale coordinate).
     #[test]
     fn the_t2b_residual_population_is_never_ingested_not_a_matcher_miss() {
         let ingested = ingested_race_trait_source_coordinates(&probe_root());
         for (file, line) in [
-            ("acg_abilities_race.lst", 9),        // "Arcanist Exploit ~ Arcane Barrier"
-            ("arg_abilities_race.lst", 2204),     // "Fins to Feet"
-            ("fetchling_abilities_race.lst", 32), // "Adopted Race ~ Fetchling"
+            ("acg_abilities_race.lst", 9),      // "Arcanist Exploit ~ Arcane Barrier"
+            ("arg_abilities_race.lst", 2204),   // "Fins to Feet"
+            ("tiefling_abilities_race.lst", 37), // "Adopted Race ~ Tiefling"
         ] {
             assert!(
                 !ingested.contains(&(file.to_string(), line)),
