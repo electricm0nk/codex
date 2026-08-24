@@ -38923,6 +38923,41 @@ fn resolve_class_feature_bonus_var(
 /// header var never overrides a member's own same-named var (`or_insert`
 /// only fills gaps), and a pool with no such header record simply merges
 /// nothing, unchanged from before this widening.
+/// Finds a pool's own HEADER record (`"<class> ~ <PoolHeaderName>"`) by a
+/// singular/plural-normalized suffix match against `pool_group`, rather than
+/// requiring the header's real corpus name to be byte-identical to the
+/// `pool_group` string a call site passes -- `decisions.md §17a` (T12 cycle
+/// 3): the real corpus HEADER for Slayer Talent is `"Slayer ~ Slayer
+/// Talents"` (plural), while `"Slayer Talent"` (singular) is simultaneously
+/// the CORRECT member-key prefix (`"Slayer Talent ~ <name>"` is the real
+/// member shape) -- so the two names cannot be unified by changing the call
+/// site's single string, and a hardcoded per-pool alias table is exactly the
+/// "relabelled shape" anti-pattern `decisions.md §1a`/`§17` forbid. One
+/// generic normalization instead: strip a single trailing `s` from both the
+/// requested `pool_group` and each candidate header's own suffix (after its
+/// `"<class> ~ "` prefix) before comparing, so `"Slayer Talent"` matches
+/// `"Slayer Talents"` and an already-exact match (the common case --
+/// `"Alchemist ~ Discovery"`, `"Witch ~ Hex"`) is unaffected either way.
+/// `None` when no header record exists at all -- callers already treat that
+/// as "this pool has no header chain to merge", unchanged from before this
+/// widening.
+fn pool_header_record_by_normalized_suffix<'a>(
+    class: &str,
+    pool_group: &str,
+) -> Option<&'a class_feature_grant_consumer::ClassFeatureRecordTokens> {
+    let table = class_feature_grant_consumer::class_feature_bonus_vars_any_record();
+    let exact_key = format!("{class} ~ {pool_group}");
+    if let Some(header) = table.get(&exact_key) {
+        return Some(header);
+    }
+    let prefix = format!("{class} ~ ");
+    let normalized_target = pool_group.trim_end_matches('s');
+    table.iter().find_map(|(key, header)| {
+        let suffix = key.strip_prefix(&prefix)?;
+        (suffix.trim_end_matches('s') == normalized_target).then_some(header)
+    })
+}
+
 pub(crate) fn resolve_pool_member_sole_magnitude(
     key: &str,
     pool_group: &str,
@@ -38945,10 +38980,7 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
         return None; // more than one terminal target -- refuse, do not guess
     }
     let mut combined_vars = record.bonus_vars.clone();
-    let header_key = format!("{} ~ {pool_group}", record.class);
-    if let Some(header) =
-        class_feature_grant_consumer::class_feature_bonus_vars_any_record().get(&header_key)
-    {
+    if let Some(header) = pool_header_record_by_normalized_suffix(&record.class, pool_group) {
         for (name, formula) in &header.bonus_vars {
             combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
         }
@@ -71469,21 +71501,22 @@ mod opponent_conditioned_tier_zero_tests {
         );
     }
 
-    /// The generic resolver refuses rather than fabricates when a
-    /// talent's formula needs a class-specific level variable
-    /// (`SlayerTalentLVL`) this pool has no registered header record to
-    /// bind (`Slayer ~ Slayer Talents`, plural, is a real corpus record,
-    /// but distinct from the `"Slayer Talent"` singular member-key
-    /// prefix this call site passes as `pool_group` -- the exact `Spirit`
-    /// -shaped name mismatch cycle 2 flagged, re-encountered live here).
-    /// `Slayer Talent ~ Assassinate`'s DC formula
+    /// SD-32 T12 Epic 8 cycle 4: `Slayer Talent ~ Assassinate`'s DC formula
     /// (`10+(SlayerAssassinateLVL/2)+INT`, chained through
-    /// `SlayerAssassinateLVL|SlayerTalentLVL`) cannot resolve without
-    /// that binding -- proving the resolver's "refuse, never guess"
-    /// contract holds even when this cycle's own wiring is incomplete,
-    /// not just when a record's shape is genuinely novel.
+    /// `SlayerAssassinateLVL|SlayerTalentLVL`) previously could not resolve
+    /// because the header record that defines `SlayerTalentLVL`
+    /// (`"Slayer ~ Slayer Talents"`, plural) did not byte-match the
+    /// `"Slayer Talent"` singular member-key prefix this call site passes
+    /// as `pool_group` -- the exact `Spirit`-shaped name mismatch cycle 2
+    /// flagged and cycle 3 confirmed general (`decisions.md §17a`).
+    /// `pool_header_record_by_normalized_suffix` (this cycle) now finds the
+    /// header by a singular/plural-normalized suffix match, so the chain
+    /// binds: at Slayer level 6, `SlayerTalentLVL` = `SlayerLVL` = 6,
+    /// `SlayerAssassinateLVL` = 6, DC = `10 + (6/2) + 0` (no INT bonus on
+    /// this fixture) = 13 -- a real value derived from the corpus formula
+    /// chain, not a guess.
     #[test]
-    fn slayer_generic_resolver_refuses_rather_than_fabricates_a_missing_class_level_binding() {
+    fn slayer_assassinate_dc_resolves_generically_once_the_header_binds_slayertalentlvl() {
         let mut input = character(SLAYER_CLASS_ID, 6);
         input.chosen.selected_choices.push(SelectedChoice {
             choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
@@ -71491,8 +71524,69 @@ mod opponent_conditioned_tier_zero_tests {
         });
         assert_eq!(
             value(&input, "class_feature.acg.slayer.talent.generic.assassinate.slayerassassinatedc"),
-            None,
-            "must refuse, not fabricate a DC computed as if SlayerTalentLVL were 0"
+            Some(13),
+            "10 + (SlayerTalentLVL=6 / 2) + INT(0) = 13, derived from the real corpus chain"
+        );
+    }
+
+    /// The same header-suffix fix closes `Slowing Strike` too -- same
+    /// `SlayerXLVL|SlayerTalentLVL` -> `10+(X/2)+INT` shape as Assassinate,
+    /// a second independent record proving this is a real class of members
+    /// closing, not a one-off.
+    #[test]
+    fn slayer_slowing_strike_dc_resolves_generically_once_the_header_binds_slayertalentlvl() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:slowing_strike".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.slowing_strike.slayerslowingstrikedc"),
+            Some(13),
+            "10 + (SlayerTalentLVL=6 / 2) + INT(0) = 13, same shape as Assassinate"
+        );
+    }
+
+    /// `Hard to Fool`'s formula (`SlayerTalentLVL/5+1`) references
+    /// `SlayerTalentLVL` DIRECTLY (no intermediate per-talent LVL variable
+    /// the way Assassinate/Slowing Strike have) -- proves the header-suffix
+    /// fix also closes a record with no intermediate chain hop.
+    #[test]
+    fn slayer_hard_to_fool_times_resolves_generically_once_the_header_binds_slayertalentlvl() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:hard_to_fool".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.hard_to_fool.slayerhardtofooltimes"),
+            Some(2),
+            "SlayerTalentLVL=6 / 5 + 1 = 2 (floor division), derived from the real corpus chain"
+        );
+    }
+
+    /// The generic resolver still refuses rather than guesses when a
+    /// record's own formulas name MORE THAN ONE terminal target with no
+    /// cross-reference between them -- `Slayer Talent ~ Combat Style I`
+    /// sets both `CombatStyleLVL|1` and `RangerDefaultCombatStyle|1`,
+    /// neither referencing the other, so `resolve_pool_member_sole_
+    /// magnitude` cannot tell which one is "the" magnitude and refuses for
+    /// both. Proves the header-suffix fix above did not weaken this
+    /// separate, still-live safety refusal.
+    #[test]
+    fn slayer_combat_style_i_refuses_rather_than_guess_between_two_terminal_targets() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:combat_style_i".to_owned(),
+        });
+        assert!(
+            build_pilot_headless_receipt(&input)
+                .computation
+                .explanations
+                .iter()
+                .all(|e| !e.id.contains("combat_style_i")),
+            "a record with two unrelated terminal targets must ground nothing, not guess one"
         );
     }
 
