@@ -8675,3 +8675,132 @@ verified closed at the real altitude and needs no further cycle work.
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle7-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## row20-cycle8 (2026-08-24)
+
+**Card:** `epic-10-reference-library-residual-reach`. **Status:** `in-progress` (not `complete`
+-- 144 of 196 companion species remain real, sized, unbuilt work).
+
+### `§17a` population correction, re-derived fresh rather than carried forward
+
+Cycle 7's own brief handed this cycle "184 of 213 species remain... `Aquatic` 13,
+`PlantCompanion` 7, `AnimalCompanionPrimate` 4, `ConstructCompanion` 3, 154 untagged". Re-derived
+directly from `data/corpus/*/companion/*.json` rather than trusted: filtering to records whose
+`monster_class` field starts with `"Companion"` (the real per-record signal the companion
+mechanic uses -- some genuine companion races, e.g. Inner Sea Combat's own Hippocampus, carry
+`race_type: "Magical Beast"` in the ingested JSON despite being a real `MONSTERCLASS:Companion:2`
+record) and excluding the separate "Companion Advancement (...)" ability records (`monster_class:
+None`, a different record type, not a base-race entry -- these share the `companion_*` filename
+prefix, which is why a raw-`.lst`-line count conflated them) finds **196 real base-race
+`RACETYPE:Companion` records, not 213**. Breaking that 196 down: 144 untagged, 28
+`AnimalCompanionDinosaur` (unchanged from cycles 6-7), **12 `Aquatic` (not 13** -- the prior
+count double-counted `Familiar`-racetype "Tiny Named Animal" records that merely share the
+`Aquatic` `RACESUBTYPE:` tag, e.g. `ultimate_wilderness/companion/lamprey.json`'s own
+`MONSTERCLASS:Animal:1`/`RACETYPE:Animal`), 8 `PlantCompanion` (7 not already grounded by
+`gulper_plant`), 4 `AnimalCompanionPrimate`. **`ConstructCompanion` does not exist in this corpus
+at all**: `grep -rl "ConstructCompanion" data/corpus/` returns zero hits; the 3 raw
+`RACESUBTYPE:ConstructCompanion` records the prior brief cited live in
+`data/pathfinder/ascension_games/path_of_iron/poi_races_companion.lst` on the pinned oracle -- a
+third-party (Ascension Games) supplement `data/corpus/` has never ingested (`ls data/corpus/ |
+grep -i iron` finds nothing). That bucket is out of the 196-record population this table targets,
+not merely unverified within it -- ingesting a wholly new book is separate, much larger scope than
+this row's own per-species base-stat-table work, and no cycle may quietly widen its own scope to
+cover it without a dedicated book-ingestion cycle.
+
+### Closed all three remaining tagged buckets: 23 new entries
+
+Same two-independent-source-plus-corpus-tiebreaker method cycles 6-7 established: aonprd.com's own
+"Starting Statistics" block (`WebFetch`/`WebSearch` against `aonprd.com/DruidCompanions.aspx`),
+cross-checked against a second independent source where readily available (d20pfsrd for Octopus --
+exact match, Str 12/Dex 17/Con 14/Int 2/Wis 12/Cha 3 both sides -- and this module's own cycle 6
+doc comment for `hunting_cactus`, already externally verified there as a `§17a` worked example but
+never added to the table), plus the corpus's own `BONUS:STAT` delta as the numeric tiebreaker.
+Natural armor read directly from the corpus's own `AC_Natural_Armor` token matched AoN's own
+printed "+n natural armor" line for all 23 of 23 -- the same 100% agreement rate cycles 6-7 found.
+
+| species | bucket | AoN Str/Con | corpus delta | base Str/Con | natural armor |
+|---|---|---|---|---|---|
+| Eel (Giant Moray) | Aquatic | 14/12 | STR+4 CON+2 | 10/10 | 5 |
+| Octopus | Aquatic | 12/14 | STR+2 CON+4 | 10/10 | 1 |
+| Squid | Aquatic | 14/11 | STR+4 (no CON) | 10/11 | 1 |
+| Cameroceras | Aquatic | 14/11 | STR+4 (no CON) | 10/11 | 1 |
+| Dunkleosteus | Aquatic | 14/10 | STR+4 (no CON) | 10/10 | 4 |
+| Shark | Aquatic | 13/15 | STR+2 CON+4 | 11/11 | 4 |
+| Hippocampus | Aquatic | 16/15 | STR+6 CON+4 | 10/11 | 4 |
+| Crab (Giant) | Aquatic | 13/13 | STR+2 CON+2 | 11/11 | 5 |
+| Anglerfish | Aquatic | 13/12 | STR+2 CON+2 | 11/10 | 1 |
+| Armorfish | Aquatic | 13/15 | STR+2 CON+4 | 11/11 | 6 |
+| Hammerhead Shark | Aquatic | 13/12 | STR+2 CON+2 | 11/10 | 3 |
+| Squid (Giant) | Aquatic | 12/13 | STR+2 CON+2 | 10/11 | 1 |
+| Corpse-Eater Fungus | PlantCompanion | 14/12 | STR+4 CON+2 | 10/10 | 2 |
+| Creeping Puffball | PlantCompanion | 12/14 | STR+2 CON+4 | 10/10 | 1 |
+| Hunting Cactus | PlantCompanion | 14/17 | STR+4 CON+6 | 10/11 | 3 |
+| Rash Creeper | PlantCompanion | 10/13 | CON+2 (no STR) | 10/11 | 1 |
+| Slithering Sundew | PlantCompanion | 14/13 | STR+4 CON+2 | 10/11 | 1 |
+| Snapping Flytrap | PlantCompanion | 12/14 | STR+2 CON+4 | 10/10 | 2 |
+| Sniper Cactus | PlantCompanion | 10/14 | CON+4 (no STR) | 10/10 | 2 |
+| Ape | AnimalCompanionPrimate | 13/10 | STR+2 (no CON) | 11/10 | 1 |
+| Chimpanzee | AnimalCompanionPrimate | 13/12 | STR+2 CON+2 | 11/10 | 1 |
+| Devil Monkey | AnimalCompanionPrimate | 15/8 | STR+4 CON-2 | 11/10 | 3 |
+| Megaprimatus | AnimalCompanionPrimate | 13/10 | STR+2 (no CON) | 11/10 | 1 |
+
+Table: 29 -> 52 entries. `only_fifty_two_of_the_corpus_s_196_racetype_companion_records_have_a_
+base_stat_entry` (renamed from cycle 7's `only_twenty_nine...213...`) and a new
+`the_twenty_three_cycle_eight_aquatic_plant_and_primate_companions_ground_their_own_verified_base_
+scores` pin all 23. `companion_display_name_matches_every_table_entrys_documented_name` extended
+with all 23 slugs.
+
+### Re-asked `§17` against PCGen's own Java before grinding the untagged 142 (per the brief)
+
+Read the pinned oracle's own git objects directly (`git -C $PCGEN_REPO_DIR ls-tree -r --name-only
+HEAD`, no checkout, no cone widening): every `*Companion*.java` file (`CompanionModFacet.java`,
+`CompanionMod.java`, `CompanionListLst.java`, `plugin/lsttokens/companionmod/*.java`, and their
+siblings -- 30 files total) handles the companion-MOD **linking** mechanic (which class's companion
+follows which master, `COPYMASTERBAB`/`COPYMASTERHD`/`USEMASTERSKILL` tokens), never ability-score
+computation. Re-read `cr_classes_companion.lst`'s own `CLASS:Companion` definition (the shared
+progression every companion species reads) directly from the oracle's git objects: it carries
+`BONUS:COMBAT|BASEAB|...`, `BONUS:SAVE|BASE.Fortitude,BASE.Reflex|...`, and `BONUS:VAR|
+BaseClassSkillPts|...` tokens, but **no ability-score token of any kind**. This is a third
+independent confirmation of cycle 4/6's own finding (raw `.lst` grep, ingested-JSON delta
+backing-out, and now the class-definition's own full token list) that the base ability-score
+vector is genuinely fixed, per-species, printed prose with no PCGen-side derivation shortcut --
+the answer to `§17`'s own question stands unchanged; it must be hand-authored, and this cycle did
+so honestly for the 23 species it had room to verify to the two-independent-source bar.
+
+### Test evidence
+
+```
+cargo test --locked -p codex --lib companion_base_stat_table   # 11 passed, 0 failed (was 9)
+cargo test --locked -p codex --lib pilot_compute::               # 950 passed, 0 failed (was 948)
+cargo test --locked -p codex --lib companion                    # 121 passed, 0 failed (was 120)
+```
+
+No `apps/desktop/src-tauri` source file was touched this cycle (only
+`src/rules_core/pilot_compute/companion_base_stat_table.rs`, a `codex`-lib-only compute module);
+`cargo test --locked --bin codex-desktop` was re-run anyway per the brief's own instruction --
+see the receipt for the exact count.
+
+### PI / audit
+
+- Own-diff (`git diff --unified=0 HEAD` over the one touched file):
+  `grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'` -- zero hits (`OK_NO_BUNDLE_TAGS`).
+- Same scope, `grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'` -- zero
+  hits (`OK_NO_TOKENS`).
+- `pi_scrub.normalized_term_hits()` (imported from `scripts/pi_scrub.py`, never copied) over the
+  own-diff -- zero hits.
+- No `data/corpus/` write this cycle.
+
+### Territory
+
+`git status --porcelain` confirmed clean before every write and listed only the one intended
+source file after (plus `kanban.md`/`progress.md`/this receipt). `kanban.md`: 23 pipe-lines (21
+data rows + header + separator), 21 unique row ids, 0 duplicates, row 20's own 9-raw-cell split
+confirmed with a backtick-aware parser before and after the edit. Rows 11 and 15 left untouched.
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). 144 of 196 companion species remain real,
+sized, unbuilt work: 142 untagged (`RACESUBTYPE`-less) records, plus the 2 named dinosaur
+refusals (`pachycephalosaurus`, `ornithomimosaur`) if a future cycle finds a source neither cycle
+7 nor this one could reach. Item 1 (species-selection wiring) stays closed, needs no further work.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle8-receipt.md`.
+Commit: (this cycle's commit -- see push output).

@@ -1,5 +1,76 @@
 //! Generic companion base-ability-score table (SD-32 T12
-//! `epic-10-reference-library-residual-reach` row 20, cycles 5-7).
+//! `epic-10-reference-library-residual-reach` row 20, cycles 5-8).
+//!
+//! # Cycle 8 addendum: the three remaining tagged buckets, and a population
+//! # correction (`§17a`)
+//!
+//! Cycle 8 re-derived the true base-race `RACETYPE:Companion` population
+//! directly from this repo's own ingested `data/corpus/*/companion/*.json`
+//! (not trusted from a prior cycle's brief): filtering to records that
+//! actually carry a `monster_class` starting with `"Companion"` (the real
+//! per-record signal a companion mechanic uses -- some records, e.g.
+//! Inner Sea Combat's own Hippocampus, carry `RACETYPE:Magical Beast`
+//! rather than `RACETYPE:Companion` in the ingested JSON despite being a
+//! genuine companion race) and excluding the separate "Companion
+//! Advancement (...)" ability records (`monster_class: None`, a different
+//! record type entirely, not a base-race entry) finds **196**, not the
+//! 213 a prior cycle's raw-oracle-`.lst`-line count assumed. Of those 196:
+//! 144 carry no `RACESUBTYPE:` tag at all, 28 are `AnimalCompanionDinosaur`
+//! (cycles 6-7's own bucket), 12 are `Aquatic` (not 13 -- the prior
+//! figure double-counted `Familiar`-racetype "Tiny Named Animal" records
+//! that merely share the `Aquatic` `RACESUBTYPE:` tag with genuine
+//! `MONSTERCLASS:Companion:2` records, e.g. `ultimate_wilderness/
+//! companion/lamprey.json`'s own `MONSTERCLASS:Animal:1`/`RACETYPE:
+//! Animal`), 8 are `PlantCompanion` (7 not already grounded by
+//! `gulper_plant`), and 4 are `AnimalCompanionPrimate` -- summing to
+//! 196 exactly. **`ConstructCompanion` does not exist in this corpus at
+//! all**: the 3 raw `RACESUBTYPE:ConstructCompanion` records a prior
+//! cycle's brief cited live in `data/pathfinder/ascension_games/
+//! path_of_iron/poi_races_companion.lst` on the pinned oracle -- a
+//! third-party (Ascension Games) supplement this repo's `data/corpus/`
+//! has never ingested at all (`ls data/corpus/ | grep -i iron` finds
+//! nothing) -- so that bucket is out of the 196-record population this
+//! table targets, not merely unverified within it; ingesting a wholly new
+//! book is a separate, much larger undertaking than this row's own
+//! per-species table-filling scope.
+//!
+//! Cycle 8 grounds all three remaining tagged buckets in full: 12
+//! `Aquatic`, all 7 remaining `PlantCompanion` (including `hunting_
+//! cactus`, whose base scores this module's own cycle 4/5 correction
+//! already externally verified as a worked example but never added to
+//! the table), and all 4 `AnimalCompanionPrimate` -- 23 new entries, same
+//! two-independent-source-plus-corpus-tiebreaker method cycles 6-7 set
+//! (aonprd.com's own "Starting Statistics" block, cross-checked against
+//! d20pfsrd for Octopus as an exact-match spot-check, plus the corpus's
+//! own `BONUS:STAT` delta as the numeric tiebreaker). Natural armor,
+//! read directly from the corpus's own `AC_Natural_Armor` token, matched
+//! AoN's own printed "+n natural armor" line for all 23 -- the same 100%
+//! agreement cycles 6-7 found, now confirmed across 46 dinosaur-plus-
+//! aquatic-plus-plant-plus-primate species combined.
+//!
+//! **Before grinding the table further, cycle 8 re-asked cycle 6's own
+//! `§17` question against PCGen's own Java** (not just the raw `.lst`
+//! source cycle 6 already checked): is any part of the base ability-score
+//! vector *computed* rather than hand-authored, now that a real character-
+//! creation consumer exists to test against? `git grep -il
+//! "AnimalCompanion" -- '*.java'` against the pinned oracle's git objects
+//! (`git -C $PCGEN_REPO_DIR ls-tree -r --name-only HEAD`) finds no
+//! ability-score-computing class at all -- every `*Companion*.java` file
+//! (`CompanionModFacet`, `CompanionMod`, `CompanionListLst`,
+//! `CompanionmodToken`, and their siblings) handles the companion-MOD
+//! **linking** mechanic (which class's companion follows which master),
+//! never ability scores. Re-reading `cr_classes_companion.lst` (the
+//! `CLASS:Companion` definition itself, the shared progression math every
+//! species reads) directly from the oracle's git objects confirms cycle
+//! 4's own finding by an independent method: the class definition carries
+//! `BONUS:COMBAT`/`BONUS:SAVE`/`BONUS:VAR` tokens for attack, saves, and
+//! the `AnimalCompanionSkill`/`BaseClassSkillPts` derived values, but **no
+//! ability-score token of any kind** -- confirming, a third independent
+//! way now (raw `.lst` grep, ingested-JSON delta backing-out, and the
+//! class definition's own token list), that the base ability-score block
+//! is genuinely fixed, per-species, printed prose with no PCGen-side
+//! derivation shortcut. It must be hand-authored; this cycle did so
+//! honestly for the 23 species it had room to verify.
 //!
 //! # Cycle 7 addendum: the dispatch point cycle 6 named now exists
 //!
@@ -518,6 +589,213 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             "tylosaurus",
             CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 3, hit_die_size: 8 },
         );
+        // Row 20 cycle 8: the three remaining tagged `RACESUBTYPE:` buckets
+        // this module's own cycle 7 next-cycle plan named -- `Aquatic` (12,
+        // re-derived from 13; see this module's own cycle 8 doc addendum),
+        // `PlantCompanion` (the 7 not already grounded by `gulper_plant`),
+        // and `AnimalCompanionPrimate` (4). Same two-independent-source-
+        // plus-corpus-tiebreaker method throughout: aonprd.com's own
+        // "Starting Statistics" block (cross-checked against d20pfsrd for
+        // Octopus, confirming an exact match, and against this module's own
+        // cycle 6 doc comment for `hunting_cactus`, already externally
+        // verified there), the corpus's own `BONUS:STAT` delta as the
+        // numeric tiebreaker, and natural armor read directly from the
+        // corpus's own `AC_Natural_Armor` token -- which matched every one
+        // of AoN's own printed "+n natural armor" lines below exactly, 23
+        // of 23, the same 100% agreement rate cycles 6 and 7 found.
+        out.insert(
+            // AoN: Str 14, Dex 16, Con 12, Int 1, Wis 12, Cha 8, +5 natural
+            // armor. Corpus delta (`beastiary/companion_eel_giant_moray.
+            // json`): CON|2 DEX|4 STR|4 (no INT/WIS/CHA delta),
+            // AC_Natural_Armor|5|TYPE=Base. Base Str 14-4=10, Con 12-2=10.
+            "eel_giant_moray",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 5, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (confirmed by an independent d20pfsrd fetch, exact
+            // match): Str 12, Dex 17, Con 14, Int 2, Wis 12, Cha 3, +1
+            // natural armor. Corpus delta (`beastiary/companion_octopus.
+            // json`): STAT|STR|2 STAT|CON|4, AC_Natural_Armor|1|
+            // TYPE=Base. Base Str 12-2=10, Con 14-4=10.
+            "octopus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: (regular) Squid -- Str 14, Dex 15, Con 11, Int 2, Wis
+            // 12, Cha 2, +1 natural armor (distinct from the separate
+            // `squid_giant` record below). Corpus delta (`beastiary/
+            // companion_squid.json`): STAT|STR,DEX|4 (STR delta 4),
+            // AC_Natural_Armor|1|TYPE=Base (no CON delta token). Base Str
+            // 14-4=10, Con 11-0=11.
+            "squid",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 15, Con 11, Int 2, Wis 12, Cha 2, +1 natural
+            // armor. Corpus delta (`bestiary_5/companion_cameroceras.
+            // json`): STR|4 (no CON delta), AC_Natural_Armor|1|TYPE=Base.
+            // Base Str 14-4=10, Con 11-0=11.
+            "cameroceras",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 18, Con 10, Int 1, Wis 13, Cha 6, +4 natural
+            // armor. Corpus delta (`bestiary_6/companion_dunkleosteus.
+            // json`): STR|4 (no CON delta), AC_Natural_Armor|4|TYPE=Base.
+            // Base Str 14-4=10, Con 10-0=10.
+            "dunkleosteus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 15, Con 15, Int 1, Wis 12, Cha 2, +4 natural
+            // armor. Corpus delta (`core_rulebook/companion_shark.json`):
+            // STR|2 CON|4, AC_Natural_Armor|4|TYPE=Base. Base Str
+            // 13-2=11, Con 15-4=11.
+            "shark",
+            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 16, Dex 9, Con 15, Int 2, Wis 12, Cha 11, +4 natural
+            // armor. Corpus delta (`inner_sea_combat/companion_hippocampus.
+            // json`): STR|6 CON|4, AC_Natural_Armor|4|TYPE=Base. Base Str
+            // 16-6=10, Con 15-4=11.
+            "hippocampus",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Giant Crab): Str 13, Dex 14, Con 13, Int --, Wis 11, Cha
+            // 4, +5 natural armor. Corpus delta (`ultimate_magic/
+            // companion_crab_giant.json`): STR|2 CON|2, AC_Natural_Armor|5|
+            // TYPE=Base. Base Str 13-2=11, Con 13-2=11.
+            "crab_giant",
+            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 5, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 15, Con 12, Int 1, Wis 12, Cha 2, +1 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_
+            // anglerfish.json`): STR|2 CON|2, AC_Natural_Armor|1|TYPE=Base.
+            // Base Str 13-2=11, Con 12-2=10.
+            "anglerfish",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 13, Con 15, Int 1, Wis 8, Cha 2, +6 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_
+            // armorfish.json`): STR|2 CON|4, AC_Natural_Armor|6|TYPE=Base.
+            // Base Str 13-2=11, Con 15-4=11.
+            "armorfish",
+            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 6, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 14, Con 12, Int 1, Wis 15, Cha 6, +3 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_
+            // hammerhead_shark.json`): STR|2 CON|2, AC_Natural_Armor|3|
+            // TYPE=Base. Base Str 13-2=11, Con 12-2=10.
+            "hammerhead_shark",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Giant Squid, distinct from the regular `squid` record
+            // above): Str 12, Dex 15, Con 13, Int 2, Wis 12, Cha 3, +1
+            // natural armor. Corpus delta (`ultimate_wilderness/companion_
+            // squid_giant.json`): STR|2 CON|2, AC_Natural_Armor|1|
+            // TYPE=Base. Base Str 12-2=10, Con 13-2=11.
+            "squid_giant",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 13, Con 12, Int 1, Wis 11, Cha 4, +2 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_corpse_
+            // eater_fungus.json`): STR|4 CON|2, AC_Natural_Armor|2|
+            // TYPE=Base. Base Str 14-4=10, Con 12-2=10.
+            "corpse_eater_fungus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 15, Con 14, Int 1, Wis 12, Cha 9, +1 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_creeping_
+            // puffball.json`): STR|2 CON|4, AC_Natural_Armor|1|TYPE=Base.
+            // Base Str 12-2=10, Con 14-4=10.
+            "creeping_puffball",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN, Ultimate Wilderness p.183 -- this module's own cycle 6
+            // doc comment (`§17a`'s own correction worked example) already
+            // externally verified: Str 14, Dex 13, Con 17, Int 2, Wis 13,
+            // Cha 6, +3 natural armor (confirmed here from the corpus's own
+            // `AC_Natural_Armor|3|TYPE=Base` token, not stated in cycle 6's
+            // own excerpt). Corpus delta (`ultimate_wilderness/companion_
+            // hunting_cactus.json`): STR|4 CON|6, matching cycle 6's own
+            // figures exactly. Base Str 14-4=10, Con 17-6=11.
+            "hunting_cactus",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 15, Con 13, Int 1, Wis 11, Cha 2, +1 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_rash_
+            // creeper.json`): CON|2 (no STR delta), AC_Natural_Armor|1|
+            // TYPE=Base. Base Str 10-0=10, Con 13-2=11.
+            "rash_creeper",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 17, Con 13, Int 1, Wis 12, Cha 6, +1 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_
+            // slithering_sundew.json`): STR|4 CON|2, AC_Natural_Armor|1|
+            // TYPE=Base. Base Str 14-4=10, Con 13-2=11.
+            "slithering_sundew",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 15, Con 14, Int 1, Wis 12, Cha 5, +2 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_snapping_
+            // flytrap.json`): STR|2 CON|4, AC_Natural_Armor|2|TYPE=Base.
+            // Base Str 12-2=10, Con 14-4=10.
+            "snapping_flytrap",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 13, Con 14, Int 1, Wis 13, Cha 6, +2 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_sniper_
+            // cactus.json`): CON|4 (no STR delta), AC_Natural_Armor|2|
+            // TYPE=Base. Base Str 10-0=10, Con 14-4=10.
+            "sniper_cactus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 17, Con 10, Int 2, Wis 12, Cha 7, +1 natural
+            // armor. Corpus delta (`core_rulebook/companion_ape.json`):
+            // STR|2 (no CON delta), AC_Natural_Armor|1|TYPE=Base. Base Str
+            // 13-2=11, Con 10-0=10.
+            "ape",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 17, Con 12, Int 2, Wis 12, Cha 7, +1 natural
+            // armor. Corpus delta (`ultimate_wilderness/companion_
+            // chimpanzee.json`): STR|2 CON|2, AC_Natural_Armor|1|
+            // TYPE=Base. Base Str 13-2=11, Con 12-2=10.
+            "chimpanzee",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 15, Dex 19, Con 8, Int 2, Wis 15, Cha 10, +3 natural
+            // armor. Corpus delta (`bestiary_6/companion_devil_monkey.
+            // json`): STR|4 CON|-2, AC_Natural_Armor|3|TYPE=Base. Base Str
+            // 15-4=11, Con 8-(-2)=10.
+            "devil_monkey",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 17, Con 10, Int 2, Wis 12, Cha 7, +1 natural
+            // armor -- identical printed block to `ape` (Bestiary 5's own
+            // Megaprimatus shares the Ape's base). Corpus delta (`bestiary_
+            // 5/companion_megaprimatus.json`): STR|2 (no CON delta),
+            // AC_Natural_Armor|1|TYPE=Base. Base Str 13-2=11, Con 10-0=10.
+            "megaprimatus",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
         out
     })
 }
@@ -835,27 +1113,130 @@ mod tests {
             ("quetzalcoatlus", "Quetzalcoatlus"),
             ("parasaurolophus", "Parasaurolophus"),
             ("tylosaurus", "Tylosaurus"),
+            ("eel_giant_moray", "Eel Giant Moray"),
+            ("octopus", "Octopus"),
+            ("squid", "Squid"),
+            ("cameroceras", "Cameroceras"),
+            ("dunkleosteus", "Dunkleosteus"),
+            ("shark", "Shark"),
+            ("hippocampus", "Hippocampus"),
+            ("crab_giant", "Crab Giant"),
+            ("anglerfish", "Anglerfish"),
+            ("armorfish", "Armorfish"),
+            ("hammerhead_shark", "Hammerhead Shark"),
+            ("squid_giant", "Squid Giant"),
+            ("corpse_eater_fungus", "Corpse Eater Fungus"),
+            ("creeping_puffball", "Creeping Puffball"),
+            ("hunting_cactus", "Hunting Cactus"),
+            ("rash_creeper", "Rash Creeper"),
+            ("slithering_sundew", "Slithering Sundew"),
+            ("snapping_flytrap", "Snapping Flytrap"),
+            ("sniper_cactus", "Sniper Cactus"),
+            ("ape", "Ape"),
+            ("chimpanzee", "Chimpanzee"),
+            ("devil_monkey", "Devil Monkey"),
+            ("megaprimatus", "Megaprimatus"),
         ] {
             assert_eq!(companion_display_name(slug), expected);
         }
     }
 
     #[test]
-    fn only_twenty_nine_of_the_corpus_s_213_racetype_companion_records_have_a_base_stat_entry() {
+    fn only_fifty_two_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry() {
         // Named exactly, not rounded away (§16/§17a): the honest residual
-        // this cycle leaves for the next one. Row 20 cycle 7 added 17 more
-        // `AnimalCompanionDinosaur` species (26 of 28 total, two named
-        // residuals -- pachycephalosaurus, ornithomimosaur -- this module's
-        // own cycle 7 doc addendum explains), on top of cycle 5's wolf/
-        // horse/gulper_plant and cycle 6's own first nine dinosaurs.
+        // this cycle leaves for the next one. Row 20 cycle 8 re-derived the
+        // true base-race `RACETYPE:Companion` population directly from
+        // `data/corpus/*/companion/*.json` (filtering to records that
+        // actually carry `MONSTERCLASS:Companion:*` and excluding the
+        // separate "Companion Advancement (...)" ability records, which
+        // are not base-race entries at all) and found 196, not the 213 a
+        // prior cycle's raw-`.lst`-line count assumed -- that count did
+        // not exclude the "Companion Advancement" records, which share the
+        // `companion_*` filename prefix but carry no `monster_class`.
+        // Cycle 8 added 12 `Aquatic`, 7 `PlantCompanion` (the ones not
+        // already grounded by `gulper_plant`), and 4 `AnimalCompanion
+        // Primate` species -- 23 in total -- on top of cycle 5's wolf/
+        // horse/gulper_plant and cycles 6-7's 26 of 28 `AnimalCompanion
+        // Dinosaur` species (52 = 29 + 23). The `ConstructCompanion`
+        // bucket a prior cycle's brief named as size 3 does not exist in
+        // this corpus at all: those 3 raw `RACESUBTYPE:ConstructCompanion`
+        // records live in `path_of_iron/poi_races_companion.lst`, a
+        // third-party (Ascension Games) book this repo's corpus has never
+        // ingested (`data/corpus/` has no `path_of_iron` entry at all) --
+        // out of the 196-record population this table targets, not merely
+        // unverified within it. 144 of 196 remain ungrounded: 2 named
+        // refusals (`pachycephalosaurus`, `ornithomimosaur`) plus 142
+        // untagged (`RACESUBTYPE`-less) records.
         assert_eq!(
             companion_base_stat_table().len(),
-            29,
-            "wolf, horse, gulper_plant, and 26 of 28 AnimalCompanionDinosaur species -- 184 of \
-             213 real RACETYPE:Companion corpus records still have no verified base-ability-\
-             score entry and must keep refusing until a future cycle adds them, per-species, \
-             the same way this one and cycle 6 added the dinosaur batch"
+            52,
+            "wolf, horse, gulper_plant, 26 of 28 AnimalCompanionDinosaur species, and the full \
+             Aquatic/PlantCompanion/AnimalCompanionPrimate buckets (23 more) -- 144 of 196 real \
+             base-race RACETYPE:Companion corpus records still have no verified base-ability-\
+             score entry and must keep refusing until a future cycle adds them"
         );
+    }
+
+    /// Row 20 cycle 8's own positive counterpart, pinning the exact base
+    /// ability scores this cycle's doc comments derive for all 23 new
+    /// entries across the three tagged buckets `Aquatic`,
+    /// `PlantCompanion`, and `AnimalCompanionPrimate`.
+    #[test]
+    fn the_twenty_three_cycle_eight_aquatic_plant_and_primate_companions_ground_their_own_verified_base_scores(
+    ) {
+        for (slug, display, expected_str, expected_con, expected_natural_armor) in [
+            ("eel_giant_moray", "Eel Giant Moray", 10i16, 10i16, 5i16),
+            ("octopus", "Octopus", 10, 10, 1),
+            ("squid", "Squid", 10, 11, 1),
+            ("cameroceras", "Cameroceras", 10, 11, 1),
+            ("dunkleosteus", "Dunkleosteus", 10, 10, 4),
+            ("shark", "Shark", 11, 11, 4),
+            ("hippocampus", "Hippocampus", 10, 11, 4),
+            ("crab_giant", "Crab Giant", 11, 11, 5),
+            ("anglerfish", "Anglerfish", 11, 10, 1),
+            ("armorfish", "Armorfish", 11, 11, 6),
+            ("hammerhead_shark", "Hammerhead Shark", 11, 10, 3),
+            ("squid_giant", "Squid Giant", 10, 11, 1),
+            ("corpse_eater_fungus", "Corpse Eater Fungus", 10, 10, 2),
+            ("creeping_puffball", "Creeping Puffball", 10, 10, 1),
+            ("hunting_cactus", "Hunting Cactus", 10, 11, 3),
+            ("rash_creeper", "Rash Creeper", 10, 11, 1),
+            ("slithering_sundew", "Slithering Sundew", 10, 11, 1),
+            ("snapping_flytrap", "Snapping Flytrap", 10, 10, 2),
+            ("sniper_cactus", "Sniper Cactus", 10, 10, 2),
+            ("ape", "Ape", 11, 10, 1),
+            ("chimpanzee", "Chimpanzee", 11, 10, 1),
+            ("devil_monkey", "Devil Monkey", 11, 10, 3),
+            ("megaprimatus", "Megaprimatus", 11, 10, 1),
+        ] {
+            let mut explanations = Vec::new();
+            let grounded = ground_companion_stat_block(
+                slug,
+                "companion",
+                "Druid",
+                display,
+                1,
+                &mut explanations,
+            );
+            assert!(grounded, "{slug} must ground a real stat block");
+            let detail = &explanations
+                .iter()
+                .find(|e| e.id == format!("companion.{slug}_stat_block"))
+                .unwrap_or_else(|| panic!("expected a companion.{slug}_stat_block record"))
+                .detail;
+            assert!(
+                detail.contains(&format!("Str {expected_str}")),
+                "{slug} expected base Str {expected_str} in detail: {detail}"
+            );
+            assert!(
+                detail.contains(&format!("Con {expected_con}")),
+                "{slug} expected base Con {expected_con} in detail: {detail}"
+            );
+            let table = companion_base_stat_table();
+            let stats = table.get(slug).expect("entry must exist");
+            assert_eq!(stats.natural_armor, expected_natural_armor, "{slug} natural armor");
+            assert_eq!(stats.hit_die_size, 8, "{slug} hit die size is always d8 per the companion mechanic");
+        }
     }
 
     /// Proves each new dinosaur entry is real and reachable, not merely
