@@ -7831,7 +7831,6 @@ No card status changed this cycle. Full receipt:
 `artifacts/gate-3-closure-invariant/closure-readiness-audit_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
 
-
 ## Cycle: row17-psychic-discipline-input (2026-08-24, t9-onboarding)
 
 **Row 17 residual closure.** Re-derived (`§17a`): `python3 scripts/row17_census.py` reconfirmed
@@ -7872,4 +7871,64 @@ term written anywhere.
 
 Full receipt:
 `artifacts/gate-1-shape-closure/row17-psychic-discipline-input_cycle-2_cycle_receipt.md`.
+
+## `declared-pi-shipping-65-followups` (2026-08-23) — closes the carried-across-six-cycles 65
+
+Re-derived `declared_pi_shipping_audit` live against the pinned oracle (`PCGEN_CORPUS_ROOT`
+confirmed via `/proc/<pid>/environ`, not the forbidden default): **65, exactly as briefed**, all
+`DESC-PI-SHIPPED` in `bestiary_4/monster_ability`. Verified per-record (not by class): every one's
+`data.description` is already the literal `"[redacted PI]"` marker — confirmed against
+`rules_tables/bestiary_4/monster_data.rs`'s own static literals — so no live PI ships; this really
+is the metadata-labeling gap `§26` already found, not a growing leak.
+
+**But the audit's own line-scoped `declared.description` check is narrower than the real gap.** A
+corpus-wide re-derivation of every shipped record whose `data.description == "[redacted PI]"` but
+whose `license`/`pi_field` do not already say so found **99, not 65**, across 9 `(book, kind)`
+pairs (`bestiary_4/monster_ability` 65 of them; `inner_sea_bestiary`/`inner_sea_gods`/
+`inner_sea_world_guide` `monster_ability` 12 more; `inner_sea_gods`/`inner_sea_temples`/
+`book_of_the_damned_volume_2` `equipment` 12; `inner_sea_gods`/`inner_sea_races` `feat` 10) — two
+distinct root causes, same "screens one field, not all" shape this bundle has now found eight
+times: (1) `gen_book_cache.rs`'s `monster_ability` writer never called any PI classifier for
+`description` at all (77 records); (2) `pi_screening::classify_field` treated a value ALREADY equal
+to the redaction marker as ordinary prose, since the marker text itself contains no blacklist term
+(22 records).
+
+**Both fixed at the root**, not just the records: `classify_field` now short-circuits on a marker
+value (closes the shared-function half for `equipment_gap`/`feat_gap`/`class_feature` all at once);
+`gen_book_cache.rs`'s `monster_ability` loop now actually calls the classifier instead of
+hardcoding `Ogl`/`None`. TDD throughout (RED confirmed for the intended reason before each fix);
+40/40 `pi_screening`, 186/186 `cache_gen::`, 5/5 `gen_book_cache`, 21/21
+`declared_pi_shipping_audit` tests pass.
+
+**Existing 99 records fixed via a new guarded-path binary**
+(`src/bin/reconcile_description_pi_stamps.rs`, 6/6 tests), not deletion+regen — every writer here
+is no-clobber on an existing file, and this repo's deletion tooling refused a bulk removal of
+`data/corpus/**` outright, so the binary patches ONLY `license`/`pi_field`/`pi_marker` in place
+(unioning into an existing `§24`-rename `pi_field` list, never dropping it), leaving `data`,
+`source`, `ingested_at`, and `wiring_class` byte-identical. `git status --porcelain` after the run:
+exactly 99 corpus files + the 2 source edits + 1 new binary.
+
+**Proved, not asserted:** `declared_pi_shipping_audit` 65→`CLEAN`.
+`corpus_literal_sweep --json-out` full-corpus before/after: `86 findings/77 records` →
+`15 findings/6 records`, and the remaining 6 are confirmed pre-existing and unrelated (different
+kind entirely — `class_feature`/`trait_generic`/`feat_generic` — present at the same count in the
+BEFORE run too, zero overlap with the 99 this cycle touched). No record count moved (metadata-only
+patch), so no `LICENSE.json` count line changes — row 19's
+`the_two_ingested_books_totals_reconcile_with_their_license_artifacts` test is unaffected (not
+touched, not re-run, out of this cycle's file scope entirely).
+
+**Unrelated pre-existing red observed, not caused:**
+`rules_tables::monster_chassis::tests::widening_the_facet_vocabulary_does_not_reclassify_any_existing_record`
+fails on a full `rules_core::` lib sweep (digest-ratchet fixture out of sync with `MONSTER_BOOKS`'
+current triple set). Confirmed pre-existing via `git diff --stat -- src/rules_core/rules_tables/
+src/rules_core/pilot_compute/` (empty — this cycle touched neither path) and present on this
+cycle's own base commit before any edit. Not fixed here (different lane's territory), named here
+per `AGENTS.md` non-negotiable rule 8 (a warning is not a control — this is a report, not a fix).
+
+**Kanban:** row 11 (`epic-2-cause-closure`) entry prepended, stays `in-progress` per dispatch
+instruction (this closes one named sub-item, the whole card's other shapes are sibling territory).
+Row 15 untouched, stays `in-progress`.
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/declared-pi-shipping-65-followups_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).

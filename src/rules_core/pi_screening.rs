@@ -104,6 +104,22 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
 /// [`REDACTED_PI_MARKER`]; no hit is plain OGL. Mirrors
 /// `gen_book_cache.rs::classify_field` exactly.
 pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    // SD-32 declared-pi-shipping-65-followups: a value that is ALREADY the
+    // redaction marker carries no blacklist term to scan for (the marker
+    // text itself is inert), so without this guard it fell through to the
+    // `Ogl`/`None` return below -- stamping metadata that claims nothing
+    // was ever redacted on a value that already IS the redacted form. This
+    // is the root cause of 99 corpus records shipping `description:
+    // "[redacted PI]"` with `license: "OGL"`/`pi_field: null`, verified
+    // corpus-wide.
+    if value == REDACTED_PI_MARKER {
+        return (
+            License::PiRedacted,
+            Some(field_name.to_string()),
+            Some(PI_MARKER_REDACTED.to_string()),
+            REDACTED_PI_MARKER.to_string(),
+        );
+    }
     for term in PI_BLACKLIST_TERMS {
         if value.contains(term) {
             return (
@@ -439,6 +455,48 @@ pub fn classify_optional_field_declared(
     }
 }
 
+/// SD-32 declared-pi-shipping-65-followups: a NARROW, guarded-path
+/// metadata-only fix for a record already on disk whose `description` is
+/// already the redaction marker but whose `license`/`pi_field` were never
+/// stamped to say so (the root cause `classify_field`'s marker-guard above
+/// now prevents going forward; this is what un-does the SAME defect on the
+/// 99 records it already produced before that guard existed). Every
+/// generator here is no-clobber on an existing file, so there is no way to
+/// route an already-shipped record back through the writer's normal
+/// from-scratch path without either deleting it first (a hand-edit-adjacent
+/// operation this repo's doctrine reserves for a real content change, not a
+/// metadata correction) or reconciling ONLY the three stamp fields in
+/// place, which is what this function computes.
+///
+/// Returns `None` when there is nothing to fix (no description, description
+/// is not the marker, or the stamp is already correct) — the caller's
+/// signal to leave the file completely untouched, exactly as its own
+/// no-clobber rule already promises for every other case. Returns
+/// `Some((license, pi_field, pi_marker))` otherwise: `PiRedacted`, the
+/// existing `pi_field` list with `"description"` unioned in (never
+/// dropping an existing entry, e.g. a prior `"name"` redaction from
+/// `decisions.md §24`), and the standard marker.
+pub fn reconcile_description_pi_stamp(
+    description: Option<&str>,
+    license: License,
+    pi_field: Option<&str>,
+) -> Option<(License, Option<String>, Option<String>)> {
+    if description != Some(REDACTED_PI_MARKER) {
+        return None;
+    }
+    let already_correct =
+        license == License::PiRedacted && pi_field.is_some_and(|f| f.split(',').any(|part| part == "description"));
+    if already_correct {
+        return None;
+    }
+    let new_pi_field = match pi_field.filter(|f| !f.is_empty()) {
+        Some(existing) if existing.split(',').any(|part| part == "description") => existing.to_string(),
+        Some(existing) => format!("{existing},description"),
+        None => "description".to_string(),
+    };
+    Some((License::PiRedacted, Some(new_pi_field), Some(PI_MARKER_REDACTED.to_string())))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -594,6 +652,29 @@ mod tests {
     fn a_place_name_redacts_too() {
         let (license, ..) = classify_field("description", "You hail from Absalom.");
         assert_eq!(license, License::PiRedacted);
+    }
+
+    /// SD-32 declared-pi-shipping-65-followups: a value that is ALREADY the
+    /// redaction marker (e.g. a static `rules_tables` literal a prior pass
+    /// hand-redacted, or a value some upstream step already blanked) must
+    /// stamp `PiRedacted`/the field name/the marker -- not fall through the
+    /// term scan as ordinary prose. `REDACTED_PI_MARKER` itself ("[redacted
+    /// PI]") contains no blacklist term, so before this fix `classify_field`
+    /// silently classified an already-redacted value as plain `Ogl` with
+    /// `pi_field: None`, shipping the marker text with metadata that claims
+    /// nothing was ever redacted -- the exact "description already redacted
+    /// but license/pi_field never stamped" shape found live in 99 corpus
+    /// records across 9 (book, kind) pairs (`bestiary_4/monster_ability` 65
+    /// of them), verified via `cargo run --locked --bin
+    /// declared_pi_shipping_audit` plus a corpus-wide re-derivation that
+    /// does not depend on the exact source-line declaration.
+    #[test]
+    fn a_value_already_equal_to_the_marker_stamps_redacted_not_plain_ogl() {
+        let (license, pi_field, pi_marker, stored) = classify_field("description", REDACTED_PI_MARKER);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+        assert_eq!(pi_marker.as_deref(), Some(PI_MARKER_REDACTED));
+        assert_eq!(stored, REDACTED_PI_MARKER);
     }
 
     #[test]
@@ -763,5 +844,59 @@ mod tests {
         let (license, pi_field, pi_marker, stored) = classify_optional_field_declared("description", None, true);
         assert_eq!(license, License::Ogl);
         assert_eq!((pi_field, pi_marker, stored), (None, None, None));
+    }
+
+    // --- `reconcile_description_pi_stamp` (SD-32 declared-pi-shipping-65) --
+
+    #[test]
+    fn reconcile_fixes_a_marker_description_shipped_as_plain_ogl() {
+        // The exact 65-record `bestiary_4/monster_ability` shape: marker in
+        // place, but license/pi_field never stamped.
+        let fixed = reconcile_description_pi_stamp(Some(REDACTED_PI_MARKER), License::Ogl, None);
+        assert_eq!(
+            fixed,
+            Some((License::PiRedacted, Some("description".to_string()), Some(PI_MARKER_REDACTED.to_string())))
+        );
+    }
+
+    #[test]
+    fn reconcile_unions_description_into_an_existing_pi_field_list_without_dropping_it() {
+        // The 9 `inner_sea_gods/equipment` renamed records: `pi_field:
+        // "name"` from the §24 rename, description ALSO the marker but
+        // never added to the list.
+        let fixed = reconcile_description_pi_stamp(Some(REDACTED_PI_MARKER), License::PiRedacted, Some("name"));
+        assert_eq!(
+            fixed,
+            Some((License::PiRedacted, Some("name,description".to_string()), Some(PI_MARKER_REDACTED.to_string())))
+        );
+    }
+
+    #[test]
+    fn reconcile_is_a_no_op_when_the_stamp_is_already_correct() {
+        let fixed =
+            reconcile_description_pi_stamp(Some(REDACTED_PI_MARKER), License::PiRedacted, Some("description"));
+        assert_eq!(fixed, None, "an already-correct record must be left completely untouched");
+    }
+
+    #[test]
+    fn reconcile_is_a_no_op_when_the_stamp_already_lists_description_among_others() {
+        let fixed = reconcile_description_pi_stamp(
+            Some(REDACTED_PI_MARKER),
+            License::PiRedacted,
+            Some("description,name,raw_tokens"),
+        );
+        assert_eq!(fixed, None);
+    }
+
+    #[test]
+    fn reconcile_is_a_no_op_for_an_ordinary_unredacted_description() {
+        let fixed = reconcile_description_pi_stamp(Some("Deals 1d6 points of fire damage."), License::Ogl, None);
+        assert_eq!(fixed, None, "must never touch a record with no marker to reconcile");
+    }
+
+    #[test]
+    fn reconcile_is_a_no_op_for_an_absent_description() {
+        let fixed = reconcile_description_pi_stamp(None, License::Ogl, None);
+        assert_eq!(fixed, None);
     }
 }

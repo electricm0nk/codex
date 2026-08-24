@@ -40,9 +40,9 @@
     "traits": []
   },
   "ingested_at": "2026-08-23T19:41:15Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

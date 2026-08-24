@@ -58,6 +58,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
 /// The `(path, line, record_key)` a `CorpusSource` cites, when it cites a
@@ -1522,6 +1523,20 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             ability.name,
             ability.codex_generated_name,
         );
+        // SD-32 declared-pi-shipping-65-followups: this loop used to
+        // hardcode `license: Ogl`/`pi_field: None` unconditionally, even
+        // when `ability.description` was already the redaction marker (a
+        // static-table literal a prior pass had blanked by hand). The
+        // `monster_record_pi_hits` hard gate below still catches any LIVE,
+        // un-redacted blacklist-term text in `description` and aborts the
+        // whole run before anything is written -- so a description that
+        // reaches this point is always either ordinary prose or already
+        // the marker, and `classify_optional_field_declared` correctly
+        // stamps both cases (this is the same shared classifier
+        // `cache_gen::{equipment_gap, feat_gap, class_feature}` already
+        // use for their own optional text fields).
+        let (ability_license, ability_pi_field, ability_pi_marker, _) =
+            pi_screening::classify_optional_field_declared("description", ability.description, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:monster_ability:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -1562,9 +1577,9 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             ingested_at: ingested_at.clone(),
             data,
             source,
-            license: Some(License::Ogl),
-            pi_field: None,
-            pi_marker: None,
+            license: Some(ability_license),
+            pi_field: ability_pi_field,
+            pi_marker: ability_pi_marker,
             wiring_class,
             wiring_class_signals,
             description_source: None,
