@@ -7932,3 +7932,65 @@ Row 15 untouched, stays `in-progress`.
 Full receipt:
 `artifacts/gate-3-closure-invariant/declared-pi-shipping-65-followups_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row19-cycle2 (2026-08-24) — Epic 9, row 19 (`epic-9-desktop-reach-and-catalog-reds`)
+
+Picked up cycle 1's 7 named reds in its own priority order. Reproduced first:
+`apps/desktop/src-tauri`: `cargo test --locked --bin codex-desktop` → 512 passed, 7 failed,
+matching cycle 1's list exactly.
+
+**Closed 2 of 7, both genuine (not stale-pin instrument corrections):**
+
+1. `reach_gate::tests::every_ingested_companion_book_reaches_the_catalog_record_by_record` —
+   `bestiary_5`'s 2 `Familiar` companions carried a raw, un-slugged `data.key`. Root cause:
+   they were written by the wrong generator (`scripts/ingest_companion.py`, when cycle 1 emptied
+   `UNINGESTED_CAMPAIGN_GATES`) instead of the guarded `gen_book_cache::gen_companion_book`, which
+   every other bestiary_5 companion record goes through. Fixed at the root: widened
+   `gen_book_cache.rs`'s `bestiary_5` `CompanionBookSpec.races_lsts` to name
+   `b5_races_companion_oa.lst` (its stale exclusion comment recited the same
+   `PRECAMPAIGN:1,Occult Adventures` premise cycle 1's own fix already falsified), removed the two
+   wrongly-shaped files, and re-ran `cargo run --bin gen_book_cache -- companion:bestiary_5` — its
+   `if !path.exists()` guard wrote fresh records for exactly those two, verified by
+   `git status --porcelain` showing only the two target files plus `LICENSE.json` changed.
+   `LICENSE.json`'s diff is append-only, `records_processed` unchanged at 279, zero PI hits.
+2. `reach_gate::tests::pathfinder_unchaineds_class_features_are_claimed_per_corpus_record` — gave
+   it the partial-credit branch cycle 1's plan named. PU's `class_feature` corpus directory holds
+   604 files; only 64 are owned by the four compiled Unchained class tables
+   (`pu_class_owned_feature_keys()`, new). The old test used a directory walk as both the pinned
+   count and the reach denominator, conflating "ingested for shape-closure" with "class-owned".
+   Rewrote with explicit, named assertions for both numbers (`on_disk.len() == 604`,
+   `class_owned.len() == 64`, `non_class_owned == 540`) rather than collapsing the family to
+   `NotSurfaced`. Mutation-proved RED (temporarily `64` → `65`, confirmed panic, reverted).
+
+**Narrowed with evidence, not closed:** `companion_catalog::tests::every_served_key_matches_a_corpus_record_file`
+iterates all 16 `COMPANION_BOOKS` (not just the 7 the sibling reach_gate test checks) and was
+failing on the first book (`beastiary`) before this cycle, hiding every later book's own
+disagreement. Closed `beastiary` (28 named `.COPY=`/`.MOD`/orphan/unmodelled rows, cited to
+`companion_data.rs`'s own header comment) and `bestiary_4` (2 named `.COPY=` ability rows) via a
+new `KNOWN_UNTRANSCRIBED_COMPANION_RECORDS` const — the same evidenced-exception shape
+`reach_gate.rs`'s own `OPEN_FINDINGS` already uses. Re-derivation (independent Python cross-check
+against the transcribed tables and on-disk files, `§17a`) found the test's true remaining scope is
+**434 more records across 4 books** (`ultimate_wilderness` 248, `ultimate_magic` 139,
+`advanced_race_guide` 18, `book_of_the_damned_volume_1` 29) — sampled records confirm the
+eidolon-evolution / shared-reference-library shape cycle 1 named for item 4, at a scale that
+cannot be honestly closed with named per-record exceptions in this cycle's remaining budget.
+
+**Re-scoped, not attempted:** the 4 remaining `reach_gate` generic-family tests
+(`every_declared_claim_actually_carries_the_records`, `every_ingested_family_is_accounted_for`,
+`unreached_records_are_exactly_the_recorded_findings`, `unsurfaced_families_are_exactly_the_recorded_findings`)
+now name **~170** unaccounted `(book, kind)` families (12 recurring newly-classified corpus kinds
+× ~30 books each — larger than cycle 1's own "~38" estimate, which predated the classifier fix
+landing corpus-wide) plus individual eidolon-evolution records (at least 18 named for
+`advanced_race_guide/companions` alone). Left red and named with evidence per `§17a`/`§1a` rather
+than fabricated at volume under time pressure.
+
+**Full sweep, post-rebase (rebased onto `origin/tranche/12` after the PI lane's and row 18's
+cycles landed, re-ran before push per the territorial coordination note):**
+`apps/desktop/src-tauri`: `cargo test --locked --bin codex-desktop` → **514 passed, 5 failed**
+(same 5 named test failures before and after rebase — unaffected by the sibling lanes' changes).
+Root workspace: `cargo test --locked --lib bestiary_5` → 4 passed, 0 failed.
+
+**Kanban:** row 19 stays `in-progress` (cycle field 1 → 2); rows 11 and 15 untouched.
+
+Full receipt: `artifacts/epic-9-desktop-reach-and-catalog-reds/row19-cycle2-receipt.md`.
+Commit: (this cycle's commit -- see push output).
