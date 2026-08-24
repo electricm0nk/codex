@@ -8128,3 +8128,68 @@ reds closed], -3 failed).
 
 Full receipt: `artifacts/epic-9-desktop-reach-and-catalog-reds/row19-cycle3-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row19-cycle4 (2026-08-24) — Epic 9, row 19 (`epic-9-desktop-reach-and-catalog-reds`) — WHOLE WORKSPACE GREEN
+
+Worktree started on a stale `tranche/11`-lineage tip (footgun 1, again); recovered via
+`git reset --hard $PIN` + `git rebase origin/tranche/12` (no new commits past `$PIN` — HEAD after
+rebase equalled cycle 3's own commit exactly). Oracle bootstrapped fresh, confirmed populated
+(`7f818006e371188e5717fd18d74d18a420747fc6`).
+
+**§17a re-derivation before writing code:** re-ran the two RED tests against the unmodified
+starting state and found **two independent gaps**, not one: (1) the twelve reference-library kinds
+the brief named — **142** `(book, kind)` families (not ~170 as inherited — moved again on
+re-derivation); (2) a **second, previously-unnamed 43-family gap** across `classes`/`spells`/
+`feats`/`equipment`/`class_features`, provably pre-existing (this cycle's diff against `bdf29f8196`
+is purely additive, 0 deletions, and its new match arm only intercepts the twelve reference-library
+kinds) — cycle 3's own receipt characterized the residual as "the same ~170 ... none of these
+families is companion" without naming this second population.
+
+**Mechanism built (closes the 142-family population):** `reference_library_catalog.rs`, ONE
+generic mechanism serving all twelve kinds across every book, per `decisions.md §17`. Three-tier
+content resolution: authored `description` → a `DESC` raw token several kinds never had hoisted to
+`description` at ingest time (`deity`, `power` — confirmed real: `ultimate_psionics/power/
+control_object.json` has no `description` field but carries a real `DESC` raw token) → a rendered
+mechanical-token summary excluding administrative/citation fields (`SOURCEPAGE`/`SOURCEWEB`/
+`SOURCELONG`/`SOURCESHORT`/`NAMEISPI`/`KEY`). Closes **9,679 of 9,697 records (139 of 142
+families)** to real served content — the 18-record, 3-family residual carries literally nothing
+beyond `key`/`name` anywhere in the corpus record, verified by direct inspection, and is served
+anyway by identity only, pinned exactly in `BARE_RECORD_FINDINGS`.
+
+**One real near-miss caught before commit:** `CORPUS_BOOK_IDS` is many-to-one (`beastiary1` maps to
+BOTH `beastiary` AND `bestiary` directories; `apg`'s directory is `advanced_players_guide`, not
+`apg`) — the first implementation assumed book id == directory name and broke silently ("nothing is
+ingested"), caught by `every_declared_claim_actually_carries_the_records`, fixed by unioning every
+directory a book id maps to.
+
+**The 43-family gap: sized and named in `OPEN_FINDINGS`, not built this cycle.** Needs five
+different real mechanisms (a class chassis per book for `classes`; joining the existing
+`feats_all`/`spell_resolver`/`equipment_resolver` per-book unions for `feats`/`spells`/`equipment`;
+`epic-4-mechanism`'s standing per-class wiring for `ultimate_psionics/class_features`, 1,573
+records, the largest single item). Each of the 43 entries carries a re-derived record count
+(`glob` over its own corpus directory) and a real remedy — not a carve-out.
+
+**Both target reds closed GREEN:** `every_ingested_family_is_accounted_for`,
+`unsurfaced_families_are_exactly_the_recorded_findings`.
+
+**Full sweep:** `apps/desktop/src-tauri`: `cargo test --locked --bin codex-desktop` →
+**536 passed, 0 failed** (up from 526/2 at cycle 3's exit). **The whole desktop workspace is
+green.**
+
+**Kanban:** row 19 set `complete` (cycle field 3 → 4), per `§10` — the whole desktop workspace is
+green and no partial-credit disposition remains for row 19's own scope. Rows 11 and 15 left
+`in-progress`, untouched by this cycle.
+
+**Not touched this cycle, named for the next lane:** the companion formula-scaled residual (~260 of
+cycle 3's 330 pinned records) against the now-real `formula_interpreter.rs`
+(`src/rules_core/pilot_compute/formula_interpreter.rs`, 1,345 lines, referenced 5× in
+`pilot_compute/mod.rs`, already proved against fixtures for all nine in-scope shape families by
+Gate 2 — `artifacts/gate-2-engines/001_cycle_receipt.md`). SD-31 Decision 20 overturned the
+interpreter ban `decisions.md §24` cited (operator, 2026-08-21: *"I choose thousands... for now we
+need to get something in front of the user community"*) — cycle 3's `OPEN_FINDINGS` entries citing
+`§24` for the companion residual are now stale and need correction, not re-filing. The 30 delta-row
+companions (`beastiary1` 28, `bestiary_4` 2) still need a real creature-template/delta-application
+engine, unchanged from cycle 1's sizing.
+
+Full receipt: `artifacts/epic-9-desktop-reach-and-catalog-reds/row19-cycle4-receipt.md`.
+Commit: (this cycle's commit -- see push output).

@@ -1974,8 +1974,95 @@ fn reach_of(family: &Family) -> Option<Reach> {
             uw::archetype_tables::archetype_swap_tables(),
         )),
 
+        // Row 19 cycle 4: the twelve corpus content-kind directories cycle 3
+        // named as having no reach mechanism at all (`CORPUS_KIND_NAMES`'s
+        // own comment above) -- ONE generic dispatch arm covering every book
+        // for all twelve, per `decisions.md §17` ("generic pass ... not
+        // per-book work"), not twelve/many separate match arms.
+        // `reference_library_catalog.rs` serves every record under
+        // `data/corpus/<book>/<kind_dir>/` with real content wherever the
+        // corpus carries any (authored prose, a `DESC` raw token, or a
+        // rendered mechanical-token summary) and identity-only for the rare
+        // record that has none.
+        (book, kind) if REFERENCE_LIBRARY_KINDS.iter().any(|(k, _)| *k == kind) => {
+            Some(reference_library_reach(book, kind))
+        }
+
         _ => None,
     }
+}
+
+/// `(plural kind name, singular corpus directory name)` for the twelve
+/// kinds `reference_library_catalog.rs` serves generically. Deliberately a
+/// second small table rather than importing `reference_library_catalog`'s
+/// own `REFERENCE_LIBRARY_KIND_DIRS` list directly into the match guard
+/// above — the plural name is this module's own vocabulary
+/// (`CORPUS_KIND_NAMES` already carries the same pairing; kept local so the
+/// match guard needs no runtime lookup through that larger table).
+const REFERENCE_LIBRARY_KINDS: &[(&str, &str)] = &[
+    ("abilities", "ability"),
+    ("class_variants", "class_generic"),
+    ("deities", "deity"),
+    ("domains", "domain"),
+    ("generic_feats", "feat_generic"),
+    ("languages", "language"),
+    ("monster_variants", "monster_generic"),
+    ("powers", "power"),
+    ("race_variants", "race_generic"),
+    ("skills", "skill"),
+    ("templates", "template"),
+    ("named_traits", "trait_generic"),
+];
+
+/// Executes `reference_library_catalog::load_reference_library_entries_prod`
+/// for one `(book, kind)` family and judges it against `corpus_record_keys`'
+/// own denominator via the shared `assess()` core -- the same pattern every
+/// other `*_reach` function in this file uses. A record with ANY resolved
+/// `description` (tier 1/2 real prose, or tier 3's rendered mechanical-token
+/// summary — both are real fields the render path reads, neither is empty)
+/// counts as `with_payload`; only a record reaching none of the three tiers
+/// (`description: None` — the 18-record residual `reference_library_
+/// catalog.rs`'s own doc comment names) counts as `identity_only`.
+/// `assess()` then reports `Surfaced` when every record in the family
+/// resolved, `BareRecords` when a genuinely-empty record remains, and would
+/// report `NotSurfaced` if any record were altogether absent from the
+/// catalog's response (structurally impossible here: the catalog walks the
+/// exact same directory `corpus_record_keys` reads, proven by
+/// `reference_library_catalog.rs`'s own
+/// `every_record_under_a_directory_becomes_exactly_one_entry` test).
+fn reference_library_reach(book: &str, kind: &str) -> Reach {
+    let Some((_, kind_dir)) = REFERENCE_LIBRARY_KINDS.iter().find(|(k, _)| *k == kind) else {
+        return Reach::NotSurfaced {
+            why: format!("'{kind}' is not a registered reference-library kind"),
+            missing: BTreeSet::new(),
+        };
+    };
+    // `family.book` is the book id `CORPUS_BOOK_IDS` maps TO, not the
+    // on-disk directory name — they differ for several books (`apg`'s
+    // directory is `advanced_players_guide`, `beastiary1`'s is `beastiary`
+    // AND `bestiary`, two directories sharing one id). Union every matching
+    // directory rather than assuming book id == directory name, the same
+    // many-to-one shape `corpus_inventory()` itself resolves through this
+    // table.
+    let mut ingested = BTreeSet::new();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for (book_dir, book_id) in CORPUS_BOOK_IDS {
+        if *book_id != book {
+            continue;
+        }
+        ingested.extend(corpus_record_keys(book_dir, kind_dir));
+        let entries =
+            crate::reference_library_catalog::load_reference_library_entries_prod(book_dir, kind_dir);
+        for entry in &entries {
+            if entry.description.is_some() {
+                with_payload.insert(entry.key.clone());
+            } else {
+                identity_only.insert(entry.key.clone());
+            }
+        }
+    }
+    assess("list_reference_library_catalog", &ingested, &with_payload, &identity_only)
 }
 
 /// The shared, honest verdict for every book's archetype-swap table -- see
@@ -3082,6 +3169,73 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          score-derived). Remedy: none for the empty-description rows; a real formula interpreter for \
          the rest, out of scope per `decisions.md §24`.",
     ),
+    // SD-32 row 19 cycle 4: an independent gap this cycle discovered while
+    // re-deriving `every_ingested_family_is_accounted_for`'s own population
+    // per `decisions.md §17a` -- 43 `(book, kind)` families across `classes`
+    // (17), `spells` (11), `feats` (11), `equipment` (3) and
+    // `class_features` (1, `ultimate_psionics`) that were ALREADY red at
+    // this cycle's own starting commit (`bdf29f8196`, cycle 3's own exit),
+    // unrelated to the twelve reference-library kinds above and unrelated to
+    // `companion`. Cycle 3's receipt characterized the residual as "the same
+    // ~170 ... none of these families is companion" without naming this
+    // second population; re-running the two RED tests against `bdf29f8196`
+    // unmodified (before this cycle's own edits) shows the identical 43
+    // families already failing: this cycle's own diff against `bdf29f8196`
+    // (`git diff --stat`) is purely additive (0 deletions) and its new
+    // match arm only intercepts the twelve reference-library kinds above --
+    // none of `classes`/`spells`/`feats`/`equipment`/`class_features` -- so
+    // this population could not have been created by this cycle's own
+    // edits; it is a real, pre-existing gap this cycle is the first to
+    // name, not a regression this cycle introduced.
+    // Every count below is `glob.glob("data/corpus/<dir>/<kind_dir>/**/*.json")`
+    // over the book's own corpus directory (re-derivable, not assumed).
+    // Each is real, ingested, un-wired content requiring its own mechanism
+    // (a class chassis, a feat/spell/equipment table joining its kind's
+    // existing generic union) -- sized here, not built this cycle; see the
+    // receipt's next-cycle plan.
+    ("adventurers_guide", "classes", "Gap: 9 Adventurer's Guide `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("adventurers_guide", "equipment", "Gap: 116 Adventurer's Guide `equipment` records are ingested; this book has not joined `equipment_resolver::equipment_catalog_rows()`'s per-book union yet, so no reach claim exists. Remedy: add this book's equipment table to the union the same way every other equipment-bearing book already is."),
+    ("beastiary1", "classes", "Gap: 28 Bestiary 1 `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("beastiary1", "spells", "Gap: 111 Bestiary 1 `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("bestiary_4", "spells", "Gap: 58 Bestiary 4 `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("bonus_bestiary", "classes", "Gap: 3 Bonus Bestiary `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("book_of_the_damned_volume_1", "classes", "Gap: 1 Book of the Damned Vol. 1 `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("book_of_the_damned_volume_1", "spells", "Gap: 6 Book of the Damned Vol. 1 `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("book_of_the_damned_volume_2", "classes", "Gap: 1 Book of the Damned Vol. 2 `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("book_of_the_damned_volume_2", "feats", "Gap: 1 Book of the Damned Vol. 2 `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("book_of_the_damned_volume_2", "spells", "Gap: 11 Book of the Damned Vol. 2 `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("core_essentials", "feats", "Gap: 15 Core Essentials `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("horror_adventures", "classes", "Gap: 1 Horror Adventures `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("horror_adventures", "feats", "Gap: 61 Horror Adventures `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("inner_sea_combat", "classes", "Gap: 2 Inner Sea Combat `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_combat", "feats", "Gap: 23 Inner Sea Combat `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("inner_sea_gods", "classes", "Gap: 3 Inner Sea Gods `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_gods", "feats", "Gap: 86 Inner Sea Gods `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("inner_sea_intrigue", "classes", "Gap: 2 Inner Sea Intrigue `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_intrigue", "feats", "Gap: 6 Inner Sea Intrigue `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("inner_sea_intrigue", "spells", "Gap: 26 Inner Sea Intrigue `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("inner_sea_magic", "classes", "Gap: 2 Inner Sea Magic `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_magic", "equipment", "Gap: 68 Inner Sea Magic `equipment` records are ingested; this book has not joined `equipment_resolver::equipment_catalog_rows()`'s per-book union yet, so no reach claim exists. Remedy: add this book's equipment table to the union the same way every other equipment-bearing book already is."),
+    ("inner_sea_races", "feats", "Gap: 50 Inner Sea Races `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("inner_sea_races", "spells", "Gap: 33 Inner Sea Races `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("inner_sea_temples", "equipment", "Gap: 43 Inner Sea Temples `equipment` records are ingested; this book has not joined `equipment_resolver::equipment_catalog_rows()`'s per-book union yet, so no reach claim exists. Remedy: add this book's equipment table to the union the same way every other equipment-bearing book already is."),
+    ("inner_sea_world_guide", "classes", "Gap: 1 Inner Sea World Guide `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_world_guide", "feats", "Gap: 31 Inner Sea World Guide `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("inner_sea_world_guide", "spells", "Gap: 22 Inner Sea World Guide `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("monster_codex", "feats", "Gap: 32 Monster Codex `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("monster_codex", "spells", "Gap: 24 Monster Codex `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("mythic_adventures", "feats", "Gap: 199 Mythic Adventures `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("mythic_adventures", "spells", "Gap: 10 Mythic Adventures `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("occult_adventures", "classes", "Gap: 9 Occult Adventures `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("occult_adventures", "feats", "Gap: 68 Occult Adventures `feat` records are ingested; this book has not joined `feats_all::all_feat_tables()`'s per-book union yet (the mechanism APG/ACG/ARG/PU/UCA/UI/UW/UC already share), so no reach claim exists. Remedy: add this book's own feat table to the union the same way each of those books did."),
+    ("ultimate_combat", "classes", "Gap: 3 Ultimate Combat `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_equipment", "spells", "Gap: 1 Ultimate Equipment `spell` records are ingested; this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("ultimate_intrigue", "classes", "Gap: 3 Ultimate Intrigue `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_magic", "classes", "Gap: 1 Ultimate Magic `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_magic_wordsofpower", "spells", "Gap: an unknown number of Ultimate Magic (Words of Power) `spell` records are ingested (via its compiled `rules_tables` source, no `data/corpus/` directory); this book has not joined `spell_resolver::spell_catalog_rows()`'s per-book chain yet (the mechanism every other spell-bearing book already uses), so no reach claim exists. Remedy: chain this book's spell table into the resolver the same way the existing books are."),
+    ("ultimate_psionics", "class_features", "Gap: 1573 Ultimate Psionics `class_feature` records are ingested corpus-wide; no per-class mechanism wiring (epic-4-mechanism) has landed for this book's classes yet, the same gap already recorded for ACG/ARG/APG/CRB/etc. above. Remedy: same as ACG above."),
+    ("ultimate_psionics", "classes", "Gap: 37 Ultimate Psionics `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_wilderness", "classes", "Gap: 1 Ultimate Wilderness `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -3116,6 +3270,61 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
     // with_real_grants`.
     ("bestiary_6", "race_traits", &["Adopted Race ~ Rougarou"]),
+    // SD-32 row 19 cycle 4: `reference_library_catalog.rs`'s three-tier
+    // resolution (authored `description`, a `DESC` raw token, then a
+    // rendered mechanical-token summary) closes 9,679 of the 9,697 records
+    // across these twelve kinds to a real served field. These 6 are the
+    // genuine residual for `beastiary/race_generic` — real corpus records
+    // (`Hydra (Cryohydra)` etc., PCGen alternate-energy-type Hydra variants)
+    // with `description: null` and `raw_tokens: []`, verified by direct
+    // inspection: nothing beyond the bare `key`/`name` exists anywhere in
+    // the corpus record for any of the three tiers to resolve.
+    (
+        "beastiary1",
+        "race_variants",
+        &[
+            "Hydra (Cryohydra)",
+            "Hydra (Pyrohydra)",
+            "Iron Cobra (Adamantine Cobra)",
+            "Iron Cobra (Cold Iron Cobra)",
+            "Iron Cobra (Darkwood Cobra)",
+            "Iron Cobra (Mithral Cobra)",
+        ],
+    ),
+    // Same shape as `beastiary/race_generic` above — 7 of Bestiary 4's 183
+    // `template` records carry only a `SOURCEPAGE` (administrative, excluded
+    // from the tier-3 summary) or nothing at all.
+    (
+        "bestiary_4",
+        "templates",
+        &[
+            "Colour-Blighted Simple Template",
+            "Demon Lord Away from Home Realm",
+            "Empyreal Lord Away from Home Realm",
+            "Standard Clockwork Steed",
+            "Standard Death Dog",
+            "Standard Gholdako",
+            "Standard-Type Clockwork Dragon",
+        ],
+    ),
+    // Same shape — 5 of Mythic Adventures' 15 `template` records carry only
+    // their own `KEY:` raw token (excluded from the tier-3 summary as
+    // duplicate identity, not content) and no `description`/`DESC`. Each
+    // record's own `name` field already carries "(Not Implemented)" as a
+    // literal suffix — upstream PCGen's own admission these rows are
+    // placeholders with nothing to describe, not a gap this mechanism
+    // failed to close.
+    (
+        "mythic_adventures",
+        "templates",
+        &[
+            "Mythic Simple Template ~ Agile",
+            "Mythic Simple Template ~ Arcane",
+            "Mythic Simple Template ~ Divine",
+            "Mythic Simple Template ~ Invincible",
+            "Mythic Simple Template ~ Savage",
+        ],
+    ),
 ];
 
 /// Ingested records that appear in **no** response at all, for a family whose
