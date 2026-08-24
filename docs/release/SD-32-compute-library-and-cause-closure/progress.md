@@ -1534,10 +1534,77 @@ still passes (`no_record` sits exactly at the committed baseline, not above it).
   what lets a future cycle tighten `NO_RECORD_BUDGET_COUNT` downward as real `no_record` units gain
   corpus records.
 
+### Cycle — sd32-closure-epilogue final-acceptance scan (BLOCKED, no closure steps executed)
+
+- **Card ID:** row 13, `closure-epilogue`.
+- **Base commit:** `bdc5311cfc` on `tranche/12`.
+- **Outcome:** Step 1 (final-acceptance scan, `workflow-instruction.md §13`) is SHORT. Per this
+  cycle's own dispatch brief and `docs/governance/STC-Skill-Creation.md`, a short scan means STOP:
+  no retrospective section, no worktree/branch sweep, no release-notes re-derivation, no
+  architecture-docs/graphify pass, no version bump, no PR, row 13 stays NOT `complete`.
+- **What is short:** `cd apps/desktop/src-tauri && cargo test --locked --bin codex-desktop` now
+  reads **541 passed, 7 failed** — a live regression from the prior cycle's own recorded **548
+  passed, 0 failed** at the same command (`row11-row13-final-closure_cycle-1_cycle_receipt.md`).
+  Root cause: `beginner_box` was ingested (closing the `EXCLUDED_BOOKS` carve-out per Decision
+  §28's window) but never added to `apps/desktop/src-tauri/src/reach_gate.rs`'s `CORPUS_BOOK_IDS`
+  table, and downstream per-book counts (e.g. `advanced_race_guide` 2207 vs a live 2208) were
+  never re-swept for the population growing 34,397 → 34,416. Failing tests:
+  `corpus_ingest_diagnostic::tests::the_two_ingested_books_totals_reconcile_with_their_license_artifacts`,
+  `equipment_catalog::tests::{catalog_spans_every_ingested_book_with_their_real_counts,
+  description_coverage_is_pinned_per_book,
+  filter_equipment_catalog_matches_category_exactly_across_every_book,
+  keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned}`,
+  `reach_gate::tests::{dispatch_gap_race_and_monster_families_all_have_book_level_reach_arms,
+  the_inventory_is_populated_from_all_three_live_sources}`.
+- **Second gap (unresolved, not a regression):** `scripts/verify.sh --only declared-pi-audit` did
+  not complete in two attempts (killed at 300s wrapped timeout; killed again after 6+ more minutes
+  unwrapped, still running at 99.9% CPU with no verdict). Previously reported `PASS (clean)` at the
+  pre-widening population. Needs its own timing/profile investigation before this gate can be
+  trusted at 34,416 records.
+- **What DID verify clean, live:** `shape-coverage-standing-gate` PASS
+  (`population=34416 unclassified=0 no_record=0`); `shape_ledger.py` independently reproduces
+  `no_record 0`; `row17_census.py --check` → `ROW 17 HONEST SIZE 0`; `retro.py summary` →
+  `DEFERRALS 29 total, 0 open, 29 resolved`; `pi-sweep` PASS (10/10 baseline);
+  `site-public-status-pi-gate` PASS (31 files, zero leaked); `site-dashboard-pi-gate` PASS
+  (21 files, zero leaked).
+- **Boundary respected:** this cycle is a planning-doc closure epilogue, not a dispatched build
+  agent — it does not edit `apps/desktop/src-tauri/src/*.rs` directly. The fix belongs to a
+  build-scoped cycle against that workspace (see receipt for the concrete next-step scope).
+- **This cycle's own changes:** none in tracked source; this progress entry plus the receipt only.
+- **Receipt:**
+  `artifacts/epic-5-protective-sweep/sd32-closure-epilogue-final_cycle_receipt.md` (full figures,
+  commands, and recommended next-cycle scope).
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
      card id, what failed, the command that shows it, named owner. Empty at launch. -->
+
+### Card 13 `closure-epilogue` — desktop cargo suite regression, `beginner_box` not swept into `CORPUS_BOOK_IDS` (filed 2026-08-24)
+
+`cd apps/desktop/src-tauri && cargo test --locked --bin codex-desktop` → **541 passed, 7 failed**
+(prior cycle's own receipt recorded 548/0 at the same command, before `beginner_box` was ingested).
+`beginner_box` is a real, now-ingested corpus book missing from
+`apps/desktop/src-tauri/src/reach_gate.rs::CORPUS_BOOK_IDS`, plus at least one downstream count pin
+(`advanced_race_guide` 2207 vs a live 2208) that never got re-derived for the population growing
+34,397 → 34,416. Non-self-healable by this cycle: fixing it means editing
+`apps/desktop/src-tauri/src/*.rs`, which is outside a planning-doc closure epilogue's write scope
+(orchestrator/executor boundary, `docs/governance/STC-Skill-Creation.md`). Escalated to the
+orchestrating session per `docs/governance/blocker-closure-doctrine.md` — needs a dispatched
+build-scoped cycle against `apps/desktop/src-tauri`, then a retry of this closure epilogue's Step 1.
+See `artifacts/epic-5-protective-sweep/sd32-closure-epilogue-final_cycle_receipt.md` for full test
+names, panic text, and the recommended fix scope. Named owner: next dispatched build cycle against
+`apps/desktop/src-tauri`.
+
+### Card 13 `closure-epilogue` — `declared-pi-audit` did not complete at the widened population (filed 2026-08-24)
+
+`scripts/verify.sh --only declared-pi-audit` did not reach a PASS/FAIL verdict in two attempts: a
+300s wrapped `timeout` killed it (`Terminated`), and a second unwrapped attempt ran the underlying
+`declared_pi_shipping_audit` binary at sustained 99.9% CPU for 6+ more minutes with no output past
+its banner line before this cycle killed it to end its turn. Previously reported `PASS (clean)` at
+the pre-widening population (34,397). Not a known-bad result — genuinely unverified. Named owner:
+next cycle to re-run with an extended timeout or profile the binary for the 34,416-record corpus
+before this epilogue can retry Step 1.
 
 ### Card 11 `epic-2-cause-closure` — remaining blocker shapes (filed 2026-08-22) — RESOLVED, removed 2026-08-23
 
