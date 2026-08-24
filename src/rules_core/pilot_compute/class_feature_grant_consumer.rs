@@ -1534,10 +1534,29 @@ pub(crate) fn resolved_description_for(
 /// not this function's; the two are mutually exclusive by construction (see the `bonus_vars.
 /// is_empty()` guard below) so a caller can safely try both without ever double-resolving the
 /// same record two different ways.
+///
+/// `header_vars`: SD-32 T12 Epic 8 row 18 cycle 19 -- the SAME "pool header chain" shape
+/// [`super::pool_header_record_by_normalized_suffix`] already merges for
+/// [`super::resolve_pool_member_sole_magnitude`]'s own `BONUS:VAR`-chain path, extended to this,
+/// the OTHER generic resolver. Cycle 18 named this precisely: `Mountain Domain ~ Foothold`'s `%1`
+/// argument is the bare identifier `DomainMountainTimes`, resolvable through Cleric's own
+/// class-record `BONUS:VAR|DomainPowerTimes|3+WIS` header chain (the SAME chain gap 1 in cycle
+/// 18's own Cleric Domain fix already wired for the bonus_vars-only resolver) -- but this
+/// resolver, unlike that one, never received it, because it evaluates each `%N` argument as a
+/// bare formula string against ONLY the ability-modifier and class-level seed, with no header
+/// merge step of its own. Resolved through the SAME [`resolve_pcgen_var_chain`] every other
+/// resolver in this module already uses (never a new evaluation mechanism, `§17`), then folded
+/// into `seed_vars` via `.entry().or_insert()` -- never overwriting the ability-modifier/
+/// class-level seeds already bound above, exactly the "never fabricate, never overwrite an
+/// already-bound identifier" policy every other merge in this module already follows. An empty
+/// `header_vars` map (both existing call sites before this cycle) makes this a true no-op --
+/// `resolve_pcgen_var_chain` on an empty map only ever re-derives the same ability-modifier/
+/// class-level seed this function was already computing, so prior behaviour is preserved exactly.
 pub(crate) fn resolved_description_for_formula_only_desc_argument(
     key: &str,
     level: u8,
     ability_modifiers: &AbilityModifiers,
+    header_vars: &BTreeMap<String, String>,
 ) -> Option<(String, i64)> {
     let record = class_feature_record_tokens_pre_gate_safe().get(key)?;
     if !record.bonus_vars.is_empty() {
@@ -1553,6 +1572,13 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
     seed_vars.insert(class_level_var.clone(), i64::from(level));
     if let Some(class_name) = class_level_var.strip_suffix("LVL") {
         seed_vars.insert(format!("CLASSLEVEL::{class_name}"), i64::from(level));
+    }
+    if !header_vars.is_empty() {
+        let resolved_header =
+            resolve_pcgen_var_chain(header_vars, &class_level_var, level, ability_modifiers);
+        for (name, value) in &resolved_header {
+            seed_vars.entry(name.clone()).or_insert(*value);
+        }
     }
     let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
     for arg in &args {

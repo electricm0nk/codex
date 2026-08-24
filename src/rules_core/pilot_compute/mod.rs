@@ -39669,6 +39669,89 @@ fn pool_header_record_by_normalized_suffix(
 /// per-class table) -- reusing the existing function rather than building a new one (`§17`).
 /// `None` (every pre-existing caller) preserves the exact original single-header behaviour,
 /// unchanged.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 19: the per-group header, `"<RegisteredName> Tracker"` header,
+/// class-wide `"<class> ~ <RegisteredName>"` bare base header, and the owning class's own
+/// record-level `BONUS:VAR` chain, factored out of this function's own body into
+/// [`pool_group_header_vars_merged`] so [`class_feature_grant_consumer::
+/// resolved_description_for_formula_only_desc_argument`] -- the OTHER generic resolver, for a
+/// record whose `bonus_vars` is EMPTY -- merges the SAME real corpus header chain this function
+/// does, rather than an independently-maintained (and, until this cycle, incomplete) copy of it
+/// (`§17`, generic passes not per-object work). This function's own behaviour is unchanged: the
+/// extraction reproduces the exact same three-merge sequence, verified by the full unchanged
+/// six-pool census re-run below.
+fn pool_group_header_vars_merged(
+    owning_class: &str,
+    pool_group: &str,
+    registered_name_for_tracker: Option<&str>,
+) -> std::collections::BTreeMap<String, String> {
+    let mut combined_vars: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+    let header_vars = pool_header_record_by_normalized_suffix(
+        owning_class,
+        pool_group,
+        registered_name_for_tracker,
+    );
+    for (name, formula) in &header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    }
+    if let Some(registered_name) = registered_name_for_tracker {
+        let tracker_name = format!("{registered_name} Tracker");
+        let tracker_vars =
+            pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
+        for (name, formula) in &tracker_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+        // SD-32 T12 Epic 8 row 18 cycle 13: a THIRD real corpus shape for the class-wide shared
+        // base of a "select ONE group, inherit every member" pool, distinct from both the
+        // per-group header (`pool_header_record_by_normalized_suffix(owning_class, pool_group)`)
+        // and the `"<RegisteredName> Tracker"` shape above. Confirmed live: `data/corpus/
+        // advanced_class_guide/class_feature/shaman/spirit.json` (key `"Shaman ~ Spirit"`, class
+        // `"Shaman"`, real `BONUS:VAR|ShamanSpiritLVL|ShamanLVL`) -- the EXACT `"<class> ~
+        // <registered_name>"` shape (no `" Tracker"` suffix), never merged before cycle 13
+        // because neither the per-group lookup (`pool_group` is the specific spirit's own name,
+        // e.g. `"Bones Spirit"`, never the bare `"Spirit"` word) nor the Tracker lookup (which
+        // only ever tries `"<rn> Tracker"`) reaches it. Traced end to end: every one of Shaman's
+        // real per-spirit member formulas (e.g. `Bones Spirit ~ Shedding Form`'s
+        // `ShamanSheddingFormRounds|ShamanSpiritLVL`) references this bare `ShamanSpiritLVL`
+        // directly, with no competing corpus record anywhere else ever targeting that same name
+        // (`every_corpus_bound_bonus_var_target()` unaffected -- this is a REAL, unambiguous
+        // corpus-verified bind, not a guessed default), so merging it here closes real members
+        // rather than fabricating one. Cavalier's own `"Cavalier ~ Order"` record matches this
+        // same shape too (binds `OrderAbilityLVL`) but changes nothing there -- every real
+        // Cavalier Order group's own members carry zero `BONUS:VAR` tokens at all
+        // (`record.bonus_vars.is_empty()` returns `None` before `combined_vars` is even built),
+        // confirmed unchanged by this cycle's own re-derived census. `None` for every class with
+        // no such record (Sorcerer, Bloodrager, Cleric, Warpriest all lack a `"<class> ~
+        // <registered_name>"` key -- confirmed by direct corpus lookup) preserves prior behaviour
+        // exactly, unchanged. This is ALSO, per cycle 19, exactly the clause that reaches
+        // Cleric Domain's own `"Domains"` bare plural record (`registered_name = "Domain"`,
+        // `pool_header_record_by_normalized_suffix`'s own trailing-`s`-tolerant bare-key clause)
+        // carrying `BONUS:VAR|DomainPowerTimes|3+WIS` -- the identifier `Mountain Domain ~
+        // Foothold`'s own `%1` argument (`DomainMountainTimes|DomainPowerTimes`, itself only
+        // reachable via the domain-kind header cycle 18 added) needs a SECOND hop through to
+        // resolve, and which the desc-formula resolver's own pre-cycle-19 header merge (a single
+        // `pool_header_record_by_normalized_suffix(class, pool_group, ...)` call, no tracker/base
+        // hop) never reached -- confirmed live, this exact gap is what motivated factoring this
+        // function out rather than duplicating a narrower, incomplete merge at the new call site.
+        let base_vars =
+            pool_header_record_by_normalized_suffix(owning_class, registered_name, None);
+        for (name, formula) in &base_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
+    // (`class_record_bonus_vars`'s own doc -- Cleric's `DomainLVL`, real PCGen source
+    // `cr_classes.lst`, binds HERE, never on any `class_feature` record) merged in too, always
+    // tried (no gating flag -- a class with no such record simply merges nothing, exactly like an
+    // absent per-group/tracker header above).
+    if let Some(class_vars) = class_feature_grant_consumer::class_record_bonus_vars().get(owning_class) {
+        for (name, formula) in class_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    combined_vars
+}
+
 pub(crate) fn resolve_pool_member_sole_magnitude(
     key: &str,
     pool_group: &str,
@@ -39694,59 +39777,10 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
         return None; // more than one terminal target -- refuse, do not guess
     }
     let mut combined_vars = record.bonus_vars.clone();
-    let header_vars = pool_header_record_by_normalized_suffix(
-        owning_class,
-        pool_group,
-        registered_name_for_tracker,
-    );
-    for (name, formula) in &header_vars {
+    let merged_header_vars =
+        pool_group_header_vars_merged(owning_class, pool_group, registered_name_for_tracker);
+    for (name, formula) in &merged_header_vars {
         combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
-    }
-    if let Some(registered_name) = registered_name_for_tracker {
-        let tracker_name = format!("{registered_name} Tracker");
-        let tracker_vars =
-            pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
-        for (name, formula) in &tracker_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
-        }
-        // SD-32 T12 Epic 8 row 18 cycle 13: a THIRD real corpus shape for the class-wide shared
-        // base of a "select ONE group, inherit every member" pool, distinct from both the
-        // per-group header (`pool_header_record_by_normalized_suffix(owning_class, pool_group)`)
-        // and the `"<RegisteredName> Tracker"` shape above. Confirmed live: `data/corpus/
-        // advanced_class_guide/class_feature/shaman/spirit.json` (key `"Shaman ~ Spirit"`, class
-        // `"Shaman"`, real `BONUS:VAR|ShamanSpiritLVL|ShamanLVL`) -- the EXACT `"<class> ~
-        // <registered_name>"` shape (no `" Tracker"` suffix), never merged before this cycle
-        // because neither the per-group lookup (`pool_group` is the specific spirit's own name,
-        // e.g. `"Bones Spirit"`, never the bare `"Spirit"` word) nor the Tracker lookup (which
-        // only ever tries `"<rn> Tracker"`) reaches it. Traced end to end: every one of Shaman's
-        // real per-spirit member formulas (e.g. `Bones Spirit ~ Shedding Form`'s
-        // `ShamanSheddingFormRounds|ShamanSpiritLVL`) references this bare `ShamanSpiritLVL`
-        // directly, with no competing corpus record anywhere else ever targeting that same name
-        // (`every_corpus_bound_bonus_var_target()` unaffected -- this is a REAL, unambiguous
-        // corpus-verified bind, not a guessed default), so merging it here closes real members
-        // rather than fabricating one. Cavalier's own `"Cavalier ~ Order"` record matches this
-        // same shape too (binds `OrderAbilityLVL`) but changes nothing there -- every real
-        // Cavalier Order group's own members carry zero `BONUS:VAR` tokens at all
-        // (`record.bonus_vars.is_empty()` returns `None` before `combined_vars` is even built),
-        // confirmed unchanged by this cycle's own re-derived census. `None` for every class with
-        // no such record (Sorcerer, Bloodrager, Cleric, Warpriest all lack a `"<class> ~
-        // <registered_name>"` key -- confirmed by direct corpus lookup) preserves prior behaviour
-        // exactly, unchanged.
-        let base_vars =
-            pool_header_record_by_normalized_suffix(owning_class, registered_name, None);
-        for (name, formula) in &base_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
-        }
-    }
-    // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
-    // (`class_record_bonus_vars`'s own doc -- Cleric's `DomainLVL`, real PCGen source
-    // `cr_classes.lst`, binds HERE, never on any `class_feature` record) merged in too, always
-    // tried (no gating flag -- a class with no such record simply merges nothing, exactly like an
-    // absent per-group/tracker header above).
-    if let Some(class_vars) = class_feature_grant_consumer::class_record_bonus_vars().get(owning_class) {
-        for (name, formula) in class_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
-        }
     }
     let class_level_var = class_feature_grant_consumer::class_level_variable_name(owning_class);
     let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
@@ -39998,6 +40032,16 @@ fn push_generic_pool_group_selection_description_magnitude(
         };
         let prefix = format!("{group} ~ ");
         let group_slug = class_feature_id_slug(&group);
+        // SD-32 T12 Epic 8 row 18 cycle 19: mirror `resolve_pool_member_sole_magnitude`'s own
+        // FULL header-chain merge (per-group header + Tracker header + bare base header +
+        // owning-class record-level `BONUS:VAR` chain -- `pool_group_header_vars_merged`, `§17`)
+        // into THIS resolver too. Cycle 18 named the gap: `Mountain Domain ~ Foothold`'s `%1`
+        // needs `DomainMountainTimes`, which chains through the domain-kind header cycle 18 added
+        // to `DomainPowerTimes`, which is bound only on Cleric Domain's OWN bare `"Domains"`
+        // base-header record (`registered_name = "Domain"`) -- the base-header hop this resolver
+        // never had. Computed once per group (not per member), never a new lookup mechanism.
+        let description_header_vars =
+            pool_group_header_vars_merged(class, &group, Some(registered_name));
         for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe()
             .iter()
         {
@@ -40010,6 +40054,7 @@ fn push_generic_pool_group_selection_description_magnitude(
                     key,
                     level,
                     ability_modifiers,
+                    &description_header_vars,
                 )
             else {
                 continue;
@@ -74934,18 +74979,24 @@ mod generic_pool_group_selection_wiring_tests {
     /// therefore always returns `None` for a record this second resolver grounds. This function
     /// closes that blind spot without touching or replacing the first one.
     fn group_has_a_resolvable_member_via_description_formula(
-        _class: &str,
-        _registered_name: &str,
+        class: &str,
+        registered_name: &str,
         group: &str,
     ) -> bool {
         let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
         let prefix = format!("{group} ~ ");
         let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        // SD-32 T12 Epic 8 row 18 cycle 19: mirror the production call site's own FULL
+        // header-chain merge (see `push_generic_pool_group_selection_description_magnitude`,
+        // `pool_group_header_vars_merged`) so this census helper reports the SAME reachability
+        // the real chassis path now has, not a stale no-header-merge figure.
+        let header_vars = super::pool_group_header_vars_merged(class, group, Some(registered_name));
         table.keys().filter(|key| key.starts_with(&prefix)).any(|key| {
             super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
                 key,
                 5,
                 &ability_modifiers,
+                &header_vars,
             )
             .is_some()
         })
@@ -75063,10 +75114,28 @@ mod generic_pool_group_selection_wiring_tests {
         // member records) PLUS the one already-standing `desc_formula`-only closure (Clandestine
         // Domain) this pass adds on top, unaffected by either fix (it resolves via the OTHER
         // resolver). Every other pool UNCHANGED.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 19 (`§27b`/`§17a`): the desc-formula resolver's own
+        // missing header-merge step (cycle 18's own named gap, `§3` of its receipt) is now fixed
+        // -- `resolved_description_for_formula_only_desc_argument` merges the SAME full header
+        // chain (`pool_group_header_vars_merged`, factored out of `resolve_pool_member_sole_
+        // magnitude` so both generic resolvers share ONE merge implementation, `§17`) that the
+        // bonus_vars resolver already had. Re-derived, not assumed (diagnostic run then removed,
+        // same methodology cycle 18 used for its own group-classification pass): Cleric Domain
+        // combined 45/73 -> 49/73 (+4: Cave, Desert, Mountain, Nobility Domain -- each closes via
+        // its own single member whose `%N` argument chains through the domain-kind header's own
+        // `DomainXTimes|DomainPowerTimes` to Cleric Domain's bare `"Domains"` base-header record,
+        // e.g. `Mountain Domain ~ Foothold`'s `%1`=`DomainMountainTimes`, the EXACT gap cycle 18
+        // named by coordinate). Sorcerer Bloodline combined 31/53 -> 32/53 (+1: Imperious
+        // Bloodline, whose sole member's `%N` argument chains through the `"Bloodline Tracker"`
+        // base-header record the bonus_vars resolver's own Tracker merge already reached but this
+        // resolver, pre-fix, did not). Bonus_vars-only baselines for both pools UNCHANGED (already
+        // asserted above) -- this cycle widens ONLY the desc-formula resolver's own reach, not the
+        // bonus_vars resolver's. Every other pool's combined figure UNCHANGED, re-verified.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=31/53, combined(bonus_vars OR desc_formula)=31/53")
+            report.contains("Sorcerer Bloodline: bonus_vars=31/53, combined(bonus_vars OR desc_formula)=32/53")
                 && report.contains("Bloodrager Bloodline: bonus_vars=5/12, combined(bonus_vars OR desc_formula)=6/12")
-                && report.contains("Cleric Domain: bonus_vars=44/73, combined(bonus_vars OR desc_formula)=45/73")
+                && report.contains("Cleric Domain: bonus_vars=44/73, combined(bonus_vars OR desc_formula)=49/73")
                 && report.contains("Shaman Spirit: bonus_vars=11/14, combined(bonus_vars OR desc_formula)=12/14")
                 && report.contains("Warpriest Blessing: bonus_vars=0/37, combined(bonus_vars OR desc_formula)=8/37")
                 && report.contains("Cavalier Order: bonus_vars=1/9, combined(bonus_vars OR desc_formula)=2/9"),
@@ -75113,6 +75182,53 @@ mod generic_pool_group_selection_wiring_tests {
         let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:plant");
         let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
         assert!(count > 0, "Plant Domain must ground at least one real corpus member generically");
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 19: the desc-formula resolver's own missing header-merge
+    /// step, named by coordinate in cycle 18's own receipt (`§3`: "the desc-formula resolver has
+    /// no header-merge step of its own to find it"). `Mountain Domain ~ Foothold`'s real corpus
+    /// `%1` argument is the bare identifier `DomainMountainTimes`, chaining through the
+    /// domain-kind header cycle 18 added (`DomainMountainTimes|DomainPowerTimes|TYPE=Domain`) to
+    /// Cleric Domain's own bare `"Domains"` base-header record (`DomainPowerTimes|3+WIS`) --
+    /// UNRESOLVABLE with an empty header map (proves the gap was real), resolvable once
+    /// `pool_group_header_vars_merged` is passed in (proves the fix, mirroring cycle 8's own
+    /// header-merge fix for the OTHER resolver, `§17`).
+    #[test]
+    fn mountain_domain_foothold_desc_formula_needs_the_header_merge_to_resolve() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let key = "Mountain Domain ~ Foothold";
+        let empty_header_vars: std::collections::BTreeMap<String, String> =
+            std::collections::BTreeMap::new();
+        assert!(
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &empty_header_vars,
+            )
+            .is_none(),
+            "without the header merge, Foothold's %1 argument (DomainMountainTimes) must stay \
+             unresolvable -- proves the pre-cycle-19 gap was real, not already closed some other way"
+        );
+        let header_vars =
+            super::pool_group_header_vars_merged("Cleric", "Mountain Domain", Some("Domain"));
+        let resolved =
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &header_vars,
+            );
+        assert!(
+            resolved.is_some(),
+            "with the real header chain merged in, Foothold's %1 argument must resolve -- \
+             DomainMountainTimes -> DomainPowerTimes -> 3+WIS"
+        );
+        let (_, value) = resolved.unwrap();
+        assert_eq!(
+            value, 3,
+            "DomainPowerTimes = 3+WIS, WIS modifier 0 under AbilityModifiers::default()"
+        );
     }
 
     /// Oracle Mystery is DELIBERATELY NOT wired to
