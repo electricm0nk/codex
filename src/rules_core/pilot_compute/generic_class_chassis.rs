@@ -29,15 +29,23 @@
 //! any future drift between the two copies is caught by CI rather than
 //! silently diverging.
 //!
-//! # 61, not 60, land in this module's own table -- Demoniac still refuses
+//! # All 61 resolve -- Demoniac closed on rebase, mid-cycle
 //!
-//! `class_catalog_generic.rs` names Demoniac's bare `classlevel()` as the
-//! one record `formula_interpreter.rs`'s grammar refuses (row 18's live
-//! territory, out of this cycle's write scope). This module hits the
-//! identical refusal for the identical reason -- `resolve` simply never
-//! returns `Some` for Demoniac, and the class stays `class_chassis.
-//! unsupported` exactly like any other genuinely-uncomputed class, until a
-//! future `formula_interpreter.rs` widening closes it.
+//! `class_catalog_generic.rs` (row 20 cycle 4) named Demoniac's bare
+//! `classlevel()` as the one record `formula_interpreter.rs`'s grammar
+//! refused (row 18's live territory). This cycle's own rebase (`git fetch
+//! origin tranche/12 && git rebase`, step 6) picked up row 18 cycle 9,
+//! which widened the grammar to PARSE a bare `classlevel()` call -- but
+//! deliberately left EVALUATION refusing until a caller explicitly binds
+//! the empty `CLASSLEVEL::` sentinel key that widening introduced (its own
+//! doc comment: "No caller today binds `CLASSLEVEL::` (empty key)"). This
+//! module's own [`resolve`] IS that caller: a bare `classlevel()` inside a
+//! class's own record can only mean that SAME class's own level (there is
+//! no other class in scope for a single-class record to name), so `resolve`
+//! binds the empty key to the record's own already-known `level` — never a
+//! guess. Per the brief's own instruction ("if the widening has landed,
+//! close your 61st and say so"): **it landed, and this closes it** — 61 of
+//! 61 conventional classes now resolve a real chassis, not 60.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -257,6 +265,16 @@ pub(crate) fn resolve(class_id_str: &str, level: u8) -> Option<GenericChassisRow
     // "Formula shape, measured across all 61 before writing any code".
     vars.insert("CLASSLEVEL::APPLIEDAS=NONEPIC".to_string(), i64::from(level));
     vars.insert(record.class_level_var.clone(), i64::from(level));
+    // SD-32 T12 row 18 cycle 9 widened `formula_interpreter.rs`'s grammar to PARSE a bare,
+    // zero-argument `classlevel()` call (Demoniac's own BASEAB/SAVE formulas), binding it to
+    // the SAME `CLASSLEVEL::<name>` lookup under the empty-string "no class name given"
+    // sentinel — but that widening deliberately left evaluation refusing until a caller
+    // explicitly binds the empty key (its own doc: "No caller today binds `CLASSLEVEL::`
+    // (empty key)"). This IS that caller: a bare `classlevel()` inside a class's own record
+    // names that SAME class's own level (there is no other class in scope for a single-class
+    // record to mean), so this binds the empty key to the same `level` this function already
+    // knows — never a guess, the record's own real level.
+    vars.insert("CLASSLEVEL::".to_string(), i64::from(level));
     let bind = |f: &str| evaluator.evaluate(f, &vars).ok().map(|v| v as i16);
     let base_attack_bonus = bind(&record.baseab_formula)?;
     let fort_save = bind(&record.fort_formula)?;
@@ -276,39 +294,41 @@ mod tests {
     use super::*;
 
     #[test]
-    fn sixty_of_the_sixty_one_conventional_classes_resolve() {
-        // Demoniac (bare `classlevel()`) is the one named, live exception
-        // — see this module's own doc comment. 60, not 61 or fewer.
+    fn all_sixty_one_conventional_classes_resolve() {
+        // Row 18 cycle 9 (landed on rebase, this cycle) widened
+        // `formula_interpreter.rs`'s grammar to PARSE bare `classlevel()`;
+        // this module's own `resolve` is the caller that binds the empty
+        // `CLASSLEVEL::` key (see the doc comment at this function's own
+        // binding site) — so Demoniac, the last of the 61, now resolves
+        // too. 61 of 61, not 60.
         assert_eq!(
             generic_class_records().len(),
             61,
             "the read/classify population itself is 61 (matches class_catalog_generic.rs's own \
-             re-derivation); Demoniac fails only at RESOLVE time (its formulas evaluate to None), \
-             not at load time, so it still appears here as a loaded record"
+             re-derivation)"
         );
         let mut resolved = 0usize;
-        for (bare, record) in generic_class_records() {
+        for (bare, _record) in generic_class_records() {
             let class_id = format!("class:{bare}");
-            if resolve(&class_id, 1).is_some() {
-                resolved += 1;
-            } else {
-                assert_eq!(
-                    record.display_name, "Demoniac",
-                    "the only class expected to fail resolve() at level 1 is Demoniac; {bare} \
-                     failed unexpectedly"
-                );
-            }
+            assert!(resolve(&class_id, 1).is_some(), "{bare} must resolve a real chassis at level 1");
+            resolved += 1;
         }
-        assert_eq!(resolved, 60, "exactly 60 of the 61 conventional classes must resolve a real chassis");
+        assert_eq!(resolved, 61, "all 61 conventional classes must resolve a real chassis");
     }
 
     #[test]
-    fn demoniac_refuses_rather_than_fabricates() {
-        assert!(
-            resolve("class:demoniac", 1).is_none(),
-            "Demoniac's bare classlevel() must still refuse until formula_interpreter.rs widens \
-             (row 18's live territory) — never guess a value here"
-        );
+    fn demoniac_resolves_via_the_bare_classlevel_binding() {
+        // Demoniac's own real corpus tokens (`book_of_the_damned_volume_2/demoniac.json`):
+        // `BONUS:COMBAT|BASEAB|classlevel()*3/4|...`, `BONUS:SAVE|BASE.Fortitude|
+        // (classlevel()+1)/2`, `BONUS:SAVE|BASE.Will,BASE.Reflex|(classlevel()+1)/3` — Reflex is
+        // packed with WILL, not Fortitude (confirmed by direct read, not assumed uniform). At
+        // level 1 (integer division, floor): BAB = 1*3/4 = 0; Fort = (1+1)/2 = 1; Reflex = Will
+        // = (1+1)/3 = 0.
+        let row = resolve("class:demoniac", 1).expect("Demoniac must now resolve (row 18 cycle 9 landed)");
+        assert_eq!(row.base_attack_bonus, 0);
+        assert_eq!(row.fort_save, 1);
+        assert_eq!(row.ref_save, 0);
+        assert_eq!(row.will_save, 0);
     }
 
     #[test]

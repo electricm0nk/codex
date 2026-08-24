@@ -26,19 +26,18 @@
   '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})'` plus the same grep over both new files in
   full — zero hits both).
 - **Wired-integration audit result:** `OK_NO_TOKENS` (`grep -nE 'todo!|unimplemented!|TODO
-  stub|FIXME stub'` over the same scope — zero hits; the one genuine gap, Demoniac, is
-  reported by `generic_class_chassis::resolve` returning `None` — the same `class_chassis.
-  unsupported` diagnostic path every other unrecognized class id already produces — and by a
-  passing test asserting exactly that, not a stub marker; every unmapped companion species in
+  stub|FIXME stub'` over the same scope — zero hits; every unmapped companion species in
   `companion_base_stat_table` REFUSES via `ground_companion_stat_block` returning `false`,
-  proven by its own passing test).
+  proven by its own passing test — the same "refuse, never guess" posture `generic_class_
+  chassis::resolve` also proves for any level past `max_level` or any unrecognized class id).
 - **PI scrub:** `pi_scrub.normalized_term_hits()` over the own-diff and over both new files in
   full — zero hits both.
 - **Corpus SHA:** oracle bootstrapped fresh this worktree (slot was empty), pinned at
   `7f818006e371188e5717fd18d74d18a420747fc6` — the same commit cycles 2/3/4 used, confirmed
   via `scripts/verify.sh --only preflight-oracle` (FAIL before bootstrap, PASS after).
-- **Status:** `in-progress` (NOT `complete` — 210 of 213 companion species and Demoniac's one
-  class both remain real, sized, unbuilt/blocked work).
+- **Status:** `in-progress` (NOT `complete` — item (a), the character-creation picker, is now
+  fully closed for all 61 classes; item (b)/(c), 210 of 213 companion species, remains real,
+  sized, unbuilt work).
 
 ## Starting state (verified, not assumed)
 
@@ -124,7 +123,7 @@ corrupts a real character's combat math, the exact failure this codebase's own
 anti-fabrication test suite (`class_feature_grant_consumer.rs`'s thirteen-test gate) exists to
 refuse. Refuse-not-guess, named exactly, per `§1a`/`§16`.
 
-## Item 2: the character-creation-time `ClassId` picker — wired for 60 of 61 classes
+## Item 2: the character-creation-time `ClassId` picker — wired for all 61 classes
 
 Read `character_hub.rs` directly before building anything: `CreateCharacterRequest.class_id`
 is already a free-form `String` (e.g. `"class:fighter"`), never a `ClassId`-enum-gated
@@ -133,7 +132,7 @@ picker mechanism, for every class family this engine already supports, is `pilot
 mod.rs`'s own `compute_class_chassis` string-keyed dispatch chain (CRB -> APG -> ACG -> PU ->
 UC -> `untabled_base_class_chassis::resolve` -> `prestige_class_entry_gate` -> `None`). Cycle
 4's own generic BAB/save table (`class_catalog_generic.rs`, `apps/desktop/src-tauri`) had no
-arm in that chain — a character picking one of the 60 resolved classes at creation could
+arm in that chain — a character picking any of the 61 resolved classes at creation could
 browse it in the reference catalog but never actually compute a real chassis for it.
 
 **Could not reuse `class_catalog_generic.rs`'s own functions directly**: `pilot_compute::
@@ -144,7 +143,7 @@ crate-internal sibling: the SAME classification/extraction logic (`classify_clas
 `select_baseab_formula`/`select_save_formulas`/`max_level_for`), re-implemented at the crate
 boundary it is actually needed at — the same "parallel per-family module" shape `class_
 slayer.rs`/`class_ultimate_combat.rs` already use. `resolve(class_id_str, level)` returns a
-real `GenericChassisRow` (BAB + 3 saves), or `None` (Demoniac; any level past `max_level`; any
+real `GenericChassisRow` (BAB + 3 saves), or `None` (any level past `max_level`; any
 unrecognized id) — never a guess.
 
 Wired a new `compute_class_chassis` arm, `else if let Some(row) = generic_class_chassis::
@@ -155,15 +154,27 @@ chassis` classes — keeps resolving through its existing, higher-priority arm; 
 only ever catches an id nothing else recognizes). Same explanation-id shape as every sibling
 arm (`class_chassis.base_attack_bonus`/`base_save.{fortitude,reflex,will}`).
 
-**60 of the 61 resolve; Demoniac still refuses** — its bare `classlevel()` trips the same
-`formula_interpreter.rs` grammar gap cycle 4 named. Checked before writing this receipt (per
-the brief's own coordination note): `grep -n classlevel src/rules_core/pilot_compute/
-formula_interpreter.rs` shows the grammar arm's error text unchanged
-(`"classlevel(...) expects a string literal class name"`) as of this cycle's own rebase base
-(`ef4a6ffca20d`, row 18 cycle 8's own commit) — **the widening has not landed**, so per the
-brief's own instruction this cycle leaves the passing refusal test
-(`demoniac_refuses_rather_than_fabricates`) rather than editing `formula_interpreter.rs`
-(row 18's live territory, untouched this cycle).
+**All 61 resolve, including Demoniac — closed mid-cycle by this cycle's own rebase.** At the
+first write of this receipt (before step 6's rebase), Demoniac still refused: its bare
+`classlevel()` tripped the same `formula_interpreter.rs` grammar gap cycle 4 named
+(`grep -n classlevel src/rules_core/pilot_compute/formula_interpreter.rs` at this cycle's
+starting base `ef4a6ffca20d`, row 18 cycle 8's own commit, showed the grammar arm's error text
+unchanged: `"classlevel(...) expects a string literal class name"`). Step 6's own `git fetch
+origin tranche/12 && git rebase origin/tranche/12` (required regardless, per the concurrent-
+write protocol) picked up row 18 cycle 9 (`49306a805c`, pushed between this cycle's start and
+its own push), which widened the grammar to PARSE a bare `classlevel()` call but deliberately
+left EVALUATION refusing until a caller binds the resulting empty `CLASSLEVEL::` sentinel key
+(its own doc: "No caller today binds `CLASSLEVEL::` (empty key)"). Per this cycle's own brief
+("if the widening has landed, close your 61st and say so"): it landed, and `generic_class_
+chassis::resolve` is exactly that caller — a bare `classlevel()` inside a class's own record
+can only mean that SAME class's own level, so `resolve` now also binds
+`CLASSLEVEL::` -> the record's own already-known `level`, never a guess. Updated
+`generic_class_chassis.rs`'s own tests to assert 61/61 (not 60/61) and added
+`demoniac_resolves_via_the_bare_classlevel_binding`, hand-verified against Demoniac's real
+corpus tokens read directly (`BONUS:SAVE|BASE.Will,BASE.Reflex|(classlevel()+1)/3` — Reflex is
+packed with Will, not Fortitude, confirmed by direct read rather than assumed uniform). Full
+targeted re-run after the fix: `companion_base_stat_table` (6/0), `generic_class_chassis`
+(5/0), `formula_interpreter`'s own `classlevel*` tests (4/0) — all green.
 
 ## Test evidence
 
@@ -206,7 +217,6 @@ history — genuinely new). `mod.rs` last touched at row 18 cycle 8's own commit
    (`AnimalCompanionDinosaur`'s 31 records is the largest untouched bucket) and repeat this
    cycle's own two-source-plus-corpus-tiebreaker verification per species, adding entries to
    `companion_base_stat_table.rs`'s table one verified batch at a time. 210 of 213 remain.
-2. **`Demoniac`**: closes automatically once `formula_interpreter.rs` widens to accept a bare
-   `classlevel()` call (row 18's own next-cycle plan already names this).
-3. Row 20 stays `in-progress` under `decisions.md §10` until both residuals close or are
-   further resized with evidence.
+2. Row 20 stays `in-progress` under `decisions.md §10` until the companion residual closes or
+   is further resized with evidence. Item (a), the character-creation picker, is fully closed
+   (61 of 61) and needs no further cycle work.

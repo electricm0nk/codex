@@ -26292,10 +26292,11 @@ fn compute_class_chassis(
         Some((base_attack_bonus, base_saves))
     } else if let Some(row) = generic_class_chassis::resolve(&class_level.class_id, class_level.level) {
         // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5: the
-        // character-creation-time dispatch arm for the 60 (of 61; Demoniac still refuses, see
-        // `generic_class_chassis`'s own module doc) conventional PC classes cycle 4 already
-        // re-derived a reference-catalog BAB/save TABLE for but never wired a chassis dispatch
-        // arm for. Same shape as the `untabled_base_class_chassis::resolve` arm above: real
+        // character-creation-time dispatch arm for all 61 conventional PC classes cycle 4
+        // already re-derived a reference-catalog BAB/save TABLE for but never wired a chassis
+        // dispatch arm for (Demoniac's own bare-`classlevel()` gap closed on this cycle's own
+        // rebase, row 18 cycle 9 — see `generic_class_chassis`'s own module doc). Same shape
+        // as the `untabled_base_class_chassis::resolve` arm above: real
         // base attack bonus and all three base saves, computed from the class's own corpus
         // `BONUS:COMBAT|BASEAB`/`BONUS:SAVE` formulas via `PcgenFormulaEvaluator`, not a
         // hand-typed table.

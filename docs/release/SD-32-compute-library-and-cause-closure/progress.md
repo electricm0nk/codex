@@ -8474,15 +8474,18 @@ externally verified). 210 of 213 species still correctly REFUSE (never fabricate
 exactly, not rounded away, the same posture `class_feature_grant_consumer.rs`'s own
 anti-fabrication tests enforce elsewhere in this codebase.
 
-**Item (a): the character-creation-time `ClassId` picker, wired for 60 of 61 classes.**
+**Item (a): the character-creation-time `ClassId` picker, wired for all 61 classes.**
 `character_hub.rs`'s own `class_id` field is already a free-form string, never an enum-gated
 UI dropdown — the real gap was `compute_class_chassis`'s own dispatch chain having no arm for
 cycle 4's generic BAB/save table. Built `generic_class_chassis.rs` (`pilot_compute`) as a
 crate-internal sibling of `class_catalog_generic.rs` (cross-crate direction forbids importing
 the apps/desktop module into the core crate), wired a new dispatch arm alongside `untabled_
-base_class_chassis`'s own. 60 of 61 resolve a real BAB/save chassis at character-creation
-time; Demoniac still refuses (`formula_interpreter.rs`'s bare-`classlevel()` gap has not
-landed as of this cycle's rebase base, row 18's live territory, unedited this cycle).
+base_class_chassis`'s own. **This cycle's own mid-cycle rebase picked up row 18 cycle 9, which
+widened `formula_interpreter.rs` to PARSE Demoniac's bare `classlevel()` call but left
+evaluation refusing until a caller bound the resulting empty `CLASSLEVEL::` key — this
+module's own `resolve` is that caller, closing Demoniac too. All 61 of 61 conventional
+classes now resolve a real BAB/save chassis at character-creation time, item (a) fully
+closed.**
 
 Targeted test suites: `companion_base_stat_table` (6/0), `generic_class_chassis` (5/0),
 `animal_companion` (14/0, unchanged), `chassis_unsupported`/`prestige_class_entry_gate_wiring_
