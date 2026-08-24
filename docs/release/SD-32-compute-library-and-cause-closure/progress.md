@@ -8497,4 +8497,58 @@ this cycle's own commit message for the exact pass count.
 Demoniac's one class remain real, sized, unbuilt/blocked work.
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle5-receipt.md`.
+
+## Cycle row20-cycle6 (2026-08-24) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+Fresh worktree started on a stale lineage (`1bb523773d`); recovered via `git reset --hard
+$PIN`, `BASE_OK` re-verified. `origin/tranche/12`'s tip already equalled `$PIN` (cycle 5's own
+commit), no rebase needed. Oracle slot was empty; bootstrapped, confirmed at the same pin
+(`7f818006e371`).
+
+**Item (a): re-derived cycle 5's own "picker fully closed" claim at the real
+character-creation altitude, not just `generic_class_chassis::resolve`'s isolated unit tests.**
+The brief's own premise ("neither wired the character-creation-time picker") was itself
+unverified against cycle 5's counter-claim — added
+`all_61_generic_classes_reach_a_real_chassis_at_character_creation_altitude` in
+`character_hub.rs`, iterating all 61 classes through the REAL `compose_character_input` ->
+`build_pilot_headless_receipt` compute path and asserting none falls through to the
+`class_chassis.unsupported` diagnostic. **Passes for all 61** — cycle 5's claim holds at the
+altitude that matters; no further picker-wiring work is needed, and this cycle's own next-cycle
+plan retracts the brief's premise rather than re-doing already-closed work.
+
+**Item (b)/(c): re-derived `§17`'s corpus-derivation question against the RAW oracle source,
+independently confirming no shortcut exists; nine more companion species closed with
+evidence.** Read `ultimate_wilderness/uw_races_companion.lst`'s own "Companion (Gulper Plant)"
+RACE line directly (not just the ingested JSON shape cycle 5 checked) — no absolute
+`STR:`/`DEX:`/etc token exists anywhere on it, only the `BONUS:STAT` deltas already read;
+hand-authoring remains the only path, confirmed by an independent method rather than merely
+trusted from cycle 5. Verified and added the 9 largest `AnimalCompanionDinosaur` species
+(Allosaurus, Ankylosaurus, Pteranodon, Deinonychus, Velociraptor, Triceratops, Tyrannosaurus,
+Amargasaurus, Brachiosaurus) to `companion_base_stat_table.rs`, each against AoN's own
+"Starting Statistics" (independently re-fetched/re-searched per species) plus the corpus's own
+`BONUS:STAT` delta as the numeric tiebreaker — table now 12/213. Also confirmed the corpus's
+own `AC_Natural_Armor|n|TYPE=Base` token IS the base natural armor directly (no backing-out
+needed), agreeing with AoN's printed line in all 9 cases, a useful simplification for future
+batches.
+
+**New finding, named not hidden: `ground_companion_stat_block` has no live caller anywhere in
+this crate** (`cargo build`'s own dead-code warning on both it and `CompanionBaseStats`).
+Druid/Hunter's Wolf and Cavalier's Horse are each wired to a FIXED single-species hand-authored
+function; no companion-bearing class offers a character-creation-time CHOICE among species at
+all, so there is no dispatch point today for this generic table to be wired into. Populating
+the table is necessary but not sufficient for the data to reach a real character — the real
+remaining wiring project (a `CharacterInput` choice slot + compute call site) is separate,
+cross-file, unbuilt work, sized and named here rather than silently assumed solved by the
+table's own existence.
+
+Targeted test suites: `companion_base_stat_table` (7/0, including the new
+`the_nine_dinosaur_companions_ground_their_own_verified_base_scores`), `generic_class_chassis`
+(5/0, unchanged, re-confirmed green). Full `apps/desktop/src-tauri` suite re-run post-change:
+**547 passed, 0 failed** (77.50s; 546 baseline + 1 new bin-crate test — the companion-table
+tests live in the `codex` lib crate and run separately).
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). 201 of 213 companion species and the
+newly-named companion-species-selection wiring gap remain real, sized, unbuilt work.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle6-receipt.md`.
 Commit: (this cycle's commit -- see push output).

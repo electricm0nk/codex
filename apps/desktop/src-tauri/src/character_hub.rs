@@ -5020,6 +5020,71 @@ mod tests {
         assert_eq!(input.chosen.class_levels[0].class_id, "class:paladin");
     }
 
+    /// SD-32 T12 Epic 10 row 20 cycle 6: proves row 20 cycle 5's own claim
+    /// ("the character-creation-time picker is already wired -- `class_id`
+    /// is a free-form string dispatched by `compute_class_chassis`, not a
+    /// separate `ClassId`-enum picker widget") at the REAL
+    /// character-creation altitude, not just `generic_class_chassis::
+    /// resolve`'s own isolated unit tests (`src/rules_core/pilot_compute/
+    /// generic_class_chassis.rs`, which only proves the crate-internal
+    /// function in isolation). Iterates every one of the 61 conventional PC
+    /// classes `class_catalog_generic.rs` re-derives from the corpus (60 via
+    /// `load_generic_class_progressions`, plus Demoniac -- named separately
+    /// because THAT module's own formula evaluator does not bind the bare
+    /// `classlevel()` empty-key sentinel `generic_class_chassis::resolve`
+    /// binds; see that module's own doc comment, "All 61 resolve --
+    /// Demoniac closed on rebase, mid-cycle") at level 1, and asserts NONE
+    /// of them falls through to the `class_chassis.unsupported` diagnostic
+    /// -- `compute_class_chassis`'s (`src/rules_core/pilot_compute/mod.rs`)
+    /// only fallback when no dispatch arm, including `generic_class_
+    /// chassis::resolve`, recognizes the class id. A class that still fell
+    /// through here would surface as "Blocked: unsupported class" to a real
+    /// player picking it at creation -- exactly the gap this cycle's brief
+    /// asked to be either closed or precisely disproven with evidence.
+    #[test]
+    fn all_61_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+        let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
+        let (records, unresolved) =
+            crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
+        assert!(
+            unresolved.is_empty() || unresolved.iter().all(|(_, name)| name == "Demoniac"),
+            "class_catalog_generic.rs's own unresolved list must contain only the named \
+             Demoniac gap, got: {unresolved:?}"
+        );
+        let mut names: Vec<String> = records.into_iter().map(|record| record.name).collect();
+        assert_eq!(
+            names.len(),
+            60,
+            "expected 60 of the 61 conventional PC classes from class_catalog_generic.rs's own \
+             re-derivation (Demoniac is the one named gap in THAT module, closed instead by \
+             generic_class_chassis::resolve's own CLASSLEVEL:: binding -- see this test's own \
+             doc comment)"
+        );
+        names.push("Demoniac".to_owned());
+        assert_eq!(names.len(), 61, "must cover all 61, not a partial sweep");
+
+        let slug = |name: &str| -> String {
+            name.trim().to_ascii_lowercase().split_whitespace().collect::<Vec<_>>().join("_")
+        };
+
+        let mut checked = 0usize;
+        for name in &names {
+            let class_id = format!("class:{}", slug(name));
+            let diagnostics = claim_blocking_diagnostic_ids("race:human", &class_id, 1);
+            assert!(
+                !diagnostics.contains("class_chassis.unsupported"),
+                "{name} ({class_id}) must resolve a real chassis at character-creation \
+                 altitude, not fall through to class_chassis.unsupported -- got diagnostics: \
+                 {diagnostics:?}"
+            );
+            checked += 1;
+        }
+        assert_eq!(
+            checked, 61,
+            "must have exercised all 61 conventional classes, not a partial sweep"
+        );
+    }
+
     /// The single most important regression guard: proves the golden-path
     /// claim against the real engine, not just against this module's own
     /// description of it. If the compute engine's requirements ever drift,
