@@ -38885,7 +38885,10 @@ fn resolve_class_feature_bonus_var(
 /// features"). `resolve_class_feature_bonus_var` above (SD-32 Epic 1) still
 /// needs its caller to already know the record's OWN target variable name
 /// (`"MasterHunterDC"`), which is fine for a handful of hand-picked named
-/// grants but does not scale to a 1,913-group, 5,981-numeric-magnitude
+/// grants but does not scale to a 1,913-group, ~5,927-numeric-magnitude
+/// (cycle 3 `§17a` re-derivation, `scripts/census_class_feature_pool_population.py`
+/// -- corrects cycle 2's own 5,981, which had not yet registered Witch
+/// Hex's pre-existing `witch_hex_save_dc` coverage)
 /// open-ended-choice-pool population (Alchemist Discovery, Witch Hex,
 /// Oracle Curse/Mystery/Revelation, Shaman Spirit, Cavalier Order, Hunter
 /// Animal Focus, Inquisitor Judgment, ...) one bespoke function per member
@@ -71445,6 +71448,83 @@ mod opponent_conditioned_tier_zero_tests {
             value(&too_early, "class_feature.acg.slayer.talent.foil_scrutiny_bonus"),
             None,
             "a level-1 Slayer has no talent slot to have spent"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 cycle 3: the generic pool-choice resolver, applied
+    /// to Slayer Talent, closes a flat-constant talent end-to-end. `Slayer
+    /// Talent ~ Deadly Range Output` (real corpus record) carries only
+    /// `BONUS:VAR|DeadlyRangeDistance|30` -- a self-contained constant
+    /// needing no class-level or ability-modifier binding at all.
+    #[test]
+    fn slayer_deadly_range_output_talent_resolves_generically_as_a_flat_constant() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:deadly_range_output".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.deadly_range_output.deadlyrangedistance"),
+            Some(30)
+        );
+    }
+
+    /// The generic resolver refuses rather than fabricates when a
+    /// talent's formula needs a class-specific level variable
+    /// (`SlayerTalentLVL`) this pool has no registered header record to
+    /// bind (`Slayer ~ Slayer Talents`, plural, is a real corpus record,
+    /// but distinct from the `"Slayer Talent"` singular member-key
+    /// prefix this call site passes as `pool_group` -- the exact `Spirit`
+    /// -shaped name mismatch cycle 2 flagged, re-encountered live here).
+    /// `Slayer Talent ~ Assassinate`'s DC formula
+    /// (`10+(SlayerAssassinateLVL/2)+INT`, chained through
+    /// `SlayerAssassinateLVL|SlayerTalentLVL`) cannot resolve without
+    /// that binding -- proving the resolver's "refuse, never guess"
+    /// contract holds even when this cycle's own wiring is incomplete,
+    /// not just when a record's shape is genuinely novel.
+    #[test]
+    fn slayer_generic_resolver_refuses_rather_than_fabricates_a_missing_class_level_binding() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:assassinate".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.assassinate.slayerassassinatedc"),
+            None,
+            "must refuse, not fabricate a DC computed as if SlayerTalentLVL were 0"
+        );
+    }
+
+    /// An invented Slayer Talent selection never grounds a generic
+    /// magnitude (mirrors the Rage Power / Discovery precedent).
+    #[test]
+    fn an_invented_slayer_talent_selection_never_grounds_a_generic_magnitude() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:not_a_real_talent".to_owned(),
+        });
+        assert!(build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .iter()
+            .all(|e| !e.id.starts_with("class_feature.acg.slayer.talent.generic.")));
+    }
+
+    /// Below the pool's own grant level (talents start at 2nd), a
+    /// recorded selection grounds no generic magnitude either -- mirrors
+    /// Alchemist Discovery's own level-gate proof.
+    #[test]
+    fn slayer_generic_talent_resolver_stays_silent_below_the_talent_grant_level() {
+        let mut input = character(SLAYER_CLASS_ID, 1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:deadly_range_output".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.deadly_range_output.deadlyrangedistance"),
+            None
         );
     }
 

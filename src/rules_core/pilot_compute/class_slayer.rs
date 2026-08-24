@@ -210,6 +210,28 @@ pub(super) fn ground_or_block_slayer_class_features(
                 ),
             });
         }
+
+        // SD-32 T12 Epic 8 cycle 3: generic pass over the OTHER 45 real
+        // corpus `Slayer Talent ~ *` records (46 total, real group name
+        // confirmed by direct corpus grep -- unlike several other
+        // `CLASS_FEATURE_POOLS`-registered pools, "Slayer Talent" is the
+        // real group prefix) this file has never hand-modelled by name.
+        // Purely additive alongside Foil Scrutiny above -- a talent this
+        // resolver cannot ground (a dice-notation magnitude, a
+        // multi-terminal record, or one carrying no BONUS/DEFINE token at
+        // all) contributes nothing here, exactly as it contributed
+        // nothing before.
+        push_generic_pool_choice_magnitude(
+            input,
+            level,
+            &ability_modifiers_from_scores(&input.chosen.ability_scores),
+            SLAYER_TALENT_CHOICE_ID,
+            "Slayer Talent",
+            "talent:",
+            "class_feature.acg.slayer.talent.generic",
+            2,
+            explanations,
+        );
     }
 
     let studied_bonus = slayer_studied_target_bonus(level);

@@ -48,6 +48,47 @@ ALREADY_MODELED_ELSEWHERE = {
     "Rage Power",    # `class_feature_pool_catalog.rs::REGISTERED_POOL_GROUPS`
 }
 
+# Groups where only a SUBSET of numeric-magnitude records is already
+# modeled elsewhere -- a whole-group exclusion (like
+# `ALREADY_MODELED_ELSEWHERE` above) would either under-exclude (miss the
+# covered records) or over-exclude (wrongly drop the genuinely-unclosed
+# ones), so this is a per-record predicate instead, checked before a
+# record is added to the residual.
+#
+# `Witch Hex` / `Witch Major Hex` / `Witch Grand Hex` (T12 cycle 3 finding,
+# following on cycle 2's own discovery-forward): `pilot_compute/mod.rs`'s
+# `witch_hex_save_dc` grounds ONE shared DC formula
+# (`10 + WitchHexStat + WitchHexAbilityLVL/2`), unconditionally, for every
+# Witch regardless of which hex is selected. A hex record's magnitude is
+# already covered by that shared formula whenever its ONLY BONUS:VAR
+# target is its own per-hex alias of the shared `WitchHexDC` variable
+# (`BONUS:VAR|WitchHexDC_<Name>|WitchHexDC`) -- confirmed live against
+# every corpus record in these three groups: 54 of 58 numeric-magnitude
+# records carry exactly that alias (including Cauldron and Flight, whose
+# OWN extra bonuses -- Craft (Alchemy), Swim -- are ALSO separately
+# hand-grounded in `ground_or_block_witch_class_features`), and the
+# remaining 4 (`Bouda's Eye`, `Enemy Ground`, `Mud Witch`, `No Place Like
+# Home`) carry their own distinct DEFINE-based magnitude with no such
+# alias and are correctly left in the residual.
+WITCH_HEX_FAMILY_GROUPS = {"Witch Hex", "Witch Major Hex", "Witch Grand Hex"}
+
+
+def witch_hex_alias_target(raw_tokens) -> bool:
+    """True if this record's numeric magnitude is entirely the shared
+    `WitchHexDC_<Name>` alias `witch_hex_save_dc` already grounds (an
+    extra, separately-hand-grounded bonus like Cauldron's or Flight's
+    does not disqualify it -- only a magnitude the shared DC formula does
+    NOT cover would)."""
+    if not isinstance(raw_tokens, list):
+        return False
+    for t in raw_tokens:
+        if not isinstance(t, dict) or t.get("key") != "BONUS":
+            continue
+        v = t.get("value")
+        if isinstance(v, str) and v.startswith("VAR|WitchHexDC_") and v.split("|")[2:3] == ["WitchHexDC"]:
+            return True
+    return False
+
 
 def is_real_description(value) -> bool:
     if not isinstance(value, str):
@@ -113,6 +154,7 @@ def main() -> int:
     total_numeric = 0
     total_text_only = 0
     malformed = 0
+    witch_hex_family_alias_covered = 0
 
     for f in files:
         try:
@@ -142,6 +184,8 @@ def main() -> int:
         if numeric:
             g["numeric_magnitude"] += 1
             total_numeric += 1
+            if group in WITCH_HEX_FAMILY_GROUPS and witch_hex_alias_target(raw_tokens):
+                witch_hex_family_alias_covered += 1
 
     already_modeled_records = sum(
         g["total"] for name, g in groups.items() if name in ALREADY_MODELED_ELSEWHERE
@@ -149,7 +193,7 @@ def main() -> int:
     already_modeled_numeric = sum(
         g["numeric_magnitude"] for name, g in groups.items() if name in ALREADY_MODELED_ELSEWHERE
     )
-    residual_numeric = total_numeric - already_modeled_numeric
+    residual_numeric = total_numeric - already_modeled_numeric - witch_hex_family_alias_covered
 
     result = {
         "files_scanned": len(files),
@@ -162,6 +206,8 @@ def main() -> int:
         "already_modeled_elsewhere_groups": sorted(ALREADY_MODELED_ELSEWHERE),
         "already_modeled_elsewhere_records": already_modeled_records,
         "already_modeled_elsewhere_numeric_magnitude": already_modeled_numeric,
+        "witch_hex_family_groups": sorted(WITCH_HEX_FAMILY_GROUPS),
+        "witch_hex_family_alias_covered_numeric_magnitude": witch_hex_family_alias_covered,
         "residual_numeric_magnitude_needing_compute": residual_numeric,
     }
 
@@ -194,6 +240,9 @@ def main() -> int:
         print(f"  already modeled elsewhere (groups: {', '.join(sorted(ALREADY_MODELED_ELSEWHERE))})")
         print(f"    records                                     {result['already_modeled_elsewhere_records']:>7}")
         print(f"    of which numeric-magnitude                  {result['already_modeled_elsewhere_numeric_magnitude']:>7}")
+        print(f"  Witch Hex family alias-covered (witch_hex_save_dc, T12 cycle-3 fix)")
+        print(f"    groups: {', '.join(sorted(WITCH_HEX_FAMILY_GROUPS))}")
+        print(f"    numeric-magnitude records covered           {result['witch_hex_family_alias_covered_numeric_magnitude']:>7}")
         print(f"  RESIDUAL numeric-magnitude needing compute    {result['residual_numeric_magnitude_needing_compute']:>7}")
 
     return 0
