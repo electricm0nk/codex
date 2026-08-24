@@ -3,17 +3,2497 @@
   "title": "Advanced Race Guide",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 335,
+      "denominator": 335,
+      "pct": 0.0,
+      "excluded_from_percentage": 17,
+      "standing_breakdown": {
+        "origin": 335,
+        "unclassified": 17
+      },
+      "items": [
+        {
+          "name": "+1 racial bonus to two related skills",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Skill Bonus",
+          "standing": "origin",
+          "display_name": "+1 racial bonus to two related skills"
+        },
+        {
+          "name": "+2 Charisma",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost2.AbilityScoreBoostMental2.Charisma",
+          "standing": "unclassified",
+          "display_name": "+2 Charisma"
+        },
+        {
+          "name": "+2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost2.AbilityScoreBoostPhysical2.Constitution",
+          "standing": "unclassified",
+          "display_name": "+2 Constitution"
+        },
+        {
+          "name": "+2 Dexterity",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost2.AbilityScoreBoostPhysical2.Dexterity",
+          "standing": "unclassified",
+          "display_name": "+2 Dexterity"
+        },
+        {
+          "name": "+2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost2.AbilityScoreBoostMental2.Intelligence",
+          "standing": "unclassified",
+          "display_name": "+2 Intelligence"
+        },
+        {
+          "name": "+2 Strength",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost2.AbilityScoreBoostPhysical2.Strength",
+          "standing": "unclassified",
+          "display_name": "+2 Strength"
+        },
+        {
+          "name": "+2 Wisdom",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost2.AbilityScoreBoostMental2.Wisdom",
+          "standing": "unclassified",
+          "display_name": "+2 Wisdom"
+        },
+        {
+          "name": "+2 racial bonus to any one skill",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Skill Bonus",
+          "standing": "origin",
+          "display_name": "+2 racial bonus to any one skill"
+        },
+        {
+          "name": "+4 Charisma",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost4.AbilityScoreBoostMental4.Charisma",
+          "standing": "origin",
+          "display_name": "+4 Charisma"
+        },
+        {
+          "name": "+4 Constitution",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost4.AbilityScoreBoostPhysical4.Constitution",
+          "standing": "origin",
+          "display_name": "+4 Constitution"
+        },
+        {
+          "name": "+4 Dexterity",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost4.AbilityScoreBoostPhysical4.Dexterity",
+          "standing": "origin",
+          "display_name": "+4 Dexterity"
+        },
+        {
+          "name": "+4 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost4.AbilityScoreBoostMental4.Intelligence",
+          "standing": "origin",
+          "display_name": "+4 Intelligence"
+        },
+        {
+          "name": "+4 Strength",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost4.AbilityScoreBoostPhysical4.Strength",
+          "standing": "origin",
+          "display_name": "+4 Strength"
+        },
+        {
+          "name": "+4 Wisdom",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreBoost4.AbilityScoreBoostMental4.Wisdom",
+          "standing": "origin",
+          "display_name": "+4 Wisdom"
+        },
+        {
+          "name": "-2 Charisma",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative2.AbilityScoreNegativeMental2.Charisma",
+          "standing": "origin",
+          "display_name": "-2 Charisma"
+        },
+        {
+          "name": "-2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative2.AbilityScoreNegativePhysical2.Constitution",
+          "standing": "origin",
+          "display_name": "-2 Constitution"
+        },
+        {
+          "name": "-2 Dexterity",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative2.AbilityScoreNegativePhysical2.Dexterity",
+          "standing": "origin",
+          "display_name": "-2 Dexterity"
+        },
+        {
+          "name": "-2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative2.AbilityScoreNegativeMental2.Intelligence",
+          "standing": "origin",
+          "display_name": "-2 Intelligence"
+        },
+        {
+          "name": "-2 Strength",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative2.AbilityScoreNegativePhysical2.Strength",
+          "standing": "origin",
+          "display_name": "-2 Strength"
+        },
+        {
+          "name": "-2 Wisdom",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative2.AbilityScoreNegativeMental2.Wisdom",
+          "standing": "origin",
+          "display_name": "-2 Wisdom"
+        },
+        {
+          "name": "-4 Charisma",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative4.AbilityScoreNegativeMental4.Charisma",
+          "standing": "origin",
+          "display_name": "-4 Charisma"
+        },
+        {
+          "name": "-4 Constitution",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative4.AbilityScoreNegativePhysical4.Constitution",
+          "standing": "origin",
+          "display_name": "-4 Constitution"
+        },
+        {
+          "name": "-4 Dexterity",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative4.AbilityScoreNegativePhysical4.Dexterity",
+          "standing": "origin",
+          "display_name": "-4 Dexterity"
+        },
+        {
+          "name": "-4 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative4.AbilityScoreNegativeMental4.Intelligence",
+          "standing": "origin",
+          "display_name": "-4 Intelligence"
+        },
+        {
+          "name": "-4 Strength",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative4.AbilityScoreNegativePhysical4.Strength",
+          "standing": "origin",
+          "display_name": "-4 Strength"
+        },
+        {
+          "name": "-4 Wisdom",
+          "doneness": "not-started",
+          "type_facet": "AbilityScoreNegative4.AbilityScoreNegativeMental4.Wisdom",
+          "standing": "origin",
+          "display_name": "-4 Wisdom"
+        },
+        {
+          "name": "Aberration",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Aberration"
+        },
+        {
+          "name": "Abyssal",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Abyssal"
+        },
+        {
+          "name": "Acid",
+          "doneness": "not-started",
+          "type_facet": "BuilderEnergyResistanceChoice.Energy Resistance 5.Acid Energy Resistance 5",
+          "standing": "origin",
+          "display_name": "Acid"
+        },
+        {
+          "name": "Advanced",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Advanced"
+        },
+        {
+          "name": "Advanced Ability Score Selection ~ Mental",
+          "doneness": "not-started",
+          "type_facet": "AdvancedAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Advanced Ability Score Selection ~ Mental"
+        },
+        {
+          "name": "Advanced Ability Score Selection ~ Physical",
+          "doneness": "not-started",
+          "type_facet": "AdvancedAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Advanced Ability Score Selection ~ Physical"
+        },
+        {
+          "name": "Advanced Charisma",
+          "doneness": "not-started",
+          "type_facet": "RacialTrait.BuilderAdvancedAbilityScoreTrait.Advanced.RaceStatBonusAbility",
+          "standing": "origin",
+          "display_name": "Advanced Charisma"
+        },
+        {
+          "name": "Advanced Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTrait.BuilderAdvancedAbilityScoreTrait.Advanced.RaceStatBonusAbility",
+          "standing": "origin",
+          "display_name": "Advanced Constitution"
+        },
+        {
+          "name": "Advanced Design",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Design",
+          "standing": "origin",
+          "display_name": "Advanced Design"
+        },
+        {
+          "name": "Advanced Dexterity",
+          "doneness": "not-started",
+          "type_facet": "RacialTrait.BuilderAdvancedAbilityScoreTrait.Advanced.RaceStatBonusAbility",
+          "standing": "origin",
+          "display_name": "Advanced Dexterity"
+        },
+        {
+          "name": "Advanced Intelligence",
+          "doneness": "not-started",
+          "type_facet": "RacialTrait.BuilderAdvancedAbilityScoreTrait.Advanced.RaceStatBonusAbility",
+          "standing": "origin",
+          "display_name": "Advanced Intelligence"
+        },
+        {
+          "name": "Advanced Strength",
+          "doneness": "not-started",
+          "type_facet": "RacialTrait.BuilderAdvancedAbilityScoreTrait.Advanced.RaceStatBonusAbility",
+          "standing": "origin",
+          "display_name": "Advanced Strength"
+        },
+        {
+          "name": "Advanced Wisdom",
+          "doneness": "not-started",
+          "type_facet": "RacialTrait.BuilderAdvancedAbilityScoreTrait.Advanced.RaceStatBonusAbility",
+          "standing": "origin",
+          "display_name": "Advanced Wisdom"
+        },
+        {
+          "name": "Aklo",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Aklo"
+        },
+        {
+          "name": "All Bows",
+          "doneness": "not-started",
+          "type_facet": "Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "All Bows"
+        },
+        {
+          "name": "All-Around Vision",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Monstrous.Sense",
+          "standing": "origin",
+          "display_name": "All-Around Vision"
+        },
+        {
+          "name": "Amphibious",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Amphibious"
+        },
+        {
+          "name": "Ancient Foe",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Ancient Foe"
+        },
+        {
+          "name": "Aquan",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Aquan"
+        },
+        {
+          "name": "Arcane Focus",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Arcane Focus"
+        },
+        {
+          "name": "Auran",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Auran"
+        },
+        {
+          "name": "Battle Hardened",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Battle Hardened"
+        },
+        {
+          "name": "Beguiling Liar",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Beguiling Liar"
+        },
+        {
+          "name": "Bite",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Bite"
+        },
+        {
+          "name": "Blindsense 30 ft.",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Blindsense 30 ft."
+        },
+        {
+          "name": "Bond to the Land",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Bond to the Land"
+        },
+        {
+          "name": "Bonus Language ~ Any Spoken",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Any Spoken"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Breath Weapon"
+        },
+        {
+          "name": "Breeze-Kissed",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Breeze-Kissed"
+        },
+        {
+          "name": "Burrow",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Burrow"
+        },
+        {
+          "name": "Camouflage",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Camouflage"
+        },
+        {
+          "name": "Carrion Sense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard.Sense",
+          "standing": "origin",
+          "display_name": "Carrion Sense"
+        },
+        {
+          "name": "Cat's Luck",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Cat's Luck"
+        },
+        {
+          "name": "Cave Dweller",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Cave Dweller"
+        },
+        {
+          "name": "Celestial",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Celestial"
+        },
+        {
+          "name": "Celestial Crusader",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Celestial Crusader"
+        },
+        {
+          "name": "Celestial Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Celestial Resistance"
+        },
+        {
+          "name": "Change Shape (Greater)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Change Shape (Greater)"
+        },
+        {
+          "name": "Change Shape (Lesser)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Change Shape (Lesser)"
+        },
+        {
+          "name": "Choose Language",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderLang",
+          "standing": "origin",
+          "display_name": "Choose Language"
+        },
+        {
+          "name": "Claws",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Claws"
+        },
+        {
+          "name": "Climb",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "unclassified",
+          "display_name": "Climb"
+        },
+        {
+          "name": "Cold",
+          "doneness": "not-started",
+          "type_facet": "BuilderEnergyResistanceChoice.Energy Resistance 5.Cold Energy Resistance 5",
+          "standing": "origin",
+          "display_name": "Cold"
+        },
+        {
+          "name": "Common",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Common"
+        },
+        {
+          "name": "Constant Spell-Like Divination",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedMagicalTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Constant Spell-Like Divination"
+        },
+        {
+          "name": "Construct",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Construct"
+        },
+        {
+          "name": "Cornered Fury",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Cornered Fury"
+        },
+        {
+          "name": "Craftsman",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Craftsman"
+        },
+        {
+          "name": "Crystalline Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Crystalline Form"
+        },
+        {
+          "name": "Curiosity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Curiosity"
+        },
+        {
+          "name": "Damage Reduction ~ DR 10/Chaotic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 10/Chaotic"
+        },
+        {
+          "name": "Damage Reduction ~ DR 10/Evil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 10/Evil"
+        },
+        {
+          "name": "Damage Reduction ~ DR 10/Good",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 10/Good"
+        },
+        {
+          "name": "Damage Reduction ~ DR 10/Lawful",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 10/Lawful"
+        },
+        {
+          "name": "Damage Reduction ~ DR 10/magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 10/magic"
+        },
+        {
+          "name": "Damage Reduction ~ DR 5/Chaotic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 5/Chaotic"
+        },
+        {
+          "name": "Damage Reduction ~ DR 5/Evil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 5/Evil"
+        },
+        {
+          "name": "Damage Reduction ~ DR 5/Good",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 5/Good"
+        },
+        {
+          "name": "Damage Reduction ~ DR 5/Lawful",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 5/Lawful"
+        },
+        {
+          "name": "Damage Reduction ~ DR 5/magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ DR 5/magic"
+        },
+        {
+          "name": "Darklands Stalker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Darklands Stalker"
+        },
+        {
+          "name": "Darkvision 120 ft.",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard",
+          "standing": "origin",
+          "display_name": "Darkvision 120 ft."
+        },
+        {
+          "name": "Darkvision 60 ft.",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard",
+          "standing": "origin",
+          "display_name": "Darkvision 60 ft."
+        },
+        {
+          "name": "Deathless Spirit",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Deathless Spirit"
+        },
+        {
+          "name": "Deep Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Deep Magic"
+        },
+        {
+          "name": "Deepsight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard.Sense",
+          "standing": "unclassified",
+          "display_name": "Deepsight"
+        },
+        {
+          "name": "Defensive Training, Greater",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Defensive Training, Greater"
+        },
+        {
+          "name": "Defensive Training, Lesser",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Defensive Training, Lesser"
+        },
+        {
+          "name": "Desert Runner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Desert Runner"
+        },
+        {
+          "name": "Dissolution's Child",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Dissolution's Child"
+        },
+        {
+          "name": "Draconic",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Draconic"
+        },
+        {
+          "name": "Dragon",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Dragon"
+        },
+        {
+          "name": "Dreamspeaker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Dreamspeaker"
+        },
+        {
+          "name": "Dual-Minded",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Dual-Minded"
+        },
+        {
+          "name": "Duergar Immunities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Duergar Immunities"
+        },
+        {
+          "name": "Dwarven",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Dwarven (RaceBuilderBonusLang)"
+        },
+        {
+          "name": "Dwarven",
+          "doneness": "not-started",
+          "type_facet": "RacialWeaponGroup.Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "Dwarven (RacialWeaponGroup.Weapon Familiarity)"
+        },
+        {
+          "name": "Electricity",
+          "doneness": "not-started",
+          "type_facet": "BuilderEnergyResistanceChoice.Energy Resistance 5.Electricity Energy Resistance 5",
+          "standing": "origin",
+          "display_name": "Electricity"
+        },
+        {
+          "name": "Elemental Affinity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elemental Affinity"
+        },
+        {
+          "name": "Elemental Assault (Acid)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elemental Assault (Acid)"
+        },
+        {
+          "name": "Elemental Assault (Cold)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elemental Assault (Cold)"
+        },
+        {
+          "name": "Elemental Assault (Electricity)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elemental Assault (Electricity)"
+        },
+        {
+          "name": "Elemental Assault (Fire)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elemental Assault (Fire)"
+        },
+        {
+          "name": "Elemental Immunity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Elemental Immunity"
+        },
+        {
+          "name": "Elemental Summoner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elemental Summoner"
+        },
+        {
+          "name": "Elemental Vulnerability (Acid)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Elemental Vulnerability (Acid)"
+        },
+        {
+          "name": "Elemental Vulnerability (Cold)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Elemental Vulnerability (Cold)"
+        },
+        {
+          "name": "Elemental Vulnerability (Electricity)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Elemental Vulnerability (Electricity)"
+        },
+        {
+          "name": "Elemental Vulnerability (Fire)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Elemental Vulnerability (Fire)"
+        },
+        {
+          "name": "Elemental Weapons (Acid)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Elemental Weapons (Acid)"
+        },
+        {
+          "name": "Elemental Weapons (Cold)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Elemental Weapons (Cold)"
+        },
+        {
+          "name": "Elemental Weapons (Electricity)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Elemental Weapons (Electricity)"
+        },
+        {
+          "name": "Elemental Weapons (Fire)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Elemental Weapons (Fire)"
+        },
+        {
+          "name": "Elven",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Elven (RaceBuilderBonusLang)"
+        },
+        {
+          "name": "Elven",
+          "doneness": "not-started",
+          "type_facet": "RacialWeaponGroup.Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "Elven (RacialWeaponGroup.Weapon Familiarity)"
+        },
+        {
+          "name": "Elven Immunities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elven Immunities"
+        },
+        {
+          "name": "Elven Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Elven Magic"
+        },
+        {
+          "name": "Emissary",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Emissary"
+        },
+        {
+          "name": "Enclave Protector",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Enclave Protector"
+        },
+        {
+          "name": "Energy Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "unclassified",
+          "display_name": "Energy Resistance"
+        },
+        {
+          "name": "Envoy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Envoy"
+        },
+        {
+          "name": "Eternal Hope",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Eternal Hope"
+        },
+        {
+          "name": "Exalted Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Exalted Resistance"
+        },
+        {
+          "name": "Expert Climber",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Expert Climber"
+        },
+        {
+          "name": "Fast",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Fast"
+        },
+        {
+          "name": "Fast Healing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "unclassified",
+          "display_name": "Fast Healing"
+        },
+        {
+          "name": "Fearless",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "unclassified",
+          "display_name": "Fearless"
+        },
+        {
+          "name": "Fell Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Fell Magic"
+        },
+        {
+          "name": "Ferocity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Ferocity"
+        },
+        {
+          "name": "Ferrous Growth",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Ferrous Growth"
+        },
+        {
+          "name": "Fertile Soil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Fertile Soil"
+        },
+        {
+          "name": "Fey",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Fey"
+        },
+        {
+          "name": "Fey Damage Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Fey Damage Resistance"
+        },
+        {
+          "name": "Fiendish Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Fiendish Resistance"
+        },
+        {
+          "name": "Fiendish Sorcery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Fiendish Sorcery"
+        },
+        {
+          "name": "Fire",
+          "doneness": "not-started",
+          "type_facet": "BuilderEnergyResistanceChoice.Energy Resistance 5.Fire Energy Resistance 5",
+          "standing": "unclassified",
+          "display_name": "Fire"
+        },
+        {
+          "name": "Fire in the Blood",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Fire in the Blood"
+        },
+        {
+          "name": "Fleet-Footed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Fleet-Footed"
+        },
+        {
+          "name": "Flexible",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Flexible"
+        },
+        {
+          "name": "Flexible Bonus Feat",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Flexible Bonus Feat"
+        },
+        {
+          "name": "Flight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Flight"
+        },
+        {
+          "name": "Focused Study",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Focused Study"
+        },
+        {
+          "name": "Frenzy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Frenzy"
+        },
+        {
+          "name": "Frightful Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Frightful Gaze"
+        },
+        {
+          "name": "Gatecrasher",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Gatecrasher"
+        },
+        {
+          "name": "Giant",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Giant"
+        },
+        {
+          "name": "Gift of Tongues",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "unclassified",
+          "display_name": "Gift of Tongues"
+        },
+        {
+          "name": "Gifted Linguist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Gifted Linguist"
+        },
+        {
+          "name": "Gliding Wings",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Gliding Wings"
+        },
+        {
+          "name": "Gnoll",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Gnoll"
+        },
+        {
+          "name": "Gnome",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Gnome (RaceBuilderBonusLang)"
+        },
+        {
+          "name": "Gnome",
+          "doneness": "not-started",
+          "type_facet": "RacialWeaponGroup.Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "Gnome (RacialWeaponGroup.Weapon Familiarity)"
+        },
+        {
+          "name": "Gnome Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Gnome Magic"
+        },
+        {
+          "name": "Goblin",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Goblin"
+        },
+        {
+          "name": "Gore",
+          "doneness": "not-started",
+          "type_facet": "Builder Racial Trait ~ Natural Attack",
+          "standing": "origin",
+          "display_name": "Gore"
+        },
+        {
+          "name": "Grappling Appendages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Grappling Appendages"
+        },
+        {
+          "name": "Greater Paragon",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Greater Paragon"
+        },
+        {
+          "name": "Greater Weakness",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Greater Weakness"
+        },
+        {
+          "name": "Greater Weakness Ability Score Selection ~ Mental",
+          "doneness": "not-started",
+          "type_facet": "GreaterWeaknessAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Greater Weakness Ability Score Selection ~ Mental"
+        },
+        {
+          "name": "Greater Weakness Ability Score Selection ~ Physical",
+          "doneness": "not-started",
+          "type_facet": "GreaterWeaknessAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Greater Weakness Ability Score Selection ~ Physical"
+        },
+        {
+          "name": "Greed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Greed"
+        },
+        {
+          "name": "Gregarious",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Gregarious"
+        },
+        {
+          "name": "Half-Construct",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Half-Construct"
+        },
+        {
+          "name": "Half-Undead",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Half-Undead"
+        },
+        {
+          "name": "Halfling",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Halfling (RaceBuilderBonusLang)"
+        },
+        {
+          "name": "Halfling",
+          "doneness": "not-started",
+          "type_facet": "RacialWeaponGroup.Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "Halfling (RacialWeaponGroup.Weapon Familiarity)"
+        },
+        {
+          "name": "Halo",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Halo"
+        },
+        {
+          "name": "Hardy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Hardy"
+        },
+        {
+          "name": "Hatred",
+          "doneness": "not-started",
+          "type_facet": "BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Hatred"
+        },
+        {
+          "name": "Hatred Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait",
+          "standing": "origin",
+          "display_name": "Hatred Display"
+        },
+        {
+          "name": "Healthy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Healthy"
+        },
+        {
+          "name": "Heavenborn",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Heavenborn"
+        },
+        {
+          "name": "Heroic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Heroic"
+        },
+        {
+          "name": "Hold Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Hold Breath"
+        },
+        {
+          "name": "Hoof",
+          "doneness": "not-started",
+          "type_facet": "Builder Racial Trait ~ Natural Attack",
+          "standing": "origin",
+          "display_name": "Hoof"
+        },
+        {
+          "name": "Human Heritage",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Human Heritage"
+        },
+        {
+          "name": "Humanoid",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Humanoid"
+        },
+        {
+          "name": "Humanoid Subrace Select",
+          "doneness": "not-started",
+          "type_facet": "Humanoid Subrace",
+          "standing": "origin",
+          "display_name": "Humanoid Subrace Select"
+        },
+        {
+          "name": "Hydrated Vitality",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Hydrated Vitality"
+        },
+        {
+          "name": "Hypnotic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Hypnotic"
+        },
+        {
+          "name": "Hypnotic Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Hypnotic Gaze"
+        },
+        {
+          "name": "Ignan",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Ignan"
+        },
+        {
+          "name": "Illusion Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Illusion Resistance"
+        },
+        {
+          "name": "Immortal Spark",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Immortal Spark"
+        },
+        {
+          "name": "Improved Natural Armor",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Improved Natural Armor"
+        },
+        {
+          "name": "Improved Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Improved Resistance"
+        },
+        {
+          "name": "Infernal",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Infernal"
+        },
+        {
+          "name": "Integrated",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Integrated"
+        },
+        {
+          "name": "Jumper",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Jumper"
+        },
+        {
+          "name": "Kneecapper",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Kneecapper"
+        },
+        {
+          "name": "Language",
+          "doneness": "not-started",
+          "type_facet": "Language",
+          "standing": "origin",
+          "display_name": "Language"
+        },
+        {
+          "name": "Large",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceSizeQuality.AltRaceSize",
+          "standing": "origin",
+          "display_name": "Large"
+        },
+        {
+          "name": "Lifebound",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Lifebound"
+        },
+        {
+          "name": "Light Blindness",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Standard",
+          "standing": "origin",
+          "display_name": "Light Blindness"
+        },
+        {
+          "name": "Light Sensitivity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Standard",
+          "standing": "origin",
+          "display_name": "Light Sensitivity"
+        },
+        {
+          "name": "Light and Dark",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Light and Dark"
+        },
+        {
+          "name": "Lightbringer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Lightbringer"
+        },
+        {
+          "name": "Linguist",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.LanguageQuality.RacialQualityLanguage",
+          "standing": "origin",
+          "display_name": "Linguist"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard",
+          "standing": "origin",
+          "display_name": "Low-Light Vision"
+        },
+        {
+          "name": "Lucky, Greater",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Lucky, Greater"
+        },
+        {
+          "name": "Lucky, Lesser",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Lucky, Lesser"
+        },
+        {
+          "name": "Magehunter",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Magehunter"
+        },
+        {
+          "name": "Magical Linguist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Magical Linguist"
+        },
+        {
+          "name": "Master Tinker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Master Tinker"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceSizeQuality",
+          "standing": "origin",
+          "display_name": "Medium"
+        },
+        {
+          "name": "Minesight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard.Sense",
+          "standing": "origin",
+          "display_name": "Minesight"
+        },
+        {
+          "name": "Mist Child",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Mist Child"
+        },
+        {
+          "name": "Mixed Weakness",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Mixed Weakness"
+        },
+        {
+          "name": "Mixed Weakness Ability Score Selection ~ Mental",
+          "doneness": "not-started",
+          "type_facet": "MixedWeaknessAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Mixed Weakness Ability Score Selection ~ Mental"
+        },
+        {
+          "name": "Mixed Weakness Ability Score Selection ~ Physical",
+          "doneness": "not-started",
+          "type_facet": "MixedWeaknessAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Mixed Weakness Ability Score Selection ~ Physical"
+        },
+        {
+          "name": "Monstrous Design",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Design",
+          "standing": "origin",
+          "display_name": "Monstrous Design"
+        },
+        {
+          "name": "Monstrous Humanoid",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Monstrous Humanoid"
+        },
+        {
+          "name": "Moon-Touched Damage Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Moon-Touched Damage Resistance"
+        },
+        {
+          "name": "Mountain-Born",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Mountain-Born"
+        },
+        {
+          "name": "Mountaineer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Mountaineer"
+        },
+        {
+          "name": "Multi-Armed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Multi-Armed"
+        },
+        {
+          "name": "Multitalented",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Multitalented"
+        },
+        {
+          "name": "Natural Armor",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Natural Armor"
+        },
+        {
+          "name": "Natural Attack",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Natural Attack"
+        },
+        {
+          "name": "Negative Energy Affinity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Standard",
+          "standing": "origin",
+          "display_name": "Negative Energy Affinity"
+        },
+        {
+          "name": "Nereid Fascination",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Nereid Fascination"
+        },
+        {
+          "name": "Nimble Attacks",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedFeatSkillTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Nimble Attacks"
+        },
+        {
+          "name": "Nimble Faller",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Nimble Faller"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceSpeedQuality",
+          "standing": "origin",
+          "display_name": "Normal Speed"
+        },
+        {
+          "name": "Object of Desire",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Object of Desire"
+        },
+        {
+          "name": "Orc",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Orc (RaceBuilderBonusLang)"
+        },
+        {
+          "name": "Orc",
+          "doneness": "not-started",
+          "type_facet": "RacialWeaponGroup.Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "Orc (RacialWeaponGroup.Weapon Familiarity)"
+        },
+        {
+          "name": "Orc Ferocity",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Orc Ferocity"
+        },
+        {
+          "name": "Outsider (Native)",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Outsider (Native)"
+        },
+        {
+          "name": "Paragon",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Paragon"
+        },
+        {
+          "name": "Paragon Ability Score Selection ~ Mental",
+          "doneness": "not-started",
+          "type_facet": "ParagonAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Paragon Ability Score Selection ~ Mental"
+        },
+        {
+          "name": "Paragon Ability Score Selection ~ Physical",
+          "doneness": "not-started",
+          "type_facet": "ParagonAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Paragon Ability Score Selection ~ Physical"
+        },
+        {
+          "name": "Plagueborn",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Plagueborn"
+        },
+        {
+          "name": "Plant",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Plant"
+        },
+        {
+          "name": "Poison Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Poison Resistance"
+        },
+        {
+          "name": "Poison Use",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard.Poison Use",
+          "standing": "origin",
+          "display_name": "Poison Use"
+        },
+        {
+          "name": "Powerful Charge",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Powerful Charge"
+        },
+        {
+          "name": "Powerful Swimmer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Powerful Swimmer"
+        },
+        {
+          "name": "Prehensile Tail",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Prehensile Tail"
+        },
+        {
+          "name": "Pyromaniac",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Pyromaniac"
+        },
+        {
+          "name": "Quadruped",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Quadruped"
+        },
+        {
+          "name": "Quick Reactions",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedFeatSkillTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Quick Reactions"
+        },
+        {
+          "name": "Race Name",
+          "doneness": "not-started",
+          "type_facet": "RaceName",
+          "standing": "origin",
+          "display_name": "Race Name"
+        },
+        {
+          "name": "Reach",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Reach"
+        },
+        {
+          "name": "Relentless",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Relentless"
+        },
+        {
+          "name": "Resist Level-Drain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Resist Level-Drain"
+        },
+        {
+          "name": "Resistant",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Resistant"
+        },
+        {
+          "name": "Resurrection Vulnerability",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Standard",
+          "standing": "origin",
+          "display_name": "Resurrection Vulnerability"
+        },
+        {
+          "name": "Rock Catching",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Rock Catching"
+        },
+        {
+          "name": "Rock Throwing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Rock Throwing"
+        },
+        {
+          "name": "Rodent Empathy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Rodent Empathy"
+        },
+        {
+          "name": "Rule - Bypass Advanced Race Spell Restrictions",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Bypass Advanced Race Spell Restrictions"
+        },
+        {
+          "name": "Samsaran Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Samsaran Magic"
+        },
+        {
+          "name": "Scavenger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Scavenger"
+        },
+        {
+          "name": "Scent",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Advanced.Sense",
+          "standing": "origin",
+          "display_name": "Scent"
+        },
+        {
+          "name": "Seducer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Seducer"
+        },
+        {
+          "name": "See in Darkness",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Advanced.Sense",
+          "standing": "origin",
+          "display_name": "See in Darkness"
+        },
+        {
+          "name": "Shadow Blending",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Shadow Blending"
+        },
+        {
+          "name": "Shadow Caster",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Shadow Caster"
+        },
+        {
+          "name": "Shadow Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Shadow Magic"
+        },
+        {
+          "name": "Shadow Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Shadow Resistance"
+        },
+        {
+          "name": "Shadow Travel",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedMagicalTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Shadow Travel"
+        },
+        {
+          "name": "Shards of the Past",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Shards of the Past"
+        },
+        {
+          "name": "Silent Hunter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Silent Hunter"
+        },
+        {
+          "name": "Silver Tongued",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Silver Tongued"
+        },
+        {
+          "name": "Skeletal Damage Reduction",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Skeletal Damage Reduction"
+        },
+        {
+          "name": "Skill Bonus",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Skill Bonus"
+        },
+        {
+          "name": "Skill Training",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Skill Training"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "unclassified",
+          "display_name": "Skilled"
+        },
+        {
+          "name": "Sky Sentinel",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Sky Sentinel"
+        },
+        {
+          "name": "Slam",
+          "doneness": "not-started",
+          "type_facet": "Builder Racial Trait ~ Natural Attack",
+          "standing": "origin",
+          "display_name": "Slam"
+        },
+        {
+          "name": "Slapping Tail",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Slapping Tail"
+        },
+        {
+          "name": "Slow Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceSpeedQuality.AltRaceSpeed",
+          "standing": "origin",
+          "display_name": "Slow Speed"
+        },
+        {
+          "name": "Small",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceSizeQuality.AltRaceSize",
+          "standing": "origin",
+          "display_name": "Small"
+        },
+        {
+          "name": "Sneaky",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Sneaky"
+        },
+        {
+          "name": "Sneaky Rider",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Sneaky Rider"
+        },
+        {
+          "name": "Sociable",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Sociable"
+        },
+        {
+          "name": "Soul Seer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Soul Seer"
+        },
+        {
+          "name": "Specialized",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Specialized"
+        },
+        {
+          "name": "Specialized Ability Score Selection ~ Mental",
+          "doneness": "not-started",
+          "type_facet": "SpecializedAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Specialized Ability Score Selection ~ Mental"
+        },
+        {
+          "name": "Specialized Ability Score Selection ~ Physical",
+          "doneness": "not-started",
+          "type_facet": "SpecializedAbilityScoreSelection",
+          "standing": "origin",
+          "display_name": "Specialized Ability Score Selection ~ Physical"
+        },
+        {
+          "name": "Spell Resistance, Greater",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Spell Resistance, Greater"
+        },
+        {
+          "name": "Spell Resistance, Lesser",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Spell Resistance, Lesser"
+        },
+        {
+          "name": "Spell-Like Ability (At-Will Lv1)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (At-Will Lv1)"
+        },
+        {
+          "name": "Spell-Like Ability (At-Will Lv2)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (At-Will Lv2)"
+        },
+        {
+          "name": "Spell-Like Ability (At-Will Lv3)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Monstrous",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (At-Will Lv3)"
+        },
+        {
+          "name": "Spell-Like Ability (Greater Lv3)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedMagicalTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (Greater Lv3)"
+        },
+        {
+          "name": "Spell-Like Ability (Greater Lv4)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedMagicalTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (Greater Lv4)"
+        },
+        {
+          "name": "Spell-Like Ability (Lesser Lv1)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (Lesser Lv1)"
+        },
+        {
+          "name": "Spell-Like Ability (Lesser Lv2)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (Lesser Lv2)"
+        },
+        {
+          "name": "Sprinter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Sprinter"
+        },
+        {
+          "name": "Stability",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stability"
+        },
+        {
+          "name": "Stalker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stalker"
+        },
+        {
+          "name": "Standard",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "Standard"
+        },
+        {
+          "name": "Standard Design",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Design",
+          "standing": "origin",
+          "display_name": "Standard Design"
+        },
+        {
+          "name": "Standard Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.LanguageQuality",
+          "standing": "origin",
+          "display_name": "Standard Languages"
+        },
+        {
+          "name": "Starting Points +1",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Design",
+          "standing": "origin",
+          "display_name": "Starting Points +1"
+        },
+        {
+          "name": "Starting Points -1",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Design",
+          "standing": "origin",
+          "display_name": "Starting Points -1"
+        },
+        {
+          "name": "Static Bonus Feat",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Static Bonus Feat"
+        },
+        {
+          "name": "Stench Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard.Aura",
+          "standing": "origin",
+          "display_name": "Stench Aura"
+        },
+        {
+          "name": "Sticky Tongue",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Sticky Tongue"
+        },
+        {
+          "name": "Stone in the Blood",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stone in the Blood"
+        },
+        {
+          "name": "Stonecunning",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stonecunning"
+        },
+        {
+          "name": "Stoneseer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stoneseer"
+        },
+        {
+          "name": "Stonesinger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stonesinger"
+        },
+        {
+          "name": "Storm in the Blood",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Storm in the Blood"
+        },
+        {
+          "name": "Stubborn",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Stubborn"
+        },
+        {
+          "name": "Sunlight Powerlessness",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Sunlight Powerlessness"
+        },
+        {
+          "name": "Svirfneblin Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Svirfneblin Magic"
+        },
+        {
+          "name": "Swarming",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Swarming"
+        },
+        {
+          "name": "Swift as Shadows",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Swift as Shadows"
+        },
+        {
+          "name": "Swim",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "unclassified",
+          "display_name": "Swim"
+        },
+        {
+          "name": "Swordtrained",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Swordtrained"
+        },
+        {
+          "name": "Sylvan",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Sylvan"
+        },
+        {
+          "name": "Talons",
+          "doneness": "not-started",
+          "type_facet": "Builder Racial Trait ~ Natural Attack",
+          "standing": "origin",
+          "display_name": "Talons"
+        },
+        {
+          "name": "Terrain Stride",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Terrain Stride"
+        },
+        {
+          "name": "Terran",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Terran"
+        },
+        {
+          "name": "Terrifying Croak",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Terrifying Croak"
+        },
+        {
+          "name": "Tiny",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceSizeQuality.AltRaceSize",
+          "standing": "origin",
+          "display_name": "Tiny"
+        },
+        {
+          "name": "Toxic (Con damage)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Toxic (Con damage)"
+        },
+        {
+          "name": "Toxic (Dex damage)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Toxic (Dex damage)"
+        },
+        {
+          "name": "Toxic (Str damage)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Toxic (Str damage)"
+        },
+        {
+          "name": "Tracker ~ Builder Racial Trait ~ Bite",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Tracker ~ Builder Racial Trait ~ Bite"
+        },
+        {
+          "name": "Tracker ~ Race Builder Flight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Tracker ~ Race Builder Flight"
+        },
+        {
+          "name": "Tracker ~ Race Builder Quadruped",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Tracker ~ Race Builder Quadruped"
+        },
+        {
+          "name": "Treacherous Earth",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Treacherous Earth"
+        },
+        {
+          "name": "Treespeech",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard",
+          "standing": "origin",
+          "display_name": "Treespeech"
+        },
+        {
+          "name": "Tripping Tail",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Advanced",
+          "standing": "origin",
+          "display_name": "Tripping Tail"
+        },
+        {
+          "name": "Undead",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality",
+          "standing": "origin",
+          "display_name": "Undead"
+        },
+        {
+          "name": "Undead Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Undead Resistance"
+        },
+        {
+          "name": "Undercommon",
+          "doneness": "not-started",
+          "type_facet": "RaceBuilderBonusLang",
+          "standing": "origin",
+          "display_name": "Undercommon"
+        },
+        {
+          "name": "Underground Sneak",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Underground Sneak"
+        },
+        {
+          "name": "Unnatural",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Unnatural"
+        },
+        {
+          "name": "Urbanite",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Urbanite"
+        },
+        {
+          "name": "Use Advanced Race Guide Race Builder System",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Use Advanced Race Guide Race Builder System"
+        },
+        {
+          "name": "Vestigial Wings",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMovementTrait.Standard",
+          "standing": "origin",
+          "display_name": "Vestigial Wings"
+        },
+        {
+          "name": "Vulnerable in Sunlight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderWeaknessTrait.Standard",
+          "standing": "origin",
+          "display_name": "Vulnerable in Sunlight"
+        },
+        {
+          "name": "Water Child",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard",
+          "standing": "origin",
+          "display_name": "Water Child"
+        },
+        {
+          "name": "Water Sense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderSensesTrait.Standard.Sense",
+          "standing": "origin",
+          "display_name": "Water Sense"
+        },
+        {
+          "name": "Weakness",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "unclassified",
+          "display_name": "Weakness"
+        },
+        {
+          "name": "Weapon",
+          "doneness": "not-started",
+          "type_facet": "Weapon Familiarity",
+          "standing": "origin",
+          "display_name": "Weapon"
+        },
+        {
+          "name": "Weapon Familiarity",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Weapon Familiarity"
+        },
+        {
+          "name": "Weather Savvy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard",
+          "standing": "origin",
+          "display_name": "Weather Savvy"
+        },
+        {
+          "name": "Wing",
+          "doneness": "not-started",
+          "type_facet": "Builder Racial Trait ~ Natural Attack",
+          "standing": "origin",
+          "display_name": "Wing"
+        },
+        {
+          "name": "Wyrmscourged",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard",
+          "standing": "origin",
+          "display_name": "Wyrmscourged"
+        },
+        {
+          "name": "Xenophobic",
+          "doneness": "not-started",
+          "type_facet": "RacialQuality.LanguageQuality.RacialQualityLanguage",
+          "standing": "unclassified",
+          "display_name": "Xenophobic"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 7,
       "partial": 0,
-      "not_started": 433,
-      "denominator": 440,
-      "pct": 1.6,
-      "excluded_from_percentage": 203,
+      "not_started": 487,
+      "denominator": 494,
+      "pct": 1.4,
+      "excluded_from_percentage": 214,
       "standing_breakdown": {
-        "origin": 440,
-        "unclassified": 203
+        "origin": 494,
+        "unclassified": 214
       },
       "items": [
         {
@@ -22,6 +2502,20 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Abjuration Sense"
+        },
+        {
+          "name": "Aboleth's Lung",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Aboleth's Lung"
+        },
+        {
+          "name": "Absorbing Inhalation",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Absorbing Inhalation"
         },
         {
           "name": "Advanced Talents",
@@ -80,6 +2574,13 @@
           "display_name": "Airborne Ambusher"
         },
         {
+          "name": "Alchemical Tinkering",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Alchemical Tinkering"
+        },
+        {
           "name": "Alignment",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality",
@@ -120,6 +2621,13 @@
           "type_facet": "BondedWitchItemChoice",
           "standing": "origin",
           "display_name": "Amulet"
+        },
+        {
+          "name": "Ancestral Regression",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Ancestral Regression"
         },
         {
           "name": "Ancient Lorekeeper",
@@ -216,7 +2724,7 @@
           "name": "Augment Summoning",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Augment Summoning"
         },
         {
@@ -311,11 +2819,32 @@
           "display_name": "Belly Shot"
         },
         {
+          "name": "Bestow Insight",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Bestow Insight"
+        },
+        {
+          "name": "Blend",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Blend"
+        },
+        {
           "name": "Blood Ability",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Blood Ability"
+        },
+        {
+          "name": "Blood Blaze",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Blood Blaze"
         },
         {
           "name": "Blood Command",
@@ -346,6 +2875,13 @@
           "display_name": "Blood Infusion"
         },
         {
+          "name": "Blood Scent",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Blood Scent"
+        },
+        {
           "name": "Bloodline Arcana",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality",
@@ -372,6 +2908,13 @@
           "type_facet": "Class Feature.Sorcerer Class Feature",
           "standing": "unclassified",
           "display_name": "Bloodline Powers (Class Feature.Sorcerer Class Feature) #2"
+        },
+        {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
         },
         {
           "name": "Bloodthirst*",
@@ -675,6 +3218,13 @@
           "display_name": "Celestial Master"
         },
         {
+          "name": "Chains of Fire",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Chains of Fire"
+        },
+        {
           "name": "Chameleon",
           "doneness": "not-started",
           "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.Supernatural",
@@ -836,6 +3386,13 @@
           "display_name": "Class Skills (ArchetypeAbility.SpecialQuality) #19"
         },
         {
+          "name": "Cloud Shape",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Cloud Shape"
+        },
+        {
           "name": "Combat Flyer",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
@@ -897,6 +3454,13 @@
           "type_facet": "Archetype.WizardArchetype.WizardArcaneBond.WizardBonusFeat5.WizardBonusFeat10.WizardBonusFeat15.WizardBonusFeat20",
           "standing": "origin",
           "display_name": "Cruoromancer"
+        },
+        {
+          "name": "Damnation Stride",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Damnation Stride"
         },
         {
           "name": "Dance of Avoidance",
@@ -967,6 +3531,13 @@
           "type_facet": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Deadly Scratch"
+        },
+        {
+          "name": "Death From Below",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Death From Below"
         },
         {
           "name": "Deathstrike",
@@ -1377,9 +3948,16 @@
         {
           "name": "Earth Glide",
           "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "unclassified",
+          "display_name": "Earth Glide (MagusSpellblend.MagusSpellBlendLVL4)"
+        },
+        {
+          "name": "Earth Glide",
+          "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
-          "display_name": "Earth Glide (ArchetypeAbility.SpecialQuality.Supernatural) #3"
+          "display_name": "Earth Glide (ArchetypeAbility.SpecialQuality.Supernatural) #4"
         },
         {
           "name": "Earthen Thrall",
@@ -1478,6 +4056,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Entomb"
+        },
+        {
+          "name": "Escaping Ward",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Escaping Ward"
         },
         {
           "name": "Evasion",
@@ -1597,6 +4182,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Favored Terrain (ArchetypeAbility.SpecialQuality.Extraordinary) #3"
+        },
+        {
+          "name": "Fearsome Duplicate",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Fearsome Duplicate"
         },
         {
           "name": "Fearsome Jurist",
@@ -1746,6 +4338,13 @@
           "display_name": "Final Revelation"
         },
         {
+          "name": "Fins to Feet",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Fins to Feet"
+        },
+        {
           "name": "Fire Body",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
@@ -1779,6 +4378,20 @@
           "type_facet": "SpecialQuality.AlchemistDiscovery",
           "standing": "origin",
           "display_name": "Fire Tamer"
+        },
+        {
+          "name": "Fire Trail",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Fire Trail"
+        },
+        {
+          "name": "Firestream",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Firestream"
         },
         {
           "name": "Flame Heart",
@@ -1830,6 +4443,13 @@
           "display_name": "Forgemaster's Blessing"
         },
         {
+          "name": "Forgetful Slumber",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "unclassified",
+          "display_name": "Forgetful Slumber"
+        },
+        {
           "name": "Free Step",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
@@ -1840,8 +4460,15 @@
           "name": "Freedom of Movement",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Freedom of Movement"
+        },
+        {
+          "name": "Ghost Wolf",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Ghost Wolf"
         },
         {
           "name": "Ghostglyph*",
@@ -1863,6 +4490,13 @@
           "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier",
           "standing": "origin",
           "display_name": "Glassfoot Bomb*"
+        },
+        {
+          "name": "Gloomblind Bolts",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Gloomblind Bolts"
         },
         {
           "name": "Glowglyph",
@@ -2061,6 +4695,20 @@
           "display_name": "Gun Training"
         },
         {
+          "name": "Gusting Sphere",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Gusting Sphere"
+        },
+        {
+          "name": "Half-Blood Extraction",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Half-Blood Extraction"
+        },
+        {
           "name": "Hammer Master",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
@@ -2115,6 +4763,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Heartstone"
+        },
+        {
+          "name": "Hellmouth Lash",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Hellmouth Lash"
         },
         {
           "name": "Heroic Echo",
@@ -2173,6 +4828,13 @@
           "display_name": "Illiteracy"
         },
         {
+          "name": "Imbue With Elemental Might",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Imbue With Elemental Might"
+        },
+        {
           "name": "Imbued Shot",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
@@ -2215,11 +4877,25 @@
           "display_name": "Imperious Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Imperious Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Imperious Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Impromptu Armament",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Impromptu Armament"
+        },
+        {
+          "name": "Improve Trap",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Improve Trap"
         },
         {
           "name": "Improved Fire Body",
@@ -2348,6 +5024,13 @@
           "display_name": "Ironskin Monk"
         },
         {
+          "name": "Jitterbugs",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Jitterbugs"
+        },
+        {
           "name": "Judgment by Fire",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
@@ -2430,6 +5113,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Kobold Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Kobold Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Kobold Bloodline ~ Feat Tracker"
         },
         {
           "name": "Leopard Trance",
@@ -2544,11 +5234,25 @@
           "display_name": "Major Hexes (ArchetypeAbility.SpecialQuality) #2"
         },
         {
+          "name": "Major Phantom Object",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Major Phantom Object"
+        },
+        {
           "name": "Maneuver Training",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Maneuver Training"
+        },
+        {
+          "name": "Marid's Mastery",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Marid's Mastery"
         },
         {
           "name": "Martial or Exotic Weapon",
@@ -2586,6 +5290,20 @@
           "display_name": "Merciful Smite"
         },
         {
+          "name": "Miasmatic Form",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Miasmatic Form (MagusSpellblend.MagusSpellBlendLVL4)"
+        },
+        {
+          "name": "Miasmatic Form",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Miasmatic Form (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
           "name": "Mighty Fist of the Earth",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.KiPower",
@@ -2593,11 +5311,25 @@
           "display_name": "Mighty Fist of the Earth"
         },
         {
+          "name": "Minor Dream",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "unclassified",
+          "display_name": "Minor Dream"
+        },
+        {
           "name": "Minor Eldritch Magic",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.RogueTalent.SpellLike",
           "standing": "origin",
           "display_name": "Minor Eldritch Magic"
+        },
+        {
+          "name": "Minor Phantom Object",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Minor Phantom Object"
         },
         {
           "name": "Mobile Defense",
@@ -2640,6 +5372,13 @@
           "type_facet": "OOTPBonusFeat",
           "standing": "unclassified",
           "display_name": "Mounted Combat"
+        },
+        {
+          "name": "Mudball",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Mudball"
         },
         {
           "name": "Mysteries",
@@ -2768,6 +5507,13 @@
           "display_name": "Nimble Walker"
         },
         {
+          "name": "Nixie's Lure",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Nixie's Lure"
+        },
+        {
           "name": "Noble Eidolon",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.SpellLike",
@@ -2810,6 +5556,13 @@
           "display_name": "Order of the Paw"
         },
         {
+          "name": "Overrun",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.NativeCunningOption",
+          "standing": "unclassified",
+          "display_name": "Overrun"
+        },
+        {
           "name": "Pact of Peace",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.SpellLike",
@@ -2822,6 +5575,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Pass for Human"
+        },
+        {
+          "name": "Path of the Winds",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Path of the Winds"
         },
         {
           "name": "Patron",
@@ -2918,7 +5678,7 @@
           "name": "Poison Immunity",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary.AugmentedFormSelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Poison Immunity"
         },
         {
@@ -2962,6 +5722,13 @@
           "type_facet": "WaveWardenBonusFeat",
           "standing": "unclassified",
           "display_name": "Precise Shot"
+        },
+        {
+          "name": "Prehensile Pilfer",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Prehensile Pilfer"
         },
         {
           "name": "Punchline",
@@ -3027,6 +5794,13 @@
           "display_name": "Rage Powers (ArchetypeAbility.SpecialQuality) #2"
         },
         {
+          "name": "Raging Rubble",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Raging Rubble"
+        },
+        {
           "name": "Raider's Riposte",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
@@ -3060,6 +5834,13 @@
           "type_facet": "WaveWardenBonusFeat",
           "standing": "origin",
           "display_name": "Rapid Reload (Crossbow (Light))"
+        },
+        {
+          "name": "Recharge Innate Magic",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Recharge Innate Magic"
         },
         {
           "name": "Recoilless",
@@ -3137,6 +5918,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Resilience"
+        },
+        {
+          "name": "Resilient Reservoir",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Resilient Reservoir"
         },
         {
           "name": "Resist Storm",
@@ -3321,6 +6109,13 @@
           "display_name": "Scarshield"
         },
         {
+          "name": "Scorching Ash Form",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Scorching Ash Form"
+        },
+        {
           "name": "Scrap Bomb",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.AlchemistDiscovery.Supernatural.AlchemistBombModifier",
@@ -3370,6 +6165,13 @@
           "display_name": "Select Greater Brand"
         },
         {
+          "name": "Sentry Skull",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Sentry Skull"
+        },
+        {
           "name": "Serene Strike",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
@@ -3389,6 +6191,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Servant of the Flame"
+        },
+        {
+          "name": "Shadow Anchor",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Shadow Anchor"
         },
         {
           "name": "Shadow Bond",
@@ -3445,6 +6254,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shadow Summoning"
+        },
+        {
+          "name": "Shadowy Haven",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Shadowy Haven"
         },
         {
           "name": "Shaitan Binder",
@@ -3562,14 +6378,14 @@
           "name": "Skill Ranks per Level",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Skill Ranks per Level (ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Skill Ranks per Level",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Skill Ranks per Level (ArchetypeAbility.SpecialQuality) #2"
         },
         {
@@ -3648,6 +6464,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Soul of Stone"
+        },
+        {
+          "name": "Sow Thought",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "unclassified",
+          "display_name": "Sow Thought"
         },
         {
           "name": "Speedy Tricks",
@@ -3762,6 +6585,13 @@
           "display_name": "Spring Attack"
         },
         {
+          "name": "Squeeze",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Squeeze"
+        },
+        {
           "name": "Staff",
           "doneness": "not-started",
           "type_facet": "BondedWitchItemChoice",
@@ -3788,6 +6618,13 @@
           "type_facet": "SpecialQuality.Extraordinary.NativeCunningOption",
           "standing": "unclassified",
           "display_name": "Steal"
+        },
+        {
+          "name": "Steal Breath",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Steal Breath"
         },
         {
           "name": "Steal the Story",
@@ -3902,6 +6739,13 @@
           "display_name": "Strength of Stone"
         },
         {
+          "name": "Strong Wings",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Strong Wings"
+        },
+        {
           "name": "Student of Humanity",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Imperious Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary",
@@ -3921,6 +6765,13 @@
           "type_facet": "ArchetypeAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Summon Nature's Ally"
+        },
+        {
+          "name": "Summon Nature's Ally Spell List",
+          "doneness": "not-started",
+          "type_facet": "ArchetypeAbility.Hidden.SpellBase",
+          "standing": "origin",
+          "display_name": "Summon Nature's Ally Spell List"
         },
         {
           "name": "Sunder",
@@ -4000,6 +6851,13 @@
           "display_name": "Terror"
         },
         {
+          "name": "Theft Ward",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Theft Ward"
+        },
+        {
           "name": "Thief-Curse",
           "doneness": "not-started",
           "type_facet": "RuneforgerOption.ArchetypeAbility.SpecialQuality",
@@ -4012,6 +6870,13 @@
           "type_facet": "SwordmasterTrance.ArchetypeAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tiger Trance"
+        },
+        {
+          "name": "Touch of Combustion",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Touch of Combustion"
         },
         {
           "name": "Touch of Serenity",
@@ -4133,6 +6998,13 @@
           "display_name": "True Naga"
         },
         {
+          "name": "Truespeak",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Truespeak"
+        },
+        {
           "name": "Twisted Wish",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Supernatural",
@@ -4203,6 +7075,13 @@
           "display_name": "Undine Adept"
         },
         {
+          "name": "Undine's Curse",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Undine's Curse"
+        },
+        {
           "name": "Unexpected Charge",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
@@ -4231,6 +7110,13 @@
           "display_name": "Unstoppable Rampage"
         },
         {
+          "name": "Urban Grace",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Urban Grace"
+        },
+        {
           "name": "Venomous Bite",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary.AugmentedFormSelection",
@@ -4250,6 +7136,20 @@
           "type_facet": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Vicious Claws"
+        },
+        {
+          "name": "Village Veil",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Village Veil"
+        },
+        {
+          "name": "Vomit Twin",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Vomit Twin"
         },
         {
           "name": "Wand",
@@ -4413,6 +7313,20 @@
           "display_name": "Weapon and Armor Proficiency (ArchetypeAbility.SpecialQuality) #6"
         },
         {
+          "name": "Web Bolt",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Web Bolt"
+        },
+        {
+          "name": "Web Cloud",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Web Cloud"
+        },
+        {
           "name": "Wicked Improvisation",
           "doneness": "not-started",
           "type_facet": "ArchetypeAbility.SpecialQuality.Extraordinary",
@@ -4469,11 +7383,32 @@
           "display_name": "Wild at Heart"
         },
         {
+          "name": "Wind Blades",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Wind Blades"
+        },
+        {
           "name": "Wind Listener",
           "doneness": "not-started",
           "type_facet": "Archetype.WizardArchetype.WizardArcaneBond.WizardBonusFeat5.WizardBonusFeat10.WizardBonusFeat15",
           "standing": "origin",
           "display_name": "Wind Listener"
+        },
+        {
+          "name": "Windy Escape",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Windy Escape"
+        },
+        {
+          "name": "Winter Feathers",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Winter Feathers"
         },
         {
           "name": "Wishbound Arcana",
@@ -4762,11 +7697,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 136,
+      "done": 138,
       "partial": 5,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 143,
-      "pct": 95.1,
+      "pct": 96.5,
       "excluded_from_percentage": 43,
       "standing_breakdown": {
         "origin": 143,
@@ -4796,8 +7731,8 @@
         },
         {
           "name": "Amazing Tools of Manufacture",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
           "standing": "origin",
           "display_name": "Amazing Tools of Manufacture"
         },
@@ -6014,8 +8949,8 @@
         },
         {
           "name": "Vampire Slayer's Kit",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Goods.Tools.Racial.Dhampir",
           "standing": "origin",
           "display_name": "Vampire Slayer's Kit"
         },
@@ -7965,13 +10900,42 @@
       ]
     },
     {
-      "kind": "monster_ability",
-      "label": "Monster Abilities",
+      "kind": "language",
+      "label": "Languages",
       "done": 0,
       "partial": 0,
-      "not_started": 1,
-      "denominator": 1,
+      "not_started": 0,
+      "denominator": 0,
       "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "unclassified": 2
+      },
+      "items": [
+        {
+          "name": "Xenophobic",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Xenophobic"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.AncientLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 1,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -7979,7 +10943,7 @@
       "items": [
         {
           "name": "Grippli Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Ability",
           "standing": "origin",
           "display_name": "Grippli Poison"
@@ -7989,15 +10953,15 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 75,
-      "partial": 83,
-      "not_started": 70,
-      "denominator": 228,
-      "pct": 32.9,
-      "excluded_from_percentage": 95,
+      "done": 76,
+      "partial": 84,
+      "not_started": 65,
+      "denominator": 225,
+      "pct": 33.8,
+      "excluded_from_percentage": 90,
       "standing_breakdown": {
-        "unclassified": 95,
-        "origin": 228
+        "unclassified": 90,
+        "origin": 225
       },
       "items": [
         {
@@ -8676,7 +11640,7 @@
           "name": "Explorer",
           "doneness": "done",
           "type_facet": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Explorer"
         },
         {
@@ -8900,7 +11864,7 @@
           "name": "Glide",
           "doneness": "partial",
           "type_facet": "RacialTraits.Tengu Racial Trait.SpecialQuality.Special Quality",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Glide"
         },
         {
@@ -9003,24 +11967,10 @@
         },
         {
           "name": "Heart of the Fields",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Heart of the Fields"
-        },
-        {
-          "name": "Heart of the Fields",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
           "standing": "unclassified",
-          "display_name": "Heart of the Fields (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus)"
-        },
-        {
-          "name": "Heart of the Mountain",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Heart of the Mountain"
+          "display_name": "Heart of the Fields"
         },
         {
           "name": "Heart of the Mountains",
@@ -9031,87 +11981,45 @@
         },
         {
           "name": "Heart of the Sea",
-          "doneness": "not-started",
-          "type_facet": null,
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
           "standing": "origin",
           "display_name": "Heart of the Sea"
         },
         {
-          "name": "Heart of the Sea",
+          "name": "Heart of the Slums",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
-          "standing": "origin",
-          "display_name": "Heart of the Sea (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus)"
-        },
-        {
-          "name": "Heart of the Slums",
-          "doneness": "not-started",
-          "type_facet": null,
           "standing": "origin",
           "display_name": "Heart of the Slums"
         },
         {
-          "name": "Heart of the Slums",
+          "name": "Heart of the Snows",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
-          "standing": "origin",
-          "display_name": "Heart of the Slums (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus)"
-        },
-        {
-          "name": "Heart of the Snows",
-          "doneness": "not-started",
-          "type_facet": null,
           "standing": "origin",
           "display_name": "Heart of the Snows"
         },
         {
-          "name": "Heart of the Snows",
+          "name": "Heart of the Streets",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
-          "standing": "origin",
-          "display_name": "Heart of the Snows (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus)"
-        },
-        {
-          "name": "Heart of the Streets",
-          "doneness": "not-started",
-          "type_facet": null,
           "standing": "unclassified",
           "display_name": "Heart of the Streets"
-        },
-        {
-          "name": "Heart of the Streets",
-          "doneness": "done",
-          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
-          "standing": "unclassified",
-          "display_name": "Heart of the Streets (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus)"
-        },
-        {
-          "name": "Heart of the Sun",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Heart of the Sun"
         },
         {
           "name": "Heart of the Sun",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait",
           "standing": "origin",
-          "display_name": "Heart of the Sun (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait)"
-        },
-        {
-          "name": "Heart of the Wilderness",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Heart of the Wilderness"
+          "display_name": "Heart of the Sun"
         },
         {
           "name": "Heart of the Wilderness",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
           "standing": "unclassified",
-          "display_name": "Heart of the Wilderness (RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus)"
+          "display_name": "Heart of the Wilderness"
         },
         {
           "name": "Heavenborn",
@@ -10266,11 +13174,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 29,
+      "done": 30,
       "partial": 2,
-      "not_started": 2,
+      "not_started": 1,
       "denominator": 33,
-      "pct": 87.9,
+      "pct": 90.9,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 33
@@ -10292,7 +13200,7 @@
         },
         {
           "name": "Dhampir",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin",
           "display_name": "Dhampir"
@@ -11172,6 +14080,372 @@
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Winter Feathers"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 39,
+      "denominator": 39,
+      "pct": 0.0,
+      "excluded_from_percentage": 11,
+      "standing_breakdown": {
+        "unclassified": 11,
+        "origin": 39
+      },
+      "items": [
+        {
+          "name": "Adlet",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Adlet"
+        },
+        {
+          "name": "Anumus",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Anumus"
+        },
+        {
+          "name": "Aquatic",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Aquatic"
+        },
+        {
+          "name": "Arctic Elf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arctic Elf"
+        },
+        {
+          "name": "Arena-Bred",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arena-Bred"
+        },
+        {
+          "name": "Avenging",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Avenging"
+        },
+        {
+          "name": "Boggle",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Boggle"
+        },
+        {
+          "name": "Charau-ka",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Charau-ka"
+        },
+        {
+          "name": "Cold",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Cold"
+        },
+        {
+          "name": "Cosmopolitan",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Cosmopolitan"
+        },
+        {
+          "name": "Country Folk",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Country Folk"
+        },
+        {
+          "name": "Dark Folk",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Dark Folk"
+        },
+        {
+          "name": "Deep Delver",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep Delver"
+        },
+        {
+          "name": "Deep Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep Kin"
+        },
+        {
+          "name": "Dread Gnome",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dread Gnome"
+        },
+        {
+          "name": "Drow-Descended",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Drow-Descended"
+        },
+        {
+          "name": "Dusk Elf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dusk Elf"
+        },
+        {
+          "name": "Elder Dwarf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Elder Dwarf"
+        },
+        {
+          "name": "Elf-Raised",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Elf-Raised"
+        },
+        {
+          "name": "Entobian",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Entobian"
+        },
+        {
+          "name": "Exiled Dwarf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Exiled Dwarf"
+        },
+        {
+          "name": "Feral",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Feral"
+        },
+        {
+          "name": "Gear Gnome",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gear Gnome"
+        },
+        {
+          "name": "Giant",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Giant"
+        },
+        {
+          "name": "Gutter Rat",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gutter Rat"
+        },
+        {
+          "name": "Half-Construct",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Half-Construct"
+        },
+        {
+          "name": "Half-Undead",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Half-Undead"
+        },
+        {
+          "name": "Human-Raised",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Human-Raised"
+        },
+        {
+          "name": "Imperious Human",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Imperious Human"
+        },
+        {
+          "name": "Lava Gnome",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lava Gnome"
+        },
+        {
+          "name": "Mahrog",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Mahrog"
+        },
+        {
+          "name": "Mountain Clan",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Mountain Clan"
+        },
+        {
+          "name": "Mountain Dwarf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Mountain Dwarf"
+        },
+        {
+          "name": "Mystic",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Mystic"
+        },
+        {
+          "name": "Nomadic",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Nomadic"
+        },
+        {
+          "name": "Obitu",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Obitu"
+        },
+        {
+          "name": "Reptilian",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Reptilian"
+        },
+        {
+          "name": "Sasquatch",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Sasquatch"
+        },
+        {
+          "name": "Savage Elf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Savage Elf"
+        },
+        {
+          "name": "Shapechanger",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Shapechanger"
+        },
+        {
+          "name": "Slave Born",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Slave Born"
+        },
+        {
+          "name": "Snillorg",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Snillorg"
+        },
+        {
+          "name": "Strix",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Strix"
+        },
+        {
+          "name": "Taddol",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Taddol"
+        },
+        {
+          "name": "Tower Elf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Tower Elf"
+        },
+        {
+          "name": "Trailblazer",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Trailblazer"
+        },
+        {
+          "name": "Traveler Gnome",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Traveler Gnome"
+        },
+        {
+          "name": "Versatile Human",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Versatile Human"
+        },
+        {
+          "name": "Zif",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Zif"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
         }
       ]
     }

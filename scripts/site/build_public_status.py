@@ -139,17 +139,25 @@ DENOMINATOR_STANDINGS = provenance.DENOMINATOR_STATUSES
 # Curated display labels for the unit "kind" facets. Fail-loud: an
 # unrecognized kind raises instead of silently omitting it.
 KIND_LABELS = {
+    "ability": "Abilities",
     "class": "Classes",
     "class_feature": "Class Features",
     "companion": "Companions",
+    "deity": "Deities",
+    "domain": "Domains",
     "equipment": "Equipment",
     "equipment_modifier": "Equipment Modifiers",
     "feat": "Feats",
+    "language": "Languages",
     "monster": "Monsters",
     "monster_ability": "Monster Abilities",
+    "power": "Powers",
     "race": "Races",
     "race_trait": "Race Traits",
+    "skill": "Skills",
     "spell": "Spells",
+    "template": "Templates",
+    "trait": "Traits",
 }
 
 # Curated display names for the sourcebooks shown publicly. Deliberately a

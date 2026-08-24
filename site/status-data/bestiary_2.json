@@ -3,6 +3,218 @@
   "title": "Bestiary 2",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 21,
+      "denominator": 21,
+      "pct": 0.0,
+      "excluded_from_percentage": 7,
+      "standing_breakdown": {
+        "origin": 21,
+        "unclassified": 7
+      },
+      "items": [
+        {
+          "name": "+2 Dexterity, +2 Intelligence, -2 Wisdom",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin",
+          "display_name": "+2 Dexterity, +2 Intelligence, -2 Wisdom (RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores)"
+        },
+        {
+          "name": "+2 Dexterity, +2 Intelligence, -2 Wisdom",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin",
+          "display_name": "+2 Dexterity, +2 Intelligence, -2 Wisdom (RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores) #2"
+        },
+        {
+          "name": "+2 Strength, +2 Charisma, -2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin",
+          "display_name": "+2 Strength, +2 Charisma, -2 Constitution"
+        },
+        {
+          "name": "+2 Strength, +2 Wisdom, -2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin",
+          "display_name": "+2 Strength, +2 Wisdom, -2 Constitution"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": "Dhampir Subrace",
+          "standing": "origin",
+          "display_name": "Dhampir"
+        },
+        {
+          "name": "Holy Weakness",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Weakness",
+          "standing": "origin",
+          "display_name": "Holy Weakness"
+        },
+        {
+          "name": "Jiang-shi-Born (Ru-shi)",
+          "doneness": "not-started",
+          "type_facet": "Dhampir Subrace",
+          "standing": "origin",
+          "display_name": "Jiang-shi-Born (Ru-shi)"
+        },
+        {
+          "name": "Moroi-Born (Svetocher)",
+          "doneness": "not-started",
+          "type_facet": "Dhampir Subrace",
+          "standing": "origin",
+          "display_name": "Moroi-Born (Svetocher)"
+        },
+        {
+          "name": "Nosferatu-Born (Ancient-born)",
+          "doneness": "not-started",
+          "type_facet": "Dhampir Subrace",
+          "standing": "origin",
+          "display_name": "Nosferatu-Born (Ancient-born)"
+        },
+        {
+          "name": "Racial Traits ~ Dhampir",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Dhampir"
+        },
+        {
+          "name": "Racial Traits ~ Fetchling",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Fetchling"
+        },
+        {
+          "name": "Racial Traits ~ Grippli",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Grippli"
+        },
+        {
+          "name": "Racial Traits ~ Ifrit",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Ifrit"
+        },
+        {
+          "name": "Racial Traits ~ Oread",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Oread"
+        },
+        {
+          "name": "Racial Traits ~ Sylph",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Sylph"
+        },
+        {
+          "name": "Racial Traits ~ Undine",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Undine"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Skilled (RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary)"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Skilled (RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary) #2"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Skilled (RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary) #3"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Skilled (RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary) #4"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (RacialTraits.Dhampir Racial Trait.SpecialQuality)"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (RacialTraits.Dhampir Racial Trait.SpecialQuality) #2"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (RacialTraits.Dhampir Racial Trait.SpecialQuality) #3"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Spell-Like Ability (RacialTraits.Dhampir Racial Trait.SpecialQuality) #4"
+        },
+        {
+          "name": "Vetala-Born (Ajibachana)",
+          "doneness": "not-started",
+          "type_facet": "Dhampir Subrace",
+          "standing": "origin",
+          "display_name": "Vetala-Born (Ajibachana)"
+        },
+        {
+          "name": "Weakness",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Weakness (RacialTraits.Dhampir Racial Trait.SpecialQuality)"
+        },
+        {
+          "name": "Weakness",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Weakness (RacialTraits.Dhampir Racial Trait.SpecialQuality) #2"
+        },
+        {
+          "name": "Weakness",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Weakness (RacialTraits.Dhampir Racial Trait.SpecialQuality) #3"
+        }
+      ]
+    },
+    {
       "kind": "companion",
       "label": "Companions",
       "done": 10,
@@ -132,28 +344,28 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 0,
+      "done": 5,
       "partial": 0,
-      "not_started": 5,
+      "not_started": 0,
       "denominator": 5,
-      "pct": 0.0,
-      "excluded_from_percentage": 3,
+      "pct": 100.0,
+      "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 5,
-        "unclassified": 3
+        "unclassified": 2
       },
       "items": [
         {
           "name": "Gaff",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Weapon.Melee.TwoHanded.Simple.Standard.Piercing",
           "standing": "origin",
           "display_name": "Gaff"
         },
         {
           "name": "Leprechaun Shillelagh",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Magic.Weapon.Melee.OneHanded.Ranged.Thrown.Simple.Standard.Bludgeoning.Club.Hammer",
           "standing": "origin",
           "display_name": "Leprechaun Shillelagh"
         },
@@ -162,57 +374,108 @@
           "doneness": "partial",
           "type_facet": "Magic.Wondrous.Tool.Weapon.Martial.Melee.TwoHanded.Bludgeoning.Specific.Club.Hammer",
           "standing": "unclassified",
-          "display_name": "Maul of the Titans (Magic.Wondrous.Tool.Weapon.Martial.Melee.TwoHanded.Bludgeoning.Specific.Club.Hammer)"
-        },
-        {
-          "name": "Maul of the Titans",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
-          "standing": "unclassified",
-          "display_name": "Maul of the Titans (PFSNotLegal)"
+          "display_name": "Maul of the Titans"
         },
         {
           "name": "Rhoka Sword",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Weapon.Exotic.Weapon.Melee.OneHanded.Piercing.Sword",
           "standing": "unclassified",
           "display_name": "Rhoka Sword"
         },
         {
           "name": "Rock (Huge)",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock",
           "standing": "origin",
           "display_name": "Rock (Huge)"
         },
         {
           "name": "Rock (Korred)",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock",
           "standing": "origin",
           "display_name": "Rock (Korred)"
         },
         {
           "name": "Royal Jelly",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Goods",
           "standing": "origin",
           "display_name": "Royal Jelly"
         }
       ]
     },
     {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 5,
+      "denominator": 5,
+      "pct": 0.0,
+      "excluded_from_percentage": 1,
+      "standing_breakdown": {
+        "unclassified": 1,
+        "origin": 5
+      },
+      "items": [
+        {
+          "name": "Boggard",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Boggard"
+        },
+        {
+          "name": "D'ziriak",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "D'ziriak"
+        },
+        {
+          "name": "D'ziriak (understanding only, cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand.Written.Read",
+          "standing": "origin",
+          "display_name": "D'ziriak (understanding only, cannot speak)"
+        },
+        {
+          "name": "Daemon",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Daemon"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Grippli"
+        },
+        {
+          "name": "Protean",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Protean"
+        }
+      ]
+    },
+    {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 240,
-      "partial": 67,
-      "not_started": 50,
-      "denominator": 357,
-      "pct": 67.2,
-      "excluded_from_percentage": 241,
+      "done": 286,
+      "partial": 96,
+      "not_started": 4,
+      "denominator": 386,
+      "pct": 74.1,
+      "excluded_from_percentage": 281,
       "standing_breakdown": {
-        "unclassified": 241,
-        "origin": 357
+        "unclassified": 281,
+        "origin": 386
       },
       "items": [
         {
@@ -230,6 +493,20 @@
           "display_name": "Absorb Flesh"
         },
         {
+          "name": "Absorb Force",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Absorb Force"
+        },
+        {
+          "name": "Abyssal Strike",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary",
+          "standing": "origin",
+          "display_name": "Abyssal Strike"
+        },
+        {
           "name": "Abyssal Transformation",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -245,7 +522,7 @@
         },
         {
           "name": "Acid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Acid (SpecialAttack.Supernatural)"
@@ -317,7 +594,7 @@
           "name": "Adamantine Claws",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Adamantine Claws"
         },
         {
@@ -326,6 +603,13 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Adaptive Strike"
+        },
+        {
+          "name": "Agent of Fate",
+          "doneness": "not-started",
+          "type_facet": "Spelllike",
+          "standing": "origin",
+          "display_name": "Agent of Fate"
         },
         {
           "name": "Agile Grappler",
@@ -364,14 +648,14 @@
         },
         {
           "name": "All-Around Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "All-Around Vision"
         },
         {
           "name": "Amphibious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Special Quality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Amphibious"
@@ -426,25 +710,46 @@
           "display_name": "Augmented Critical"
         },
         {
+          "name": "Aura of Cold",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "origin",
+          "display_name": "Aura of Cold"
+        },
+        {
           "name": "Aura of Courage/Fear Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality",
           "standing": "origin",
           "display_name": "Aura of Courage/Fear Aura"
         },
         {
           "name": "Aura of Empathy/Apathy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality",
           "standing": "origin",
           "display_name": "Aura of Empathy/Apathy"
         },
         {
           "name": "Aura of Hope/Despair",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality",
           "standing": "origin",
           "display_name": "Aura of Hope/Despair"
+        },
+        {
+          "name": "Aura of Madness",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Aura of Madness"
+        },
+        {
+          "name": "Aura of Sobs",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "origin",
+          "display_name": "Aura of Sobs"
         },
         {
           "name": "Baleful Shriek",
@@ -466,6 +771,13 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Bardic Performance"
+        },
+        {
+          "name": "Beguiling Aura",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "origin",
+          "display_name": "Beguiling Aura"
         },
         {
           "name": "Belly Grease",
@@ -496,6 +808,13 @@
           "display_name": "Black Flame Knives"
         },
         {
+          "name": "Blend With Light",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Blend With Light"
+        },
+        {
           "name": "Blightfire",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -503,11 +822,25 @@
           "display_name": "Blightfire"
         },
         {
+          "name": "Blind",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Blind"
+        },
+        {
           "name": "Blinding Gaze",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Blinding Gaze"
+        },
+        {
+          "name": "Blinding Light",
+          "doneness": "done",
+          "type_facet": "Aura.Extraordinary",
+          "standing": "origin",
+          "display_name": "Blinding Light"
         },
         {
           "name": "Blink",
@@ -541,6 +874,13 @@
           "name": "Blood Rage",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Blood Rage (SpecialAttack.Extraordinary)"
+        },
+        {
+          "name": "Blood Rage",
+          "doneness": "done",
+          "type_facet": null,
           "standing": "unclassified",
           "display_name": "Blood Rage"
         },
@@ -595,7 +935,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural)"
@@ -630,7 +970,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #6"
@@ -644,7 +984,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #8"
@@ -679,7 +1019,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #13"
@@ -704,6 +1044,13 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Breath of Flies"
+        },
+        {
+          "name": "Bristles",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Bristles"
         },
         {
           "name": "Burble",
@@ -847,14 +1194,14 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #7"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #8"
@@ -896,7 +1243,7 @@
         },
         {
           "name": "Channel Energy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Channel Energy"
@@ -923,6 +1270,13 @@
           "display_name": "Chupar"
         },
         {
+          "name": "Cling",
+          "doneness": "done",
+          "type_facet": "SpecialAttck.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Cling"
+        },
+        {
           "name": "Cloak of Chaos",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
@@ -940,7 +1294,7 @@
           "name": "Cloud Form",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Cloud Form"
         },
         {
@@ -966,7 +1320,7 @@
         },
         {
           "name": "Cold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Cold (SpecialAttack.Supernatural)"
@@ -1042,6 +1396,13 @@
           "display_name": "Cold (SpecialAttack.Extraordinary)"
         },
         {
+          "name": "Cold Lethargy",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Cold Lethargy"
+        },
+        {
           "name": "Cold Vigor",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
@@ -1057,7 +1418,7 @@
         },
         {
           "name": "Companion Favored Terrain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Companion Favored Terrain"
@@ -1087,21 +1448,21 @@
           "name": "Confusion",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Confusion (SpecialAttack.Supernatural)"
         },
         {
           "name": "Confusion",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Confusion (SpecialAttack.Supernatural) #2"
         },
         {
           "name": "Confusion",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Confusion (SpecialAttack.Supernatural) #3"
         },
         {
@@ -1127,7 +1488,7 @@
         },
         {
           "name": "Constructed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Defensive.Extraordinary",
           "standing": "origin",
           "display_name": "Constructed"
@@ -1176,10 +1537,17 @@
         },
         {
           "name": "Critical Hits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Critical Hits"
+        },
+        {
+          "name": "Crystal Sense",
+          "doneness": "done",
+          "type_facet": "Sense.SpellLike",
+          "standing": "origin",
+          "display_name": "Crystal Sense"
         },
         {
           "name": "Crystalline Dust Form",
@@ -1245,6 +1613,13 @@
           "display_name": "Deadly Embrace"
         },
         {
+          "name": "Deaf",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Deaf"
+        },
+        {
           "name": "Death Burst",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
@@ -1280,6 +1655,13 @@
           "display_name": "Death Throes (SpecialAttack.Supernatural) #2"
         },
         {
+          "name": "Death Throes",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Death Throes (Defensive.Supernatural)"
+        },
+        {
           "name": "Death's Calling",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -1309,7 +1691,7 @@
         },
         {
           "name": "Deformed Hand",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity",
           "standing": "origin",
           "display_name": "Deformed Hand"
@@ -1379,24 +1761,31 @@
         },
         {
           "name": "Detect Poison",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Poison"
         },
         {
           "name": "Detect Snares and Pits",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Snares and Pits"
         },
         {
           "name": "Detect Thoughts",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
-          "display_name": "Detect Thoughts"
+          "display_name": "Detect Thoughts (SpecialQuality.SpellLike.Sense)"
+        },
+        {
+          "name": "Detect Thoughts",
+          "doneness": "partial",
+          "type_facet": "Sense.Spelllike",
+          "standing": "unclassified",
+          "display_name": "Detect Thoughts (Sense.Spelllike)"
         },
         {
           "name": "Devour",
@@ -1428,14 +1817,14 @@
         },
         {
           "name": "Discern Lies",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Discern Lies"
         },
         {
           "name": "Discorporate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Discorporate"
@@ -1504,6 +1893,13 @@
           "display_name": "Disease (SpecialAttack.Supernatural) #9"
         },
         {
+          "name": "Divine Aversion",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Divine Aversion"
+        },
+        {
           "name": "Divine Insight",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
@@ -1514,7 +1910,7 @@
           "name": "Double Damage Against Objects",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Double Damage Against Objects"
         },
         {
@@ -1554,7 +1950,7 @@
         },
         {
           "name": "Earth Glide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "unclassified",
           "display_name": "Earth Glide"
@@ -1592,7 +1988,14 @@
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
-          "display_name": "Electrical Jolt"
+          "display_name": "Electrical Jolt (SpecialAttack.Supernatural)"
+        },
+        {
+          "name": "Electrical Jolt",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Electrical Jolt (Defensive.Supernatural)"
         },
         {
           "name": "Electricity",
@@ -1621,6 +2024,13 @@
           "type_facet": "SpecialAttack",
           "standing": "origin",
           "display_name": "Electricity (SpecialAttack) #4"
+        },
+        {
+          "name": "Elusive",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Elusive"
         },
         {
           "name": "Energy Drain",
@@ -1673,7 +2083,7 @@
         },
         {
           "name": "Entrap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Entrap (SpecialAttack.Supernatural)"
@@ -1693,6 +2103,13 @@
           "display_name": "Entropic Beams"
         },
         {
+          "name": "Entropic Flesh",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Entropic Flesh"
+        },
+        {
           "name": "Entropic Shield",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
@@ -1708,7 +2125,7 @@
         },
         {
           "name": "Envisaging",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "origin",
           "display_name": "Envisaging"
@@ -1729,7 +2146,7 @@
         },
         {
           "name": "Extension of All",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Extension of All"
@@ -1777,6 +2194,13 @@
           "display_name": "Fear"
         },
         {
+          "name": "Fear Aura",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Fear Aura"
+        },
+        {
           "name": "Fear Gaze",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -1789,6 +2213,13 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fear Gaze (SpecialAttack.Supernatural) #2"
+        },
+        {
+          "name": "Fear of Vorpal Weapons",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Fear of Vorpal Weapons"
         },
         {
           "name": "Fiddle",
@@ -1806,7 +2237,7 @@
         },
         {
           "name": "Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Fire (SpecialAttack.Supernatural)"
@@ -1897,7 +2328,7 @@
         },
         {
           "name": "Fragile",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity",
           "standing": "origin",
           "display_name": "Fragile"
@@ -1934,7 +2365,7 @@
           "name": "Gaseous",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Gaseous"
         },
         {
@@ -1948,7 +2379,7 @@
           "name": "Glide",
           "doneness": "done",
           "type_facet": "SpecialQuality.ModifyMovement.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Glide"
         },
         {
@@ -2085,10 +2516,17 @@
           "display_name": "Grab (SpecialAttack.Extraordinary) #17"
         },
         {
+          "name": "Grasping Tendrils",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Grasping Tendrils"
+        },
+        {
           "name": "Grind",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Grind"
         },
         {
@@ -2097,6 +2535,13 @@
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Hallucinatory Spores"
+        },
+        {
+          "name": "Hear Heartbeat",
+          "doneness": "done",
+          "type_facet": "Sense.Extraordinary",
+          "standing": "origin",
+          "display_name": "Hear Heartbeat"
         },
         {
           "name": "Heat",
@@ -2282,7 +2727,7 @@
         },
         {
           "name": "Immunity to Magic Missile",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "unclassified",
           "display_name": "Immunity to Magic Missile"
@@ -2331,10 +2776,24 @@
         },
         {
           "name": "Ink Cloud",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Ink Cloud"
+        },
+        {
+          "name": "Invisible in Light",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Invisible in Light"
+        },
+        {
+          "name": "Irreligious",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Irreligious"
         },
         {
           "name": "Item Use",
@@ -2345,7 +2804,7 @@
         },
         {
           "name": "Jet",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "unclassified",
           "display_name": "Jet"
@@ -2358,6 +2817,13 @@
           "display_name": "Kneecapper"
         },
         {
+          "name": "Know Alignment",
+          "doneness": "done",
+          "type_facet": "Sense.Supernatural",
+          "standing": "origin",
+          "display_name": "Know Alignment"
+        },
+        {
           "name": "Know Direction",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
@@ -2366,7 +2832,7 @@
         },
         {
           "name": "Larva",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "Larva"
@@ -2415,7 +2881,7 @@
         },
         {
           "name": "Light Sensitive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity",
           "standing": "origin",
           "display_name": "Light Sensitive"
@@ -2431,7 +2897,7 @@
           "name": "Lure",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Lure"
         },
         {
@@ -2526,6 +2992,13 @@
           "display_name": "Misty Form"
         },
         {
+          "name": "Molten Body",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "origin",
+          "display_name": "Molten Body"
+        },
+        {
           "name": "Multiweapon Mastery",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
@@ -2538,6 +3011,13 @@
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Multiweapon Mastery (SpecialAttack.Extraordinary) #2"
+        },
+        {
+          "name": "Natural Invisibility",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Natural Invisibility"
         },
         {
           "name": "Nausea",
@@ -2596,8 +3076,15 @@
           "display_name": "Numbing Cold"
         },
         {
+          "name": "Oaksight",
+          "doneness": "done",
+          "type_facet": "Sense.Supernatural",
+          "standing": "origin",
+          "display_name": "Oaksight"
+        },
+        {
           "name": "Obese",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity",
           "standing": "origin",
           "display_name": "Obese"
@@ -2613,19 +3100,19 @@
           "name": "Otherworldly Mind",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Otherworldly Mind"
         },
         {
           "name": "Oversized Limb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinBeneficialDeformity",
           "standing": "origin",
           "display_name": "Oversized Limb"
         },
         {
           "name": "Oversized Maw",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.OgrekinBeneficialDeformity",
           "standing": "origin",
           "display_name": "Oversized Maw"
@@ -2641,7 +3128,7 @@
           "name": "Pain",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Pain"
         },
         {
@@ -2739,22 +3226,36 @@
           "name": "Planar Acclimation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Planar Acclimation (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Planar Acclimation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Planar Acclimation (SpecialQuality.Extraordinary) #2"
         },
         {
           "name": "Planar Acclimation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Planar Acclimation (SpecialQuality.Extraordinary) #3"
+        },
+        {
+          "name": "Planar Fast Healing",
+          "doneness": "not-started",
+          "type_facet": "ModifyHP.Supernatural",
+          "standing": "origin",
+          "display_name": "Planar Fast Healing"
+        },
+        {
+          "name": "Plant Defenses",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Plant Defenses"
         },
         {
           "name": "Pod Prison",
@@ -2793,14 +3294,14 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #4"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #5"
@@ -2863,7 +3364,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #14"
@@ -2877,35 +3378,35 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #16"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #17"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #18"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #19"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #20"
@@ -2968,7 +3469,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #29"
@@ -2982,7 +3483,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #31"
@@ -3038,7 +3539,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #39"
@@ -3052,21 +3553,21 @@
         },
         {
           "name": "Poison (Fiendish Bile)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Poison (Fiendish Bile)"
         },
         {
           "name": "Poison (Mysterious Blood)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Poison (Mysterious Blood)"
         },
         {
           "name": "Poison (Vile Disjunction)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Poison (Vile Disjunction)"
@@ -3086,6 +3587,13 @@
           "display_name": "Positive Energy"
         },
         {
+          "name": "Positive Energy Affinity",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Positive Energy Affinity"
+        },
+        {
           "name": "Possession",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -3100,6 +3608,13 @@
           "display_name": "Powerful Bite"
         },
         {
+          "name": "Protection from Sonics",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Protection from Sonics"
+        },
+        {
           "name": "Pus Burst",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -3108,7 +3623,7 @@
         },
         {
           "name": "Quick Metabolism",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinBeneficialDeformity",
           "standing": "origin",
           "display_name": "Quick Metabolism"
@@ -3121,6 +3636,13 @@
           "display_name": "Quickness"
         },
         {
+          "name": "Quill Defense",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Quill Defense"
+        },
+        {
           "name": "Radiant Armor",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
@@ -3128,8 +3650,15 @@
           "display_name": "Radiant Armor"
         },
         {
-          "name": "Rapid Stinging",
+          "name": "Rake",
           "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Rake"
+        },
+        {
+          "name": "Rapid Stinging",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Rapid Stinging"
@@ -3138,8 +3667,15 @@
           "name": "Razor Sharp",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Razor Sharp"
+        },
+        {
+          "name": "Reactive Strike",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Reactive Strike"
         },
         {
           "name": "Reason to Hate",
@@ -3178,7 +3714,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #3"
@@ -3203,6 +3739,20 @@
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Regurgitate"
+        },
+        {
+          "name": "Rejuvenation",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Rejuvenation"
+        },
+        {
+          "name": "Remorse",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Remorse"
         },
         {
           "name": "Rend",
@@ -3231,6 +3781,13 @@
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Resist Energy (one at a time)"
+        },
+        {
+          "name": "Resistant to Transformation",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Resistant to Transformation"
         },
         {
           "name": "Ripping Gaze",
@@ -3339,10 +3896,31 @@
         },
         {
           "name": "See in Darkness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Supernatural.Sense.Vision",
           "standing": "unclassified",
           "display_name": "See in Darkness"
+        },
+        {
+          "name": "Self-Loathing",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Self-Loathing"
+        },
+        {
+          "name": "Sense Blood",
+          "doneness": "done",
+          "type_facet": "Sense.Extraordinary",
+          "standing": "origin",
+          "display_name": "Sense Blood"
+        },
+        {
+          "name": "Sense Murderer",
+          "doneness": "partial",
+          "type_facet": "Sense.Supernatural",
+          "standing": "origin",
+          "display_name": "Sense Murderer"
         },
         {
           "name": "Shadow Breath",
@@ -3378,6 +3956,13 @@
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Share Defenses"
+        },
+        {
+          "name": "Shawl",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Shawl"
         },
         {
           "name": "Shell",
@@ -3464,11 +4049,32 @@
           "display_name": "Sleep"
         },
         {
+          "name": "Sleep Aura",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "origin",
+          "display_name": "Sleep Aura"
+        },
+        {
           "name": "Slime",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Slime"
+        },
+        {
+          "name": "Slippery",
+          "doneness": "partial",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Slippery"
+        },
+        {
+          "name": "Slow Susceptibility",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Slow Susceptibility"
         },
         {
           "name": "Smashing Breach",
@@ -3479,7 +4085,7 @@
         },
         {
           "name": "Smite Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Smite Chaos"
@@ -3493,7 +4099,7 @@
         },
         {
           "name": "Smite Law",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Smite Law"
@@ -3509,7 +4115,7 @@
           "name": "Smoke Form",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Smoke Form"
         },
         {
@@ -3527,6 +4133,13 @@
           "display_name": "Solid Blow"
         },
         {
+          "name": "Sonic Lance",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary",
+          "standing": "origin",
+          "display_name": "Sonic Lance"
+        },
+        {
           "name": "Soporific Pollen",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
@@ -3535,7 +4148,7 @@
         },
         {
           "name": "Soul Consumption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Soul Consumption"
@@ -3577,7 +4190,7 @@
         },
         {
           "name": "Soul Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Soul Magic"
@@ -3598,7 +4211,7 @@
         },
         {
           "name": "Sound Mimicry",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sound Mimicry (SpecialQuality.Extraordinary)"
@@ -3626,7 +4239,7 @@
         },
         {
           "name": "Speak with Plants",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Speak with Plants"
@@ -3681,6 +4294,13 @@
           "display_name": "Speedy Sabotage"
         },
         {
+          "name": "Spell Absorption",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Spell Absorption"
+        },
+        {
           "name": "Spell Turning",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
@@ -3689,10 +4309,17 @@
         },
         {
           "name": "Spells",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Spells"
+        },
+        {
+          "name": "Spells",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
-          "display_name": "Spells"
+          "display_name": "Spells (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Sphere of Creation",
@@ -3737,6 +4364,27 @@
           "display_name": "Splinterspray"
         },
         {
+          "name": "Split",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Split (Defensive.Supernatural)"
+        },
+        {
+          "name": "Split",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Split"
+        },
+        {
+          "name": "Spore Cloud",
+          "doneness": "partial",
+          "type_facet": "Aura.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Spore Cloud"
+        },
+        {
           "name": "Spore Cough",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
@@ -3773,7 +4421,7 @@
         },
         {
           "name": "Squirming Embrace",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Squirming Embrace"
@@ -3828,6 +4476,20 @@
           "display_name": "Stone Stride"
         },
         {
+          "name": "Storm Aura",
+          "doneness": "done",
+          "type_facet": "Aura.Supernatural",
+          "standing": "origin",
+          "display_name": "Storm Aura"
+        },
+        {
+          "name": "Stormsight",
+          "doneness": "done",
+          "type_facet": "Sense.Extraordinary",
+          "standing": "origin",
+          "display_name": "Stormsight"
+        },
+        {
           "name": "Strangle",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
@@ -3871,7 +4533,7 @@
         },
         {
           "name": "Stunted Legs",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity",
           "standing": "origin",
           "display_name": "Stunted Legs"
@@ -3896,6 +4558,27 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Superheated"
+        },
+        {
+          "name": "Supernatural Speed",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "origin",
+          "display_name": "Supernatural Speed"
+        },
+        {
+          "name": "Susceptible to Cold",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Susceptible to Cold"
+        },
+        {
+          "name": "Susceptible to Mind-Affecting Effects",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Susceptible to Mind-Affecting Effects"
         },
         {
           "name": "Swallow Whole",
@@ -3927,7 +4610,7 @@
         },
         {
           "name": "Tail Slap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Tail Slap"
@@ -3976,7 +4659,7 @@
         },
         {
           "name": "Tenacious",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Tenacious"
@@ -4004,63 +4687,63 @@
         },
         {
           "name": "The Chosen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Chosen"
         },
         {
           "name": "The Cleansed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Cleansed"
         },
         {
           "name": "The Damned",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Damned"
         },
         {
           "name": "The Dead",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Dead"
         },
         {
           "name": "The Elect",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Elect"
         },
         {
           "name": "The Hunted",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Hunted"
         },
         {
           "name": "The Remade",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Remade"
         },
         {
           "name": "The Shapeless",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Shapeless"
         },
         {
           "name": "Thick Skin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinBeneficialDeformity",
           "standing": "origin",
           "display_name": "Thick Skin"
@@ -4069,7 +4752,7 @@
           "name": "Thunderbolt",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Thunderbolt"
         },
         {
@@ -4092,6 +4775,13 @@
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Tongues"
+        },
+        {
+          "name": "Transparency",
+          "doneness": "done",
+          "type_facet": "Defensive.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Transparency"
         },
         {
           "name": "Transparent",
@@ -4130,7 +4820,7 @@
         },
         {
           "name": "Trip",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Trip (SpecialAttack.Extraordinary.AttackOption) #2"
@@ -4144,7 +4834,7 @@
         },
         {
           "name": "Truespeech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Communicate.Supernatural",
           "standing": "unclassified",
           "display_name": "Truespeech"
@@ -4192,6 +4882,13 @@
           "display_name": "Unseen Servant"
         },
         {
+          "name": "Unusual Anatomy",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Unusual Anatomy"
+        },
+        {
           "name": "Venomous Skin",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
@@ -4200,14 +4897,14 @@
         },
         {
           "name": "Vestigal Limb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinBeneficialDeformity",
           "standing": "origin",
           "display_name": "Vestigal Limb"
         },
         {
           "name": "Vestigal Twin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.OgrekinBeneficialDeformity",
           "standing": "origin",
           "display_name": "Vestigal Twin"
@@ -4227,10 +4924,17 @@
           "display_name": "Void Bite"
         },
         {
-          "name": "Void Form",
-          "doneness": "not-started",
-          "type_facet": "SpecialQuality.Supernatural",
+          "name": "Void Child",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
           "standing": "origin",
+          "display_name": "Void Child"
+        },
+        {
+          "name": "Void Form",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality.Supernatural",
+          "standing": "unclassified",
           "display_name": "Void Form"
         },
         {
@@ -4239,6 +4943,34 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Vortex"
+        },
+        {
+          "name": "Vulnerability to Sunlight",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Vulnerability to Sunlight"
+        },
+        {
+          "name": "Vulnerability to Water",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Vulnerability to Water"
+        },
+        {
+          "name": "Vulnerable to Salt Water",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Vulnerable to Salt Water"
+        },
+        {
+          "name": "Vulnerable to Supernatural Darkness",
+          "doneness": "done",
+          "type_facet": "Weakness.Extraordinary",
+          "standing": "origin",
+          "display_name": "Vulnerable to Supernatural Darkness"
         },
         {
           "name": "Wail",
@@ -4270,7 +5002,7 @@
         },
         {
           "name": "Water Dependency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Dependency (SpecialQuality.Extraordinary)"
@@ -4305,7 +5037,7 @@
         },
         {
           "name": "Weak Mind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity",
           "standing": "origin",
           "display_name": "Weak Mind"
@@ -4333,21 +5065,21 @@
         },
         {
           "name": "Werebear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LycanthropeKind",
           "standing": "origin",
           "display_name": "Werebear"
         },
         {
           "name": "Wereboar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LycanthropeKind",
           "standing": "origin",
           "display_name": "Wereboar"
         },
         {
           "name": "Weretiger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LycanthropeKind",
           "standing": "origin",
           "display_name": "Weretiger"
@@ -4358,6 +5090,13 @@
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Whiffling"
+        },
+        {
+          "name": "Wind Defense",
+          "doneness": "done",
+          "type_facet": "Defensive.Extraordinary",
+          "standing": "origin",
+          "display_name": "Wind Defense"
         },
         {
           "name": "Wind Walk",
@@ -4379,6 +5118,13 @@
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Wisdom Drain"
+        },
+        {
+          "name": "Witchflame",
+          "doneness": "done",
+          "type_facet": "Defensive.SpecialAttack.Supernatural",
+          "standing": "origin",
+          "display_name": "Witchflame"
         },
         {
           "name": "Wounding Weapons",
@@ -6633,20 +7379,20 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 4,
-      "partial": 5,
-      "not_started": 210,
-      "denominator": 219,
-      "pct": 1.8,
-      "excluded_from_percentage": 97,
+      "done": 6,
+      "partial": 8,
+      "not_started": 150,
+      "denominator": 164,
+      "pct": 3.7,
+      "excluded_from_percentage": 79,
       "standing_breakdown": {
-        "unclassified": 97,
-        "origin": 219
+        "unclassified": 79,
+        "origin": 164
       },
       "items": [
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Constitution",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Charisma, -2 Constitution"
@@ -6694,20 +7440,6 @@
           "display_name": "+2 Strength, +2 Wisdom, -2 Charisma"
         },
         {
-          "name": "Absorb Force",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Absorb Force"
-        },
-        {
-          "name": "Abyssal Strike",
-          "doneness": "not-started",
-          "type_facet": "Extraordinary",
-          "standing": "origin",
-          "display_name": "Abyssal Strike"
-        },
-        {
           "name": "Acid Spray",
           "doneness": "not-started",
           "type_facet": "Defensive.Supernatural",
@@ -6734,13 +7466,6 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Agathion ~ Lay on Hands"
-        },
-        {
-          "name": "Agent of Fate",
-          "doneness": "not-started",
-          "type_facet": "Spelllike",
-          "standing": "origin",
-          "display_name": "Agent of Fate"
         },
         {
           "name": "Air Affinity",
@@ -6792,20 +7517,6 @@
           "display_name": "Arsinoitherium Companion Natural Attack"
         },
         {
-          "name": "Aura of Cold",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Aura of Cold"
-        },
-        {
-          "name": "Aura of Madness",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Aura of Madness"
-        },
-        {
           "name": "Aura of Misfortune",
           "doneness": "not-started",
           "type_facet": "Aura.Supernatural",
@@ -6813,25 +7524,11 @@
           "display_name": "Aura of Misfortune"
         },
         {
-          "name": "Aura of Sobs",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Aura of Sobs"
-        },
-        {
           "name": "Barbed Hairs",
           "doneness": "not-started",
           "type_facet": "Defensive.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Barbed Hairs"
-        },
-        {
-          "name": "Beguiling Aura",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Beguiling Aura"
         },
         {
           "name": "Bitter Cold",
@@ -6855,46 +7552,11 @@
           "display_name": "Blackest Depths"
         },
         {
-          "name": "Blend With Light",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Blend With Light"
-        },
-        {
-          "name": "Blind",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Blind"
-        },
-        {
-          "name": "Blinding Light",
-          "doneness": "not-started",
-          "type_facet": "Aura.Extraordinary",
-          "standing": "origin",
-          "display_name": "Blinding Light"
-        },
-        {
-          "name": "Blood Rage",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Blood Rage"
-        },
-        {
           "name": "Bonus vs Illusions",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
           "standing": "origin",
           "display_name": "Bonus vs Illusions"
-        },
-        {
-          "name": "Bristles",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Bristles"
         },
         {
           "name": "Burrow",
@@ -6967,20 +7629,6 @@
           "display_name": "Change Shape ~ Nereid"
         },
         {
-          "name": "Cling",
-          "doneness": "not-started",
-          "type_facet": "SpecialAttck.Extraordinary",
-          "standing": "origin",
-          "display_name": "Cling"
-        },
-        {
-          "name": "Cold Lethargy",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Cold Lethargy"
-        },
-        {
           "name": "Constant Vigilance",
           "doneness": "not-started",
           "type_facet": "Defensive.Supernatural",
@@ -7000,13 +7648,6 @@
           "type_facet": "Aura.Supernatural",
           "standing": "origin",
           "display_name": "Cowering Fear"
-        },
-        {
-          "name": "Crystal Sense",
-          "doneness": "not-started",
-          "type_facet": "Sense.SpellLike",
-          "standing": "origin",
-          "display_name": "Crystal Sense"
         },
         {
           "name": "Daemon Traits",
@@ -7072,20 +7713,6 @@
           "display_name": "Darkvision (RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Vision)"
         },
         {
-          "name": "Deaf",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Deaf"
-        },
-        {
-          "name": "Death Throes",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "unclassified",
-          "display_name": "Death Throes"
-        },
-        {
           "name": "Decapus ~ Sound Mimicry",
           "doneness": "not-started",
           "type_facet": null,
@@ -7107,13 +7734,6 @@
           "display_name": "Desecrating Aura"
         },
         {
-          "name": "Detect Thoughts",
-          "doneness": "not-started",
-          "type_facet": "Sense.Spelllike",
-          "standing": "unclassified",
-          "display_name": "Detect Thoughts"
-        },
-        {
           "name": "Dhampir",
           "doneness": "not-started",
           "type_facet": "AdoptiveRace",
@@ -7122,7 +7742,7 @@
         },
         {
           "name": "Dhampir",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Type",
           "standing": "origin",
           "display_name": "Dhampir (RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Type)"
@@ -7140,13 +7760,6 @@
           "type_facet": "Defensive.SpellLike",
           "standing": "unclassified",
           "display_name": "Displacement"
-        },
-        {
-          "name": "Divine Aversion",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Divine Aversion"
         },
         {
           "name": "Earth Affinity",
@@ -7168,20 +7781,6 @@
           "type_facet": "ModifyMovement.Extraordinary",
           "standing": "origin",
           "display_name": "Earth Glide (ModifyMovement.Extraordinary) #2"
-        },
-        {
-          "name": "Electrical Jolt",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Electrical Jolt"
-        },
-        {
-          "name": "Elusive",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "unclassified",
-          "display_name": "Elusive"
         },
         {
           "name": "Energy Bolt",
@@ -7226,13 +7825,6 @@
           "display_name": "Entrap"
         },
         {
-          "name": "Entropic Flesh",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Entropic Flesh"
-        },
-        {
           "name": "Explosive Rebirth",
           "doneness": "not-started",
           "type_facet": "Defensive.Supernatural",
@@ -7252,20 +7844,6 @@
           "type_facet": "Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Fear (Supernatural.Aura)"
-        },
-        {
-          "name": "Fear Aura",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Fear Aura"
-        },
-        {
-          "name": "Fear of Vorpal Weapons",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Fear of Vorpal Weapons"
         },
         {
           "name": "Feeblemind Aura",
@@ -7394,13 +7972,6 @@
           "display_name": "Grab ~ Werebear"
         },
         {
-          "name": "Grasping Tendrils",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Grasping Tendrils"
-        },
-        {
           "name": "Green",
           "doneness": "not-started",
           "type_facet": "DraconalColor",
@@ -7448,13 +8019,6 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hangman Tree ~ Pull"
-        },
-        {
-          "name": "Hear Heartbeat",
-          "doneness": "not-started",
-          "type_facet": "Sense.Extraordinary",
-          "standing": "origin",
-          "display_name": "Hear Heartbeat"
         },
         {
           "name": "Hellcat ~ Rake",
@@ -7667,32 +8231,11 @@
           "display_name": "Indestructible"
         },
         {
-          "name": "Inevitable Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Inevitable Traits"
-        },
-        {
           "name": "Infectious Aura",
           "doneness": "not-started",
           "type_facet": "Aura.Supernatural",
           "standing": "origin",
           "display_name": "Infectious Aura"
-        },
-        {
-          "name": "Invisible in Light",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Invisible in Light"
-        },
-        {
-          "name": "Irreligious",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Irreligious"
         },
         {
           "name": "Jet",
@@ -7709,15 +8252,8 @@
           "display_name": "Keen Scent"
         },
         {
-          "name": "Know Alignment",
-          "doneness": "not-started",
-          "type_facet": "Sense.Supernatural",
-          "standing": "origin",
-          "display_name": "Know Alignment"
-        },
-        {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Language)"
@@ -7775,7 +8311,7 @@
           "name": "Lifesense",
           "doneness": "not-started",
           "type_facet": "Sense.Supernatural",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Lifesense"
         },
         {
@@ -7787,7 +8323,7 @@
         },
         {
           "name": "Light Sensitivity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default",
           "standing": "unclassified",
           "display_name": "Light Sensitivity"
@@ -7817,19 +8353,19 @@
           "name": "Magic Circle against Evil",
           "doneness": "not-started",
           "type_facet": "Aura.ModifyAC.SpellLike",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Magic Circle against Evil"
         },
         {
           "name": "Manipulative",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Manipulative"
         },
         {
           "name": "Medium",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Medium (RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Size)"
@@ -7882,13 +8418,6 @@
           "type_facet": "Sense.Supernatural",
           "standing": "origin",
           "display_name": "Mist Vision"
-        },
-        {
-          "name": "Molten Body",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Molten Body"
         },
         {
           "name": "Native Outsider",
@@ -7947,13 +8476,6 @@
           "display_name": "Natural Invisibility (Defensive.Supernatural)"
         },
         {
-          "name": "Natural Invisibility",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Natural Invisibility (Defensive.Supernatural) #3"
-        },
-        {
           "name": "Nature's Pacifism",
           "doneness": "not-started",
           "type_facet": "Defensive.Extraordinary",
@@ -7962,16 +8484,16 @@
         },
         {
           "name": "Negative Energy Affinity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Negative Energy Affinity (RacialTraits.Dhampir Racial Trait.Dhampir Racial Default)"
         },
         {
           "name": "Negative Energy Affinity",
           "doneness": "not-started",
           "type_facet": "Defensive.Extraordinary",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Negative Energy Affinity (Defensive.Extraordinary)"
         },
         {
@@ -7982,13 +8504,6 @@
           "display_name": "Never Surprised or Flat-Footed"
         },
         {
-          "name": "Nightshade Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Nightshade Traits"
-        },
-        {
           "name": "No Combat Maneuvers",
           "doneness": "not-started",
           "type_facet": null,
@@ -7997,7 +8512,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Speed)"
@@ -8038,27 +8553,6 @@
           "display_name": "Normal Speed (RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Speed)"
         },
         {
-          "name": "Oaksight",
-          "doneness": "not-started",
-          "type_facet": "Sense.Supernatural",
-          "standing": "origin",
-          "display_name": "Oaksight"
-        },
-        {
-          "name": "Oni Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Oni Traits"
-        },
-        {
-          "name": "Ooze Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Ooze Traits"
-        },
-        {
           "name": "Oread",
           "doneness": "not-started",
           "type_facet": "AdoptiveRace",
@@ -8080,20 +8574,6 @@
           "display_name": "Paralysis"
         },
         {
-          "name": "Planar Fast Healing",
-          "doneness": "not-started",
-          "type_facet": "ModifyHP.Supernatural",
-          "standing": "origin",
-          "display_name": "Planar Fast Healing"
-        },
-        {
-          "name": "Plant Defenses",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Plant Defenses"
-        },
-        {
           "name": "Poison Save Bonus",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
@@ -8104,15 +8584,8 @@
           "name": "Poison Skin",
           "doneness": "not-started",
           "type_facet": "Defensive.Extraordinary",
-          "standing": "unclassified",
-          "display_name": "Poison Skin"
-        },
-        {
-          "name": "Positive Energy Affinity",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
           "standing": "origin",
-          "display_name": "Positive Energy Affinity"
+          "display_name": "Poison Skin"
         },
         {
           "name": "Protean Traits",
@@ -8134,13 +8607,6 @@
           "type_facet": "Defensive.Extraordinary",
           "standing": "origin",
           "display_name": "Protected Life Force"
-        },
-        {
-          "name": "Protection from Sonics",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Protection from Sonics"
         },
         {
           "name": "Protective Aura",
@@ -8192,13 +8658,6 @@
           "display_name": "Qlippoth ~ Cythnigot Traits"
         },
         {
-          "name": "Quill Defense",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "unclassified",
-          "display_name": "Quill Defense"
-        },
-        {
           "name": "Rake",
           "doneness": "not-started",
           "type_facet": null,
@@ -8206,25 +8665,11 @@
           "display_name": "Rake"
         },
         {
-          "name": "Rake",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Rake #2"
-        },
-        {
           "name": "Ray Reflection",
           "doneness": "not-started",
           "type_facet": "Defensive.Extraordinary",
           "standing": "origin",
           "display_name": "Ray Reflection"
-        },
-        {
-          "name": "Reactive Strike",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Reactive Strike"
         },
         {
           "name": "Red",
@@ -8241,32 +8686,11 @@
           "display_name": "Reflect Spells"
         },
         {
-          "name": "Rejuvenation",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "unclassified",
-          "display_name": "Rejuvenation"
-        },
-        {
-          "name": "Remorse",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Remorse"
-        },
-        {
           "name": "Resist Level Drain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Defensive",
           "standing": "unclassified",
           "display_name": "Resist Level Drain"
-        },
-        {
-          "name": "Resistant to Transformation",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Resistant to Transformation"
         },
         {
           "name": "Scintillating Aura",
@@ -8283,29 +8707,8 @@
           "display_name": "See in Darkness"
         },
         {
-          "name": "Self-Loathing",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Self-Loathing"
-        },
-        {
-          "name": "Sense Blood",
-          "doneness": "not-started",
-          "type_facet": "Sense.Extraordinary",
-          "standing": "origin",
-          "display_name": "Sense Blood"
-        },
-        {
-          "name": "Sense Murderer",
-          "doneness": "not-started",
-          "type_facet": "Sense.Supernatural",
-          "standing": "origin",
-          "display_name": "Sense Murderer"
-        },
-        {
           "name": "Senses",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Senses"
@@ -8323,13 +8726,6 @@
           "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Shadowy Resistance"
-        },
-        {
-          "name": "Shawl",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Shawl"
         },
         {
           "name": "Shield of Law",
@@ -8395,13 +8791,6 @@
           "display_name": "Skilled"
         },
         {
-          "name": "Sleep Aura",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Sleep Aura"
-        },
-        {
           "name": "Sleep Spittle",
           "doneness": "not-started",
           "type_facet": "Supernatural",
@@ -8416,25 +8805,11 @@
           "display_name": "Slime"
         },
         {
-          "name": "Slippery",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Slippery"
-        },
-        {
           "name": "Slow Speed",
           "doneness": "partial",
           "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Slow Speed"
-        },
-        {
-          "name": "Slow Susceptibility",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Slow Susceptibility"
         },
         {
           "name": "Small",
@@ -8456,13 +8831,6 @@
           "type_facet": "Sense.Extraordinary",
           "standing": "origin",
           "display_name": "Snow Vision (Sense.Extraordinary) #2"
-        },
-        {
-          "name": "Sonic Lance",
-          "doneness": "not-started",
-          "type_facet": "Extraordinary",
-          "standing": "origin",
-          "display_name": "Sonic Lance"
         },
         {
           "name": "Soul Siphon",
@@ -8514,13 +8882,6 @@
           "display_name": "Speak with Animals (Communicate.SpellLike)"
         },
         {
-          "name": "Spell Absorption",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Spell Absorption"
-        },
-        {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.SpellLike",
@@ -8529,7 +8890,7 @@
         },
         {
           "name": "Spell-Like Ability",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell-Like Ability (RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality)"
@@ -8563,32 +8924,11 @@
           "display_name": "Spell-Like Ability (RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality)"
         },
         {
-          "name": "Spells",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Spells"
-        },
-        {
-          "name": "Split",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "unclassified",
-          "display_name": "Split (Defensive.Supernatural)"
-        },
-        {
-          "name": "Split",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "unclassified",
-          "display_name": "Split"
-        },
-        {
           "name": "Split",
           "doneness": "not-started",
           "type_facet": "Defensive.Extraordinary",
-          "standing": "unclassified",
-          "display_name": "Split (Defensive.Extraordinary)"
+          "standing": "origin",
+          "display_name": "Split"
         },
         {
           "name": "Split ~ Magma Ooze",
@@ -8598,32 +8938,11 @@
           "display_name": "Split ~ Magma Ooze"
         },
         {
-          "name": "Spore Cloud",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "unclassified",
-          "display_name": "Spore Cloud"
-        },
-        {
           "name": "Stench",
           "doneness": "not-started",
           "type_facet": "Aura.Supernatural",
           "standing": "origin",
           "display_name": "Stench"
-        },
-        {
-          "name": "Storm Aura",
-          "doneness": "not-started",
-          "type_facet": "Aura.Supernatural",
-          "standing": "origin",
-          "display_name": "Storm Aura"
-        },
-        {
-          "name": "Stormsight",
-          "doneness": "not-started",
-          "type_facet": "Sense.Extraordinary",
-          "standing": "origin",
-          "display_name": "Stormsight"
         },
         {
           "name": "Sunlight Petrification",
@@ -8640,31 +8959,10 @@
           "display_name": "Sunlight Powerlessness"
         },
         {
-          "name": "Supernatural Speed",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Supernatural Speed"
-        },
-        {
-          "name": "Susceptible to Cold",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Susceptible to Cold"
-        },
-        {
-          "name": "Susceptible to Mind-Affecting Effects",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Susceptible to Mind-Affecting Effects"
-        },
-        {
           "name": "Swamp Stride",
           "doneness": "done",
           "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Swamp Stride"
         },
         {
@@ -8696,13 +8994,6 @@
           "display_name": "Telepathy ~ Moonflower"
         },
         {
-          "name": "Transparency",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Supernatural",
-          "standing": "origin",
-          "display_name": "Transparency"
-        },
-        {
           "name": "Tremorsense",
           "doneness": "not-started",
           "type_facet": "Sense.Extraordinary.SpecialQuality",
@@ -8725,7 +9016,7 @@
         },
         {
           "name": "Undead Resistance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Undead Resistance"
@@ -8759,53 +9050,11 @@
           "display_name": "Unluck Aura"
         },
         {
-          "name": "Unusual Anatomy",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Unusual Anatomy"
-        },
-        {
-          "name": "Void Child",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Void Child"
-        },
-        {
-          "name": "Vulnerability to Sunlight",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Vulnerability to Sunlight"
-        },
-        {
-          "name": "Vulnerability to Water",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Vulnerability to Water"
-        },
-        {
-          "name": "Vulnerable to Salt Water",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Vulnerable to Salt Water"
-        },
-        {
           "name": "Vulnerable to Smoke",
           "doneness": "not-started",
           "type_facet": "Weakness.Extraordinary",
           "standing": "origin",
           "display_name": "Vulnerable to Smoke"
-        },
-        {
-          "name": "Vulnerable to Supernatural Darkness",
-          "doneness": "not-started",
-          "type_facet": "Weakness.Extraordinary",
-          "standing": "origin",
-          "display_name": "Vulnerable to Supernatural Darkness"
         },
         {
           "name": "Water Affinity",
@@ -8827,20 +9076,6 @@
           "type_facet": "DraconalColor",
           "standing": "origin",
           "display_name": "White"
-        },
-        {
-          "name": "Wind Defense",
-          "doneness": "not-started",
-          "type_facet": "Defensive.Extraordinary",
-          "standing": "origin",
-          "display_name": "Wind Defense"
-        },
-        {
-          "name": "Witchflame",
-          "doneness": "not-started",
-          "type_facet": "Defensive.SpecialAttack.Supernatural",
-          "standing": "origin",
-          "display_name": "Witchflame"
         },
         {
           "name": "Worm that Walks Traits",
@@ -8912,6 +9147,1087 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Magma Ooze (Crystalline)"
+        }
+      ]
+    },
+    {
+      "kind": "skill",
+      "label": "Skills",
+      "done": 0,
+      "partial": 0,
+      "not_started": 1,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Craft (Rope)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Craft",
+          "standing": "origin",
+          "display_name": "Craft (Rope)"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 147,
+      "denominator": 147,
+      "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "origin": 147,
+        "unclassified": 2
+      },
+      "items": [
+        {
+          "name": "Aeon",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aeon"
+        },
+        {
+          "name": "Afflicted Werebear",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Afflicted Werebear"
+        },
+        {
+          "name": "Afflicted Wereboar",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Afflicted Wereboar"
+        },
+        {
+          "name": "Afflicted Weretiger",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Afflicted Weretiger"
+        },
+        {
+          "name": "Agathion",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Agathion"
+        },
+        {
+          "name": "Arms ~ 1",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 1"
+        },
+        {
+          "name": "Arms ~ 10",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 10"
+        },
+        {
+          "name": "Arms ~ 2",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 2"
+        },
+        {
+          "name": "Arms ~ 3",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 3"
+        },
+        {
+          "name": "Arms ~ 4",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 4"
+        },
+        {
+          "name": "Arms ~ 5",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 5"
+        },
+        {
+          "name": "Arms ~ 6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 6"
+        },
+        {
+          "name": "Arms ~ 7",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 7"
+        },
+        {
+          "name": "Arms ~ 8",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 8"
+        },
+        {
+          "name": "Arms ~ 9",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arms ~ 9"
+        },
+        {
+          "name": "Arsinoitherium Companion Advancement",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arsinoitherium Companion Advancement"
+        },
+        {
+          "name": "Awakened Animal",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Awakened Animal"
+        },
+        {
+          "name": "Awakened Tree",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Awakened Tree"
+        },
+        {
+          "name": "Awakened Vermin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Awakened Vermin"
+        },
+        {
+          "name": "Bonus Language ~ Boggard",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bonus Language ~ Boggard"
+        },
+        {
+          "name": "Bonus Language ~ D'ziriak",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ D'ziriak"
+        },
+        {
+          "name": "Bonus Language ~ D'ziriak ~ Cannot Speak",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ D'ziriak ~ Cannot Speak"
+        },
+        {
+          "name": "Bonus Language ~ Daemon",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Daemon"
+        },
+        {
+          "name": "Bonus Language ~ Grippli",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Grippli"
+        },
+        {
+          "name": "Bonus Language ~ Protean",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Protean"
+        },
+        {
+          "name": "Daemon",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Daemon"
+        },
+        {
+          "name": "Dark Folk",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dark Folk"
+        },
+        {
+          "name": "Decrease Bite Wield Category by 1",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Decrease Bite Wield Category by 1"
+        },
+        {
+          "name": "Decrease Bite Wield Category by 2",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Decrease Bite Wield Category by 2"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dhampir"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Dhampir (Race Builder Subtype)"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dhampir #3"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": "Racial Heritage",
+          "standing": "origin",
+          "display_name": "Dhampir (Racial Heritage)"
+        },
+        {
+          "name": "Entropic Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Entropic Creature"
+        },
+        {
+          "name": "Fetchling",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fetchling"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Grippli"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Grippli (Race Builder Subtype)"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Grippli #3"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "not-started",
+          "type_facet": "Racial Heritage",
+          "standing": "origin",
+          "display_name": "Grippli (Racial Heritage)"
+        },
+        {
+          "name": "Gylptodon Companion Advancement",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gylptodon Companion Advancement"
+        },
+        {
+          "name": "Hippopotamus Companion Advancement",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hippopotamus Companion Advancement"
+        },
+        {
+          "name": "Ifrit",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ifrit"
+        },
+        {
+          "name": "Increase Bite Wield Category by 1",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Increase Bite Wield Category by 1"
+        },
+        {
+          "name": "Increase Bite Wield Category by 2",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Increase Bite Wield Category by 2"
+        },
+        {
+          "name": "Inevitable",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Inevitable"
+        },
+        {
+          "name": "IsDhampir",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsDhampir"
+        },
+        {
+          "name": "IsFetchling",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsFetchling"
+        },
+        {
+          "name": "IsGrippli",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsGrippli"
+        },
+        {
+          "name": "IsIfrit",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsIfrit"
+        },
+        {
+          "name": "IsOread",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsOread"
+        },
+        {
+          "name": "IsSylph",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsSylph"
+        },
+        {
+          "name": "IsUndine",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsUndine"
+        },
+        {
+          "name": "Jiang-shi-Born",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Jiang-shi-Born"
+        },
+        {
+          "name": "Juju Zombie Flight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Juju Zombie Flight"
+        },
+        {
+          "name": "Juju Zombie Magical Flight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Juju Zombie Magical Flight"
+        },
+        {
+          "name": "Juju Zombie No Flight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Juju Zombie No Flight"
+        },
+        {
+          "name": "Juju Zombie Winged Flight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Juju Zombie Winged Flight"
+        },
+        {
+          "name": "Legs ~ 1",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 1"
+        },
+        {
+          "name": "Legs ~ 10",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 10"
+        },
+        {
+          "name": "Legs ~ 11",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 11"
+        },
+        {
+          "name": "Legs ~ 12",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 12"
+        },
+        {
+          "name": "Legs ~ 13",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 13"
+        },
+        {
+          "name": "Legs ~ 14",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 14"
+        },
+        {
+          "name": "Legs ~ 15",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 15"
+        },
+        {
+          "name": "Legs ~ 16",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 16"
+        },
+        {
+          "name": "Legs ~ 17",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 17"
+        },
+        {
+          "name": "Legs ~ 18",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 18"
+        },
+        {
+          "name": "Legs ~ 19",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 19"
+        },
+        {
+          "name": "Legs ~ 2",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 2"
+        },
+        {
+          "name": "Legs ~ 20",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 20"
+        },
+        {
+          "name": "Legs ~ 21",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 21"
+        },
+        {
+          "name": "Legs ~ 22",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 22"
+        },
+        {
+          "name": "Legs ~ 23",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 23"
+        },
+        {
+          "name": "Legs ~ 24",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 24"
+        },
+        {
+          "name": "Legs ~ 25",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 25"
+        },
+        {
+          "name": "Legs ~ 26",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 26"
+        },
+        {
+          "name": "Legs ~ 27",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 27"
+        },
+        {
+          "name": "Legs ~ 28",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 28"
+        },
+        {
+          "name": "Legs ~ 3",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 3"
+        },
+        {
+          "name": "Legs ~ 4",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 4"
+        },
+        {
+          "name": "Legs ~ 5",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 5"
+        },
+        {
+          "name": "Legs ~ 6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 6"
+        },
+        {
+          "name": "Legs ~ 7",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 7"
+        },
+        {
+          "name": "Legs ~ 8",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 8"
+        },
+        {
+          "name": "Legs ~ 9",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs ~ 9"
+        },
+        {
+          "name": "Monster is a PC",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Monster is a PC"
+        },
+        {
+          "name": "Moroi-Born",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Moroi-Born"
+        },
+        {
+          "name": "Natural Werebear",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Natural Werebear"
+        },
+        {
+          "name": "Natural Wereboar",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Natural Wereboar"
+        },
+        {
+          "name": "Natural Weretiger",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Natural Weretiger"
+        },
+        {
+          "name": "Nightshade",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Nightshade"
+        },
+        {
+          "name": "Nosferatu-Born",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Nosferatu-Born"
+        },
+        {
+          "name": "Ogrekin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ogrekin"
+        },
+        {
+          "name": "Oread",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oread"
+        },
+        {
+          "name": "Petitioner Bite",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite"
+        },
+        {
+          "name": "Petitioner Bite ~ C",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ C"
+        },
+        {
+          "name": "Petitioner Bite ~ D",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ D"
+        },
+        {
+          "name": "Petitioner Bite ~ F",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ F"
+        },
+        {
+          "name": "Petitioner Bite ~ G",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ G"
+        },
+        {
+          "name": "Petitioner Bite ~ H",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ H"
+        },
+        {
+          "name": "Petitioner Bite ~ L",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ L"
+        },
+        {
+          "name": "Petitioner Bite ~ M",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ M"
+        },
+        {
+          "name": "Petitioner Bite ~ S",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ S"
+        },
+        {
+          "name": "Petitioner Bite ~ T",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Bite ~ T"
+        },
+        {
+          "name": "Petitioner Slam",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam"
+        },
+        {
+          "name": "Petitioner Slam ~ C",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ C"
+        },
+        {
+          "name": "Petitioner Slam ~ D",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ D"
+        },
+        {
+          "name": "Petitioner Slam ~ F",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ F"
+        },
+        {
+          "name": "Petitioner Slam ~ G",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ G"
+        },
+        {
+          "name": "Petitioner Slam ~ H",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ H"
+        },
+        {
+          "name": "Petitioner Slam ~ L",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ L"
+        },
+        {
+          "name": "Petitioner Slam ~ M",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ M"
+        },
+        {
+          "name": "Petitioner Slam ~ S",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ S"
+        },
+        {
+          "name": "Petitioner Slam ~ T",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Petitioner Slam ~ T"
+        },
+        {
+          "name": "Protean",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Protean"
+        },
+        {
+          "name": "Qlippoth",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Qlippoth"
+        },
+        {
+          "name": "Ravener",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ravener"
+        },
+        {
+          "name": "Resolute Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Resolute Creature"
+        },
+        {
+          "name": "Spriggan Size Alteration",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Spriggan Size Alteration"
+        },
+        {
+          "name": "Sylph",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Sylph"
+        },
+        {
+          "name": "Undine",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Undine"
+        },
+        {
+          "name": "Vetala-Born",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vetala-Born"
+        },
+        {
+          "name": "Werebear Abilities",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werebear Abilities"
+        },
+        {
+          "name": "Werebear_CON",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werebear_CON"
+        },
+        {
+          "name": "Werebear_DEX",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werebear_DEX"
+        },
+        {
+          "name": "Werebear_STR",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werebear_STR"
+        },
+        {
+          "name": "Wereboar Abilities",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereboar Abilities"
+        },
+        {
+          "name": "Wereboar_CON",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereboar_CON"
+        },
+        {
+          "name": "Wereboar_DEX",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereboar_DEX"
+        },
+        {
+          "name": "Wereboar_STR",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereboar_STR"
+        },
+        {
+          "name": "Weretiger Abilities",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weretiger Abilities"
+        },
+        {
+          "name": "Weretiger_CON",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weretiger_CON"
+        },
+        {
+          "name": "Weretiger_DEX",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weretiger_DEX"
+        },
+        {
+          "name": "Weretiger_STR",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weretiger_STR"
+        },
+        {
+          "name": "Whale Bite",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Whale Bite"
+        },
+        {
+          "name": "Whale Tail Slap",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Whale Tail Slap"
+        },
+        {
+          "name": "Worm that Walks",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks"
+        },
+        {
+          "name": "Worm that Walks Slam",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam"
+        },
+        {
+          "name": "Worm that Walks Slam ~ C",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ C"
+        },
+        {
+          "name": "Worm that Walks Slam ~ D",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ D"
+        },
+        {
+          "name": "Worm that Walks Slam ~ F",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ F"
+        },
+        {
+          "name": "Worm that Walks Slam ~ G",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ G"
+        },
+        {
+          "name": "Worm that Walks Slam ~ H",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ H"
+        },
+        {
+          "name": "Worm that Walks Slam ~ L",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ L"
+        },
+        {
+          "name": "Worm that Walks Slam ~ M",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ M"
+        },
+        {
+          "name": "Worm that Walks Slam ~ S",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ S"
+        },
+        {
+          "name": "Worm that Walks Slam ~ T",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Worm that Walks Slam ~ T"
+        },
+        {
+          "name": "Zombie (Juju)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Zombie (Juju)"
+        },
+        {
+          "name": "Zombie (Void)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Zombie (Void)"
         }
       ]
     }

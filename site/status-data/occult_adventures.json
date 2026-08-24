@@ -5,15 +5,15 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 39,
       "partial": 0,
-      "not_started": 808,
-      "denominator": 808,
-      "pct": 0.0,
-      "excluded_from_percentage": 169,
+      "not_started": 799,
+      "denominator": 838,
+      "pct": 4.7,
+      "excluded_from_percentage": 192,
       "standing_breakdown": {
-        "unclassified": 169,
-        "origin": 808
+        "unclassified": 192,
+        "origin": 838
       },
       "items": [
         {
@@ -347,7 +347,7 @@
         },
         {
           "name": "Astral Beacon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Astral Beacon"
@@ -375,9 +375,9 @@
         },
         {
           "name": "Aura Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Aura Sight"
         },
         {
@@ -477,6 +477,13 @@
           "type_facet": "Battle Host Class Feature.Occultist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Battle Skill"
+        },
+        {
+          "name": "Bilocation",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Bilocation"
         },
         {
           "name": "Binding Circles",
@@ -598,6 +605,13 @@
           "display_name": "Bloodline Powers (Class Feature.Sorcerer Class Feature) #2"
         },
         {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
+        },
+        {
           "name": "Blue Flame Blast",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Composite Blast",
@@ -641,14 +655,14 @@
         },
         {
           "name": "Bonded Manifestation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Bonded Manifestation"
         },
         {
           "name": "Bonded Senses",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Bonded Senses"
@@ -795,7 +809,7 @@
         },
         {
           "name": "Call Spirit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Call Spirit"
@@ -1089,7 +1103,7 @@
         },
         {
           "name": "Composite Specialization",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Composite Specialization"
@@ -1131,7 +1145,7 @@
         },
         {
           "name": "Connection Channel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Connection Channel"
@@ -1242,6 +1256,13 @@
           "display_name": "Dazzling Feint"
         },
         {
+          "name": "Deadly Aim",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Deadly Aim"
+        },
+        {
           "name": "Deadly Earth",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Earth",
@@ -1268,6 +1289,13 @@
           "type_facet": "Phantom Emotional Focus",
           "standing": "origin",
           "display_name": "Dedication"
+        },
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
         },
         {
           "name": "Defensive Prognostication",
@@ -1313,14 +1341,14 @@
         },
         {
           "name": "Detect Thoughts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Detect Thoughts"
         },
         {
           "name": "Detect Undead",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Detect Undead"
@@ -1452,6 +1480,13 @@
           "display_name": "Double"
         },
         {
+          "name": "Double Slice",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Double Slice"
+        },
+        {
           "name": "Dowsing (Survival)",
           "doneness": "not-started",
           "type_facet": "SkillUnlock.SpecialQuality",
@@ -1495,7 +1530,7 @@
         },
         {
           "name": "Dual Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dual Bond"
@@ -1592,6 +1627,13 @@
           "display_name": "Ectoplasm Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Ectoplasm Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ectoplasm Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Ectoplasmatist",
           "doneness": "not-started",
           "type_facet": "SpiritualistArchetype",
@@ -1621,10 +1663,17 @@
         },
         {
           "name": "Ectoplasmic Bonded Manifestation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Ectoplasmic Bonded Manifestation"
+        },
+        {
+          "name": "Ectoplasmic Eruption",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Ectoplasmic Eruption"
         },
         {
           "name": "Ectoplasmic Form",
@@ -1648,6 +1697,13 @@
           "display_name": "Ectoplasmic Reach"
         },
         {
+          "name": "Ectoplasmic Snare",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Ectoplasmic Snare"
+        },
+        {
           "name": "Edicts",
           "doneness": "not-started",
           "type_facet": "Order Of The Eastern Star Class Feature.Cavalier Class Feature.SpecialQuality",
@@ -1660,6 +1716,13 @@
           "type_facet": "Order Of The Shroud Class Feature.Cavalier Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Edicts (Order Of The Shroud Class Feature.Cavalier Class Feature.SpecialQuality)"
+        },
+        {
+          "name": "Ego Whip I",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Ego Whip I"
         },
         {
           "name": "Electric Blast",
@@ -1684,7 +1747,7 @@
         },
         {
           "name": "Elemental Defense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Defense"
@@ -1712,7 +1775,7 @@
         },
         {
           "name": "Elemental Overflow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Elemental Overflow"
@@ -1782,7 +1845,7 @@
         },
         {
           "name": "Empowered Consciousness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Empowered Consciousness"
@@ -1929,7 +1992,7 @@
         },
         {
           "name": "Etheric Tether",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Etheric Tether"
@@ -2132,7 +2195,7 @@
         },
         {
           "name": "Fast Circles",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fast Circles"
@@ -2433,7 +2496,7 @@
         },
         {
           "name": "Fused Consciousness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fused Consciousness"
@@ -2454,7 +2517,7 @@
         },
         {
           "name": "Gather Power",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Gather Power"
@@ -2500,6 +2563,13 @@
           "type_facet": "Ectochymist Class Feature.Alchemist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ghost Trap"
+        },
+        {
+          "name": "Ghost Whip",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Ghost Whip"
         },
         {
           "name": "Ghost Wind",
@@ -2573,10 +2643,17 @@
         },
         {
           "name": "Greater Spiritual Interference (Ex or Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Greater Spiritual Interference (Ex or Su)"
+        },
+        {
+          "name": "Greater Weapon Focus",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Greater Weapon Focus"
         },
         {
           "name": "Guarded",
@@ -2775,6 +2852,13 @@
           "display_name": "Icewalker"
         },
         {
+          "name": "Id Insinuation I",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Id Insinuation I"
+        },
+        {
           "name": "Illuminating Answers",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
@@ -2804,7 +2888,7 @@
         },
         {
           "name": "Implement Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Implement Mastery"
@@ -2831,6 +2915,13 @@
           "display_name": "Improved Bodily Mutations"
         },
         {
+          "name": "Improved Critical",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Critical"
+        },
+        {
           "name": "Improved Injections",
           "doneness": "not-started",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
@@ -2838,11 +2929,25 @@
           "display_name": "Improved Injections"
         },
         {
+          "name": "Improved Precise Shot",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Precise Shot"
+        },
+        {
           "name": "Improved Tattooed Spell",
           "doneness": "not-started",
           "type_facet": "Esoteric Class Feature.Magus Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Improved Tattooed Spell"
+        },
+        {
+          "name": "Improved Two-Weapon Fighting",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Two-Weapon Fighting"
         },
         {
           "name": "Improved Uncanny Dodge",
@@ -2867,7 +2972,7 @@
         },
         {
           "name": "Incorporeal Bonded Manifestation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Incorporeal Bonded Manifestation"
@@ -2888,7 +2993,7 @@
         },
         {
           "name": "Infusion Specialization",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Infusion Specialization"
@@ -2929,6 +3034,13 @@
           "display_name": "Inspiring Call"
         },
         {
+          "name": "Intellect Fortress I",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Intellect Fortress I"
+        },
+        {
           "name": "Intense Focus",
           "doneness": "not-started",
           "type_facet": "Phrenic Amplification.SpecialQuality.Extraordinary",
@@ -2944,10 +3056,17 @@
         },
         {
           "name": "Internal Buffer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Internal Buffer"
+        },
+        {
+          "name": "Intuitive Spell",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Intuitive Spell"
         },
         {
           "name": "Investigator Talents",
@@ -2983,6 +3102,83 @@
           "type_facet": "Sha'ir Class Feature.Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Jin Spy"
+        },
+        {
+          "name": "KB Selector",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB Selector"
+        },
+        {
+          "name": "KB ~ 01d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 01d6"
+        },
+        {
+          "name": "KB ~ 02d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 02d6"
+        },
+        {
+          "name": "KB ~ 03d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 03d6"
+        },
+        {
+          "name": "KB ~ 04d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 04d6"
+        },
+        {
+          "name": "KB ~ 05d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 05d6"
+        },
+        {
+          "name": "KB ~ 06d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 06d6"
+        },
+        {
+          "name": "KB ~ 07d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 07d6"
+        },
+        {
+          "name": "KB ~ 08d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 08d6"
+        },
+        {
+          "name": "KB ~ 09d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 09d6"
+        },
+        {
+          "name": "KB ~ 10d6",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "KB ~ 10d6"
         },
         {
           "name": "Kami Channeler",
@@ -3101,39 +3297,46 @@
           "doneness": "not-started",
           "type_facet": "FavoredClass",
           "standing": "origin",
+          "display_name": "Kineticist (FavoredClass)"
+        },
+        {
+          "name": "Kineticist",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
           "display_name": "Kineticist"
         },
         {
           "name": "Knacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Knacks (MediumClassFeatures.SpecialQuality)"
         },
         {
           "name": "Knacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Knacks (MesmeristClassFeatures.SpecialQuality)"
         },
         {
           "name": "Knacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Knacks (Occultist Class Feature.SpecialQuality)"
         },
         {
           "name": "Knacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Knacks (Psychic Class Feature.SpecialQuality)"
         },
         {
           "name": "Knacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Knacks (Spiritualist Class Feature.SpecialQuality)"
@@ -3286,6 +3489,13 @@
           "display_name": "Loci Sentry [Abjuration]"
         },
         {
+          "name": "Logical Spell",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Logical Spell"
+        },
+        {
           "name": "Lore",
           "doneness": "not-started",
           "type_facet": "Psychic Discipline.SpecialQuality",
@@ -3294,7 +3504,7 @@
         },
         {
           "name": "Magic Circles",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Magic Circles"
@@ -3427,7 +3637,7 @@
         },
         {
           "name": "Masterful Tricks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Masterful Tricks"
@@ -3436,6 +3646,13 @@
           "name": "Medium",
           "doneness": "not-started",
           "type_facet": "FavoredClass",
+          "standing": "origin",
+          "display_name": "Medium (FavoredClass)"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": null,
           "standing": "origin",
           "display_name": "Medium"
         },
@@ -3720,6 +3937,13 @@
           "display_name": "Memory Palace"
         },
         {
+          "name": "Mental Barrier V",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Mental Barrier V"
+        },
+        {
           "name": "Mental Discord [Enchantment]",
           "doneness": "not-started",
           "type_facet": "Implement School Focus Power.SpecialQuality.SpellLike",
@@ -3786,6 +4010,13 @@
           "name": "Mesmerist",
           "doneness": "not-started",
           "type_facet": "FavoredClass",
+          "standing": "origin",
+          "display_name": "Mesmerist (FavoredClass)"
+        },
+        {
+          "name": "Mesmerist",
+          "doneness": "not-started",
+          "type_facet": null,
           "standing": "origin",
           "display_name": "Mesmerist"
         },
@@ -3938,14 +4169,14 @@
         },
         {
           "name": "Metakinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Metakinesis"
         },
         {
           "name": "Metakinetic Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Metakinetic Master"
@@ -3956,6 +4187,13 @@
           "type_facet": "SpecialQuality.Composite Blast",
           "standing": "origin",
           "display_name": "Metal Blast"
+        },
+        {
+          "name": "Microcosm",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Microcosm"
         },
         {
           "name": "Mimic Metamagic",
@@ -4026,6 +4264,13 @@
           "type_facet": "Implement School Focus Power.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Mind Steed [Conjuration]"
+        },
+        {
+          "name": "Mind Thrust I",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Mind Thrust I"
         },
         {
           "name": "Mindblade",
@@ -4197,7 +4442,7 @@
         },
         {
           "name": "Object Reading",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Object Reading (Occultist Class Feature.SpecialQuality.Supernatural)"
@@ -4217,9 +4462,23 @@
           "display_name": "Object Seer [Divination]"
         },
         {
+          "name": "Occult Skill Unlock",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Occult Skill Unlock"
+        },
+        {
           "name": "Occultist",
           "doneness": "not-started",
           "type_facet": "FavoredClass",
+          "standing": "unclassified",
+          "display_name": "Occultist (FavoredClass)"
+        },
+        {
+          "name": "Occultist",
+          "doneness": "not-started",
+          "type_facet": null,
           "standing": "unclassified",
           "display_name": "Occultist"
         },
@@ -4365,7 +4624,7 @@
         },
         {
           "name": "Omnikinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Omnikinesis"
@@ -4540,7 +4799,7 @@
         },
         {
           "name": "Phantom Recall",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Phantom Recall"
@@ -4672,6 +4931,13 @@
           "display_name": "Plasma Blast"
         },
         {
+          "name": "Point-Blank Shot",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Point-Blank Shot"
+        },
+        {
           "name": "Poltergeist's Knack",
           "doneness": "not-started",
           "type_facet": "Geist Channeler Class Feature.Spiritualist Class Feature.SpecialQuality.SpellLike",
@@ -4684,6 +4950,13 @@
           "type_facet": "SpecialAttack.SpecialQuality.Supernatural.HierophantEnergyFont",
           "standing": "origin",
           "display_name": "Positive Energy Font"
+        },
+        {
+          "name": "Power Attack",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Power Attack"
         },
         {
           "name": "Power from Pain",
@@ -4721,6 +4994,13 @@
           "display_name": "Prayer Aura"
         },
         {
+          "name": "Precise Shot",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Precise Shot"
+        },
+        {
           "name": "Precision",
           "doneness": "not-started",
           "type_facet": "Sensate Class Feature.Fighter Class Feature.SpecialQuality.Supernatural",
@@ -4750,7 +5030,7 @@
         },
         {
           "name": "Propitiation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Propitiation"
@@ -4766,6 +5046,13 @@
           "name": "Psychic",
           "doneness": "not-started",
           "type_facet": "FavoredClass",
+          "standing": "origin",
+          "display_name": "Psychic (FavoredClass)"
+        },
+        {
+          "name": "Psychic",
+          "doneness": "not-started",
+          "type_facet": null,
           "standing": "origin",
           "display_name": "Psychic"
         },
@@ -4789,6 +5076,20 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Psychic Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Psychic Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Psychic Bloodline ~ Feat Tracker"
+        },
+        {
+          "name": "Psychic Crush I",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Psychic Crush I"
         },
         {
           "name": "Psychic Curse [Necromancy]",
@@ -5232,6 +5533,13 @@
           "display_name": "Rapid Manifest"
         },
         {
+          "name": "Rapid Shot",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Rapid Shot"
+        },
+        {
           "name": "Rapport",
           "doneness": "not-started",
           "type_facet": "Psychic Discipline.SpecialQuality",
@@ -5331,7 +5639,7 @@
         },
         {
           "name": "Remade Self",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Remade Self"
@@ -5373,7 +5681,7 @@
         },
         {
           "name": "Rule Minds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Rule Minds"
@@ -5408,9 +5716,9 @@
         },
         {
           "name": "See Invisibility",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "See Invisibility"
         },
         {
@@ -5499,7 +5807,7 @@
         },
         {
           "name": "Shared Seance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shared Seance"
@@ -5527,7 +5835,7 @@
         },
         {
           "name": "Shift Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shift Focus"
@@ -5669,7 +5977,7 @@
           "name": "Slow",
           "doneness": "not-started",
           "type_facet": "InjectionImprovement.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Slow"
         },
         {
@@ -5709,7 +6017,7 @@
         },
         {
           "name": "Spacious Soul",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Spacious Soul"
@@ -5786,7 +6094,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spells (Occultist Class Feature.SpecialQuality)"
@@ -5800,7 +6108,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spells (Psychic Class Feature.SpecialQuality)"
@@ -5821,7 +6129,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spells (Spiritualist Class Feature.SpecialQuality)"
@@ -5898,7 +6206,7 @@
         },
         {
           "name": "Spirit Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Spirit Mastery"
@@ -5946,6 +6254,13 @@
           "display_name": "Spirit Warrior"
         },
         {
+          "name": "Spirit-Bound Blade",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Spirit-Bound Blade"
+        },
+        {
           "name": "Spirited Mount",
           "doneness": "not-started",
           "type_facet": "Ghost Rider Class Feature.Cavalier Class Feature.SpecialQuality.Supernatural",
@@ -5954,7 +6269,7 @@
         },
         {
           "name": "Spiritual Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Spiritual Bond"
@@ -5968,7 +6283,7 @@
         },
         {
           "name": "Spiritual Interference (Ex or Su)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Spiritual Interference (Ex or Su)"
@@ -5998,6 +6313,13 @@
           "name": "Spiritualist",
           "doneness": "not-started",
           "type_facet": "FavoredClass",
+          "standing": "unclassified",
+          "display_name": "Spiritualist (FavoredClass)"
+        },
+        {
+          "name": "Spiritualist",
+          "doneness": "not-started",
+          "type_facet": null,
           "standing": "unclassified",
           "display_name": "Spiritualist"
         },
@@ -6101,7 +6423,7 @@
         },
         {
           "name": "Supercharge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Supercharge"
@@ -6150,7 +6472,7 @@
         },
         {
           "name": "Taboo",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Taboo"
@@ -6227,14 +6549,14 @@
         },
         {
           "name": "Telepathic Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Telepathic Bond"
         },
         {
           "name": "Telepathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Telepathy"
@@ -6329,6 +6651,13 @@
           "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Aether",
           "standing": "origin",
           "display_name": "Touchsight, Reactive"
+        },
+        {
+          "name": "Tower Of Iron Will III",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Tower Of Iron Will III"
         },
         {
           "name": "Towering Ego",
@@ -6448,6 +6777,20 @@
           "type_facet": "Phrenic Amplification.Major Amplification.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Turning Shield"
+        },
+        {
+          "name": "Two-Weapon Fighting",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Two-Weapon Fighting"
+        },
+        {
+          "name": "Two-Weapon Rend",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Two-Weapon Rend"
         },
         {
           "name": "Unarmed Spellstrike",
@@ -6625,6 +6968,13 @@
           "display_name": "Wall"
         },
         {
+          "name": "Wall Of Ectoplasm",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Wall Of Ectoplasm"
+        },
+        {
           "name": "Wall of Power [Evocation]",
           "doneness": "not-started",
           "type_facet": "Implement School Focus Power.SpecialQuality.SpellLike",
@@ -6709,6 +7059,27 @@
           "display_name": "Watersense"
         },
         {
+          "name": "Weapon Finesse",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Weapon Finesse"
+        },
+        {
+          "name": "Weapon Focus",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Weapon Focus"
+        },
+        {
+          "name": "Weapon Specialization",
+          "doneness": "not-started",
+          "type_facet": "Elemental Annihilator Feat",
+          "standing": "unclassified",
+          "display_name": "Weapon Specialization"
+        },
+        {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Battle Host Class Feature.Occultist Class Feature.SpecialQuality",
@@ -6724,35 +7095,35 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (Kineticist Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (MediumClassFeatures.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (MesmeristClassFeatures.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (Occultist Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (Psychic Class Feature.SpecialQuality)"
@@ -6766,7 +7137,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (Spiritualist Class Feature.SpecialQuality)"
@@ -8276,36 +8647,72 @@
       ]
     },
     {
-      "kind": "monster_ability",
-      "label": "Monster Abilities",
+      "kind": "language",
+      "label": "Languages",
       "done": 0,
       "partial": 0,
-      "not_started": 1,
-      "denominator": 1,
+      "not_started": 0,
+      "denominator": 0,
       "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 1,
       "standing_breakdown": {
-        "unclassified": 2,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Common (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Common (cannot speak)"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 1,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 4,
+      "standing_breakdown": {
+        "unclassified": 4,
         "origin": 1
       },
       "items": [
         {
+          "name": "Improvised Weapon Mastery",
+          "doneness": "done",
+          "type_facet": "ShikigamiRacialAbility.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Improvised Weapon Mastery"
+        },
+        {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison"
         },
         {
+          "name": "Spell-Like Abilities",
+          "doneness": "partial",
+          "type_facet": "ShikigamiRacialAbility.SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities"
+        },
+        {
           "name": "Sympathetic Alchemy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Sympathetic Alchemy"
         },
         {
           "name": "Telepathic Link",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Telepathic Link"
@@ -8327,7 +8734,7 @@
       "items": [
         {
           "name": "Shikigami",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "Shikigami"
@@ -8339,13 +8746,13 @@
       "label": "Race Traits",
       "done": 0,
       "partial": 0,
-      "not_started": 58,
-      "denominator": 58,
+      "not_started": 59,
+      "denominator": 59,
       "pct": 0.0,
-      "excluded_from_percentage": 15,
+      "excluded_from_percentage": 12,
       "standing_breakdown": {
-        "unclassified": 15,
-        "origin": 58
+        "unclassified": 12,
+        "origin": 59
       },
       "items": [
         {
@@ -8587,13 +8994,6 @@
           "display_name": "Horrifying Strike"
         },
         {
-          "name": "Improvised Weapon Mastery",
-          "doneness": "not-started",
-          "type_facet": "ShikigamiRacialAbility.SpecialQuality.Extraordinary",
-          "standing": "unclassified",
-          "display_name": "Improvised Weapon Mastery"
-        },
-        {
           "name": "Incorporeal",
           "doneness": "not-started",
           "type_facet": "Phantom Racial Trait.Phantom Manifestation.SpecialQuality",
@@ -8793,15 +9193,8 @@
           "name": "Sneak Attack",
           "doneness": "not-started",
           "type_facet": "Emotional Focus / Hatred.SpecialQuality.Supernatural",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Sneak Attack"
-        },
-        {
-          "name": "Spell-Like Abilities",
-          "doneness": "not-started",
-          "type_facet": "ShikigamiRacialAbility.SpecialQuality.SpellLike",
-          "standing": "unclassified",
-          "display_name": "Spell-Like Abilities"
         },
         {
           "name": "Steadfast Devotion",
@@ -12228,6 +12621,49 @@
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Withdraw Affliction"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 4,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 4
+      },
+      "items": [
+        {
+          "name": "LARGE",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "LARGE"
+        },
+        {
+          "name": "MEDIUM",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "MEDIUM"
+        },
+        {
+          "name": "Psychic Detective",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Psychic Detective"
+        },
+        {
+          "name": "SMALL",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "SMALL"
         }
       ]
     }

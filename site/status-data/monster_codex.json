@@ -3,17 +3,46 @@
   "title": "Monster Codex",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 2,
+      "denominator": 2,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 2
+      },
+      "items": [
+        {
+          "name": "Beast Rider",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Beast Rider"
+        },
+        {
+          "name": "Ironskin",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Ironskin"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 0,
       "partial": 0,
-      "not_started": 54,
-      "denominator": 54,
+      "not_started": 57,
+      "denominator": 57,
       "pct": 0.0,
-      "excluded_from_percentage": 13,
+      "excluded_from_percentage": 15,
       "standing_breakdown": {
-        "origin": 54,
-        "unclassified": 13
+        "origin": 57,
+        "unclassified": 15
       },
       "items": [
         {
@@ -59,6 +88,13 @@
           "display_name": "Apocalypse Mysteries"
         },
         {
+          "name": "Apocalypse Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Apocalypse Mysteries Class Skills"
+        },
+        {
           "name": "Blackstar Bomb*",
           "doneness": "not-started",
           "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier",
@@ -78,6 +114,13 @@
           "type_facet": "Class Feature.Sorcerer Class Feature",
           "standing": "unclassified",
           "display_name": "Bloodline Powers"
+        },
+        {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
         },
         {
           "name": "Bomb Trap",
@@ -106,6 +149,13 @@
           "type_facet": "Witch Class Features.BoudaClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Bouda's Eye"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Features.WingedMarauderClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills"
         },
         {
           "name": "Cold-Blooded",
@@ -290,6 +340,13 @@
           "display_name": "Ghoul Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Ghoul Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghoul Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Ghoulish Aspect",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural",
@@ -309,6 +366,13 @@
           "type_facet": "Archetype.AlchemistArchetype",
           "standing": "origin",
           "display_name": "Grenadier"
+        },
+        {
+          "name": "Hungry Earth",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Hungry Earth"
         },
         {
           "name": "Hyena Shape",
@@ -1222,6 +1286,35 @@
       ]
     },
     {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "unclassified": 2
+      },
+      "items": [
+        {
+          "name": "Aklo (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Aklo (cannot speak)"
+        },
+        {
+          "name": "Common (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Common (cannot speak)"
+        }
+      ]
+    },
+    {
       "kind": "monster_ability",
       "label": "Monster Abilities",
       "done": 1,
@@ -1291,8 +1384,8 @@
       "kind": "race_trait",
       "label": "Race Traits",
       "done": 1,
-      "partial": 2,
-      "not_started": 8,
+      "partial": 6,
+      "not_started": 4,
       "denominator": 11,
       "pct": 9.1,
       "excluded_from_percentage": 3,
@@ -1317,14 +1410,14 @@
         },
         {
           "name": "Cheek Pouches",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Cheek Pouches"
         },
         {
           "name": "Cleanliness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Cleanliness"
@@ -1345,14 +1438,14 @@
         },
         {
           "name": "Lab Rat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Lab Rat"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision"
@@ -1366,7 +1459,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed"
@@ -1387,7 +1480,7 @@
         },
         {
           "name": "Surface Sprinter",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Surface Sprinter"

@@ -7,13 +7,13 @@
       "label": "Class Features",
       "done": 0,
       "partial": 0,
-      "not_started": 118,
-      "denominator": 118,
+      "not_started": 120,
+      "denominator": 120,
       "pct": 0.0,
-      "excluded_from_percentage": 51,
+      "excluded_from_percentage": 64,
       "standing_breakdown": {
-        "unclassified": 51,
-        "origin": 118
+        "unclassified": 64,
+        "origin": 120
       },
       "items": [
         {
@@ -57,6 +57,13 @@
           "type_facet": "Archetype.InvestigatorArchetype",
           "standing": "origin",
           "display_name": "Bonded Investigator"
+        },
+        {
+          "name": "Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Bonus Spells"
         },
         {
           "name": "Calumny",
@@ -106,6 +113,48 @@
           "type_facet": "InquisitorDomain.Inquisition",
           "standing": "origin",
           "display_name": "Clandestine Inquisition"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Ninja Class Features.FrozenShadowClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Ninja Class Features.FrozenShadowClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (TYPE:Summoner Class Features.GodCallerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Class Skills ([redacted PI])"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Magus Class Features.MagicWarriorClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Magus Class Features.MagicWarriorClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Monk Class Features.PerfectScholarClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Monk Class Features.PerfectScholarClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Inquisitor Class Features.RoyalAccuserClassFeatures)"
         },
         {
           "name": "Clockwork Bond",
@@ -204,6 +253,13 @@
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Darkvision"
+        },
+        {
+          "name": "Daylight",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.LanternBearerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Daylight"
         },
         {
           "name": "Delayed Spells",
@@ -381,6 +437,13 @@
           "display_name": "Favored Enemy"
         },
         {
+          "name": "Favored Terrain",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.LanternBearerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Favored Terrain"
+        },
+        {
           "name": "Final Sway",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary",
@@ -484,6 +547,20 @@
           "type_facet": "Vigilante Talent.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Harsh Judgment"
+        },
+        {
+          "name": "Harsh Judgment (Profane)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteClassFeatures.SpecialQuality.Supernatural.VigilanteHarshJudgment",
+          "standing": "origin",
+          "display_name": "Harsh Judgment (Profane)"
+        },
+        {
+          "name": "Harsh Judgment (Sacred)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteClassFeatures.SpecialQuality.Supernatural.VigilanteHarshJudgment",
+          "standing": "origin",
+          "display_name": "Harsh Judgment (Sacred)"
         },
         {
           "name": "Heart's Desire",
@@ -738,6 +815,13 @@
           "display_name": "Nature Bond"
         },
         {
+          "name": "Nondetection",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Nondetection"
+        },
+        {
           "name": "One with the Library",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
@@ -799,6 +883,13 @@
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Perfect Surprise"
+        },
+        {
+          "name": "Poison Immunity",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.LanternBearerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Poison Immunity"
         },
         {
           "name": "Poison Resistance",
@@ -890,6 +981,13 @@
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
           "standing": "unclassified",
           "display_name": "Safe House"
+        },
+        {
+          "name": "Scribe Scroll",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Scribe Scroll"
         },
         {
           "name": "Secret Messenger",
@@ -1153,6 +1251,13 @@
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
+          "type_facet": "Druid Class Features.NithveilAdeptClassFeatures",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Druid Class Features.NithveilAdeptClassFeatures)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
           "type_facet": "Archetype.OracleArchetype",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Archetype.OracleArchetype)"
@@ -1183,7 +1288,7 @@
           "doneness": "not-started",
           "type_facet": "Social Talent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
-          "display_name": "[redacted PI] (Social Talent.SpecialQuality.Extraordinary) #8"
+          "display_name": "[redacted PI] (Social Talent.SpecialQuality.Extraordinary) #9"
         },
         {
           "name": "[redacted PI]",
@@ -1900,6 +2005,63 @@
           "type_facet": "Arcane.Psychic",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Arcane.Psychic)"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 6,
+      "denominator": 6,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 6
+      },
+      "items": [
+        {
+          "name": "Clockwork Familiar Potion Installation",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Clockwork Familiar Potion Installation"
+        },
+        {
+          "name": "Clockwork Familiar Scroll Installation",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Clockwork Familiar Scroll Installation"
+        },
+        {
+          "name": "Clockwork Familiar Wand Installation",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Clockwork Familiar Wand Installation"
+        },
+        {
+          "name": "Lantern Bearer Bonus Darkvision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lantern Bearer Bonus Darkvision"
+        },
+        {
+          "name": "Lantern Bearer Darkvision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lantern Bearer Darkvision"
+        },
+        {
+          "name": "Lantern Bearer New Darkvision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lantern Bearer New Darkvision"
         }
       ]
     }

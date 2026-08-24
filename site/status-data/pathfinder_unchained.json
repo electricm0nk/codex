@@ -3,17 +3,2588 @@
   "title": "Pathfinder Unchained",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 311,
+      "denominator": 311,
+      "pct": 0.0,
+      "excluded_from_percentage": 54,
+      "standing_breakdown": {
+        "origin": 311,
+        "unclassified": 54
+      },
+      "items": [
+        {
+          "name": "Adder Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Adder Strike"
+        },
+        {
+          "name": "Amateur Gunslinger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Amateur Gunslinger"
+        },
+        {
+          "name": "Amateur Swashbuckler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Amateur Swashbuckler"
+        },
+        {
+          "name": "Anticipate Dodge",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Anticipate Dodge"
+        },
+        {
+          "name": "Arc Slinger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Arc Slinger"
+        },
+        {
+          "name": "Barroom Brawler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Barroom Brawler"
+        },
+        {
+          "name": "Bashing Finish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Bashing Finish"
+        },
+        {
+          "name": "Battle Cry",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Battle Cry"
+        },
+        {
+          "name": "Befuddling Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Befuddling Strike"
+        },
+        {
+          "name": "Binding Throw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Binding Throw"
+        },
+        {
+          "name": "Blazing Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Blazing Aura"
+        },
+        {
+          "name": "Blistering Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Blistering Feint"
+        },
+        {
+          "name": "Blood Beak",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Blood Beak"
+        },
+        {
+          "name": "Blooded Arcane Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Blooded Arcane Strike"
+        },
+        {
+          "name": "Bloody Assault",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Bloody Assault"
+        },
+        {
+          "name": "Bludgeoner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Bludgeoner"
+        },
+        {
+          "name": "Blundering Defense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Blundering Defense"
+        },
+        {
+          "name": "Boar Ferocity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Boar Ferocity"
+        },
+        {
+          "name": "Boar Shred",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Boar Shred"
+        },
+        {
+          "name": "Boar Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Boar Style"
+        },
+        {
+          "name": "Body Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Body Shield"
+        },
+        {
+          "name": "Bodyguard",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Bodyguard"
+        },
+        {
+          "name": "Bonebreaker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Bonebreaker"
+        },
+        {
+          "name": "Break Guard",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Break Guard"
+        },
+        {
+          "name": "Broken Wing Gambit",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Broken Wing Gambit"
+        },
+        {
+          "name": "Bull Rush Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Bull Rush Strike"
+        },
+        {
+          "name": "Bullying Blow",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Bullying Blow"
+        },
+        {
+          "name": "Canny Tumble",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Canny Tumble"
+        },
+        {
+          "name": "Cautious Fighter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Cautious Fighter"
+        },
+        {
+          "name": "Cavalry Formation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Cavalry Formation"
+        },
+        {
+          "name": "Channeling Force",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Channeling Force"
+        },
+        {
+          "name": "Charge Through",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Charge Through"
+        },
+        {
+          "name": "Charging Hurler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Charging Hurler"
+        },
+        {
+          "name": "Chokehold",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Chokehold"
+        },
+        {
+          "name": "Claw Pounce",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Claw Pounce"
+        },
+        {
+          "name": "Cleave Through",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Cleave Through"
+        },
+        {
+          "name": "Cleaving Finish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Cleaving Finish"
+        },
+        {
+          "name": "Close-Quarters Thrower",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Close-Quarters Thrower"
+        },
+        {
+          "name": "Cloven Helm",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Cloven Helm"
+        },
+        {
+          "name": "Clustered Shots",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Clustered Shots"
+        },
+        {
+          "name": "Cockatrice Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Cockatrice Strike"
+        },
+        {
+          "name": "Combat Patrol",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Combat Patrol"
+        },
+        {
+          "name": "Combat Style Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Combat Style Master"
+        },
+        {
+          "name": "Combat Trick Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Combat Trick Tracker"
+        },
+        {
+          "name": "Coordinated Charge",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Coordinated Charge"
+        },
+        {
+          "name": "Coordinated Defense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Coordinated Defense"
+        },
+        {
+          "name": "Coordinated Maneuvers",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Coordinated Maneuvers"
+        },
+        {
+          "name": "Coordinated Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Coordinated Shot"
+        },
+        {
+          "name": "Counter Ref lexes",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Counter Ref lexes"
+        },
+        {
+          "name": "Counterpunch",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Counterpunch"
+        },
+        {
+          "name": "Covering Defense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Covering Defense"
+        },
+        {
+          "name": "Crane Riposte",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crane Riposte"
+        },
+        {
+          "name": "Crane Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crane Style"
+        },
+        {
+          "name": "Crane Wing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crane Wing"
+        },
+        {
+          "name": "Crippling Critical",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crippling Critical"
+        },
+        {
+          "name": "Critical Versatility",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Critical Versatility"
+        },
+        {
+          "name": "Crossbow Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crossbow Mastery"
+        },
+        {
+          "name": "Crusader's Fist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crusader's Fist"
+        },
+        {
+          "name": "Crushing Blow",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Crushing Blow"
+        },
+        {
+          "name": "Dastardly Finish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dastardly Finish"
+        },
+        {
+          "name": "Dazing Assault",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dazing Assault"
+        },
+        {
+          "name": "Dazing Fist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dazing Fist"
+        },
+        {
+          "name": "Deadly Finish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Deadly Finish"
+        },
+        {
+          "name": "Death from Above",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Death from Above"
+        },
+        {
+          "name": "Death or Glory",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Death or Glory"
+        },
+        {
+          "name": "Deathless Initiate",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Deathless Initiate"
+        },
+        {
+          "name": "Deathless Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Deathless Master"
+        },
+        {
+          "name": "Deathless Zealot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Deathless Zealot"
+        },
+        {
+          "name": "Defensive Weapon Training",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Defensive Weapon Training"
+        },
+        {
+          "name": "Demoralizing Lash",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Demoralizing Lash"
+        },
+        {
+          "name": "Dented Helm",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Dented Helm"
+        },
+        {
+          "name": "Desperate Swing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Desperate Swing"
+        },
+        {
+          "name": "Destroyer's Blessing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Destroyer's Blessing"
+        },
+        {
+          "name": "Devastating Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Devastating Strike"
+        },
+        {
+          "name": "Disarming Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Disarming Strike"
+        },
+        {
+          "name": "Disengaging Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Disengaging Feint"
+        },
+        {
+          "name": "Disengaging Flourish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Disengaging Flourish"
+        },
+        {
+          "name": "Disengaging Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Disengaging Shot"
+        },
+        {
+          "name": "Disheartening Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Disheartening Display"
+        },
+        {
+          "name": "Disrupting Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Disrupting Shot"
+        },
+        {
+          "name": "Distance Thrower",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Distance Thrower"
+        },
+        {
+          "name": "Distracting Charge",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Distracting Charge"
+        },
+        {
+          "name": "Djinni Spin",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Djinni Spin"
+        },
+        {
+          "name": "Djinni Spirit",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Djinni Spirit"
+        },
+        {
+          "name": "Djinni Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Djinni Style"
+        },
+        {
+          "name": "Domain Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Domain Strike"
+        },
+        {
+          "name": "Drag Down",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Drag Down"
+        },
+        {
+          "name": "Dragon Ferocity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dragon Ferocity"
+        },
+        {
+          "name": "Dragon Roar",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dragon Roar"
+        },
+        {
+          "name": "Dragon Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dragon Style"
+        },
+        {
+          "name": "Draining Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Draining Strike"
+        },
+        {
+          "name": "Dramatic Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dramatic Display"
+        },
+        {
+          "name": "Dreadful Carnage",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dreadful Carnage"
+        },
+        {
+          "name": "Dueling Cape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Dueling Cape"
+        },
+        {
+          "name": "Earth Child Binder",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Earth Child Binder"
+        },
+        {
+          "name": "Earth Child Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Earth Child Style"
+        },
+        {
+          "name": "Earth Child Topple",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Earth Child Topple"
+        },
+        {
+          "name": "Efreeti Stance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Efreeti Stance"
+        },
+        {
+          "name": "Efreeti Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Efreeti Style"
+        },
+        {
+          "name": "Efreeti Touch",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Efreeti Touch"
+        },
+        {
+          "name": "Eldritch Claws",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Eldritch Claws"
+        },
+        {
+          "name": "Elemental Fist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Elemental Fist"
+        },
+        {
+          "name": "Elven Accuracy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Elven Accuracy"
+        },
+        {
+          "name": "Elven Battle Training",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Elven Battle Training"
+        },
+        {
+          "name": "Enfilading Fire",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Enfilading Fire"
+        },
+        {
+          "name": "Enforcer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Enforcer"
+        },
+        {
+          "name": "Extreme Prejudice",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Extreme Prejudice"
+        },
+        {
+          "name": "Faerie's Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Faerie's Strike"
+        },
+        {
+          "name": "Feint Partner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Feint Partner"
+        },
+        {
+          "name": "Felling Escape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Felling Escape"
+        },
+        {
+          "name": "Felling Smash",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Felling Smash"
+        },
+        {
+          "name": "Feral Combat Training",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Feral Combat Training"
+        },
+        {
+          "name": "Ferocious Tenacity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Ferocious Tenacity"
+        },
+        {
+          "name": "Final Embrace",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Final Embrace"
+        },
+        {
+          "name": "Final Embrace Horror",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Final Embrace Horror"
+        },
+        {
+          "name": "Final Embrace Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Final Embrace Master"
+        },
+        {
+          "name": "Fire Hand",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Fire Hand"
+        },
+        {
+          "name": "Flanking Foil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Flanking Foil"
+        },
+        {
+          "name": "Focused Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Focused Shot"
+        },
+        {
+          "name": "Following Step",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Following Step"
+        },
+        {
+          "name": "Fortified Armor Training",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Fortified Armor Training"
+        },
+        {
+          "name": "Furious Focus",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Furious Focus"
+        },
+        {
+          "name": "Gang Up",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Gang Up"
+        },
+        {
+          "name": "Giant Killer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Giant Killer"
+        },
+        {
+          "name": "Gloom Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Gloom Strike"
+        },
+        {
+          "name": "Gnome Weapon Focus",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Gnome Weapon Focus"
+        },
+        {
+          "name": "Goblin Cleaver",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Goblin Cleaver"
+        },
+        {
+          "name": "Goblin Gunslinger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Goblin Gunslinger"
+        },
+        {
+          "name": "Gory Finish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Gory Finish"
+        },
+        {
+          "name": "Grabbing Drag",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Grabbing Drag"
+        },
+        {
+          "name": "Grabbing Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Grabbing Master"
+        },
+        {
+          "name": "Grabbing Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Grabbing Style"
+        },
+        {
+          "name": "Grasping Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Grasping Strike"
+        },
+        {
+          "name": "Great Hatred",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Great Hatred"
+        },
+        {
+          "name": "Greater Blind-Fight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Blind-Fight"
+        },
+        {
+          "name": "Greater Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Dirty Trick"
+        },
+        {
+          "name": "Greater Drag",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Drag"
+        },
+        {
+          "name": "Greater Rending Fury",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Rending Fury"
+        },
+        {
+          "name": "Greater Reposition",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Reposition"
+        },
+        {
+          "name": "Greater Shield Specialization",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Shield Specialization"
+        },
+        {
+          "name": "Greater Snap Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Snap Shot"
+        },
+        {
+          "name": "Greater Steal",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Steal"
+        },
+        {
+          "name": "Greater Weapon of the Chosen",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Weapon of the Chosen"
+        },
+        {
+          "name": "Greater Whip Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Greater Whip Mastery"
+        },
+        {
+          "name": "Grudge Fighter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Grudge Fighter"
+        },
+        {
+          "name": "Gruesome Slaughter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Gruesome Slaughter"
+        },
+        {
+          "name": "Hammer the Gap",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Hammer the Gap"
+        },
+        {
+          "name": "Hard-Headed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Hard-Headed"
+        },
+        {
+          "name": "Haunted Gnome",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Haunted Gnome"
+        },
+        {
+          "name": "Haunted Gnome Assault",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Haunted Gnome Assault"
+        },
+        {
+          "name": "Haunted Gnome Shroud",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Haunted Gnome Shroud"
+        },
+        {
+          "name": "Hero's Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Hero's Display"
+        },
+        {
+          "name": "Hex Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Hex Strike"
+        },
+        {
+          "name": "Horse Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Horse Master"
+        },
+        {
+          "name": "Impact Critical Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Impact Critical Shot"
+        },
+        {
+          "name": "Impaling Critical",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Impaling Critical"
+        },
+        {
+          "name": "Improved Awesome Blow",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Awesome Blow"
+        },
+        {
+          "name": "Improved Blind-Fight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Blind-Fight"
+        },
+        {
+          "name": "Improved Charging Hurler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Charging Hurler"
+        },
+        {
+          "name": "Improved Cleaving Finish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Cleaving Finish"
+        },
+        {
+          "name": "Improved Devastating Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Devastating Strike"
+        },
+        {
+          "name": "Improved Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Dirty Trick"
+        },
+        {
+          "name": "Improved Drag",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Drag"
+        },
+        {
+          "name": "Improved Feint Partner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Feint Partner"
+        },
+        {
+          "name": "Improved Impaling Critical",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Impaling Critical"
+        },
+        {
+          "name": "Improved Ki Throw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Ki Throw"
+        },
+        {
+          "name": "Improved Low Blow",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Improved Low Blow"
+        },
+        {
+          "name": "Improved Rending Fury",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Rending Fury"
+        },
+        {
+          "name": "Improved Reposition",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Reposition"
+        },
+        {
+          "name": "Improved Second Chance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Second Chance"
+        },
+        {
+          "name": "Improved Sidestep",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Sidestep"
+        },
+        {
+          "name": "Improved Snap Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Snap Shot"
+        },
+        {
+          "name": "Improved Steal",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Steal"
+        },
+        {
+          "name": "Improved Surprise Follow-Through",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Improved Surprise Follow-Through"
+        },
+        {
+          "name": "Improved Swap Places",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Swap Places"
+        },
+        {
+          "name": "Improved Two-Weapon Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Two-Weapon Feint"
+        },
+        {
+          "name": "Improved Weapon of the Chosen",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Weapon of the Chosen"
+        },
+        {
+          "name": "Improved Whip Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Improved Whip Mastery"
+        },
+        {
+          "name": "In Harm's Way",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "In Harm's Way"
+        },
+        {
+          "name": "Inner Flame",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Inner Flame"
+        },
+        {
+          "name": "Intercept Charge",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Intercept Charge"
+        },
+        {
+          "name": "Jabbing Dancer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Jabbing Dancer"
+        },
+        {
+          "name": "Jabbing Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Jabbing Master"
+        },
+        {
+          "name": "Jabbing Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Jabbing Style"
+        },
+        {
+          "name": "Janni Rush",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Janni Rush"
+        },
+        {
+          "name": "Janni Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Janni Style"
+        },
+        {
+          "name": "Janni Tempest",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Janni Tempest"
+        },
+        {
+          "name": "Jawbreaker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Jawbreaker"
+        },
+        {
+          "name": "Ki Throw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Ki Throw"
+        },
+        {
+          "name": "Kick Up",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Kick Up"
+        },
+        {
+          "name": "Killing Flourish",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Killing Flourish"
+        },
+        {
+          "name": "Kirin Path",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Kirin Path"
+        },
+        {
+          "name": "Kirin Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Kirin Strike"
+        },
+        {
+          "name": "Kirin Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Kirin Style"
+        },
+        {
+          "name": "Kobold Ambusher",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Kobold Ambusher"
+        },
+        {
+          "name": "Kobold Sniper",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Kobold Sniper"
+        },
+        {
+          "name": "Landing Roll",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Landing Roll"
+        },
+        {
+          "name": "Lookout",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Lookout"
+        },
+        {
+          "name": "Low Profile",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Low Profile"
+        },
+        {
+          "name": "Lucky Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Lucky Strike"
+        },
+        {
+          "name": "Mantis Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Mantis Style"
+        },
+        {
+          "name": "Mantis Torment",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Mantis Torment"
+        },
+        {
+          "name": "Mantis Wisdom",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Mantis Wisdom"
+        },
+        {
+          "name": "Marid Coldsnap",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Marid Coldsnap"
+        },
+        {
+          "name": "Marid Spirit",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Marid Spirit"
+        },
+        {
+          "name": "Marid Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Marid Style"
+        },
+        {
+          "name": "Martial Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Martial Mastery"
+        },
+        {
+          "name": "Martial Versatility",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Martial Versatility"
+        },
+        {
+          "name": "Master Combat Performer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Master Combat Performer"
+        },
+        {
+          "name": "Master Siege Engineer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Master Siege Engineer"
+        },
+        {
+          "name": "Masterful Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Masterful Display"
+        },
+        {
+          "name": "Merciless Butchery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Merciless Butchery"
+        },
+        {
+          "name": "Missile Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Missile Shield"
+        },
+        {
+          "name": "Mocking Dance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Mocking Dance"
+        },
+        {
+          "name": "Monastic Legacy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Monastic Legacy"
+        },
+        {
+          "name": "Monkey Moves",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Monkey Moves"
+        },
+        {
+          "name": "Monkey Shine",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Monkey Shine"
+        },
+        {
+          "name": "Monkey Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Monkey Style"
+        },
+        {
+          "name": "Moonlight Stalker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Moonlight Stalker"
+        },
+        {
+          "name": "Moonlight Stalker Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Moonlight Stalker Feint"
+        },
+        {
+          "name": "Moonlight Stalker Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Moonlight Stalker Master"
+        },
+        {
+          "name": "Mounted Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Mounted Shield"
+        },
+        {
+          "name": "Mounted Skirmisher",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Mounted Skirmisher"
+        },
+        {
+          "name": "Murderer's Circle",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Murderer's Circle"
+        },
+        {
+          "name": "Neckbreaker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Neckbreaker"
+        },
+        {
+          "name": "Net Adept",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Net Adept"
+        },
+        {
+          "name": "Net Maneuvering",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Net Maneuvering"
+        },
+        {
+          "name": "Net Trickery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Net Trickery"
+        },
+        {
+          "name": "Net and Trident",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Net and Trident"
+        },
+        {
+          "name": "Nightmare Fist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Nightmare Fist"
+        },
+        {
+          "name": "Nightmare Striker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Nightmare Striker"
+        },
+        {
+          "name": "Nightmare Weaver",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Nightmare Weaver"
+        },
+        {
+          "name": "Nimble Striker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Nimble Striker"
+        },
+        {
+          "name": "Opening Volley",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Opening Volley"
+        },
+        {
+          "name": "Orc Hewer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Orc Hewer"
+        },
+        {
+          "name": "Orc Weapon Expertise",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Orc Weapon Expertise"
+        },
+        {
+          "name": "Outflank",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Outflank"
+        },
+        {
+          "name": "Pack Attack",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pack Attack"
+        },
+        {
+          "name": "Paired Opportunists",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Paired Opportunists"
+        },
+        {
+          "name": "Panther Claw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Panther Claw"
+        },
+        {
+          "name": "Panther Parry",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Panther Parry"
+        },
+        {
+          "name": "Panther Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Panther Style"
+        },
+        {
+          "name": "Paralyzing Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Paralyzing Strike"
+        },
+        {
+          "name": "Parting Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Parting Shot"
+        },
+        {
+          "name": "Passing Trick",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Passing Trick"
+        },
+        {
+          "name": "Perfect Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Perfect Strike"
+        },
+        {
+          "name": "Performance Weapon Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Performance Weapon Mastery"
+        },
+        {
+          "name": "Performing Combatant",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Performing Combatant"
+        },
+        {
+          "name": "Pin Down",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pin Down"
+        },
+        {
+          "name": "Pinning Knockout",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pinning Knockout"
+        },
+        {
+          "name": "Pinning Rend",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pinning Rend"
+        },
+        {
+          "name": "Pinpoint Poisoner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pinpoint Poisoner"
+        },
+        {
+          "name": "Point-Blank Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Point-Blank Master"
+        },
+        {
+          "name": "Precise Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Precise Strike"
+        },
+        {
+          "name": "Prone Shooter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Prone Shooter"
+        },
+        {
+          "name": "Prone Slinger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Prone Slinger"
+        },
+        {
+          "name": "Pummeling Bully",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pummeling Bully"
+        },
+        {
+          "name": "Pummeling Charge",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pummeling Charge"
+        },
+        {
+          "name": "Pummeling Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pummeling Style"
+        },
+        {
+          "name": "Punishing Kick",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Punishing Kick"
+        },
+        {
+          "name": "Pushing Assault",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Pushing Assault"
+        },
+        {
+          "name": "Quarterstaff Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Quarterstaff Master"
+        },
+        {
+          "name": "Quick Bull Rush",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Quick Bull Rush"
+        },
+        {
+          "name": "Quick Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Quick Dirty Trick"
+        },
+        {
+          "name": "Quick Drag",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Quick Drag"
+        },
+        {
+          "name": "Quick Reposition",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Quick Reposition"
+        },
+        {
+          "name": "Quick Steal",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Quick Steal"
+        },
+        {
+          "name": "Rapid Grappler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Rapid Grappler"
+        },
+        {
+          "name": "Ray Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Ray Shield"
+        },
+        {
+          "name": "Rebounding Leap",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Rebounding Leap"
+        },
+        {
+          "name": "Rebuffing Reduction",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Rebuffing Reduction"
+        },
+        {
+          "name": "Rending Claws",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Rending Claws"
+        },
+        {
+          "name": "Rending Fury",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Rending Fury"
+        },
+        {
+          "name": "Repositioning Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Repositioning Strike"
+        },
+        {
+          "name": "Revelation Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Revelation Strike"
+        },
+        {
+          "name": "Reverse-Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Reverse-Feint"
+        },
+        {
+          "name": "Risky Striker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Risky Striker"
+        },
+        {
+          "name": "Riving Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Riving Strike"
+        },
+        {
+          "name": "Sap Adept",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sap Adept"
+        },
+        {
+          "name": "Sap Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sap Master"
+        },
+        {
+          "name": "Savage Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Savage Display"
+        },
+        {
+          "name": "Saving Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Saving Shield"
+        },
+        {
+          "name": "School Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "School Strike"
+        },
+        {
+          "name": "Scorching Weapons",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Scorching Weapons"
+        },
+        {
+          "name": "Sea Hunter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Sea Hunter"
+        },
+        {
+          "name": "Second Chance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Second Chance"
+        },
+        {
+          "name": "Seething Hatred",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Seething Hatred"
+        },
+        {
+          "name": "Seize Advantage",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Seize Advantage"
+        },
+        {
+          "name": "Seize the Moment",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Seize the Moment"
+        },
+        {
+          "name": "Shadow Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shadow Strike"
+        },
+        {
+          "name": "Shaitan Earthblast",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shaitan Earthblast"
+        },
+        {
+          "name": "Shaitan Skin",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shaitan Skin"
+        },
+        {
+          "name": "Shaitan Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shaitan Style"
+        },
+        {
+          "name": "Sharpclaw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Sharpclaw"
+        },
+        {
+          "name": "Shatterspell",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Shatterspell"
+        },
+        {
+          "name": "Shield Specialization",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shield Specialization"
+        },
+        {
+          "name": "Shield Wall",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shield Wall"
+        },
+        {
+          "name": "Shield of Swings",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Shield of Swings"
+        },
+        {
+          "name": "Sidestep",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sidestep"
+        },
+        {
+          "name": "Siege Commander",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Siege Commander"
+        },
+        {
+          "name": "Siege Engineer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Siege Engineer"
+        },
+        {
+          "name": "Siege Gunner",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Siege Gunner"
+        },
+        {
+          "name": "Silent Kill",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Silent Kill"
+        },
+        {
+          "name": "Slashing Grace",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Slashing Grace"
+        },
+        {
+          "name": "Slayer's Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Slayer's Feint"
+        },
+        {
+          "name": "Sling Flail",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sling Flail"
+        },
+        {
+          "name": "Smash",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Smash"
+        },
+        {
+          "name": "Snake Fang",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snake Fang"
+        },
+        {
+          "name": "Snake Sidewind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snake Sidewind"
+        },
+        {
+          "name": "Snake Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snake Style"
+        },
+        {
+          "name": "Snap Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snap Shot"
+        },
+        {
+          "name": "Snapping Turtle Clutch",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snapping Turtle Clutch"
+        },
+        {
+          "name": "Snapping Turtle Shell",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snapping Turtle Shell"
+        },
+        {
+          "name": "Snapping Turtle Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Snapping Turtle Style"
+        },
+        {
+          "name": "Sorcerous Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sorcerous Strike"
+        },
+        {
+          "name": "Spinning Throw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Spinning Throw"
+        },
+        {
+          "name": "Spit Venom",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Spit Venom"
+        },
+        {
+          "name": "Stabbing Shot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Stabbing Shot"
+        },
+        {
+          "name": "Stage Combatant",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Stage Combatant"
+        },
+        {
+          "name": "Staggering Fist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Staggering Fist"
+        },
+        {
+          "name": "Step Up and Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Step Up and Strike"
+        },
+        {
+          "name": "Strangler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Strangler"
+        },
+        {
+          "name": "Stunning Assault",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Stunning Assault"
+        },
+        {
+          "name": "Stunning Pin",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Stunning Pin"
+        },
+        {
+          "name": "Sundering Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sundering Strike"
+        },
+        {
+          "name": "Surprise Follow-Through",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Surprise Follow-Through"
+        },
+        {
+          "name": "Surprise Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Surprise Strike"
+        },
+        {
+          "name": "Swap Places",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Swap Places"
+        },
+        {
+          "name": "Swift Aid",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Swift Aid"
+        },
+        {
+          "name": "Sword and Pistol",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Sword and Pistol"
+        },
+        {
+          "name": "Sympathetic Rage",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Sympathetic Rage"
+        },
+        {
+          "name": "Tail Terror",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Tail Terror"
+        },
+        {
+          "name": "Tandem Trip",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tandem Trip"
+        },
+        {
+          "name": "Tangle Feet",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Tangle Feet"
+        },
+        {
+          "name": "Target of Opportunity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Target of Opportunity"
+        },
+        {
+          "name": "Taskmaster",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Taskmaster"
+        },
+        {
+          "name": "Team Up",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Team Up"
+        },
+        {
+          "name": "Teleport Tactician",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Teleport Tactician"
+        },
+        {
+          "name": "Terrorizing Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Terrorizing Display"
+        },
+        {
+          "name": "Tiger Claws",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tiger Claws"
+        },
+        {
+          "name": "Tiger Pounce",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tiger Pounce"
+        },
+        {
+          "name": "Tiger Style",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tiger Style"
+        },
+        {
+          "name": "Touch of Serenity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Touch of Serenity"
+        },
+        {
+          "name": "Tree Hanger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Tree Hanger"
+        },
+        {
+          "name": "Trick Riding",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Trick Riding"
+        },
+        {
+          "name": "Tripping Staff",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tripping Staff"
+        },
+        {
+          "name": "Tripping Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tripping Strike"
+        },
+        {
+          "name": "Tripping Twirl",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Tripping Twirl"
+        },
+        {
+          "name": "Twin Thunders",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Twin Thunders"
+        },
+        {
+          "name": "Twin Thunders Flurry",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Twin Thunders Flurry"
+        },
+        {
+          "name": "Twin Thunders Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Twin Thunders Master"
+        },
+        {
+          "name": "Twinned Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Twinned Feint"
+        },
+        {
+          "name": "Two-Handed Thrower",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Two-Handed Thrower"
+        },
+        {
+          "name": "Two-Weapon Feint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Two-Weapon Feint"
+        },
+        {
+          "name": "Uncanny Defense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Uncanny Defense"
+        },
+        {
+          "name": "Under and Over",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Under and Over"
+        },
+        {
+          "name": "Underfoot",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Underfoot"
+        },
+        {
+          "name": "Undersized Mount",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Undersized Mount"
+        },
+        {
+          "name": "Vast Hatred",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "unclassified",
+          "display_name": "Vast Hatred"
+        },
+        {
+          "name": "Vicious Stomp",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Vicious Stomp"
+        },
+        {
+          "name": "Wave Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Wave Strike"
+        },
+        {
+          "name": "Weapon of the Chosen",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Weapon of the Chosen"
+        },
+        {
+          "name": "Whip Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Whip Mastery"
+        },
+        {
+          "name": "Winter's Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Winter's Strike"
+        },
+        {
+          "name": "Wounded Paw Gambit",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Combat Trick",
+          "standing": "origin",
+          "display_name": "Wounded Paw Gambit"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 3,
       "partial": 1,
-      "not_started": 322,
-      "denominator": 326,
+      "not_started": 346,
+      "denominator": 350,
       "pct": 0.9,
-      "excluded_from_percentage": 251,
+      "excluded_from_percentage": 254,
       "standing_breakdown": {
-        "origin": 326,
-        "unclassified": 251
+        "origin": 350,
+        "unclassified": 254
       },
       "items": [
         {
@@ -99,6 +2670,62 @@
           "type_facet": "ABP Mental Prowess",
           "standing": "origin",
           "display_name": "+2 Wisdom"
+        },
+        {
+          "name": "ABP_AC_Deflection",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_AC_Deflection"
+        },
+        {
+          "name": "ABP_AC_Natural_Armor",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_AC_Natural_Armor"
+        },
+        {
+          "name": "ABP_Armor",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_Armor"
+        },
+        {
+          "name": "ABP_Legendary",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_Legendary"
+        },
+        {
+          "name": "ABP_Mental",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_Mental"
+        },
+        {
+          "name": "ABP_Physical",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_Physical"
+        },
+        {
+          "name": "ABP_Save",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_Save"
+        },
+        {
+          "name": "ABP_Weapon",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "ABP_Weapon"
         },
         {
           "name": "AC Bonus",
@@ -211,6 +2838,13 @@
           "type_facet": "Variant Multiclass Fighter.SpecialQuality",
           "standing": "origin",
           "display_name": "Armor Training 2"
+        },
+        {
+          "name": "Artistry is a Class Skill",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Artistry is a Class Skill"
         },
         {
           "name": "Aspect",
@@ -414,6 +3048,13 @@
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Certainty (SpecialQuality.Extraordinary)"
+        },
+        {
+          "name": "Class Skills ~ Unchained Monk",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Class Skills ~ Unchained Monk"
         },
         {
           "name": "Clear Mind",
@@ -1200,6 +3841,13 @@
           "display_name": "Combat Trick / Wind Stance"
         },
         {
+          "name": "Combat Trick Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Combat Trick Tracker"
+        },
+        {
           "name": "Craft",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Certainty",
@@ -1291,6 +3939,13 @@
           "display_name": "Debilitating Injury"
         },
         {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
           "name": "Defensive Roll",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.Unchained Rogue Advanced Talent",
@@ -1315,7 +3970,7 @@
           "name": "Deflection",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Defensive.Automatic Bonus Progression.Applied Bonus",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Deflection"
         },
         {
@@ -1688,6 +4343,13 @@
           "type_facet": "UnchainedMonkBonusFeat",
           "standing": "unclassified",
           "display_name": "Gorgon's Fist"
+        },
+        {
+          "name": "Grant Standard Unchained Rage Benefits",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Grant Standard Unchained Rage Benefits"
         },
         {
           "name": "Greater Aspect",
@@ -2668,6 +5330,97 @@
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Roused Anger"
+        },
+        {
+          "name": "Rule - Multiclass Variant",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Multiclass Variant"
+        },
+        {
+          "name": "Rule - Use Automatic Bonus Progression",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Automatic Bonus Progression"
+        },
+        {
+          "name": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Automatic Bonus Progression ~ Magic Items Removed"
+        },
+        {
+          "name": "Rule - Use Background Skills",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Background Skills"
+        },
+        {
+          "name": "Rule - Use Combat Trick System",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Combat Trick System"
+        },
+        {
+          "name": "Rule - Use Consolidated Skills",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Consolidated Skills"
+        },
+        {
+          "name": "Rule - Use Fractional BAB",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Fractional BAB"
+        },
+        {
+          "name": "Rule - Use Fractional Saves",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Fractional Saves"
+        },
+        {
+          "name": "Rule - Use Skill Rule ~ Artistry",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Skill Rule ~ Artistry"
+        },
+        {
+          "name": "Rule - Use Skill Rule ~ Disable Signature Skill Feat",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Skill Rule ~ Disable Signature Skill Feat"
+        },
+        {
+          "name": "Rule - Use Skill Rule ~ Everyone gets free access to skill Unlocks",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Skill Rule ~ Everyone gets free access to skill Unlocks"
+        },
+        {
+          "name": "Rule - Use Unchained Skills",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Use Unchained Skills"
+        },
+        {
+          "name": "Rule - Wound Threshold",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Wound Threshold"
         },
         {
           "name": "Scent",
@@ -3688,7 +6441,7 @@
           "name": "Summon Monster I",
           "doneness": "not-started",
           "type_facet": "Unchained Summoner Class Feature.SpecialQuality.SpellLike.Summon Monster.Summon Monster SLA",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Summon Monster I"
         },
         {
@@ -3872,6 +6625,13 @@
           "type_facet": "Barbarian Class Selection.AltBarbarianChoice",
           "standing": "origin",
           "display_name": "Unchained Barbarian"
+        },
+        {
+          "name": "Unchained Barbarian Core Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Unchained Barbarian Core Class Skills"
         },
         {
           "name": "Unchained Barbarian ~ Uncanny Dodge Tracker",
@@ -4453,56 +7213,56 @@
       "items": [
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AgathionLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.AgathionLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AngelLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.AngelLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ArchonLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.ArchonLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AzataLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.AzataLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DaemonLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.DaemonLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DemonLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.DemonLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DevilLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.DevilLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DivLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.DivLVL1)"
@@ -4516,245 +7276,245 @@
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.InevitableLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.InevitableLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ProteanLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.ProteanLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PsychopompLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1 (SpecialQuality.PsychopompLVL1)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AgathionLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.AgathionLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AngelLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.AngelLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.ArchonLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.ArchonLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AzataLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.AzataLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DaemonLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DaemonLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DemonLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DemonLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DevilLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DevilLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DivLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DivLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ElementalLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.ElementalLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.InevitableLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.InevitableLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.ProteanLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.ProteanLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.PsychopompLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.PsychopompLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AgathionLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.AgathionLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AngelLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.AngelLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.ArchonLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.ArchonLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AzataLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.AzataLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DaemonLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.DaemonLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DemonLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.DemonLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DevilLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.DevilLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DivLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.DivLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ElementalLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.ElementalLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.InevitableLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.InevitableLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.ProteanLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.ProteanLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PsychopompLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16 (SpecialQuality.PsychopompLVL16)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AgathionLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.AgathionLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AngelLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.AngelLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ArchonLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.ArchonLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AzataLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.AzataLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DaemonLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.DaemonLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DemonLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.DemonLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DevilLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.DevilLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DivLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.DivLVL20)"
@@ -4768,161 +7528,161 @@
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.InevitableLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.InevitableLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ProteanLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.ProteanLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.PsychopompLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.PsychopompLVL20)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AgathionLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.AgathionLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AngelLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.AngelLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ArchonLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.ArchonLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.AzataLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.AzataLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DaemonLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.DaemonLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DemonLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.DemonLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DevilLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.DevilLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.DivLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.DivLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ElementalLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.ElementalLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.InevitableLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.InevitableLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.ProteanLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.ProteanLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.PsychopompLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4 (SpecialQuality.PsychopompLVL4)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AgathionLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.AgathionLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AngelLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.AngelLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ArchonLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.ArchonLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AzataLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.AzataLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DaemonLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.DaemonLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DemonLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.DemonLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DevilLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.DevilLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DivLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.DivLVL8)"
@@ -4936,21 +7696,21 @@
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.InevitableLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.InevitableLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.ProteanLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.ProteanLVL8)"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PsychopompLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8 (SpecialQuality.PsychopompLVL8)"
@@ -4962,13 +7722,13 @@
       "label": "Race Traits",
       "done": 0,
       "partial": 0,
-      "not_started": 74,
-      "denominator": 74,
+      "not_started": 54,
+      "denominator": 54,
       "pct": 0.0,
-      "excluded_from_percentage": 53,
+      "excluded_from_percentage": 51,
       "standing_breakdown": {
-        "origin": 74,
-        "unclassified": 53
+        "origin": 54,
+        "unclassified": 51
       },
       "items": [
         {
@@ -4993,32 +7753,11 @@
           "display_name": "Agathion"
         },
         {
-          "name": "Agathion Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Agathion Base Form ~ Biped"
-        },
-        {
-          "name": "Agathion Base Form ~ Quadruped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Agathion Base Form ~ Quadruped"
-        },
-        {
           "name": "Angel",
           "doneness": "not-started",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Angel"
-        },
-        {
-          "name": "Angel Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Angel Base Form ~ Biped"
         },
         {
           "name": "Archon",
@@ -5028,32 +7767,11 @@
           "display_name": "Archon"
         },
         {
-          "name": "Archon Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Archon Base Form ~ Biped"
-        },
-        {
           "name": "Azata",
           "doneness": "not-started",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Azata"
-        },
-        {
-          "name": "Azata Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Azata Base Form ~ Biped"
-        },
-        {
-          "name": "Azata Base Form ~ Serpentine",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Azata Base Form ~ Serpentine"
         },
         {
           "name": "Biped",
@@ -5108,7 +7826,7 @@
           "name": "Breath Weapon",
           "doneness": "not-started",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Breath Weapon"
         },
         {
@@ -5175,27 +7893,6 @@
           "display_name": "Daemon"
         },
         {
-          "name": "Daemon Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Daemon Base Form ~ Biped"
-        },
-        {
-          "name": "Daemon Base Form ~ Quadruped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Daemon Base Form ~ Quadruped"
-        },
-        {
-          "name": "Daemon Base Form ~ Serpentine",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Daemon Base Form ~ Serpentine"
-        },
-        {
           "name": "Damage Reduction",
           "doneness": "not-started",
           "type_facet": "Unchained Evolution.SpecialQuality.Supernatural",
@@ -5217,39 +7914,11 @@
           "display_name": "Demon"
         },
         {
-          "name": "Demon Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Demon Base Form ~ Biped"
-        },
-        {
-          "name": "Demon Base Form ~ Quadruped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Demon Base Form ~ Quadruped"
-        },
-        {
-          "name": "Demon Base Form ~ Serpentine",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Demon Base Form ~ Serpentine"
-        },
-        {
           "name": "Devil",
           "doneness": "not-started",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Devil"
-        },
-        {
-          "name": "Devil Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Devil Base Form ~ Biped"
         },
         {
           "name": "Devotion",
@@ -5264,13 +7933,6 @@
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Div"
-        },
-        {
-          "name": "Div Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Div Base Form ~ Biped"
         },
         {
           "name": "Eidolon Ability Increase CHA +2",
@@ -5334,27 +7996,6 @@
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Elemental"
-        },
-        {
-          "name": "Elemental Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Elemental Base Form ~ Biped"
-        },
-        {
-          "name": "Elemental Base Form ~ Quadruped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Elemental Base Form ~ Quadruped"
-        },
-        {
-          "name": "Elemental Base Form ~ Serpentine",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Elemental Base Form ~ Serpentine"
         },
         {
           "name": "Energy Attacks",
@@ -5423,7 +8064,7 @@
           "name": "Grab",
           "doneness": "not-started",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Grab"
         },
         {
@@ -5467,13 +8108,6 @@
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Inevitable"
-        },
-        {
-          "name": "Inevitable Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Inevitable Base Form ~ Biped"
         },
         {
           "name": "Large",
@@ -5567,39 +8201,11 @@
           "display_name": "Protean"
         },
         {
-          "name": "Protean Base Form ~ Serpentine",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Protean Base Form ~ Serpentine"
-        },
-        {
           "name": "Psychopomp",
           "doneness": "not-started",
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "origin",
           "display_name": "Psychopomp"
-        },
-        {
-          "name": "Psychopomp Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Psychopomp Base Form ~ Biped"
-        },
-        {
-          "name": "Psychopomp Base Form ~ Quadruped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Psychopomp Base Form ~ Quadruped"
-        },
-        {
-          "name": "Psychopomp Base Form ~ Serpentine",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Psychopomp Base Form ~ Serpentine"
         },
         {
           "name": "Pull",
@@ -5859,6 +8465,288 @@
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Wing Buffet"
+        }
+      ]
+    },
+    {
+      "kind": "skill",
+      "label": "Skills",
+      "done": 0,
+      "partial": 0,
+      "not_started": 24,
+      "denominator": 24,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 24
+      },
+      "items": [
+        {
+          "name": "Artistry",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background",
+          "standing": "origin",
+          "display_name": "Artistry"
+        },
+        {
+          "name": "Athletics",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Athletics"
+        },
+        {
+          "name": "Finesse",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Finesse"
+        },
+        {
+          "name": "Influence",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Influence"
+        },
+        {
+          "name": "Lore (A particular small city)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (A particular small city)"
+        },
+        {
+          "name": "Lore (Bandits in a region)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Bandits in a region)"
+        },
+        {
+          "name": "Lore (Cats)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Cats)"
+        },
+        {
+          "name": "Lore (Dagon)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Dagon)"
+        },
+        {
+          "name": "Lore (Drow matriarchs)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Drow matriarchs)"
+        },
+        {
+          "name": "Lore (Dwarven history)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Dwarven history)"
+        },
+        {
+          "name": "Lore (Famous battles in a region)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Famous battles in a region)"
+        },
+        {
+          "name": "Lore (Frost giants)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Frost giants)"
+        },
+        {
+          "name": "Lore (Military commanders)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Military commanders)"
+        },
+        {
+          "name": "Lore (One district of a large city or metropolis)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (One district of a large city or metropolis)"
+        },
+        {
+          "name": "Lore (Phlegethon)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Phlegethon)"
+        },
+        {
+          "name": "Lore (Sarenrae)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Sarenrae)"
+        },
+        {
+          "name": "Lore (Taverns in a region)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (Taverns in a region)"
+        },
+        {
+          "name": "Lore (The spice trade)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (The spice trade)"
+        },
+        {
+          "name": "Lore (_______________________)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "Lore (_______________________)"
+        },
+        {
+          "name": "Nature",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Nature"
+        },
+        {
+          "name": "Performance",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Performance"
+        },
+        {
+          "name": "Religion",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Religion"
+        },
+        {
+          "name": "Society",
+          "doneness": "not-started",
+          "type_facet": "Consolidated Skills",
+          "standing": "origin",
+          "display_name": "Society"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Base.Background.Lore",
+          "standing": "origin",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 12,
+      "denominator": 12,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 12
+      },
+      "items": [
+        {
+          "name": "Legs 02",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 02"
+        },
+        {
+          "name": "Legs 04",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 04"
+        },
+        {
+          "name": "Legs 06",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 06"
+        },
+        {
+          "name": "Legs 08",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 08"
+        },
+        {
+          "name": "Legs 10",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 10"
+        },
+        {
+          "name": "Legs 12",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 12"
+        },
+        {
+          "name": "Legs 14",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 14"
+        },
+        {
+          "name": "Legs 16",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 16"
+        },
+        {
+          "name": "Legs 18",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 18"
+        },
+        {
+          "name": "Legs 20",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 20"
+        },
+        {
+          "name": "Legs 22",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Legs 22"
+        },
+        {
+          "name": "Monk ~ Unchained HD",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Monk ~ Unchained HD"
         }
       ]
     }

@@ -3,17 +3,894 @@
   "title": "Advanced Player's Guide",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 65,
+      "denominator": 65,
+      "pct": 0.0,
+      "excluded_from_percentage": 58,
+      "standing_breakdown": {
+        "origin": 65,
+        "unclassified": 58
+      },
+      "items": [
+        {
+          "name": "+1 Hero Point Current Value",
+          "doneness": "not-started",
+          "type_facet": "GM_Award.SpecialQuality",
+          "standing": "origin",
+          "display_name": "+1 Hero Point Current Value"
+        },
+        {
+          "name": "+1 Hero Point Maximum Value",
+          "doneness": "not-started",
+          "type_facet": "GM_Award.SpecialQuality",
+          "standing": "origin",
+          "display_name": "+1 Hero Point Maximum Value"
+        },
+        {
+          "name": "+1 Trait",
+          "doneness": "not-started",
+          "type_facet": "GM_Award.SpecialQuality",
+          "standing": "origin",
+          "display_name": "+1 Trait"
+        },
+        {
+          "name": "Acid Splash",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Acid Splash"
+        },
+        {
+          "name": "Add Witch Patron",
+          "doneness": "not-started",
+          "type_facet": "GM_Award.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Add Witch Patron"
+        },
+        {
+          "name": "Alchemist",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Alchemist"
+        },
+        {
+          "name": "Alchemist",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Alchemist #2"
+        },
+        {
+          "name": "Animal Companion (Beast Master Archetype)",
+          "doneness": "not-started",
+          "type_facet": "BoonCompanionSelection",
+          "standing": "origin",
+          "display_name": "Animal Companion (Beast Master Archetype)"
+        },
+        {
+          "name": "Animal Companion / II",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / II"
+        },
+        {
+          "name": "Animal Companion / III",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / III"
+        },
+        {
+          "name": "Animal Companion / IV",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / IV"
+        },
+        {
+          "name": "Animal Companion / IX",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / IX"
+        },
+        {
+          "name": "Animal Companion / Primary",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / Primary"
+        },
+        {
+          "name": "Animal Companion / V",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / V"
+        },
+        {
+          "name": "Animal Companion / VI",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / VI"
+        },
+        {
+          "name": "Animal Companion / VII",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / VII"
+        },
+        {
+          "name": "Animal Companion / VIII",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / VIII"
+        },
+        {
+          "name": "Animal Companion / X",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / X"
+        },
+        {
+          "name": "Animal Companion / XI",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XI"
+        },
+        {
+          "name": "Animal Companion / XII",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XII"
+        },
+        {
+          "name": "Animal Companion / XIII",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XIII"
+        },
+        {
+          "name": "Animal Companion / XIV",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XIV"
+        },
+        {
+          "name": "Animal Companion / XIX",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XIX"
+        },
+        {
+          "name": "Animal Companion / XV",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XV"
+        },
+        {
+          "name": "Animal Companion / XVI",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XVI"
+        },
+        {
+          "name": "Animal Companion / XVII",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XVII"
+        },
+        {
+          "name": "Animal Companion / XVIII",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XVIII"
+        },
+        {
+          "name": "Animal Companion / XX",
+          "doneness": "not-started",
+          "type_facet": "Select Beast Master Companion",
+          "standing": "origin",
+          "display_name": "Animal Companion / XX"
+        },
+        {
+          "name": "Antihero",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Antihero"
+        },
+        {
+          "name": "Antipaladin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Antipaladin"
+        },
+        {
+          "name": "Antipaladin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Antipaladin #2"
+        },
+        {
+          "name": "Arcane Mark",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Arcane Mark"
+        },
+        {
+          "name": "Arcanist",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Arcanist"
+        },
+        {
+          "name": "Aspect Combat Bonus ~ Furious Focus",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aspect Combat Bonus ~ Furious Focus"
+        },
+        {
+          "name": "Aspect Combat Bonus ~ Low Profile",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aspect Combat Bonus ~ Low Profile"
+        },
+        {
+          "name": "Bard",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bard"
+        },
+        {
+          "name": "Battle Herald",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Battle Herald"
+        },
+        {
+          "name": "Bleed",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Bleed"
+        },
+        {
+          "name": "Blessing of Courage and Life",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Blessing of Courage and Life"
+        },
+        {
+          "name": "Bloodrager",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodrager"
+        },
+        {
+          "name": "Brand",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Brand"
+        },
+        {
+          "name": "Cavalier",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Cavalier"
+        },
+        {
+          "name": "Cleric",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Cleric"
+        },
+        {
+          "name": "Cloak of Shade",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Cloak of Shade"
+        },
+        {
+          "name": "Corruption Resistance",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Corruption Resistance"
+        },
+        {
+          "name": "Dancing Lights",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Dancing Lights"
+        },
+        {
+          "name": "Daze",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Daze"
+        },
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
+          "name": "Detect Magic",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Detect Magic"
+        },
+        {
+          "name": "Detect Poison",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Detect Poison"
+        },
+        {
+          "name": "Disrupt Undead",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Disrupt Undead"
+        },
+        {
+          "name": "Dust of Twilight",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Dust of Twilight"
+        },
+        {
+          "name": "Favored Terrain (Cold)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Cold)"
+        },
+        {
+          "name": "Favored Terrain (Desert)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Desert)"
+        },
+        {
+          "name": "Favored Terrain (Forest)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Forest)"
+        },
+        {
+          "name": "Favored Terrain (Jungle)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Jungle)"
+        },
+        {
+          "name": "Favored Terrain (Mountain)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Mountain)"
+        },
+        {
+          "name": "Favored Terrain (Plains)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Plains)"
+        },
+        {
+          "name": "Favored Terrain (Plane)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Plane)"
+        },
+        {
+          "name": "Favored Terrain (Swamp)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Swamp)"
+        },
+        {
+          "name": "Favored Terrain (Underground)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Underground)"
+        },
+        {
+          "name": "Favored Terrain (Urban)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Urban)"
+        },
+        {
+          "name": "Favored Terrain (Water)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.FavoredTerrain",
+          "standing": "origin",
+          "display_name": "Favored Terrain (Water)"
+        },
+        {
+          "name": "Feat ~ Cosmopolitan",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Feat ~ Cosmopolitan"
+        },
+        {
+          "name": "Feather Step",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Feather Step"
+        },
+        {
+          "name": "Flare",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Flare"
+        },
+        {
+          "name": "Flare Burst",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Flare Burst"
+        },
+        {
+          "name": "Ghost Sound",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Ghost Sound"
+        },
+        {
+          "name": "Gifted Adept ~ Standard",
+          "doneness": "not-started",
+          "type_facet": "Gifted Adept",
+          "standing": "origin",
+          "display_name": "Gifted Adept ~ Standard"
+        },
+        {
+          "name": "Hero Points",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Hero Points"
+        },
+        {
+          "name": "Holy Vindicator",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Holy Vindicator"
+        },
+        {
+          "name": "Horizon Walker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Horizon Walker"
+        },
+        {
+          "name": "Hunter",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Hunter"
+        },
+        {
+          "name": "Hydraulic Push",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Hydraulic Push"
+        },
+        {
+          "name": "Ill Omen",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Ill Omen"
+        },
+        {
+          "name": "Innocence",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Innocence"
+        },
+        {
+          "name": "Inquisitor",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Inquisitor"
+        },
+        {
+          "name": "Inquisitor",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Inquisitor #2"
+        },
+        {
+          "name": "Investigator",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Investigator"
+        },
+        {
+          "name": "Light",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Light"
+        },
+        {
+          "name": "Mage Hand",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Mage Hand"
+        },
+        {
+          "name": "Magus",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Magus"
+        },
+        {
+          "name": "Master Chymist",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Master Chymist"
+        },
+        {
+          "name": "Master Spy",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Master Spy"
+        },
+        {
+          "name": "Memory Lapse",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Memory Lapse"
+        },
+        {
+          "name": "Mending",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Mending"
+        },
+        {
+          "name": "Message",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Message"
+        },
+        {
+          "name": "Nature Warden",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Nature Warden"
+        },
+        {
+          "name": "No Race Trait Available",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "No Race Trait Available"
+        },
+        {
+          "name": "Open/Close",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Open/Close"
+        },
+        {
+          "name": "Oracle",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Oracle"
+        },
+        {
+          "name": "Oracle",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Oracle #2"
+        },
+        {
+          "name": "Paladin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Paladin"
+        },
+        {
+          "name": "Prestidigitation",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Prestidigitation"
+        },
+        {
+          "name": "Putrefy Food and Drink",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Putrefy Food and Drink"
+        },
+        {
+          "name": "Racial Heritage Choice",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Heritage Choice"
+        },
+        {
+          "name": "Rage Prophet",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Rage Prophet"
+        },
+        {
+          "name": "Ranger",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Ranger"
+        },
+        {
+          "name": "Ray of Frost",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Ray of Frost"
+        },
+        {
+          "name": "Read Magic",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Read Magic"
+        },
+        {
+          "name": "Resistance",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Resistance"
+        },
+        {
+          "name": "Rule - Bypass Eidolon HD Cap",
+          "doneness": "not-started",
+          "type_facet": "Rule.Rules.OptionalRules",
+          "standing": "origin",
+          "display_name": "Rule - Bypass Eidolon HD Cap"
+        },
+        {
+          "name": "SPELL ~ Aspect of the Falcon",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "SPELL ~ Aspect of the Falcon"
+        },
+        {
+          "name": "Shaman",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Shaman"
+        },
+        {
+          "name": "Sift",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "unclassified",
+          "display_name": "Sift"
+        },
+        {
+          "name": "Skald",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Skald"
+        },
+        {
+          "name": "Sorcerer",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Sorcerer"
+        },
+        {
+          "name": "Spark",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Spark (ArcaneTalentSelection)"
+        },
+        {
+          "name": "Spark",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "unclassified",
+          "display_name": "Spark (Innate Spell-Like Ability)"
+        },
+        {
+          "name": "Special Ability ~ Dueling ~ Melee",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Special Ability ~ Dueling ~ Melee"
+        },
+        {
+          "name": "Spindle of Perfect Knowledge",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Spindle of Perfect Knowledge"
+        },
+        {
+          "name": "Stalwart Defender",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Stalwart Defender"
+        },
+        {
+          "name": "Summoner",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Summoner"
+        },
+        {
+          "name": "Touch of Fatigue",
+          "doneness": "not-started",
+          "type_facet": "ArcaneTalentSelection",
+          "standing": "unclassified",
+          "display_name": "Touch of Fatigue"
+        },
+        {
+          "name": "Unwitting Ally",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Unwitting Ally"
+        },
+        {
+          "name": "Use Hero Points",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Use Hero Points"
+        },
+        {
+          "name": "Wake of Light",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Wake of Light"
+        },
+        {
+          "name": "Wandering Star Motes",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Wandering Star Motes"
+        },
+        {
+          "name": "Warpriest",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Warpriest"
+        },
+        {
+          "name": "Weapon of Awe",
+          "doneness": "not-started",
+          "type_facet": "Innate Spell-Like Ability",
+          "standing": "origin",
+          "display_name": "Weapon of Awe"
+        },
+        {
+          "name": "Witch",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Witch"
+        },
+        {
+          "name": "Witch",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Witch #2"
+        },
+        {
+          "name": "Wizard",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Wizard"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 38,
+      "done": 40,
       "partial": 2,
-      "not_started": 1200,
-      "denominator": 1240,
-      "pct": 3.1,
-      "excluded_from_percentage": 805,
+      "not_started": 1411,
+      "denominator": 1453,
+      "pct": 2.8,
+      "excluded_from_percentage": 881,
       "standing_breakdown": {
-        "unclassified": 805,
-        "origin": 1240
+        "unclassified": 881,
+        "origin": 1453
       },
       "items": [
         {
@@ -45,6 +922,13 @@
           "display_name": "Aberration"
         },
         {
+          "name": "Accelerate Poison",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Accelerate Poison"
+        },
+        {
           "name": "Accuracy",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RogueClassFeatures.SpecialAttack.Extraordinary",
@@ -64,6 +948,20 @@
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Acid Cloud"
+        },
+        {
+          "name": "Acid Dart",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Acid Dart"
+        },
+        {
+          "name": "Acid Pit",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Acid Pit"
         },
         {
           "name": "Acid Resistance 10",
@@ -125,14 +1023,14 @@
           "name": "Adoration",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Adoration (SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Adoration",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Adoration (SpecialQuality.Supernatural.DomainPower) #2"
         },
         {
@@ -155,6 +1053,13 @@
           "type_facet": "InquisitorDomain",
           "standing": "origin",
           "display_name": "Agathion Subdomain (InquisitorDomain)"
+        },
+        {
+          "name": "Agile Feet",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Agile Feet"
         },
         {
           "name": "Agility",
@@ -239,6 +1144,13 @@
           "type_facet": "CavalierClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Alignment Selection"
+        },
+        {
+          "name": "Alter Winds",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Alter Winds"
         },
         {
           "name": "Amphibious",
@@ -500,6 +1412,13 @@
           "display_name": "Another Day"
         },
         {
+          "name": "Ant Haul",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Ant Haul"
+        },
+        {
           "name": "Antipaladin",
           "doneness": "not-started",
           "type_facet": "FavoredClass",
@@ -563,6 +1482,13 @@
           "display_name": "Aquatic Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Aquatic Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aquatic Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Aquatic Druid",
           "doneness": "not-started",
           "type_facet": "Archetype.DruidArchetype.DruidWoodlandStride.DruidTracklessStep.DruidNaturesLure.DruidVenomImmunity.DruidThousandFaces.DruidWildShape",
@@ -577,6 +1503,20 @@
           "display_name": "Aquatic Telepathy"
         },
         {
+          "name": "Aqueous Orb",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Aqueous Orb (MagusSpellblend.MagusSpellBlendLVL3)"
+        },
+        {
+          "name": "Aqueous Orb",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Aqueous Orb (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
           "name": "Arcane Archivist",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.LoreRevelation.Supernatural.PerDayOracleRevelation",
@@ -589,6 +1529,13 @@
           "type_facet": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardJackOfAllTrades",
           "standing": "origin",
           "display_name": "Arcane Armor"
+        },
+        {
+          "name": "Arcane Armor (Heavy)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcane Armor (Heavy)"
         },
         {
           "name": "Arcane Beacon",
@@ -794,6 +1741,13 @@
           "display_name": "Archetype Cavalier"
         },
         {
+          "name": "Archetype Display",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Archetype Display"
+        },
+        {
           "name": "Archetype Inquisitor",
           "doneness": "not-started",
           "type_facet": "InquisitorArchetype",
@@ -892,6 +1846,13 @@
           "display_name": "Armored Charger"
         },
         {
+          "name": "Arrow Eruption",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Arrow Eruption"
+        },
+        {
           "name": "Art of Deception",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
@@ -904,6 +1865,13 @@
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Artifice"
+        },
+        {
+          "name": "Artificer's Touch",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Artificer's Touch"
         },
         {
           "name": "Ash Subdomain",
@@ -1047,7 +2015,7 @@
         },
         {
           "name": "Aura of Cowardice",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Cowardice"
@@ -1075,7 +2043,7 @@
         },
         {
           "name": "Aura of Despair",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Aura of Despair"
@@ -1166,14 +2134,14 @@
         },
         {
           "name": "Aura of Sin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Sin"
         },
         {
           "name": "Aura of Vengeance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Vengeance"
@@ -1247,6 +2215,13 @@
           "type_facet": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorTraining2",
           "standing": "origin",
           "display_name": "Backswing"
+        },
+        {
+          "name": "Ball Lightning",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Ball Lightning"
         },
         {
           "name": "Bane",
@@ -1389,6 +2364,20 @@
           "display_name": "Battle Mysteries"
         },
         {
+          "name": "Battle Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Battle Mysteries Class Skills"
+        },
+        {
+          "name": "Battle Rage",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Battle Rage"
+        },
+        {
           "name": "Battle Scavenger",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary",
@@ -1457,6 +2446,13 @@
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Beast Totem"
+        },
+        {
+          "name": "Beast Totem ~ Claws",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Beast Totem ~ Claws"
         },
         {
           "name": "Beast Totem, Greater",
@@ -1683,6 +2679,13 @@
           "display_name": "Binding Ties (SpecialQuality.Supernatural.DomainPower) #2"
         },
         {
+          "name": "Bit of Luck",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Bit of Luck"
+        },
+        {
           "name": "Black",
           "doneness": "not-started",
           "type_facet": null,
@@ -1695,6 +2698,20 @@
           "type_facet": "ClassFeatures.BardClassFeatures.SpecialQuality.Supernatural.BardSuggestion",
           "standing": "origin",
           "display_name": "Bladethirst"
+        },
+        {
+          "name": "Blast Rune",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Blast Rune"
+        },
+        {
+          "name": "Bleeding Touch",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Bleeding Touch"
         },
         {
           "name": "Bleeding Wounds",
@@ -1711,10 +2728,17 @@
           "display_name": "Blend In"
         },
         {
+          "name": "Blessing of Fervor",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Blessing of Fervor"
+        },
+        {
           "name": "Blight",
           "doneness": "not-started",
           "type_facet": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Blight"
         },
         {
@@ -1786,6 +2810,13 @@
           "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.WavesRevelation.Supernatural.PerDayOracleRevelation",
           "standing": "origin",
           "display_name": "Blizzard (OracleClassFeatures.SpecialAttack.OracleRevelation.WavesRevelation.Supernatural.PerDayOracleRevelation)"
+        },
+        {
+          "name": "Blood Biography",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Blood Biography"
         },
         {
           "name": "Blood Subdomain",
@@ -1949,6 +2980,13 @@
           "display_name": "Bloodline Powers (Class Feature.Sorcerer Class Feature) #10"
         },
         {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
+        },
+        {
           "name": "Bloodrain",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
@@ -2038,6 +3076,27 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Bone Mysteries"
+        },
+        {
+          "name": "Bone Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bone Mysteries Class Skills"
+        },
+        {
+          "name": "Bonus Bomb Damage Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Bomb Damage Tracker"
+        },
+        {
+          "name": "Bonus Bomb Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Bomb Tracker"
         },
         {
           "name": "Bonus Feat",
@@ -2131,6 +3190,13 @@
           "display_name": "Boreal Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Boreal Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Boreal Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Braggart",
           "doneness": "not-started",
           "type_facet": "CavalierClassFeatures.SpecialQuality.Extraordinary",
@@ -2178,6 +3244,13 @@
           "type_facet": "Class Feature.Sorcerer Class Feature.Starsoul Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Breaching the Gulf"
+        },
+        {
+          "name": "Break",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Break"
         },
         {
           "name": "Breaker",
@@ -2250,6 +3323,13 @@
           "display_name": "Burly"
         },
         {
+          "name": "Burning Gaze",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Burning Gaze"
+        },
+        {
           "name": "Burning Magic",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.RevelationTargetOneOnly",
@@ -2264,6 +3344,13 @@
           "display_name": "By My Honor"
         },
         {
+          "name": "CMB",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "CMB"
+        },
+        {
           "name": "Cackle",
           "doneness": "not-started",
           "type_facet": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex",
@@ -2271,11 +3358,25 @@
           "display_name": "Cackle"
         },
         {
+          "name": "Calcific Touch",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Calcific Touch"
+        },
+        {
           "name": "Call Celestial Ally",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.PaladinClassFeatures.SpecialQuality.SpellLike.PaladinAuraOfResolve",
           "standing": "origin",
           "display_name": "Call Celestial Ally"
+        },
+        {
+          "name": "Call Lightning Storm (Starsoul)",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Call Lightning Storm (Starsoul)"
         },
         {
           "name": "Call the Storm",
@@ -2292,11 +3393,25 @@
           "display_name": "Calling"
         },
         {
+          "name": "Calming Touch",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Calming Touch"
+        },
+        {
           "name": "Camouflage",
           "doneness": "done",
           "type_facet": "RogueTalent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Camouflage"
+        },
+        {
+          "name": "Campfire Wall",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Campfire Wall"
         },
         {
           "name": "Canny Charger",
@@ -2460,6 +3575,13 @@
           "display_name": "Chaos"
         },
         {
+          "name": "Chaos Blade",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Chaos Blade"
+        },
+        {
           "name": "Chaos Totem",
           "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
@@ -2523,11 +3645,60 @@
           "display_name": "Cinder Dance"
         },
         {
+          "name": "Clashing Rocks",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Clashing Rocks (MagusSpellblend.MagusSpellBlendLVL9)"
+        },
+        {
+          "name": "Clashing Rocks",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Clashing Rocks (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Class Skills"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Class Skills #2"
+        },
+        {
           "name": "Class Skills",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.RangerClassSkills",
           "standing": "unclassified",
-          "display_name": "Class Skills"
+          "display_name": "Class Skills (ClassFeatures.RangerClassFeatures.SpecialQuality.RangerClassSkills)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Class Skills #4"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Class Skills #5"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Class Skills #6"
         },
         {
           "name": "Claws of the Beast",
@@ -2556,6 +3727,20 @@
           "type_facet": "ClassFeatures.RangerClassFeatures.AdaptationSelection",
           "standing": "origin",
           "display_name": "Climb 15 Ft."
+        },
+        {
+          "name": "Cloak of Dreams",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "unclassified",
+          "display_name": "Cloak of Dreams"
+        },
+        {
+          "name": "Cloak of Winds",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "unclassified",
+          "display_name": "Cloak of Winds"
         },
         {
           "name": "Clobbering Strike",
@@ -2789,6 +3974,13 @@
           "display_name": "Companion Walk"
         },
         {
+          "name": "Companion ~ Cavalier Mount",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Companion ~ Cavalier Mount"
+        },
+        {
           "name": "Complex Commands",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
@@ -2838,6 +4030,13 @@
           "display_name": "Construct Subdomain (InquisitorDomain)"
         },
         {
+          "name": "Contagious Flame",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Contagious Flame"
+        },
+        {
           "name": "Controller School",
           "doneness": "not-started",
           "type_facet": "Focused Arcane School.WizardEnchantment.WizardEnchantingSmile.WizardAuraOfDespair",
@@ -2850,6 +4049,503 @@
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Copper"
+        },
+        {
+          "name": "Copycat",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Copycat"
+        },
+        {
+          "name": "Core Domain ~ Agathion Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Agathion Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Ancestors Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Ancestors Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Arcane Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Arcane Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Archon Subdomain (Good)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Archon Subdomain (Good)"
+        },
+        {
+          "name": "Core Domain ~ Archon Subdomain (Law)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Archon Subdomain (Law)"
+        },
+        {
+          "name": "Core Domain ~ Ash Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Ash Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Azata Subdomain (Chaos)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Azata Subdomain (Chaos)"
+        },
+        {
+          "name": "Core Domain ~ Azata Subdomain (Good)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Azata Subdomain (Good)"
+        },
+        {
+          "name": "Core Domain ~ Blood Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Blood Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Catastrophe Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Catastrophe Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Caves Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Caves Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Cloud Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Cloud Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Construct Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Construct Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Curse Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Curse Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Daemon Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Daemon Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Day Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Day Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Decay Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Decay Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Deception Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Deception Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Defense Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Defense Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Demon Subdomain (Chaos)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Demon Subdomain (Chaos)"
+        },
+        {
+          "name": "Core Domain ~ Demon Subdomain (Evil)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Demon Subdomain (Evil)"
+        },
+        {
+          "name": "Core Domain ~ Devil Subdomain (Evil)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Devil Subdomain (Evil)"
+        },
+        {
+          "name": "Core Domain ~ Devil Subdomain (Law)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Devil Subdomain (Law)"
+        },
+        {
+          "name": "Core Domain ~ Divine Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Divine Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Exploration Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Exploration Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Family Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Family Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Fate Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Fate Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Feather Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Feather Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Ferocity Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Ferocity Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Freedom Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Freedom Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Fur Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Fur Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Growth Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Growth Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Heroism Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Heroism Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Home Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Home Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Honor Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Honor Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Ice Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Ice Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Inevitable Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Inevitable Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Insanity Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Insanity Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Language Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Language Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Leadership Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Leadership Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Light Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Light Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Loss Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Loss Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Love Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Love Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Lust Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Lust Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Martyr Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Martyr Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Memory Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Memory Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Metal Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Metal Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Murder Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Murder Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Night Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Night Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Nightmare Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Nightmare Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Oceans Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Oceans Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Protean Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Protean Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Purity Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Purity Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Rage Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Rage Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Resolve Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Resolve Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Restoration Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Restoration Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Resurrection Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Resurrection Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Revolution Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Revolution Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Seasons Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Seasons Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Smoke Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Smoke Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Souls Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Souls Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Storms Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Storms Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Tactics Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Tactics Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Thievery Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Thievery Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Thought Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Thought Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Toil Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Toil Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Trade Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Trade Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Undead Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Undead Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Wards Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Wards Subdomain"
+        },
+        {
+          "name": "Core Domain ~ Wind Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Core Domain ~ Wind Subdomain"
         },
         {
           "name": "Counterspell Mastery",
@@ -2880,11 +4576,46 @@
           "display_name": "Coven"
         },
         {
+          "name": "Crafter's Curse",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Crafter's Curse"
+        },
+        {
+          "name": "Crafter's Fortune",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Crafter's Fortune"
+        },
+        {
           "name": "Create Gear",
           "doneness": "not-started",
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Create Gear"
+        },
+        {
+          "name": "Create Pit",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Create Pit (MagusSpellblend.MagusSpellBlendLVL2)"
+        },
+        {
+          "name": "Create Pit",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Create Pit (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Create Treasure Map",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Create Treasure Map"
         },
         {
           "name": "Creation School",
@@ -3048,6 +4779,20 @@
           "display_name": "Dancing Flame"
         },
         {
+          "name": "Dancing Lantern",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Dancing Lantern"
+        },
+        {
+          "name": "Dancing Weapons",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Dancing Weapons"
+        },
+        {
           "name": "Daring",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RogueClassFeatures.SpecialQuality.Extraordinary",
@@ -3116,6 +4861,13 @@
           "type_facet": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Cruelty.LayOnHands",
           "standing": "unclassified",
           "display_name": "Dazed"
+        },
+        {
+          "name": "Dazing Touch",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Dazing Touch"
         },
         {
           "name": "Deadly Aim",
@@ -3300,11 +5052,25 @@
           "display_name": "Deep Earth Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Deep Earth Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep Earth Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Deep One",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Aquatic Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary",
           "standing": "origin",
           "display_name": "Deep One"
+        },
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
         },
         {
           "name": "Defense Subdomain",
@@ -3361,6 +5127,13 @@
           "type_facet": "ZenArcher.ZenArcherFeat",
           "standing": "unclassified",
           "display_name": "Deflect Arrows"
+        },
+        {
+          "name": "Deflection",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "unclassified",
+          "display_name": "Deflection"
         },
         {
           "name": "Deflection Aura",
@@ -3517,6 +5290,13 @@
           "display_name": "Destructive"
         },
         {
+          "name": "Destructive Smite",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Destructive Smite"
+        },
+        {
           "name": "Detect Alignment",
           "doneness": "not-started",
           "type_facet": "InquisitorClassFeatures.SpecialQuality.SpellLike",
@@ -3536,6 +5316,13 @@
           "type_facet": "Archetype.BardArchetype.BardInspireCourage.BardInspireGreatness.BardInspireHeroics.BardBardicKnowledge.BardWellVersed.BardVersatilePerformance",
           "standing": "origin",
           "display_name": "Detective"
+        },
+        {
+          "name": "Detonate",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Detonate"
         },
         {
           "name": "Devastating Blow",
@@ -3571,6 +5358,13 @@
           "type_facet": "InquisitorDomain",
           "standing": "origin",
           "display_name": "Devil Subdomain (Law) (InquisitorDomain)"
+        },
+        {
+          "name": "Devolution",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "unclassified",
+          "display_name": "Devolution"
         },
         {
           "name": "Dilution",
@@ -3627,6 +5421,13 @@
           "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery",
           "standing": "origin",
           "display_name": "Dispelling Bomb"
+        },
+        {
+          "name": "Dispelling Touch",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Dispelling Touch"
         },
         {
           "name": "Disruption",
@@ -3776,11 +5577,32 @@
           "display_name": "Draconic Mutagen"
         },
         {
+          "name": "Draconic Reservoir",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Draconic Reservoir"
+        },
+        {
           "name": "Dragon",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.AdaptationCreature.Darkvision.GreatFortitude.IronWill.LightningReflexes.LowLightVision.Lunge",
           "standing": "unclassified",
           "display_name": "Dragon"
+        },
+        {
+          "name": "Dragon's Breath",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "unclassified",
+          "display_name": "Dragon's Breath (MagusSpellblend.MagusSpellBlendLVL4)"
+        },
+        {
+          "name": "Dragon's Breath",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Dragon's Breath (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Dramatic Subtext",
@@ -3816,6 +5638,20 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Dreamspun Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Dreamspun Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dreamspun Bloodline ~ Feat Tracker"
+        },
+        {
+          "name": "Druid Companion",
+          "doneness": "not-started",
+          "type_facet": "Multiple Companions",
+          "standing": "unclassified",
+          "display_name": "Druid Companion"
         },
         {
           "name": "Druid Domain",
@@ -3937,6 +5773,13 @@
           "display_name": "Dunemeld"
         },
         {
+          "name": "Dust of Twilight",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Dust of Twilight"
+        },
+        {
           "name": "Dweller in Darkness",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.SpellLike.PerDayOracleRevelation",
@@ -4014,6 +5857,13 @@
           "display_name": "Easy March"
         },
         {
+          "name": "Ectoplasmic Spell",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Ectoplasmic Spell"
+        },
+        {
           "name": "Edicts",
           "doneness": "not-started",
           "type_facet": "SpecialQuality",
@@ -4077,6 +5927,20 @@
           "display_name": "Eldritch Claws"
         },
         {
+          "name": "Elemental Aura",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Elemental Aura"
+        },
+        {
+          "name": "Elemental Aura (Cold Only)",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Elemental Aura (Cold Only)"
+        },
+        {
           "name": "Elemental Fist",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkStunningFist",
@@ -4124,6 +5988,20 @@
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Rage, Lesser"
+        },
+        {
+          "name": "Elemental Speech",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "unclassified",
+          "display_name": "Elemental Speech"
+        },
+        {
+          "name": "Elemental Touch",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Elemental Touch"
         },
         {
           "name": "Elements Patron",
@@ -4203,6 +6081,13 @@
           "display_name": "Enduring Rage"
         },
         {
+          "name": "Enemy Hammer",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Enemy Hammer"
+        },
+        {
           "name": "Energy Absorption",
           "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
@@ -4243,6 +6128,13 @@
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance, Greater"
+        },
+        {
+          "name": "Enforcer",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Enforcer"
         },
         {
           "name": "Enhance Potion",
@@ -4294,6 +6186,13 @@
           "display_name": "Entanglement of Blades**"
         },
         {
+          "name": "Enter Image",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Enter Image"
+        },
+        {
           "name": "Enveloping Darkness",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Shadow Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.SpellLike",
@@ -4327,6 +6226,13 @@
           "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistGrandDiscovery",
           "standing": "origin",
           "display_name": "Eternal Youth"
+        },
+        {
+          "name": "Euphoric Tranquility",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL8",
+          "standing": "origin",
+          "display_name": "Euphoric Tranquility"
         },
         {
           "name": "Evasion",
@@ -4392,6 +6298,20 @@
           "display_name": "Exotic Weapon Proficiency (dire flail)"
         },
         {
+          "name": "Expanded Arcana",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Expanded Arcana"
+        },
+        {
+          "name": "Expanded Choices",
+          "doneness": "not-started",
+          "type_facet": "CavalierMountSelection.CavalierMountAlternate",
+          "standing": "unclassified",
+          "display_name": "Expanded Choices"
+        },
+        {
           "name": "Expanded Repertoire",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardVersatilePerformance",
@@ -4404,6 +6324,27 @@
           "type_facet": "ClassFeatures.BardClassFeatures.ExpandedRepertoire.SpecialQuality",
           "standing": "origin",
           "display_name": "Expanded Repertoire Spells"
+        },
+        {
+          "name": "Expeditious Excavation",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Expeditious Excavation (MagusSpellblend.MagusSpellBlendLVL1)"
+        },
+        {
+          "name": "Expeditious Excavation",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Expeditious Excavation (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Expend",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Expend"
         },
         {
           "name": "Expert Acrobat",
@@ -4614,6 +6555,13 @@
           "type_facet": "RogueTalent.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Fast Getaway"
+        },
+        {
+          "name": "Fast Healer",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Fast Healer"
         },
         {
           "name": "Fast Healing",
@@ -4868,6 +6816,13 @@
           "display_name": "Fearless Defense"
         },
         {
+          "name": "Feast of Ashes",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Feast of Ashes"
+        },
+        {
           "name": "Feather Subdomain",
           "doneness": "not-started",
           "type_facet": "DruidDomainSelection.SpecialQuality",
@@ -5001,6 +6956,13 @@
           "display_name": "Fiendish Servant"
         },
         {
+          "name": "Fiery Body",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Fiery Body"
+        },
+        {
           "name": "Final Revelation",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.FinalRevelation",
@@ -5078,11 +7040,25 @@
           "display_name": "Fire"
         },
         {
+          "name": "Fire Bolt",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Fire Bolt"
+        },
+        {
           "name": "Fire Breath",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.PerDayOracleRevelation",
           "standing": "origin",
-          "display_name": "Fire Breath"
+          "display_name": "Fire Breath (OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.PerDayOracleRevelation)"
+        },
+        {
+          "name": "Fire Breath",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Fire Breath (MagusSpellblend.MagusSpellBlendLVL2)"
         },
         {
           "name": "Fire Jet",
@@ -5106,6 +7082,20 @@
           "display_name": "Fire School"
         },
         {
+          "name": "Fire Snake",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Fire Snake (MagusSpellblend.MagusSpellBlendLVL5)"
+        },
+        {
+          "name": "Fire Snake",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Fire Snake (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
           "name": "Fire Storm",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.PerDayOracleRevelation",
@@ -5120,6 +7110,27 @@
           "display_name": "Fire Supremacy"
         },
         {
+          "name": "Firebrand",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Firebrand (MagusSpellblend.MagusSpellBlendLVL7)"
+        },
+        {
+          "name": "Firebrand",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Firebrand (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Firefall",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Firefall"
+        },
+        {
           "name": "Firewater Breath",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkEmptyBody",
@@ -5132,6 +7143,20 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Flame Mysteries"
+        },
+        {
+          "name": "Flame Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Flame Mysteries Class Skills"
+        },
+        {
+          "name": "Flare Burst",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Flare Burst"
         },
         {
           "name": "Fleet Footed",
@@ -5160,6 +7185,20 @@
           "type_facet": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex",
           "standing": "unclassified",
           "display_name": "Flight"
+        },
+        {
+          "name": "Fluid Form",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "unclassified",
+          "display_name": "Fluid Form (MagusSpellblend.MagusSpellBlendLVL6)"
+        },
+        {
+          "name": "Fluid Form",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Fluid Form (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Fluid Nature",
@@ -5197,6 +7236,13 @@
           "display_name": "Flurry of Blows (ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary) #2"
         },
         {
+          "name": "Fly (Mass)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Fly (Mass)"
+        },
+        {
           "name": "Focused Arcane School",
           "doneness": "not-started",
           "type_facet": "Focused Arcane School",
@@ -5223,6 +7269,13 @@
           "type_facet": "ZenArcher.ZenArcherFeat",
           "standing": "unclassified",
           "display_name": "Focused Shot (ZenArcher.ZenArcherFeat)"
+        },
+        {
+          "name": "Focused Spell",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Focused Spell"
         },
         {
           "name": "Focused Trance",
@@ -5356,6 +7409,13 @@
           "type_facet": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex",
           "standing": "unclassified",
           "display_name": "Fortune"
+        },
+        {
+          "name": "Free Formula Book",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Free Formula Book"
         },
         {
           "name": "Free Hand Fighter",
@@ -5494,7 +7554,7 @@
           "name": "Gate",
           "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.SpellLike.Gate",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Gate"
         },
         {
@@ -5510,6 +7570,34 @@
           "type_facet": "Focused Arcane School.WizardEvocation.WizardIntenseSpells.WizardForceMissile",
           "standing": "unclassified",
           "display_name": "Generation School"
+        },
+        {
+          "name": "Gentle Rest",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Gentle Rest"
+        },
+        {
+          "name": "Getaway",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Getaway"
+        },
+        {
+          "name": "Geyser",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Geyser (MagusSpellblend.MagusSpellBlendLVL5)"
+        },
+        {
+          "name": "Geyser",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Geyser (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Gift of Life",
@@ -5538,6 +7626,13 @@
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Glib Lie"
+        },
+        {
+          "name": "Glide",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Glide"
         },
         {
           "name": "Glorious Epic",
@@ -5587,6 +7682,13 @@
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
           "display_name": "Good"
+        },
+        {
+          "name": "Good Fortune",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Good Fortune"
         },
         {
           "name": "Good for What Ails You",
@@ -5657,6 +7759,13 @@
           "type_facet": "Display",
           "standing": "unclassified",
           "display_name": "Grand Mutagen (Display)"
+        },
+        {
+          "name": "Gravity Bow",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Gravity Bow"
         },
         {
           "name": "Great Cleave",
@@ -5904,6 +8013,13 @@
           "display_name": "Guileful Polyglot (RogueTalent)"
         },
         {
+          "name": "HalfSwimSpeed",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "HalfSwimSpeed"
+        },
+        {
           "name": "Halfling Luck",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.AdaptationSelection",
@@ -5916,6 +8032,13 @@
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary.DefensiveStancePower",
           "standing": "origin",
           "display_name": "Halting Blow"
+        },
+        {
+          "name": "Hand of the Acolyte",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Hand of the Acolyte"
         },
         {
           "name": "Hard to Fool",
@@ -6009,6 +8132,13 @@
           "display_name": "Heavens Mysteries"
         },
         {
+          "name": "Heavens Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Heavens Mysteries Class Skills"
+        },
+        {
           "name": "Heel",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice",
@@ -6044,6 +8174,20 @@
           "display_name": "Heraldic Expertise"
         },
         {
+          "name": "Heroic Defiance",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Heroic Defiance"
+        },
+        {
+          "name": "Heroic Recovery",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Heroic Recovery"
+        },
+        {
           "name": "Heroism Subdomain",
           "doneness": "not-started",
           "type_facet": "DruidDomainSelection.SpecialQuality",
@@ -6077,6 +8221,13 @@
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice",
           "standing": "unclassified",
           "display_name": "Hobbling Attack"
+        },
+        {
+          "name": "Holy Lance",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Holy Lance"
         },
         {
           "name": "Home Subdomain",
@@ -6226,6 +8377,13 @@
           "display_name": "Hungry Ghost Monk"
         },
         {
+          "name": "Hungry Pit",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Hungry Pit"
+        },
+        {
           "name": "Hunter's Surprise",
           "doneness": "done",
           "type_facet": "RogueAdvancedTalent.Extraordinary.SpecialAttack.AttackOption",
@@ -6275,6 +8433,27 @@
           "display_name": "Hurling, Lesser"
         },
         {
+          "name": "Hydraulic Push",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "unclassified",
+          "display_name": "Hydraulic Push (MagusSpellblend.MagusSpellBlendLVL1)"
+        },
+        {
+          "name": "Hydraulic Push",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Hydraulic Push (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Hydraulic Torrent",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "unclassified",
+          "display_name": "Hydraulic Torrent"
+        },
+        {
           "name": "Ice Armor",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.WavesRevelation.Supernatural.HoursPerDayOracleRevelation",
@@ -6308,6 +8487,13 @@
           "type_facet": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Icewalking"
+        },
+        {
+          "name": "Icicle",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Icicle"
         },
         {
           "name": "Icy Skin",
@@ -6630,6 +8816,48 @@
           "type_facet": "ExpandedArcana.Inquisitor",
           "standing": "origin",
           "display_name": "Inquisitor Expanded Arcana 2x5"
+        },
+        {
+          "name": "Inquisitor Spell Level 0",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownInquisitor",
+          "standing": "origin",
+          "display_name": "Inquisitor Spell Level 0"
+        },
+        {
+          "name": "Inquisitor Spell Level 1",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownInquisitor",
+          "standing": "origin",
+          "display_name": "Inquisitor Spell Level 1"
+        },
+        {
+          "name": "Inquisitor Spell Level 2",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownInquisitor",
+          "standing": "origin",
+          "display_name": "Inquisitor Spell Level 2"
+        },
+        {
+          "name": "Inquisitor Spell Level 3",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownInquisitor",
+          "standing": "origin",
+          "display_name": "Inquisitor Spell Level 3"
+        },
+        {
+          "name": "Inquisitor Spell Level 4",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownInquisitor",
+          "standing": "origin",
+          "display_name": "Inquisitor Spell Level 4"
+        },
+        {
+          "name": "Inquisitor Spell Level 5",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownInquisitor",
+          "standing": "origin",
+          "display_name": "Inquisitor Spell Level 5"
         },
         {
           "name": "Inquisitor ~ Domains",
@@ -7269,6 +9497,13 @@
           "display_name": "Life Bond"
         },
         {
+          "name": "Life Bubble",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Life Bubble"
+        },
+        {
           "name": "Life Funnel",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkWholenessOfBody",
@@ -7302,6 +9537,13 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Life Mysteries"
+        },
+        {
+          "name": "Life Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Life Mysteries Class Skills"
         },
         {
           "name": "Life School",
@@ -7346,6 +9588,13 @@
           "display_name": "Lightfoot"
         },
         {
+          "name": "Lightning Arc",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Lightning Arc"
+        },
+        {
           "name": "Lightning Breath",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.WindRevelation.Supernatural.PerDayOracleRevelation",
@@ -7360,6 +9609,13 @@
           "display_name": "Lightning Flash"
         },
         {
+          "name": "Lightning Lord",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Lightning Lord"
+        },
+        {
           "name": "Lightning Reflexes",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.AdaptationSelection",
@@ -7372,6 +9628,20 @@
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Lingering Evocations"
+        },
+        {
+          "name": "Lingering Performance",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Lingering Performance"
+        },
+        {
+          "name": "Lingering Spell",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Lingering Spell"
         },
         {
           "name": "Lion Shaman",
@@ -7421,6 +9691,13 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Lore Mysteries"
+        },
+        {
+          "name": "Lore Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lore Mysteries Class Skills"
         },
         {
           "name": "Lorekeeper",
@@ -7864,6 +10141,13 @@
           "display_name": "Measure the Mark"
         },
         {
+          "name": "Memory Lapse",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Memory Lapse"
+        },
+        {
           "name": "Memory Subdomain",
           "doneness": "not-started",
           "type_facet": "DruidDomainSelection.SpecialQuality",
@@ -7932,6 +10216,13 @@
           "type_facet": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterWeaponTraining4",
           "standing": "origin",
           "display_name": "Meteor Shot"
+        },
+        {
+          "name": "Meteor Swarm (Dealing Cold Damage)",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Meteor Swarm (Dealing Cold Damage)"
         },
         {
           "name": "Miasma",
@@ -8121,6 +10412,13 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Supernatural.PerDayOracleRevelation",
           "standing": "origin",
           "display_name": "Moonlight Bridge"
+        },
+        {
+          "name": "Moonstruck",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Moonstruck"
         },
         {
           "name": "Mount",
@@ -8515,6 +10813,13 @@
           "display_name": "Nature Mysteries"
         },
         {
+          "name": "Nature Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Nature Mysteries Class Skills"
+        },
+        {
           "name": "Nature's Whispers",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.NatureRevelation.Extraordinary",
@@ -8823,6 +11128,69 @@
           "display_name": "Oracle Expanded Arcana 2x8"
         },
         {
+          "name": "Oracle Spell Level 0",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 0"
+        },
+        {
+          "name": "Oracle Spell Level 1",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 1"
+        },
+        {
+          "name": "Oracle Spell Level 2",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 2"
+        },
+        {
+          "name": "Oracle Spell Level 3",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 3"
+        },
+        {
+          "name": "Oracle Spell Level 4",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 4"
+        },
+        {
+          "name": "Oracle Spell Level 5",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 5"
+        },
+        {
+          "name": "Oracle Spell Level 6",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 6"
+        },
+        {
+          "name": "Oracle Spell Level 7",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 7"
+        },
+        {
+          "name": "Oracle Spell Level 8",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownOracle",
+          "standing": "origin",
+          "display_name": "Oracle Spell Level 8"
+        },
+        {
           "name": "Oracle of Bone Extra Channel",
           "doneness": "not-started",
           "type_facet": "ExtraChannel",
@@ -9012,6 +11380,27 @@
           "display_name": "Overhand Chop"
         },
         {
+          "name": "Pain Strike",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Pain Strike"
+        },
+        {
+          "name": "Pain Strike (Mass)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Pain Strike (Mass)"
+        },
+        {
+          "name": "Paladin Mount",
+          "doneness": "not-started",
+          "type_facet": "Multiple Companions",
+          "standing": "unclassified",
+          "display_name": "Paladin Mount"
+        },
+        {
           "name": "Paralyzed",
           "doneness": "not-started",
           "type_facet": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Cruelty.LayOnHands",
@@ -9117,6 +11506,20 @@
           "display_name": "Phantasm School"
         },
         {
+          "name": "Phantasmal Revenge",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Phantasmal Revenge"
+        },
+        {
+          "name": "Phantasmal Web",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Phantasmal Web"
+        },
+        {
           "name": "Philosopher's Stone",
           "doneness": "not-started",
           "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistGrandDiscovery",
@@ -9174,7 +11577,7 @@
         },
         {
           "name": "Plague Bringer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Plague Bringer"
@@ -9206,6 +11609,20 @@
           "type_facet": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary.DruidWoodlandStride",
           "standing": "origin",
           "display_name": "Plains Traveler"
+        },
+        {
+          "name": "Planar Adaptation",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Planar Adaptation"
+        },
+        {
+          "name": "Planar Adaptation (Mass)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Planar Adaptation (Mass)"
         },
         {
           "name": "Plant",
@@ -9458,6 +11875,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Protean Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Protean Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Protean Bloodline ~ Feat Tracker"
         },
         {
           "name": "Protean Resistances",
@@ -9747,11 +12171,25 @@
           "display_name": "Rallying Cry"
         },
         {
+          "name": "Rampart",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Rampart"
+        },
+        {
           "name": "Ranged Defense",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.FighterClassFeatures.SpecialQuality.Extraordinary.FighterArmorMastery",
           "standing": "origin",
           "display_name": "Ranged Defense"
+        },
+        {
+          "name": "Ranger Companion",
+          "doneness": "not-started",
+          "type_facet": "Multiple Companions",
+          "standing": "unclassified",
+          "display_name": "Ranger Companion"
         },
         {
           "name": "Ranger Favored Community",
@@ -9843,6 +12281,13 @@
           "type_facet": "Class Feature.Sorcerer Class Feature.Protean Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Reality Wrinkle"
+        },
+        {
+          "name": "Rebuke Death",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Rebuke Death"
         },
         {
           "name": "Recall",
@@ -9971,6 +12416,13 @@
           "display_name": "Resist Temptation"
         },
         {
+          "name": "Resistant Touch",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Resistant Touch"
+        },
+        {
           "name": "Resolute",
           "doneness": "not-started",
           "type_facet": "CavalierClassFeatures.SpecialQuality.Extraordinary",
@@ -10086,7 +12538,7 @@
           "name": "Ride the Lightning",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Stormborn Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialAttack.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Ride the Lightning"
         },
         {
@@ -10095,6 +12547,13 @@
           "type_facet": "RangerBonusFeat",
           "standing": "unclassified",
           "display_name": "Ride-By Attack"
+        },
+        {
+          "name": "River of Wind",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "River of Wind"
         },
         {
           "name": "Roaring Drunk",
@@ -10349,6 +12808,20 @@
           "display_name": "Scryer School"
         },
         {
+          "name": "Sculpt Corpse",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Sculpt Corpse"
+        },
+        {
+          "name": "Scythe of Evil",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Scythe of Evil"
+        },
+        {
           "name": "Sea Legs",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardWellVersed",
@@ -10375,6 +12848,20 @@
           "type_facet": "ClassFeatures.DruidClassFeatures.ArchetypeAquaticDruid.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Seaborn"
+        },
+        {
+          "name": "Seamantle",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL8",
+          "standing": "origin",
+          "display_name": "Seamantle (MagusSpellblend.MagusSpellBlendLVL8)"
+        },
+        {
+          "name": "Seamantle",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Seamantle (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Seasons Subdomain",
@@ -10410,6 +12897,13 @@
           "type_facet": "InquisitorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Second Judgment"
+        },
+        {
+          "name": "Seek Thoughts",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Seek Thoughts"
         },
         {
           "name": "Seize the Initiative",
@@ -10468,6 +12962,13 @@
           "display_name": "Serpentine Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Serpentine Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Serpentine Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Shaded Vision",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.DruidClassFeatures.ArchetypeDruid.SpecialQuality.Extraordinary.DruidVenomImmunity",
@@ -10489,6 +12990,13 @@
           "display_name": "Shadow Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Shadow Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shadow Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Shadow Master",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Shadow Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural",
@@ -10501,6 +13009,13 @@
           "type_facet": "WitchPatron.SpecialQuality",
           "standing": "origin",
           "display_name": "Shadow Patron"
+        },
+        {
+          "name": "Shadow Projection",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Shadow Projection"
         },
         {
           "name": "Shadow School",
@@ -10606,6 +13121,20 @@
           "type_facet": "WizardClassFeatures.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Share Essence"
+        },
+        {
+          "name": "Share Language",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Share Language"
+        },
+        {
+          "name": "Share Senses",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Share Senses"
         },
         {
           "name": "Shared Defense",
@@ -10755,6 +13284,20 @@
           "display_name": "Shifter's Blessing"
         },
         {
+          "name": "Shifting Sand",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Shifting Sand (MagusSpellblend.MagusSpellBlendLVL3)"
+        },
+        {
+          "name": "Shifting Sand",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Shifting Sand (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
           "name": "Shining Knight",
           "doneness": "not-started",
           "type_facet": "Archetype.PaladinArchetype.PaladinBondedWeapon.PaladinDivineHealth.PaladinAuraofJustice",
@@ -10811,6 +13354,13 @@
           "display_name": "Sickened"
         },
         {
+          "name": "Sickening Spell",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Feat",
+          "standing": "origin",
+          "display_name": "Sickening Spell"
+        },
+        {
           "name": "Sidestep Secret",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.LoreRevelation.Supernatural",
@@ -10860,6 +13410,13 @@
           "display_name": "Sipping Demon"
         },
         {
+          "name": "Sirocco",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Sirocco"
+        },
+        {
           "name": "Sixth Sense",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.SpecialQuality.Extraordinary",
@@ -10870,7 +13427,7 @@
           "name": "Skill Focus (Stealth)",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.AdaptationSelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Skill Focus (Stealth)"
         },
         {
@@ -10970,6 +13527,20 @@
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Slippery Mind"
+        },
+        {
+          "name": "Slipstream",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Slipstream (MagusSpellblend.MagusSpellBlendLVL2)"
+        },
+        {
+          "name": "Slipstream",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Slipstream (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Slow Time",
@@ -11315,6 +13886,13 @@
           "display_name": "Sound the Retreat"
         },
         {
+          "name": "Spark",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL0",
+          "standing": "origin",
+          "display_name": "Spark"
+        },
+        {
           "name": "Spark Skin",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.WindRevelation.Extraordinary",
@@ -11383,6 +13961,13 @@
           "type_facet": "ClassFeatures.PaladinClassFeatures.SpecialQuality.CF_Domain",
           "standing": "unclassified",
           "display_name": "Spells"
+        },
+        {
+          "name": "Spiked Pit",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Spiked Pit"
         },
         {
           "name": "Spire Walker",
@@ -11525,6 +14110,13 @@
           "display_name": "Stab and Grab"
         },
         {
+          "name": "Staff of Order",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Staff of Order"
+        },
+        {
           "name": "Stag's Leap",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice",
@@ -11574,6 +14166,13 @@
           "display_name": "Standard"
         },
         {
+          "name": "Standard Choices",
+          "doneness": "not-started",
+          "type_facet": "CavalierMountSelection",
+          "standing": "unclassified",
+          "display_name": "Standard Choices"
+        },
+        {
           "name": "Star Chart",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.HeavensRevelation.Extraordinary.PerDayOracleRevelation",
@@ -11600,6 +14199,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Starsoul Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Starsoul Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starsoul Bloodline ~ Feat Tracker"
         },
         {
           "name": "Steadfast Mount",
@@ -11707,11 +14313,32 @@
           "display_name": "Stink Bomb*"
         },
         {
+          "name": "Stone Call",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Stone Call"
+        },
+        {
+          "name": "Stone Fist",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Stone Fist"
+        },
+        {
           "name": "Stone Mysteries",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Stone Mysteries"
+        },
+        {
+          "name": "Stone Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Stone Mysteries Class Skills"
         },
         {
           "name": "Stone Stability",
@@ -11721,11 +14348,25 @@
           "display_name": "Stone Stability"
         },
         {
+          "name": "Storm Burst",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Storm Burst"
+        },
+        {
           "name": "Storm Lord",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Stormborn Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Storm Lord"
+        },
+        {
+          "name": "Stormbolts",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL8",
+          "standing": "origin",
+          "display_name": "Stormbolts"
         },
         {
           "name": "Stormborn Bloodline",
@@ -11740,6 +14381,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Stormborn Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Stormborn Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Stormborn Bloodline ~ Feat Tracker"
         },
         {
           "name": "Stormchild",
@@ -11805,6 +14453,13 @@
           "display_name": "Strength Patron"
         },
         {
+          "name": "Strength Surge",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Strength Surge"
+        },
+        {
           "name": "Strength of Stone",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural",
@@ -11833,6 +14488,13 @@
           "display_name": "Strong Impression"
         },
         {
+          "name": "Stumble Gap",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Stumble Gap"
+        },
+        {
           "name": "Stunned",
           "doneness": "not-started",
           "type_facet": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Cruelty.LayOnHands",
@@ -11854,11 +14516,39 @@
           "display_name": "Sudden Shift (SpecialQuality.SpellLike.DomainPower) #2"
         },
         {
+          "name": "Suffocation",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "unclassified",
+          "display_name": "Suffocation"
+        },
+        {
+          "name": "Suffocation (Mass)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Suffocation (Mass)"
+        },
+        {
           "name": "Summon Monster",
           "doneness": "not-started",
           "type_facet": "SummonerClassFeatures.SpecialQuality.SpellLike.Summon Monster.Summon Monster SLA",
           "standing": "origin",
           "display_name": "Summon Monster"
+        },
+        {
+          "name": "Summon Monster III (Reptiles Only)",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Summon Monster III (Reptiles Only)"
+        },
+        {
+          "name": "Summon Monster VII (Reptiles Only)",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Summon Monster VII (Reptiles Only)"
         },
         {
           "name": "Summoner",
@@ -11950,6 +14640,13 @@
           "type_facet": "ExpandedArcana.Summoner",
           "standing": "origin",
           "display_name": "Summoner Expanded Arcana 2x5"
+        },
+        {
+          "name": "Summoner ~ Skill",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Summoner ~ Skill"
         },
         {
           "name": "Sun",
@@ -12491,6 +15188,13 @@
           "display_name": "Thoughtful Reexamining"
         },
         {
+          "name": "Threefold Aspect",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Threefold Aspect"
+        },
+        {
           "name": "Throw Anything",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.AdaptationSelection",
@@ -12729,11 +15433,25 @@
           "display_name": "Touch of Acid"
         },
         {
+          "name": "Touch of Chaos",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Touch of Chaos"
+        },
+        {
           "name": "Touch of Corruption",
           "doneness": "not-started",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.LayOnHands.Lay on Hands",
           "standing": "origin",
           "display_name": "Touch of Corruption"
+        },
+        {
+          "name": "Touch of Darkness",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Touch of Darkness"
         },
         {
           "name": "Touch of Electricity",
@@ -12743,11 +15461,46 @@
           "display_name": "Touch of Electricity"
         },
         {
+          "name": "Touch of Evil",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Touch of Evil"
+        },
+        {
           "name": "Touch of Flame",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.FlameRevelation.Supernatural.PerDayOracleRevelation.RevelationTargetOneOnly",
           "standing": "unclassified",
           "display_name": "Touch of Flame"
+        },
+        {
+          "name": "Touch of Glory",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Touch of Glory"
+        },
+        {
+          "name": "Touch of Good",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Touch of Good"
+        },
+        {
+          "name": "Touch of Gracelessness",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Touch of Gracelessness"
+        },
+        {
+          "name": "Touch of Law",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Touch of Law"
         },
         {
           "name": "Touch of Peace",
@@ -12769,6 +15522,13 @@
           "type_facet": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkAbundantStep",
           "standing": "origin",
           "display_name": "Touch of Surrender"
+        },
+        {
+          "name": "Touch of the Sea",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Touch of the Sea"
         },
         {
           "name": "Touch the Spirit World",
@@ -12869,6 +15629,13 @@
           "display_name": "Travel (InquisitorDomain)"
         },
         {
+          "name": "Treasure Stitching",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Treasure Stitching"
+        },
+        {
           "name": "Tremor",
           "doneness": "not-started",
           "type_facet": "Class Feature.Sorcerer Class Feature.Deep Earth Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.SpellLike",
@@ -12932,6 +15699,13 @@
           "display_name": "True Confession"
         },
         {
+          "name": "True Form",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "True Form"
+        },
+        {
           "name": "True Judgment",
           "doneness": "not-started",
           "type_facet": "InquisitorClassFeatures.SpecialQuality.Supernatural",
@@ -12951,6 +15725,13 @@
           "type_facet": "ClassFeatures.MonkClassFeatures.SpecialQuality.Supernatural.MonkPerfectSelf",
           "standing": "origin",
           "display_name": "True Sacrifice"
+        },
+        {
+          "name": "Tsunami",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Tsunami"
         },
         {
           "name": "Tuck and Roll",
@@ -12993,6 +15774,13 @@
           "type_facet": "ClassFeatures.DruidClassFeatures.ArchetypeCaveDruid.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tunnelrunner"
+        },
+        {
+          "name": "Twilight Knife",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Twilight Knife"
         },
         {
           "name": "Twin Blades",
@@ -13135,6 +15923,13 @@
           "display_name": "Unholy Resilience"
         },
         {
+          "name": "Unity",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL8",
+          "standing": "unclassified",
+          "display_name": "Unity"
+        },
+        {
           "name": "Unseat",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
@@ -13170,6 +15965,13 @@
           "display_name": "Untouched by the Seasons (SpecialQuality.Supernatural.DomainPower) #2"
         },
         {
+          "name": "Unwilling Shield",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL6",
+          "standing": "unclassified",
+          "display_name": "Unwilling Shield"
+        },
+        {
           "name": "Upending Strike",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice",
@@ -13198,6 +16000,13 @@
           "display_name": "Urban Ranger (ClassFeatures.RangerClassFeatures.SpecialQuality)"
         },
         {
+          "name": "Vanish",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL1",
+          "standing": "unclassified",
+          "display_name": "Vanish"
+        },
+        {
           "name": "Vengeance Strike",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.HuntersTrickChoice",
@@ -13217,6 +16026,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Verdant Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Verdant Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Verdant Bloodline ~ Feat Tracker"
         },
         {
           "name": "Verdant Sentinel",
@@ -13261,11 +16077,25 @@
           "display_name": "Versatile Improvisation"
         },
         {
+          "name": "Versatile Weapon",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Versatile Weapon"
+        },
+        {
           "name": "Vindicator's Shield",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Vindicator's Shield"
+        },
+        {
+          "name": "Vision of Madness",
+          "doneness": "not-started",
+          "type_facet": "DomainBonusTimes.DomainPowerTimesLVL1",
+          "standing": "unclassified",
+          "display_name": "Vision of Madness"
         },
         {
           "name": "Vital Strike",
@@ -13303,6 +16133,13 @@
           "display_name": "Volley"
         },
         {
+          "name": "Vortex",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Vortex"
+        },
+        {
           "name": "Vortex Spells",
           "doneness": "not-started",
           "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.WindRevelation.Extraordinary.RevelationTargetOneOnly",
@@ -13331,11 +16168,39 @@
           "display_name": "Wall of Ashes (SpecialQuality.Supernatural.DomainPower) #2"
         },
         {
+          "name": "Wall of Lava",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL8",
+          "standing": "origin",
+          "display_name": "Wall of Lava (MagusSpellblend.MagusSpellBlendLVL8)"
+        },
+        {
+          "name": "Wall of Lava",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Wall of Lava (Sorcerer Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Wall of Suppression",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Wall of Suppression"
+        },
+        {
           "name": "Wand Mastery",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardJackOfAllTrades",
           "standing": "unclassified",
           "display_name": "Wand Mastery"
+        },
+        {
+          "name": "Wandering Star Motes",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Wandering Star Motes"
         },
         {
           "name": "War",
@@ -13462,6 +16327,13 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Waves Mysteries"
+        },
+        {
+          "name": "Waves Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Waves Mysteries Class Skills"
         },
         {
           "name": "Way of the Bow",
@@ -14087,6 +16959,13 @@
           "display_name": "Wind Mysteries"
         },
         {
+          "name": "Wind Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wind Mysteries Class Skills"
+        },
+        {
           "name": "Wind Servant",
           "doneness": "not-started",
           "type_facet": "WizardClassFeatures.SpecialQuality.SpellLike",
@@ -14113,6 +16992,13 @@
           "type_facet": "InquisitorDomain",
           "standing": "origin",
           "display_name": "Wind Subdomain (InquisitorDomain)"
+        },
+        {
+          "name": "Winds of Vengeance",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "Winds of Vengeance"
         },
         {
           "name": "Wings of Air",
@@ -14295,6 +17181,20 @@
           "type_facet": "ClassFeatures.BardClassFeatures.SpecialQuality.Extraordinary.BardBardicKnowledge",
           "standing": "origin",
           "display_name": "World Traveler"
+        },
+        {
+          "name": "World Wave",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellblend.MagusSpellBlendLVL9",
+          "standing": "origin",
+          "display_name": "World Wave (MagusSpellblend.MagusSpellBlendLVL9)"
+        },
+        {
+          "name": "World Wave",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "World Wave (Sorcerer Bloodline Bonus Spell)"
         },
         {
           "name": "Wounding Blade",
@@ -16031,17 +18931,530 @@
       ]
     },
     {
+      "kind": "domain",
+      "label": "Domains",
+      "done": 0,
+      "partial": 0,
+      "not_started": 70,
+      "denominator": 70,
+      "pct": 0.0,
+      "excluded_from_percentage": 1,
+      "standing_breakdown": {
+        "origin": 70,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Agathion Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Agathion Subdomain"
+        },
+        {
+          "name": "Ancestors Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ancestors Subdomain"
+        },
+        {
+          "name": "Arcane Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcane Subdomain"
+        },
+        {
+          "name": "Archon Subdomain (Good)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Archon Subdomain (Good)"
+        },
+        {
+          "name": "Archon Subdomain (Law)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Archon Subdomain (Law)"
+        },
+        {
+          "name": "Ash Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ash Subdomain"
+        },
+        {
+          "name": "Azata Subdomain (Chaos)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Azata Subdomain (Chaos)"
+        },
+        {
+          "name": "Azata Subdomain (Good)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Azata Subdomain (Good)"
+        },
+        {
+          "name": "Blood Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Blood Subdomain"
+        },
+        {
+          "name": "Catastrophe Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Catastrophe Subdomain"
+        },
+        {
+          "name": "Caves Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Caves Subdomain"
+        },
+        {
+          "name": "Cloud Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Cloud Subdomain"
+        },
+        {
+          "name": "Construct Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Construct Subdomain"
+        },
+        {
+          "name": "Curse Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Curse Subdomain"
+        },
+        {
+          "name": "Daemon Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Daemon Subdomain"
+        },
+        {
+          "name": "Day Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Day Subdomain"
+        },
+        {
+          "name": "Decay Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Decay Subdomain"
+        },
+        {
+          "name": "Deception Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deception Subdomain"
+        },
+        {
+          "name": "Defense Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Defense Subdomain"
+        },
+        {
+          "name": "Demon Subdomain (Chaos)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Demon Subdomain (Chaos)"
+        },
+        {
+          "name": "Demon Subdomain (Evil)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Demon Subdomain (Evil)"
+        },
+        {
+          "name": "Devil Subdomain (Evil)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil Subdomain (Evil)"
+        },
+        {
+          "name": "Devil Subdomain (Law)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Devil Subdomain (Law)"
+        },
+        {
+          "name": "Divine Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Divine Subdomain"
+        },
+        {
+          "name": "Exploration Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Exploration Subdomain"
+        },
+        {
+          "name": "Family Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Family Subdomain"
+        },
+        {
+          "name": "Fate Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fate Subdomain"
+        },
+        {
+          "name": "Feather Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Feather Subdomain"
+        },
+        {
+          "name": "Ferocity Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ferocity Subdomain"
+        },
+        {
+          "name": "Freedom Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Freedom Subdomain"
+        },
+        {
+          "name": "Fur Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fur Subdomain"
+        },
+        {
+          "name": "Growth Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Growth Subdomain"
+        },
+        {
+          "name": "Heroism Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Heroism Subdomain"
+        },
+        {
+          "name": "Home Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Home Subdomain"
+        },
+        {
+          "name": "Honor Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Honor Subdomain"
+        },
+        {
+          "name": "Ice Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ice Subdomain"
+        },
+        {
+          "name": "Inevitable Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Inevitable Subdomain"
+        },
+        {
+          "name": "Insanity Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Insanity Subdomain"
+        },
+        {
+          "name": "Language Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Language Subdomain"
+        },
+        {
+          "name": "Leadership Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Leadership Subdomain"
+        },
+        {
+          "name": "Light Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Light Subdomain"
+        },
+        {
+          "name": "Loss Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Loss Subdomain"
+        },
+        {
+          "name": "Love Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Love Subdomain"
+        },
+        {
+          "name": "Lust Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lust Subdomain"
+        },
+        {
+          "name": "Martyr Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Martyr Subdomain"
+        },
+        {
+          "name": "Memory Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Memory Subdomain"
+        },
+        {
+          "name": "Metal Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Metal Subdomain"
+        },
+        {
+          "name": "Murder Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Murder Subdomain"
+        },
+        {
+          "name": "Night Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Night Subdomain"
+        },
+        {
+          "name": "Nightmare Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Nightmare Subdomain"
+        },
+        {
+          "name": "Oceans Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oceans Subdomain"
+        },
+        {
+          "name": "Protean Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Protean Subdomain"
+        },
+        {
+          "name": "Purity Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Purity Subdomain"
+        },
+        {
+          "name": "Rage Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Rage Subdomain"
+        },
+        {
+          "name": "Resolve Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Resolve Subdomain"
+        },
+        {
+          "name": "Restoration Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Restoration Subdomain"
+        },
+        {
+          "name": "Resurrection Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Resurrection Subdomain"
+        },
+        {
+          "name": "Revolution Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Revolution Subdomain"
+        },
+        {
+          "name": "Seasons Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Seasons Subdomain"
+        },
+        {
+          "name": "Smoke Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Smoke Subdomain"
+        },
+        {
+          "name": "Souls Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Souls Subdomain"
+        },
+        {
+          "name": "Storms Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Storms Subdomain"
+        },
+        {
+          "name": "Tactics Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Tactics Subdomain"
+        },
+        {
+          "name": "Thievery Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Thievery Subdomain"
+        },
+        {
+          "name": "Thought Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Thought Subdomain"
+        },
+        {
+          "name": "Toil Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Toil Subdomain"
+        },
+        {
+          "name": "Trade Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Trade Subdomain"
+        },
+        {
+          "name": "Undead Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Undead Subdomain"
+        },
+        {
+          "name": "Wards Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wards Subdomain"
+        },
+        {
+          "name": "Wind Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wind Subdomain"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    },
+    {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 301,
+      "done": 297,
       "partial": 26,
       "not_started": 1,
-      "denominator": 328,
-      "pct": 91.8,
-      "excluded_from_percentage": 10,
+      "denominator": 324,
+      "pct": 91.7,
+      "excluded_from_percentage": 14,
       "standing_breakdown": {
-        "origin": 328,
-        "unclassified": 10
+        "origin": 324,
+        "unclassified": 14
       },
       "items": [
         {
@@ -16286,7 +19699,7 @@
           "name": "Bandages of Rapid Recovery",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Chest.Consumable",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Bandages of Rapid Recovery"
         },
         {
@@ -16622,7 +20035,7 @@
           "name": "Campfire Bead",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Campfire Bead"
         },
         {
@@ -16930,7 +20343,7 @@
           "name": "Flying Ointment",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Flying Ointment"
         },
         {
@@ -17084,7 +20497,7 @@
           "name": "Glowing Glove",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Glowing Glove"
         },
         {
@@ -18415,11 +21828,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 15,
+      "done": 17,
       "partial": 9,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 26,
-      "pct": 57.7,
+      "pct": 65.4,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 26,
@@ -18470,14 +21883,14 @@
         },
         {
           "name": "CRRSVE_BRST_M",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "CRRSVE_BRST_M"
         },
         {
           "name": "CRRSVE_BRST_R",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "CRRSVE_BRST_R"
@@ -18692,12 +22105,12 @@
       "label": "Feats",
       "done": 136,
       "partial": 7,
-      "not_started": 29,
-      "denominator": 172,
-      "pct": 79.1,
+      "not_started": 30,
+      "denominator": 173,
+      "pct": 78.6,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
-        "origin": 172,
+        "origin": 173,
         "unclassified": 1
       },
       "items": [
@@ -19437,6 +22850,13 @@
           "display_name": "Lucky Halfling"
         },
         {
+          "name": "Magical Lineage",
+          "doneness": "not-started",
+          "type_facet": "Metamagic",
+          "standing": "origin",
+          "display_name": "Magical Lineage"
+        },
+        {
           "name": "Major Spell Expertise",
           "doneness": "done",
           "type_facet": "General",
@@ -19919,13 +23339,13 @@
       "label": "Race Traits",
       "done": 1,
       "partial": 0,
-      "not_started": 53,
-      "denominator": 54,
-      "pct": 1.9,
+      "not_started": 38,
+      "denominator": 39,
+      "pct": 2.6,
       "excluded_from_percentage": 54,
       "standing_breakdown": {
         "unclassified": 54,
-        "origin": 54
+        "origin": 39
       },
       "items": [
         {
@@ -20286,48 +23706,6 @@
           "display_name": "Inquisitor"
         },
         {
-          "name": "Inquisitor Spell Level 0",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownInquisitor",
-          "standing": "origin",
-          "display_name": "Inquisitor Spell Level 0"
-        },
-        {
-          "name": "Inquisitor Spell Level 1",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownInquisitor",
-          "standing": "origin",
-          "display_name": "Inquisitor Spell Level 1"
-        },
-        {
-          "name": "Inquisitor Spell Level 2",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownInquisitor",
-          "standing": "origin",
-          "display_name": "Inquisitor Spell Level 2"
-        },
-        {
-          "name": "Inquisitor Spell Level 3",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownInquisitor",
-          "standing": "origin",
-          "display_name": "Inquisitor Spell Level 3"
-        },
-        {
-          "name": "Inquisitor Spell Level 4",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownInquisitor",
-          "standing": "origin",
-          "display_name": "Inquisitor Spell Level 4"
-        },
-        {
-          "name": "Inquisitor Spell Level 5",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownInquisitor",
-          "standing": "origin",
-          "display_name": "Inquisitor Spell Level 5"
-        },
-        {
           "name": "Integrated",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
@@ -20389,69 +23767,6 @@
           "type_facet": "FavoredClass",
           "standing": "unclassified",
           "display_name": "Oracle"
-        },
-        {
-          "name": "Oracle Spell Level 0",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 0"
-        },
-        {
-          "name": "Oracle Spell Level 1",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 1"
-        },
-        {
-          "name": "Oracle Spell Level 2",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 2"
-        },
-        {
-          "name": "Oracle Spell Level 3",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 3"
-        },
-        {
-          "name": "Oracle Spell Level 4",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 4"
-        },
-        {
-          "name": "Oracle Spell Level 5",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 5"
-        },
-        {
-          "name": "Oracle Spell Level 6",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 6"
-        },
-        {
-          "name": "Oracle Spell Level 7",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 7"
-        },
-        {
-          "name": "Oracle Spell Level 8",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownOracle",
-          "standing": "origin",
-          "display_name": "Oracle Spell Level 8"
         },
         {
           "name": "Outrider",
@@ -22750,6 +26065,933 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wrathful Mantle"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 38,
+      "denominator": 38,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 38
+      },
+      "items": [
+        {
+          "name": "Aquan Bonus Language",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aquan Bonus Language"
+        },
+        {
+          "name": "Class ~ Summoner",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Class ~ Summoner"
+        },
+        {
+          "name": "Formula Book",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Formula Book"
+        },
+        {
+          "name": "LEGS 2",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "LEGS 2"
+        },
+        {
+          "name": "LEGS 4",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "LEGS 4"
+        },
+        {
+          "name": "Medium Claws",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Medium Claws"
+        },
+        {
+          "name": "Mental Acuity",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Mental Acuity"
+        },
+        {
+          "name": "Mental Acuity 07",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 07"
+        },
+        {
+          "name": "Mental Acuity 08",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 08"
+        },
+        {
+          "name": "Mental Acuity 09",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 09"
+        },
+        {
+          "name": "Mental Acuity 10",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 10"
+        },
+        {
+          "name": "Mental Acuity 11",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 11"
+        },
+        {
+          "name": "Mental Acuity 12",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 12"
+        },
+        {
+          "name": "Mental Acuity 13",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 13"
+        },
+        {
+          "name": "Mental Acuity 14",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 14"
+        },
+        {
+          "name": "Mental Acuity 15",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 15"
+        },
+        {
+          "name": "Mental Acuity 16",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 16"
+        },
+        {
+          "name": "Mental Acuity 17",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 17"
+        },
+        {
+          "name": "Mental Acuity 18",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 18"
+        },
+        {
+          "name": "Mental Acuity 19",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 19"
+        },
+        {
+          "name": "Mental Acuity 20",
+          "doneness": "not-started",
+          "type_facet": "MentalAcuityOracleLevel",
+          "standing": "origin",
+          "display_name": "Mental Acuity 20"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Abyssal",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Abyssal"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Aklo",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Aklo"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Aquan",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Aquan"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Auran",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Auran"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Celestial",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Celestial"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Ignan",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Ignan"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Infernal",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Infernal"
+        },
+        {
+          "name": "Oracle Tongues Choice ~ Terran",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Oracle Tongues Choice ~ Terran"
+        },
+        {
+          "name": "Racial Heritage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Heritage"
+        },
+        {
+          "name": "Small Claws",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Small Claws"
+        },
+        {
+          "name": "Starting Gold APG ~ Average",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold APG ~ Average"
+        },
+        {
+          "name": "Starting Gold APG ~ Maximum",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold APG ~ Maximum"
+        },
+        {
+          "name": "Starting Gold APG ~ Random",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold APG ~ Random"
+        },
+        {
+          "name": "Starting Gold ~ APG",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ~ APG"
+        },
+        {
+          "name": "Vision Darkvision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vision Darkvision"
+        },
+        {
+          "name": "Vision Lowlight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vision Lowlight"
+        },
+        {
+          "name": "Vision Normal",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vision Normal"
+        }
+      ]
+    },
+    {
+      "kind": "trait",
+      "label": "Traits",
+      "done": 0,
+      "partial": 0,
+      "not_started": 74,
+      "denominator": 74,
+      "pct": 0.0,
+      "excluded_from_percentage": 16,
+      "standing_breakdown": {
+        "origin": 74,
+        "unclassified": 16
+      },
+      "items": [
+        {
+          "name": "Adopted",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Adopted"
+        },
+        {
+          "name": "Anatomist",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Anatomist"
+        },
+        {
+          "name": "Animal Friend",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Gnome Race Trait",
+          "standing": "origin",
+          "display_name": "Animal Friend"
+        },
+        {
+          "name": "Armor Expert",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Armor Expert"
+        },
+        {
+          "name": "Birthmark",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Birthmark"
+        },
+        {
+          "name": "Black Sheep",
+          "doneness": "not-started",
+          "type_facet": "Trait.SampleCampaignTrait",
+          "standing": "origin",
+          "display_name": "Black Sheep"
+        },
+        {
+          "name": "Black Sheep / Aliver \"Pillbug\" Podiker (apothecary)",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Black Sheep / Aliver \"Pillbug\" Podiker (apothecary)"
+        },
+        {
+          "name": "Black Sheep / Titus Scarnetti (bitter nobleman)",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Black Sheep / Titus Scarnetti (bitter nobleman)"
+        },
+        {
+          "name": "Brute",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
+          "standing": "origin",
+          "display_name": "Brute"
+        },
+        {
+          "name": "Bullied",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Bullied"
+        },
+        {
+          "name": "Bully",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Bully"
+        },
+        {
+          "name": "Calistrian Prostitute (Calistria)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Calistrian Prostitute (Calistria)"
+        },
+        {
+          "name": "Canter",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Canter"
+        },
+        {
+          "name": "Caretaker",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Caretaker"
+        },
+        {
+          "name": "Charming",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Charming"
+        },
+        {
+          "name": "Child of Nature (Gozreh)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Child of Nature (Gozreh)"
+        },
+        {
+          "name": "Child of the Streets",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Child of the Streets"
+        },
+        {
+          "name": "Child of the Temple",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Child of the Temple"
+        },
+        {
+          "name": "Classically Schooled",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Classically Schooled"
+        },
+        {
+          "name": "Courageous",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Courageous"
+        },
+        {
+          "name": "Dangerously Curious",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Dangerously Curious"
+        },
+        {
+          "name": "Deft Dodger",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Deft Dodger"
+        },
+        {
+          "name": "Desert Child (desert)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "Desert Child (desert)"
+        },
+        {
+          "name": "Devotee of the Green",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Devotee of the Green"
+        },
+        {
+          "name": "Dirty Fighter",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Dirty Fighter"
+        },
+        {
+          "name": "Divine Warrior (Iomedae)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Divine Warrior (Iomedae)"
+        },
+        {
+          "name": "Ease of Faith",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Ease of Faith"
+        },
+        {
+          "name": "Elven Reflexes",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Elven Reflexes"
+        },
+        {
+          "name": "Failed Apprentice",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Failed Apprentice"
+        },
+        {
+          "name": "Fast-Talker",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Fast-Talker"
+        },
+        {
+          "name": "Favored Son/Daughter",
+          "doneness": "not-started",
+          "type_facet": "Trait.SampleCampaignTrait",
+          "standing": "origin",
+          "display_name": "Favored Son/Daughter"
+        },
+        {
+          "name": "Favored Son/Daughter / Ameiko Kaijitsu (local noble and owner of the Rusty Dragon Inn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Favored Son/Daughter / Ameiko Kaijitsu (local noble and owner of the Rusty Dragon Inn)"
+        },
+        {
+          "name": "Favored Son/Daughter / Belor Hemlock (town sheriff)",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Favored Son/Daughter / Belor Hemlock (town sheriff)"
+        },
+        {
+          "name": "Fencer",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Fencer"
+        },
+        {
+          "name": "Flame of the Dawnflower (Sarenrae)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Flame of the Dawnflower (Sarenrae)"
+        },
+        {
+          "name": "Focused Mind",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Focused Mind"
+        },
+        {
+          "name": "Forlorn",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Forlorn"
+        },
+        {
+          "name": "Freedom Fighter",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Halfling Race Trait",
+          "standing": "origin",
+          "display_name": "Freedom Fighter"
+        },
+        {
+          "name": "Gifted Adept",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Gifted Adept"
+        },
+        {
+          "name": "Goldsniffer",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
+          "standing": "origin",
+          "display_name": "Goldsniffer"
+        },
+        {
+          "name": "Guardian of the Forge (Torag)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Guardian of the Forge (Torag)"
+        },
+        {
+          "name": "Hedge Magician",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Hedge Magician"
+        },
+        {
+          "name": "Highlander (hills or mountains)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "Highlander (hills or mountains)"
+        },
+        {
+          "name": "History of Heresy",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "History of Heresy"
+        },
+        {
+          "name": "Indomitable Faith",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Indomitable Faith"
+        },
+        {
+          "name": "Killer",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Killer"
+        },
+        {
+          "name": "Log Roller (forest)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "Log Roller (forest)"
+        },
+        {
+          "name": "Lore Seeker Arcane Spells",
+          "doneness": "not-started",
+          "type_facet": "Trait.SampleCampaignTrait.LoreSeekerArcaneSpells",
+          "standing": "origin",
+          "display_name": "Lore Seeker Arcane Spells"
+        },
+        {
+          "name": "Magical Knack",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Magical Knack"
+        },
+        {
+          "name": "Magical Lineage",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Magical Lineage"
+        },
+        {
+          "name": "Magical Talent",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Magical Talent"
+        },
+        {
+          "name": "Mathematical Prodigy",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Mathematical Prodigy"
+        },
+        {
+          "name": "Militia Veteran (any town or village)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "Militia Veteran (any town or village)"
+        },
+        {
+          "name": "Missionary Divine Spells",
+          "doneness": "not-started",
+          "type_facet": "Trait.SampleCampaignTrait.MissionaryDivineSpells",
+          "standing": "origin",
+          "display_name": "Missionary Divine Spells"
+        },
+        {
+          "name": "Natural-Born Leader",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Natural-Born Leader"
+        },
+        {
+          "name": "No Traits",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait.FaithTrait.MagicTrait.SocialTrait.CampaignTrait.RaceTrait.RegionalTrait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "No Traits"
+        },
+        {
+          "name": "Outcast",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
+          "standing": "origin",
+          "display_name": "Outcast"
+        },
+        {
+          "name": "Outlander",
+          "doneness": "not-started",
+          "type_facet": "Trait.SampleCampaignTrait",
+          "standing": "origin",
+          "display_name": "Outlander"
+        },
+        {
+          "name": "Outlander / Exile",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Outlander / Exile"
+        },
+        {
+          "name": "Outlander / Lore Seeker",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Outlander / Lore Seeker"
+        },
+        {
+          "name": "Outlander / Missionary",
+          "doneness": "not-started",
+          "type_facet": "Trait.TraitCampaignChoice",
+          "standing": "origin",
+          "display_name": "Outlander / Missionary"
+        },
+        {
+          "name": "Patient Optimist (Erastil)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Patient Optimist (Erastil)"
+        },
+        {
+          "name": "Poverty-Stricken",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Poverty-Stricken"
+        },
+        {
+          "name": "Rapscallion",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Gnome Race Trait",
+          "standing": "origin",
+          "display_name": "Rapscallion"
+        },
+        {
+          "name": "Reactionary",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Reactionary"
+        },
+        {
+          "name": "Resilient",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.CombatTrait",
+          "standing": "origin",
+          "display_name": "Resilient"
+        },
+        {
+          "name": "Rich Parents",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Rich Parents"
+        },
+        {
+          "name": "River Rat (marsh or river)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "River Rat (marsh or river)"
+        },
+        {
+          "name": "Sacred Conduit",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Sacred Conduit"
+        },
+        {
+          "name": "Sacred Touch",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Sacred Touch"
+        },
+        {
+          "name": "Savanna Child (plains)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "Savanna Child (plains)"
+        },
+        {
+          "name": "Scholar of Ruins",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Human Race Trait",
+          "standing": "origin",
+          "display_name": "Scholar of Ruins"
+        },
+        {
+          "name": "Scholar of the Great Beyond",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.FaithTrait",
+          "standing": "unclassified",
+          "display_name": "Scholar of the Great Beyond"
+        },
+        {
+          "name": "Skeptic",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.MagicTrait",
+          "standing": "origin",
+          "display_name": "Skeptic"
+        },
+        {
+          "name": "Starchild (Desna)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Starchild (Desna)"
+        },
+        {
+          "name": "Suspicious",
+          "doneness": "not-started",
+          "type_facet": "Trait.BasicTrait.SocialTrait",
+          "standing": "origin",
+          "display_name": "Suspicious"
+        },
+        {
+          "name": "Tunnel Fighter",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
+          "standing": "origin",
+          "display_name": "Tunnel Fighter"
+        },
+        {
+          "name": "Vagabond Child (urban)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RegionalTrait",
+          "standing": "origin",
+          "display_name": "Vagabond Child (urban)"
+        },
+        {
+          "name": "Veteran of Battle (Gorum)",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Veteran of Battle (Gorum)"
+        },
+        {
+          "name": "Warrior of Old",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Warrior of Old"
+        },
+        {
+          "name": "Well-Informed",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Halfling Race Trait",
+          "standing": "origin",
+          "display_name": "Well-Informed"
+        },
+        {
+          "name": "Wisdom in the Flesh (Irori) - Dexterity",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Wisdom in the Flesh (Irori) - Dexterity"
+        },
+        {
+          "name": "Wisdom in the Flesh (Irori) - Strength",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "origin",
+          "display_name": "Wisdom in the Flesh (Irori) - Strength"
+        },
+        {
+          "name": "World Traveler",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Human Race Trait",
+          "standing": "origin",
+          "display_name": "World Traveler"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.ReligionTrait)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.ReligionTrait) #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.ReligionTrait) #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.ReligionTrait) #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.ReligionTrait) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.ReligionTrait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.ReligionTrait) #6"
         }
       ]
     }
