@@ -141,6 +141,14 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // the real residual is named as a next-cycle item rather than widening
     // this generator's predicate untested in the same cycle.
     ("UM", 0),
+    // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`): `beginner_box`
+    // had no `BOOK_INPUT` entry at all -- an inherited "will not be brought
+    // in" carve-out `§27b` overturns. 19 = the book's whole `equipment`-kind
+    // population (`docs/work-inventory.json`), all 19 resolve to a real
+    // citation and clear PI screening except one (`bbox_equip_magic_items.
+    // lst:16`, a declared/blacklisted name INCLUDED under a Codex-generated
+    // neutral identity per `decisions.md §24`, not excluded).
+    ("BB", 19),
 ];
 
 #[test]
@@ -153,8 +161,10 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1954,
-        "1954 = 1953 + 1 (SD-32 T9 onboarding card 11 group C, `decisions.md §20` residual: \
+        total, 1973,
+        "1973 = 1954 + 19 (SD-32 `sd32-beginner-box-ingest`, `decisions.md §27b`: `beginner_box` \
+         had no BOOK_INPUT entry at all -- see EXPECTED_PER_BOOK's `BB` entry above). \
+         1954 = 1953 + 1 (SD-32 T9 onboarding card 11 group C, `decisions.md §20` residual: \
          `ag_equipmods.lst` was absent from adventurers_guide's BOOK_INPUTS, so its one real \
          equipment_modifier object was never read; AG 115 -> 116, see EXPECTED_PER_BOOK above). \
          1953 = 1879 + 74 (SD-32 `decisions.md §24`: a declared-PI or blacklisted-name row is \

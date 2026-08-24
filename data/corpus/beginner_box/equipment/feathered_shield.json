@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Feathered Shield",
+    "category": "ArmsArmor",
+    "name": "Feathered Shield",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_arms_armor.lst",
+    "sha256": "21a28b20c58390a6bd2b330e680685012f63458bc9599e534988c0a1bc7da1bd",
+    "line": 6,
+    "record_key": "Feathered Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -182,6 +182,19 @@ const EQUIPMENT_BOOK_ISM: &str = "ISM";
 // a genuine new-content book, routed in `cache_gen::equipment_gap`'s
 // `book_routing` alongside this constant.
 const EQUIPMENT_BOOK_AG: &str = "AG";
+// SD-32 `sd32-beginner-box-ingest`: `beginner_box` never had a `BOOK_INPUT`
+// entry at all -- decisions.md §27b overturns the operator's earlier
+// 2026-07-27 "redundant to other tomes, will not be brought in" disposition
+// (`v06_work_inventory.rs`'s `out_of_scope` set carried that note; removed
+// alongside this arm). §27b: "no 'unregistered book' exemption" and "the
+// only admissible reason for a unit not to close is a hard impossibility --
+// the source data does not exist, or licensing forbids shipping it". Both
+// `bbox_equip_magic_items.lst` and `bbox_equip_arms_armor.lst` are present
+// in the pinned oracle and carry ordinary OGC equipment mechanics, so
+// neither applies. Same shape as `AG`/`ISTEM`/`ISM` above: a genuine
+// new-content book, routed in `cache_gen::equipment_gap`'s `book_routing`
+// alongside this constant.
+const EQUIPMENT_BOOK_BB: &str = "BB";
 
 /// Refuses to ship a description whose rendering the player would see as
 /// broken PCGen syntax -- an unsubstituted `%N`/`%<KEYWORD>` reference or a
@@ -521,6 +534,20 @@ const BOOK_INPUTS: &[BookInput] = &[
         files: &[
             "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
             "pathfinder/paizo/roleplaying_game/ultimate_magic/_pfs/pfs_um_equip_general.lst",
+        ],
+    },
+    // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`): `beginner_box`
+    // had no `BOOK_INPUT` entry at all -- 19 `equipment`-kind units (14
+    // `no_record`, 5 cross-book-name-matched `no_formula_tokens`), the whole
+    // of `docs/work-inventory.json`'s `beginner_box` population, re-derived
+    // against the pinned oracle. Both files live directly under the book's
+    // own corpus directory (no shared-library host-discovery hazard).
+    BookInput {
+        code: EQUIPMENT_BOOK_BB,
+        slug: "beginner_box",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_arms_armor.lst",
         ],
     },
 ];

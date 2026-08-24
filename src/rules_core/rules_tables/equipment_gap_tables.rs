@@ -22,7 +22,7 @@
 //! whole — it is INCLUDED under a Codex-generated neutral `key`/`name`
 //! (`name_pi_citation` is `Some` for exactly these rows).
 //!
-//! Total: 1954 rows.
+//! Total: 1973 rows.
 
 /// One recovered corpus equipment row. Deliberately one flat shape for
 /// every book: unlike the hand-authored per-book tables (each with its own
@@ -56,7 +56,7 @@ pub struct EquipmentGapRow {
 /// Every recovered row, in book order. The order is load-bearing the same
 /// way `equipment_catalog_rows()`'s is: first match wins for key lookup.
 pub fn equipment_gap_rows() -> impl Iterator<Item = &'static EquipmentGapRow> {
-    [CORE_RULEBOOK_GAP_ROWS, BESTIARY_GAP_ROWS, ADVANCED_PLAYERS_GUIDE_GAP_ROWS, ADVANCED_CLASS_GUIDE_GAP_ROWS, ADVANCED_RACE_GUIDE_GAP_ROWS, ULTIMATE_COMBAT_GAP_ROWS, ULTIMATE_INTRIGUE_GAP_ROWS, ULTIMATE_EQUIPMENT_GAP_ROWS, ULTIMATE_PSIONICS_GAP_ROWS, ULTIMATE_WILDERNESS_GAP_ROWS, OCCULT_ADVENTURES_GAP_ROWS, HORROR_ADVENTURES_GAP_ROWS, INNER_SEA_RACES_GAP_ROWS, INNER_SEA_WORLD_GUIDE_GAP_ROWS, MONSTER_CODEX_GAP_ROWS, BESTIARY_2_GAP_ROWS, BESTIARY_3_GAP_ROWS, BESTIARY_4_GAP_ROWS, INNER_SEA_GODS_GAP_ROWS, MYTHIC_ADVENTURES_GAP_ROWS, INNER_SEA_COMBAT_GAP_ROWS, INNER_SEA_INTRIGUE_GAP_ROWS, BOOK_OF_THE_DAMNED_VOLUME_2_GAP_ROWS, INNER_SEA_TEMPLES_GAP_ROWS, INNER_SEA_MAGIC_GAP_ROWS, ADVENTURERS_GUIDE_GAP_ROWS, ULTIMATE_MAGIC_GAP_ROWS]
+    [CORE_RULEBOOK_GAP_ROWS, BESTIARY_GAP_ROWS, ADVANCED_PLAYERS_GUIDE_GAP_ROWS, ADVANCED_CLASS_GUIDE_GAP_ROWS, ADVANCED_RACE_GUIDE_GAP_ROWS, ULTIMATE_COMBAT_GAP_ROWS, ULTIMATE_INTRIGUE_GAP_ROWS, ULTIMATE_EQUIPMENT_GAP_ROWS, ULTIMATE_PSIONICS_GAP_ROWS, ULTIMATE_WILDERNESS_GAP_ROWS, OCCULT_ADVENTURES_GAP_ROWS, HORROR_ADVENTURES_GAP_ROWS, INNER_SEA_RACES_GAP_ROWS, INNER_SEA_WORLD_GUIDE_GAP_ROWS, MONSTER_CODEX_GAP_ROWS, BESTIARY_2_GAP_ROWS, BESTIARY_3_GAP_ROWS, BESTIARY_4_GAP_ROWS, INNER_SEA_GODS_GAP_ROWS, MYTHIC_ADVENTURES_GAP_ROWS, INNER_SEA_COMBAT_GAP_ROWS, INNER_SEA_INTRIGUE_GAP_ROWS, BOOK_OF_THE_DAMNED_VOLUME_2_GAP_ROWS, INNER_SEA_TEMPLES_GAP_ROWS, INNER_SEA_MAGIC_GAP_ROWS, ADVENTURERS_GUIDE_GAP_ROWS, ULTIMATE_MAGIC_GAP_ROWS, BEGINNER_BOX_GAP_ROWS]
         .into_iter()
         .flat_map(|rows| rows.iter())
 }
@@ -2121,4 +2121,27 @@ pub static ADVENTURERS_GUIDE_GAP_ROWS: &[EquipmentGapRow] = &[
 
 /// ultimate_magic — 0 record(s) the hand-authored `ultimate_magic` table does not hold.
 pub static ULTIMATE_MAGIC_GAP_ROWS: &[EquipmentGapRow] = &[
+];
+
+/// beginner_box — 19 record(s) the hand-authored `beginner_box` table does not hold.
+pub static BEGINNER_BOX_GAP_ROWS: &[EquipmentGapRow] = &[
+    EquipmentGapRow { book: "BB", key: "Bandages of Rapid Recovery", name: "Bandages of Rapid Recovery", category: "MagicItems", cost_gp: Some(200.0), weight_lbs: Some(1.0), description: Some("These bandages let you recover from wounds as if someone were using long-term care on you (Hero's Handbook, page 37). They are destroyed when removed or when you reach full hit points."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Campfire Bead", name: "Campfire Bead", category: "MagicItems", cost_gp: Some(720.0), weight_lbs: Some(0.0), description: Some("Once per day, this glass bead transforms itself into a 2-foot campfire whenever you speak its command word. The fire burns for 8 hours or until extinguished, then turns back into a bead."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Cloak of the Dark Tapestry", name: "Cloak of the Dark Tapestry", category: "MagicItems", cost_gp: Some(2500.0), weight_lbs: Some(1.0), description: Some("[redacted PI]"), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Dawnflower Sash", name: "Dawnflower Sash", category: "MagicItems", cost_gp: Some(2500.0), weight_lbs: Some(0.0), description: Some("[redacted PI]"), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Energy Heart", name: "Energy Heart", category: "MagicItems", cost_gp: Some(1000.0), weight_lbs: Some(0.0), description: Some("The first time each day that you take acid, cold, electricity, or fire damage, the gem reduces the amount by 10 points (minimum damage is 0)."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Flying Ointment", name: "Flying Ointment", category: "MagicItems", cost_gp: Some(2250.0), weight_lbs: Some(0.0), description: Some("As a standard action, you can rub this pungent ointment on your skin. It allows you to fly at a speed of 40 feet (30 feet if wearing medium or heavy armor) for 9 hours."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Glowing Glove", name: "Glowing Glove", category: "MagicItems", cost_gp: Some(2000.0), weight_lbs: Some(0.0), description: Some("As a standard action, you may press this glove against any surface or object and cause a luminous handprint to appear. The print is the color you wish, sheds light as a candle, and lasts 1 day."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Heroic Tabard", name: "Heroic Tabard", category: "MagicItems", cost_gp: Some(700.0), weight_lbs: Some(1.0), description: Some("This tabard is white and has a clasp at the neck. When worn, it gives you a +2 bonus on saving throws against fear attacks."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Ioun Stone (Mossy Disk)", name: "Ioun Stone (Mossy Disk)", category: "MagicItems", cost_gp: Some(5000.0), weight_lbs: Some(0.0), description: Some("+5 competence bonus on one Knowledge skill"), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Scroll of New Life", name: "Scroll of New Life", category: "MagicItems", cost_gp: Some(6125.0), weight_lbs: Some(0.0), description: Some("Casting this spell takes 1 minute. You touch a creature that died no more than 9 days ago and bring it back to life. The creature awakens with only 1 hit point per level or Hit Die. This cleric scroll is caster level 9"), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Shadow Helm", name: "Shadow Helm", category: "MagicItems", cost_gp: Some(4200.0), weight_lbs: Some(3.0), description: Some("[redacted PI]"), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Codex-Named Unit (equipment_beginner_box_bbox_equip_magic_items_lst_16)", name: "Codex-Named Unit (equipment_beginner_box_bbox_equip_magic_items_lst_16)", category: "MagicItems", cost_gp: Some(3500.0), weight_lbs: Some(0.0), description: Some("+1 bonus on all saving throws. Once per day, you can use it to give yourself the benefit of a false life spell (1d10+5 temporary hit points)."), name_pi_citation: Some(("bbox_equip_magic_items.lst", 16)) },
+    EquipmentGapRow { book: "BB", key: "Sustaining Bowl", name: "Sustaining Bowl", category: "MagicItems", cost_gp: Some(5400.0), weight_lbs: Some(0.0), description: Some("Once per day you can command this bowl to fill with a thick gruel, which tastes like warm, wet paper, but is highly nourishing. The bowl produces enough gruel each day to feed up to four humans."), name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Staff of Curing", name: "Staff of Curing", category: "MagicItems", cost_gp: Some(4500.0), weight_lbs: Some(5.0), description: None, name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Staff of Guarding", name: "Staff of Guarding", category: "MagicItems", cost_gp: Some(5500.0), weight_lbs: Some(5.0), description: None, name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Staff of Scorching", name: "Staff of Scorching", category: "MagicItems", cost_gp: Some(4500.0), weight_lbs: Some(5.0), description: None, name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Staff of Swampy Dread", name: "Staff of Swampy Dread", category: "MagicItems", cost_gp: Some(6000.0), weight_lbs: Some(5.0), description: None, name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Poison-Resistant Scale Mail", name: "Poison-Resistant Scale Mail", category: "ArmsArmor", cost_gp: None, weight_lbs: None, description: None, name_pi_citation: None },
+    EquipmentGapRow { book: "BB", key: "Feathered Shield", name: "Feathered Shield", category: "ArmsArmor", cost_gp: None, weight_lbs: None, description: None, name_pi_citation: None },
 ];

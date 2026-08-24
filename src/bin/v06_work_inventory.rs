@@ -4791,6 +4791,17 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         // 1-line match-arm append only, self-verified by this file's own pre-existing
         // `equipment_book_slug_for_covers_every_catalog_book` test.
         "AG" => "adventurers_guide",
+        // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`): one more
+        // book extended into `equipment_gap_tables` -- same narrow,
+        // additive-only shape as every arm above. This function's own
+        // panic (below) otherwise hard-crashes `v06_work_inventory` for
+        // every caller the moment `equipment_resolver::
+        // equipment_catalog_rows()` carries this code, which the
+        // `beginner_box` `BookInput`/`book_routing` regen makes true
+        // unconditionally. 1-line match-arm append only, self-verified by
+        // this file's own pre-existing
+        // `equipment_book_slug_for_covers_every_catalog_book` test.
+        "BB" => "beginner_box",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \
@@ -11021,10 +11032,22 @@ fn main() {
                 .collect()
         })
         .unwrap_or_default();
-    // Operator directive 2026-07-27: redundant to other tomes, will not be
-    // brought in. Sourced here rather than inferred, and reported as its own
-    // scope word so it can never be confused with "not yet done".
-    let out_of_scope: BTreeSet<&str> = ["beginner_box", "core_essentials"].into_iter().collect();
+    // Operator directive 2026-07-27 excluded `beginner_box` here as
+    // "redundant to other tomes, will not be brought in". `decisions.md
+    // §27b` (2026-08-23, `sd32-beginner-box-ingest`) overturns that
+    // disposition: "no 'unregistered book' exemption ... the only
+    // admissible reason for a unit not to close is a hard impossibility --
+    // the source data does not exist, or licensing forbids shipping it."
+    // Neither applies (both `bbox_equip_*.lst` files are present in the
+    // pinned oracle, ordinary OGC equipment mechanics) -- `beginner_box` is
+    // now `in_scope` via `rule_set_for` returning `None` here falling
+    // through to that check below being irrelevant: its equipment records
+    // are real corpus records even without a compiled `RuleSetId`, the same
+    // "book has real ingested content but no compiled rule set" shape this
+    // module already reports via `evidence: "no_compiled_rule_set_for_book"`
+    // for every other un-compiled book. Removed from this set so it reports
+    // that real shape instead of the retired `out_of_scope` label.
+    let out_of_scope: BTreeSet<&str> = ["core_essentials"].into_iter().collect();
 
     let mut books: Vec<BookMeta> = Vec::new();
     for id in &book_dirs {

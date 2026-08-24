@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Bandages of Rapid Recovery",
+    "category": "MagicItems",
+    "name": "Bandages of Rapid Recovery",
+    "cost_gp": 200.0,
+    "weight_lbs": 1.0,
+    "description": "These bandages let you recover from wounds as if someone were using long-term care on you (Hero's Handbook, page 37). They are destroyed when removed or when you reach full hit points."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 5,
+    "record_key": "Bandages of Rapid Recovery"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -244,6 +244,12 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
         // UE additive-only: no already-shipped UE record is touched or
         // duplicated, only the residue nobody wrote gets a corpus record.
         "UE" => Some(("ultimate_equipment", "pathfinder/paizo/roleplaying_game/ultimate_equipment")),
+        // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`):
+        // `beginner_box` had no routing at all (no `RuleSetId`, no
+        // `BOOK_INPUTS` entry -- an inherited "will not be brought in"
+        // carve-out `§27b` overturns). See `gen_equipment_gap_tables.rs`'s
+        // `EQUIPMENT_BOOK_BB` `BookInput` doc comment.
+        "BB" => Some(("beginner_box", "pathfinder/paizo/roleplaying_game/beginner_box")),
         _ => None,
     }
 }
@@ -1152,7 +1158,7 @@ mod tests {
         for code in [
             "CRB", "APG", "ACG", "ARG", "UC", "UI", "UM", "UPSI", "UW", "B1", "ISG", "OA", "HA",
             "MYTHIC", "ISC", "ISR", "ISWG", "MC", "ISI", "B2", "B3", "B4", "BOTD2", "ISTEM",
-            "ISM", "AG",
+            "ISM", "AG", "BB",
         ] {
             assert!(book_routing(code).is_some(), "missing routing for {code}");
         }
@@ -1572,7 +1578,7 @@ mod tests {
         for code in [
             "CRB", "B1", "APG", "ACG", "ARG", "UC", "UI", "UM", "UPSI", "UW", "ISG", "OA", "HA",
             "MYTHIC", "ISC", "ISR", "ISWG", "MC", "ISI", "B2", "B3", "B4", "BOTD2", "ISTEM", "ISM",
-            "AG", "UE",
+            "AG", "UE", "BB",
         ] {
             if let Some((book_id, book_rel_dir)) = book_routing(code) {
                 book_dirs.insert(book_id, corpus_root.join(book_rel_dir));
