@@ -1,5 +1,39 @@
 //! Generic companion base-ability-score table (SD-32 T12
-//! `epic-10-reference-library-residual-reach` row 20, cycles 5-11).
+//! `epic-10-reference-library-residual-reach` row 20, cycles 5-12).
+//!
+//! # Cycle 12 addendum: all 38 `ultimate_wilderness` untagged records
+//! # grounded -- the single largest remaining bucket (104 -> 142)
+//!
+//! Continuing cycle 11's own next-cycle order, cycle 12 re-derived the
+//! `ultimate_wilderness` base-race `RACETYPE:Companion` population directly
+//! from `data/corpus/ultimate_wilderness/companion/*.json` (`§17a`),
+//! filtering to `monster_class` starting with `"Companion"` and excluding
+//! `companion_advancement_*`/`companion_body_type_*` records (a different
+//! record type, not a base-race entry): **52 total**, of which `gulper_
+//! plant` (cycle 5) and `ornithomimosaur` (cycle 11) were already grounded,
+//! leaving exactly **38** -- matching cycle 11's own next-cycle figure
+//! exactly.
+//!
+//! Source: `aonprd.com/DruidCompanions.aspx?ItemName=All&Category=Animal`
+//! -- a full alphabetical index of every animal-companion species this
+//! site tracks across all books, discovered this cycle -- confirmed all 38
+//! `ultimate_wilderness` slugs are listed, then fetched each species' own
+//! `DruidCompanions.aspx?ItemName=<species>` page directly for its printed
+//! "Starting Statistics" line (Ultimate Wilderness pp.178-185 per page,
+//! confirmed in each response), the same aonprd.com domain and per-species
+//! fetch method cycles 6-11 already used. Every one of the 38 fetched pages
+//! independently confirmed its own source book and page number. Cross-
+//! checked against the corpus's own `natural_armor` field for all 38:
+//! **100% agreement**, the same rate every prior cycle found. No delta was
+//! backed out anywhere -- every Str/Con value stored is the page's own
+//! printed total directly, matching cycle 9's corrected methodology.
+//!
+//! Table: **104 -> 142** (104 + 38). `ultimate_wilderness` is now fully
+//! closed (0 of 52 base-race records remain ungrounded). 54 of 196 remain,
+//! all untagged: `beastiary` (14), `ultimate_magic` (9), `advanced_race_
+//! guide` (6), `bestiary_6` (6), `core_rulebook` (6), `monster_codex` (5
+//! residual), `bestiary_5` (4 residual), `inner_sea_combat` (3, including
+//! `griffon`, still a live pinned refusal example), `horror_adventures` (1).
 //!
 //! # Cycle 11 addendum: both named dinosaur refusals resolved; 28 of the
 //! # 120 untagged-outside-`core_rulebook` records grounded (74 -> 104)
@@ -1357,6 +1391,280 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             "wolliped",
             CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 1, hit_die_size: 8 },
         );
+        // Cycle 12: the single largest remaining bucket, `ultimate_wilderness`'s
+        // own 38 untagged `RACETYPE:Companion` records not already grounded by
+        // `gulper_plant`/`ornithomimosaur`. Source: `aonprd.com/DruidCompanions.
+        // aspx?ItemName=<species>`'s own printed "Starting Statistics" line per
+        // species (an index page, `DruidCompanions.aspx?ItemName=All&Category=
+        // Animal`, enumerated the full species list first), cross-checked
+        // against the corpus's own `natural_armor` token for all 38 -- 100%
+        // agreement, same as every prior cycle.
+        out.insert(
+            // AoN: Str 8, Dex 15, Con 12, Int 2, Wis 13, Cha 7, +1 natural armor
+            // (Ultimate Wilderness p.178). Corpus (`ultimate_wilderness/companion/
+            // companion_archaeopteryx.json`) natural_armor: 1 -- agrees.
+            "archaeopteryx",
+            CompanionBaseStats { strength: 8, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 15, Con 13, Int --, Wis 10, Cha 2, +2 natural
+            // armor (Ultimate Wilderness p.184). Corpus (`companion_assassin_
+            // bug_giant.json`) natural_armor: 2 -- agrees.
+            "assassin_bug_giant",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 14, Con 13, Int 2, Wis 13, Cha 5, +2 natural armor
+            // (Ultimate Wilderness p.178). Corpus (`companion_bustard.json`)
+            // natural_armor: 2 -- agrees.
+            "bustard",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 15, Con 12, Int 2, Wis 13, Cha 5, +1 natural armor
+            // (Ultimate Wilderness p.179). Corpus (`companion_capybara.json`)
+            // natural_armor: 1 -- agrees.
+            "capybara",
+            CompanionBaseStats { strength: 12, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 13, Con 13, Int --, Wis 11, Cha 2, +2 natural
+            // armor (Ultimate Wilderness p.184). Corpus (`companion_caterpillar_
+            // giant.json`) natural_armor: 2 -- agrees.
+            "caterpillar_giant",
+            CompanionBaseStats { strength: 14, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 12, Con 12, Int 2, Wis 11, Cha 4, +2 natural armor
+            // (Ultimate Wilderness p.179). Corpus (`companion_cattle.json`)
+            // natural_armor: 2 -- agrees.
+            "cattle",
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 9, Dex 10, Con 17, Int --, Wis 11, Cha 2, +1 natural armor
+            // (Ultimate Wilderness p.184). Corpus (`companion_cockroach_giant.
+            // json`) natural_armor: 1 -- agrees.
+            "cockroach_giant",
+            CompanionBaseStats { strength: 9, constitution: 17, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 17, Con 12, Int --, Wis 12, Cha 9, +2 natural
+            // armor (Ultimate Wilderness p.184). Corpus (`companion_dragonfly_
+            // giant.json`) natural_armor: 2 -- agrees.
+            "dragonfly_giant",
+            CompanionBaseStats { strength: 13, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 11, Dex 15, Con 12, Int 2, Wis 11, Cha 4, +2 natural armor
+            // (Ultimate Wilderness p.179). Corpus (`companion_eohippus.json`)
+            // natural_armor: 2 -- agrees.
+            "eohippus",
+            CompanionBaseStats { strength: 11, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 11, Con 12, Int --, Wis 13, Cha 2, +2 natural
+            // armor (Ultimate Wilderness p.184). Corpus (`companion_eurypterid.
+            // json`) natural_armor: 2 -- agrees.
+            "eurypterid",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 15, Con 11, Int 2, Wis 15, Cha 6, +1 natural armor
+            // (Ultimate Wilderness p.179). Corpus (`companion_falcon.json`)
+            // natural_armor: 1 -- agrees.
+            "falcon",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 15, Con 13, Int 2, Wis 14, Cha 10, +4 natural
+            // armor (Ultimate Wilderness p.179). Corpus (`companion_frilled_
+            // lizard_giant.json`) natural_armor: 4 -- agrees.
+            "frilled_lizard_giant",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 17, Dex 13, Con 13, Int 2, Wis 13, Cha 6, +1 natural armor
+            // (Ultimate Wilderness p.179). Corpus (`companion_grizzly_bear.json`)
+            // natural_armor: 1 -- agrees.
+            "grizzly_bear",
+            CompanionBaseStats { strength: 17, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 11, Dex 16, Con 12, Int 2, Wis 13, Cha 9, +1 natural armor
+            // (Ultimate Wilderness p.180). Corpus (`companion_llama.json`)
+            // natural_armor: 1 -- agrees.
+            "llama",
+            CompanionBaseStats { strength: 11, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 17, Con 11, Int --, Wis 10, Cha 7, +3 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_locust_
+            // giant.json`) natural_armor: 3 -- agrees.
+            "locust_giant",
+            CompanionBaseStats { strength: 12, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 17, Con 14, Int --, Wis 13, Cha 6, +3 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_mantis_
+            // shrimp_giant.json`) natural_armor: 3 -- agrees.
+            "mantis_shrimp_giant",
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 15, Dex 13, Con 12, Int 2, Wis 10, Cha 7, +1 natural armor
+            // (Ultimate Wilderness p.180). Corpus (`companion_marsupial_devil.
+            // json`) natural_armor: 1 -- agrees.
+            "marsupial_devil",
+            CompanionBaseStats { strength: 15, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 16, Con 13, Int 2, Wis 13, Cha 7, +1 natural armor
+            // (Ultimate Wilderness p.180). Corpus (`companion_marsupial_lion.
+            // json`) natural_armor: 1 -- agrees.
+            "marsupial_lion",
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 15, Con 13, Int 2, Wis 10, Cha 5, +1 natural armor
+            // (Ultimate Wilderness p.180). Corpus (`companion_mole_giant.json`)
+            // natural_armor: 1 -- agrees.
+            "mole_giant",
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 15, Con 14, Int 2, Wis 13, Cha 7, +2 natural armor
+            // (Ultimate Wilderness p.180). Corpus (`companion_moose.json`)
+            // natural_armor: 2 -- agrees.
+            "moose",
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 21, Con 15, Int --, Wis 13, Cha 6, +1 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_mosquito_
+            // giant.json`) natural_armor: 1 -- agrees.
+            "mosquito_giant",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 17, Con 13, Int 2, Wis 13, Cha 6, +2 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_owl_giant.json`)
+            // natural_armor: 2 -- agrees.
+            "owl_giant",
+            CompanionBaseStats { strength: 10, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 12, Con 14, Int 2, Wis 13, Cha 9, +2 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_panda.json`)
+            // natural_armor: 2 -- agrees.
+            "panda",
+            CompanionBaseStats { strength: 13, constitution: 14, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 12, Con 15, Int 2, Wis 13, Cha 5, +1 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_porcupine_giant.
+            // json`) natural_armor: 1 -- agrees.
+            "porcupine_giant",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 14, Con 15, Int 1, Wis 12, Cha 4, +2 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_prionosuchus.
+            // json`) natural_armor: 2 -- agrees.
+            "prionosuchus",
+            CompanionBaseStats { strength: 13, constitution: 15, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 15, Con 12, Int 1, Wis 13, Cha 2, +2 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_reef_snake.json`)
+            // natural_armor: 2 -- agrees.
+            "reef_snake",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 14, Con 13, Int 2, Wis 12, Cha 5, +2 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_reindeer.json`)
+            // natural_armor: 2 -- agrees.
+            "reindeer",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 15, Dex 15, Con 13, Int 2, Wis 13, Cha 8, +1 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_saber_toothed_
+            // cat.json`) natural_armor: 1 -- agrees.
+            "saber_toothed_cat",
+            CompanionBaseStats { strength: 15, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 13, Dex 14, Con 15, Int 1, Wis 12, Cha 4, +3 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_salamander_giant.
+            // json`) natural_armor: 3 -- agrees.
+            "salamander_giant",
+            CompanionBaseStats { strength: 13, constitution: 15, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 9, Dex 14, Con 13, Int 2, Wis 12, Cha 9, +1 natural armor
+            // (Ultimate Wilderness p.181). Corpus (`companion_skunk_giant.json`)
+            // natural_armor: 1 -- agrees.
+            "skunk_giant",
+            CompanionBaseStats { strength: 9, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 15, Con 15, Int --, Wis 11, Cha 2, +1 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_solifugid_
+            // giant.json`) natural_armor: 1 -- agrees.
+            "solifugid_giant",
+            CompanionBaseStats { strength: 12, constitution: 15, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 10, Dex 17, Con 10, Int --, Wis 10, Cha 2, +1 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_spider_web_
+            // tyrant.json`) natural_armor: 1 -- agrees.
+            "spider_web_tyrant",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 8, Dex 15, Con 11, Int 1, Wis 12, Cha 2, +2 natural armor
+            // (Ultimate Wilderness p.182). Corpus (`companion_spitting_cobra.
+            // json`) natural_armor: 2 -- agrees.
+            "spitting_cobra",
+            CompanionBaseStats { strength: 8, constitution: 11, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 12, Dex 11, Con 12, Int --, Wis 12, Cha 7, +2 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_termite_
+            // giant.json`) natural_armor: 2 -- agrees.
+            "termite_giant",
+            CompanionBaseStats { strength: 12, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 9, Dex 13, Con 13, Int --, Wis 10, Cha 2, +3 natural
+            // armor (Ultimate Wilderness p.185). Corpus (`companion_whiptail_
+            // centipede_giant.json`) natural_armor: 3 -- agrees.
+            "whiptail_centipede_giant",
+            CompanionBaseStats { strength: 9, constitution: 13, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 15, Dex 15, Con 13, Int 2, Wis 12, Cha 6, +2 natural armor
+            // (Ultimate Wilderness p.182). Corpus (`companion_wolfdog.json`)
+            // natural_armor: 2 -- agrees.
+            "wolfdog",
+            CompanionBaseStats { strength: 15, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 10, Con 12, Int 2, Wis 10, Cha 5, +4 natural armor
+            // (Ultimate Wilderness p.182). Corpus (`companion_yak.json`)
+            // natural_armor: 4 -- agrees.
+            "yak",
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN: Str 14, Dex 15, Con 13, Int 2, Wis 14, Cha 6, +2 natural armor
+            // (Ultimate Wilderness p.182). Corpus (`companion_zebra.json`)
+            // natural_armor: 2 -- agrees.
+            "zebra",
+            CompanionBaseStats { strength: 14, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
         out
     })
 }
@@ -1759,13 +2067,51 @@ mod tests {
             ("narwhal", "Narwhal"),
             ("uintatherium", "Uintatherium"),
             ("wolliped", "Wolliped"),
+            ("archaeopteryx", "Archaeopteryx"),
+            ("assassin_bug_giant", "Assassin Bug Giant"),
+            ("bustard", "Bustard"),
+            ("capybara", "Capybara"),
+            ("caterpillar_giant", "Caterpillar Giant"),
+            ("cattle", "Cattle"),
+            ("cockroach_giant", "Cockroach Giant"),
+            ("dragonfly_giant", "Dragonfly Giant"),
+            ("eohippus", "Eohippus"),
+            ("eurypterid", "Eurypterid"),
+            ("falcon", "Falcon"),
+            ("frilled_lizard_giant", "Frilled Lizard Giant"),
+            ("grizzly_bear", "Grizzly Bear"),
+            ("llama", "Llama"),
+            ("locust_giant", "Locust Giant"),
+            ("mantis_shrimp_giant", "Mantis Shrimp Giant"),
+            ("marsupial_devil", "Marsupial Devil"),
+            ("marsupial_lion", "Marsupial Lion"),
+            ("mole_giant", "Mole Giant"),
+            ("moose", "Moose"),
+            ("mosquito_giant", "Mosquito Giant"),
+            ("owl_giant", "Owl Giant"),
+            ("panda", "Panda"),
+            ("porcupine_giant", "Porcupine Giant"),
+            ("prionosuchus", "Prionosuchus"),
+            ("reef_snake", "Reef Snake"),
+            ("reindeer", "Reindeer"),
+            ("saber_toothed_cat", "Saber Toothed Cat"),
+            ("salamander_giant", "Salamander Giant"),
+            ("skunk_giant", "Skunk Giant"),
+            ("solifugid_giant", "Solifugid Giant"),
+            ("spider_web_tyrant", "Spider Web Tyrant"),
+            ("spitting_cobra", "Spitting Cobra"),
+            ("termite_giant", "Termite Giant"),
+            ("whiptail_centipede_giant", "Whiptail Centipede Giant"),
+            ("wolfdog", "Wolfdog"),
+            ("yak", "Yak"),
+            ("zebra", "Zebra"),
         ] {
             assert_eq!(companion_display_name(slug), expected);
         }
     }
 
     #[test]
-    fn only_one_hundred_and_four_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry(
+    fn only_one_hundred_and_forty_two_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry(
     ) {
         // Named exactly, not rounded away (§16/§17a): the honest residual
         // this cycle leaves for the next one. Row 20 cycle 8 re-derived the
@@ -1806,14 +2152,90 @@ mod tests {
         // `inner_sea_combat` (3), and `horror_adventures` (1).
         assert_eq!(
             companion_base_stat_table().len(),
-            104,
+            142,
             "wolf, horse, gulper_plant, all 28 AnimalCompanionDinosaur species, the full \
              Aquatic/PlantCompanion/AnimalCompanionPrimate buckets (23 more), 22 of the 142 \
-             untagged core_rulebook records, and 28 more untagged records outside core_rulebook \
-             -- 92 of 196 real base-race RACETYPE:Companion corpus records still have no \
-             verified base-ability-score entry and must keep refusing until a future cycle adds \
-             them"
+             untagged core_rulebook records, 28 more untagged records outside core_rulebook, and \
+             cycle 12's 38 `ultimate_wilderness` untagged records -- 54 of 196 real base-race \
+             RACETYPE:Companion corpus records still have no verified base-ability-score entry \
+             and must keep refusing until a future cycle adds them"
         );
+    }
+
+    /// Row 20 cycle 12's own positive counterpart: all 38 `ultimate_wilderness`
+    /// untagged records, the single largest remaining bucket cycle 11 named,
+    /// pinning the exact base ability scores this cycle's doc comments derive.
+    #[test]
+    fn the_thirty_eight_cycle_twelve_ultimate_wilderness_companions_ground_their_own_verified_base_scores(
+    ) {
+        for (slug, display, expected_str, expected_con, expected_natural_armor) in [
+            ("archaeopteryx", "Archaeopteryx", 8i16, 12i16, 1i16),
+            ("assassin_bug_giant", "Assassin Bug Giant", 13, 13, 2),
+            ("bustard", "Bustard", 13, 13, 2),
+            ("capybara", "Capybara", 12, 12, 1),
+            ("caterpillar_giant", "Caterpillar Giant", 14, 13, 2),
+            ("cattle", "Cattle", 14, 12, 2),
+            ("cockroach_giant", "Cockroach Giant", 9, 17, 1),
+            ("dragonfly_giant", "Dragonfly Giant", 13, 12, 2),
+            ("eohippus", "Eohippus", 11, 12, 2),
+            ("eurypterid", "Eurypterid", 10, 12, 2),
+            ("falcon", "Falcon", 10, 11, 1),
+            ("frilled_lizard_giant", "Frilled Lizard Giant", 13, 13, 4),
+            ("grizzly_bear", "Grizzly Bear", 17, 13, 1),
+            ("llama", "Llama", 11, 12, 1),
+            ("locust_giant", "Locust Giant", 12, 11, 3),
+            ("mantis_shrimp_giant", "Mantis Shrimp Giant", 12, 14, 3),
+            ("marsupial_devil", "Marsupial Devil", 15, 12, 1),
+            ("marsupial_lion", "Marsupial Lion", 12, 13, 1),
+            ("mole_giant", "Mole Giant", 12, 13, 1),
+            ("moose", "Moose", 12, 14, 2),
+            ("mosquito_giant", "Mosquito Giant", 14, 15, 1),
+            ("owl_giant", "Owl Giant", 10, 13, 2),
+            ("panda", "Panda", 13, 14, 2),
+            ("porcupine_giant", "Porcupine Giant", 14, 15, 1),
+            ("prionosuchus", "Prionosuchus", 13, 15, 2),
+            ("reef_snake", "Reef Snake", 10, 12, 2),
+            ("reindeer", "Reindeer", 13, 13, 2),
+            ("saber_toothed_cat", "Saber Toothed Cat", 15, 13, 1),
+            ("salamander_giant", "Salamander Giant", 13, 15, 3),
+            ("skunk_giant", "Skunk Giant", 9, 13, 1),
+            ("solifugid_giant", "Solifugid Giant", 12, 15, 1),
+            ("spider_web_tyrant", "Spider Web Tyrant", 10, 10, 1),
+            ("spitting_cobra", "Spitting Cobra", 8, 11, 2),
+            ("termite_giant", "Termite Giant", 12, 12, 2),
+            ("whiptail_centipede_giant", "Whiptail Centipede Giant", 9, 13, 3),
+            ("wolfdog", "Wolfdog", 15, 13, 2),
+            ("yak", "Yak", 14, 12, 4),
+            ("zebra", "Zebra", 14, 13, 2),
+        ] {
+            let mut explanations = Vec::new();
+            let grounded = ground_companion_stat_block(
+                slug,
+                "companion",
+                "Druid",
+                display,
+                1,
+                &mut explanations,
+            );
+            assert!(grounded, "{slug} must ground a real stat block");
+            let detail = &explanations
+                .iter()
+                .find(|e| e.id == format!("companion.{slug}_stat_block"))
+                .unwrap_or_else(|| panic!("expected a companion.{slug}_stat_block record"))
+                .detail;
+            assert!(
+                detail.contains(&format!("Str {expected_str}")),
+                "{slug} expected base Str {expected_str} in detail: {detail}"
+            );
+            assert!(
+                detail.contains(&format!("Con {expected_con}")),
+                "{slug} expected base Con {expected_con} in detail: {detail}"
+            );
+            let table = companion_base_stat_table();
+            let stats = table.get(slug).expect("entry must exist");
+            assert_eq!(stats.natural_armor, expected_natural_armor, "{slug} natural armor");
+            assert_eq!(stats.hit_die_size, 8, "{slug} hit die size is always d8 per the companion mechanic");
+        }
     }
 
     /// Row 20 cycle 8's own positive counterpart, pinning the exact base
