@@ -1,5 +1,70 @@
 //! Generic companion base-ability-score table (SD-32 T12
-//! `epic-10-reference-library-residual-reach` row 20, cycles 5-12).
+//! `epic-10-reference-library-residual-reach` row 20, cycles 5-13).
+//!
+//! # Cycle 13 addendum: all 54 remaining untagged records grounded --
+//! # the 196-record `RACETYPE:Companion` population is now FULLY closed
+//!
+//! Continuing cycle 12's own next-cycle order (largest book first), cycle
+//! 13 re-derived the full residual population directly from `data/corpus/
+//! <book>/companion/*.json` across all nine books cycle 12 named (`§17a`),
+//! this time globbing every file in each book's `companion/` directory
+//! (not just `companion_*.json`) after a first pass under the narrower
+//! glob undercounted `advanced_race_guide` by 2 (`brute_steed_camel.json`/
+//! `brute_steed_horse.json` -- both real `MONSTERCLASS:Companion:2`
+//! records, filed without the usual `companion_` filename prefix). The
+//! corrected re-derivation found exactly **54**, matching cycle 12's own
+//! figure book-for-book once the two `brute_steed_*` records are counted
+//! (`advanced_race_guide` 6, not 4): `beastiary` (14), `ultimate_magic`
+//! (9), `advanced_race_guide` (6), `bestiary_6` (6), `core_rulebook` (6),
+//! `monster_codex` (5), `bestiary_5` (4), `inner_sea_combat` (3),
+//! `horror_adventures` (1).
+//!
+//! Source: the same `aonprd.com/DruidCompanions.aspx?ItemName=<species>`
+//! per-species fetch cycles 6-12 used, for every entry with its own
+//! printed "Starting Statistics" line (48 of 54). The remaining 6 have no
+//! independent stat block and are derived instead, each from an already-
+//! grounded table entry plus the source's own explicit textual rule,
+//! cross-checked against the corpus's own `natural_armor` token exactly
+//! like every other entry: `carnivorous_flower`/`crawling_vine`/
+//! `puffball`/`sapling_treant` (Advanced Race Guide p.26, the Treesinger
+//! elf druid archetype's plant companions -- an aonprd.com "Plant"
+//! category page plus a d20pfsrd/Paizo-blog corroboration, since AoN's own
+//! Plant Companions index only tracks Ultimate Wilderness's 8), `brute_
+//! steed_camel`/`brute_steed_horse` (Advanced Race Guide p.56, the Fell
+//! Rider hobgoblin cavalier archetype's own class feature text: "+2
+//! Strength, -2 Dexterity ... otherwise works like the cavalier's mount
+//! ability" -- the already-grounded `camel`/`horse` entries plus that
+//! delta), and `devolved_humanoid` (Horror Adventures p.50, the
+//! Devolutionist druid archetype's own nature-bond text: "Use the stats
+//! for an ape animal companion" -- the already-grounded `ape` entry
+//! reused directly). All 6 derivations are independently confirmed by the
+//! corpus's own `natural_armor` token agreeing with the source entry they
+//! derive from, not merely asserted.
+//!
+//! Natural-armor cross-check: **53 of 54 agree** with the corpus's own
+//! token. The lone exception, `dolphin_orca` (corpus 6, two independent
+//! sources -- aonprd.com and a corroborating search -- agree on 1): traced
+//! to the PCGen oracle itself (`b1_races_companion.lst` line 16,
+//! `BONUS:VAR|AC_Natural_Armor|6|TYPE=Base`), which shares its exact
+//! natural-armor value with the UNRELATED standalone Huge Orca monster
+//! race entry in the same file (`b1_races.lst`) -- strong evidence of a
+//! copy-paste error in PCGen's own third-party data, not a corpus
+//! ingestion defect. Per `decisions.md §1a` (grounded by measurement, not
+//! by whichever source is more convenient) the printed total (1) is what
+//! is stored; the corpus/oracle's disagreeing token is documented here
+//! rather than silently overridden or silently trusted. No delta was
+//! backed out anywhere else in this cycle's diff -- every other Str/Con
+//! value stored is the source's own printed (or once-removed, for the 6
+//! derived entries) total directly, matching cycle 9's corrected
+//! methodology throughout.
+//!
+//! Table: **142 -> 196** (142 + 54). The entire 196-record `RACETYPE:
+//! Companion` base-race population this table targets is now grounded --
+//! **zero** untagged records remain in any of the nine books cycle 12's
+//! own next-cycle plan named. Row 20's own acceptance criterion
+//! (`decisions.md §27b`/`§1a`: close or precisely size every
+//! `RACETYPE:Companion` corpus record) is met in full for this table; see
+//! this cycle's own receipt for the card-level `complete` determination.
 //!
 //! # Cycle 12 addendum: all 38 `ultimate_wilderness` untagged records
 //! # grounded -- the single largest remaining bucket (104 -> 142)
@@ -1665,6 +1730,364 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             "zebra",
             CompanionBaseStats { strength: 14, constitution: 13, natural_armor: 2, hit_die_size: 8 },
         );
+        // AoN: Str 9, Con 9, +0 natural armor (Pathfinder RPG Bestiary p.30). Corpus
+        // (`bat_dire.json`) natural_armor: 0 -- agrees.
+        out.insert(
+            "bat_dire",
+            CompanionBaseStats { strength: 9, constitution: 9, natural_armor: 0, hit_die_size: 8 },
+        );
+        // AoN: Str 12, Con 13, +1 natural armor (Pathfinder RPG Bestiary p.88). Corpus
+        // (`dolphin.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "dolphin",
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN (`aonprd.com/DruidCompanions.aspx?ItemName=Orca`, corroborated
+        // by an independent search-engine cross-check): Str 11, Con 10, +1
+        // natural armor (Pathfinder RPG Bestiary p.88). Corpus (`beastiary/companion_dolphin_
+        // orca.json`) carries `BONUS:VAR|AC_Natural_Armor|6|TYPE=Base` --
+        // PCGen's own oracle (`b1_races_companion.lst` line 16) really does say
+        // 6, not a repo ingestion error, but it is provably wrong: the wild-
+        // monster `Dolphin (Orca)` race entry in the SAME oracle file
+        // (`b1_races.lst`) shares the identical `AC_Natural_Armor|6` token --
+        // strong evidence PCGen's companion entry was copy-pasted from the
+        // standalone Huge Orca monster stat block rather than authored from
+        // the companion-specific Medium starting statistics. Two independent
+        // sources agree on 1; the printed total is grounded here directly,
+        // matching this table's own doctrine of measurement over fabrication
+        // (`decisions.md §1a`) -- the corpus's own natural-armor token is the
+        // outlier this cycle, not the ground truth, for this one record only.
+        out.insert(
+            "dolphin_orca",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 12, Con 18, +0 natural armor (Pathfinder RPG Bestiary p.119). Corpus
+        // (`eel_electric.json`) natural_armor: 0 -- agrees.
+        out.insert(
+            "eel_electric",
+            CompanionBaseStats { strength: 12, constitution: 18, natural_armor: 0, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 13, +4 natural armor (Pathfinder RPG Bestiary p.128). Corpus
+        // (`elephant.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "elephant",
+            CompanionBaseStats { strength: 14, constitution: 13, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 13, +4 natural armor (Pathfinder RPG Bestiary p.128). Corpus
+        // (`elephant_mastodon.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "elephant_mastodon",
+            CompanionBaseStats { strength: 14, constitution: 13, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 16, +1 natural armor (Pathfinder RPG Bestiary p.135). Corpus
+        // (`frog_giant.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "frog_giant",
+            CompanionBaseStats { strength: 15, constitution: 16, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 11, Con 11, +0 natural armor (Pathfinder RPG Bestiary p.157). Corpus
+        // (`goblin_dog.json`) natural_armor: 0 -- agrees.
+        out.insert(
+            "goblin_dog",
+            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 0, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 12, +1 natural armor (Pathfinder RPG Bestiary p.174). Corpus
+        // (`herd_animal_aurochs.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "herd_animal_aurochs",
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 12, +1 natural armor (Pathfinder RPG Bestiary p.174). Corpus
+        // (`herd_animal_bison.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "herd_animal_bison",
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 10, Con 13, +2 natural armor (Pathfinder RPG Bestiary p.179). Corpus
+        // (`hyena.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "hyena",
+            CompanionBaseStats { strength: 10, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 13, Con 12, +1 natural armor (Pathfinder RPG Bestiary p.194). Corpus
+        // (`lizard_monitor.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "lizard_monitor",
+            CompanionBaseStats { strength: 13, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 15, +4 natural armor (Pathfinder RPG Bestiary p.235). Corpus
+        // (`rhinoceros.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "rhinoceros",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 12, Con 9, +5 natural armor (Pathfinder RPG Bestiary p.236). Corpus
+        // (`roc.json`) natural_armor: 5 -- agrees.
+        out.insert(
+            "roc",
+            CompanionBaseStats { strength: 12, constitution: 9, natural_armor: 5, hit_die_size: 8 },
+        );
+        // AoN: Str 10, Con 15, +2 natural armor (Ultimate Magic p.36). Corpus
+        // (`ant_giant.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "ant_giant",
+            CompanionBaseStats { strength: 10, constitution: 15, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 13, Con 13, +6 natural armor (Ultimate Magic p.36). Corpus
+        // (`beetle_giant.json`) natural_armor: 6 -- agrees.
+        out.insert(
+            "beetle_giant",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 6, hit_die_size: 8 },
+        );
+        // AoN: Str 8, Con 11, +2 natural armor (Ultimate Magic p.36). Corpus
+        // (`centipede_giant.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "centipede_giant",
+            CompanionBaseStats { strength: 8, constitution: 11, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 9, Con 12, +0 natural armor (Ultimate Magic p.36). Corpus
+        // (`leech_giant.json`) natural_armor: 0 -- agrees.
+        out.insert(
+            "leech_giant",
+            CompanionBaseStats { strength: 9, constitution: 12, natural_armor: 0, hit_die_size: 8 },
+        );
+        // AoN: Str 10, Con 10, +3 natural armor (Ultimate Magic p.37). Corpus
+        // (`mantis_giant.json`) natural_armor: 3 -- agrees.
+        out.insert(
+            "mantis_giant",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 3, hit_die_size: 8 },
+        );
+        // AoN: Str 11, Con 12, +1 natural armor (Ultimate Magic p.37). Corpus
+        // (`scorpion_giant.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "scorpion_giant",
+            CompanionBaseStats { strength: 11, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 13, Con 13, +4 natural armor (Ultimate Magic p.37). Corpus
+        // (`slug_giant.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "slug_giant",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 6, Con 10, +0 natural armor (Ultimate Magic p.37). Corpus
+        // (`spider_giant.json`) natural_armor: 0 -- agrees.
+        out.insert(
+            "spider_giant",
+            CompanionBaseStats { strength: 6, constitution: 10, natural_armor: 0, hit_die_size: 8 },
+        );
+        // AoN: Str 10, Con 11, +2 natural armor (Ultimate Magic p.37). Corpus
+        // (`wasp_giant.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "wasp_giant",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 10, Con 15, +2 natural armor (Advanced Race Guide p.26). Corpus
+        // (`carnivorous_flower.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "carnivorous_flower",
+            CompanionBaseStats { strength: 10, constitution: 15, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 13, Con 13, +2 natural armor (Advanced Race Guide p.26). Corpus
+        // (`crawling_vine.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "crawling_vine",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 10, Con 12, +1 natural armor (Advanced Race Guide p.26). Corpus
+        // (`puffball.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "puffball",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 12, +1 natural armor (Advanced Race Guide p.26). Corpus
+        // (`sapling_treant.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "sapling_treant",
+            CompanionBaseStats { strength: 15, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // Advanced Race Guide p.56, the Fell Rider (Hobgoblin Cavalier) archetype's own
+        // "Brute Steed" class feature: "gains a +2 bonus to Strength, but
+        // takes a -2 penalty to Dexterity. This ability otherwise works like
+        // the cavalier's mount ability" -- not an independent stat block, a
+        // modifier on the ordinary Camel companion (already grounded above,
+        // Str 18/Con 14/+1 natural armor). Str 18+2=20, Con
+        // unaffected (14), natural armor unaffected (1) -- Dex is not a
+        // field this table tracks. Corpus (`advanced_race_guide/companion_
+        // brute_steed_camel.json`) `natural_armor`: 1 -- agrees with the unmodified Camel
+        // value, independently confirming this derivation.
+        out.insert(
+            "brute_steed_camel",
+            CompanionBaseStats { strength: 20, constitution: 14, natural_armor: 1, hit_die_size: 8 },
+        );
+        // Advanced Race Guide p.56, the Fell Rider (Hobgoblin Cavalier) archetype's own
+        // "Brute Steed" class feature: "gains a +2 bonus to Strength, but
+        // takes a -2 penalty to Dexterity. This ability otherwise works like
+        // the cavalier's mount ability" -- not an independent stat block, a
+        // modifier on the ordinary Horse companion (already grounded above,
+        // Str 16/Con 15/+4 natural armor). Str 16+2=18, Con
+        // unaffected (15), natural armor unaffected (4) -- Dex is not a
+        // field this table tracks. Corpus (`advanced_race_guide/companion_
+        // brute_steed_horse.json`) `natural_armor`: 4 -- agrees with the unmodified Horse
+        // value, independently confirming this derivation.
+        out.insert(
+            "brute_steed_horse",
+            CompanionBaseStats { strength: 18, constitution: 15, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 12, Con 12, +8 natural armor (Bestiary 6 p.311). Corpus
+        // (`brontotherium.json`) natural_armor: 8 -- agrees.
+        out.insert(
+            "brontotherium",
+            CompanionBaseStats { strength: 12, constitution: 12, natural_armor: 8, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 15, +4 natural armor (Bestiary 6 p.311). Corpus
+        // (`deinotherium.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "deinotherium",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 15, +4 natural armor (Bestiary 6 p.312). Corpus
+        // (`elasmotherium.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "elasmotherium",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 16, Con 10, +5 natural armor (Bestiary 6 p.312). Corpus
+        // (`mokele_mbembe.json`) natural_armor: 5 -- agrees.
+        out.insert(
+            "mokele_mbembe",
+            CompanionBaseStats { strength: 16, constitution: 10, natural_armor: 5, hit_die_size: 8 },
+        );
+        // AoN: Str 8, Con 10, +0 natural armor (Bestiary 6 p.312). Corpus
+        // (`raven_giant.json`) natural_armor: 0 -- agrees.
+        out.insert(
+            "raven_giant",
+            CompanionBaseStats { strength: 8, constitution: 10, natural_armor: 0, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 11, +4 natural armor (Bestiary 6 p.312). Corpus
+        // (`titanoboa.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "titanoboa",
+            CompanionBaseStats { strength: 15, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 15, +1 natural armor (Bestiary 2 p.128). Corpus
+        // (`gar.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "gar",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 15, +4 natural armor (Bestiary 2 p.186). Corpus
+        // (`megafauna_arsinoitherium.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "megafauna_arsinoitherium",
+            CompanionBaseStats { strength: 14, constitution: 15, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 13, Con 13, +5 natural armor (Bestiary 2 p.186). Corpus
+        // (`megafauna_gylptodon.json`) natural_armor: 5 -- agrees.
+        out.insert(
+            "megafauna_gylptodon",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 5, hit_die_size: 8 },
+        );
+        // AoN: Str 12, Con 14, +3 natural armor (Bestiary 2 p.187). Corpus
+        // (`megafauna_megaloceros.json`) natural_armor: 3 -- agrees.
+        out.insert(
+            "megafauna_megaloceros",
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 3, hit_die_size: 8 },
+        );
+        // AoN: Str 9, Con 11, +5 natural armor (Bestiary 2 p.187). Corpus
+        // (`megafauna_megatherium.json`) natural_armor: 5 -- agrees.
+        out.insert(
+            "megafauna_megatherium",
+            CompanionBaseStats { strength: 9, constitution: 11, natural_armor: 5, hit_die_size: 8 },
+        );
+        // AoN: Str 8, Con 11, +2 natural armor (Pathfinder RPG Core Rulebook p.54). Corpus
+        // (`snake_viper.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "snake_viper",
+            CompanionBaseStats { strength: 8, constitution: 11, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 13, Con 13, +2 natural armor (Monster Codex p.128). Corpus
+        // (`cave_salamander.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "cave_salamander",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 16, Con 13, +4 natural armor (Monster Codex p.172). Corpus
+        // (`gorthek.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "gorthek",
+            CompanionBaseStats { strength: 16, constitution: 13, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 11, Con 13, +1 natural armor (Monster Codex p.128). Corpus
+        // (`python_riding.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "python_riding",
+            CompanionBaseStats { strength: 11, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 17, +1 natural armor (Monster Codex p.177). Corpus
+        // (`rat_riding.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "rat_riding",
+            CompanionBaseStats { strength: 14, constitution: 17, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 14, Con 12, +1 natural armor (Monster Codex p.124). Corpus
+        // (`yzobu.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "yzobu",
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 16, +1 natural armor (Bestiary 5 p.313). Corpus
+        // (`frog_father.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "frog_father",
+            CompanionBaseStats { strength: 15, constitution: 16, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 16, +1 natural armor (Bestiary 5 p.313). Corpus
+        // (`frog_goliath.json`) natural_armor: 1 -- agrees.
+        out.insert(
+            "frog_goliath",
+            CompanionBaseStats { strength: 15, constitution: 16, natural_armor: 1, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 13, +2 natural armor (Bestiary 5 p.313). Corpus
+        // (`polar_bear.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "polar_bear",
+            CompanionBaseStats { strength: 15, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 13, +2 natural armor (Bestiary 5 p.313). Corpus
+        // (`polar_bear_dire.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "polar_bear_dire",
+            CompanionBaseStats { strength: 15, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 16, Con 16, +4 natural armor (Inner Sea Combat p.14). Corpus
+        // (`griffon.json`) natural_armor: 4 -- agrees.
+        out.insert(
+            "griffon",
+            CompanionBaseStats { strength: 16, constitution: 16, natural_armor: 4, hit_die_size: 8 },
+        );
+        // AoN: Str 15, Con 14, +2 natural armor (Inner Sea Combat p.14). Corpus
+        // (`hippogriff.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "hippogriff",
+            CompanionBaseStats { strength: 15, constitution: 14, natural_armor: 2, hit_die_size: 8 },
+        );
+        // AoN: Str 17, Con 13, +2 natural armor (Inner Sea Combat p.14). Corpus
+        // (`worg.json`) natural_armor: 2 -- agrees.
+        out.insert(
+            "worg",
+            CompanionBaseStats { strength: 17, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        // A `devolutionist` druid's own nature-bond text (Horror Adventures
+        // p.50): "Use the stats for an ape animal companion" -- not an
+        // independent stat block, the already-grounded `ape` entry's own Str
+        // 13/Con 10/+1 natural armor (above), reused directly. Corpus
+        // (`horror_adventures/companion_devolved_humanoid.json`)
+        // `natural_armor`: 1 -- agrees with `ape`'s own value, independently
+        // confirming this derivation.
+        out.insert(
+            "devolved_humanoid",
+            CompanionBaseStats { strength: 13, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
         out
     })
 }
@@ -1942,13 +2365,19 @@ mod tests {
     fn an_unknown_species_slug_refuses_rather_than_guesses() {
         // `decisions.md §1a`/the same posture `class_feature_grant_
         // consumer.rs`'s own module doc names throughout: no verified
-        // base-stat entry, no grounded record -- ever.
+        // base-stat entry, no grounded record -- ever. Cycle 13 grounded
+        // `griffon` (this test's own slug through cycle 12) as part of
+        // closing the full 196-record population, so the refusal example
+        // moves to a slug that is not, and never has been, a real PF1
+        // companion species -- proving the refusal path still exists and
+        // still works now that the table has no real gaps left to exercise
+        // it with.
         let mut explanations = Vec::new();
         let grounded = ground_companion_stat_block(
-            "griffon",
+            "not_a_real_companion_species",
             "companion",
             "Druid",
-            "Griffon",
+            "Not A Real Companion Species",
             1,
             &mut explanations,
         );
@@ -2105,13 +2534,92 @@ mod tests {
             ("wolfdog", "Wolfdog"),
             ("yak", "Yak"),
             ("zebra", "Zebra"),
+            // Cycle 13's own 54 new entries, closing the full population.
+            ("bat_dire", "Bat Dire"),
+            ("dolphin", "Dolphin"),
+            ("dolphin_orca", "Dolphin Orca"),
+            ("eel_electric", "Eel Electric"),
+            ("elephant", "Elephant"),
+            ("elephant_mastodon", "Elephant Mastodon"),
+            ("frog_giant", "Frog Giant"),
+            ("goblin_dog", "Goblin Dog"),
+            ("herd_animal_aurochs", "Herd Animal Aurochs"),
+            ("herd_animal_bison", "Herd Animal Bison"),
+            ("hyena", "Hyena"),
+            ("lizard_monitor", "Lizard Monitor"),
+            ("rhinoceros", "Rhinoceros"),
+            ("roc", "Roc"),
+            ("ant_giant", "Ant Giant"),
+            ("beetle_giant", "Beetle Giant"),
+            ("centipede_giant", "Centipede Giant"),
+            ("leech_giant", "Leech Giant"),
+            ("mantis_giant", "Mantis Giant"),
+            ("scorpion_giant", "Scorpion Giant"),
+            ("slug_giant", "Slug Giant"),
+            ("spider_giant", "Spider Giant"),
+            ("wasp_giant", "Wasp Giant"),
+            ("carnivorous_flower", "Carnivorous Flower"),
+            ("crawling_vine", "Crawling Vine"),
+            ("puffball", "Puffball"),
+            ("sapling_treant", "Sapling Treant"),
+            ("brute_steed_camel", "Brute Steed Camel"),
+            ("brute_steed_horse", "Brute Steed Horse"),
+            ("brontotherium", "Brontotherium"),
+            ("deinotherium", "Deinotherium"),
+            ("elasmotherium", "Elasmotherium"),
+            ("mokele_mbembe", "Mokele Mbembe"),
+            ("raven_giant", "Raven Giant"),
+            ("titanoboa", "Titanoboa"),
+            ("gar", "Gar"),
+            ("megafauna_arsinoitherium", "Megafauna Arsinoitherium"),
+            ("megafauna_gylptodon", "Megafauna Gylptodon"),
+            ("megafauna_megaloceros", "Megafauna Megaloceros"),
+            ("megafauna_megatherium", "Megafauna Megatherium"),
+            ("snake_viper", "Snake Viper"),
+            ("cave_salamander", "Cave Salamander"),
+            ("gorthek", "Gorthek"),
+            ("python_riding", "Python Riding"),
+            ("rat_riding", "Rat Riding"),
+            ("yzobu", "Yzobu"),
+            ("frog_father", "Frog Father"),
+            ("frog_goliath", "Frog Goliath"),
+            ("polar_bear", "Polar Bear"),
+            ("polar_bear_dire", "Polar Bear Dire"),
+            ("griffon", "Griffon"),
+            ("hippogriff", "Hippogriff"),
+            ("worg", "Worg"),
+            ("devolved_humanoid", "Devolved Humanoid"),
         ] {
             assert_eq!(companion_display_name(slug), expected);
         }
     }
 
     #[test]
-    fn only_one_hundred_and_forty_two_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry(
+    fn griffon_base_attack_bonus_and_armor_class_at_master_level_1() {
+        // Cycle 13: `griffon` was this module's own long-standing negative-
+        // test example (cycle 5 through 12) precisely because it had no
+        // verified entry. Now grounded (Inner Sea Combat p.14: Str 16, Con
+        // 16, +4 natural armor), this proves it the same positive way
+        // `gulper_plant`'s own tests above do: base attack bonus at 2 HD =
+        // 2*3/4 = 1, +3 Str modifier (Str 16) = 4. AC = 10 + natural armor
+        // (4 + 0 advancement) = 14.
+        let mut explanations = Vec::new();
+        let grounded = ground_companion_stat_block(
+            "griffon",
+            "companion",
+            "Druid",
+            "Griffon",
+            1,
+            &mut explanations,
+        );
+        assert!(grounded, "griffon must be found in the table now that cycle 13 grounded it");
+        let by_id: BTreeMap<&str, i16> = explanations.iter().map(|e| (e.id.as_str(), e.value)).collect();
+        assert_eq!(by_id.get("companion.base_attack_bonus"), Some(&4));
+        assert_eq!(by_id.get("companion.armor_class"), Some(&14));
+    }
+
+    #[test]
+    fn only_one_hundred_and_ninety_six_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry(
     ) {
         // Named exactly, not rounded away (§16/§17a): the honest residual
         // this cycle leaves for the next one. Row 20 cycle 8 re-derived the
@@ -2149,16 +2657,31 @@ mod tests {
         // (38), `beastiary` (14), `bestiary_3`/`bestiary_5` (6 each
         // residual), `ultimate_magic` (9), `bestiary_4`/`bestiary_6`/
         // `advanced_race_guide`/`core_rulebook`/`monster_codex` (residuals),
-        // `inner_sea_combat` (3), and `horror_adventures` (1).
+        // `inner_sea_combat` (3), and `horror_adventures` (1). Cycle 12
+        // added all 38 `ultimate_wilderness` records (104 -> 142), leaving
+        // 54 across the remaining nine books. Cycle 13 re-derived that
+        // residual directly (`§17a`, this module's own cycle-13 addendum
+        // above) -- 54 exactly, confirmed once the narrower `companion_*`
+        // filename glob a first pass used was replaced with a full
+        // directory glob catching `advanced_race_guide`'s two `brute_
+        // steed_*` files -- and grounded every one of them: `beastiary`
+        // (14), `ultimate_magic` (9), `advanced_race_guide` (6),
+        // `bestiary_6` (6), `core_rulebook` (6), `monster_codex` (5),
+        // `bestiary_5` (4), `inner_sea_combat` (3), `horror_adventures`
+        // (1) -- 142 + 54 = 196. The full `RACETYPE:Companion` base-race
+        // population is now closed: zero untagged records remain in any
+        // book (`decisions.md §27b`/`§1a`).
         assert_eq!(
             companion_base_stat_table().len(),
-            142,
+            196,
             "wolf, horse, gulper_plant, all 28 AnimalCompanionDinosaur species, the full \
              Aquatic/PlantCompanion/AnimalCompanionPrimate buckets (23 more), 22 of the 142 \
-             untagged core_rulebook records, 28 more untagged records outside core_rulebook, and \
-             cycle 12's 38 `ultimate_wilderness` untagged records -- 54 of 196 real base-race \
-             RACETYPE:Companion corpus records still have no verified base-ability-score entry \
-             and must keep refusing until a future cycle adds them"
+             untagged core_rulebook records, 28 more untagged records outside core_rulebook, \
+             cycle 12's 38 `ultimate_wilderness` untagged records, and cycle 13's final 54 \
+             untagged records spanning beastiary/ultimate_magic/advanced_race_guide/bestiary_6/ \
+             core_rulebook/monster_codex/bestiary_5/inner_sea_combat/horror_adventures -- every \
+             real base-race RACETYPE:Companion corpus record now has a verified \
+             base-ability-score entry"
         );
     }
 

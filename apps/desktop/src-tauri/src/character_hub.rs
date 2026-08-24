@@ -5185,9 +5185,18 @@ mod tests {
 
         // An unrecognized species slug must fall back to the class's own
         // prior default, never fabricate a stat block for an unverified
-        // species and never block the character.
+        // species and never block the character. Row 20 cycle 13 grounded
+        // `griffon` (this test's own unknown-species example through cycle
+        // 12) as part of closing the full 196-record companion population
+        // (`companion_base_stat_table.rs`'s own cycle-13 addendum), so the
+        // fallback example moves to a slug that is not, and never has
+        // been, a real PF1 companion species -- proving the fallback path
+        // still exists and still works now that the table has no real gaps
+        // left to exercise it with, the same correction
+        // `companion_base_stat_table.rs`'s own
+        // `an_unknown_species_slug_refuses_rather_than_guesses` test made.
         let unknown_species_request = CreateCharacterRequest {
-            companion_species: Some("griffon".to_owned()),
+            companion_species: Some("not_a_real_companion_species".to_owned()),
             ..request_for_class("race:human", "class:druid", 1)
         };
         let unknown_species_receipt =
@@ -5205,10 +5214,37 @@ mod tests {
                 .explanations
                 .iter()
                 .any(|e| e.id == "class_chassis.druid.animal_companion.wolf_stat_block"),
-            "an unrecognized companion_species (griffon, no verified table row) must fall back \
-             to grounding Wolf, this class's own prior default, never fabricate a Griffon stat \
-             block: {:?}",
+            "an unrecognized companion_species (not_a_real_companion_species, no verified table \
+             row) must fall back to grounding Wolf, this class's own prior default, never \
+             fabricate a stat block for it: {:?}",
             unknown_species_receipt.computation.explanations.iter().map(|e| &e.id).collect::<Vec<_>>()
+        );
+
+        // Positive proof, not just the refusal-path correction above:
+        // `griffon` itself now grounds through the SAME real
+        // character-creation request path `gulper_plant` was proven
+        // through above, never falling back to Wolf.
+        let griffon_request = CreateCharacterRequest {
+            companion_species: Some("griffon".to_owned()),
+            ..request_for_class("race:human", "class:druid", 1)
+        };
+        let griffon_receipt = build_pilot_headless_receipt(&compose_character_input(&griffon_request));
+        assert_eq!(
+            griffon_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Druid who selects griffon (grounded by row 20 cycle 13) must reach Computed: {:?}",
+            griffon_receipt.computation.diagnostics
+        );
+        let griffon_ids: std::collections::BTreeSet<&str> =
+            griffon_receipt.computation.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(
+            griffon_ids.contains("class_chassis.druid.animal_companion.griffon_stat_block"),
+            "a Druid who selected griffon must ground Griffon's own verified stat block, not \
+             fall back to Wolf, now that row 20 cycle 13 grounded it: {griffon_ids:?}"
+        );
+        assert!(
+            !griffon_ids.contains("class_chassis.druid.animal_companion.wolf_stat_block"),
+            "a Druid who selected griffon must NOT also ground Wolf's stat block: {griffon_ids:?}"
         );
     }
 
