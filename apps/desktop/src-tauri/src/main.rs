@@ -17,6 +17,7 @@ mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
 mod companion_catalog;
+mod companion_pool_catalog;
 mod intelligent_item_catalog;
 mod monster_catalog;
 mod pf1_adapter;

@@ -2452,6 +2452,24 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
         }
     }
 
+    // SD-32 row 19 cycle 3: the book's reference-pool ability groups
+    // (`" ~ "`-qualified, `owners: []` records no creature row of this book
+    // claims — `companion_pool_catalog.rs`'s own module doc names the
+    // shape). Every entry that reaches `pool_groups` at all already carries a
+    // real rendered `description` -- the render-and-refuse gate refused
+    // anything without one before it was ever added to the response -- so
+    // every row here is `with_payload` by construction. Inserted by
+    // `corpus_key` (the RAW `data.key` this ingest path wrote), not the
+    // slugged wire `key` -- `ingested` above is built from `corpus_record_
+    // keys`, which reads `data.key` verbatim, and this shape's raw key was
+    // never slugged in the first place (`CompanionPoolAbilityDto::corpus_key`'s
+    // own doc comment).
+    for group in response.pool_groups.iter().filter(|g| g.book == wire_code) {
+        for ability in &group.abilities {
+            with_payload.insert(ability.corpus_key.clone());
+        }
+    }
+
     assess("list_companion_catalog", &ingested, &with_payload, &identity_only)
 }
 
@@ -2952,6 +2970,118 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-DESC: residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("occult_adventures", "monster_abilities", "Gap: all 5 of Occult Adventures's `monster_ability` records (`decisions.md §27b` — EVERYTHING, overturning four cycles' worth of \"correctly out of scope\" for a negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate this repo's campaign set fails, a REACHABILITY finding, not an ingest exemption) ship with `owners: &[]` -- no monster row in this generator's ownership pass claims any of the 5 by name (the two owning race rows reference them only via a CATEGORY:Internal umbrella row this generator does not resolve into per-record ownership: `Race Traits ~ Homunculus Companion` names 2 of the 3 Homunculus rows, `Poison` is not named at all; `Racial Traits ~ Kami (Shikigami)` grants by TYPE=, not by name), the identical shape every other zero-record-owner book in this registry already ships. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`/`§27b`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: a per-record trace of each umbrella row's own grant logic (named references plus TYPE= auto-grants) to determine real ownership, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    // SD-32 row 19 cycle 3: `companion_pool_catalog.rs` (the generic
+    // "referenced pool" mechanism `decisions.md §17` asked for) closed 434
+    // of the ~470 companion records across 8 books that reached no surface
+    // at all, but each book's residual is real, not an instrument gap --
+    // structurally excluded by ONE of three verified reasons, never
+    // hand-listed per record: (1) an unresolvable `%N` formula scaling on a
+    // value this catalog has no character to compute (`MasterLevel`,
+    // `DraconicCompanionResistanceBonus`, eidolon-evolution CL-scaled dice);
+    // (2) `origin != "declared"` -- a PCGen `.MOD`/`.COPY=` delta row
+    // (confirmed real: `beastiary/companion/universal_monster_rule_fast_
+    // healing.json`, `origin: "mod_only"`) or an internal `VISIBLE:NO`
+    // engine-only row with `description: null` (confirmed real: `book_of_
+    // the_damned_volume_1/companion/imp_companion.json`); (3) no `" ~ "`
+    // group qualifier at all -- a bare category-header row (`Companion`,
+    // `Black Blade`, `Archetype Companion`) PCGen never intends as
+    // standalone player-facing content. Exact per-record keys pinned in
+    // `UNREACHED_RECORD_FINDINGS` below. Remedy: none of the three shapes is
+    // this mechanism's to close further -- (1) needs the same real formula
+    // interpreter `decisions.md §24` already ruled out of scope, (2) needs a
+    // delta-application engine (`beastiary1`'s pre-existing finding above
+    // names the same gap for its 28), (3) is not player-facing content by
+    // PCGen's own authoring convention.
+    (
+        "beastiary1",
+        "companions",
+        "28 of Bestiary 1's 154 companion records never appear on `list_companion_catalog` -- all \
+         22 `.COPY=` Celestial/Fiendish creature-template rows, 4 `.MOD` Universal-Monster-Rule \
+         ability rows, 1 orphan ability, 1 owned-but-`ASPECT:`-only row; `origin != \"declared\"` for \
+         every `.COPY=`/`.MOD` entry, the identical delta-row shape `companion_pool_catalog.rs`'s \
+         `origin == \"declared\"` gate structurally refuses. Needs a Celestial/Fiendish \
+         creature-template application engine that does not exist anywhere in this program \
+         (row 19 cycle 1's original assessment, unchanged).",
+    ),
+    (
+        "bestiary_4",
+        "companions",
+        "2 of Bestiary 4's 80 companion records never appear on `list_companion_catalog` -- both \
+         `.COPY=` ability-delta rows (`Pooka ~ Change Shape`, `Psychopomp (Nosoi) ~ Change Shape`), \
+         the same `origin != \"declared\"` delta shape as `beastiary1`'s finding above. Same remedy.",
+    ),
+    (
+        "advanced_race_guide",
+        "companions",
+        "9 of Advanced Race Guide's 32 companion records never appear on `list_companion_catalog` -- \
+         7 `Evolution ~ Major/Ultimate ...` rows carry an unresolvable `%N` formula \
+         (`companion_pool_catalog.rs`'s render-and-refuse gate correctly refuses rather than dropping \
+         the digit), plus `Shaitan Binder Eidolon ~ Noble Eidolon` and `WCEvolution ~ Skilled` (both \
+         also formula-scaled). Remedy: a real formula interpreter, out of scope per `decisions.md §24`.",
+    ),
+    (
+        // `Family.book` for this book is `"apg"`, not `"advanced_players_guide"`
+        // (`reach_of`'s own dispatch arm below carries the comment explaining
+        // the historical rename) -- this entry must match it exactly or
+        // `unsurfaced_families_are_exactly_the_recorded_findings` cannot find it.
+        "apg",
+        "companions",
+        "137 of Advanced Players Guide's 220 companion records never appear on `list_companion_catalog` \
+         -- the book's full Eidolon `Evolution ~ ...`/`Temp Evolution ~ ...` roster, every one scaling \
+         on a `%N` formula (`DR`/resistance/breath-weapon magnitudes computed from eidolon level) this \
+         catalog has no character to resolve, correctly refused by the render-and-refuse gate rather \
+         than served with a dropped digit -- `Companion Bonus Skill`/`Eidolon Bonus Skill`, the book's \
+         only ungrouped clean-rendering records, ARE served (`companion_pool_catalog.rs` admits a \
+         `\" ~ \"`-free key as its own singleton pool, not excluded on a syntax technicality). Remedy: \
+         a real formula interpreter, out of scope per `decisions.md §24`.",
+    ),
+    (
+        "crb",
+        "companions",
+        "31 of Core Rulebook's 184 companion records never appear on `list_companion_catalog` -- \
+         verified per record, not by shape guess: most (`Companion`, `Companion Advancement`, \
+         `Companion Skills`, `Companion Stat ~ <ability>`, 5 `.MOD` bonus-delta rows) carry an \
+         EMPTY `description` (confirmed: `data/corpus/core_rulebook/companion/companion.json`'s \
+         `data.description == \"\"`) -- PCGen's own umbrella/category-header convention, no prose \
+         to serve at all; the rest (`Animal Companion Feat ~ Combat Reflexes`/`Power Attack`/etc.) \
+         carry an unresolvable `%N` formula this catalog has no character to compute. Remedy: none \
+         for the empty-description rows (no content exists to serve); a real formula interpreter for \
+         the rest, out of scope per `decisions.md §24`.",
+    ),
+    (
+        "ultimate_magic",
+        "companions",
+        "106 of Ultimate Magic's 198 companion records never appear on `list_companion_catalog` -- the \
+         Black Blade (Magus arcane pool weapon) and Eidolon `Evolution ~ ...`/basic-spell-like-ability \
+         roster, every one scaling on a `%N` formula (caster level, arcane pool points, `MasterLevel`) \
+         this catalog has no character to resolve, correctly refused by the render-and-refuse gate. \
+         Remedy: a real formula interpreter, out of scope per `decisions.md §24`.",
+    ),
+    (
+        "book_of_the_damned_volume_1",
+        "companions",
+        "4 of Book of the Damned Volume 1's 31 companion records never appear on `list_companion_catalog` \
+         -- confirmed real: `imp_companion.json`'s `description: null` (`VISIBLE:NO` internal chassis \
+         row, `origin: \"declared\"` but no prose to render at all), `1.json`'s `description: null` \
+         (a bare `ABILITY:FEAT|AUTOMATIC|CMB Output` internal token, not player content), and the \
+         Imp Companion's 2 `Bonus Tricks`/`Starting Shape Change` rows, both scaling on an unresolved \
+         `%N` (`ImpCompBonusTricks`/`ImpCompStartTricks`). Remedy: a real formula interpreter for the \
+         latter two; the former two carry no content to serve at all.",
+    ),
+    (
+        "ultimate_wilderness",
+        "companions",
+        "43 of Ultimate Wilderness's 575 companion records never appear on `list_companion_catalog` -- \
+         down from 248 before `companion_pool_catalog.rs` landed this cycle. Verified per record: most \
+         (`Archetype Companion`, `Archetype Familiar`, `Plant Base Form ~ <element>`, `Unchained \
+         Eidolon Base Form ~ <element>`) carry an EMPTY `description` (confirmed: `data/corpus/\
+         ultimate_wilderness/companion/cactus.json`'s `data.description == \"\"`) -- umbrella \
+         category rows with no prose to serve; the rest (`Draconic Companion ~ <Resistance>`, \
+         `Animal Trick ~ Sneak`/`Spin Silk`, `Prankster ~ Glib Comedy`, eidolon-progression rows) \
+         carry an unresolvable `%N` formula (`MasterLevel`/`DraconicCompanionResistanceBonus`/CON-\
+         score-derived). Remedy: none for the empty-description rows; a real formula interpreter for \
+         the rest, out of scope per `decisions.md §24`.",
+    ),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -5104,6 +5234,414 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "ultimate_psionics:monster_ability:energy_touch_fire",
             "ultimate_psionics:monster_ability:horror_devastating_touch",
             "ultimate_psionics:monster_ability:horror_link",
+        ],
+    ),
+    // SD-32 row 19 cycle 3: `companion` records `companion_pool_catalog.rs`
+    // structurally declines to serve (empty description, a non-`"declared"`
+    // `origin`, or an unresolved `%N`) -- see the matching `OPEN_FINDINGS`
+    // entries above for the per-book breakdown. Pinned by the corpus's own
+    // RAW `data.key` (this ingest path, unlike every other kind's ingest,
+    // never slugs it into a `<book>:companion:<slug>` wire identity --
+    // `CompanionPoolAbilityDto::corpus_key`'s own doc comment), verbatim
+    // from a live `corpus_record_keys` run, never retyped by hand.
+    (
+        "beastiary1",
+        "companions",
+        &[
+            "Bat (Celestial)",
+            "Bat (Fiendish)",
+            "Cat (Celestial)",
+            "Cat (Fiendish)",
+            "Hawk (Celestial)",
+            "Hawk (Fiendish)",
+            "Lizard (Celestial)",
+            "Lizard (Fiendish)",
+            "Mephit ~ Summon",
+            "Monkey (Celestial)",
+            "Monkey (Fiendish)",
+            "Owl (Celestial)",
+            "Owl (Fiendish)",
+            "Pseudodragon ~ Tail",
+            "Rat (Celestial)",
+            "Rat (Fiendish)",
+            "Raven (Celestial)",
+            "Raven (Fiendish)",
+            "Toad (Celestial)",
+            "Toad (Fiendish)",
+            "Universal Monster Rule ~ Change Shape",
+            "Universal Monster Rule ~ Disease (Extraordinary)",
+            "Universal Monster Rule ~ Fast Healing",
+            "Universal Monster Rule ~ Poison (Extraordinary)",
+            "Viper (Celestial)",
+            "Viper (Fiendish)",
+            "Weasel (Celestial)",
+            "Weasel (Fiendish)",
+        ],
+    ),
+    (
+        "bestiary_4",
+        "companions",
+        &["Pooka ~ Change Shape", "Psychopomp (Nosoi) ~ Change Shape"],
+    ),
+    (
+        "advanced_race_guide",
+        "companions",
+        &[
+            "Evolution ~ Major Glitterdust 1",
+            "Evolution ~ Major Glitterdust 3",
+            "Evolution ~ Major Soften Earth and Stone 1",
+            "Evolution ~ Major Soften Earth and Stone 3",
+            "Evolution ~ Stone Curse",
+            "Evolution ~ Ultimate Meld Into Stone 1",
+            "Evolution ~ Ultimate Stone Shape 1",
+            "Shaitan Binder Eidolon ~ Noble Eidolon",
+            "WCEvolution ~ Skilled",
+        ],
+    ),
+    (
+        "apg",
+        "companions",
+        &[
+            "Evolution ~ Ability Increase Cha",
+            "Evolution ~ Ability Increase Con LH",
+            "Evolution ~ Ability Increase Con SM",
+            "Evolution ~ Ability Increase Dex",
+            "Evolution ~ Ability Increase Int",
+            "Evolution ~ Ability Increase Str LH",
+            "Evolution ~ Ability Increase Str SM",
+            "Evolution ~ Ability Increase Wis",
+            "Evolution ~ Arms",
+            "Evolution ~ Blindsense",
+            "Evolution ~ Blindsight",
+            "Evolution ~ Breath Weapon (Cone of Acid)",
+            "Evolution ~ Breath Weapon (Cone of Cold)",
+            "Evolution ~ Breath Weapon (Cone of Electricity)",
+            "Evolution ~ Breath Weapon (Cone of Fire)",
+            "Evolution ~ Breath Weapon (Line of Acid)",
+            "Evolution ~ Breath Weapon (Line of Cold)",
+            "Evolution ~ Breath Weapon (Line of Electricity)",
+            "Evolution ~ Breath Weapon (Line of Fire)",
+            "Evolution ~ Burrow",
+            "Evolution ~ DR Chaotic",
+            "Evolution ~ DR Evil",
+            "Evolution ~ DR Good",
+            "Evolution ~ DR Lawful",
+            "Evolution ~ Extra Breath Weapon Cone Acid",
+            "Evolution ~ Extra Breath Weapon Cone Cold",
+            "Evolution ~ Extra Breath Weapon Cone Electricity",
+            "Evolution ~ Extra Breath Weapon Cone Fire",
+            "Evolution ~ Extra Breath Weapon Line Acid",
+            "Evolution ~ Extra Breath Weapon Line Cold",
+            "Evolution ~ Extra Breath Weapon Line Electricity",
+            "Evolution ~ Extra Breath Weapon Line Fire",
+            "Evolution ~ Fast Healing",
+            "Evolution ~ Flight Magic",
+            "Evolution ~ Flight Winged",
+            "Evolution ~ Frightful Presence",
+            "Evolution ~ Huge",
+            "Evolution ~ Immune Acid",
+            "Evolution ~ Immune Cold",
+            "Evolution ~ Immune Electricity",
+            "Evolution ~ Immune Fire",
+            "Evolution ~ Immune Sonic",
+            "Evolution ~ Improved DR Chaotic",
+            "Evolution ~ Improved DR Evil",
+            "Evolution ~ Improved DR Good",
+            "Evolution ~ Improved DR Lawful",
+            "Evolution ~ Improved Fast Healing",
+            "Evolution ~ Improved Flight",
+            "Evolution ~ Large",
+            "Evolution ~ Legs",
+            "Evolution ~ Poison Con",
+            "Evolution ~ Poison Str",
+            "Evolution ~ Rake",
+            "Evolution ~ Reach",
+            "Evolution ~ Remove Claws",
+            "Evolution ~ Rend",
+            "Evolution ~ Resist Acid",
+            "Evolution ~ Resist Cold",
+            "Evolution ~ Resist Electricity",
+            "Evolution ~ Resist Fire",
+            "Evolution ~ Resist Sonic",
+            "Evolution ~ SR",
+            "Evolution ~ Small",
+            "Evolution ~ Trample",
+            "Evolution ~ Tremorsense",
+            "Evolution ~ Trip",
+            "Evolution ~ Weapon Martial",
+            "Evolution ~ Weapon Simple",
+            "Evolution ~ Web",
+            "Temp Evolution ~ Ability Increase Cha",
+            "Temp Evolution ~ Ability Increase Con LH",
+            "Temp Evolution ~ Ability Increase Con SM",
+            "Temp Evolution ~ Ability Increase Dex",
+            "Temp Evolution ~ Ability Increase Int",
+            "Temp Evolution ~ Ability Increase Str LH",
+            "Temp Evolution ~ Ability Increase Str SM",
+            "Temp Evolution ~ Ability Increase Wis",
+            "Temp Evolution ~ Arms",
+            "Temp Evolution ~ Blindsense",
+            "Temp Evolution ~ Blindsight",
+            "Temp Evolution ~ Breath Weapon (Cone of Acid)",
+            "Temp Evolution ~ Breath Weapon (Cone of Cold)",
+            "Temp Evolution ~ Breath Weapon (Cone of Electricity)",
+            "Temp Evolution ~ Breath Weapon (Cone of Fire)",
+            "Temp Evolution ~ Breath Weapon (Line of Acid)",
+            "Temp Evolution ~ Breath Weapon (Line of Cold)",
+            "Temp Evolution ~ Breath Weapon (Line of Electricity)",
+            "Temp Evolution ~ Breath Weapon (Line of Fire)",
+            "Temp Evolution ~ Burrow",
+            "Temp Evolution ~ DR Chaotic",
+            "Temp Evolution ~ DR Evil",
+            "Temp Evolution ~ DR Good",
+            "Temp Evolution ~ DR Lawful",
+            "Temp Evolution ~ Extra Breath Weapon Cone Acid",
+            "Temp Evolution ~ Extra Breath Weapon Cone Cold",
+            "Temp Evolution ~ Extra Breath Weapon Cone Electricity",
+            "Temp Evolution ~ Extra Breath Weapon Cone Fire",
+            "Temp Evolution ~ Extra Breath Weapon Line Acid",
+            "Temp Evolution ~ Extra Breath Weapon Line Cold",
+            "Temp Evolution ~ Extra Breath Weapon Line Electricity",
+            "Temp Evolution ~ Extra Breath Weapon Line Fire",
+            "Temp Evolution ~ Fast Healing",
+            "Temp Evolution ~ Flight Magic",
+            "Temp Evolution ~ Flight Winged",
+            "Temp Evolution ~ Frightful Presence",
+            "Temp Evolution ~ Huge",
+            "Temp Evolution ~ Immune Acid",
+            "Temp Evolution ~ Immune Cold",
+            "Temp Evolution ~ Immune Electricity",
+            "Temp Evolution ~ Immune Fire",
+            "Temp Evolution ~ Immune Sonic",
+            "Temp Evolution ~ Improved Bite",
+            "Temp Evolution ~ Improved DR Chaotic",
+            "Temp Evolution ~ Improved DR Evil",
+            "Temp Evolution ~ Improved DR Good",
+            "Temp Evolution ~ Improved DR Lawful",
+            "Temp Evolution ~ Improved Fast Healing",
+            "Temp Evolution ~ Improved Flight",
+            "Temp Evolution ~ Large",
+            "Temp Evolution ~ Legs",
+            "Temp Evolution ~ Poison Con",
+            "Temp Evolution ~ Poison Str",
+            "Temp Evolution ~ Rake",
+            "Temp Evolution ~ Reach",
+            "Temp Evolution ~ Rend",
+            "Temp Evolution ~ Resist Acid",
+            "Temp Evolution ~ Resist Cold",
+            "Temp Evolution ~ Resist Electricity",
+            "Temp Evolution ~ Resist Fire",
+            "Temp Evolution ~ Resist Sonic",
+            "Temp Evolution ~ SR",
+            "Temp Evolution ~ Trample",
+            "Temp Evolution ~ Tremorsense",
+            "Temp Evolution ~ Trip",
+            "Temp Evolution ~ Weapon Martial",
+            "Temp Evolution ~ Weapon Simple",
+            "Temp Evolution ~ Web",
+        ],
+    ),
+    (
+        "book_of_the_damned_volume_1",
+        "companions",
+        &["1", "Imp Companion", "Imp Companion ~ Bonus Tricks", "Imp Companion ~ Starting Shape Change"],
+    ),
+    (
+        "crb",
+        "companions",
+        &[
+            "+2 to Dexterity and Constitution",
+            "Animal Companion Feat ~ Combat Reflexes",
+            "Animal Companion Feat ~ Power Attack",
+            "Animal Companion Feat ~ Toughness",
+            "Animal Companion Feat ~ Weapon Focus",
+            "Animal Companion ~ AC Bonus",
+            "Animal Companion ~ Bonus Tricks",
+            "Animal Companion ~ Spell Resistance",
+            "Animal Companion ~ Stat Bonus",
+            "Base Companion ~ Animal Companion",
+            "Base Companion ~ Special Mount",
+            "Companion",
+            "Companion Advancement",
+            "Companion Skills",
+            "Companion Stat ~ CHA",
+            "Companion Stat ~ CON",
+            "Companion Stat ~ DEX",
+            "Companion Stat ~ INT",
+            "Companion Stat ~ STR",
+            "Companion Stat ~ WIS",
+            "Companion ~ Ability Score Increase",
+            "Companion ~ Bonus Tricks",
+            "Companion ~ Devotion",
+            "Companion ~ Evasion",
+            "Companion ~ Improved Evasion",
+            "Companion ~ Link",
+            "Companion ~ Multiattack",
+            "Companion ~ Share Spells",
+            "Companion ~ Spell Resistance (AC)",
+            "Companion ~ Spell Resistance (SM)",
+            "Shadow Companion",
+        ],
+    ),
+    (
+        "ultimate_magic",
+        "companions",
+        &[
+            "1",
+            "Black Blade",
+            "Black Blade Arcane Pool",
+            "Black Blade ~ Ego",
+            "Black Blade ~ Enhancement Bonus",
+            "Black Blade ~ Life Drinker",
+            "Black Blade ~ Spell Defense",
+            "Black Blade ~ Transfer Arcana",
+            "Companion Stat ~ Mindless to 1 INT",
+            "Evolution ~ BM Acid Splash 1",
+            "Evolution ~ BM Acid Splash 3",
+            "Evolution ~ BM Dancing Lights 1",
+            "Evolution ~ BM Dancing Lights 3",
+            "Evolution ~ BM Daze 1",
+            "Evolution ~ BM Daze 3",
+            "Evolution ~ BM Detect Magic 1",
+            "Evolution ~ BM Detect Magic 3",
+            "Evolution ~ BM Flare 1",
+            "Evolution ~ BM Flare 3",
+            "Evolution ~ BM Ghost Sound 1",
+            "Evolution ~ BM Ghost Sound 3",
+            "Evolution ~ BM Light 1",
+            "Evolution ~ BM Light 3",
+            "Evolution ~ BM Mage Hand 1",
+            "Evolution ~ BM Mage Hand 3",
+            "Evolution ~ BM Ray of Frost 1",
+            "Evolution ~ BM Ray of Frost 3",
+            "Evolution ~ BM Stabilize 1",
+            "Evolution ~ BM Stabilize 3",
+            "Evolution ~ BM Touch of Fatigue 1",
+            "Evolution ~ BM Touch of Fatigue 3",
+            "Evolution ~ Channel Resistance",
+            "Evolution ~ Dimension Door",
+            "Evolution ~ Hooved Feet",
+            "Evolution ~ Hooved Hands",
+            "Evolution ~ Improved Channel Resistance",
+            "Evolution ~ Incorporeal Form",
+            "Evolution ~ Major Acid Arrow 1",
+            "Evolution ~ Major Acid Arrow 3",
+            "Evolution ~ Major Cure Moderate Wounds 1",
+            "Evolution ~ Major Cure Moderate Wounds 3",
+            "Evolution ~ Major Darkness 1",
+            "Evolution ~ Major Darkness 3",
+            "Evolution ~ Major Daze Monster 1",
+            "Evolution ~ Major Daze Monster 3",
+            "Evolution ~ Major Glide 1",
+            "Evolution ~ Major Glide 3",
+            "Evolution ~ Major Invisibility 1",
+            "Evolution ~ Major Invisibility 3",
+            "Evolution ~ Major Lesser Restoration 1",
+            "Evolution ~ Major Lesser Restoration 3",
+            "Evolution ~ Major Levitate 1",
+            "Evolution ~ Major Levitate 3",
+            "Evolution ~ Major Minor Image 1",
+            "Evolution ~ Major Minor Image 3",
+            "Evolution ~ Major Scorching Ray 1",
+            "Evolution ~ Major Scorching Ray 3",
+            "Evolution ~ Major See Invisibility 1",
+            "Evolution ~ Major See Invisibility 3",
+            "Evolution ~ Major Spider Climb 1",
+            "Evolution ~ Major Spider Climb 3",
+            "Evolution ~ Minor Burning Hands 1",
+            "Evolution ~ Minor Burning Hands 3",
+            "Evolution ~ Minor Comprehend Languages 1",
+            "Evolution ~ Minor Comprehend Languages 3",
+            "Evolution ~ Minor Cure Light Wounds 1",
+            "Evolution ~ Minor Cure Light Wounds 3",
+            "Evolution ~ Minor Detect Chaos 1",
+            "Evolution ~ Minor Detect Chaos 3",
+            "Evolution ~ Minor Detect Evil 1",
+            "Evolution ~ Minor Detect Evil 3",
+            "Evolution ~ Minor Detect Good 1",
+            "Evolution ~ Minor Detect Good 3",
+            "Evolution ~ Minor Detect Law 1",
+            "Evolution ~ Minor Detect Law 3",
+            "Evolution ~ Minor Magic Missile 1",
+            "Evolution ~ Minor Magic Missile 3",
+            "Evolution ~ Minor Obscuring Mist 1",
+            "Evolution ~ Minor Obscuring Mist 3",
+            "Evolution ~ Minor Silent Image 1",
+            "Evolution ~ Minor Silent Image 3",
+            "Evolution ~ Minor Vanish 1",
+            "Evolution ~ Minor Vanish 3",
+            "Evolution ~ Minor Ventriloquism 1",
+            "Evolution ~ Minor Ventriloquism 3",
+            "Evolution ~ Ultimate Arcane Sight 1",
+            "Evolution ~ Ultimate Create Food and Water 1",
+            "Evolution ~ Ultimate Cure Serious Wounds 1",
+            "Evolution ~ Ultimate Daylight 1",
+            "Evolution ~ Ultimate Fireball 1",
+            "Evolution ~ Ultimate Fly 1",
+            "Evolution ~ Ultimate Gaseous Form 1",
+            "Evolution ~ Ultimate Lightning Bolt 1",
+            "Evolution ~ Ultimate Major Image 1",
+            "Evolution ~ Ultimate Stinking Cloud 1",
+            "Evolution ~ Ultimate Tongues 1",
+            "Evolution ~ Ultimate Water Breathing 1",
+            "Giant Spider Vermin Companion ~ Poison",
+            "Greensting Scorpion ~ Poison",
+            "Temp Evolution ~ Channel Resistance",
+            "Temp Evolution ~ Dimension Door",
+            "Temp Evolution ~ Hooved Feet",
+            "Temp Evolution ~ Hooved Hands",
+            "Temp Evolution ~ Improved Channel Resistance",
+            "Temp Evolution ~ Incorporeal Form",
+            "Vermin Companion",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "companions",
+        &[
+            "Aberrant Companion ~ Aberrant Sight",
+            "Aberrant Companion ~ Aberrant Skills",
+            "Animal Trick ~ Cocoon",
+            "Animal Trick ~ Spin Silk",
+            "Archetype Companion",
+            "Archetype Familiar",
+            "Augmented Companion ~ Augmented Sight",
+            "Deathtouched Companion ~ Dead Sight",
+            "Deathtouched Companion ~ Deathtouched Skills",
+            "Draconic Companion ~ Acid Resistance",
+            "Draconic Companion ~ Breath Weapon Choice",
+            "Draconic Companion ~ Breath Weapon ~ Cone",
+            "Draconic Companion ~ Breath Weapon ~ Line",
+            "Draconic Companion ~ Cold Resistance",
+            "Draconic Companion ~ Draconic Sight",
+            "Draconic Companion ~ Draconic Skills",
+            "Draconic Companion ~ Electricity Resistance",
+            "Draconic Companion ~ Fire Resistance",
+            "Feytouched Companion Advancement",
+            "Feytouched Companion ~ Feytouched Skills",
+            "Feytouched Companion ~ Iron Bane",
+            "Figment ~ Manifest Dreams",
+            "Hunter's Bond ~ Animal Companion",
+            "Infiltrator ~ Scry on Familiar",
+            "Infiltrator ~ Uncanny Dodge Tracker",
+            "Margay ~ Sound Mimicry",
+            "Pilferer ~ Nondetection",
+            "Pilferer ~ Sneak",
+            "Plant Base Form ~ Cactus",
+            "Plant Base Form ~ Conifer",
+            "Plant Base Form ~ Fungus",
+            "Plant Base Form ~ Leaf",
+            "Plant Base Form ~ Seaweed",
+            "Plant ~ Unchained Eidolon LVL08",
+            "Prankster ~ Glib Comedy",
+            "Precocious Companion Advancement",
+            "Tracker ~ Tracker Skills",
+            "Unchained Eidolon Base Form ~ Cactus",
+            "Unchained Eidolon Base Form ~ Conifer",
+            "Unchained Eidolon Base Form ~ Fungus",
+            "Unchained Eidolon Base Form ~ Leaf",
+            "Unchained Eidolon Base Form ~ Seaweed",
+            "Verdant Companion ~ Verdant Resistance",
         ],
     ),
 ];

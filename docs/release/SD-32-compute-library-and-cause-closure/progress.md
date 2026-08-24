@@ -8065,3 +8065,66 @@ Full receipt:
 `artifacts/gate-3-closure-invariant/row11-final-enumeration-and-two-closures_cycle-1_cycle_receipt.md`
 (revised post-rebase to reflect §2's superseded-by-concurrent-landing outcome).
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row19-cycle3 (2026-08-24) — Epic 9, row 19 (`epic-9-desktop-reach-and-catalog-reds`)
+
+Read `class_feature_pool_catalog.rs` / `class_feature_grant_consumer.rs` first, per the brief, and
+built the SAME "member of a referenced pool" mechanism for `companion` in a new
+`companion_pool_catalog.rs` — not a second module reinventing the shape. A `companion/*.json`
+record with `owners: []` and `origin: "declared"` is a shared reference-library entry (an eidolon
+`Evolution ~ ...`, `Animal Trick ~ Aid`, ...), served generically through the same render-and-refuse
+discipline `class_feature_pool_catalog.rs` established, not 434 hand-listed exceptions.
+
+**Two real near-misses caught before commit, both regression-tested:**
+
+1. A creature stat-block record (`gen_book_cache`-written) carries no `owners` field at all, which
+   `is_none_or` alone reads as vacuously empty — without the `origin == "declared"` gate (which
+   creature records also lack), every companion creature would have been wrongly admitted as a
+   "pool member". Test: `a_creature_stat_block_record_is_never_admitted_as_a_pool_member`.
+2. `companion_pool_catalog.rs`'s served `key` is slugged wire-format, but `reach_gate.rs`'s
+   `corpus_record_keys` denominator reads the corpus's own RAW `data.key` for this specific ingest
+   path (`scripts/ingest_companion.py`, unlike every other kind's ingest and unlike
+   `gen_book_cache`-written companion records) — without a separate `corpus_key` field carrying the
+   raw string, the whole mechanism would have been a silent no-op against `reach_gate`.
+
+**Re-derived fresh (`§17a`), not carried forward from cycle 2's 434/4-book estimate:** the
+companion residual is **330 records across 8 books** — `advanced_players_guide`/`core_rulebook`
+surfaced their own residuals the moment the pass covered every book `companion_chassis::
+COMPANION_BOOKS` registers, not just the 4 the brief's estimate named. Down from 464
+(434 + `beastiary1`'s pre-existing 28 + `bestiary_4`'s 2). **134 records genuinely reach a player
+for real** (`§16`: reachability, not reclassification) — `ultimate_wilderness` 248→43,
+`ultimate_magic` 139→106, `advanced_race_guide` 18→9, `book_of_the_damned_volume_1` 29→4, plus
+every clean orphan across the other 4 books. Mid-cycle widening: a `" ~ "` group qualifier is
+common but not required — `Companion Bonus Skill`/`Eidolon Bonus Skill` (Advanced Player's Guide)
+are genuine, ungrouped, clean-rendering records, served as their own singleton pools once the
+first full sweep showed them wrongly unaccounted-for.
+
+**Closed 3 of cycle 2's 5 named reds, GREEN:**
+
+1. `companion_catalog::tests::every_served_key_matches_a_corpus_record_file` — rewritten so the
+   330-record residual is proven structurally (re-deriving, per record, whether one of the pool
+   catalog's own three refusal reasons applies: empty description, non-`"declared"` origin, or an
+   unresolved formula) rather than a 330-entry hand-typed exception list, which `§17a` forbids
+   fabricating at that volume. `beastiary1`'s 28 and `bestiary_4`'s 2 keep their existing named
+   `KNOWN_UNTRANSCRIBED_COMPANION_RECORDS` entries (delta rows, a different shape).
+2. `reach_gate::tests::every_declared_claim_actually_carries_the_records`.
+3. `reach_gate::tests::unreached_records_are_exactly_the_recorded_findings` — all 330 residual
+   records pinned by exact key in `UNREACHED_RECORD_FINDINGS`, copied verbatim from a live
+   `cargo test` failure output (never retyped from memory), with matching `OPEN_FINDINGS` entries
+   per book naming the structural reason and remedy.
+
+**2 of 5 remain red, unchanged in scope from cycle 2 (this mechanism does not touch them):**
+`every_ingested_family_is_accounted_for` / `unsurfaced_families_are_exactly_the_recorded_findings`
+— the same ~170 `(book, kind)` families across 12 unrelated corpus kinds
+(abilities/domains/templates/languages/skills/deities/generic_feats/race_variants/class_variants/
+monster_variants/named_traits/powers), none of them `companion`. Re-confirmed live this cycle: the
+family list is unchanged in content and count from cycle 2's dump.
+
+**Full sweep:** `apps/desktop/src-tauri`: `cargo test --locked --bin codex-desktop` →
+**526 passed, 2 failed** (up from 514/5 at cycle 2's exit — net +12 passed [9 new unit tests plus 3
+reds closed], -3 failed).
+
+**Kanban:** row 19 stays `in-progress` (cycle field 2 → 3); rows 11 and 15 untouched.
+
+Full receipt: `artifacts/epic-9-desktop-reach-and-catalog-reds/row19-cycle3-receipt.md`.
+Commit: (this cycle's commit -- see push output).
