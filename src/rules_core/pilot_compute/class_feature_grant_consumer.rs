@@ -841,6 +841,25 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
     out
 }
 
+/// SD-32 T12 Epic 8 row 18 cycle 10: the ONE per-target merge policy both
+/// `class_feature_bonus_vars_any_record` (cycle 8, header-side) and
+/// `class_feature_record_tokens_pre_gate_safe` (this cycle, member-side)
+/// now share -- never overwrite an already-bound target name, so the FIRST
+/// book (alphabetical walk order) to define a given `BONUS:VAR` target
+/// wins for that target specifically, while every OTHER target either side
+/// contributes still merges in. Factored out so the two cross-book merges
+/// cannot drift into two different collision policies the way the header
+/// and member tables' own WHOLE-RECORD `or_insert_with` calls silently did
+/// before cycle 8/10 fixed them one at a time.
+fn merge_bonus_var_target_map_never_overwriting(
+    into: &mut BTreeMap<String, String>,
+    from: BTreeMap<String, String>,
+) {
+    for (target, formula) in from {
+        into.entry(target).or_insert(formula);
+    }
+}
+
 /// A PRE-gate-safe sibling of [`class_feature_record_tokens`], identical in
 /// every respect except its `bonus_vars` field is built via
 /// [`parse_bonus_var_tokens_pre_gate_safe`] rather than
@@ -848,11 +867,51 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
 /// why a generic, per-record-unverified consumer (SD-32 T12 Epic 8's
 /// [`super::resolve_pool_member_sole_magnitude`]) must use this table
 /// instead of the original.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 10: MERGED across every book carrying the
+/// SAME bare `KEY:`, never first-book-wins -- the member-side twin of
+/// `class_feature_bonus_vars_any_record`'s own cross-book merge (cycle 8),
+/// same root cause and same fix, applied to this table instead of skipped
+/// as a "narrower/riskier" scope call (cycle 8's own receipt; the `class`
+/// field this table's `owned_by_class` census check reads IS load-bearing,
+/// see below, so this merge preserves first-seen `class`/`name`/
+/// `raw_description` exactly as before and only widens `bonus_vars`).
+/// Confirmed live: this table's own description gate (`is_real_description_
+/// value`) means most of the header-only 155 bare-key duplicates
+/// `class_feature_bonus_vars_any_record`'s own doc names never reach this
+/// table at all (a header record with `description: null` is filtered out
+/// upstream, before `or_insert_with` even runs) -- but any MEMBER record
+/// sharing a bare key across books (a book reprinting the same named
+/// bloodline/domain/order power) previously kept only the alphabetically-
+/// first book's own `bonus_vars`, silently discarding a later book's
+/// `.MOD`-restored rows for a target the first book's copy never carried.
+/// Per-target `.or_insert` (never overwriting an already-bound target,
+/// identical policy to the header-side table) means a genuine cross-book
+/// disagreement on the SAME target name still keeps whichever book's row
+/// was seen first, unchanged from this table's own pre-existing single-
+/// record collision policy -- this only extends "one record" to "one key,
+/// merged across books", exactly as cycle 8 phrased it for the header
+/// table.
+///
+/// **`§17a` re-derivation result: this merge closes ZERO new pool groups.**
+/// Independently re-derived corpus-wide (every real `class_feature`
+/// key carrying a non-null description that appears in more than one
+/// book): 81 such keys exist, and for every one of them the union of
+/// `BONUS:VAR` target names across all contributing books is IDENTICAL to
+/// the alphabetically-first book's own target set alone -- no book
+/// contributes a target its sibling copies lack. The defect this cycle
+/// fixes is real (a future corpus update that DOES diverge would have
+/// silently lost data under the old whole-record `or_insert_with`), but it
+/// has not yet manifested for any key currently in this table. A predicted
+/// change that does not reproduce is itself a finding (`decisions.md
+/// §17a`), not a wasted cycle: `pool_group_closure_census_across_all_six_
+/// pools`'s six baselines are unchanged by this fix, confirmed by re-
+/// running that test after landing it.
 pub(crate) fn class_feature_record_tokens_pre_gate_safe() -> &'static BTreeMap<String, ClassFeatureRecordTokens>
 {
     static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
     TABLE.get_or_init(|| {
-        let mut out = BTreeMap::new();
+        let mut out: BTreeMap<String, ClassFeatureRecordTokens> = BTreeMap::new();
         let corpus_root = repo_root().join("data/corpus");
         let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
         let mut book_dirs: Vec<_> = books.flatten().collect();
@@ -881,12 +940,13 @@ pub(crate) fn class_feature_record_tokens_pre_gate_safe() -> &'static BTreeMap<S
                     .as_array()
                     .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
                     .unwrap_or_default();
-                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                let entry = out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
                     name: name.to_string(),
                     class: class.to_string(),
                     raw_description: raw_desc.to_string(),
-                    bonus_vars,
+                    bonus_vars: BTreeMap::new(),
                 });
+                merge_bonus_var_target_map_never_overwriting(&mut entry.bonus_vars, bonus_vars);
             }
         }
         out
@@ -982,9 +1042,7 @@ pub(crate) fn class_feature_bonus_vars_any_record() -> &'static BTreeMap<String,
                 if entry.raw_description.is_empty() && !raw_desc.is_empty() {
                     entry.raw_description = raw_desc;
                 }
-                for (target, formula) in bonus_vars {
-                    entry.bonus_vars.entry(target).or_insert(formula);
-                }
+                merge_bonus_var_target_map_never_overwriting(&mut entry.bonus_vars, bonus_vars);
             }
         }
         out
@@ -1279,6 +1337,38 @@ pub(super) fn push_generic_class_feature_grant_records(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// SD-32 T12 Epic 8 row 18 cycle 10. The shared merge policy both
+    /// cross-book tables now use: a target seen in an earlier book is never
+    /// overwritten by a later book's own value for the same target name,
+    /// but a target the earlier book never defined at all DOES get pulled
+    /// in from a later book -- proving the exact defect the old whole-
+    /// record `or_insert_with` (first book wins ENTIRELY, even for targets
+    /// it never carried) used to have, on both tables, before cycle 8/10.
+    #[test]
+    fn merge_bonus_var_target_map_pulls_in_new_targets_but_never_overwrites_a_seen_one() {
+        let mut into: BTreeMap<String, String> = BTreeMap::new();
+        into.insert("SharedTarget".to_string(), "first-book-formula".to_string());
+        into.insert("OnlyFirstBook".to_string(), "1".to_string());
+        let mut from: BTreeMap<String, String> = BTreeMap::new();
+        from.insert("SharedTarget".to_string(), "second-book-formula".to_string());
+        from.insert("OnlySecondBook".to_string(), "2".to_string());
+
+        merge_bonus_var_target_map_never_overwriting(&mut into, from);
+
+        assert_eq!(
+            into.get("SharedTarget").map(String::as_str),
+            Some("first-book-formula"),
+            "a target already bound by an earlier book must never be overwritten by a later one"
+        );
+        assert_eq!(into.get("OnlyFirstBook").map(String::as_str), Some("1"));
+        assert_eq!(
+            into.get("OnlySecondBook").map(String::as_str),
+            Some("2"),
+            "a target the earlier book never defined must still merge in from a later book -- \
+             this is the exact behaviour the old whole-record `or_insert_with` lacked"
+        );
+    }
 
     #[test]
     fn resolvable_grants_is_non_empty_against_the_live_merged_data() {
