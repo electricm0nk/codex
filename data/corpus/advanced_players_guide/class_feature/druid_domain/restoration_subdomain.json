@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Restoration Subdomain",
     "name": "Restoration Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Cure Light Wounds|Druid=2|Remove Disease|Druid=3|Cure Serious Wounds|Druid=4|Neutralize Poison|Druid=5|Break Enchantment|Druid=6|Heal|Druid=7|Regenerate|Druid=8|Cure Critical Wounds (Mass)|Druid=9|Heal (Mass)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

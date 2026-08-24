@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bloodline Feat ~ Weapon Finesse",
     "name": "Weapon Finesse",
@@ -39,6 +39,14 @@
       {
         "key": "BENEFIT",
         "value": "With a light weapon, rapier, whip, or spiked chain made for a creature of your size category, you may use your Dexterity modifier instead of your Strength modifier on attack rolls. If you carry a shield, its armor check penalty applies to your attack rolls."
+      },
+      {
+        "key": "DEFINE",
+        "value": "HasWeaponFinesseFeat|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasWeaponFinesseFeat|1|TYPE=Boolean"
       }
     ]
   },

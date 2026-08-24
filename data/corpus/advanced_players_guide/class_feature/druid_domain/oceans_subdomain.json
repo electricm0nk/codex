@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Oceans Subdomain",
     "name": "Oceans Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Obscuring Mist|Druid=2|Slipstream|Druid=3|Water Walk|Druid=4|Control Water|Druid=5|Ice Storm|Druid=6|Cone of Cold|Druid=7|Elemental Body IV (Water Only)|Druid=8|Horrid Wilting|Druid=9|Tsunami"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

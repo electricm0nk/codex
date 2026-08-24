@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist ~ Discovery",
     "name": "Discovery",
@@ -55,6 +55,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.27"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,2|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery2],[PREVAREQ:Alchemist_CF_Discovery2,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,4|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery4],[PREVAREQ:Alchemist_CF_Discovery4,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,6|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery6],[PREVAREQ:Alchemist_CF_Discovery6,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,8|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery8],[PREVAREQ:Alchemist_CF_Discovery8,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,10|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery10],[PREVAREQ:Alchemist_CF_Discovery10,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,12|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery12],[PREVAREQ:Alchemist_CF_Discovery12,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,14|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery14],[PREVAREQ:Alchemist_CF_Discovery14,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,16|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery16],[PREVAREQ:Alchemist_CF_Discovery16,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Alchemist Discovery|-1|PREVARGTEQ:AlchemistDiscoveryLVL,18|PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,AlchemistDiscovery18],[PREVAREQ:Alchemist_CF_Discovery18,1]"
       }
     ]
   },

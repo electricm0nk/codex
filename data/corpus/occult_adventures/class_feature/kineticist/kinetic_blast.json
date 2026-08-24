@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Kineticist ~ Kinetic Blast",
     "name": "Kinetic Blast",
@@ -39,6 +39,58 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Aetheric Boost|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Telekinetic Blast,TYPE.Kineticist Expanded Element"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Blizzard Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Air Blast,Wild Talent ~ Cold Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Blue Flame Blast|PREABILITY:2,CATEGORY=Special Ability,Kineticist Primary Element ~ Fire,Kineticist Expanded Element ~ Fire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Charged Water Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Electric Blast,Wild Talent ~ Cold Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Force Blast|PREABILITY:2,CATEGORY=Special Ability,Kineticist Primary Element ~ Aether,Kineticist Expanded Element ~ Aether"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Ice Blast|PREABILITY:2,CATEGORY=Special Ability,Kineticist Primary Element ~ Water,Kineticist Expanded Element ~ Water"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Magma Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Earth Blast,Wild Talent ~ Fire Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Metal Blast|PREABILITY:2,CATEGORY=Special Ability,Kineticist Primary Element ~ Earth,Kineticist Expanded Element ~ Earth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Mud Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Earth Blast,Wild Talent ~ Water Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Plasma Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Air Blast,Wild Talent ~ Fire Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Sandstorm Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Air Blast,Wild Talent ~ Earth Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Steam Blast|PREABILITY:2,CATEGORY=Special Ability,Wild Talent ~ Fire Blast,Wild Talent ~ Water Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Composite Blast ~ Thunderstorm Blast|PREABILITY:2,CATEGORY=Special Ability,Kineticist Primary Element ~ Air,Kineticist Expanded Element ~ Air"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Adoration",
     "name": "Adoration",
     "class": "Magus",
-    "description": null,
+    "description": "You gain a bonus on Diplomacy checks and performance combat checks.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Adoration"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a bonus on Diplomacy checks and performance combat checks.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Archetype ~ Bladebound",
     "name": "Bladebound",
@@ -55,6 +55,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Bladebound],[!PREFACT:1,ABILITIES,Magus_Archetype_ArcanePool=True,Magus_Archetype_Arcana3=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana3|true"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler",
     "name": "Brawler",
@@ -31,6 +31,278 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Brawler\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler ~ Class Skills|PREVAREQ:Brawler_CF_ClassSkills,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler ~ Unarmed Damage|PREVAREQ:Brawler_CF_UnarmedStrike,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Unarmed Strike|PREVAREQ:Brawler_CF_UnarmedStrike,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_UnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BrawlersCunning|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_MartialFlexibility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_MartialTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BrawlersFlurry|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_ManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_ACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_Knockout|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BrawlersStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_CloseWeaponMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_AwesomeBlow|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_ImprovedAwesomeBlow|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Brawler_CF_BonusFeat20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat11|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat17|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeat20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeat20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_UnarmedStrike|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_UnarmedStrike=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BrawlersCunning|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BrawlersCunning=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_MartialFlexibility|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_MartialFlexibility=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_MartialTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_MartialTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BonusFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BrawlersFlurry|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BrawlersFlurry=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ManeuverTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_ManeuverTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ACBonus|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_ACBonus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_Knockout|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_Knockout=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BrawlersStrike|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_BrawlersStrike=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_CloseWeaponMastery|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_CloseWeaponMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_AwesomeBlow|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_AwesomeBlow=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ImprovedAwesomeBlow|1|TYPE=Boolean|PREFACT:1,ABILITIES,Brawler_CF_ImprovedAwesomeBlow=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_Proficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ClassSkills|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerClassSkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_UnarmedStrike|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerUnarmedStrike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BrawlersCunning|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerBrawlersCunning"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_MartialFlexibility|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerMartialFlexibility"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_MartialTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerMartialTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BonusFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerBonusFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BrawlersFlurry|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerBrawlersFlurry"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ManeuverTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerManeuverTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ACBonus|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_Knockout|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerKnockout"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_BrawlersStrike|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerBrawlersStrike"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_CloseWeaponMastery|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerCloseWeaponMastery"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_AwesomeBlow|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerAwesomeBlow"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Brawler_CF_ImprovedAwesomeBlow|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BrawlerImprovedAwesomeBlow"
       }
     ]
   },

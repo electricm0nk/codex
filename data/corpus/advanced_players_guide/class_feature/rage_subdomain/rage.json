@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rage Subdomain ~ Rage",
     "name": "Rage",
@@ -27,6 +27,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.95"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=3"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Demon Subdomain (Chaos)=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Rage Subdomain=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Demon Subdomain (Evil)=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Insanity Subdomain,Nightmare Subdomain=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Ferocity Subdomain=3"
       }
     ]
   },

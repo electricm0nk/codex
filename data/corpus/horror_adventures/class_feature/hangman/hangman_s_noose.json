@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Hangman ~ Hangman's Noose",
     "name": "Hangman's Noose",
@@ -27,6 +27,10 @@
       {
         "key": "DESC",
         "value": "A hangman can wield a rope noose as a net or whip, and also can use it to grapple, gaining the benefits of Improved Grapple with it. He takes no penalty on combat maneuver checks with the noose for having the noose in his hand, but he still doesn't add any bonuses he might have with a net or whip (such as weapon enhancement bonuses or benefits from Weapon Focus) on the check. He can spend 1 minute to weave a magical or masterwork net or whip into a noose, thereafter gaining these benefits with it."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
       }
     ]
   },

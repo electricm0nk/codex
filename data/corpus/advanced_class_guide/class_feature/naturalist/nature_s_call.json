@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Naturalist ~ Nature's Call",
     "name": "Nature's Call",
@@ -59,6 +59,42 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally I|PREVAREQ:NaturalistSummonNaturesAllyLVL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally II|PREVAREQ:NaturalistSummonNaturesAllyLVL,2"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally III|PREVAREQ:NaturalistSummonNaturesAllyLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally IV|PREVAREQ:NaturalistSummonNaturesAllyLVL,4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally V|PREVAREQ:NaturalistSummonNaturesAllyLVL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally VI|PREVAREQ:NaturalistSummonNaturesAllyLVL,6"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally VII|PREVAREQ:NaturalistSummonNaturesAllyLVL,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally VIII|PREVAREQ:NaturalistSummonNaturesAllyLVL,8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=NaturalistSummonNaturesAllyTimes|CASTERLEVEL=NaturalistLVL|Naturalist Summon Nature's Ally IX|PREVARGTEQ:NaturalistSummonNaturesAllyLVL,9"
       }
     ]
   },

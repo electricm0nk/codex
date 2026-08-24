@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -31,6 +31,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.15"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Magus Bonus Feat|-1|PRECLASS:1,Magus=5|PREVAREQ:Magus_CF_BonusFeat5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Magus Bonus Feat|-1|PRECLASS:1,Magus=11|PREVAREQ:Magus_CF_BonusFeat11,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Magus Bonus Feat|-1|PRECLASS:1,Magus=17|PREVAREQ:Magus_CF_BonusFeat17,1"
       }
     ]
   },

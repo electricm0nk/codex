@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Master Summoner",
     "name": "Master Summoner",
@@ -59,6 +59,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Master Summoner],[!PREFACT:1,ABILITIES,Summoner_Archetype_Eidolon=True,Summoner_Archetype_ShieldAlly=True,Summoner_Archetype_GreaterShieldAlly=True,Summoner_Archetype_BondSenses=True,Summoner_Archetype_SummonMonster=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_BondSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_BondSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_SummonMonster|true"
       }
     ]
   },

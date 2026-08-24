@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Destruction Domain",
     "name": "Destruction",
@@ -71,6 +71,14 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Destruction=1|True Strike|Destruction=2|Shatter|Destruction=3|Rage|Destruction=4|Inflict Critical Wounds|Destruction=5|Shout|Destruction=6|Harm|Destruction=7|Disintegrate|Destruction=8|Earthquake|Destruction=9|Implosion"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Destruction],[PREVARLT:DestructionDomain,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell instantly delivers 10 points of damage per caster level. If the spell slays the target, it consumes the remains utterly in holy [or unholy] fire [but not its equipment or possessions]. If the target's Fortitude saving throw succeeds, it instead takes 10d6 points of damage. The only way to restore life to a character who has failed to save against this spell [and was slain] is to use true resurrection, a carefully worded wish spell followed by resurrection, or miracle.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

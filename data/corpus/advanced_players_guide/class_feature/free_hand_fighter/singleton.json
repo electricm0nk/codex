@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Free Hand Fighter ~ Singleton",
     "name": "Singleton",
@@ -39,6 +39,18 @@
       {
         "key": "ASPECT",
         "value": "CombatBonus|+%1 bonus on attack and damage rolls when wielding a melee weapon in one hand and leaving his other hand free.|SingletonBonus"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "+1 bonus on attack and damage rolls when wielding a melee weapon in one hand and leaving his other hand free"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Light;OneHanded|WEAPON|TOHIT|SingletonBonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Light;OneHanded|WEAPON|DAMAGE|SingletonBonus"
       }
     ]
   },

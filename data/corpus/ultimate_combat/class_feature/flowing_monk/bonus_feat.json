@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Flowing Monk ~ Bonus Feat",
     "name": "Bonus Feat",
@@ -51,6 +51,30 @@
       {
         "key": "DEFINE",
         "value": "MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|-1|PREVARGTEQ:FlowingMonkFeatCount,1|PREVAREQ:Monk_CF_BonusFeat1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|-1|PREVARGTEQ:FlowingMonkFeatCount,2|PREVAREQ:Monk_CF_BonusFeat2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|-1|PREVARGTEQ:FlowingMonkFeatCount,3|PREVAREQ:Monk_CF_BonusFeat6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|-1|PREVARGTEQ:FlowingMonkFeatCount,4|PREVAREQ:Monk_CF_BonusFeat10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|-1|PREVARGTEQ:FlowingMonkFeatCount,5|PREVAREQ:Monk_CF_BonusFeat14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flowing Monk Bonus Feat|-1|PREVARGTEQ:FlowingMonkFeatCount,6|PREVAREQ:Monk_CF_BonusFeat18,1"
       }
     ]
   },

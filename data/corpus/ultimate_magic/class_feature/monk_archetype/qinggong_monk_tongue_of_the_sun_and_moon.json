@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon",
     "name": "Qinggong Monk (Tongue of the Sun and Moon)",
@@ -47,6 +47,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon],[!PREFACT:1,ABILITIES,Monk_Archetype_TongueOfTheSunAndMoon=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
       }
     ]
   },

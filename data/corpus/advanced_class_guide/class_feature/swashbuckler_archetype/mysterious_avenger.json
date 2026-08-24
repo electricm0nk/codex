@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Mysterious Avenger",
     "name": "Mysterious Avenger",
@@ -75,6 +75,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Mysterious Avenger],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_ClassSkills=True,Swashbuckler_Archetype_Proficiencies=True,Swashbuckler_Archetype_SwashbucklerFinesse=True,Swashbuckler_Archetype_Nimble=True,Swashbuckler_Archetype_SwashbucklerWeaponTraining=True,Swashbuckler_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BonusFeats|true"
       }
     ]
   },

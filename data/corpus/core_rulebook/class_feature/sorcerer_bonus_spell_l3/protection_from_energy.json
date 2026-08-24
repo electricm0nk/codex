@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L3 ~ Protection from Energy",
     "name": "Protection from Energy",
     "class": "Sorcerer",
-    "description": null,
+    "description": "Protection from energy grants temporary immunity to the type of energy you specify when you cast it [acid, cold, electricity, fire, or sonic]. When the spell absorbs 12 points per caster level of energy damage [to a maximum of 120 points at 10th level], it is discharged. Protection from energy overlaps [and does not stack with] resist energy. If a character is warded by protection from energy and resist energy, the protection spell absorbs damage until its power is exhausted.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=3|Protection from Energy"
+      },
+      {
+        "key": "DESC",
+        "value": "Protection from energy grants temporary immunity to the type of energy you specify when you cast it [acid, cold, electricity, fire, or sonic]. When the spell absorbs 12 points per caster level of energy damage [to a maximum of 120 points at 10th level], it is discharged. Protection from energy overlaps [and does not stack with] resist energy. If a character is warded by protection from energy and resist energy, the protection spell absorbs damage until its power is exhausted.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

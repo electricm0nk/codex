@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Aura Sight",
     "name": "Aura Sight",
     "class": "Magus",
-    "description": null,
+    "description": "Alignment auras become visible to you.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=3|Aura Sight"
+      },
+      {
+        "key": "DESC",
+        "value": "Alignment auras become visible to you.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

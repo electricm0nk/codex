@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcane Talent ~ Haunted Fey Aspect",
     "name": "Haunted Fey Aspect",
     "class": "Arcane Talent",
-    "description": null,
+    "description": "You surround yourself with disturbing illusions.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -27,6 +27,10 @@
       {
         "key": "BONUS",
         "value": "VAR|SLA_HauntedFeyAspect_Times|3|TYPE=Base"
+      },
+      {
+        "key": "DESC",
+        "value": "You surround yourself with disturbing illusions.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

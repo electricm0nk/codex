@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Resonant Power ~ Third Eye",
     "name": "Third Eye [Divination]",
@@ -39,6 +39,50 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.52"
+      },
+      {
+        "key": "DESC",
+        "value": " The implement also grants: lowlight vision|PREMULT:2,[PREVARGTEQ:OccultistLVL,3],[PREVARGTEQ:OccultistDivinationFocus,3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|PREMULT:2,[PREVARGTEQ:OccultistLVL,3],[PREVARGTEQ:OccultistDivinationFocus,3]"
+      },
+      {
+        "key": "DESC",
+        "value": ", darkvision 60 feet (or increases darkvision range by 30 feet)|PREMULT:2,[PREVARGTEQ:OccultistLVL,5],[PREVARGTEQ:OccultistDivinationFocus,6]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30|TYPE=Base|PREMULT:2,[PREVARGTEQ:OccultistLVL,5],[PREVARGTEQ:OccultistDivinationFocus,6]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|30|PREMULT:2,[PREVARGTEQ:OccultistLVL,5],[PREVARGTEQ:OccultistDivinationFocus,6]"
+      },
+      {
+        "key": "DESC",
+        "value": ", the effects of see invisibility|PREMULT:2,[PREVARGTEQ:OccultistLVL,7],[PREVARGTEQ:OccultistDivinationFocus,9]"
+      },
+      {
+        "key": "VISION",
+        "value": "See Invisibility|PREMULT:2,[PREVARGTEQ:OccultistLVL,7],[PREVARGTEQ:OccultistDivinationFocus,9]"
+      },
+      {
+        "key": "DESC",
+        "value": ", blindsense 60 feet|PREMULT:2,[PREVARGTEQ:OccultistLVL,13],[PREVARGTEQ:OccultistDivinationFocus,12]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Blindsense|60|TYPE=Base|PREMULT:2,[PREVARGTEQ:OccultistLVL,13],[PREVARGTEQ:OccultistDivinationFocus,12]"
+      },
+      {
+        "key": "DESC",
+        "value": ", and blindsight 30 feet.|PREMULT:2,[PREVARGTEQ:OccultistLVL,19],[PREVARGTEQ:OccultistDivinationFocus,15]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Blindsight|30|TYPE=Base|PREMULT:2,[PREVARGTEQ:OccultistLVL,19],[PREVARGTEQ:OccultistDivinationFocus,15]"
       }
     ]
   },

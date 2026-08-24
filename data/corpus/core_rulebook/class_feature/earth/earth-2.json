@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Elemental Bloodline (Earth)",
     "name": "Earth",
@@ -31,6 +31,10 @@
       {
         "key": "BONUS",
         "value": "VAR|Sorcerer_ElementalBloodlineChoice_Earth|1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Earth],[PREVARLT:EarthDomain,1]"
       }
     ]
   },

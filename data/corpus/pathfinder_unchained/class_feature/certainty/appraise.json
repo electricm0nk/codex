@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Certainty ~ Appraise",
     "name": "Appraise",
@@ -39,6 +39,10 @@
       {
         "key": "ABILITY",
         "value": "Special Ability|AUTOMATIC|Skill Mastery ~ appraise|PREABILITY:1,CATEGORY=Special Ability,Unchained Rogue Talent ~ Skill Mastery"
+      },
+      {
+        "key": "TYPE",
+        "value": "Background"
       }
     ]
   },

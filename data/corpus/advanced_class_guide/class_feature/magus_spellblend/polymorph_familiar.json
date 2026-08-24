@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Polymorph Familiar",
     "name": "Polymorph Familiar",
     "class": "Magus",
-    "description": null,
+    "description": "Give your familiar the shape of another animal.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=3|Polymorph Familiar"
+      },
+      {
+        "key": "DESC",
+        "value": "Give your familiar the shape of another animal.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

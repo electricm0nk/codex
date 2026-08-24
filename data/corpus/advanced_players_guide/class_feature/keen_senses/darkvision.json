@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Keen Senses ~ Darkvision",
     "name": "Darkvision",
@@ -31,6 +31,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.79"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=2"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L2 ~ Molten Orb",
     "name": "Molten Orb",
     "class": "Sorcerer",
-    "description": null,
+    "description": "Molten metal splash weapon deals 2d6 fire damage plus ongoing damage.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=2|Molten Orb"
+      },
+      {
+        "key": "DESC",
+        "value": "Molten metal splash weapon deals 2d6 fire damage plus ongoing damage.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

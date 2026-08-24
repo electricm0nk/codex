@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter Archetype ~ Divine Hunter",
     "name": "Divine Hunter",
@@ -59,6 +59,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Hunter"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Divine Hunter],[!PREFACT:1,ABILITIES,Hunter_Archetype_ClassSkills=True,Hunter_Archetype_TeamworkFeats=True,Hunter_Archetype_HunterTactics=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_HunterTactics|true"
       }
     ]
   },

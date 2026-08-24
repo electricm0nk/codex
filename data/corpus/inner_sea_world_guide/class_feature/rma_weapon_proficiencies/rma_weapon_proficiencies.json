@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "RMA Weapon Proficiencies",
     "name": "RMA Weapon Proficiencies",
@@ -23,6 +23,10 @@
       {
         "key": "AUTO",
         "value": "WEAPONPROF|TYPE=Light.Martial"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
       }
     ]
   },

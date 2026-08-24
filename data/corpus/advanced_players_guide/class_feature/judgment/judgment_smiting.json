@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Judgment ~ Smiting",
     "name": "Judgment / Smiting",
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.39"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor's weapons also count as one alignment type (chaotic, evil, good, or lawful) for the purpose of bypassing damage reduction. The type selected must match one of the inquisitor's alignments|PREALIGN:LG,NG,CG,LN,CN,LE,NE,CE|PREVARGTEQ:InqJudgeSmitingLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor's weapons also count as adamantine for the purpose of overcoming damage reduction (but not for reducing hardness).|PREVARGTEQ:InqJudgeSmitingLVL,10"
       }
     ]
   },

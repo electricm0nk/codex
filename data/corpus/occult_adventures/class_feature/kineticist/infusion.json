@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Kineticist ~ Infusion",
     "name": "Infusion",
@@ -35,6 +35,98 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,01|PREVAREQ:Kineticist_CF_Infusion1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,03|PREVAREQ:Kineticist_CF_Infusion3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,05|PREVAREQ:Kineticist_CF_Infusion5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,09|PREVAREQ:Kineticist_CF_Infusion9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,11|PREVAREQ:Kineticist_CF_Infusion11,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,13|PREVAREQ:Kineticist_CF_Infusion13,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,17|PREVAREQ:Kineticist_CF_Infusion17,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistInfusion|-1|PREVARGTEQ:KineticistLVL,19|PREVAREQ:Kineticist_CF_Infusion19,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,02|PREVAREQ:Kineticist_CF_UtilityWildTalent2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,04|PREVAREQ:Kineticist_CF_UtilityWildTalent4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,06|PREVAREQ:Kineticist_CF_UtilityWildTalent6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,08|PREVAREQ:Kineticist_CF_UtilityWildTalent8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,10|PREVAREQ:Kineticist_CF_UtilityWildTalent10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,12|PREVAREQ:Kineticist_CF_UtilityWildTalent12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,14|PREVAREQ:Kineticist_CF_UtilityWildTalent14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,16|PREVAREQ:Kineticist_CF_UtilityWildTalent16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,18|PREVAREQ:Kineticist_CF_UtilityWildTalent18,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistUtilityWildTalents|-1|PREVARGTEQ:KineticistLVL,20|PREVAREQ:Kineticist_CF_UtilityWildTalent20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Aether|1|PREVARGTEQ:ElementTracker_Aether,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Air|1|PREVARGTEQ:ElementTracker_Air,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Earth|1|PREVARGTEQ:ElementTracker_Earth,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Fire|1|PREVARGTEQ:ElementTracker_Fire,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Water|1|PREVARGTEQ:ElementTracker_Water,2"
       }
     ]
   },

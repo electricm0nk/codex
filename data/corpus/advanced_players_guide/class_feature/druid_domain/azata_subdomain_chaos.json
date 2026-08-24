@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Azata Subdomain (Chaos)",
     "name": "Azata Subdomain (Chaos)",
@@ -35,6 +35,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Protection from Law|Druid=2|Align Weapon (Chaos Only)|Druid=3|Magic Circle against Law|Druid=4|Chaos Hammer|Druid=5|Dispel Law|Druid=6|Planar Ally (Azata Only)|Druid=7|Word of Chaos|Druid=8|Cloak of Chaos|Druid=9|Summon Monster IX (Chaos Spell Only)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

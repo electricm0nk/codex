@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald",
     "name": "Skald",
@@ -31,6 +31,362 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Skald\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Class Feature|AUTOMATIC|Skald ~ Extra Performance|PREVAREQ:Skald_CF_ScribeScroll,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Skald ~ Class Skills|PREVAREQ:Skald_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_BardicKnowledge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_Cantrips|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagingSong|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_InspiredRage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_ScribeScroll|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_VersatilePerformance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_WellVersed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SongOfMarching|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_UncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SpellKenning|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SongOfStrength|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_LoreMaster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_ImprovedUncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_DamageReduction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_DirgeOfDoom|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SongOfTheFallen|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_MasterSkald|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SpellKenning5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SpellKenning11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_SpellKenning17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePower6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_RagePower18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_VersatilePerformance2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_VersatilePerformance7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_VersatilePerformance12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skald_CF_VersatilePerformance17|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SpellKenning5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SpellKenning5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SpellKenning11|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SpellKenning11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SpellKenning17|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SpellKenning17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePower3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePower3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePower6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePower6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePower9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePower9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePower12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePower12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePower15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePower15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePower18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePower18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_VersatilePerformance2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_VersatilePerformance2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_VersatilePerformance7|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_VersatilePerformance7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_VersatilePerformance12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_VersatilePerformance12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_VersatilePerformance17|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_VersatilePerformance17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_BardicKnowledge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_BardicKnowledge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_Cantrips|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_Cantrips=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagingSong|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagingSong=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_InspiredRage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_InspiredRage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_ScribeScroll|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_ScribeScroll=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_VersatilePerformance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_VersatilePerformance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_WellVersed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_WellVersed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePowers|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_RagePowers=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SongOfMarching|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SongOfMarching=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_UncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_UncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SpellKenning|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SpellKenning=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SongOfStrength|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SongOfStrength=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_LoreMaster|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_LoreMaster=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_ImprovedUncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_DamageReduction|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_DamageReduction=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_DirgeOfDoom|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_DirgeOfDoom=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SongOfTheFallen|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_SongOfTheFallen=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_MasterSkald|1|TYPE=Boolean|PREFACT:1,ABILITIES,Skald_CF_MasterSkald=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_BardicKnowledge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldBardicKnowledge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_Cantrips|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldCantrips"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagingSong|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldRagingSong"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_InspiredRage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldInspiredRage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_ScribeScroll|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldScribeScroll"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_VersatilePerformance|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldVersatilePerformance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_WellVersed|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldWellVersed"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_RagePowers|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldRagePowers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SongOfMarching|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldSongOfMarching"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_UncannyDodge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldUncannyDodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SpellKenning|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldSpellKenning"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SongOfStrength|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldSongOfStrength"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_LoreMaster|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldLoreMaster"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldImprovedUncannyDodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_DamageReduction|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldDamageReduction"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_DirgeOfDoom|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldDirgeOfDoom"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_SongOfTheFallen|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldSongOfTheFallen"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Skald_CF_MasterSkald|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SkaldMasterSkald"
       }
     ]
   },

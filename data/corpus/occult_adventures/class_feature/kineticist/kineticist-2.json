@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Kineticist ~ CLASS",
     "name": "Kineticist",
@@ -23,6 +23,406 @@
       {
         "key": "BONUS",
         "value": "VAR|Kineticist_CFP_Level|KineticistLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Class Skills|PREVAREQ:Kineticist_CF_ClassSkills,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Weapon and Armor Proficiency|PREVAREQ:Kineticist_CF_WeaponandArmorProficiency,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Elemental Focus|PREVAREQ:Kineticist_CF_ElementalFocus,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Wild Talents|PREVAREQ:Kineticist_CF_WildTalents,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Burn|PREVAREQ:Kineticist_CF_Burn,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Kinetic Blast|PREVAREQ:Kineticist_CF_KineticBlast,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Gather Power|PREVAREQ:Kineticist_CF_GatherPower,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Infusion|PREVAREQ:Kineticist_CF_Infusion,0|PREVARGTEQ:Kineticist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Elemental Defense|PREVAREQ:Kineticist_CF_ElementalDefense,0|PREVARGTEQ:Kineticist_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Elemental Overflow|PREVAREQ:Kineticist_CF_ElementalOverflow,0|PREVARGTEQ:Kineticist_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Infusion Specialization|PREVAREQ:Kineticist_CF_InfusionSpecialization,0|PREVARGTEQ:Kineticist_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Metakinesis|PREVAREQ:Kineticist_CF_Metakinesis,0|PREVARGTEQ:Kineticist_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Internal Buffer|PREVAREQ:Kineticist_CF_InternalBuffer,0|PREVARGTEQ:Kineticist_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Expanded Element|PREVAREQ:Kineticist_CF_ExpandedElement,0|PREVARGTEQ:Kineticist_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Supercharge|PREVAREQ:Kineticist_CF_Supercharge,0|PREVARGTEQ:Kineticist_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Composite Specialization|PREVAREQ:Kineticist_CF_CompositeSpecialization,0|PREVARGTEQ:Kineticist_CFP_Level,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Metakinetic Master|PREVAREQ:Kineticist_CF_MetakineticMaster,0|PREVARGTEQ:Kineticist_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Class Feature|AUTOMATIC|Kineticist ~ Omnikinesis|PREVAREQ:Kineticist_CF_Omnikinesis,0|PREVARGTEQ:Kineticist_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_WeaponandArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_ElementalFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_WildTalents|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Burn|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_KineticBlast|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_GatherPower|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_ElementalDefense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_ElementalOverflow|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_InfusionSpecialization|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Metakinesis|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_InternalBuffer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_ExpandedElement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Supercharge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_CompositeSpecialization|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_MetakineticMaster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Omnikinesis|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_ClassSkills|1|PREFACT:1,ABILITIES,Kineticist_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_WeaponandArmorProficiency|1|PREFACT:1,ABILITIES,Kineticist_CF_WeaponandArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_ElementalFocus|1|PREFACT:1,ABILITIES,Kineticist_CF_ElementalFocus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_WildTalents|1|PREFACT:1,ABILITIES,Kineticist_CF_WildTalents=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Burn|1|PREFACT:1,ABILITIES,Kineticist_CF_Burn=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_KineticBlast|1|PREFACT:1,ABILITIES,Kineticist_CF_KineticBlast=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_GatherPower|1|PREFACT:1,ABILITIES,Kineticist_CF_GatherPower=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_ElementalDefense|1|PREFACT:1,ABILITIES,Kineticist_CF_ElementalDefense=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_ElementalOverflow|1|PREFACT:1,ABILITIES,Kineticist_CF_ElementalOverflow=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_InfusionSpecialization|1|PREFACT:1,ABILITIES,Kineticist_CF_InfusionSpecialization=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Metakinesis|1|PREFACT:1,ABILITIES,Kineticist_CF_Metakinesis=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_InternalBuffer|1|PREFACT:1,ABILITIES,Kineticist_CF_InternalBuffer=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_ExpandedElement|1|PREFACT:1,ABILITIES,Kineticist_CF_ExpandedElement=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Supercharge|1|PREFACT:1,ABILITIES,Kineticist_CF_Supercharge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_CompositeSpecialization|1|PREFACT:1,ABILITIES,Kineticist_CF_CompositeSpecialization=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_MetakineticMaster|1|PREFACT:1,ABILITIES,Kineticist_CF_MetakineticMaster=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Omnikinesis|1|PREFACT:1,ABILITIES,Kineticist_CF_Omnikinesis=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_BasicUtilityWildTalent|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion13|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_Infusion19|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_UtilityWildTalent20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_EmpowerMetakinesis|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_MaximizeMetakinesis|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_QuickenMetakinesis|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Kineticist_CF_DualBlastMetakinesis|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_BasicUtilityWildTalent|1|PREFACT:1,ABILITIES,Kineticist_CF_BasicUtilityWildTalent=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion1|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion3|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion5|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion9|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion11|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion13|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion13=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion17|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_Infusion19|1|PREFACT:1,ABILITIES,Kineticist_CF_Infusion19=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent2|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent4|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent6|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent8|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent10|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent12|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent14|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent16|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent18|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_UtilityWildTalent20|1|PREFACT:1,ABILITIES,Kineticist_CF_UtilityWildTalent20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_EmpowerMetakinesis|1|PREFACT:1,ABILITIES,Kineticist_CF_EmpowerMetakinesis=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_MaximizeMetakinesis|1|PREFACT:1,ABILITIES,Kineticist_CF_MaximizeMetakinesis=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_QuickenMetakinesis|1|PREFACT:1,ABILITIES,Kineticist_CF_QuickenMetakinesis=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Kineticist_CF_DualBlastMetakinesis|1|PREFACT:1,ABILITIES,Kineticist_CF_DualBlastMetakinesis=True"
       }
     ]
   },

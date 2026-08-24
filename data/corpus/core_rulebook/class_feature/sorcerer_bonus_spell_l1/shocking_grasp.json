@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L1 ~ Shocking Grasp",
     "name": "Shocking Grasp",
     "class": "Sorcerer",
-    "description": null,
+    "description": "Your successful melee touch attack deals 1d6 points of electricity damage per caster level [maximum 5d6]. When delivering the jolt, you gain a +3 bonus on attack rolls if the opponent is wearing metal armor [or is carrying a metal weapon or is made of metal].|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=1|Shocking Grasp"
+      },
+      {
+        "key": "DESC",
+        "value": "Your successful melee touch attack deals 1d6 points of electricity damage per caster level [maximum 5d6]. When delivering the jolt, you gain a +3 bonus on attack rolls if the opponent is wearing metal armor [or is carrying a metal weapon or is made of metal].|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

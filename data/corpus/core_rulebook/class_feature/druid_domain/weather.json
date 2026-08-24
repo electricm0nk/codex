@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Weather",
     "name": "Weather",
@@ -55,6 +55,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Obscuring Mist|Druid=2|Fog Cloud|Druid=3|Call Lightning|Druid=4|Sleet Storm|Druid=5|Ice Storm|Druid=6|Control Winds|Druid=7|Control Weather|Druid=8|Whirlwind|Druid=9|Storm of Vengeance"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Weather],[PREVARLT:WeatherDomain,1]"
       }
     ]
   },

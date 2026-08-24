@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Versatile Weapon",
     "name": "Versatile Weapon",
     "class": "Magus",
-    "description": null,
+    "description": "You transform the physical makeup of a weapon as you desire.  This spell functions like greater magic weapon, except that it subtly alters the physical properties of a weapon, enabling it to bypass damage reduction of one the following types: bludgeoning, cold iron, piercing, silver, or slashing. The affected weapon still inflicts damage of its normal type and its hardness and hit points are unchanged. This spell can be cast on a natural weapon or unarmed strike.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=3|Versatile Weapon"
+      },
+      {
+        "key": "DESC",
+        "value": "You transform the physical makeup of a weapon as you desire.  This spell functions like greater magic weapon, except that it subtly alters the physical properties of a weapon, enabling it to bypass damage reduction of one the following types: bludgeoning, cold iron, piercing, silver, or slashing. The affected weapon still inflicts damage of its normal type and its hardness and hit points are unchanged. This spell can be cast on a natural weapon or unarmed strike.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

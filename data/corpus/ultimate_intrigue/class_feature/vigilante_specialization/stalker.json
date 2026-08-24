@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Vigilante Specialization ~ Stalker",
     "name": "Stalker",
@@ -43,6 +43,10 @@
       {
         "key": "ASPECT",
         "value": "Ability Benefit|%1d8 (or %1d4)|HiddenStrikeDiceCount"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "Vigilante_CF_Stalker,0"
       }
     ]
   },

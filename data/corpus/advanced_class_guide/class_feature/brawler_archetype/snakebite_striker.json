@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Snakebite Striker",
     "name": "Snakebite Striker",
@@ -63,6 +63,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Snakebite Striker],[!PREFACT:1,ABILITIES,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_MartialFlexibility=True,Brawler_Archetype_ClassSkills=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "With her lightning quickness and guile, a snakebite striker keeps her foes' attention focused on her, because any one of her feints might be an actual attack. By giving up some of a brawler's versatility, she increases her damage potential and exposes opponents to deadly and unexpected strikes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Sneak Attack|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Class Skills|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Snake Feint|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Snakebite Striker Brawler ~ Opportunist|PRECLASS:1,Brawler=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_MartialFlexibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_MartialFlexibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ClassSkills|true"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L1 ~ Disguise Self",
     "name": "Disguise Self",
     "class": "Sorcerer",
-    "description": null,
+    "description": "You make yourself-including clothing, armor, weapons, and equipment-look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your creature type [although you can appear as another subtype]. Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person or gender. The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile [touch] or audible [sound] properties of you or your equipment. If you use this spell to create a disguise, you get a +10 bonus on the Disguise check. A creature that interacts with the glamer gets a Will save to recognize it as an illusion.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=1|Disguise Self"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants Disguise skill bonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Disguise|10|TYPE=Temporary"
+      },
+      {
+        "key": "DESC",
+        "value": "You make yourself-including clothing, armor, weapons, and equipment-look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your creature type [although you can appear as another subtype]. Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person or gender. The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile [touch] or audible [sound] properties of you or your equipment. If you use this spell to create a disguise, you get a +10 bonus on the Disguise check. A creature that interacts with the glamer gets a Will save to recognize it as an illusion.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

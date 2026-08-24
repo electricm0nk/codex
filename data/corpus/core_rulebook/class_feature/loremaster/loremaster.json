@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Loremaster",
     "name": "Loremaster",
@@ -19,6 +19,22 @@
       {
         "key": "BONUS",
         "value": "VAR|Loremaster_CFP_Level|LoremasterLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Loremaster Class Feature|AUTOMATIC|Loremaster ~ Secret Lore|PREVARGTEQ:Loremaster_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Loremaster Class Feature|AUTOMATIC|Loremaster ~ Lore|PREVARGTEQ:Loremaster_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Loremaster Class Feature|AUTOMATIC|Loremaster ~ Greater Lore|PREVARGTEQ:Loremaster_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Loremaster Class Feature|AUTOMATIC|Loremaster ~ True Lore|PREVARGTEQ:Loremaster_CFP_Level,10"
       }
     ]
   },

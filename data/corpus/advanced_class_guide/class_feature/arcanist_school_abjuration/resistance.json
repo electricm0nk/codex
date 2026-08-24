@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist School Abjuration ~ Resistance",
     "name": "Resistance",
@@ -35,6 +35,10 @@
       {
         "key": "BONUS",
         "value": "VAR|ArcanistSchoolBoost_Resistance|-1|!PRECLASS:1,Wizard=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman=0"
       }
     ]
   },

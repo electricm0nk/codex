@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Repose Domain",
     "name": "Repose",
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Repose=1|Deathwatch|Repose=2|Gentle Repose|Repose=3|Speak with Dead|Repose=4|Death Ward|Repose=5|Slay Living|Repose=6|Undeath to Death|Repose=7|Destruction|Repose=8|Waves of Exhaustion|Repose=9|Wail of the Banshee"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Repose],[PREVARLT:ReposeDomain,1]"
       }
     ]
   },

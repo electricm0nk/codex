@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Variant Multiclass ~ Summoner",
     "name": "Summoner",
@@ -43,6 +43,58 @@
       {
         "key": "DESC",
         "value": "&nl;Aspect: At 19th level, he gains the aspect class feature, except he can divert only 1 evolution point from his eidolon to himself."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Summoner_Class_Selection|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Agathion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Agathion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Angel|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Angel=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Archon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Archon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Azata|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Azata=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Daemon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Daemon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Demon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Demon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Devil|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Devil=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Div|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Div=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Elemental|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Elemental=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Inevitable|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Inevitable=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Protean|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Protean=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonSubtype_Psychopomp|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_EidolonSubtype_Psychopomp=True"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Green Faith Marshal ~ Monkey Domain",
     "name": "Monkey",
@@ -67,6 +67,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Inquisitor=1|Beguiling Gift|Inquisitor=2|Spider Climb|Inquisitor=3|Cacophonous Call|Inquisitor=4|Freedom of Movement|Inquisitor=5|Summon Nature's Ally V (Dire Ape or Girallon Only)|Inquisitor=6|Confusion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Body Type ~ Biped (Hands)"
       }
     ]
   },

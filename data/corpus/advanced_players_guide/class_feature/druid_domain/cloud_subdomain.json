@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Cloud Subdomain",
     "name": "Cloud Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Obscuring Mist|Druid=2|Wind Wall|Druid=3|Gaseous Form|Druid=4|Solid Fog|Druid=5|Control Winds|Druid=6|Chain Lightning|Druid=7|Elemental Body IV (Air Only)|Druid=8|Whirlwind|Druid=9|Storm of Vengeance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

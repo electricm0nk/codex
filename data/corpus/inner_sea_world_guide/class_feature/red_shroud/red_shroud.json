@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Red Shroud",
     "name": "Red Shroud",
@@ -35,6 +35,10 @@
       {
         "key": "TEMPBONUS",
         "value": "ANYPC|COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
       }
     ]
   },

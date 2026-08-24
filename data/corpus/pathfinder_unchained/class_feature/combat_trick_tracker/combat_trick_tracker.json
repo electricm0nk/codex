@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Combat Trick Tracker",
     "name": "Combat Trick Tracker",
@@ -11,6 +11,1870 @@
       {
         "key": "ABILITY",
         "value": "Special Ability|AUTOMATIC|Combat Trick ~ Agile Maneuvers|PREABILITY:1,CATEGORY=FEAT,Agile Maneuvers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Agile Maneuvers|PREABILITY:1,CATEGORY=FEAT,Agile Maneuvers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Arcane Armor Mastery|PREABILITY:1,CATEGORY=FEAT,Arcane Armor Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Arcane Armor Training|PREABILITY:1,CATEGORY=FEAT,Arcane Armor Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Arcane Strike|PREABILITY:1,CATEGORY=FEAT,Arcane Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bleeding Critical|PREABILITY:1,CATEGORY=FEAT,Bleeding Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blind-Fight|PREABILITY:1,CATEGORY=FEAT,Blind-Fight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blinding Critical|PREABILITY:1,CATEGORY=FEAT,Blinding Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Catch Off-Guard|PREABILITY:1,CATEGORY=FEAT,Catch Off-Guard"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Channel Smite|PREABILITY:1,CATEGORY=FEAT,Channel Smite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cleave|PREABILITY:1,CATEGORY=FEAT,Cleave"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Combat Expertise|PREABILITY:1,CATEGORY=FEAT,Combat Expertise"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Combat Reflexes|PREABILITY:1,CATEGORY=FEAT,Combat Reflexes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Critical Focus|PREABILITY:1,CATEGORY=FEAT,Critical Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Critical Mastery|PREABILITY:1,CATEGORY=FEAT,Critical Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dazzling Display|PREABILITY:1,CATEGORY=FEAT,Dazzling Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deadly Aim|PREABILITY:1,CATEGORY=FEAT,Deadly Aim"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deadly Stroke|PREABILITY:1,CATEGORY=FEAT,Deadly Stroke"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deafening Critical|PREABILITY:1,CATEGORY=FEAT,Deafening Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Defensive Combat Training|PREABILITY:1,CATEGORY=FEAT,Defensive Combat Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deflect Arrows|PREABILITY:1,CATEGORY=FEAT,Deflect Arrows"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disruptive|PREABILITY:1,CATEGORY=FEAT,Disruptive"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dodge|PREABILITY:1,CATEGORY=FEAT,Dodge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Double Slice|PREABILITY:1,CATEGORY=FEAT,Double Slice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Exhausting Critical|PREABILITY:1,CATEGORY=FEAT,Exhausting Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Far Shot|PREABILITY:1,CATEGORY=FEAT,Far Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Gorgon's Fist|PREABILITY:1,CATEGORY=FEAT,Gorgon's Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Great Cleave|PREABILITY:1,CATEGORY=FEAT,Great Cleave"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Bull Rush|PREABILITY:1,CATEGORY=FEAT,Greater Bull Rush"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Disarm|PREABILITY:1,CATEGORY=FEAT,Greater Disarm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Feint|PREABILITY:1,CATEGORY=FEAT,Greater Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Grapple|PREABILITY:1,CATEGORY=FEAT,Greater Grapple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Overrun|PREABILITY:1,CATEGORY=FEAT,Greater Overrun"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Penetrating Strike|PREABILITY:1,CATEGORY=FEAT,Greater Penetrating Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Shield Focus|PREABILITY:1,CATEGORY=FEAT,Greater Shield Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Sunder|PREABILITY:1,CATEGORY=FEAT,Greater Sunder"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Trip|PREABILITY:1,CATEGORY=FEAT,Greater Trip"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Two-Weapon Fighting|PREABILITY:1,CATEGORY=FEAT,Greater Two-Weapon Fighting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Vital Strike|PREABILITY:1,CATEGORY=FEAT,Greater Vital Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Weapon Focus|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Weapon Specialization|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Specialization"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Bull Rush|PREABILITY:1,CATEGORY=FEAT,Improved Bull Rush"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Critical|PREABILITY:1,CATEGORY=FEAT,Improved Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Disarm|PREABILITY:1,CATEGORY=FEAT,Improved Disarm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Feint|PREABILITY:1,CATEGORY=FEAT,Improved Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Grapple|PREABILITY:1,CATEGORY=FEAT,Improved Grapple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Initiative|PREABILITY:1,CATEGORY=FEAT,Improved Initiative"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Overrun|PREABILITY:1,CATEGORY=FEAT,Improved Overrun"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Precise Shot|PREABILITY:1,CATEGORY=FEAT,Improved Precise Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Shield Bash|PREABILITY:1,CATEGORY=FEAT,Improved Shield Bash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Sunder|PREABILITY:1,CATEGORY=FEAT,Improved Sunder"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Trip|PREABILITY:1,CATEGORY=FEAT,Improved Trip"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Two-Weapon Fighting|PREABILITY:1,CATEGORY=FEAT,Improved Two-Weapon Fighting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Unarmed Strike|PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Vital Strike|PREABILITY:1,CATEGORY=FEAT,Improved Vital Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improvised Weapon Mastery|PREABILITY:1,CATEGORY=FEAT,Improvised Weapon Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Intimidating Prowess|PREABILITY:1,CATEGORY=FEAT,Intimidating Prowess"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Lightning Stance|PREABILITY:1,CATEGORY=FEAT,Lightning Stance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Lunge|PREABILITY:1,CATEGORY=FEAT,Lunge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Manyshot|PREABILITY:1,CATEGORY=FEAT,Manyshot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Medusa's Wrath|PREABILITY:1,CATEGORY=FEAT,Medusa's Wrath"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mobility|PREABILITY:1,CATEGORY=FEAT,Mobility"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mounted Archery|PREABILITY:1,CATEGORY=FEAT,Mounted Archery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mounted Combat|PREABILITY:1,CATEGORY=FEAT,Mounted Combat"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Penetrating Strike|PREABILITY:1,CATEGORY=FEAT,Penetrating Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pinpoint Targeting|PREABILITY:1,CATEGORY=FEAT,Pinpoint Targeting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Point-Blank Shot|PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Power Attack|PREABILITY:1,CATEGORY=FEAT,Power Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Precise Shot|PREABILITY:1,CATEGORY=FEAT,Precise Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quick Draw|PREABILITY:1,CATEGORY=FEAT,Quick Draw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rapid Reload|PREABILITY:1,CATEGORY=FEAT,Rapid Reload"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rapid Shot|PREABILITY:1,CATEGORY=FEAT,Rapid Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Ride-By Attack|PREABILITY:1,CATEGORY=FEAT,Ride-By Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Scorpion Style|PREABILITY:1,CATEGORY=FEAT,Scorpion Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shatter Defenses|PREABILITY:1,CATEGORY=FEAT,Shatter Defenses"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shield Focus|PREABILITY:1,CATEGORY=FEAT,Shield Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shield Master|PREABILITY:1,CATEGORY=FEAT,Shield Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shield Slam|PREABILITY:1,CATEGORY=FEAT,Shield Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shot on the Run|PREABILITY:1,CATEGORY=FEAT,Shot on the Run"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sickening Critical|PREABILITY:1,CATEGORY=FEAT,Sickening Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snatch Arrows|PREABILITY:1,CATEGORY=FEAT,Snatch Arrows"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Spellbreaker|PREABILITY:1,CATEGORY=FEAT,Spellbreaker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Spirited Charge|PREABILITY:1,CATEGORY=FEAT,Spirited Charge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Spring Attack|PREABILITY:1,CATEGORY=FEAT,Spring Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Staggering Critical|PREABILITY:1,CATEGORY=FEAT,Staggering Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stand Still|PREABILITY:1,CATEGORY=FEAT,Stand Still"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Step Up|PREABILITY:1,CATEGORY=FEAT,Step Up"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Strike Back|PREABILITY:1,CATEGORY=FEAT,Strike Back"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stunning Critical|PREABILITY:1,CATEGORY=FEAT,Stunning Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stunning Fist|PREABILITY:1,CATEGORY=FEAT,Stunning Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Throw Anything|PREABILITY:1,CATEGORY=FEAT,Throw Anything"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tiring Critical|PREABILITY:1,CATEGORY=FEAT,Tiring Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Trample|PREABILITY:1,CATEGORY=FEAT,Trample"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Two-Weapon Defense|PREABILITY:1,CATEGORY=FEAT,Two-Weapon Defense"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Two-Weapon Fighting|PREABILITY:1,CATEGORY=FEAT,Two-Weapon Fighting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Two-Weapon Rend|PREABILITY:1,CATEGORY=FEAT,Two-Weapon Rend"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Unseat|PREABILITY:1,CATEGORY=FEAT,Unseat"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Vital Strike|PREABILITY:1,CATEGORY=FEAT,Vital Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Weapon Finesse|PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Weapon Focus|PREABILITY:1,CATEGORY=FEAT,Weapon Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Weapon Specialization|PREABILITY:1,CATEGORY=FEAT,Weapon Specialization"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Whirlwind Attack|PREABILITY:1,CATEGORY=FEAT,Whirlwind Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Wind Stance|PREABILITY:1,CATEGORY=FEAT,Wind Stance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Amateur Swashbuckler|PREABILITY:1,CATEGORY=FEAT,Amateur Swashbuckler"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Anticipate Dodge|PREABILITY:1,CATEGORY=FEAT,Anticipate Dodge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Barroom Brawler|PREABILITY:1,CATEGORY=FEAT,Barroom Brawler"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Battle Cry|PREABILITY:1,CATEGORY=FEAT,Battle Cry"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Befuddling Strike|PREABILITY:1,CATEGORY=FEAT,Befuddling Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blooded Arcane Strike|PREABILITY:1,CATEGORY=FEAT,Blooded Arcane Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Canny Tumble|PREABILITY:1,CATEGORY=FEAT,Canny Tumble"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Channeling Force|PREABILITY:1,CATEGORY=FEAT,Channeling Force"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Coordinated Shot|PREABILITY:1,CATEGORY=FEAT,Coordinated Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Counter Ref lexes|PREABILITY:1,CATEGORY=FEAT,Counter Ref lexes"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Counterpunch|PREABILITY:1,CATEGORY=FEAT,Counterpunch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dazing Fist|PREABILITY:1,CATEGORY=FEAT,Dazing Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disheartening Display|PREABILITY:1,CATEGORY=FEAT,Disheartening Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Distracting Charge|PREABILITY:1,CATEGORY=FEAT,Distracting Charge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Draining Strike|PREABILITY:1,CATEGORY=FEAT,Draining Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dueling Cape|PREABILITY:1,CATEGORY=FEAT,Dueling Cape"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Extreme Prejudice|PREABILITY:1,CATEGORY=FEAT,Extreme Prejudice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Faerie's Strike|PREABILITY:1,CATEGORY=FEAT,Faerie's Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Grabbing Drag|PREABILITY:1,CATEGORY=FEAT,Grabbing Drag"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Grabbing Master|PREABILITY:1,CATEGORY=FEAT,Grabbing Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Grabbing Style|PREABILITY:1,CATEGORY=FEAT,Grabbing Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Grasping Strike|PREABILITY:1,CATEGORY=FEAT,Grasping Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Weapon of the Chosen|PREABILITY:1,CATEGORY=FEAT,Greater Weapon of the Chosen"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Gruesome Slaughter|PREABILITY:1,CATEGORY=FEAT,Gruesome Slaughter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Awesome Blow|PREABILITY:1,CATEGORY=FEAT,Improved Awesome Blow"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Swap Places|PREABILITY:1,CATEGORY=FEAT,Improved Swap Places"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Weapon of the Chosen|PREABILITY:1,CATEGORY=FEAT,Improved Weapon of the Chosen"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Intercept Charge|PREABILITY:1,CATEGORY=FEAT,Intercept Charge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Jabbing Dancer|PREABILITY:1,CATEGORY=FEAT,Jabbing Dancer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Jabbing Master|PREABILITY:1,CATEGORY=FEAT,Jabbing Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Jabbing Style|PREABILITY:1,CATEGORY=FEAT,Jabbing Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Kick Up|PREABILITY:1,CATEGORY=FEAT,Kick Up"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Killing Flourish|PREABILITY:1,CATEGORY=FEAT,Killing Flourish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Merciless Butchery|PREABILITY:1,CATEGORY=FEAT,Merciless Butchery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Paralyzing Strike|PREABILITY:1,CATEGORY=FEAT,Paralyzing Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pummeling Bully|PREABILITY:1,CATEGORY=FEAT,Pummeling Bully"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pummeling Charge|PREABILITY:1,CATEGORY=FEAT,Pummeling Charge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pummeling Style|PREABILITY:1,CATEGORY=FEAT,Pummeling Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Riving Strike|PREABILITY:1,CATEGORY=FEAT,Riving Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Seething Hatred|PREABILITY:1,CATEGORY=FEAT,Seething Hatred"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Seize Advantage|PREABILITY:1,CATEGORY=FEAT,Seize Advantage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Silent Kill|PREABILITY:1,CATEGORY=FEAT,Silent Kill"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Slashing Grace|PREABILITY:1,CATEGORY=FEAT,Slashing Grace"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Slayer's Feint|PREABILITY:1,CATEGORY=FEAT,Slayer's Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Staggering Fist|PREABILITY:1,CATEGORY=FEAT,Staggering Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Twinned Feint|PREABILITY:1,CATEGORY=FEAT,Twinned Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Undersized Mount|PREABILITY:1,CATEGORY=FEAT,Undersized Mount"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Weapon of the Chosen|PREABILITY:1,CATEGORY=FEAT,Weapon of the Chosen"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Winter's Strike|PREABILITY:1,CATEGORY=FEAT,Winter's Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Wounded Paw Gambit|PREABILITY:1,CATEGORY=FEAT,Wounded Paw Gambit"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Great Hatred|PREABILITY:1,CATEGORY=FEAT,Great Hatred"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bashing Finish|PREABILITY:1,CATEGORY=FEAT,Bashing Finish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bloody Assault|PREABILITY:1,CATEGORY=FEAT,Bloody Assault"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bodyguard|PREABILITY:1,CATEGORY=FEAT,Bodyguard"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bull Rush Strike|PREABILITY:1,CATEGORY=FEAT,Bull Rush Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Charge Through|PREABILITY:1,CATEGORY=FEAT,Charge Through"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cockatrice Strike|PREABILITY:1,CATEGORY=FEAT,Cockatrice Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Combat Patrol|PREABILITY:1,CATEGORY=FEAT,Combat Patrol"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Coordinated Defense|PREABILITY:1,CATEGORY=FEAT,Coordinated Defense"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Coordinated Maneuvers|PREABILITY:1,CATEGORY=FEAT,Coordinated Maneuvers"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Covering Defense|PREABILITY:1,CATEGORY=FEAT,Covering Defense"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crippling Critical|PREABILITY:1,CATEGORY=FEAT,Crippling Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crossbow Mastery|PREABILITY:1,CATEGORY=FEAT,Crossbow Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dastardly Finish|PREABILITY:1,CATEGORY=FEAT,Dastardly Finish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dazing Assault|PREABILITY:1,CATEGORY=FEAT,Dazing Assault"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disarming Strike|PREABILITY:1,CATEGORY=FEAT,Disarming Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disrupting Shot|PREABILITY:1,CATEGORY=FEAT,Disrupting Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dreadful Carnage|PREABILITY:1,CATEGORY=FEAT,Dreadful Carnage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Eldritch Claws|PREABILITY:1,CATEGORY=FEAT,Eldritch Claws"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Elemental Fist|PREABILITY:1,CATEGORY=FEAT,Elemental Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Elven Accuracy|PREABILITY:1,CATEGORY=FEAT,Elven Accuracy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Enforcer|PREABILITY:1,CATEGORY=FEAT,Enforcer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Focused Shot|PREABILITY:1,CATEGORY=FEAT,Focused Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Following Step|PREABILITY:1,CATEGORY=FEAT,Following Step"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Furious Focus|PREABILITY:1,CATEGORY=FEAT,Furious Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Gang Up|PREABILITY:1,CATEGORY=FEAT,Gang Up"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Blind-Fight|PREABILITY:1,CATEGORY=FEAT,Greater Blind-Fight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Dirty Trick|PREABILITY:1,CATEGORY=FEAT,Greater Dirty Trick"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Drag|PREABILITY:1,CATEGORY=FEAT,Greater Drag"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Reposition|PREABILITY:1,CATEGORY=FEAT,Greater Reposition"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Shield Specialization|PREABILITY:1,CATEGORY=FEAT,Greater Shield Specialization"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Steal|PREABILITY:1,CATEGORY=FEAT,Greater Steal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Blind-Fight|PREABILITY:1,CATEGORY=FEAT,Improved Blind-Fight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Dirty Trick|PREABILITY:1,CATEGORY=FEAT,Improved Dirty Trick"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Drag|PREABILITY:1,CATEGORY=FEAT,Improved Drag"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Ki Throw|PREABILITY:1,CATEGORY=FEAT,Improved Ki Throw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Reposition|PREABILITY:1,CATEGORY=FEAT,Improved Reposition"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Second Chance|PREABILITY:1,CATEGORY=FEAT,Improved Second Chance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Sidestep|PREABILITY:1,CATEGORY=FEAT,Improved Sidestep"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Steal|PREABILITY:1,CATEGORY=FEAT,Improved Steal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ In Harm's Way|PREABILITY:1,CATEGORY=FEAT,In Harm's Way"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Ki Throw|PREABILITY:1,CATEGORY=FEAT,Ki Throw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Lookout|PREABILITY:1,CATEGORY=FEAT,Lookout"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Low Profile|PREABILITY:1,CATEGORY=FEAT,Low Profile"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Missile Shield|PREABILITY:1,CATEGORY=FEAT,Missile Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Outflank|PREABILITY:1,CATEGORY=FEAT,Outflank"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mounted Shield|PREABILITY:1,CATEGORY=FEAT,Mounted Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mounted Skirmisher|PREABILITY:1,CATEGORY=FEAT,Mounted Skirmisher"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Paired Opportunists|PREABILITY:1,CATEGORY=FEAT,Paired Opportunists"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Parting Shot|PREABILITY:1,CATEGORY=FEAT,Parting Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Perfect Strike|PREABILITY:1,CATEGORY=FEAT,Perfect Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Point-Blank Master|PREABILITY:1,CATEGORY=FEAT,Point-Blank Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Precise Strike|PREABILITY:1,CATEGORY=FEAT,Precise Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Punishing Kick|PREABILITY:1,CATEGORY=FEAT,Punishing Kick"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pushing Assault|PREABILITY:1,CATEGORY=FEAT,Pushing Assault"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Ray Shield|PREABILITY:1,CATEGORY=FEAT,Ray Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rending Claws|PREABILITY:1,CATEGORY=FEAT,Rending Claws"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Repositioning Strike|PREABILITY:1,CATEGORY=FEAT,Repositioning Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Saving Shield|PREABILITY:1,CATEGORY=FEAT,Saving Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Second Chance|PREABILITY:1,CATEGORY=FEAT,Second Chance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shadow Strike|PREABILITY:1,CATEGORY=FEAT,Shadow Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shield of Swings|PREABILITY:1,CATEGORY=FEAT,Shield of Swings"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shield Specialization|PREABILITY:1,CATEGORY=FEAT,Shield Specialization"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shield Wall|PREABILITY:1,CATEGORY=FEAT,Shield Wall"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sidestep|PREABILITY:1,CATEGORY=FEAT,Sidestep"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Smash|PREABILITY:1,CATEGORY=FEAT,Smash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stabbing Shot|PREABILITY:1,CATEGORY=FEAT,Stabbing Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Step Up and Strike|PREABILITY:1,CATEGORY=FEAT,Step Up and Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stunning Assault|PREABILITY:1,CATEGORY=FEAT,Stunning Assault"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sundering Strike|PREABILITY:1,CATEGORY=FEAT,Sundering Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Swap Places|PREABILITY:1,CATEGORY=FEAT,Swap Places"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Swift Aid|PREABILITY:1,CATEGORY=FEAT,Swift Aid"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Team Up|PREABILITY:1,CATEGORY=FEAT,Team Up"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Teleport Tactician|PREABILITY:1,CATEGORY=FEAT,Teleport Tactician"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Touch of Serenity|PREABILITY:1,CATEGORY=FEAT,Touch of Serenity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Trick Riding|PREABILITY:1,CATEGORY=FEAT,Trick Riding"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tripping Strike|PREABILITY:1,CATEGORY=FEAT,Tripping Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Under and Over|PREABILITY:1,CATEGORY=FEAT,Under and Over"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Underfoot|PREABILITY:1,CATEGORY=FEAT,Underfoot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blazing Aura|PREABILITY:1,CATEGORY=FEAT,Blazing Aura"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blistering Feint|PREABILITY:1,CATEGORY=FEAT,Blistering Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blood Beak|PREABILITY:1,CATEGORY=FEAT,Blood Beak"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Blundering Defense|PREABILITY:1,CATEGORY=FEAT,Blundering Defense"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bullying Blow|PREABILITY:1,CATEGORY=FEAT,Bullying Blow"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cautious Fighter|PREABILITY:1,CATEGORY=FEAT,Cautious Fighter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Claw Pounce|PREABILITY:1,CATEGORY=FEAT,Claw Pounce"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cleave Through|PREABILITY:1,CATEGORY=FEAT,Cleave Through"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cloven Helm|PREABILITY:1,CATEGORY=FEAT,Cloven Helm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Critical Versatility|PREABILITY:1,CATEGORY=FEAT,Critical Versatility"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Demoralizing Lash|PREABILITY:1,CATEGORY=FEAT,Demoralizing Lash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dented Helm|PREABILITY:1,CATEGORY=FEAT,Dented Helm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Desperate Swing|PREABILITY:1,CATEGORY=FEAT,Desperate Swing"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Destroyer's Blessing|PREABILITY:1,CATEGORY=FEAT,Destroyer's Blessing"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Elven Battle Training|PREABILITY:1,CATEGORY=FEAT,Elven Battle Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Ferocious Tenacity|PREABILITY:1,CATEGORY=FEAT,Ferocious Tenacity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Fire Hand|PREABILITY:1,CATEGORY=FEAT,Fire Hand"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Giant Killer|PREABILITY:1,CATEGORY=FEAT,Giant Killer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Gloom Strike|PREABILITY:1,CATEGORY=FEAT,Gloom Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Gnome Weapon Focus|PREABILITY:1,CATEGORY=FEAT,Gnome Weapon Focus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Goblin Cleaver|PREABILITY:1,CATEGORY=FEAT,Goblin Cleaver"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Goblin Gunslinger|PREABILITY:1,CATEGORY=FEAT,Goblin Gunslinger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Grudge Fighter|PREABILITY:1,CATEGORY=FEAT,Grudge Fighter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Hard-Headed|PREABILITY:1,CATEGORY=FEAT,Hard-Headed"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Low Blow|PREABILITY:1,CATEGORY=FEAT,Improved Low Blow"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Surprise Follow-Through|PREABILITY:1,CATEGORY=FEAT,Improved Surprise Follow-Through"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Inner Flame|PREABILITY:1,CATEGORY=FEAT,Inner Flame"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Kobold Ambusher|PREABILITY:1,CATEGORY=FEAT,Kobold Ambusher"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Kobold Sniper|PREABILITY:1,CATEGORY=FEAT,Kobold Sniper"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Lucky Strike|PREABILITY:1,CATEGORY=FEAT,Lucky Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Martial Mastery|PREABILITY:1,CATEGORY=FEAT,Martial Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Martial Versatility|PREABILITY:1,CATEGORY=FEAT,Martial Versatility"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Orc Hewer|PREABILITY:1,CATEGORY=FEAT,Orc Hewer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Nimble Striker|PREABILITY:1,CATEGORY=FEAT,Nimble Striker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Orc Weapon Expertise|PREABILITY:1,CATEGORY=FEAT,Orc Weapon Expertise"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Reverse-Feint|PREABILITY:1,CATEGORY=FEAT,Reverse-Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Risky Striker|PREABILITY:1,CATEGORY=FEAT,Risky Striker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Scorching Weapons|PREABILITY:1,CATEGORY=FEAT,Scorching Weapons"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sea Hunter|PREABILITY:1,CATEGORY=FEAT,Sea Hunter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sharpclaw|PREABILITY:1,CATEGORY=FEAT,Sharpclaw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shatterspell|PREABILITY:1,CATEGORY=FEAT,Shatterspell"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Spit Venom|PREABILITY:1,CATEGORY=FEAT,Spit Venom"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Surprise Follow-Through|PREABILITY:1,CATEGORY=FEAT,Surprise Follow-Through"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Surprise Strike|PREABILITY:1,CATEGORY=FEAT,Surprise Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sympathetic Rage|PREABILITY:1,CATEGORY=FEAT,Sympathetic Rage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tail Terror|PREABILITY:1,CATEGORY=FEAT,Tail Terror"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tangle Feet|PREABILITY:1,CATEGORY=FEAT,Tangle Feet"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Taskmaster|PREABILITY:1,CATEGORY=FEAT,Taskmaster"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Terrorizing Display|PREABILITY:1,CATEGORY=FEAT,Terrorizing Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tree Hanger|PREABILITY:1,CATEGORY=FEAT,Tree Hanger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Uncanny Defense|PREABILITY:1,CATEGORY=FEAT,Uncanny Defense"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Vast Hatred|PREABILITY:1,CATEGORY=FEAT,Vast Hatred"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Adder Strike|PREABILITY:1,CATEGORY=FEAT,Adder Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Amateur Gunslinger|PREABILITY:1,CATEGORY=FEAT,Amateur Gunslinger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Arc Slinger|PREABILITY:1,CATEGORY=FEAT,Arc Slinger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Binding Throw|PREABILITY:1,CATEGORY=FEAT,Binding Throw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bludgeoner|PREABILITY:1,CATEGORY=FEAT,Bludgeoner"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Boar Ferocity|PREABILITY:1,CATEGORY=FEAT,Boar Ferocity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Boar Shred|PREABILITY:1,CATEGORY=FEAT,Boar Shred"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Boar Style|PREABILITY:1,CATEGORY=FEAT,Boar Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Body Shield|PREABILITY:1,CATEGORY=FEAT,Body Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Bonebreaker|PREABILITY:1,CATEGORY=FEAT,Bonebreaker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Break Guard|PREABILITY:1,CATEGORY=FEAT,Break Guard"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Broken Wing Gambit|PREABILITY:1,CATEGORY=FEAT,Broken Wing Gambit"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cavalry Formation|PREABILITY:1,CATEGORY=FEAT,Cavalry Formation"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Charging Hurler|PREABILITY:1,CATEGORY=FEAT,Charging Hurler"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Chokehold|PREABILITY:1,CATEGORY=FEAT,Chokehold"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Cleaving Finish|PREABILITY:1,CATEGORY=FEAT,Cleaving Finish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Close-Quarters Thrower|PREABILITY:1,CATEGORY=FEAT,Close-Quarters Thrower"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Clustered Shots|PREABILITY:1,CATEGORY=FEAT,Clustered Shots"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Combat Style Master|PREABILITY:1,CATEGORY=FEAT,Combat Style Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Coordinated Charge|PREABILITY:1,CATEGORY=FEAT,Coordinated Charge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crane Riposte|PREABILITY:1,CATEGORY=FEAT,Crane Riposte"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crane Style|PREABILITY:1,CATEGORY=FEAT,Crane Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crane Wing|PREABILITY:1,CATEGORY=FEAT,Crane Wing"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crusader's Fist|PREABILITY:1,CATEGORY=FEAT,Crusader's Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Crushing Blow|PREABILITY:1,CATEGORY=FEAT,Crushing Blow"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deadly Finish|PREABILITY:1,CATEGORY=FEAT,Deadly Finish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Death from Above|PREABILITY:1,CATEGORY=FEAT,Death from Above"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Death or Glory|PREABILITY:1,CATEGORY=FEAT,Death or Glory"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deathless Initiate|PREABILITY:1,CATEGORY=FEAT,Deathless Initiate"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deathless Master|PREABILITY:1,CATEGORY=FEAT,Deathless Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Deathless Zealot|PREABILITY:1,CATEGORY=FEAT,Deathless Zealot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Defensive Weapon Training|PREABILITY:1,CATEGORY=FEAT,Defensive Weapon Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Devastating Strike|PREABILITY:1,CATEGORY=FEAT,Devastating Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disengaging Feint|PREABILITY:1,CATEGORY=FEAT,Disengaging Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disengaging Flourish|PREABILITY:1,CATEGORY=FEAT,Disengaging Flourish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Disengaging Shot|PREABILITY:1,CATEGORY=FEAT,Disengaging Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Distance Thrower|PREABILITY:1,CATEGORY=FEAT,Distance Thrower"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Djinni Spin|PREABILITY:1,CATEGORY=FEAT,Djinni Spin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Djinni Spirit|PREABILITY:1,CATEGORY=FEAT,Djinni Spirit"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Djinni Style|PREABILITY:1,CATEGORY=FEAT,Djinni Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Domain Strike|PREABILITY:1,CATEGORY=FEAT,Domain Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Drag Down|PREABILITY:1,CATEGORY=FEAT,Drag Down"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dragon Ferocity|PREABILITY:1,CATEGORY=FEAT,Dragon Ferocity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dragon Roar|PREABILITY:1,CATEGORY=FEAT,Dragon Roar"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dragon Style|PREABILITY:1,CATEGORY=FEAT,Dragon Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Dramatic Display|PREABILITY:1,CATEGORY=FEAT,Dramatic Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Earth Child Binder|PREABILITY:1,CATEGORY=FEAT,Earth Child Binder"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Earth Child Style|PREABILITY:1,CATEGORY=FEAT,Earth Child Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Earth Child Topple|PREABILITY:1,CATEGORY=FEAT,Earth Child Topple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Efreeti Stance|PREABILITY:1,CATEGORY=FEAT,Efreeti Stance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Efreeti Style|PREABILITY:1,CATEGORY=FEAT,Efreeti Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Efreeti Touch|PREABILITY:1,CATEGORY=FEAT,Efreeti Touch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Enfilading Fire|PREABILITY:1,CATEGORY=FEAT,Enfilading Fire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Feint Partner|PREABILITY:1,CATEGORY=FEAT,Feint Partner"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Felling Escape|PREABILITY:1,CATEGORY=FEAT,Felling Escape"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Felling Smash|PREABILITY:1,CATEGORY=FEAT,Felling Smash"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Feral Combat Training|PREABILITY:1,CATEGORY=FEAT,Feral Combat Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Final Embrace|PREABILITY:1,CATEGORY=FEAT,Final Embrace"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Final Embrace Horror|PREABILITY:1,CATEGORY=FEAT,Final Embrace Horror"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Final Embrace Master|PREABILITY:1,CATEGORY=FEAT,Final Embrace Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Flanking Foil|PREABILITY:1,CATEGORY=FEAT,Flanking Foil"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Fortified Armor Training|PREABILITY:1,CATEGORY=FEAT,Fortified Armor Training"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Gory Finish|PREABILITY:1,CATEGORY=FEAT,Gory Finish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Rending Fury|PREABILITY:1,CATEGORY=FEAT,Greater Rending Fury"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Snap Shot|PREABILITY:1,CATEGORY=FEAT,Greater Snap Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Greater Whip Mastery|PREABILITY:1,CATEGORY=FEAT,Greater Whip Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Hammer the Gap|PREABILITY:1,CATEGORY=FEAT,Hammer the Gap"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Haunted Gnome|PREABILITY:1,CATEGORY=FEAT,Haunted Gnome"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Haunted Gnome Assault|PREABILITY:1,CATEGORY=FEAT,Haunted Gnome Assault"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Haunted Gnome Shroud|PREABILITY:1,CATEGORY=FEAT,Haunted Gnome Shroud"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Hero's Display|PREABILITY:1,CATEGORY=FEAT,Hero's Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Hex Strike|PREABILITY:1,CATEGORY=FEAT,Hex Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Horse Master|PREABILITY:1,CATEGORY=FEAT,Horse Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Impact Critical Shot|PREABILITY:1,CATEGORY=FEAT,Impact Critical Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Impaling Critical|PREABILITY:1,CATEGORY=FEAT,Impaling Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Charging Hurler|PREABILITY:1,CATEGORY=FEAT,Improved Charging Hurler"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Cleaving Finish|PREABILITY:1,CATEGORY=FEAT,Improved Cleaving Finish"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Devastating Strike|PREABILITY:1,CATEGORY=FEAT,Improved Devastating Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Feint Partner|PREABILITY:1,CATEGORY=FEAT,Improved Feint Partner"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Impaling Critical|PREABILITY:1,CATEGORY=FEAT,Improved Impaling Critical"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Rending Fury|PREABILITY:1,CATEGORY=FEAT,Improved Rending Fury"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Snap Shot|PREABILITY:1,CATEGORY=FEAT,Improved Snap Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Whip Mastery|PREABILITY:1,CATEGORY=FEAT,Improved Whip Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Improved Two-Weapon Feint|PREABILITY:1,CATEGORY=FEAT,Improved Two-Weapon Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Janni Rush|PREABILITY:1,CATEGORY=FEAT,Janni Rush"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Janni Style|PREABILITY:1,CATEGORY=FEAT,Janni Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Janni Tempest|PREABILITY:1,CATEGORY=FEAT,Janni Tempest"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Jawbreaker|PREABILITY:1,CATEGORY=FEAT,Jawbreaker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Kirin Path|PREABILITY:1,CATEGORY=FEAT,Kirin Path"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Kirin Strike|PREABILITY:1,CATEGORY=FEAT,Kirin Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Kirin Style|PREABILITY:1,CATEGORY=FEAT,Kirin Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Landing Roll|PREABILITY:1,CATEGORY=FEAT,Landing Roll"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mantis Style|PREABILITY:1,CATEGORY=FEAT,Mantis Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mantis Torment|PREABILITY:1,CATEGORY=FEAT,Mantis Torment"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mantis Wisdom|PREABILITY:1,CATEGORY=FEAT,Mantis Wisdom"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Marid Coldsnap|PREABILITY:1,CATEGORY=FEAT,Marid Coldsnap"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Marid Spirit|PREABILITY:1,CATEGORY=FEAT,Marid Spirit"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Marid Style|PREABILITY:1,CATEGORY=FEAT,Marid Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Master Combat Performer|PREABILITY:1,CATEGORY=FEAT,Master Combat Performer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Master Siege Engineer|PREABILITY:1,CATEGORY=FEAT,Master Siege Engineer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Masterful Display|PREABILITY:1,CATEGORY=FEAT,Masterful Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Mocking Dance|PREABILITY:1,CATEGORY=FEAT,Mocking Dance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Monastic Legacy|PREABILITY:1,CATEGORY=FEAT,Monastic Legacy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Monkey Moves|PREABILITY:1,CATEGORY=FEAT,Monkey Moves"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Monkey Shine|PREABILITY:1,CATEGORY=FEAT,Monkey Shine"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Monkey Style|PREABILITY:1,CATEGORY=FEAT,Monkey Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Moonlight Stalker|PREABILITY:1,CATEGORY=FEAT,Moonlight Stalker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Moonlight Stalker Feint|PREABILITY:1,CATEGORY=FEAT,Moonlight Stalker Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Moonlight Stalker Master|PREABILITY:1,CATEGORY=FEAT,Moonlight Stalker Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Murderer's Circle|PREABILITY:1,CATEGORY=FEAT,Murderer's Circle"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Neckbreaker|PREABILITY:1,CATEGORY=FEAT,Neckbreaker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Net Adept|PREABILITY:1,CATEGORY=FEAT,Net Adept"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Net and Trident|PREABILITY:1,CATEGORY=FEAT,Net and Trident"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Net Maneuvering|PREABILITY:1,CATEGORY=FEAT,Net Maneuvering"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Net Trickery|PREABILITY:1,CATEGORY=FEAT,Net Trickery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Nightmare Fist|PREABILITY:1,CATEGORY=FEAT,Nightmare Fist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Nightmare Striker|PREABILITY:1,CATEGORY=FEAT,Nightmare Striker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Nightmare Weaver|PREABILITY:1,CATEGORY=FEAT,Nightmare Weaver"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Opening Volley|PREABILITY:1,CATEGORY=FEAT,Opening Volley"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pack Attack|PREABILITY:1,CATEGORY=FEAT,Pack Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Panther Claw|PREABILITY:1,CATEGORY=FEAT,Panther Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Panther Parry|PREABILITY:1,CATEGORY=FEAT,Panther Parry"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Panther Style|PREABILITY:1,CATEGORY=FEAT,Panther Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Passing Trick|PREABILITY:1,CATEGORY=FEAT,Passing Trick"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Performance Weapon Mastery|PREABILITY:1,CATEGORY=FEAT,Performance Weapon Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Performing Combatant|PREABILITY:1,CATEGORY=FEAT,Performing Combatant"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pin Down|PREABILITY:1,CATEGORY=FEAT,Pin Down"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pinning Knockout|PREABILITY:1,CATEGORY=FEAT,Pinning Knockout"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pinning Rend|PREABILITY:1,CATEGORY=FEAT,Pinning Rend"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Pinpoint Poisoner|PREABILITY:1,CATEGORY=FEAT,Pinpoint Poisoner"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Prone Shooter|PREABILITY:1,CATEGORY=FEAT,Prone Shooter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Prone Slinger|PREABILITY:1,CATEGORY=FEAT,Prone Slinger"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quick Bull Rush|PREABILITY:1,CATEGORY=FEAT,Quick Bull Rush"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quick Dirty Trick|PREABILITY:1,CATEGORY=FEAT,Quick Dirty Trick"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quick Drag|PREABILITY:1,CATEGORY=FEAT,Quick Drag"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quick Reposition|PREABILITY:1,CATEGORY=FEAT,Quick Reposition"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quick Steal|PREABILITY:1,CATEGORY=FEAT,Quick Steal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rapid Grappler|PREABILITY:1,CATEGORY=FEAT,Rapid Grappler"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rebounding Leap|PREABILITY:1,CATEGORY=FEAT,Rebounding Leap"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rebuffing Reduction|PREABILITY:1,CATEGORY=FEAT,Rebuffing Reduction"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Rending Fury|PREABILITY:1,CATEGORY=FEAT,Rending Fury"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shaitan Earthblast|PREABILITY:1,CATEGORY=FEAT,Shaitan Earthblast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Revelation Strike|PREABILITY:1,CATEGORY=FEAT,Revelation Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sap Adept|PREABILITY:1,CATEGORY=FEAT,Sap Adept"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sap Master|PREABILITY:1,CATEGORY=FEAT,Sap Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Savage Display|PREABILITY:1,CATEGORY=FEAT,Savage Display"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ School Strike|PREABILITY:1,CATEGORY=FEAT,School Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Seize the Moment|PREABILITY:1,CATEGORY=FEAT,Seize the Moment"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shaitan Skin|PREABILITY:1,CATEGORY=FEAT,Shaitan Skin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Shaitan Style|PREABILITY:1,CATEGORY=FEAT,Shaitan Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Siege Commander|PREABILITY:1,CATEGORY=FEAT,Siege Commander"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Siege Engineer|PREABILITY:1,CATEGORY=FEAT,Siege Engineer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Siege Gunner|PREABILITY:1,CATEGORY=FEAT,Siege Gunner"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sling Flail|PREABILITY:1,CATEGORY=FEAT,Sling Flail"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snake Fang|PREABILITY:1,CATEGORY=FEAT,Snake Fang"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snake Sidewind|PREABILITY:1,CATEGORY=FEAT,Snake Sidewind"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snake Style|PREABILITY:1,CATEGORY=FEAT,Snake Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snap Shot|PREABILITY:1,CATEGORY=FEAT,Snap Shot"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snapping Turtle Clutch|PREABILITY:1,CATEGORY=FEAT,Snapping Turtle Clutch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snapping Turtle Shell|PREABILITY:1,CATEGORY=FEAT,Snapping Turtle Shell"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Snapping Turtle Style|PREABILITY:1,CATEGORY=FEAT,Snapping Turtle Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sorcerous Strike|PREABILITY:1,CATEGORY=FEAT,Sorcerous Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Spinning Throw|PREABILITY:1,CATEGORY=FEAT,Spinning Throw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stage Combatant|PREABILITY:1,CATEGORY=FEAT,Stage Combatant"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Stunning Pin|PREABILITY:1,CATEGORY=FEAT,Stunning Pin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Sword and Pistol|PREABILITY:1,CATEGORY=FEAT,Sword and Pistol"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tandem Trip|PREABILITY:1,CATEGORY=FEAT,Tandem Trip"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Target of Opportunity|PREABILITY:1,CATEGORY=FEAT,Target of Opportunity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tiger Claws|PREABILITY:1,CATEGORY=FEAT,Tiger Claws"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tiger Pounce|PREABILITY:1,CATEGORY=FEAT,Tiger Pounce"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tiger Style|PREABILITY:1,CATEGORY=FEAT,Tiger Style"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Twin Thunders|PREABILITY:1,CATEGORY=FEAT,Twin Thunders"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Twin Thunders Flurry|PREABILITY:1,CATEGORY=FEAT,Twin Thunders Flurry"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Twin Thunders Master|PREABILITY:1,CATEGORY=FEAT,Twin Thunders Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Two-Handed Thrower|PREABILITY:1,CATEGORY=FEAT,Two-Handed Thrower"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Two-Weapon Feint|PREABILITY:1,CATEGORY=FEAT,Two-Weapon Feint"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Strangler|PREABILITY:1,CATEGORY=FEAT,Strangler"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Vicious Stomp|PREABILITY:1,CATEGORY=FEAT,Vicious Stomp"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Wave Strike|PREABILITY:1,CATEGORY=FEAT,Wave Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Whip Mastery|PREABILITY:1,CATEGORY=FEAT,Whip Mastery"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Quarterstaff Master|PREABILITY:1,CATEGORY=FEAT,Quarterstaff Master"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tripping Staff|PREABILITY:1,CATEGORY=FEAT,Tripping Staff"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Combat Trick ~ Tripping Twirl|PREABILITY:1,CATEGORY=FEAT,Tripping Twirl"
       }
     ]
   },

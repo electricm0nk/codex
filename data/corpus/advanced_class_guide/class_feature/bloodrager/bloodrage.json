@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager ~ Bloodrage",
     "name": "Bloodrage",
@@ -123,6 +123,22 @@
       {
         "key": "TEMPBONUS",
         "value": "PC|VAR|BloodrageActive|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bloodrager ~ Raging|PREVAREQ:BloodrageActive,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageDuration|DwarfBloodragerFavClassBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageDuration|HalfOrcBloodragerFavClassBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodrageDuration|HumanBloodragerFavClassBonus"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Sniper",
     "name": "Sniper",
@@ -51,6 +51,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Slayer"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Sniper],[!PREFACT:1,ABILITIES,Slayer_Archetype_Track=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent2|true"
       },
       {
         "key": "FACT",

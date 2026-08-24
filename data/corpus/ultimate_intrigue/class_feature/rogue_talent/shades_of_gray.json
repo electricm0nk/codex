@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue Talent ~ Shades of Gray",
     "name": "Shades of Gray",
@@ -31,6 +31,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Talent"
       }
     ]
   },

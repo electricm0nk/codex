@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Pistolero",
     "name": "Pistolero",
@@ -67,6 +67,54 @@
       {
         "key": "ABILITY",
         "value": "Gunslinger Class Feature|AUTOMATIC|PISTOLERO ~ Pistol Training|PREABILITY:1,CATEGORY=Internal,Optional Rules Firearms ~ Guns Everywhere"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ PISTOLERO],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Proficiencies=True,Gunslinger_Archetype_Gunsmith=True,Gunslinger_Archetype_GunTraining=True,Gunslinger_Archetype_DeadeyeDeed=True,Gunslinger_Archetype_StartlingShotDeed=True,Gunslinger_Archetype_BleedingWoundDeed=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_StartlingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Gunsmith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_StartlingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BleedingWoundDeed|true"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L8 ~ Polar Ray",
     "name": "Polar Ray",
     "class": "Sorcerer",
-    "description": null,
+    "description": "A blue-white ray of freezing air and ice springs from your hand. You must succeed on a ranged touch attack with the ray to deal damage to a target. The ray deals 1d6 points of cold damage per caster level [maximum 25d6] and 1d4 points of Dexterity drain.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=8|Polar Ray"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ray"
+      },
+      {
+        "key": "DESC",
+        "value": "A blue-white ray of freezing air and ice springs from your hand. You must succeed on a ranged touch attack with the ray to deal damage to a target. The ray deals 1d6 points of cold damage per caster level [maximum 25d6] and 1d4 points of Dexterity drain.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

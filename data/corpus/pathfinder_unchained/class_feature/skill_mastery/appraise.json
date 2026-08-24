@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skill Mastery ~ Appraise",
     "name": "Appraise",
@@ -27,6 +27,10 @@
       {
         "key": "DESC",
         "value": "When making an appraise check, you may take 10 even if stress and distractions would normally prevent you from doing so."
+      },
+      {
+        "key": "TYPE",
+        "value": "Background"
       }
     ]
   },

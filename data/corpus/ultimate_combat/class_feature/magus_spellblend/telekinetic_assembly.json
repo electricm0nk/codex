@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Telekinetic Assembly",
     "name": "Telekinetic Assembly",
     "class": "Magus",
-    "description": null,
+    "description": "Assembles a siege engine using 1 fewer worker for every two caster levels.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Telekinetic Assembly"
+      },
+      {
+        "key": "DESC",
+        "value": "Assembles a siege engine using 1 fewer worker for every two caster levels.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

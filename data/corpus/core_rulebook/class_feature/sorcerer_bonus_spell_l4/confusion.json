@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L4 ~ Confusion",
     "name": "Confusion",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell causes confusion in the targets, making them unable to determine their actions. Roll on the following table at the start of each subject's turn each round to see what it does in that round. &nl;d%% &pipe; Behavior &nl;01-25 &pipe; Act normally &nl;26-50 &pipe; Do nothing but babble incoherently &nl;51-75 &pipe; Deal 1d8 points of damage + Str modifier to self with item in hand &nl;76-100 &pipe; Attack nearest creature [for this purpose, a familiar counts as part of the subject's self] &nl;A confused character who can't carry out the indicated action does nothing but babble incoherently. Attackers are not at any special advantage when attacking a confused character. Any confused character who is attacked automatically attacks its attackers on its next turn, as long as it is still confused when its turn comes. Note that a confused character will not make attacks of opportunity against any creature that it is not already devoted to attacking [either because of its most recent action or because it has just been attacked].|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=4|Confusion"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell causes confusion in the targets, making them unable to determine their actions. Roll on the following table at the start of each subject's turn each round to see what it does in that round. &nl;d%% &pipe; Behavior &nl;01-25 &pipe; Act normally &nl;26-50 &pipe; Do nothing but babble incoherently &nl;51-75 &pipe; Deal 1d8 points of damage + Str modifier to self with item in hand &nl;76-100 &pipe; Attack nearest creature [for this purpose, a familiar counts as part of the subject's self] &nl;A confused character who can't carry out the indicated action does nothing but babble incoherently. Attackers are not at any special advantage when attacking a confused character. Any confused character who is attacked automatically attacks its attackers on its next turn, as long as it is still confused when its turn comes. Note that a confused character will not make attacks of opportunity against any creature that it is not already devoted to attacking [either because of its most recent action or because it has just been attacked].|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

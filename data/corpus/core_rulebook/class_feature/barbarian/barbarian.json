@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian",
     "name": "Barbarian",
@@ -31,6 +31,458 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|BarbarianLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_Rage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_FastMovement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_RagePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TrapSense6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_DamageReduction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_DamageReduction1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_DamageReduction2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_DamageReduction3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_DamageReduction4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_DamageReduction5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_GreaterRage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_IndomitableWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_TirelessRage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_MightyRage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_UncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Barbarian_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_Rage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_Rage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_FastMovement|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_FastMovement=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePowers|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePowers=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_RagePower20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TrapSense6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_DamageReduction=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_DamageReduction1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_DamageReduction2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_DamageReduction3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_DamageReduction4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_DamageReduction5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_GreaterRage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_GreaterRage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_IndomitableWill|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_IndomitableWill=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TirelessRage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_TirelessRage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_MightyRage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_MightyRage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_UncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_UncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_ImprovedUncannyDodge=TRUE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Barbarian_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_Proficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianArmorProficiencies,TYPE.BarbarianWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_Rage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_FastMovement|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePowers|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePowers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower6|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower8|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower10|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower12|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower14|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower16|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower18|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_RagePower20|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense1|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense3|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense5|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TrapSense6|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction1|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction3|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_DamageReduction5|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_GreaterRage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianGreaterRage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_IndomitableWill|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianIndomitableWill"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_TirelessRage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTirelessRage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_MightyRage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianMightyRage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_UncannyDodge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianUncannyDodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianImprovedUncannyDodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ClassSkills|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianClassSkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_WeaponProficiencies|1|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Barbarian_CF_ArmorProficiencies|1|PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianArmorProficiencies"
       }
     ]
   },

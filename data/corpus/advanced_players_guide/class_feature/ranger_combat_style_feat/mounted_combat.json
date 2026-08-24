@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Combat Style Feat ~ Mounted Combat",
     "name": "Mounted Combat",
@@ -35,6 +35,10 @@
       {
         "key": "ABILITY",
         "value": "FEAT|VIRTUAL|Mounted Combat|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "TYPE",
+        "value": "MountedMastery"
       }
     ]
   },

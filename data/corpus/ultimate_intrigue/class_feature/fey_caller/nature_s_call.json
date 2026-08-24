@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Fey Caller ~ Nature's Call",
     "name": "Nature's Call",
@@ -59,6 +59,42 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally I|PREVAREQ:FeyCallerSummonNaturesAllyLVL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally II|PREVAREQ:FeyCallerSummonNaturesAllyLVL,2"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally III|PREVAREQ:FeyCallerSummonNaturesAllyLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally IV|PREVAREQ:FeyCallerSummonNaturesAllyLVL,4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally V|PREVAREQ:FeyCallerSummonNaturesAllyLVL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally VI|PREVAREQ:FeyCallerSummonNaturesAllyLVL,6"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally VII|PREVAREQ:FeyCallerSummonNaturesAllyLVL,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally VIII|PREVAREQ:FeyCallerSummonNaturesAllyLVL,8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally IX|PREVARGTEQ:FeyCallerSummonNaturesAllyLVL,9"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest ~ Channel Energy",
     "name": "Channel Energy",
@@ -39,6 +39,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.62"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestGnomeChannelEnergyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;When healing creatures of the animal, fey, and plant types, the channeled energy heals an additional %1 points.|WarpriestGnomeChannelEnergyBonus|PREVARGTEQ:WarpriestGnomeChannelEnergyBonus,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestGnomeChannelEnergyBonus|GnomeWarpriestFavClassBonus/2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestHalfelfChannelEnergyBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Gain a +%1 bonus on the damage dealt or healed due to your Favored Class.|WarpriestHalfelfChannelEnergyBonus|PREVARGTEQ:WarpriestHalfelfChannelEnergyBonus,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestHalfelfChannelEnergyBonus|HalfelfWarpriestFavClassBonus/3"
       }
     ]
   },

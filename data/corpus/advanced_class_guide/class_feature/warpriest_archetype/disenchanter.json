@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest Archetype ~ Disenchanter",
     "name": "Disenchanter",
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Warpriest"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Disenchanter],[!PREFACT:1,ABILITIES,Warpriest_Archetype_BonusFeats=True,Warpriest_Archetype_ChannelEnergy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_ChannelEnergy|true"
       }
     ]
   },

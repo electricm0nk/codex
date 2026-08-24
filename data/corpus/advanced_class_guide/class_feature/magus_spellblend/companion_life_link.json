@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Companion Life Link",
     "name": "Companion Life Link",
     "class": "Magus",
-    "description": null,
+    "description": "Sense whenever your companion is wounded and call out to it in a time of need.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Companion Life Link"
+      },
+      {
+        "key": "DESC",
+        "value": "Sense whenever your companion is wounded and call out to it in a time of need.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

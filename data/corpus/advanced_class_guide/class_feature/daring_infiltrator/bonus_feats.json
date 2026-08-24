@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Daring Infiltrator ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -31,6 +31,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.124"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,20"
       }
     ]
   },

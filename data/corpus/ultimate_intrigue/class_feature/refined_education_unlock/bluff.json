@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Refined Education Unlock ~ Bluff",
     "name": "Bluff",
@@ -55,6 +55,22 @@
       {
         "key": "BONUS",
         "value": "VAR|BluffRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Bluff\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Appear Innocent"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Stay in character"
+      },
+      {
+        "key": "SITUATION",
+        "value": "True from current identity's point of view"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
       }
     ]
   },

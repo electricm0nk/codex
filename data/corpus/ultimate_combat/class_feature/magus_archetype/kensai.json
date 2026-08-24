@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Magus Archetype ~ Kensai",
     "name": "Kensai",
@@ -95,6 +95,62 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Kensai],[!PREFACT:1,ABILITIES,Magus_Archetype_SpellRecall=True,Magus_Archetype_KnowledgePool=True,Magus_Archetype_Proficiencies=True,Magus_Archetype_Arcana9=True,Magus_Archetype_ImprovedSpellRecall=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_WeaponProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellRecall|true"
       }
     ]
   },

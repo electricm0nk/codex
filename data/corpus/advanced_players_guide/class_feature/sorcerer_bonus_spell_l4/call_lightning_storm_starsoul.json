@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L4 ~ Call Lightning Storm (Starsoul)",
     "name": "Call Lightning Storm (Starsoul)",
     "class": "Sorcerer",
-    "description": null,
+    "description": ".CLEAR",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,22 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=4|Call Lightning Storm (Starsoul)"
+      },
+      {
+        "key": "CLASSES",
+        "value": ".CLEARALL"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": ".CLEAR|Fire"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like call lightning, except that each bolt deals 5d6 points of Fire damage [or 5d10 if created outdoors at night], and you may call a maximum of 15 bolts.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

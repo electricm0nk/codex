@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer",
     "name": "Sorcerer",
@@ -31,6 +31,246 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|SorcererLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Sorcerer ~ Weapon and Armor Proficiency|PREVAREQ:Sorcerer_CF_WeaponProficiencies,0|PREVARGTEQ:Sorcerer_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Sorcerer ~ Spells|PREVAREQ:Sorcerer_CF_Spells,0|PREVARGTEQ:Sorcerer_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Sorcerer ~ Standard Bloodline|PREVAREQ:Sorcerer_CF_Bloodline,0|PREVARGTEQ:Sorcerer_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Sorcerer ~ Cantrips|PREVAREQ:Sorcerer_CF_Cantrips,0|PREVARGTEQ:Sorcerer_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sorcerer Class Feature|AUTOMATIC|Sorcerer ~ Eschew Materials|PREVAREQ:Sorcerer_CF_EschewMaterials,0|PREVARGTEQ:Sorcerer_CFP_Level,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_Bloodline|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_Cantrips|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_EschewMaterials|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineClassSkill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineArcana|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlinePowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlinePower3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlinePower9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlinePower15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlinePower20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_CF_BloodlineSpell9|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineArcana|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineArcana=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlinePowers|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlinePowers=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlinePower1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlinePower1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlinePower3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlinePower3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlinePower9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlinePower9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlinePower15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlinePower15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlinePower20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlinePower20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_EschewMaterials|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_EschewMaterials=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell7|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineSpell9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineSpell9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_Bloodline|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_Bloodline=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_BloodlineClassSkill|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_BloodlineClassSkill=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_Cantrips|1|TYPE=Boolean|PREFACT:1,ABILITIES,Sorcerer_CF_Cantrips=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SorcererWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_CF_EschewMaterials|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SorcererEschewMaterials"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Metamorph SpellCasting Removal",
     "name": "Metamorph SpellCasting Removal",
@@ -23,6 +23,306 @@
       {
         "key": "BONUS",
         "value": "VAR|NoFormulaBoook|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-1|PREVAREQ:AlchemistLvl,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-2|PREVAREQ:AlchemistLvl,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-3|PREVAREQ:AlchemistLvl,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-3|PREVAREQ:AlchemistLvl,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-1|PREVAREQ:AlchemistLvl,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-4|PREVAREQ:AlchemistLvl,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-2|PREVAREQ:AlchemistLvl,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-4|PREVAREQ:AlchemistLvl,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-3|PREVAREQ:AlchemistLvl,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-4|PREVAREQ:AlchemistLvl,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-3|PREVAREQ:AlchemistLvl,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-1|PREVAREQ:AlchemistLvl,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-4|PREVAREQ:AlchemistLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-4|PREVAREQ:AlchemistLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-2|PREVAREQ:AlchemistLvl,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-4|PREVAREQ:AlchemistLvl,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-3|PREVAREQ:AlchemistLvl,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-4|PREVAREQ:AlchemistLvl,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-3|PREVAREQ:AlchemistLvl,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-1|PREVAREQ:AlchemistLvl,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-4|PREVAREQ:AlchemistLvl,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-4|PREVAREQ:AlchemistLvl,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-2|PREVAREQ:AlchemistLvl,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-4|PREVAREQ:AlchemistLvl,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-3|PREVAREQ:AlchemistLvl,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-4|PREVAREQ:AlchemistLvl,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-3|PREVAREQ:AlchemistLvl,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-1|PREVAREQ:AlchemistLvl,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-4|PREVAREQ:AlchemistLvl,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-4|PREVAREQ:AlchemistLvl,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-2|PREVAREQ:AlchemistLvl,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-5|PREVAREQ:AlchemistLvl,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-4|PREVAREQ:AlchemistLvl,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-3|PREVAREQ:AlchemistLvl,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-5|PREVAREQ:AlchemistLvl,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-4|PREVAREQ:AlchemistLvl,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-3|PREVAREQ:AlchemistLvl,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=6|-1|PREVAREQ:AlchemistLvl,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-5|PREVAREQ:AlchemistLvl,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-4|PREVAREQ:AlchemistLvl,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-4|PREVAREQ:AlchemistLvl,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=6|-2|PREVAREQ:AlchemistLvl,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-5|PREVAREQ:AlchemistLvl,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-5|PREVAREQ:AlchemistLvl,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-4|PREVAREQ:AlchemistLvl,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=6|-3|PREVAREQ:AlchemistLvl,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVAREQ:AlchemistLvl,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVAREQ:AlchemistLvl,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-5|PREVAREQ:AlchemistLvl,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-5|PREVAREQ:AlchemistLvl,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-5|PREVAREQ:AlchemistLvl,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=6|-4|PREVAREQ:AlchemistLvl,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=1|-5|PREVARGTEQ:AlchemistLvl,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=2|-5|PREVARGTEQ:AlchemistLvl,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=3|-5|PREVARGTEQ:AlchemistLvl,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=4|-5|PREVARGTEQ:AlchemistLvl,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=5|-5|PREVARGTEQ:AlchemistLvl,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Alchemist;LEVEL=6|-5|PREVARGTEQ:AlchemistLvl,20"
       }
     ]
   },

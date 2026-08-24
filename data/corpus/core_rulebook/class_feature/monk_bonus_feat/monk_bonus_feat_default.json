@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Bonus Feat ~ Default",
     "name": "Monk Bonus Feat ~ Default",
@@ -11,6 +11,74 @@
       {
         "key": "BONUS",
         "value": "VAR|MonkBonusFeat_CatchOffGuard|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CatchOffGuard|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CombatReflexes|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DeflectArrows|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Dodge|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ScorpionStyle|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ThrowAnything|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GorgonsFist|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedBullRush|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedDisarm|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedFeint|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedTrip|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Mobility|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedCritical|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MedusasWrath|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnatchArrows|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SpringAttack|1|PREVARGTEQ:MonkBonusFeatLVL,10"
       }
     ]
   },

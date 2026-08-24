@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest Archetype ~ Champion of the Faith",
     "name": "Champion of the Faith",
@@ -59,6 +59,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Warpriest"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Champion of the Faith],[!PREFACT:1,ABILITIES,Warpriest_Archetype_BonusFeats=True,Warpriest_Archetype_SacredWeapon=True,Warpriest_Archetype_ChannelEnergy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_SacredWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_SacredWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_ChannelEnergy|true"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Talent ~ Combat Style I",
     "name": "Combat Style I",
@@ -51,6 +51,62 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.53"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleArcheryAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleArcheryAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleTwoWeaponAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleTwoWeaponAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleWeaponAndShieldAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleWeaponAndShieldAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleTwoHandedWeaponAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleTwoHandedWeaponAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleNaturalWeaponAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleNaturalWeaponAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleMountedCombatAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleMountedCombatAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleCrossbowAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleCrossbowAllowed|RangerDefaultCombatStyle"
       }
     ]
   },

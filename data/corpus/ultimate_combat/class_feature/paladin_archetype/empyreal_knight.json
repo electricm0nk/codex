@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Empyreal Knight",
     "name": "Empyreal Knight",
@@ -63,6 +63,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ EMPYREAL KNIGHT],[!PREFACT:1,ABILITIES,Paladin_Archetype_DivineBond=True,Paladin_Archetype_DivineGrace=True,Paladin_Archetype_Mercy=True,Paladin_Archetype_LayOnHands=True,Paladin_Archetype_ChannelPositiveEnergy=True,Paladin_Archetype_HolyChampion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_LayOnHands|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_HolyChampion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_LayOnHands|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_HolyChampion|true"
       }
     ]
   },

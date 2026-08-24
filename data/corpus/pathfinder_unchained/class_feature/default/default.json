@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -55,6 +55,62 @@
       {
         "key": "DEFINE",
         "value": "EidolonSubtype_Psychopomp|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Agathion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Angel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Archon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Azata|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Daemon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Demon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Devil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Div|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Elemental|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Inevitable|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Protean|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonSubtype_Psychopomp|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueTalentTaken|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueTalentTaken|count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=Unchained Rogue Talent\")"
       }
     ]
   },

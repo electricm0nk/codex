@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus ~ Magus Arcana",
     "name": "Magus Arcana",
@@ -51,6 +51,38 @@
       {
         "key": "BONUS",
         "value": "VAR|ArcanaQualifyLVL|MagusLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusArcanaCount|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|-1|PREVARGTEQ:MagusArcanaCount,1|PREVAREQ:Magus_CF_Arcana3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusArcanaCount|MagusArcanaLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|-1|PREVARGTEQ:MagusArcanaCount,2|PREVAREQ:Magus_CF_Arcana6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|-1|PREVARGTEQ:MagusArcanaCount,3|PREVAREQ:Magus_CF_Arcana9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|-1|PREVARGTEQ:MagusArcanaCount,4|PREVAREQ:Magus_CF_Arcana12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|-1|PREVARGTEQ:MagusArcanaCount,5|PREVAREQ:Magus_CF_Arcana15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Magus_Arcana|-1|PREVARGTEQ:MagusArcanaCount,6|PREVAREQ:Magus_CF_Arcana18,1"
       }
     ]
   },

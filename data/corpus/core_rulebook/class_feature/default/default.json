@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -35,6 +35,938 @@
       {
         "key": "DEFINE",
         "value": "UnarmedLethal|0"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Modern Human Language"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BastardSwordExoticUse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassSizeMods|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DwarvenWaraxeExoticUse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ActivateEnlargePerson|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ActivateReducePerson|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Traits|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IsPC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Temp_Feat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisableArmorBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisableShieldBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_CombatFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SPELLFAILURE_Total|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Enlarge Person|PREVAREQ:ActivateEnlargePerson,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Reduce Person|PREVAREQ:ActivateReducePerson,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BastardSwordExoticUse|1|PREABILITY:1,CATEGORY=FEAT,Exotic Weapon Proficiency (Sword (Bastard))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DwarvenWaraxeExoticUse|1|PREABILITY:1,CATEGORY=FEAT,Exotic Weapon Proficiency (Waraxe (Dwarven))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SPELLFAILURE_Total|SPELLFAILURE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HasWeaponFinesseFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UseProfessionUntrained|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UseKnowledgeUntrained|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponFocusToHit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterWeaponFocusToHit|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Aspect Combat Bonus ~ Encumbrance|PREVARGTEQ:Encumbrance,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponFocusToHit|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterWeaponFocusToHit|1|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Linguisitcs_NumLanguages|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Linguisitcs_NumLanguages|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FightingDefensivelyAttackPenalty|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FightingDefensivelyAttackPenalty|4|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StoneskinActivate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SizeIncrease|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ActivateTempBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireCourageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireGreatnessActivate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfResolveActivate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfCourageActivate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfJusticeActivate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfRighteousnessActivate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_BlessWeapon|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Temp_Bonus_Aspect_Tracker|PREVARGTEQ:ActivateTempBonus,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Temp Bonus ~ Stoneskin|PREVARGTEQ:StoneskinActivate,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNotAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FortitudeSave_ResistanceBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|FortitudeSave_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReflexSave_ResistanceBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Reflex|ReflexSave_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WillSave_ResistanceBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|WillSave_ResistanceBonus|TYPE=Resistance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FortitudeSave_LuckBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|FortitudeSave_LuckBonus+Global_LuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReflexSave_LuckBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Reflex|ReflexSave_LuckBonus+Global_LuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WillSave_LuckBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|WillSave_LuckBonus+Global_LuckBonus|TYPE=Luck"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NegLevels|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Negative Levels|PREVARGTEQ:NegLevels,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlargePerson_GrappleBonusValue|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlargePerson_StrBonusValue|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlargePerson_DexBonusValue|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnlargePerson_ACBonusValue|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnlargePerson_GrappleBonusValue|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnlargePerson_StrBonusValue|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnlargePerson_DexBonusValue|2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Base_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Default_SLA_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Base_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_DC_STAT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Base_LVL|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Base_LVL|TL|TYPE=Base|PREVAREQ:Default_SLA_LVL,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_DC_STAT|CHA"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageSTR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageDEX|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageCON|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageINT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageWIS|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDamageCHA|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityPenaltySTR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityPenaltyDEX|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityPenaltyCON|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityPenaltyINT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityPenaltyWIS|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityPenaltyCHA|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityModifierSTR|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityModifierSTR|floor((AbilityDamageSTR+max(0,min(AbilityPenaltySTR,(STRSCORE-AbilityDamageSTR-1))))/2)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityModifierDEX|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityModifierDEX|floor((AbilityDamageDEX+max(0,min(AbilityPenaltyDEX,(STRSCORE-AbilityDamageDEX-1))))/2)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityModifierCON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityModifierCON|floor((AbilityDamageCON+max(0,min(AbilityPenaltyCON,(STRSCORE-AbilityDamageCON-1))))/2)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityModifierINT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityModifierINT|floor((AbilityDamageINT+max(0,min(AbilityPenaltyINT,(STRSCORE-AbilityDamageINT-1))))/2)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityModifierWIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityModifierWIS|floor((AbilityDamageWIS+max(0,min(AbilityPenaltyWIS,(STRSCORE-AbilityDamageWIS-1))))/2)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityModifierCHA|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityModifierCHA|floor((AbilityDamageCHA+max(0,min(AbilityPenaltyCHA,(STRSCORE-AbilityDamageCHA-1))))/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Melee,DAMAGE.Melee|-AbilityModifierSTR|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Strength|-AbilityModifierSTR|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB|-AbilityModifierSTR|TYPE=AbilityDamage|PRESIZEGTEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|-AbilityModifierSTR|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Reflex|-AbilityModifierDEX|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Dexterity|-AbilityModifierDEX|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Ranged|-AbilityModifierDEX|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|-AbilityModifierDEX|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|-AbilityModifierDEX|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB|-AbilityModifierDEX|TYPE=AbilityDamage|PRESIZELTEQ:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|-AbilityModifierDEX|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|-AbilityModifierCON|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|-AbilityModifierCON*TL|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Intelligence|-AbilityModifierINT|TYPE=AbilityDamage.AbilityPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|CLASS.Rogue,CLASS.Arcanist,CLASS.Investigator,CLASS.Alchemist,CLASS.Witch,CLASS.Wizard,CLASS.Occultist,CLASS.Psychic,CLASS.Psychic Detective,CLASS.VWarlock,CLASS.VCabalist,CLASS.Magus|-AbilityModifierINT"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|-AbilityModifierWIS|TYPE=AbilityDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Wisdom|-AbilityModifierWIS|TYPE=AbilityDamage.AbilityPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Charisma|-AbilityModifierCHA|TYPE=AbilityDamage.AbilityPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|CLASS.Red Mantis Assassin,CLASS.Bloodrager,CLASS.Skald,CLASS.Oracle,CLASS.Summoner,CLASS.Antipaladin,CLASS.Couatl Outsider,CLASS.Guardian Naga,CLASS.Spirit Naga,CLASS.Sorcerer/Cleric (Arcane),CLASS.Bard,CLASS.Paladin,CLASS.Sorcerer,CLASS.Medium,CLASS.Mesmerist|-AbilityModifierCHA"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Condition|AUTOMATIC|Ability Damaged Output Text|PREMULT:1,[PREVARGT:AbilityDamageSTR,0],[PREVARGT:AbilityDamageDEX,0],[PREVARGT:AbilityDamageCON,0],[PREVARGT:AbilityDamageINT,0],[PREVARGT:AbilityDamageWIS,0],[PREVARGT:AbilityDamageCHA,0]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Condition|AUTOMATIC|Ability Penalized Output Text|PREMULT:1,[PREVARGT:AbilityPenaltySTR,0],[PREVARGT:AbilityPenaltyDEX,0],[PREVARGT:AbilityPenaltyCON,0],[PREVARGT:AbilityPenaltyINT,0],[PREVARGT:AbilityPenaltyWIS,0],[PREVARGT:AbilityPenaltyCHA,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Divine_Bond_Mount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunters_Bond_Animal_Companion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_All_Class|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassProhibitSpellAlignment_Restriction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Rage_Power|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Class|1|PREPCLEVEL:MIN=1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnarmedLethal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProhibitSpell_Alignment_Good|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProhibitSpell_Alignment_Good|1|PREMULT:2,[PREMULT:1,[PREALIGN:LE,NE,CE],[PREDEITYALIGN:LE,NE,CE]],[PREVAREQ:BypassProhibitSpellAlignment_Restriction,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProhibitSpell_Alignment_Evil|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProhibitSpell_Alignment_Evil|1|PREMULT:2,[PREMULT:1,[PREALIGN:LG,NG,CG],[PREDEITYALIGN:LG,NG,CG]],[PREVAREQ:BypassProhibitSpellAlignment_Restriction,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProhibitSpell_Alignment_Lawful|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProhibitSpell_Alignment_Lawful|1|PREMULT:2,[PREMULT:1,[PREALIGN:CG,CN,CE],[PREDEITYALIGN:CG,CN,CE]],[PREVAREQ:BypassProhibitSpellAlignment_Restriction,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProhibitSpell_Alignment_Chaotic|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProhibitSpell_Alignment_Chaotic|1|PREMULT:2,[PREMULT:1,[PREALIGN:LG,LN,LE],[PREDEITYALIGN:LG,LN,LE]],[PREVAREQ:BypassProhibitSpellAlignment_Restriction,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Bard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Cleric|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Druid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Paladin|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Ranger|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Sorcerer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Wizard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Adept|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Bard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Cleric|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Druid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Paladin|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Ranger|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Sorcerer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Wizard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Adept|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Barbarian|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Barbarian|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Druid|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Druid|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Monk|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Monk|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Monk|1|TYPE=Bypass|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkAlignment"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Paladin|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Paladin|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Arcane_Trickster|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Arcane_Trickster|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Assassin|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Assassin|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassFeatureDR_ALL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClassFeatureDR_Silver|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Damage Reduction ~ All|PREVARGTEQ:ClassFeatureDR_ALL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Damage Reduction ~ Silver|PREVARGTEQ:ClassFeatureDR_Silver,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeatQualifier_WizardLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAirAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAnimalAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidEarthAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFireAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidPlantAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWaterAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWeatherAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KiPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Far_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Point_Blank_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Precise_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Rapid_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Precise_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Manyshot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Pinpoint_Targeting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shot_on_the_Run|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Double_Slice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Shield_Bash|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Quick_Draw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Fighting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Two_Weapon_Fighting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Defense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Two_Weapon_Fighting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Rend|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueTalentTaken|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rogue Archetype Support|PREABILITY:1,CATEGORY=Archetype,TYPE.RogueArchetype"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueTalentTaken|count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=RogueTalent\")+count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=NinjaTrick\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Archetype Display"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialStatStr|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialStatDex|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialStatCon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialStatInt|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialStatWis|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialStatCha|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GauntletOS|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnarmedLethal|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Equipment ~ Heavy Armor Grants Gauntlet|PREARMORTYPE:1,TYPE.ArmorProfHeavy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UncannyDodgeLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Natural Attack|AUTOMATIC|Touch Attack (Ray)|PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]|PRESPELLTYPE:1,Ray=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|PRECLASS:1,TYPE.PC=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Uncanny Dodge ~ Base|PREVARGTEQ:UncannyDodgeLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Air Domain|PREVAREQ:AirDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Animal Domain|PREVAREQ:AnimalDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Chaos Domain|PREVAREQ:ChaosDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Death Domain|PREVAREQ:DeathDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Destruction Domain|PREVAREQ:DestructionDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Earth Domain|PREVAREQ:EarthDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Evil Domain|PREVAREQ:EvilDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Fire Domain|PREVAREQ:FireDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Good Domain|PREVAREQ:GoodDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Healing Domain|PREVAREQ:HealingDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Law Domain|PREVAREQ:LawDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Luck Domain|PREVAREQ:LuckDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Knowledge Domain|PREVAREQ:KnowledgeDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Magic Domain|PREVAREQ:MagicDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Plant Domain|PREVAREQ:PlantDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Protection Domain|PREVAREQ:ProtectionDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Strength Domain|PREVAREQ:StrengthDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Sun Domain|PREVAREQ:SunDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Travel Domain|PREVAREQ:TravelDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Trickery Domain|PREVAREQ:TrickeryDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|War Domain|PREVAREQ:WarDomainAllowed,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Water Domain|PREVAREQ:WaterDomainAllowed,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_AnimalCompanionFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_CompanionLevelIncreaseChoice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_CompanionStatIncrease|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_CompanionSkill|0"
       }
     ]
   },
@@ -51,8 +983,8 @@
     "derived:bonus",
     "static:literal_magnitudes_only"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false
 }

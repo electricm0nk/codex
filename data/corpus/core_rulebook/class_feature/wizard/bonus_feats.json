@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wizard ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -35,6 +35,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.79"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wizard Bonus Feat|-1|PREVARGTEQ:WizardLvl,5|PREVAREQ:Wizard_CF_BonusFeat5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wizard Bonus Feat|-1|PREVARGTEQ:WizardLvl,10|PREVAREQ:Wizard_CF_BonusFeat10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wizard Bonus Feat|-1|PREVARGTEQ:WizardLvl,15|PREVAREQ:Wizard_CF_BonusFeat15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Wizard Bonus Feat|-1|PREVARGTEQ:WizardLvl,20|PREVAREQ:Wizard_CF_BonusFeat20,1"
       }
     ]
   },

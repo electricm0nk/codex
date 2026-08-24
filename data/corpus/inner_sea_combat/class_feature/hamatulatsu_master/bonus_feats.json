@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hamatulatsu Master ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -27,6 +27,114 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.38"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DeflectArrows|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Dodge|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ExoticWeaponProficiency|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ExoticWeaponProficiency|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_IntimidatingProwess|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_IntimidatingProwess|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ScorpionStyle|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_WeaponFocus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WeaponFocus|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GorgonsFist|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_Hamatulatsu|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Hamatulatsu|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedSunder|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedSunder|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Mobility|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_PowerAttack|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PowerAttack|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_CriticalFocus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CriticalFocus|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImpalingCritical_UnarmedStrike|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImpalingCritical_UnarmedStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedCritical|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MedusasWrath|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnatchArrows|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedImpalingCritical|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedImpalingCritical|1|PREVARGTEQ:MonkBonusFeatLVL,14"
       }
     ]
   },

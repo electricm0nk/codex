@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Assassin",
     "name": "Assassin",
@@ -19,6 +19,38 @@
       {
         "key": "BONUS",
         "value": "VAR|Assassin_CFP_Level|AssassinLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Weapon and Armor Proficiency|PREVARGTEQ:Assassin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Death Attack|Assassin ~ Poison Use|Assassin ~ Sneak Attack|PREVARGTEQ:Assassin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Save against Poisons|Assassin ~ Uncanny Dodge|PREVARGTEQ:Assassin_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Hidden Weapons|Assassin ~ True Death|PREVARGTEQ:Assassin_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Quiet Death|PREVARGTEQ:Assassin_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Hide in Plain Sight|PREVARGTEQ:Assassin_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Swift Death|PREVARGTEQ:Assassin_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Assassin Class Feature|AUTOMATIC|Assassin ~ Angel of Death|PREVARGTEQ:Assassin_CFP_Level,10"
       }
     ]
   },

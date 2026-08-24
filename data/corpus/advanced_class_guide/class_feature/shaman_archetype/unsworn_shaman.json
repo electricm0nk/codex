@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Archetype ~ Unsworn Shaman",
     "name": "Unsworn Shaman",
@@ -59,6 +59,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Unsworn Shaman],[!PREFACT:1,ABILITIES,Shaman_Archetype_SpiritMagic=True,Shaman_Archetype_SpiritAnimal=True,Shaman_Archetype_WanderingSpirit=True,Shaman_Archetype_WanderingHex=True,Shaman_Archetype_Spirit=True,Shaman_Archetype_Hex=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpiritBase|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_SpiritAnimal|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingHex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Spirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_SpiritAnimal|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingHex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Spirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Hex|true"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Domain Power ~ Command",
     "name": "Command",
@@ -39,6 +39,30 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Toil Subdomain=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Devil Subdomain (Evil)=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Devil Subdomain (Law)=1"
       }
     ]
   },

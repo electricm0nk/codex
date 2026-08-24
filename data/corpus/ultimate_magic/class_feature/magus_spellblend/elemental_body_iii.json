@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Elemental Body III",
     "name": "Elemental Body III",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=6|Elemental Body III"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Magus=6"
       }
     ]
   },

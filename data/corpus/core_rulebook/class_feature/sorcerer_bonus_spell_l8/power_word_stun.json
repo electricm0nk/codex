@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L8 ~ Power Word Stun",
     "name": "Power Word Stun",
     "class": "Sorcerer",
-    "description": null,
+    "description": "You utter a single word of power that instantly causes one creature of your choice to become stunned, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 151 or more hit points is unaffected by power word stun. &nl;Hit Points &pipe; Duration &nl;50 or less &pipe; 4d4 rounds &nl;51-100 &pipe; 2d4 rounds &nl;101-150 &pipe; 1d4 rounds|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=8|Power Word Stun"
+      },
+      {
+        "key": "DESC",
+        "value": "You utter a single word of power that instantly causes one creature of your choice to become stunned, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 151 or more hit points is unaffected by power word stun. &nl;Hit Points &pipe; Duration &nl;50 or less &pipe; 4d4 rounds &nl;51-100 &pipe; 2d4 rounds &nl;101-150 &pipe; 1d4 rounds|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald Archetype ~ Spell Warrior",
     "name": "Spell Warrior",
@@ -63,6 +63,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Skald"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Spell Warrior],[!PREFACT:1,ABILITIES,Skald_Archetype_ScribeScroll=True,Skald_Archetype_InspiredRage=True,Skald_Archetype_DirgeOfDoom=True,Skald_Archetype_SpellKenning=True,Skald_Archetype_MasterSkald=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_InspiredRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_MasterSkald|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_InspiredRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_MasterSkald|true"
       }
     ]
   },

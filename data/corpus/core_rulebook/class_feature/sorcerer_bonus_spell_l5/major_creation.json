@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L5 ~ Major Creation",
     "name": "Major Creation",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table. &nl;Hardness and Rarity &pipe; Examples Duration &nl;Vegetable matter &pipe; 2 hr./level &nl;Stone, crystal, base metals &pipe; 1 hr./level &nl;Precious metals &pipe; 20 min./level &nl;Gems &pipe; 10 min./level &nl;Rare metal* &pipe; 1 round/level &nl;* Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=5|Major Creation"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table. &nl;Hardness and Rarity &pipe; Examples Duration &nl;Vegetable matter &pipe; 2 hr./level &nl;Stone, crystal, base metals &pipe; 1 hr./level &nl;Precious metals &pipe; 20 min./level &nl;Gems &pipe; 10 min./level &nl;Rare metal* &pipe; 1 round/level &nl;* Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

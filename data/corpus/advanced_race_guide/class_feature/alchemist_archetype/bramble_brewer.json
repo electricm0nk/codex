@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Bramble Brewer",
     "name": "Bramble Brewer",
@@ -63,6 +63,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Bramble Brewer],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Discovery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery|true"
       }
     ]
   },

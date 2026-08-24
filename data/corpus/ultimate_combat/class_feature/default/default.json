@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -19,6 +19,38 @@
       {
         "key": "BONUS",
         "value": "VAR|KatanaExoticUse|1|PREABILITY:1,CATEGORY=FEAT,Exotic Weapon Proficiency (Katana)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KatanaExoticUse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KatanaExoticUse|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KatanaExoticUse|1|PREABILITY:1,CATEGORY=FEAT,Exotic Weapon Proficiency (Katana)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFamilyAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidRageAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidStrengthAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidNightAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDeceptionAllowed|0"
       }
     ]
   },

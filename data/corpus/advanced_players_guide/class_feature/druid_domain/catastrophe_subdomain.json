@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Catastrophe Subdomain",
     "name": "Catastrophe Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|True Strike|Druid=2|Gust of Wind|Druid=3|Call Lightning|Druid=4|Inflict Critical Wounds|Druid=5|Shout|Druid=6|Harm|Druid=7|Control Weather|Druid=8|Earthquake|Druid=9|Implosion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

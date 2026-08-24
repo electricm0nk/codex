@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Refined Education Unlock ~ Perform",
     "name": "Perform",
@@ -55,6 +55,14 @@
       {
         "key": "BONUS",
         "value": "VAR|PerformRefinedEducationUnlockLVL|RogueLVL/2+HighestPerformRank"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighestPerformRank|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighestPerformRank|max(skillinfo(\"RANK\", \"Perform (Act)\"),skillinfo(\"RANK\", \"Perform (Comedy)\"),skillinfo(\"RANK\", \"Perform (Dance)\"),skillinfo(\"RANK\", \"Perform (Keyboard Instruments)\"),skillinfo(\"RANK\", \"Perform (Oratory)\"),skillinfo(\"RANK\", \"Perform (Percussion Instruments)\"),skillinfo(\"RANK\", \"Perform (Sing)\"),skillinfo(\"RANK\", \"Perform (String Instruments)\"),skillinfo(\"RANK\", \"Perform (Wind Instruments)\"))"
       }
     ]
   },

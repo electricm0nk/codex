@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -15,6 +15,126 @@
       {
         "key": "BONUS",
         "value": "VAR|RangerCombatStyleDeceptiveAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleDeceptiveAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleDeceptiveAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleMenacingAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleMenacingAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleUnderhandedAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleUnderhandedAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Combat_Expertise|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Dazzling_Display|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Disengaging_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Disengaging_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Dodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Dreadful_Carnage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Enforcer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Gory_Finish|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Dirty_Trick|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Steal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Critical|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Dirty_Trick|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Steal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Intimidating_Prowess|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Martial_Dominance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Misdirection_Tactics|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Passing_Trick|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Ranged_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shatter_Defenses|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Quick_Dirty_Trick|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Quick_Steal|0"
       }
     ]
   },

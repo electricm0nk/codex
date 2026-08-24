@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Construct Subdomain",
     "name": "Construct Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Animate Rope|Druid=2|Wood Shape|Druid=3|Stone Shape|Druid=4|Minor Creation|Druid=5|Fabricate|Druid=6|Major Creation|Druid=7|Limited Wish|Druid=8|Polymorph Any Object|Druid=9|Prismatic Sphere"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

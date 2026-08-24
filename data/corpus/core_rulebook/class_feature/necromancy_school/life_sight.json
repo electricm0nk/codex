@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Necromancy School ~ Life Sight",
     "name": "Life Sight",
@@ -51,6 +51,10 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Rounds per day"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Wizard_CF_SchoolPower8,1"
       }
     ]
   },

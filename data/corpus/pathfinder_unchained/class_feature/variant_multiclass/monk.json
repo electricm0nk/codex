@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Variant Multiclass ~ Monk",
     "name": "Monk",
@@ -47,6 +47,10 @@
       {
         "key": "DESC",
         "value": "&nl;Improved Evasion: At 19th level, he gains improved evasion."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Monk_Class_Selection|1|TYPE=Base"
       }
     ]
   },

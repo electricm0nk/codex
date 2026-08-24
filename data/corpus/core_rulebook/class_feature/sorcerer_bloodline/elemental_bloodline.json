@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Elemental",
     "name": "Elemental Bloodline",
@@ -163,6 +163,38 @@
       {
         "key": "ASPECT",
         "value": "Bloodline|Elemental"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Air)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Air)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Air)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Air)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Earth)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Earth)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Earth)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Earth)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Fire)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Fire)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Fire)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Fire)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Water)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Water)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Water)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Water)"
       }
     ]
   },

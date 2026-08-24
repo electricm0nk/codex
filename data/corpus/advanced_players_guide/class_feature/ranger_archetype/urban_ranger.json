@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Urban Ranger",
     "name": "Urban Ranger",
@@ -67,6 +67,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Urban Ranger],[!PREFACT:1,ABILITIES,Ranger_Archetype_ClassSkills=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_Endurance=True,Ranger_Archetype_HideInPlainSight=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_Camouflage=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HideInPlainSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HideInPlainSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Camouflage|true"
       }
     ]
   },

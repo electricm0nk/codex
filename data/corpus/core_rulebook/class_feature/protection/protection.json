@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Protection Domain",
     "name": "Protection",
@@ -83,6 +83,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Protection=1|Sanctuary|Protection=2|Shield Other|Protection=3|Protection from Energy|Protection=4|Spell Immunity|Protection=5|Spell Resistance|Protection=6|Antimagic Field|Protection=7|Repulsion|Protection=8|Mind Blank|Protection=9|Prismatic Sphere"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Protection],[PREVARLT:ProtectionDomain,1]"
       }
     ]
   },

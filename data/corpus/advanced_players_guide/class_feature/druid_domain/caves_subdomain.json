@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Caves Subdomain",
     "name": "Caves Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Magic Stone|Druid=2|Create Pit|Druid=3|Spiked Pit|Druid=4|Spike Stones|Druid=5|Wall of Stone|Druid=6|Hungry Pit|Druid=7|Elemental Body IV (Earth Only)|Druid=8|Earthquake|Druid=9|Elemental Swarm (Earth Spell Only)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

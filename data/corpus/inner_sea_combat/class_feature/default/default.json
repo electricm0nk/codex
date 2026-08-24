@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -11,6 +11,406 @@
       {
         "key": "DEFINE",
         "value": "Ranger_Combat_Style_Feat_Monstrous_Mount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Monstrous_Mount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Monstrous_Mount_Mastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Agile_Maneuvers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Bashing_Finish|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Bleeding_Critical|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Blind_Fight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Bloody_Assault|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Bludgeoner|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Bodyguard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Catch_Off_Guard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Charging_Hurler|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Cleave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Cleaving_Finish|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Close_Quarters_Thrower|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Clustered_Shots|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Combat_Expertise|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Combat_Reflexes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Critical_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Deadly_Aim|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Deadly_Finish|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Death_or_Glory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Disarming_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Disengaging_Flourish|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Disruptive|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Distance_Thrower|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Double_Slice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Dreadful_Carnage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Exotic_Weapon_Proficiency_sawtooth_sabre|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Exotic_Weapon_Proficiency_spiked_chain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Exotic_Weapon_Proficiency_Whip|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Far_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Felling_Smash|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Furious_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Blind_Fight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Grapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Shield_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Sunder|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Trip|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Two_Weapon_Fighting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Whip_Mastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Impaling_Critical_trident|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Bull_Rush|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Charging_Hurler|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Critical_rapier|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Critical_short_sword|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Dirty_Trick|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Disarm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Grapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Initiative|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Shield_Bash|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Snap_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Sunder|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Trip|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Two_Weapon_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Unarmed_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Vital_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Whip_Mastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_In_Harm's_Way|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Ki_Throw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Lightning_Stance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Lunge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mobility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Monastic_Legacy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Nimble_Moves|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Opening_Volley|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Pin_Down|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Pinning_Knockout|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Pinpoint_Targeting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Point_Blank_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Power_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Precise_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Pushing_Assault|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Quick_Dirty_Trick|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Quick_Draw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Rapid_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Master|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_of_Swings|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Slam|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shot_on_the_Run|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Sidestep|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Snap_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Spring_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Step_Up|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Strike_Back|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Stunning_Fist|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Sundering_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Defense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Handed_Thrower|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Feint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Fighting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Two_Weapon_Rend|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Vital_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Wave_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Weapon_Finesse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Whip_Mastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Whirlwind_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Wind_Stance|0"
       }
     ]
   },

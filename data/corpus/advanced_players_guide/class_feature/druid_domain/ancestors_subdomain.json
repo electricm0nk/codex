@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Ancestors Subdomain",
     "name": "Ancestors Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Deathwatch|Druid=2|Gentle Repose|Druid=3|Speak with Dead|Druid=4|Rest Eternal|Druid=5|Slay Living|Druid=6|Geas/Quest|Druid=7|Destruction|Druid=8|Waves of Exhaustion|Druid=9|Wail of the Banshee"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

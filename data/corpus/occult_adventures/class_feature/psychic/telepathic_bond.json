@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Psychic ~ Telepathic Bond",
     "name": "Telepathic Bond",
@@ -27,6 +27,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.63"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist=4|Spiritualist=5"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Devil Subdomain (Law)",
     "name": "Devil Subdomain (Law)",
@@ -35,6 +35,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Command|Druid=2|Align Weapon (Law Only)|Druid=3|Suggestion|Druid=4|Order's Wrath|Druid=5|Dispel Chaos|Druid=6|Planar Binding|Druid=7|Dictum|Druid=8|Shield of Law|Druid=9|Summon Monster IX (Law Spell Only)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

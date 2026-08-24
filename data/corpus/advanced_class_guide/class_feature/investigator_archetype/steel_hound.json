@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Investigator Archetype ~ Steel Hound",
     "name": "Steel Hound",
@@ -67,6 +67,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Investigator"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNOTLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Steel Hound],[!PREFACT:1,ABILITIES,Investigator_Archetype_Proficiencies=True,Investigator_Archetype_Proficiencies=True,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_SwiftAlchemy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
       }
     ]
   },

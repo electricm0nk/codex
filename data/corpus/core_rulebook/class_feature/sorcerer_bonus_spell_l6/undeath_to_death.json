@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L6 ~ Undeath to Death",
     "name": "Undeath to Death",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell functions like circle of death, except that it destroys undead creatures as noted above.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=6|Undeath to Death"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like circle of death, except that it destroys undead creatures as noted above.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

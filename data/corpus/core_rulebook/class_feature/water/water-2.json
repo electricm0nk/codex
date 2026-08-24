@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Water Domain",
     "name": "Water",
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Water=1|Obscuring Mist|Water=2|Fog Cloud|Water=3|Water Breathing|Water=4|Control Water|Water=5|Ice Storm|Water=6|Cone of Cold|Water=7|Elemental Body IV (Water Only)|Water=8|Horrid Wilting|Water=9|Elemental Swarm (Water Spell Only)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Water],[PREVARLT:WaterDomain,1]"
       }
     ]
   },

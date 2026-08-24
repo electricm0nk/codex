@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bardic Performance ~ Inspire Courage",
     "name": "Inspire Courage",
@@ -47,6 +47,22 @@
       {
         "key": "ASPECT",
         "value": "ChildAbility|Bardic Performance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCourageBonus|-1|PREVARGTEQ:InspireCourageCount,1|PREVAREQ:Bard_CF_InspireCourage1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCourageBonus|-1|PREVARGTEQ:InspireCourageCount,2|PREVAREQ:Bard_CF_InspireCourage2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCourageBonus|-1|PREVARGTEQ:InspireCourageCount,3|PREVAREQ:Bard_CF_InspireCourage3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCourageBonus|-1|PREVARGTEQ:InspireCourageCount,4|PREVAREQ:Bard_CF_InspireCourage4,1"
       }
     ]
   },

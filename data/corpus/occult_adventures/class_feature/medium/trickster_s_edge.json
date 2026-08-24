@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Medium ~ Trickster's Edge",
     "name": "Trickster's Edge",
@@ -31,6 +31,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.36"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Champion Feat Choice|1|PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler"
       }
     ]
   },

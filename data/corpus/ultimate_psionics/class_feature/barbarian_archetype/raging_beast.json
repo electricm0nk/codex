@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Raging Beast",
     "name": "Raging Beast",
@@ -67,6 +67,62 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.296"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Raging Beast],[!PREFACT:1,ABILITIES,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_RagePowers=True,Barbarian_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
       }
     ]
   },

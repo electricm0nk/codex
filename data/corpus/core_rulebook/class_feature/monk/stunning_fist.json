@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Stunning Fist",
     "name": "Stunning Fist",
@@ -39,6 +39,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Stunning Fist as a bonus feat. You can choose to make the target of your Stunning Fist fatigued. This condition replaces stunning the target for 1 round, and a successful saving throw still negates the effect. You must choose which condition will apply before the attack roll is made. These effects do not stack with themselves, but additional hits do increase the duration.|PREVARGTEQ:StunningFistMonkLVL,4|PREVARLT:StunningFistMonkLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Stunning Fist as a bonus feat. You can choose to make the target of your Stunning Fist fatigued, or sickened for 1 minute. This condition replaces stunning the target for 1 round, and a successful saving throw still negates the effect. You must choose which condition will apply before the attack roll is made. These effects do not stack with themselves, but additional hits do increase the duration.|PREVARGTEQ:StunningFistMonkLVL,8|PREVARLT:StunningFistMonkLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Stunning Fist as a bonus feat. You can choose to make the target of your Stunning Fist fatigued, sickened for 1 minute, or staggered for 1d6+1 rounds. This condition replaces stunning the target for 1 round, and a successful saving throw still negates the effect. You must choose which condition will apply before the attack roll is made. These effects do not stack with themselves, but additional hits do increase the duration.|PREVARGTEQ:StunningFistMonkLVL,12|PREVARLT:StunningFistMonkLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Stunning Fist as a bonus feat. You can choose to make the target of your Stunning Fist fatigued, sickened for 1 minute, staggered for 1d6+1 rounds, or permanently blinded or deafened. This condition replaces stunning the target for 1 round, and a successful saving throw still negates the effect. You must choose which condition will apply before the attack roll is made. These effects do not stack with themselves, but additional hits do increase the duration.|PREVARGTEQ:MonkStunningFistLVL,16|PREVARLT:StunningFistMonkLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Stunning Fist as a bonus feat. You can choose to make the target of your Stunning Fist fatigued, sickened for 1 minute, staggered for 1d6+1 rounds, permanently blinded or deafened, or paralyzed for 1d6+1 rounds. This condition replaces stunning the target for 1 round, and a successful saving throw still negates the effect. You must choose which condition will apply before the attack roll is made. These effects do not stack with themselves, but additional hits do increase the duration.|PREVARGTEQ:StunningFistMonkLVL,20"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Martyr Subdomain",
     "name": "Martyr Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Divine Favor|Druid=2|Shield Other|Druid=3|Magic Vestment|Druid=4|Discern Lies|Druid=5|Command (Greater)|Druid=6|Sacrificial Oath|Druid=7|Repulsion|Druid=8|Demand|Druid=9|Storm of Vengeance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

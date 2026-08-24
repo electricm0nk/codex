@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Purifier",
     "name": "Purifier",
@@ -79,6 +79,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Purifier],[!PREFACT:1,ABILITIES,Oracle_Archetype_Revelation3=True,Oracle_Archetype_Revelation7=True,Oracle_Archetype_Revelation11=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation11|true"
       }
     ]
   },

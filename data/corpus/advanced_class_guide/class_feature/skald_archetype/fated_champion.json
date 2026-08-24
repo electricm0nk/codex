@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald Archetype ~ Fated Champion",
     "name": "Fated Champion",
@@ -59,6 +59,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Skald"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Fated Champion],[!PREFACT:1,ABILITIES,Skald_Archetype_WellVersed=True,Skald_Archetype_DirgeOfDoom=True,Skald_Archetype_MasterSkald=True,Skald_Archetype_SpellKenning=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_MasterSkald|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_MasterSkald|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
       }
     ]
   },

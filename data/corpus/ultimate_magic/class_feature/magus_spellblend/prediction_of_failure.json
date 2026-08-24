@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Prediction of Failure",
     "name": "Prediction of Failure",
@@ -23,6 +23,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=8|Prediction of Failure"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "CLASSES",
+        "value": ".CLEARALL"
+      },
+      {
+        "key": "ITEM",
+        "value": "Potion"
       }
     ]
   },

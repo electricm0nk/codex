@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger ~ Favored Enemy",
     "name": "Ranger Favored Enemy",
@@ -79,6 +79,46 @@
       {
         "key": "TEMPVALUE",
         "value": "MIN=2|MAX=10|TITLE=Choose favored enemy bonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|-1|PREVARGTEQ:RangerFavoredEnemyCount,1|PREVAREQ:Ranger_CF_FavoredEnemy1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy Bonus|-1|PREVARGTEQ:FavoredEnemyBonusCount,1|PREVAREQ:Ranger_CF_FavoredEnemy1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|-1|PREVARGTEQ:RangerFavoredEnemyCount,2|PREVAREQ:Ranger_CF_FavoredEnemy2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy Bonus|-1|PREVARGTEQ:FavoredEnemyBonusCount,2|PREVAREQ:Ranger_CF_FavoredEnemy2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|-1|PREVARGTEQ:RangerFavoredEnemyCount,3|PREVAREQ:Ranger_CF_FavoredEnemy3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy Bonus|-1|PREVARGTEQ:FavoredEnemyBonusCount,3|PREVAREQ:Ranger_CF_FavoredEnemy3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|-1|PREVARGTEQ:RangerFavoredEnemyCount,4|PREVAREQ:Ranger_CF_FavoredEnemy4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy Bonus|-1|PREVARGTEQ:FavoredEnemyBonusCount,4|PREVAREQ:Ranger_CF_FavoredEnemy4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy|-1|PREVARGTEQ:RangerFavoredEnemyCount,5|PREVAREQ:Ranger_CF_FavoredEnemy5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Favored Enemy Bonus|-1|PREVARGTEQ:FavoredEnemyBonusCount,5|PREVAREQ:Ranger_CF_FavoredEnemy5,1"
       }
     ]
   },

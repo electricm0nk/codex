@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Wild Talent ~ Greensight",
     "name": "Greensight",
@@ -35,6 +35,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "Grant a target the ability to see through plant matter as if it were transparent.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

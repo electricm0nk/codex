@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Archetype ~ Tattooed Sorcerer",
     "name": "Tattooed Sorcerer",
@@ -67,6 +67,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Sorcerer"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Sorcerer Archetype ~ Tattooed Sorcerer],[!PREFACT:1,ABILITIES,Sorcerer_Archetype_Bloodline=True,Sorcerer_Archetype_EschewMaterials=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineBonusFeat7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_EschewMaterials|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_EschewMaterials|true"
       }
     ]
   },

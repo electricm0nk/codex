@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Path Skill ~ Acrobatics",
     "name": "Acrobatics",
@@ -43,6 +43,14 @@
       {
         "key": "BONUS",
         "value": "SKILL|Acrobatics|2"
+      },
+      {
+        "key": "SITUATION",
+        "value": "On ship"
+      },
+      {
+        "key": "SITUATION",
+        "value": "On the ground"
       }
     ]
   },

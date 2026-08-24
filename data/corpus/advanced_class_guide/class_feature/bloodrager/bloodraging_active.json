@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager ~ Raging",
     "name": "Bloodraging Active",
@@ -23,6 +23,34 @@
       {
         "key": "DESC",
         "value": "Actively Bloodraging"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|Bloodrager_Destined_FatedBloodrager_LuckBonus+Global_LuckBonus|TYPE=Luck|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Destined"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|Bloodrager_Destined_FatedBloodrager_LuckBonus+Global_LuckBonus|TYPE=Luck|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Destined"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|Bloodrager_Draconic_DraconicResistance_NaturalArmor|TYPE=NaturalArmor.STACK|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|Bloodrager_Draconic_DraconicResistance_ResistBonus|PREVARGTEQ:BloodragerDraconicBloodline_Acid,1|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|Bloodrager_Draconic_DraconicResistance_ResistBonus|PREVARGTEQ:BloodragerDraconicBloodline_Cold,1|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|Bloodrager_Draconic_DraconicResistance_ResistBonus|PREVARGTEQ:BloodragerDraconicBloodline_Electricity,1|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|Bloodrager_Draconic_DraconicResistance_ResistBonus|PREVARGTEQ:BloodragerDraconicBloodline_Fire,1|PREABILITY:1,CATEGORY=Special Ability,Bloodrager Bloodline ~ Draconic"
       }
     ]
   },

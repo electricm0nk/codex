@@ -1328,7 +1328,7 @@ pub fn generate(
                 report.foreign_citation_skipped += 1;
                 continue;
             }
-            let Some(raw_row) = lines.line(book, &unit.source_file, unit.source_line as usize) else {
+            let Some(_raw_row) = lines.line(book, &unit.source_file, unit.source_line as usize) else {
                 report.unresolved_citations.push(format!("{book}:{}:{}", unit.source_file, unit.source_line));
                 continue;
             };
@@ -1352,7 +1352,30 @@ pub fn generate(
             // written at all (module doc comment's pre-§24 "not written"
             // text is superseded here).
             let name_is_pi = declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted;
-            let mut tokens = row_tokens(&raw_row);
+            // Row 21 fix (`decisions.md`): `raw_row` alone is only this
+            // unit's OWN base corpus row -- a real `.MOD`-appended
+            // `BONUS:VAR` line targeting the SAME base name lives on a
+            // SEPARATE row and, read this way, was silently dropped (all 8
+            // `bloodline_tracker.json` records corpus-wide carried 1-2
+            // tokens and ZERO `BONUS:VAR` tokens before this fix). Building
+            // `tokens` from `wiring_index`'s own closure -- the identical
+            // resolution `wiring_class_for` already uses to CLASSIFY this
+            // record -- unions every `.MOD` row targeting this unit's
+            // `name`/`key` (plus a `.COPY=` base row, when applicable) into
+            // `raw_tokens`, so the mechanics the wiring-class read already
+            // "sees" are the same ones shipped. `closure_rows`'s first
+            // entry is always this same base row, so a unit with no `.MOD`
+            // rows targeting it (the common case) sees byte-identical
+            // `tokens` to before this fix.
+            let closure_rows = wiring_index.closure_rows(
+                &mut lines,
+                &unit.source_file,
+                unit.source_line,
+                &unit.name,
+                &unit.key,
+            );
+            let mut tokens: Vec<RawToken> =
+                closure_rows.iter().filter_map(|r| r.as_deref()).flat_map(row_tokens).collect();
             let description = desc_value(&tokens);
             let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
                 "description",
@@ -3058,6 +3081,172 @@ mod tests {
             Some("Domain Power"),
             "single-owner `class` must not be forced/collapsed by the new multi-owner field: {written}"
         );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// Row 21 (`decisions.md`): reproduces `core_rulebook`'s real
+    /// `"Bloodline Tracker"` shape verbatim -- one base declaration plus
+    /// THREE separate `.MOD` rows appending distinct `BONUS:VAR` tokens
+    /// (`cr_abilities_class.lst:1704-1707`, cycle 7's own finding). Before
+    /// the fix, `generate()` read only the base row's own line and every
+    /// `.MOD`-appended token was silently dropped -- all 8 real
+    /// `bloodline_tracker.json` records corpus-wide carried 1-2 tokens and
+    /// ZERO `BONUS:VAR` tokens. Proves every `.MOD` row's tokens now
+    /// survive into `data.raw_tokens`, alongside the base row's own.
+    #[test]
+    fn generate_unions_every_mod_row_s_tokens_into_raw_tokens_not_just_the_base_row() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-modunion-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("cr_abilities_class.lst"),
+            "Bloodline Tracker\tCATEGORY:Internal\tKEY:Bloodline Tracker\tSOURCEPAGE:p.1\tBONUS:VAR|BloodlineLVL|SorcererLVL|TYPE=Base\n\
+             CATEGORY=Internal|Bloodline Tracker.MOD\tBONUS:VAR|BloodlineCasterLVL|SorcererLVL|TYPE=Base\n\
+             CATEGORY=Internal|Bloodline Tracker.MOD\tBONUS:VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "core_rulebook".to_string(),
+            source_file: "cr_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Bloodline Tracker".to_string(),
+            name: "Bloodline Tracker".to_string(),
+            type_facet: None,
+        }];
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-23T00:00:00Z", &units, &BTreeMap::new())
+            .expect("generate must succeed against a well-formed fixture");
+
+        let written = std::fs::read_to_string(out_dir.join("core_rulebook/class_feature/bloodline_tracker/bloodline_tracker.json"))
+            .expect("generate must write the base record's own file");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        let bonus_vars: Vec<String> = json["data"]["raw_tokens"]
+            .as_array()
+            .expect("raw_tokens must be an array")
+            .iter()
+            .filter(|t| t["key"].as_str() == Some("BONUS") && t["value"].as_str().is_some_and(|v| v.starts_with("VAR|")))
+            .map(|t| t["value"].as_str().unwrap().to_string())
+            .collect();
+        assert_eq!(
+            bonus_vars,
+            vec![
+                "VAR|BloodlineLVL|SorcererLVL|TYPE=Base".to_string(),
+                "VAR|BloodlineCasterLVL|SorcererLVL|TYPE=Base".to_string(),
+                "VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base".to_string(),
+            ],
+            "all three BONUS:VAR tokens (base row's own plus both .MOD rows') must survive into raw_tokens, not just the base row's: {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// A record with NO `.MOD` row targeting it must see byte-identical
+    /// `raw_tokens` to before the closure-based fix -- the common case
+    /// (most `class_feature` records have no sibling `.MOD` row at all)
+    /// must not regress.
+    #[test]
+    fn generate_leaves_a_record_with_no_mod_row_unchanged() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-nomod-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("cr_abilities_class.lst"),
+            "Ferocity\t\tKEY:Rage Power ~ Ferocity\t\tCATEGORY:Special Ability\tDESC:You fight through wounds.\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "core_rulebook".to_string(),
+            source_file: "cr_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Rage Power ~ Ferocity".to_string(),
+            name: "Ferocity".to_string(),
+            type_facet: None,
+        }];
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-23T00:00:00Z", &units, &BTreeMap::new())
+            .expect("generate must succeed against a well-formed fixture");
+
+        let written = std::fs::read_to_string(out_dir.join("core_rulebook/class_feature/rage_power/ferocity.json"))
+            .expect("generate must still write to the key-owner-keyed path");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        let tokens = json["data"]["raw_tokens"].as_array().expect("raw_tokens must be an array");
+        assert_eq!(tokens.len(), 3, "no .MOD row targets this unit, so raw_tokens must be exactly this base row's own tokens (KEY/CATEGORY/DESC): {written}");
+    }
+
+    /// A `.MOD` row targeting this unit's `key` sits in a NESTED `support/`
+    /// file under the same book directory (the real `ultimate_combat/
+    /// support/uc_abilities_class_ag.lst` shape) AND carries a real
+    /// Product-Identity term (`"Aldori"` -- a real Golarion proper noun,
+    /// the same blacklist term `redact_concatenated_blacklist_tokens`
+    /// already screens every other token for). Proves BOTH: the nested
+    /// file's row is found by the closure fix (a `BONUS` token appears at
+    /// all, where before this fix none of this row's tokens would), AND
+    /// `§15`'s PI discipline still applies to a token this fix newly
+    /// surfaces -- it ships REDACTED, never the real PI value, and the
+    /// record's `license`/`pi_field` correctly reflect the redaction.
+    #[test]
+    fn generate_finds_a_mod_row_in_a_nested_support_file_and_still_redacts_its_pi() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-nested-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/ultimate_combat");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("uc_abilities_class.lst"),
+            "Bonus Feat\t\tKEY:Master Of Many Styles ~ Bonus Feat\t\tCATEGORY:Special Ability\tDESC:x\n",
+        )
+        .unwrap();
+        let support_dir = book_dir.join("support");
+        std::fs::create_dir_all(&support_dir).unwrap();
+        std::fs::write(
+            support_dir.join("uc_abilities_class_ag.lst"),
+            "CATEGORY=Special Ability|Master Of Many Styles ~ Bonus Feat.MOD\tBONUS:VAR|MonkBonusFeat_AldoriStyle|1\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(&grants_root).unwrap();
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "ultimate_combat".to_string(),
+            source_file: "uc_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Master Of Many Styles ~ Bonus Feat".to_string(),
+            name: "Bonus Feat".to_string(),
+            type_facet: None,
+        }];
+
+        generate(&corpus_root, &grants_root, &out_dir, "2026-08-24T00:00:00Z", &units, &BTreeMap::new())
+            .expect("generate must succeed");
+
+        let written = std::fs::read_to_string(out_dir.join("ultimate_combat/class_feature/master_of_many_styles/bonus_feat.json"))
+            .expect("generate must write the record");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        let tokens = json["data"]["raw_tokens"].as_array().unwrap();
+        let bonus = tokens.iter().find(|t| t["key"].as_str() == Some("BONUS"));
+        assert!(bonus.is_some(), "the nested support/ file's .MOD row must be found: {written}");
+        assert_eq!(
+            bonus.unwrap()["value"].as_str(),
+            Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER),
+            "a real PI term (\"Aldori\") in a newly-surfaced .MOD token must still be redacted, never shipped raw: {written}"
+        );
+        assert_eq!(json["license"].as_str(), Some("PI-REDACTED"), "license must reflect the redaction: {written}");
 
         std::fs::remove_dir_all(&tmp).ok();
     }

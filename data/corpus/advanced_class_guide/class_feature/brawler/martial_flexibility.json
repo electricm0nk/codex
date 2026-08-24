@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler ~ Martial Flexibility",
     "name": "Martial Flexibility",
@@ -95,6 +95,10 @@
       {
         "key": "TEMPBONUS",
         "value": "PC|VAR|Active_Martial_Flexibility|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlerMartialFlexibilityTimes|GnomeBrawlerFavClassBonus/4"
       }
     ]
   },

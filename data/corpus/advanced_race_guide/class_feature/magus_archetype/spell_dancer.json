@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Archetype ~ Spell Dancer",
     "name": "Spell Dancer",
@@ -71,6 +71,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Spell Dancer],[!PREFACT:1,ABILITIES,Magus_Archetype_ArcanePool=True,Magus_Archetype_BonusFeat5=True,Magus_Archetype_Proficiencies=True,Magus_Archetype_ClassSkills=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ClassSkills|true"
       }
     ]
   },

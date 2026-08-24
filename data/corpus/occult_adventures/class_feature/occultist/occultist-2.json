@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Occultist ~ CLASS",
     "name": "Occultist",
@@ -23,6 +23,374 @@
       {
         "key": "BONUS",
         "value": "VAR|Occultist_CFP_Level|OccultistLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Class Skills|PREVAREQ:Occultist_CF_ClassSkills,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Weapon and Armor Proficiency|PREVAREQ:Occultist_CF_WeaponandArmorProficiency,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Spells|PREVAREQ:Occultist_CF_Spells,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Focus Powers|PREVAREQ:Occultist_CF_FocusPowers,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Implements|PREVAREQ:Occultist_CF_Implements,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Knacks|PREVAREQ:Occultist_CF_Knacks,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Mental Focus|PREVAREQ:Occultist_CF_MentalFocus,0|PREVARGTEQ:Occultist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Magic Item Skill|PREVAREQ:Occultist_CF_MagicItemSkill,0|PREVARGTEQ:Occultist_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Object Reading|PREVAREQ:Occultist_CF_ObjectReading,0|PREVARGTEQ:Occultist_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Shift Focus|PREVAREQ:Occultist_CF_ShiftFocus,0|PREVARGTEQ:Occultist_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Aura Sight|PREVAREQ:Occultist_CF_AuraSight,0|PREVARGTEQ:Occultist_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Magic Circles|PREVAREQ:Occultist_CF_MagicCircles,0|PREVARGTEQ:Occultist_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Outside Contact|PREVAREQ:Occultist_CF_OutsideContact,0|PREVARGTEQ:Occultist_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Binding Circles|PREVAREQ:Occultist_CF_BindingCircles,0|PREVARGTEQ:Occultist_CFP_Level,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Fast Circles|PREVAREQ:Occultist_CF_FastCircles,0|PREVARGTEQ:Occultist_CFP_Level,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Occultist Class Feature|AUTOMATIC|Occultist ~ Implement Mastery|PREVAREQ:Occultist_CF_ImplementMastery,0|PREVARGTEQ:Occultist_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_WeaponandArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Implements|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Knacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_MentalFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_MagicItemSkill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_ObjectReading|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_ShiftFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_AuraSight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_MagicCircles|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_OutsideContact|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_BindingCircles|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FastCircles|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_ImplementMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Abjuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Conjuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Divination|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Enchantment|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Evocation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Illusion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Necromancy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OccultistSchool_Transmutation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Implement2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Implement6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Implement10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Implement14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_Implement18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers13|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Occultist_CF_FocusPowers19|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_ClassSkills|1|PREFACT:1,ABILITIES,Occultist_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_WeaponandArmorProficiency|1|PREFACT:1,ABILITIES,Occultist_CF_WeaponandArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Spells|1|PREFACT:1,ABILITIES,Occultist_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Implements|1|PREFACT:1,ABILITIES,Occultist_CF_Implements=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Knacks|1|PREFACT:1,ABILITIES,Occultist_CF_Knacks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_MentalFocus|1|PREFACT:1,ABILITIES,Occultist_CF_MentalFocus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_MagicItemSkill|1|PREFACT:1,ABILITIES,Occultist_CF_MagicItemSkill=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_ObjectReading|1|PREFACT:1,ABILITIES,Occultist_CF_ObjectReading=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_ShiftFocus|1|PREFACT:1,ABILITIES,Occultist_CF_ShiftFocus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_AuraSight|1|PREFACT:1,ABILITIES,Occultist_CF_AuraSight=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_MagicCircles|1|PREFACT:1,ABILITIES,Occultist_CF_MagicCircles=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_OutsideContact|1|PREFACT:1,ABILITIES,Occultist_CF_OutsideContact=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_BindingCircles|1|PREFACT:1,ABILITIES,Occultist_CF_BindingCircles=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FastCircles|1|PREFACT:1,ABILITIES,Occultist_CF_FastCircles=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_ImplementMastery|1|PREFACT:1,ABILITIES,Occultist_CF_ImplementMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Abjuration|1|PREFACT:1,ABILITIES,OccultistSchool_Abjuration=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Conjuration|1|PREFACT:1,ABILITIES,OccultistSchool_Conjuration=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Divination|1|PREFACT:1,ABILITIES,OccultistSchool_Divination=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Enchantment|1|PREFACT:1,ABILITIES,OccultistSchool_Enchantment=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Evocation|1|PREFACT:1,ABILITIES,OccultistSchool_Evocation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Illusion|1|PREFACT:1,ABILITIES,OccultistSchool_Illusion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Necromancy|1|PREFACT:1,ABILITIES,OccultistSchool_Necromancy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistSchool_Transmutation|1|PREFACT:1,ABILITIES,OccultistSchool_Transmutation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Implement2|1|PREFACT:1,ABILITIES,Occultist_CF_Implement2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Implement6|1|PREFACT:1,ABILITIES,Occultist_CF_Implement6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Implement10|1|PREFACT:1,ABILITIES,Occultist_CF_Implement10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Implement14|1|PREFACT:1,ABILITIES,Occultist_CF_Implement14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_Implement18|1|PREFACT:1,ABILITIES,Occultist_CF_Implement18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers3|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers5|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers7|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers9|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers11|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers13|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers13=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers15|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers17|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Occultist_CF_FocusPowers19|1|PREFACT:1,ABILITIES,Occultist_CF_FocusPowers19=True"
       }
     ]
   },

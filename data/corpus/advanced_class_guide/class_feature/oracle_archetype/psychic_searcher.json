@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Psychic Searcher",
     "name": "Psychic Searcher",
@@ -55,6 +55,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Psychic Searcher],[!PREFACT:1,ABILITIES,Oracle_Archetype_OraclesMystery=True,Oracle_Archetype_Revelation=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_OraclesMystery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation|true"
       }
     ]
   },

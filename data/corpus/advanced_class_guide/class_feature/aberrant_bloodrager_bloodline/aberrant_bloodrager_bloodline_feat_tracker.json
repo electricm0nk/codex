@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Aberrant Bloodrager Bloodline ~ Feat Tracker",
     "name": "Aberrant Bloodrager Bloodline ~ Feat Tracker",
@@ -11,6 +11,34 @@
       {
         "key": "BONUS",
         "value": "VAR|Bloodrager_BloodlineFeat_CombatReflexes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_CombatReflexes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_GreatFortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedDisarm|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedGrapple|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedInitiative|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_ImprovedUnarmedStrike|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_IronWill|1"
       }
     ]
   },

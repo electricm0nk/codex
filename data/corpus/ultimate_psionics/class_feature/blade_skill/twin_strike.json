@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Blade Skill ~ Twin Strike",
     "name": "Twin Strike",
@@ -31,6 +31,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.63"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,Soulknife Archetype ~ Soulbolt"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill"
       }
     ]
   },

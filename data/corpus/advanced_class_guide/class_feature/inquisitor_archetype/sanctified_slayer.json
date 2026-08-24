@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Sanctified Slayer",
     "name": "Sanctified Slayer",
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sanctified Slayer],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Judgment=True,Inquisitor_Archetype_TrueJudgment=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TrueJudgment|true"
       }
     ]
   },

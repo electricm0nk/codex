@@ -143,6 +143,54 @@ impl WiringClassIndex {
         signals.sort();
         (class.id().to_string(), signals)
     }
+
+    /// The full raw-row token closure for one record -- its own base corpus
+    /// row, plus every `.MOD` row targeting its `name`/`key` within this
+    /// book, plus (when applicable) the plain base row a `.COPY=` row
+    /// inherits from. The SAME [`token_closure_rows`] resolution
+    /// [`wiring_class_for_book`] already uses to CLASSIFY a record, exposed
+    /// here so a generator's shipped `raw_tokens` field can be built from
+    /// the identical closure instead of the base row alone.
+    ///
+    /// Row 21 (`decisions.md`): a real `.MOD`-appended `BONUS:VAR` line
+    /// lives on a SEPARATE corpus row from the base record it targets --
+    /// reading only the base row's own line (as every `raw_tokens` builder
+    /// did before this method existed) silently drops it. PCGen legally
+    /// emits SEVERAL `.MOD` lines against the same base name (three, for
+    /// `core_rulebook`'s own `"Bloodline Tracker"`); this closure carries
+    /// all of them, not just the first or last one found.
+    pub fn closure_rows_for_book(
+        &self,
+        lines: &mut CorpusLines,
+        book: &str,
+        file: &str,
+        line: u32,
+        name: &str,
+        key: &str,
+    ) -> Vec<Option<String>> {
+        token_closure_rows(
+            lines,
+            ClosureIndexes { mod_index: &self.mod_index, copy_base_index: &self.copy_base_index },
+            book,
+            file,
+            line as usize,
+            name,
+            key,
+        )
+    }
+
+    /// Same as [`closure_rows_for_book`], but against this index's own
+    /// `book_id` -- the closure-rows counterpart to [`wiring_class_for`].
+    pub fn closure_rows(
+        &self,
+        lines: &mut CorpusLines,
+        file: &str,
+        line: u32,
+        name: &str,
+        key: &str,
+    ) -> Vec<Option<String>> {
+        self.closure_rows_for_book(lines, &self.book_id.clone(), file, line, name, key)
+    }
 }
 
 #[cfg(test)]

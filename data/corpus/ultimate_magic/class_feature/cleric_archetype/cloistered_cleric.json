@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cleric Archetype ~ Cloistered Cleric",
     "name": "Cloistered Cleric",
@@ -75,6 +75,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cleric"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cleric Archetype ~ Cloistered Cleric ~ PFS Replace Scribe Scroll|PRECLASS:1,Cleric=4"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Cloistered Cleric],[!PREFACT:1,ABILITIES,Cleric_Archetype_Proficiencies=True,Cleric_Archetype_ClassSkills=True,Cleric_Archetype_SkillRanks=True,Cleric_Archetype_Domains=True,Cleric_Archetype_Spellcasting=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_WeaponProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_SkillRanks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Spellcasting|true"
       }
     ]
   },

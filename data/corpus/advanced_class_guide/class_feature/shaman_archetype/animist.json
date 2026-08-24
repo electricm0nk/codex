@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Archetype ~ Animist",
     "name": "Animist",
@@ -71,6 +71,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Animist],[!PREFACT:1,ABILITIES,Shaman_Archetype_Hex=True,Shaman_Archetype_Manifestation=True,Shaman_Archetype_Spirit=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Manifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Spirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Hex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Manifestation|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Spirit|true"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Hex ~ Tongues",
     "name": "Tongues",
@@ -55,6 +55,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.67"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=3"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Agathion Subdomain=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Language Subdomain=3"
       }
     ]
   },

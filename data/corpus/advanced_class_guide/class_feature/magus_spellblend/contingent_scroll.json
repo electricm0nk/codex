@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Contingent Scroll",
     "name": "Contingent Scroll",
     "class": "Magus",
-    "description": null,
+    "description": "Transfer a scroll's power to the target; the scroll is then triggered as contingency.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=4|Contingent Scroll"
+      },
+      {
+        "key": "DESC",
+        "value": "Transfer a scroll's power to the target; the scroll is then triggered as contingency.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

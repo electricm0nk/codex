@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Agathion Subdomain",
     "name": "Agathion Subdomain",
@@ -35,6 +35,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Shield of Faith|Druid=2|Align Weapon (Good Only)|Druid=3|Tongues|Druid=4|Holy Smite|Druid=5|Dispel Evil|Druid=6|Planar Ally (Agathions Only)|Druid=7|Holy Word|Druid=8|Holy Aura|Druid=9|Summon Monster IX (Good Spell Only)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

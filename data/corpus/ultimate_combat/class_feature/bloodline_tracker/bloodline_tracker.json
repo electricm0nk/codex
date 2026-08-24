@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodline Tracker",
     "name": "Bloodline Tracker",
@@ -11,6 +11,14 @@
       {
         "key": "DEFINE",
         "value": "Sorcerer_BonusSpell_TarPool_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TarPool_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MomentofGreatness_L1|0"
       }
     ]
   },

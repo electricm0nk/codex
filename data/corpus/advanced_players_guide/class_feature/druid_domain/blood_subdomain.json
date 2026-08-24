@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Blood Subdomain",
     "name": "Blood Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Magic Weapon|Druid=2|Spiritual Weapon|Druid=3|Vampiric Touch|Druid=4|Divine Power|Druid=5|Wall of Thorns|Druid=6|Blade Barrier|Druid=7|Inflict Serious Wounds (Mass)|Druid=8|Power Word Stun|Druid=9|Power Word Kill"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

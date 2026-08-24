@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Certain Grip",
     "name": "Certain Grip",
     "class": "Magus",
-    "description": null,
+    "description": "You gain a +4 competence bonus on Acrobatics and Climb checks and to CMD.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Certain Grip"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 competence bonus on Acrobatics and Climb checks and to CMD.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
       }
     ]
   },

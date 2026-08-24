@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Exploration Subdomain",
     "name": "Exploration Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Expeditious Retreat|Druid=2|Locate Object|Druid=3|Fly|Druid=4|Locate Creature|Druid=5|Teleport|Druid=7|Teleport (Greater)|Druid=8|Phase Door|Druid=9|World Wave"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Whip of Ants",
     "name": "Whip of Ants",
     "class": "Magus",
-    "description": null,
+    "description": "Create a whip made of army ants.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=6|Whip of Ants"
+      },
+      {
+        "key": "DESC",
+        "value": "Create a whip made of army ants.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

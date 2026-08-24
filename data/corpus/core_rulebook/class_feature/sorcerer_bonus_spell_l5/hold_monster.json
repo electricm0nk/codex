@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L5 ~ Hold Monster",
     "name": "Hold Monster",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell functions like hold person, except that it affects any living creature that fails its Will save.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=5|Hold Monster"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like hold person, except that it affects any living creature that fails its Will save.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

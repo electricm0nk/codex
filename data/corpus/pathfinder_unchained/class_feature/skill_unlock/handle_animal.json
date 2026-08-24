@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skill unlock ~ Handle Animal",
     "name": "Handle Animal",
@@ -39,6 +39,10 @@
       {
         "key": "ABILITY",
         "value": "Special Ability|AUTOMATIC|Skill unlock ~ handle animal 20 Ranks|PRESKILL:1,handle animal=20"
+      },
+      {
+        "key": "TYPE",
+        "value": "Background"
       }
     ]
   },

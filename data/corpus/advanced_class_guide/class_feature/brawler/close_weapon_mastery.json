@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler ~ Close Weapon Mastery",
     "name": "Close Weapon Mastery",
@@ -27,6 +27,66 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d6 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:M|PREVAREQ:BrawlerUnarmedDamageProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d8 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:M|PREVAREQ:BrawlerUnarmedDamageProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d10 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:M|PREVAREQ:BrawlerUnarmedDamageProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 2d6 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:M|PREVAREQ:BrawlerUnarmedDamageProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 2d8 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:M|PREVAREQ:BrawlerUnarmedDamageProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d4 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:S|PREVAREQ:BrawlerUnarmedDamageProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d6 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:S|PREVAREQ:BrawlerUnarmedDamageProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d8 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:S|PREVAREQ:BrawlerUnarmedDamageProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d10 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:S|PREVAREQ:BrawlerUnarmedDamageProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 2d6 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:S|PREVAREQ:BrawlerUnarmedDamageProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 1d8 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:L|PREVAREQ:BrawlerUnarmedDamageProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 2d6 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:L|PREVAREQ:BrawlerUnarmedDamageProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 2d8 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:L|PREVAREQ:BrawlerUnarmedDamageProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 3d6 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:L|PREVAREQ:BrawlerUnarmedDamageProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding a close weapon, you may treat its base damage as 3d8 (you may apply any effects that increase your unarmed damage dice).|PRESIZEEQ:L|PREVAREQ:BrawlerUnarmedDamageProgression,5"
       }
     ]
   },

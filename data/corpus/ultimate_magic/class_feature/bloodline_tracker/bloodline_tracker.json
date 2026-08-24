@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodline Tracker",
     "name": "Bloodline Tracker",
@@ -11,6 +11,62 @@
       {
         "key": "DEFINE",
         "value": "Sorcerer_BloodlineFeat_DetectExpertise|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_DetectExpertise|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_EchoingSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_EldritchHeritage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Prodigy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Spellsong|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SurmountAffliction_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_JoyfulRapture_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_OverwhelmingPresence_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DefensiveShock_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Echolocation_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_AgeResistanceGreater_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PredictionofFailure_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CreateDemiplane_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShareMemory_L5|0"
       }
     ]
   },

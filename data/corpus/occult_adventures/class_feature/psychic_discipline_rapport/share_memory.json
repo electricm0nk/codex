@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Psychic Discipline Rapport ~ Share Memory",
     "name": "Share Memory",
@@ -27,6 +27,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p."
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Occultist=2[PREFACT:1,ABILITIES,OccultistSchool_Divination=True]"
       }
     ]
   },

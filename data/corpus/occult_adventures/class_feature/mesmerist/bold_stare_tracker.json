@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Mesmerist ~ Bold Stare",
     "name": "Bold Stare Tracker",
@@ -35,6 +35,26 @@
       {
         "key": "BONUS",
         "value": "VAR|BoldStaresKnown|(MesmeristLVL+1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldStaresKnown|-1|PREVARGTEQ:MesmeristLvl,3|PREFACT:1,ABILITIES,Mesmerist_CF_BoldStare3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldStaresKnown|-1|PREVARGTEQ:MesmeristLvl,7|PREFACT:1,ABILITIES,Mesmerist_CF_BoldStare7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldStaresKnown|-1|PREVARGTEQ:MesmeristLvl,11|PREFACT:1,ABILITIES,Mesmerist_CF_BoldStare11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldStaresKnown|-1|PREVARGTEQ:MesmeristLvl,15|PREFACT:1,ABILITIES,Mesmerist_CF_BoldStare15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BoldStaresKnown|-1|PREVARGTEQ:MesmeristLvl,19|PREFACT:1,ABILITIES,Mesmerist_CF_BoldStare19=True"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman ~ Hex",
     "name": "Hex",
@@ -67,6 +67,38 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.35"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=2],[PREVAREQ:Shaman_CF_Hex2,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=4],[PREVAREQ:Shaman_CF_Hex4,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=8],[PREVAREQ:Shaman_CF_Hex8,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=10],[PREVAREQ:Shaman_CF_Hex10,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=12],[PREVAREQ:Shaman_CF_Hex12,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=16],[PREVAREQ:Shaman_CF_Hex16,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=18],[PREVAREQ:Shaman_CF_Hex18,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanHexChoices|1|PREMULT:2,[PRECLASS:1,Shaman=20],[PREVAREQ:Shaman_CF_Hex20,0]"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bloodline Feat ~ Arcane Strike",
     "name": "Arcane Strike",
@@ -43,6 +43,10 @@
       {
         "key": "BENEFIT",
         "value": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, your weapons deal +1 damage and are treated as magic for the purpose of overcoming damage reduction. For every five caster levels you possess, this bonus increases by +1, to a maximum of +5 at 20th level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcaneStrikeLVL|Caster_Level_Total__Arcane"
       }
     ]
   },

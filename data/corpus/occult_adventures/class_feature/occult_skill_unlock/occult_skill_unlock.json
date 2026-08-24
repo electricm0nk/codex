@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Occult Skill Unlock",
     "name": "Occult Skill Unlock",
@@ -11,6 +11,38 @@
       {
         "key": "ABILITY",
         "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Automatic Writing|PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Automatic Writing|PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Dowsing|PRESKILL:1,Survival=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Faith Healing|PRESKILL:1,Heal=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Hypnotism|PRESKILL:1,Diplomacy=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Phrenology|PRESKILL:1,Knowledge (Arcana)=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Prognostication|PRESKILL:1,Sense Motive=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Psychometry|PRESKILL:1,Appraise=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Read Aura|PRESKILL:1,Perception=1"
       }
     ]
   },

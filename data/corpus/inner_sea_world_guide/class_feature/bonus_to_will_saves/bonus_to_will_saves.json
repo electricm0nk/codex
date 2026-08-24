@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bonus to Will Saves ~ AF",
     "name": "Bonus to Will Saves",
@@ -39,6 +39,10 @@
       {
         "key": "ASPECT",
         "value": "SaveBonus|+1 morale bonus to Will"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
       }
     ]
   },

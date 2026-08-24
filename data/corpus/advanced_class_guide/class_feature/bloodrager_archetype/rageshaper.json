@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Rageshaper",
     "name": "Rageshaper",
@@ -51,6 +51,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Rageshaper],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_BloodSanctuary=True,Bloodrager_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "All bloodragers blend the unpredictable surge of arcane power with the savage fury of battle lust. For most, their rage is a conduit for the eldritch power locked in their heritage, but for a rageshaper, the latent magical energies in his blood bring about physical transformations and facilitate the blending of arcana and aggression into a deadly synthesis that few other barbarians (or even other bloodragers) can match."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Rageshaper ~ Bestial Aspect|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Rageshaper ~ Furious Transformation|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodSanctuary|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodSanctuary|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_ImprovedUncannyDodge|true"
       }
     ]
   },

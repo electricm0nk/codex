@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor ~ Teamwork Feat",
     "name": "Inquisitor ~ Teamwork Feat",
@@ -27,6 +27,30 @@
       {
         "key": "BONUS",
         "value": "VAR|InquisitorTeamworkFeatProgression|InquisitorLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorTeamworkFeatProgression|-1|PREMULT:2,[PREVARGTEQ:InquisitorLVL,3],[PREVAREQ:Inquisitor_CF_TeamworkFeat3,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorTeamworkFeatProgression|-1|PREMULT:2,[PREVARGTEQ:InquisitorLVL,6],[PREVAREQ:Inquisitor_CF_TeamworkFeat6,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorTeamworkFeatProgression|-1|PREMULT:2,[PREVARGTEQ:InquisitorLVL,9],[PREVAREQ:Inquisitor_CF_TeamworkFeat9,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorTeamworkFeatProgression|-1|PREMULT:2,[PREVARGTEQ:InquisitorLVL,12],[PREVAREQ:Inquisitor_CF_TeamworkFeat12,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorTeamworkFeatProgression|-1|PREMULT:2,[PREVARGTEQ:InquisitorLVL,15],[PREVAREQ:Inquisitor_CF_TeamworkFeat15,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorTeamworkFeatProgression|-1|PREMULT:2,[PREVARGTEQ:InquisitorLVL,18],[PREVAREQ:Inquisitor_CF_TeamworkFeat18,1]"
       }
     ]
   },

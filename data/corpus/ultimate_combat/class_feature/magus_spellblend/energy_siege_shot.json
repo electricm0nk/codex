@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Energy Siege Shot",
     "name": "Energy Siege Shot",
     "class": "Magus",
-    "description": null,
+    "description": "A Large siege engine deals energy damage that you designate with other effects depending on the type of energy you choose.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=5|Energy Siege Shot"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "DESC",
+        "value": "A Large siege engine deals energy damage that you designate with other effects depending on the type of energy you choose.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

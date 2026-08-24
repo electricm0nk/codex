@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Mesmerist ~ Mesmerist Tricks",
     "name": "Mesmerist Tricks Tracker",
@@ -63,6 +63,50 @@
       {
         "key": "BONUS",
         "value": "VAR|MesmeristTricksKnown|MesmeristLVL/2+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,1|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,2|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,4|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,6|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,8|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,10|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,12|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,14|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,16|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,18|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MesmeristTricksKnown|-1|PREVARGTEQ:MesmeristLvl,20|PREFACT:1,ABILITIES,Mesmerist_CF_MesmeristTrick20=True"
       }
     ]
   },

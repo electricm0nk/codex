@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wizard Archetype ~ Spirit Whisperer",
     "name": "Spirit Whisperer",
@@ -99,6 +99,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Wizard"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Spirit Whisperer],[!PREFACT:1,ABILITIES,Wizard_Archetype_SpellBook=True,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_ArcaneSchool=True,Wizard_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_SpellBook|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_SpellBook|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeats|true"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L1 ~ Magic Weapon",
     "name": "Magic Weapon",
     "class": "Sorcerer",
-    "description": null,
+    "description": "Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls. An enhancement bonus does not stack with a masterwork weapon's +1 bonus on attack rolls. You can't cast this spell on a natural weapon, such as an unarmed strike [instead, see magic fang]. A monk's unarmed strike is considered a weapon, and thus it can be enhanced by this spell.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=1|Magic Weapon"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a weapon a +1 enhancement bonus on attack and damage rolls"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon|WEAPON|TOHIT,DAMAGE|1|TYPE=Enhancement"
+      },
+      {
+        "key": "DESC",
+        "value": "Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls. An enhancement bonus does not stack with a masterwork weapon's +1 bonus on attack rolls. You can't cast this spell on a natural weapon, such as an unarmed strike [instead, see magic fang]. A monk's unarmed strike is considered a weapon, and thus it can be enhanced by this spell.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Gentle Breeze",
     "name": "Gentle Breeze",
     "class": "Magus",
-    "description": null,
+    "description": "Light wind protects one target from clouds, gases, heat, and vapors.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=1|Gentle Breeze"
+      },
+      {
+        "key": "DESC",
+        "value": "Light wind protects one target from clouds, gases, heat, and vapors.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

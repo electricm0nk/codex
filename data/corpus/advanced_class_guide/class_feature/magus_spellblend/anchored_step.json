@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Anchored Step",
     "name": "Anchored Step",
     "class": "Magus",
-    "description": null,
+    "description": "Vines beneath your feet stabilize you but slow you down.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=3|Anchored Step"
+      },
+      {
+        "key": "DESC",
+        "value": "Vines beneath your feet stabilize you but slow you down.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD_BullRush,CMD_Overrun,CMD_Pull,CMD_Push,CMD_Reposition,CMD_Trip|10"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|MOVEADD|TYPE.Walk|-10"
       }
     ]
   },

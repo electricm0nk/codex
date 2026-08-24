@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodline Tracker",
     "name": "Bloodline Tracker",
@@ -11,6 +11,70 @@
       {
         "key": "DEFINE",
         "value": "Sorcerer_BloodlineFeat_IntuitiveSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_IntuitiveSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_LogicalSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GhostWhip_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EctoplasmicSnare_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SpiritBoundBlade_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallOfEctoplasm_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EctoplasmicEruption_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MindThrustI_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_IdInsinuationI_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EgoWhipI_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_IntellectFortressI_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PsychicCrushI_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MentalBarrierV_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TowerofIronWillIII_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Bilocation_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Microcosm_L9|0"
       }
     ]
   },

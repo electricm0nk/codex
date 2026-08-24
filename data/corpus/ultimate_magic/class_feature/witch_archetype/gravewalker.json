@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Archetype ~ Gravewalker",
     "name": "Gravewalker",
@@ -67,6 +67,90 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Witch"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Gravewalker],[!PREFACT:1,ABILITIES,Witch_Archetype_PatronSpell4=True,Witch_Archetype_PatronSpell6=True,Witch_Archetype_PatronSpell12=True,Witch_Archetype_PatronSpell14=True,Witch_Archetype_PatronSpell16=True,Witch_Archetype_Familiar=True,Witch_Archetype_Hex1=True,Witch_Archetype_Hex4=True,Witch_Archetype_Hex8=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_PatronSpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_PatronSpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex8|true"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager ~ Bloodline Tracker",
     "name": "Bloodrager ~ Bloodline Tracker",
@@ -11,6 +11,454 @@
       {
         "key": "DEFINE",
         "value": "BloodragerBloodlineBonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlineBonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlineLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineLVL|BloodragerLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlineCasterLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineCasterLVL|BloodragerLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlineProgressionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineProgressionLVL|BloodragerLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePowerTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlinePowerTimes|3+CHA|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlineFeatProgression|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineFeatProgression|BloodragerBloodlineProgressionLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePower1LVLBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePower4LVLBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePower8LVLBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePower12LVLBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePower16LVLBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodragerBloodlinePower20LVLBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineBonusFeats|1|PREVARGTEQ:BloodragerBloodlineFeatProgression,6|PREVAREQ:Bloodrager_CF_BloodlineFeat6,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineBonusFeats|1|PREVARGTEQ:BloodragerBloodlineFeatProgression,9|PREVAREQ:Bloodrager_CF_BloodlineFeat9,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineBonusFeats|1|PREVARGTEQ:BloodragerBloodlineFeatProgression,12|PREVAREQ:Bloodrager_CF_BloodlineFeat12,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineBonusFeats|1|PREVARGTEQ:BloodragerBloodlineFeatProgression,15|PREVAREQ:Bloodrager_CF_BloodlineFeat15,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineBonusFeats|1|PREVARGTEQ:BloodragerBloodlineFeatProgression,18|PREVAREQ:Bloodrager_CF_BloodlineFeat18,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Bloodrager Bloodline Feat|BloodragerBloodlineBonusFeats"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Alertness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_BlindFight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Cleave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_CombatCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_CombatReflexes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Deceitful|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Diehard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Disruptive|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Dodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Endurance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_GreatFortitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedBullRush|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedDisarm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedGrapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedInitiative|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedSunder|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedUnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_IntimidatingProwess|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_IronWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Leadership|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_LightningReflexes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Mobility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_MountedCombat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_PowerAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_QuickDraw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_RideByAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Spellbreaker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Stealthy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_StepUp|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Toughness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_WeaponFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_BlackTentacles|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_Bless|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_Blur|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_BullsStrength|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_BurningHands|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_BurningHandsAcid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_BurningHandsCold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_BurningHandsElectricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_ChillTouch|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_Confusion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_DimensionDoor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_Displacement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_ElementalBodyI|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_Enervation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_EnlargePerson|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_Entangle|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_FalseLife|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_Fear|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_FireShield|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_Fly|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_FreedomOfMovement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_Haste|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_Heroism|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_HideousLaughter|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_HolySmite|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_Invisibility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_LightningBolt|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_MagicMissile|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_ProtectionFromEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_ProtectionFromGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_Rage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_RayOfEnfeeblement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_ResistEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_ResistEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_ScorchingRay|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_ScorchingRayAcid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_ScorchingRayCold|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_ScorchingRayElectricity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_SeeInvisibility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_Shield|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_Shield|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_Stoneskin|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_Suggestion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_VampiricTouch|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedBullRush|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedGrapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedReposition|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedTrip|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ImprovedUnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_EmpowerSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_EnlargeSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_ExtendSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_HeightenSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_MaximizeSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_QuickenSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_SilentSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_StillSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_WidenSpell|0"
       }
     ]
   },

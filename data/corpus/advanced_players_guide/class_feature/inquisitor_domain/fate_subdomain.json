@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Domain ~ Fate Subdomain",
     "name": "Fate Subdomain",
@@ -79,6 +79,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.90"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

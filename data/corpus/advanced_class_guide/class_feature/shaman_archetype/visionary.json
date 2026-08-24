@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Archetype ~ Visionary",
     "name": "Visionary",
@@ -63,6 +63,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Visionary],[!PREFACT:1,ABILITIES,Shaman_Archetype_WanderingSpirit=True,Shaman_Archetype_WanderingHex=True,Shaman_Archetype_WanderingSpirit=True,Shaman_Archetype_WanderingSpirit=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingHex6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpiritGreater|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpiritTrue|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingHex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
       }
     ]
   },

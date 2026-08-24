@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bonded Witch ~ Bonded Item",
     "name": "Bonded Item",
@@ -31,6 +31,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.43"
+      },
+      {
+        "key": "DESC",
+        "value": "PFS Weapon - 2nd-warding weapon (Ultimate Combat 248); 4th-versatile weapon (Advanced Player's Guide 254); 6th-greater magic weapon; 8th-telekinetic charge (Ultimate Combat 247); 10th-resounding shot (Advanced Player's Guide 238); 12th-blade barrier; 14th-fire brand (Advanced Player's Guide 222); 16th-earthquake; 18th-ride the lightning (Ultimate Magic 235).|PREABILITY:1,CATEGORY=Special Ability,BWBI ~ Weapon"
+      },
+      {
+        "key": "DESC",
+        "value": "Amulet - 2nd-stonefist (Advanced Player's Guide 247); 4th- bear's endurance; 6th-burst of speed (Ultimate Combat 225); 8th-mnemonic enhancer; 10th-stoneskin; 12th-monstrous physique IV (Ultimate Magic 229); 14th-firebrand (Advanced Player's Guide 222); 16th-iron body; 18th-overwhelming presence (Ultimate Magic 230).|PREABILITY:1,CATEGORY=Special Ability,BWBI ~ Amulet"
+      },
+      {
+        "key": "DESC",
+        "value": "Ring - 2nd-shield; 4th-ablative barrier (Ultimate Combat 221); 6th-protection from energy; 8th-nondetection; 10th- life bubble (Advanced Player's Guide 230); 12th-resinous skin (Ultimate Combat 242); 14th-antimagic field; 16th- deflection (Advanced Player's Guide 215); 18th-spell immunity.|PREABILITY:1,CATEGORY=Special Ability,BWBI ~ Ring"
+      },
+      {
+        "key": "DESC",
+        "value": "Staff - 2nd-shillelagh; 4th-warp wood; 6th-plant growth; 8th-arboreal hammer (Ultimate Magic 206); 10th-passwall; 12th-move earth; 14th-change staff; 16th-control plants; 18th-wooden phalanx (Ultimate Magic 249).|PREABILITY:1,CATEGORY=Special Ability,BWBI ~ Staff"
+      },
+      {
+        "key": "DESC",
+        "value": "Wand - 2nd-magic missile; 4th-knock; 6th-fireball; 8th-restoration; 10th-maximized scorching ray; 12th- bull's strength (mass); 14th-greater restoration; 16th- empowered and maximized fireball; 18th-empowered and maximized fire shield.|PREABILITY:1,CATEGORY=Special Ability,BWBI ~ Wand"
+      },
+      {
+        "key": "DESC",
+        "value": "Weapon - 2nd-warding weapon (Ultimate Combat 248); 4th-versatile weapon (Advanced Player's Guide 254); 6th-greater magic weapon; 8th-telekinetic charge (Ultimate Combat 247); 10th-energy siege shot (Ultimate Combat 228); 12th-blade barrier; 14th-arcane cannon (Ultimate Combat 223); 16th-earthquake; 18th-ride the lightning (Ultimate Magic 235).|PREABILITY:1,CATEGORY=Special Ability,BWBI ~ Weapon"
       }
     ]
   },

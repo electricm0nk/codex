@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Bounty Hunter",
     "name": "Bounty Hunter",
@@ -79,6 +79,42 @@
       {
         "key": "FACT",
         "value": "Slayer_Archetype_Talent10|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Bounty Hunter],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Proficiencies|true"
       }
     ]
   },

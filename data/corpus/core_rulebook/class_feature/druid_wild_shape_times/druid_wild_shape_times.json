@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Wild Shape Times",
     "name": "Druid Wild Shape Times",
@@ -27,6 +27,42 @@
       {
         "key": "DEFINE",
         "value": "WildShapeTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,4],[PREVAREQ:Druid_CF_WildShapeUses4,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,6],[PREVAREQ:Druid_CF_WildShapeUses6,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,8],[PREVAREQ:Druid_CF_WildShapeUses8,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,10],[PREVAREQ:Druid_CF_WildShapeUses10,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,12],[PREVAREQ:Druid_CF_WildShapeUses12,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,14],[PREVAREQ:Druid_CF_WildShapeUses14,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,16],[PREVAREQ:Druid_CF_WildShapeUses16,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,18],[PREVAREQ:Druid_CF_WildShapeUses18,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeTimes|-1|PREMULT:2,[PREVARGTEQ:DruidWildShape,20],[PREVAREQ:Druid_CF_WildShapeUses20,1]"
       }
     ]
   },

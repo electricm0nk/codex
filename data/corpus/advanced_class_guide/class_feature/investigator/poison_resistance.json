@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Investigator ~ Poison Resistance",
     "name": "Poison Resistance",
@@ -63,6 +63,22 @@
       {
         "key": "ASPECT",
         "value": "SaveBonus|+%1 vs. poison|InvestigatorPoisonResistanceBonus|PREVARLT:InvestigatorPoisonLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorPoisonLVL|1|PREVARGTEQ:InvestigatorLVL,2|PREVAREQ:Investigator_CF_PoisonResistance2,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorPoisonLVL|1|PREVARGTEQ:InvestigatorLVL,5|PREVAREQ:Investigator_CF_PoisonResistance4,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorPoisonLVL|1|PREVARGTEQ:InvestigatorLVL,8|PREVAREQ:Investigator_CF_PoisonResistance6,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorPoisonLVL|1|PREVARGTEQ:InvestigatorLVL,10|PREVAREQ:Investigator_CF_PoisonImmunity,0"
       }
     ]
   },

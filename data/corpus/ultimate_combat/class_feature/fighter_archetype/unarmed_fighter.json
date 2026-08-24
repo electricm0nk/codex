@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Unarmed Fighter",
     "name": "Unarmed Fighter",
@@ -103,6 +103,82 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Unarmed Fighter],[!PREFACT:1,ABILITIES,Fighter_Archetype_Proficiencies=True,Fighter_Archetype_BonusFeat1=True,Fighter_Archetype_Bravery=True,Fighter_Archetype_WeaponTraining=True,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_ArmorMastery=True,Fighter_Archetype_WeaponMastery=True,Fighter_Archetype_BonusFeat8=True,Fighter_Archetype_BonusFeat12=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat8|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat8|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeat12|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat12|True"
       }
     ]
   },

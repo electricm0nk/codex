@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -95,6 +95,118 @@
       {
         "key": "DEFINE",
         "value": "DruidWindAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCloudAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidStormsAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWindAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWarAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAquaticAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidArcticAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCaveAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDesertAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidEagleAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFrogAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidJungleAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidMonkeyAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidMountainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidPlainsAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidSerpentAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidSwampAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWolfAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCloudAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDestructionAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidStormsAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWarAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWindAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EldritchHeritageCharismaPrerequisite|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EldritchHeritageCharismaPrerequisite|13"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterEldritchHeritageCharismaPrerequisite|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterEldritchHeritageCharismaPrerequisite|17"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImprovedEldritchHeritageCharismaPrerequisite|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImprovedEldritchHeritageCharismaPrerequisite|15"
       }
     ]
   },

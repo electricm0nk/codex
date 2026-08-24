@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Mutation Warrior ~ Mutagen",
     "name": "Mutagen",
@@ -119,6 +119,58 @@
       {
         "key": "DEFINE",
         "value": "MutationWarriorMutagenActive|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|MutationWarriorMutagenACBonus|TYPE=NaturalArmor"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|MutationWarriorMutagenStatBonus|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 1 STR"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|MutationWarriorMutagenStatBonus-2|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 2 STR"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|MutationWarriorMutagenStatBonus-4|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 3 STR"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|DEX|MutationWarriorMutagenStatBonus|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 1 DEX"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|DEX|MutationWarriorMutagenStatBonus-2|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 2 DEX"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|DEX|MutationWarriorMutagenStatBonus-4|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 3 DEX"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|MutationWarriorMutagenStatBonus|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 1 CON"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|MutationWarriorMutagenStatBonus-2|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 2 CON"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|MutationWarriorMutagenStatBonus-4|TYPE=Alchemical|PREABILITY:1,CATEGORY=Special Ability,Mutation Warrior ~ Mutagen 3 CON"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|INT|MutationWarriorMutagenStatPenalty|PREABILITY:1,CATEGORY=Special Ability,TYPE.Mutagen STR"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|WIS|MutationWarriorMutagenStatPenalty|PREABILITY:1,CATEGORY=Special Ability,TYPE.Mutagen DEX"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CHA|MutationWarriorMutagenStatPenalty|PREABILITY:1,CATEGORY=Special Ability,TYPE.Mutagen CON"
       }
     ]
   },

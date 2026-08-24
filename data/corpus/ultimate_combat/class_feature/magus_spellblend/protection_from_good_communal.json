@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Protection from Good (Communal)",
     "name": "Protection from Good (Communal)",
     "class": "Magus",
-    "description": null,
+    "description": "As protection from good, but you may divide the duration among creatures touched.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Protection from Good (Communal)"
+      },
+      {
+        "key": "DESC",
+        "value": "As protection from good, but you may divide the duration among creatures touched.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

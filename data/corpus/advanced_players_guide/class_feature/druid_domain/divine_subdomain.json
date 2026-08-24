@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Divine Subdomain",
     "name": "Divine Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Identify|Druid=2|Bless Water|Druid=3|Dispel Magic|Druid=4|Imbue with Spell Ability|Druid=5|Cleanse|Druid=6|Antimagic Field|Druid=7|Resurrection|Druid=8|Protection from Spells|Druid=9|Miracle"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

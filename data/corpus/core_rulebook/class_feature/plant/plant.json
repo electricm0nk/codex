@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Plant Domain",
     "name": "Plant",
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Plant=1|Entangle|Plant=2|Barkskin|Plant=3|Plant Growth|Plant=4|Command Plants|Plant=5|Wall of Thorns|Plant=6|Repel Wood|Plant=7|Animate Plants|Plant=8|Control Plants|Plant=9|Shambler"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Plant],[PREVARLT:PlantDomain,1]"
       }
     ]
   },

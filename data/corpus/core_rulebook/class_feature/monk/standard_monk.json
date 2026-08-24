@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Standard Class",
     "name": "Standard Monk",
@@ -55,6 +55,98 @@
       {
         "key": "TEMPLATE",
         "value": "Monk HD d8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Unarmed Strike|PREVAREQ:Monk_CF_UnarmedStrike,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Flurry of Blows|PREVAREQ:Monk_CF_FlurryOfBlows,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Monk Bonus Feat|PREVAREQ:Monk_CF_BonusFeats,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ AC Bonus|PREVAREQ:Monk_CF_ACBonus,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Stunning Fist|PREVAREQ:Monk_CF_StunningFist,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Evasion|PREVAREQ:Monk_CF_Evasion,0|PREVARGTEQ:Monk_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Fast Movement|PREVAREQ:Monk_CF_FastMovement,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Maneuver Training|PREVAREQ:Monk_CF_ManeuverTraining,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Still Mind|PREVAREQ:Monk_CF_StillMind,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Ki Pool|PREVAREQ:Monk_CF_KiPool,0|PREVARGTEQ:Monk_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Slow Fall|PREVAREQ:Monk_CF_SlowFall,0|PREVARGTEQ:Monk_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ High Jump|PREVAREQ:Monk_CF_HighJump,0|PREVARGTEQ:Monk_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Purity of Body|PREVAREQ:Monk_CF_PurityOfBody,0|PREVARGTEQ:Monk_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Wholeness of Body|PREVAREQ:Monk_CF_WholenessOfBody,0|PREVARGTEQ:Monk_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Improved Evasion|PREVAREQ:Monk_CF_ImprovedEvasion,0|PREVARGTEQ:Monk_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Diamond Body|PREVAREQ:Monk_CF_DiamondBody,0|PREVARGTEQ:Monk_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Abundant Step|PREVAREQ:Monk_CF_AbundantStep,0|PREVARGTEQ:Monk_CFP_Level,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Diamond Soul|PREVAREQ:Monk_CF_DiamondSoul,0|PREVARGTEQ:Monk_CFP_Level,13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Quivering Palm|PREVAREQ:Monk_CF_QuiveringPalm,0|PREVARGTEQ:Monk_CFP_Level,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Tongue of the Sun and Moon|PREVAREQ:Monk_CF_TongueOfTheSunAndMoon,0|PREVARGTEQ:Monk_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Timeless Body|PREVAREQ:Monk_CF_TimelessBody,0|PREVARGTEQ:Monk_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Empty Body|PREVAREQ:Monk_CF_EmptyBody,0|PREVARGTEQ:Monk_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Monk Class Feature|AUTOMATIC|Monk ~ Perfect Self|PREVAREQ:Monk_CF_PerfectSelf,0|PREVARGTEQ:Monk_CFP_Level,20"
       }
     ]
   },

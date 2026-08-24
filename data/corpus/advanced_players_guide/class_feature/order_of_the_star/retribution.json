@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Order of the Star ~ Retribution",
     "name": "Retribution",
@@ -23,6 +23,10 @@
       {
         "key": "DESC",
         "value": "At 15th level, the cavalier can take retribution on those who dare to strike an agent of his faith. Whenever an enemy makes a successful melee attack against the cavalier or an adjacent ally devoted to the same faith as the cavalier, the enemy provokes an attack of opportunity from the cavalier. The cavalier receives a +2 morale bonus on the attack of opportunity. If the attack made by the enemy was a critical hit, the cavalier may treat the enemy as the target of his challenge for the attack of opportunity. The cavalier can use this ability once per round."
+      },
+      {
+        "key": "DESC",
+        "value": "Retribution blasts those who have the temerity to assault your person. You may target anyone who has just struck you with an attack within the previous round, whether with a melee, ranged, or natural weapon, or a spell that requires an attack roll. The target is wracked with shooting pains that impose a -4 penalty on attack rolls, skills checks, and ability checks. On a successful Fortitude save, the penalty only lasts for 1 round.  A target who worships the same god as you takes a -2 penalty on its saving throw.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

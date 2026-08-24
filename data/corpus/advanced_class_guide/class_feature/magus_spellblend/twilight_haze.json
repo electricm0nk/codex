@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Twilight Haze",
     "name": "Twilight Haze",
     "class": "Magus",
-    "description": null,
+    "description": "Illusory fog obscures vision.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Twilight Haze"
+      },
+      {
+        "key": "DESC",
+        "value": "Illusory fog obscures vision.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

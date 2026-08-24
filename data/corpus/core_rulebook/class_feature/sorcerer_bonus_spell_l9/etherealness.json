@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L9 ~ Etherealness",
     "name": "Etherealness",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell functions like ethereal jaunt, except that you and other willing creatures joined by linked hands [along with their equipment] become ethereal. Besides yourself, you can bring one creature per three caster levels to the Ethereal Plane. Once ethereal, the subjects need not stay together. When the spell expires, all affected creatures on the Ethereal Plane return to material existence.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=9|Etherealness"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like ethereal jaunt, except that you and other willing creatures joined by linked hands [along with their equipment] become ethereal. Besides yourself, you can bring one creature per three caster levels to the Ethereal Plane. Once ethereal, the subjects need not stay together. When the spell expires, all affected creatures on the Ethereal Plane return to material existence.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

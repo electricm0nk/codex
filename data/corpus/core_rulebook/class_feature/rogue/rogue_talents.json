@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue ~ Rogue Talents",
     "name": "Rogue Talents",
@@ -35,6 +35,58 @@
       {
         "key": "BONUS",
         "value": "VAR|RogueTalentLVL|RogueLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,2|PREVAREQ:Rogue_CF_RogueTalent2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,4|PREVAREQ:Rogue_CF_RogueTalent4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,6|PREVAREQ:Rogue_CF_RogueTalent6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,8|PREVAREQ:Rogue_CF_RogueTalent8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,10|PREVAREQ:Rogue_CF_RogueTalent10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,12|PREVAREQ:Rogue_CF_RogueTalent12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,14|PREVAREQ:Rogue_CF_RogueTalent14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,16|PREVAREQ:Rogue_CF_RogueTalent16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,18|PREVAREQ:Rogue_CF_RogueTalent18,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rogue Talent|-1|PREVARGTEQ:RogueTalentLVL,20|PREVAREQ:Rogue_CF_RogueTalent20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombatTrickAllowed|1|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatTrickAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatTrickTaken|0"
       }
     ]
   },

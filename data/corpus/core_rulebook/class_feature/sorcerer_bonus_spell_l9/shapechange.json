@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L9 ~ Shapechange",
     "name": "Shapechange",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell allows you to take the form of a wide variety of creatures. This spell can function as alter self, beast form IV, elemental body IV, form of the dragon III, giant form II, and plant shape III depending on what form you take. You can change form once each round as a free action. The change takes place either immediately before your regular action or immediately after it, but not during the action.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=9|Shapechange"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell allows you to take the form of a wide variety of creatures. This spell can function as alter self, beast form IV, elemental body IV, form of the dragon III, giant form II, and plant shape III depending on what form you take. You can change form once each round as a free action. The change takes place either immediately before your regular action or immediately after it, but not during the action.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

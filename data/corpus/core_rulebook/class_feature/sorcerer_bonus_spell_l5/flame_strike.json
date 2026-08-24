@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L5 ~ Flame Strike",
     "name": "Flame Strike",
     "class": "Sorcerer",
-    "description": null,
+    "description": "A flame strike evokes a vertical column of divine fire. The spell deals 1d6 points of damage per caster level [maximum 15d6]. Half the damage is fire damage, but the other half results directly from divine power and is therefore not subject to being reduced by resistance to fire-based attacks.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=5|Flame Strike"
+      },
+      {
+        "key": "DESC",
+        "value": "A flame strike evokes a vertical column of divine fire. The spell deals 1d6 points of damage per caster level [maximum 15d6]. Half the damage is fire damage, but the other half results directly from divine power and is therefore not subject to being reduced by resistance to fire-based attacks.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

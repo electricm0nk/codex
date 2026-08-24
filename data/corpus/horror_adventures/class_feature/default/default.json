@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -147,6 +147,154 @@
       {
         "key": "DEFINE",
         "value": "AllowDomainVoid|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainAir|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainAnimal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainArtifice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainChaos|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainCharm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainCommunity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainDarkness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainDeath|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainDestruction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainEarth|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainFire|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainGlory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainHealing|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainKnowledge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainLaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainLiberation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainLuck|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainMadness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainMagic|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainNobility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainPlant|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainProtection|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainRepose|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainRune|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainStrength|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainSun|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainTravel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainTrickery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainWar|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainWater|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainWeather|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainScalykind|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowDomainVoid|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Race Subtype ~ Deep One|PRERACE:1,RACESUBTYPE=Deep One|PRECHARACTERTYPE:1,NPC,Monster"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Race Subtype ~ Hive|PRERACE:1,RACESUBTYPE=Hive|PRECHARACTERTYPE:1,NPC,Monster"
       }
     ]
   },

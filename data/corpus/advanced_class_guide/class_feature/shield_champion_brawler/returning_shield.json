@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shield Champion Brawler ~ Returning Shield",
     "name": "Returning Shield",
@@ -35,6 +35,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.87"
+      },
+      {
+        "key": "DESC",
+        "value": "A shield champion gains Greater Shield Focus as a bonus feat.|PREVARGTEQ:ReturningShieldProgression,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Shield Focus|PREVARGTEQ:ReturningShieldProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "A shield champion can use her unarmed strike damage when dealing damage with a shield (whether in melee or thrown) or the shield's damage, whichever is greater.|PREVARGTEQ:ReturningShieldProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "By ricocheting her shield off a nearby surface before hitting your intended target, she can treat that surface as the origin square of the attack to determine whether the target is flanked and whether the target gains a cover bonus to its AC. She can use this ability to attack a creature with total concealment from her if she knows what square it occupies, but the attack still has a 50%% miss chance.|PREVARGTEQ:ReturningShieldProgression,4"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Wall of Blindness/Deafness",
     "name": "Wall of Blindness/Deafness",
     "class": "Magus",
-    "description": null,
+    "description": "Translucent wall blinds or deafens creatures that pass through it.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=4|Wall of Blindness/Deafness"
+      },
+      {
+        "key": "DESC",
+        "value": "Translucent wall blinds or deafens creatures that pass through it.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler ~ Swashbuckler Finesse",
     "name": "Swashbuckler Finesse",
@@ -47,6 +47,78 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.56"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HasWeaponFinesseFeat|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasWeaponFinesseFeat|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Weapon Group Melee Light Piercing|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged|!PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Weapon Group Melee OneHanded Piercing|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged|!PREABILITY:1,CATEGORY=FEAT,Weapon Finesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longsword|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Longsword)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longsword|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Longsword)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scimitar|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Scimitar)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scimitar|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Scimitar)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Katana)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Katana)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Sawtooth Sabre)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Sawtooth Sabre)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Falcata|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Falcata)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Falcata|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Falcata)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kukri|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Kukri)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kukri|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Kukri)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wakizashi|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Wakizashi)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wakizashi|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Wakizashi)"
       }
     ]
   },

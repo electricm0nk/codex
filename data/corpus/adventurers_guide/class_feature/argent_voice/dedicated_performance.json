@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Argent Voice ~ Dedicated Performance",
     "name": "Dedicated Performance",
@@ -47,6 +47,134 @@
       {
         "key": "BONUS",
         "value": "SKILL|Sense Motive (Perform (Sing))|DedicatedPerformanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Act)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Comedy)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Dance)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Keyboard Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Oratory)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Percussion Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (String Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Wind Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Act)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Comedy)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Dance)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Keyboard Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Oratory)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Percussion Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (String Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Wind Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Act)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Comedy)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Dance)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Keyboard Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Oratory)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Percussion Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (String Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Wind Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Act)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Comedy)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Dance)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Keyboard Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Oratory)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Percussion Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (String Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DedicatedPerformanceBonus|if(skillinfo(\"TOTALRANK\", \"Perform (Wind Instruments)\")>=TL,1,0)|PRECLASS:1,Bard=18"
       }
     ]
   },

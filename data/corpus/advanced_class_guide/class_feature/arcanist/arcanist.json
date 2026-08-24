@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist",
     "name": "Arcanist",
@@ -31,6 +31,214 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Arcanist\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Arcanist ~ Class Skills|PREVAREQ:Arcanist_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ConsumeSpells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcaneReservoir|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploits|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_Cantrips|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_GreaterArcanistExploits|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_MagicalSupremacy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_Spellbooks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit13|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcanist_CF_ArcanistExploit19|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit1|01|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit3|01|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit5|01|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit7|01|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit9|01|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit11|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit13|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit13=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit17|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploit19|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploit19=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_Spellbooks|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_Spellbooks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ConsumeSpells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ConsumeSpells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcaneReservoir|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcaneReservoir=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploits|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_ArcanistExploits=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_Cantrips|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_Cantrips=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_GreaterArcanistExploits|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_GreaterArcanistExploits=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_MagicalSupremacy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Arcanist_CF_MagicalSupremacy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_Proficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.Arcanist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ClassSkills|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistClassSkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ConsumeSpells|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistConsumeSpells"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcaneReservoir|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistArcaneReservoir"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_ArcanistExploits|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistArcanistExploits"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_Cantrips|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistCantrips"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_GreaterArcanistExploits|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistGreaterArcanistExploits"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcanist_CF_MagicalSupremacy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ArcanistMagicalSupremacy"
       }
     ]
   },

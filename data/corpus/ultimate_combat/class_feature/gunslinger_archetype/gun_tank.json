@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Gun Tank",
     "name": "Gun Tank",
@@ -63,6 +63,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ GUN TANK],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_DodgeDeed=True,Gunslinger_Archetype_EvasiveDeed=True,Gunslinger_Archetype_Nimble=True,Gunslinger_Archetype_BonusFeat=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunslingersDodgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_EvasiveDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_DodgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_EvasiveDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat|true"
       }
     ]
   },

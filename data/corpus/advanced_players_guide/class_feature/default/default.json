@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Default",
     "name": "Default",
@@ -15,6 +15,722 @@
       {
         "key": "BONUS",
         "value": "VAR|BypassClassAlignment_Antipaladin|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Traits|2|TYPE=Base|PREVARGTEQ:IsPC,1|PRECHARACTERTYPE:1,PC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsPC|1|TYPE=Base|PREFACT:1,RACE,IsPC=TRUE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeroPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeroPointsMax|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_AspectOfTheFalcon|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|SPELL ~ Aspect of the Falcon|PREVARGT:TempBonus_AspectOfTheFalcon,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonBypassHDCap|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassClassAlignment_Antipaladin|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_Antipaladin|BypassClassAlignment_All_Class|TYPE=Bypass"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CLASS_SummonerAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StandardSummonerAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CLASS_SummonerAllowed|StandardSummonerAllowed|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StandardSummonerAllowed|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAgathionSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAncestorsSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidArcaneSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidArchonGoodSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidArchonLawSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAshSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAzataGoodSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidAzataChaosSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidBloodSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCatastropheSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCavesSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCloudSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidConstructSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCurseSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDaemonSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDaySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDecaySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDeceptionSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDefenseSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDemonEvilSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDemonChaosSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDevilEvilSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDevilLawSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDivineSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidExplorationSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFamilySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFateSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFeatherSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFerocitySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFreedomSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidFurSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidGrowthSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidHeroismSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidHomeSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidHonorSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidIceSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidInevitableSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidInsanitySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLanguageSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLeadershipSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLightSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLossSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLoveSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLustSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidMartyrSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidMemorySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidMurderSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidNightSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidNightmareSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidOceansSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidProteanSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidPuritySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidRageSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidResolveSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidRestorationSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidResurrectionSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidRevolutionSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidSeasonsSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidSmokeSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidSoulsSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidStormsSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidTacticsSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidThieverySubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidThoughtSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidToilSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidTradeSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidUndeadSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWardsSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidWindSubdomainAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCharmAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidCommunityAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDarknessAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDeathAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidDestructionAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidGloryAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidKnowledgeAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLiberationAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidNobilityAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidProtectionAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidReposeAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidRuneAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidStrengthAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidSunAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidTravelAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidTrickeryAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidHealingAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Deadly_Aim|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Focused_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Point_Blank_Master|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Rapid_Reload|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Crossbow_Mastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Combat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Archery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Ride_By_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Trick_Riding|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Shield|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Spirited_Charge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Skirmisher|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Unseat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Aspect_of_the_Beast|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Natural_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Rending_Claws|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Weapon_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Eldritch_Claws|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Vital_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Multiattack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Vital_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Cleave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Power_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Pushing_Assault|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_of_Swings|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Furious_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Great_Cleave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Dreadful_Carnage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Sunder|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Proficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Slam|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Saving_Shield|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Shield_Master|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Bashing_Finish|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Greater_Shield_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleArcheryAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleArcheryAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleTwoWeaponAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleTwoWeaponAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleWeaponAndShieldAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleWeaponAndShieldAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleTwoHandedWeaponAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleTwoHandedWeaponAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleNaturalWeaponAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleNaturalWeaponAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleMountedCombatAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleMountedCombatAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangerCombatStyleCrossbowAllowed|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleCrossbowAllowed|RangerDefaultCombatStyle"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Deadly_Aim|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Focused_Shot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Point_Blank_Master|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Rapid_Reload|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Crossbow_Mastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Combat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Archery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Ride_By_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Trick_Riding|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Shield|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Spirited_Charge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Mounted_Skirmisher|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Unseat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Aspect_of_the_Beast|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Improved_Natural_Attack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Rending_Claws|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Weapon_Focus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Eldritch_Claws|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Vital_Strike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ranger_Combat_Style_Feat_Multiattack|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Focused Arcane School|AUTOMATIC|Focused Arcane School|PRESUBCLASS:1,Abjurer,Conjurer,Diviner,Enchanter,Evoker,Illusionist,Necromancer,Transmuter"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonusDisplayNaturalist|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|ASPECT DISPLAY for Naturalist|PREVARGTEQ:TempBonusDisplayNaturalist,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Multiple Companion Combination|1|PREMULT:2,[PREABILITY:1,CATEGORY=Special Ability,Samurai ~ Mount,Cavalier ~ Mount],[PREABILITY:1,CATEGORY=Special Ability,Hunter's Bond ~ Animal Companion,Nature's Bond ~ Animal Companion,Divine Bond ~ Special Mount]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_EvolutionSurge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_EvolutionSurgeGreater|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempBonus_EvolutionSurgeLesser|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Evolution Surge|PREVARGTEQ:TempBonus_EvolutionSurge,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Evolution Surge (Greater)|PREVARGTEQ:TempBonus_EvolutionSurgeGreater,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Temp Bonus ~ Evolution Surge (Lesser)|PREVARGTEQ:TempBonus_EvolutionSurgeLesser,1"
       }
     ]
   },

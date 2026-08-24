@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Aegis ~ Form Astral Suit",
     "name": "Form Astral Suit",
@@ -63,6 +63,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.28"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Skin|PREEQUIP:1,Astral Skin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Armor|PREEQUIP:1,Astral Armor"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Juggernaut|PREEQUIP:1,Astral Juggernaut"
       }
     ]
   },

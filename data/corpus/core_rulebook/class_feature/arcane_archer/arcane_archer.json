@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcane Archer",
     "name": "Arcane Archer",
@@ -19,6 +19,46 @@
       {
         "key": "BONUS",
         "value": "VAR|ArcaneArcher_CFP_Level|ArcaneArcherLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All Martial Weapon Proficiencies|PREVARGTEQ:ArcaneArcher_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Martial Weapon Proficiency Output|Simple Weapon Proficiency|PREVARGTEQ:ArcaneArcher_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Armor Proficiency (Light)|Armor Proficiency (Medium)|PREVARGTEQ:ArcaneArcher_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Shield Proficiency|PREVARGTEQ:ArcaneArcher_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Archer ~ Enhance Arrow|PREVARGTEQ:ArcaneArcher_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Archer ~ Imbue Arrow|PREVARGTEQ:ArcaneArcher_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Archer ~ Seeker Arrow|PREVARGTEQ:ArcaneArcher_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Archer ~ Phase Arrow|PREVARGTEQ:ArcaneArcher_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Archer ~ Hail of Arrows|PREVARGTEQ:ArcaneArcher_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Archer ~ Arrow of Death|PREVARGTEQ:ArcaneArcher_CFP_Level,10"
       }
     ]
   },

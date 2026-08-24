@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wolf Shaman ~ Wild Shape",
     "name": "Wild Shape",
@@ -27,6 +27,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.103"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Small or Medium ooze as if using beast shape III (treating the ooze as if it were a magical beast without a natural armor bonus).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Cave Druid|PREVAREQ:WildShapeProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus).|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Small or Medium vermin as if using beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid|PREVAREQ:WildShapeProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Tiny or Large vermin as if using beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Large giant as if using giant form I.|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Huge giant as if using giant form II.|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid|PREVAREQ:WildShapeProgression,7"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Blood Armor",
     "name": "Blood Armor",
     "class": "Magus",
-    "description": null,
+    "description": "Your blood hardens when you are wounded, increasing your AC.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Blood Armor"
+      },
+      {
+        "key": "DESC",
+        "value": "Your blood hardens when you are wounded, increasing your AC.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|%CHOICE|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=5|TITLE=Current AC bonus"
       }
     ]
   },

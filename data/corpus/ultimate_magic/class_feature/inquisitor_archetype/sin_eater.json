@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Sin Eater",
     "name": "Sin Eater",
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sin Eater],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Domains=True,Inquisitor_Archetype_TeamworkFeat6=True,Inquisitor_Archetype_ExploitWeakness=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TeamworkFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ExploitWeakness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TeamworkFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ExploitWeakness|true"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Heightened Awareness",
     "name": "Heightened Awareness",
     "class": "Magus",
-    "description": null,
+    "description": "Your recall and ability to process information improve.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=1|Heightened Awareness"
+      },
+      {
+        "key": "DESC",
+        "value": "Your recall and ability to process information improve.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Perception,TYPE.Knowledge|2|TYPE=Competence"
       }
     ]
   },

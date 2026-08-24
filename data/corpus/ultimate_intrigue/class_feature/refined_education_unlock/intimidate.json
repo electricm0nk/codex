@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Refined Education Unlock ~ Intimidate",
     "name": "Intimidate",
@@ -55,6 +55,18 @@
       {
         "key": "BONUS",
         "value": "VAR|IntimidateRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Intimidate\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Vigilante Identity"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Interacting with criminals"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
       }
     ]
   },

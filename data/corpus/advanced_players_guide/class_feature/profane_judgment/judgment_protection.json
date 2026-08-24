@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Profane Judgment ~ Protection",
     "name": "Judgment / Protection",
@@ -35,6 +35,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.39"
+      },
+      {
+        "key": "DESC",
+        "value": "This bonus is doubled against attack rolls made to confirm critical hits against the inquisitor.|PREVARGTEQ:InqJudgeProtectionLVL,10"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L2 ~ Blur",
     "name": "Blur",
     "class": "Sorcerer",
-    "description": null,
+    "description": "The subject's outline appears blurred, shifting, and wavering. This distortion grants the subject concealment [20%% miss chance]. A see invisibility spell does not counteract the blur effect, but a true seeing spell does. Opponents that cannot see the subject ignore the spell's effect [though fighting an unseen opponent carries penalties of its own].|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=2|Blur"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject's outline appears blurred, shifting, and wavering. This distortion grants the subject concealment [20%% miss chance]. A see invisibility spell does not counteract the blur effect, but a true seeing spell does. Opponents that cannot see the subject ignore the spell's effect [though fighting an unseen opponent carries penalties of its own].|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

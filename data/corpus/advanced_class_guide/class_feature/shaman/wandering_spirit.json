@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman ~ Wandering Spirit",
     "name": "Wandering Spirit",
@@ -31,6 +31,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.37"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWanderingSpiritBase|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWanderingSpiritBase|1|PREVAREQ:Shaman_CF_WanderingSpiritBase,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWanderingSpiritGreater|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWanderingSpiritGreater|1|PREMULT:2,[PRECLASS:1,Shaman=12],[PREVAREQ:Shaman_CF_WanderingSpiritGreater,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanWanderingSpiritTrue|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanWanderingSpiritTrue|1|PREMULT:2,[PRECLASS:1,Shaman=20],[PREVAREQ:Shaman_CF_WanderingSpiritTrue,0]"
       }
     ]
   },

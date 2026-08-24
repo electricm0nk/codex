@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest Archetype ~ Sacred Fist",
     "name": "Sacred Fist",
@@ -79,6 +79,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Warpriest"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Sacred Fist],[!PREFACT:1,ABILITIES,Warpriest_Archetype_ClassSkills=True,Warpriest_Archetype_Proficiencies=True,Warpriest_Archetype_SacredWeapon=True,Warpriest_Archetype_FocusWeapon=True,Warpriest_Archetype_BonusFeats=True,Warpriest_Archetype_SacredArmor=True,Warpriest_Archetype_ClassSkills=True,Warpriest_Archetype_Proficiencies=True,Warpriest_Archetype_SacredWeapon=True,Warpriest_Archetype_FocusWeapon=True,Warpriest_Archetype_BonusFeats=True,Warpriest_Archetype_SacredArmor=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_SacredWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_FocusWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_SacredArmor|true"
       }
     ]
   },

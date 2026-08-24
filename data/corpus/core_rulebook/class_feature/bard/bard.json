@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard",
     "name": "Bard",
@@ -31,6 +31,414 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|BardLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Bardic Knowledge|PREVAREQ:Bard_CF_BardicKnowledge,0|PREVARGTEQ:Bard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Bardic Countersong|PREVAREQ:Bard_CF_CounterSong,0|PREVARGTEQ:Bard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Bardic Performance|PREVAREQ:Bard_CF_BardicPerformance,0|PREVARGTEQ:Bard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Armored Casting|PREVAREQ:Bard_CF_ArmoredCasting,0|PREVARGTEQ:Bard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Cantrips|PREVAREQ:Bard_CF_Cantrips,0|PREVARGTEQ:Bard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Versatile Performance|PREVAREQ:Bard_CF_VersatilePerformance,0|PREVARGTEQ:Bard_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Well-Versed|PREVAREQ:Bard_CF_WellVersed,0|PREVARGTEQ:Bard_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Lore Master|PREVAREQ:Bard_CF_LoreMaster,0|PREVARGTEQ:Bard_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Jack of All Trades|PREVAREQ:Bard_CF_JackOfAllTrades,0|PREVARGTEQ:Bard_CFP_Level,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Weapon and Armor Proficiency ~ Bard|PREVAREQ:Bard_CF_Proficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Simple|Weapon Proficiencies ~ Bard|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardWeaponProficiencies"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|Shield Prof|!PREABILITY:1,CATEGORY=Archetype,TYPE.BardArmorProficiencies"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Armored Casting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Bardic Knowledge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Bardic Countersong"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Bardic Performance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Cantrips"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Versatile Performance|PREVARGTEQ:BardLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Well-Versed|PREVARGTEQ:BardLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Lore Master|PREVARGTEQ:BardLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Bard ~ Jack of All Trades|PREVARGTEQ:BardLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_BardicKnowledge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_CounterSong|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_BardicPerformance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_ArmoredCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_Cantrips|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_VersatilePerformance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_WellVersed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_LoreMaster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_JackOfAllTrades|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_BardDistraction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_Fascinate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCourage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_Suggestion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_DirgeOfDoom|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireGreatness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_SoothingPerformance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_FrighteningTune|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireHeroics|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_MassSuggestion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_DeadlyPerformance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCourage1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCourage2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCourage3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCourage4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bard_CF_InspireCompetence6|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_BardicKnowledge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_BardicKnowledge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_CounterSong|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_CounterSong=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_BardicPerformance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_BardicPerformance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_ArmoredCasting|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_ArmoredCasting=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_Cantrips|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_Cantrips=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_VersatilePerformance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_VersatilePerformance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_WellVersed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_WellVersed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_LoreMaster|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_LoreMaster=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_JackOfAllTrades|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_JackOfAllTrades=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_BardDistraction|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_BardDistraction=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_Fascinate|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_Fascinate=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCourage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCourage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_Suggestion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_Suggestion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_DirgeOfDoom|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_DirgeOfDoom=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireGreatness|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireGreatness=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_SoothingPerformance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_SoothingPerformance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_FrighteningTune|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_FrighteningTune=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireHeroics|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireHeroics=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_MassSuggestion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_MassSuggestion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_DeadlyPerformance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_DeadlyPerformance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCourage1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCourage1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCourage2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCourage2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCourage3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCourage3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCourage4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCourage4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_InspireCompetence6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bard_CF_InspireCompetence6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_BardicKnowledge|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicKnowledge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_CounterSong|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardCounterSong"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_BardDistraction|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardDistraction"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_BardicPerformance|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicPerformance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_ArmoredCasting|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardArmoredCasting"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_Cantrips|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardCantrips"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_VersatilePerformance|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardVersatilePerformance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_WellVersed|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardWellVersed"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_LoreMaster|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardLoreMaster"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_JackOfAllTrades|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardJackOfAllTrades"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_ClassSkills|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardClassSkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bard_CF_Proficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BardArmorProficiencies,TYPE.BardWeaponProficiencies"
       }
     ]
   },

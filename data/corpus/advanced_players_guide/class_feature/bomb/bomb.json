@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bomb",
     "name": "Bomb",
@@ -99,6 +99,18 @@
       {
         "key": "ASPECT",
         "value": "NaturalAttackCritMult|x%1|BombCritMult"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Bomb)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Focus (Bomb)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Throw Anything"
       }
     ]
   },

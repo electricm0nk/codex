@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist ~ Bomb",
     "name": "Bomb",
@@ -123,6 +123,54 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Bomb)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Focus (Bomb)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BombAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Throw Anything"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,3],[PREVAREQ:Alchemist_CF_BombDamage3,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,5],[PREVAREQ:Alchemist_CF_BombDamage5,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,7],[PREVAREQ:Alchemist_CF_BombDamage7,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,9],[PREVAREQ:Alchemist_CF_BombDamage9,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,11],[PREVAREQ:Alchemist_CF_BombDamage11,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,13],[PREVAREQ:Alchemist_CF_BombDamage13,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,15],[PREVAREQ:Alchemist_CF_BombDamage15,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,17],[PREVAREQ:Alchemist_CF_BombDamage17,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemistBombAdditionalDice|-1|PREMULT:2,[PREVARGTEQ:AlchemistBombLVL,19],[PREVAREQ:Alchemist_CF_BombDamage19,1]"
       }
     ]
   },

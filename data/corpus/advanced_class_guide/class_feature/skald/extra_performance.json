@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Skald ~ Extra Performance",
     "name": "Extra Performance",
@@ -27,6 +27,18 @@
       {
         "key": "ABILITY",
         "value": "FEAT|AUTOMATIC|Extra Performance"
+      },
+      {
+        "key": "PRE",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldRagingSongRoundsPerDay|6"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,TYPE.SkaldRagingSong],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Bardic Performance]"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Fire Bomber",
     "name": "Fire Bomber",
@@ -75,6 +75,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Fire Bomber],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Discovery4=True,Alchemist_Archetype_PoisonResistance6=True,Alchemist_Archetype_PoisonImmunity=True,Alchemist_Archetype_PersistentMutagen=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PersistentMutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PersistentMutagen|true"
       }
     ]
   },

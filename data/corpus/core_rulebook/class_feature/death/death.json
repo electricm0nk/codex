@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Death Domain",
     "name": "Death",
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Death=1|Cause Fear|Death=2|Death Knell|Death=3|Animate Dead|Death=4|Death Ward|Death=5|Slay Living|Death=6|Create Undead|Death=7|Destruction|Death=8|Create Greater Undead|Death=9|Wail of the Banshee"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Death],[PREVARLT:DeathDomain,1]"
       }
     ]
   },

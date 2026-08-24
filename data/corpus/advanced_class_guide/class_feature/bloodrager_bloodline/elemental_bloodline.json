@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Elemental",
     "name": "Elemental Bloodline",
@@ -183,6 +183,26 @@
       {
         "key": "ASPECT",
         "value": "ChildAbility|Bloodrager Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Air)|PREVAREQ:BloodragerElementalBloodline_Air,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Earth)|PREVAREQ:BloodragerElementalBloodline_Earth,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Fire)|PREVAREQ:BloodragerElementalBloodline_Fire,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Water)|PREVAREQ:BloodragerElementalBloodline_Water,1"
       }
     ]
   },

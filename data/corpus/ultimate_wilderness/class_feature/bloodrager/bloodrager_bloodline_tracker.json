@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager ~ Bloodline Tracker",
     "name": "Bloodrager ~ Bloodline Tracker",
@@ -11,6 +11,50 @@
       {
         "key": "DEFINE",
         "value": "Bloodrager_BloodlineFeat_BolsteredResilience|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_BolsteredResilience|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Diehard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Endurance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_GreatFortitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_PowerAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_RagingVitality|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BloodlineFeat_Toughness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L1_Entangle|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L2_Greensight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L3_BurstofNettles|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_BonusSpell_L4_CommandPlants|0"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wind Mystery ~ Gaseous Form",
     "name": "Gaseous Form",
@@ -39,6 +39,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.53"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Cloud Subdomain,Wind Subdomain=3"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
       }
     ]
   },

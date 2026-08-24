@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner ~ Summon Monster",
     "name": "Summon Monster",
@@ -55,6 +55,42 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster I|PREVAREQ:SummonerSummonMonsterLVL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster II|PREVAREQ:SummonerSummonMonsterLVL,2"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster III|PREVAREQ:SummonerSummonMonsterLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster IV|PREVAREQ:SummonerSummonMonsterLVL,4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster V|PREVAREQ:SummonerSummonMonsterLVL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster VI|PREVAREQ:SummonerSummonMonsterLVL,6"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster VII|PREVAREQ:SummonerSummonMonsterLVL,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster VIII|PREVAREQ:SummonerSummonMonsterLVL,8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster IX|PREVARGTEQ:SummonerSummonMonsterLVL,9"
       }
     ]
   },

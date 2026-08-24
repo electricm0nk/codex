@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Refined Education ~ Diplomacy",
     "name": "Diplomacy",
@@ -35,6 +35,22 @@
       {
         "key": "BONUS",
         "value": "VAR|DiplomacyRefinedEducationUnlock|1|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Bargain with a conjured creature"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Bribery attempts"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Interacting with criminals"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger ~ Deeds",
     "name": "Deeds",
@@ -43,6 +43,94 @@
       {
         "key": "ASPECT",
         "value": "MasterAbility|Deeds"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Deadeye|PREVAREQ:Gunslinger_CF_DeadeyeDeed,0|PREVARGTEQ:DeedsLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Gunslinger's Dodge|PREVAREQ:Gunslinger_CF_GunslingersDodgeDeed,0|PREVARGTEQ:DeedsLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Quick Clear|PREVAREQ:Gunslinger_CF_QuickClearDeed,0|PREVARGTEQ:DeedsLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Gunslinger Initiative|PREVAREQ:Gunslinger_CF_GunslingerInitiativeDeed,0|PREVARGTEQ:DeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Pistol-Whip|PREVAREQ:Gunslinger_CF_PistolWhipDeed,0|PREVARGTEQ:DeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Utility Shot|PREVAREQ:Gunslinger_CF_UtilityShotDeed,0|PREVARGTEQ:DeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Dead Shot|PREVAREQ:Gunslinger_CF_DeadShotDeed,0|PREVARGTEQ:DeedsLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Startling Shot|PREVAREQ:Gunslinger_CF_StartlingShotDeed,0|PREVARGTEQ:DeedsLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Targeting|PREVAREQ:Gunslinger_CF_TargetingDeed,0|PREVARGTEQ:DeedsLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Bleeding Wound|PREVAREQ:Gunslinger_CF_BleedingWoundDeed,0|PREVARGTEQ:DeedsLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Expert Loading|PREVAREQ:Gunslinger_CF_ExpertLoadingDeed,0|PREVARGTEQ:DeedsLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Lightning Reload|PREVAREQ:Gunslinger_CF_LightningReloadDeed,0|PREVARGTEQ:DeedsLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Evasive|PREVAREQ:Gunslinger_CF_EvasiveDeed,0|PREVARGTEQ:DeedsLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Menacing Shot|PREVAREQ:Gunslinger_CF_MenacingShotDeed,0|PREVARGTEQ:DeedsLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Slinger's Luck|PREVAREQ:Gunslinger_CF_SlingersLuckDeed,0|PREVARGTEQ:DeedsLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Cheat Death|PREVAREQ:Gunslinger_CF_CheatDeathDeed,0|PREVARGTEQ:DeedsLVL,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Death's Shot|PREVAREQ:Gunslinger_CF_DeathsShotDeed,0|PREVARGTEQ:DeedsLVL,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Gunslinger ~ Stunning Shot|PREVAREQ:Gunslinger_CF_StunningShotDeed,0|PREVARGTEQ:DeedsLVL,19"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A gun tank swaps a pair of deeds for the following - Gun Tank's Resolve, Gun Tank's Resilience.|PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ GUN TANK"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A musket master swaps a pair of deeds for the following. - Steady Aim, Fast Musket.|PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ MUSKET MASTER"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A mysterious stranger swaps a pair of deeds for the following - Focused Aim, Clipping Shot.|PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ MYSTERIOUS STRANGER"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A pistolero swaps a trio of deeds for the following - Up Close and Deadly, Deadeye, Twin Shot Knockdown.|PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ PISTOLERO"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Vigilante Talent ~ Harsh Judgment",
     "name": "Harsh Judgment",
@@ -31,6 +31,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.33"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "VigilanteIsZealot,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeSmitingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgeDestructionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgePiercingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InqJudgePurityLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Harsh Judgment Effect|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InqJudgeSmitingLVL,InqJudgeDestructionLVL,InqJudgePiercingLVL,InqJudgePurityLVL|VigilanteTalentLVL"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Psionic Fighter",
     "name": "Psionic Fighter",
@@ -59,6 +59,38 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.294"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Psionic Fighter],[!PREFACT:1,ABILITIES,Fighter_Archetype_BonusFeats=True,Fighter_Archetype_Bravery=True,Fighter_Archetype_WeaponTraining=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
       }
     ]
   },

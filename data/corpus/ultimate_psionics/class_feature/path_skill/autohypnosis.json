@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Path Skill ~ Autohypnosis",
     "name": "Autohypnosis",
@@ -43,6 +43,14 @@
       {
         "key": "BONUS",
         "value": "SKILL|Autohypnosis|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Autohypnosis|3|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Skill Focus (Autohypnosis)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Autohypnosis|6|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Skill Focus (Autohypnosis)|PRESKILL:1,Autohypnosis=10"
       }
     ]
   },

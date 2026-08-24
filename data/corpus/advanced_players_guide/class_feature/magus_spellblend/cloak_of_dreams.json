@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Cloak of Dreams",
     "name": "Cloak of Dreams",
     "class": "Magus",
-    "description": null,
+    "description": "You are surrounded by a soporific aroma that causes living creatures that begin their turn or end their movement within 5 feet of you to fall asleep for 1 minute. Creatures must save each time they begin their turn or end their movement within the cloak of dreams, even if they have previously saved against the effect. Sleeping creatures are helpless but can be awakened with a standard action or after being wounded.  Creatures with the scent special quality have a -4 penalty on their saves.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=6|Cloak of Dreams"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Nightmare Subdomain=6"
+      },
+      {
+        "key": "DESC",
+        "value": "You are surrounded by a soporific aroma that causes living creatures that begin their turn or end their movement within 5 feet of you to fall asleep for 1 minute. Creatures must save each time they begin their turn or end their movement within the cloak of dreams, even if they have previously saved against the effect. Sleeping creatures are helpless but can be awakened with a standard action or after being wounded.  Creatures with the scent special quality have a -4 penalty on their saves.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

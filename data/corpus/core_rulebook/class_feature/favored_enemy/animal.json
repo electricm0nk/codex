@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Favored Enemy ~ Animal",
     "name": "Animal",
@@ -47,6 +47,10 @@
       {
         "key": "ASPECT",
         "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against animals.|FavoredAnimal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Animal],[PREVARLT:AnimalDomain,1]"
       }
     ]
   },

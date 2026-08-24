@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L8 ~ Horrid Wilting",
     "name": "Horrid Wilting",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell evaporates moisture from the body of each subject living creature, causing flesh to wither and crack and crumble to dust. This deals 1d6 points of damage per caster level [maximum 20d6]. This spell is especially devastating to water elementals and plant creatures, which instead take 1d8 points of damage per caster level [maximum 20d8].|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=8|Horrid Wilting"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell evaporates moisture from the body of each subject living creature, causing flesh to wither and crack and crumble to dust. This deals 1d6 points of damage per caster level [maximum 20d6]. This spell is especially devastating to water elementals and plant creatures, which instead take 1d8 points of damage per caster level [maximum 20d8].|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

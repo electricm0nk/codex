@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sabre Fighting",
     "name": "Sabre Fighting",
@@ -35,6 +35,22 @@
       {
         "key": "BONUS",
         "value": "COMBAT|TOHIT.Sawtooth Sabre|((max(STR,DEX)-STR)+SHIELDACCHECK)"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Weapon Specialization &amp; Greater Weapon Focus (Sawtooth Sabre) as bonus feats.|PREVARGT:SabreFightingLvl,4|PREVARLT:SabreFightingLvl,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Weapon Focus (Sawtooth Sabre)|PREVARGT:SabreFightingLvl,4"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Weapon Specialization, Greater Weapon Focus and Greater Weapon Specialization (Sawtooth Sabre) as bonus feats.|PREVARGT:SabreFightingLvl,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Weapon Specialization (Sawtooth Sabre)|PREVARGT:SabreFightingLvl,6"
       }
     ]
   },

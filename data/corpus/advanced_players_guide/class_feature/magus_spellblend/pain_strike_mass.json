@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Pain Strike (Mass)",
     "name": "Pain Strike (Mass)",
     "class": "Magus",
-    "description": null,
+    "description": "This spell works like pain strike, except as noted above.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=5|Pain Strike (Mass)"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell works like pain strike, except as noted above.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

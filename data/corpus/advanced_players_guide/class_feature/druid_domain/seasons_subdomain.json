@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Seasons Subdomain",
     "name": "Seasons Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Goodberry|Druid=2|Fog Cloud|Druid=3|Call Lightning|Druid=4|Blight|Druid=5|Ice Storm|Druid=6|Control Winds|Druid=7|Control Weather|Druid=8|Sunburst|Druid=9|Storm of Vengeance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

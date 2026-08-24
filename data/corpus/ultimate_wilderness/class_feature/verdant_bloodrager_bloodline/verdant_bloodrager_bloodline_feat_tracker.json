@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Verdant Bloodrager Bloodline ~ Feat Tracker",
     "name": "Verdant Bloodrager Bloodline ~ Feat Tracker",
@@ -11,6 +11,34 @@
       {
         "key": "BONUS",
         "value": "VAR|Bloodrager_BloodlineFeat_BolsteredResilience|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_BolsteredResilience|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_Diehard|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_Endurance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_GreatFortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_PowerAttack|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_RagingVitality|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_Toughness|1"
       }
     ]
   },

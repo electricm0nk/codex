@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Flurry of Blows",
     "name": "Flurry of Blows",
@@ -27,6 +27,146 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.57"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryExtraAttacks|min((FlurryLVL+6)/7,3)|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryBABBonus|FlurryLVL-MonkBAB|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryLVL|FlurryBABRaw|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBAB|MonkLVL*3/4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryAttacks|2+(FlurryLVL>=6)+(FlurryLVL>=8)+(FlurryLVL>=11)+(FlurryLVL>=15)+(FlurryLVL>=16)|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB|FlurryBABBonus-2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_1|FAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_2|FAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_3|FAB-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_4|FAB-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_5|FAB-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_6|FAB-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_7|FAB-15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryBABRaw|MonkLVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryDiff|BAB-MonkBAB|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryExtraAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryBABBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryBAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryBABRaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryDiff|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBAB|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action. When doing so, you may make one additional attack, taking a -2 penalty on all of your attacks, as if using the Two-Weapon Fighting feat. These attacks can be any combination of unarmed strikes and attacks with a monk speciak weapon (you do not need to use two weapons to utlilize this ability). For the purpose of these attacks, your base attack bonus is equal to your monk level. For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.|PREVARGTEQ:FlurryLVL,1|PREVARLT:FlurryLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action. When doing so, you may make two additional attacks using any combination of unarmed strikes or attack with a special monk weapon (kama, nunchaku, quarterstaff, sai, shuriken, and siangham) as if using the Two-Weapon Fighting and Improved Two-Weapon Fighting feats. For the purpose of these attacks, your base attack bonus is equal to your monk level. For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.|PREVARGTEQ:FlurryLVL,8|PREVARLT:FlurryLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action. When doing so, you may make three additional attacks using any combination of unarmed strikes or attack with a special monk weapon (kama, nunchaku, quarterstaff, sai, shuriken, and siangham) as if using the Two-Weapon Fighting, Improved Two-Weapon Fighting, and Greater Two-Weapon Fighting feats. For the purpose of these attacks, your base attack bonus is equal to your monk level. For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.|PREVARGTEQ:FlurryLVL,15"
       }
     ]
   },

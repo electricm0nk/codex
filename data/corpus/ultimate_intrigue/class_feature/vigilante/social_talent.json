@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Vigilante ~ Social Talent",
     "name": "Social Talent",
@@ -47,6 +47,46 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,1|PREVAREQ:Vigilante_CF_SocialTalent1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,3|PREVAREQ:Vigilante_CF_SocialTalent3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,5|PREVAREQ:Vigilante_CF_SocialTalent5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,7|PREVAREQ:Vigilante_CF_SocialTalent7,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,9|PREVAREQ:Vigilante_CF_SocialTalent9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,11|PREVAREQ:Vigilante_CF_SocialTalent11,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,13|PREVAREQ:Vigilante_CF_SocialTalent13,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,15|PREVAREQ:Vigilante_CF_SocialTalent15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,17|PREVAREQ:Vigilante_CF_SocialTalent17,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Social Talent|-1|PREVARGTEQ:VigilanteLVL,19|PREVAREQ:Vigilante_CF_SocialTalent19,1"
       }
     ]
   },

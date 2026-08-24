@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Murder Subdomain",
     "name": "Murder Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Cause Fear|Druid=2|Death Knell|Druid=3|Keen Edge|Druid=4|Death Ward|Druid=5|Suffocation|Druid=6|Create Undead|Druid=7|Destruction|Druid=8|Create Greater Undead|Druid=9|Suffocation (Mass)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

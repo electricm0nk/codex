@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Broodmaster",
     "name": "Broodmaster",
@@ -67,6 +67,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Broodmaster],[!PREFACT:1,ABILITIES,Summoner_Archetype_Eidolon=True,Summoner_Archetype_LifeLink=True,Summoner_Archetype_LifeBond=True,Summoner_Archetype_MergeForms=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_LifeLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_LifeBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_MergeForms|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_LifeLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_LifeBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_MergeForms|true"
       }
     ]
   },

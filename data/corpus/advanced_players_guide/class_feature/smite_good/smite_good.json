@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Smite Good",
     "name": "Smite Good",
@@ -55,6 +55,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.120"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,1|PREVAREQ:Antipaladin_CF_SmiteGood1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,4|PREVAREQ:Antipaladin_CF_SmiteGood4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,7|PREVAREQ:Antipaladin_CF_SmiteGood7,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,10|PREVAREQ:Antipaladin_CF_SmiteGood10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,13|PREVAREQ:Antipaladin_CF_SmiteGood13,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,16|PREVAREQ:Antipaladin_CF_SmiteGood16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|-1|PREVARGTEQ:DetectGoodLVL,19|PREVAREQ:Antipaladin_CF_SmiteGood19,1"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Draconic",
     "name": "Draconic Bloodline",
@@ -207,6 +207,50 @@
       {
         "key": "ASPECT",
         "value": "ChildAbility|Bloodrager Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Black)|PREVAREQ:BloodragerDraconicBloodline_Black,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Blue)|PREVAREQ:BloodragerDraconicBloodline_Blue,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Green)|PREVAREQ:BloodragerDraconicBloodline_Green,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Red)|PREVAREQ:BloodragerDraconicBloodline_Red,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (White)|PREVAREQ:BloodragerDraconicBloodline_White,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Brass)|PREVAREQ:BloodragerDraconicBloodline_Brass,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Bronze)|PREVAREQ:BloodragerDraconicBloodline_Bronze,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Copper)|PREVAREQ:BloodragerDraconicBloodline_Copper,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Gold)|PREVAREQ:BloodragerDraconicBloodline_Gold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Silver)|PREVAREQ:BloodragerDraconicBloodline_Silver,1"
       }
     ]
   },

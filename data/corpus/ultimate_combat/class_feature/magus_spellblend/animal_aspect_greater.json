@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Animal Aspect (Greater)",
     "name": "Animal Aspect (Greater)",
     "class": "Magus",
-    "description": null,
+    "description": "As animal aspect, but you gain two animal qualities.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=4|Animal Aspect (Greater)"
+      },
+      {
+        "key": "DESC",
+        "value": "As animal aspect, but you gain two animal qualities.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

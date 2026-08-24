@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Steel-Breaker",
     "name": "Steel-Breaker",
@@ -55,6 +55,62 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Steel-Breaker],[!PREFACT:1,ABILITIES,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_BrawlersStrike=True,Brawler_Archetype_ClassSkills=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The steel-breaker studies destruction and practices it as an art form. She knows every defense has a breaking point, and can shatter those defenses with carefully planned strikes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Steel-Breaker Brawler ~ Class Skills|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Steel-Breaker Brawler ~ Sunder Training|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Steel-Breaker Brawler ~ Exploit Weakness|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BrawlersStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BrawlersStrike|true"
       }
     ]
   },

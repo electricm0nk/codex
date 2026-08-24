@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle ~ Curse of Black Blood",
     "name": "Curse of Black Blood",
@@ -39,6 +39,38 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.32"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlackBloodColdRes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains cold resistance %1.|BlackBloodColdRes|PREVARGTEQ:OracleCurseLVL,5|PREVARLT:OracleCurseLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold|PREVARGTEQ:OracleCurseLVL,5|PREVARLT:OracleCurseLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlackBloodColdRes|5|PREVARGTEQ:OracleCurseLVL,5|PREVARLT:OracleCurseLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlackBloodColdRes|5|PREVARGTEQ:OracleCurseLVL,10|PREVARLT:OracleCurseLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|BlackBloodColdRes"
+      },
+      {
+        "key": "DESC",
+        "value": "She gains immunity to cold.|PREVARGTEQ:OracleCurseLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|PREVARGTEQ:OracleCurseLVL,15"
       }
     ]
   },

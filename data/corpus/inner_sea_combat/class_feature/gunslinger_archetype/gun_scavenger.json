@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Gun Scavenger",
     "name": "Gun Scavenger",
@@ -63,6 +63,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.37"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Gun Scavenger],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_Nimble=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_QuickClearDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_TargetingDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Nimble|true"
       }
     ]
   },

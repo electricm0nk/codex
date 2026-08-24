@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin",
     "name": "Paladin",
@@ -31,6 +31,478 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|PaladinLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon and Armor Proficiency ~ Paladin|!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinWeaponProficiencies,TYPE.PaladinArmorProficiency,TYPE.PaladinArmorProficiencyHeavy,TYPE.PaladinArmorProficiencyLight,TYPE.PaladinArmorProficiencyMedium,TYPE.PaladinArmorProficiency,TYPE.PaladinShieldProf,TYPE.PaladinShieldProficiency|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Martial|Weapon Prof ~ Simple|!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinWeaponProficiencies|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Heavy|!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinArmorProficiency,TYPE.PaladinArmorProficiencyHeavy|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinArmorProficiency,TYPE.PaladinArmorProficiencyLight|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Medium|!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinArmorProficiency,TYPE.PaladinArmorProficiencyMedium|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinArmorProficiency,TYPE.PaladinShieldProf,TYPE.PaladinShieldProficiency|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Aura of Good|PREVAREQ:Paladin_CF_AuraOfGood,0|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Detect Evil|PREVAREQ:Paladin_CF_DetectEvil,0|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Smite Evil|PREVAREQ:Paladin_CF_SmiteEvil,0|PREVARGTEQ:Paladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Divine Grace|PREVAREQ:Paladin_CF_DivineGrace,0|PREVARGTEQ:Paladin_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Lay on Hands|PREVAREQ:Paladin_CF_LayOnHands,0|PREVARGTEQ:Paladin_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Aura of Courage|PREVAREQ:Paladin_CF_AuraOfCourage,0|PREVARGTEQ:Paladin_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Divine Health|PREVAREQ:Paladin_CF_DivineHealth,0|PREVARGTEQ:Paladin_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Mercy|PREVAREQ:Paladin_CF_Mercy,0|PREVARGTEQ:Paladin_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Channel Positive Energy|PREVAREQ:Paladin_CF_ChannelPositiveEnergy,0|PREVARGTEQ:Paladin_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Divine Bond|PREVAREQ:Paladin_CF_DivineBond,0|PREVARGTEQ:Paladin_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Aura of Resolve|PREVAREQ:Paladin_CF_AuraOfResolve,0|PREVARGTEQ:Paladin_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Aura of Justice|PREVAREQ:Paladin_CF_AuraOfJustice,0|PREVARGTEQ:Paladin_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Aura of Faith|PREVAREQ:Paladin_CF_AuraOfFaith,0|PREVARGTEQ:Paladin_CFP_Level,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Aura of Righteousness|PREVAREQ:Paladin_CF_AuraOfRighteousness,0|PREVARGTEQ:Paladin_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Holy Champion|PREVAREQ:Paladin_CF_HolyChampion,0|PREVARGTEQ:Paladin_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_WeaponProficiencySimple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_WeaponProficiencyMartial|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ArmorProficiencyHeavy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ArmorProficiencyMedium|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ArmorProficiencyLight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ShieldProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_AuraOfGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_DetectEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_SmiteEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_DivineGrace|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_LayOnHands|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_AuraOfCourage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_DivineHealth|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Mercy18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_ChannelPositiveEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_DivineBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_BondedMount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_BondedWeapon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_AuraOfResolve|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_AuraOfJustice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_AuraOfFaith|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_AuraOfRighteousness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_HolyChampion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_CF_CodeOfConduct|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllowHolyAvenger|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HolyAvengerCL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HolyAvengerSR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Paladin_AuraRange|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlignmentAuraLVL|PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AllowHolyAvenger|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HolyAvengerCL|PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HolyAvengerSR|5+PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_AuraRange|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_WeaponProficiencySimple,Paladin_CF_WeaponProficiencyMartial|1|TYPE=Boolean|PREVARGTEQ:Paladin_CF_WeaponProficiencies,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_WeaponProficiencySimple|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_WeaponProficiencySimple=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_WeaponProficiencyMartial|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_WeaponProficiencyMartial=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ArmorProficiencyHeavy,Paladin_CF_ArmorProficiencyMedium,Paladin_CF_ArmorProficiencyLight|1|TYPE=Boolean|PREVARGTEQ:Paladin_CF_ArmorProficiencies,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ArmorProficiencyHeavy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ArmorProficiencyHeavy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ArmorProficiencyMedium|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ArmorProficiencyMedium=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ArmorProficiencyLight|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ArmorProficiencyLight=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ShieldProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ShieldProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfGood|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_AuraOfGood=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DetectEvil|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_DetectEvil=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_SmiteEvil|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_SmiteEvil=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DivineGrace|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_DivineGrace=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_LayOnHands|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_LayOnHands=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfCourage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_AuraOfCourage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DivineHealth|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_DivineHealth=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Mercy18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ChannelPositiveEnergy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_ChannelPositiveEnergy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DivineBond|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_DivineBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_BondedMount|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_BondedMount=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_BondedWeapon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_BondedWeapon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfResolve|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_AuraOfResolve=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfJustice|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_AuraOfJustice=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfFaith|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_AuraOfFaith=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfRighteousness|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_AuraOfRighteousness=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_HolyChampion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_HolyChampion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_CodeOfConduct|1|TYPE=Boolean|PREFACT:1,ABILITIES,Paladin_CF_CodeOfConduct=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfGood|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfGood"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DetectEvil|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDetectEvil"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_SmiteEvil|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DivineGrace|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineGrace"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_LayOnHands|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinLayOnHands"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfCourage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfCourage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DivineHealth|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineHealth"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_Mercy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinMercy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_ChannelPositiveEnergy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinChannelPositiveEnergy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_DivineBond|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineBond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfResolve|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfResolve"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfJustice|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfJustice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfFaith|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfFaith"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_AuraOfRighteousness|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfRighteousness"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Paladin_CF_HolyChampion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinHolyChampion"
       }
     ]
   },

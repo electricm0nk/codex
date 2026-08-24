@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Repair Undead (Mass)",
     "name": "Repair Undead (Mass)",
     "class": "Magus",
-    "description": null,
+    "description": "Heals undead of 1d8 hp + 1/level; affects 1 undead/level.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=5|Repair Undead (Mass)"
+      },
+      {
+        "key": "DESC",
+        "value": "Heals undead of 1d8 hp + 1/level; affects 1 undead/level.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

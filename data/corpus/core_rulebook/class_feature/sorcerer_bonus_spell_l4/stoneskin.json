@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L4 ~ Stoneskin",
     "name": "Stoneskin",
     "class": "Sorcerer",
-    "description": null,
+    "description": "The warded creature gains resistance to blows, cuts, stabs, and slashes. The subject gains DR 10/adamantine. It ignores the first 10 points of damage each time it takes damage from a weapon, though an adamantine weapon bypasses the reduction. Once the spell has prevented a total of 10 points of damage per caster level [maximum 150 points], it is discharged.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=4|Stoneskin"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants DR 10/adamantine for a total of 10 points of damage per caster level (maximum 150 points)."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|StoneskinActivate|1"
+      },
+      {
+        "key": "DESC",
+        "value": "The warded creature gains resistance to blows, cuts, stabs, and slashes. The subject gains DR 10/adamantine. It ignores the first 10 points of damage each time it takes damage from a weapon, though an adamantine weapon bypasses the reduction. Once the spell has prevented a total of 10 points of damage per caster level [maximum 150 points], it is discharged.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

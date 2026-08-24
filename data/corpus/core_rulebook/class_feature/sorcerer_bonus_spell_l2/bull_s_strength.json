@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L2 ~ Bull's Strength",
     "name": "Bull's Strength",
     "class": "Sorcerer",
-    "description": null,
+    "description": "The subject becomes stronger. The spell grants a +4 enhancement bonus to Strength, adding the usual benefits to melee attack rolls, melee damage rolls, and other uses of the Strength modifier.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=2|Bull's Strength"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants +4 enhancement bonus to Strength"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|4|TYPE=Enhancement"
+      },
+      {
+        "key": "DESC",
+        "value": "The subject becomes stronger. The spell grants a +4 enhancement bonus to Strength, adding the usual benefits to melee attack rolls, melee damage rolls, and other uses of the Strength modifier.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

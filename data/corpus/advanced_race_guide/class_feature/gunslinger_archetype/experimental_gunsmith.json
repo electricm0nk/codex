@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Experimental Gunsmith",
     "name": "Experimental Gunsmith",
@@ -55,6 +55,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Experimental Gunsmith],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_GunTraining1=True,Gunslinger_Archetype_GunTraining2=True,Gunslinger_Archetype_GunTraining3=True,Gunslinger_Archetype_GunTraining4=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining4|true"
       }
     ]
   },

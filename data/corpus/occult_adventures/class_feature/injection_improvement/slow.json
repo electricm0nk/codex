@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Injection Improvement ~ Slow",
     "name": "Slow",
@@ -27,6 +27,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.98"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=2|Spiritualist=3"
       }
     ]
   },

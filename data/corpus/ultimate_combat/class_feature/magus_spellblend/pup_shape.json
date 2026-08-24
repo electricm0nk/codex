@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Pup Shape",
     "name": "Pup Shape",
     "class": "Magus",
-    "description": null,
+    "description": "Transforms a single animal or magical beast into a younger and cuter version of itself for a short period of time.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=3|Pup Shape"
+      },
+      {
+        "key": "DESC",
+        "value": "Transforms a single animal or magical beast into a younger and cuter version of itself for a short period of time.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
       }
     ]
   },

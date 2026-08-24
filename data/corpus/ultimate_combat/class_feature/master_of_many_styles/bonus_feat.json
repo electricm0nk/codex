@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Master Of Many Styles ~ Bonus Feat",
     "name": "Bonus Feat",
@@ -35,6 +35,958 @@
       {
         "key": "BONUS",
         "value": "VAR|MonkBonusFeatLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GrabbingStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GrabbingDrag|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Grabbing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Grabbing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GrabbingMaster|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Grabbing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Grabbing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_JabbingStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_JabbingDancer|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Jabbing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Jabbing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_JabbingMaster|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Jabbing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Jabbing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PummelingStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PummelingBully|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Pummeling Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Pummeling Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PummelingCharge|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Pummeling Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Pummeling Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DivaStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DivaAdvance|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Diva Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Diva Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DivaStrike|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Diva Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Diva Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PerfectStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UnblinkingFlameFeint|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Perfect Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Perfect Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UnblinkingFlameFist|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Perfect Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Perfect Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UnfoldingWindStrike|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Perfect Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Perfect Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UnfoldingWindRush|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Perfect Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Perfect Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UntwistingIronStrength|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Perfect Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Perfect Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UntwistingIronSkin|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Perfect Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Perfect Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SisterhoodStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SisterhoodRampart|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Sisterhood Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Sisterhood Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SisterhoodDedication|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Sisterhood Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Sisterhood Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BuletteChargeStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BuletteLeap|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Bulette Charge Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Bulette Charge Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BuletteRampage|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Bulette Charge Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Bulette Charge Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MobileBulwarkStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MobileFortress|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Mobile Bulwark Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Mobile Bulwark Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MobileStronghold|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Mobile Bulwark Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Mobile Bulwark Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShieldGauntletStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShieldedGauntletAttack|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shield Gauntlet Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shield Gauntlet Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShieldedGauntletMaster|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shield Gauntlet Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shield Gauntlet Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Spring-HeeledStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Spring-HeeledSprint|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Spring-Heeled Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Spring-Heeled Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Spring-HeeledReaping|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Spring-Heeled Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Spring-Heeled Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SwiftIronStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SwiftRefuge|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Swift Iron Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Swift Iron Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SwiftSprint|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Swift Iron Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Swift Iron Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UpsettingShieldStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UpsettingStrike|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Upsetting Shield Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Upsetting Shield Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_UpsettingVengeance|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Upsetting Shield Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Upsetting Shield Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_VanguardStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_VanguardWard|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Vanguard Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Vanguard Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_VanguardHustle|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Vanguard Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Vanguard Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DolphinStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DolphinCircle|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dolphin Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dolphin Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DolphinDart|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dolphin Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dolphin Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SharkStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SharkTear|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shark Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shark Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SharkLeap|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shark Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shark Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ArchonStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ArchonDiversion|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Archon Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Archon Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ArchonJustice|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Archon Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Archon Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BlindedBladeStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BlindedCompetence|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Blinded Blade Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Blinded Blade Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BlindedMaster|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Blinded Blade Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Blinded Blade Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CloakandDaggerStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CloakandDaggerSubterfuge|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Cloak and Dagger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Cloak and Dagger Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CloakandDaggerTactics|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Cloak and Dagger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Cloak and Dagger Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SkyseekerStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SkyseekerThrash|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Skyseeker Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Skyseeker Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SkyseekerImpact|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Skyseeker Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Skyseeker Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ScorpionStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Gorgon'sFist|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Scorpion Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Scorpion Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Medusa'sWrath|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Scorpion Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Scorpion Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KitsuneStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KitsuneTricks|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kitsune Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kitsune Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KitsuneVengeance|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kitsune Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kitsune Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BruteStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BruteStomp|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Brute Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Brute Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BruteAssault|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Brute Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Brute Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DeadhandStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DeadhandInitiate|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Deadhand Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Deadhand Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DeadhandMaster|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Deadhand Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Deadhand Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KytonStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KytonShield|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kyton Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kyton Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KytonCut|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kyton Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kyton Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MaddeningStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MaddeningStrike|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Maddening Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Maddening Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MaddeningObliteration|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Maddening Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Maddening Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ChargingStagStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StagHorns|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Charging Stag Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Charging Stag Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StagSubmission|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Charging Stag Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Charging Stag Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KoboldStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KoboldGroundling|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kobold Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kobold Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KoboldFlood|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kobold Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kobold Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_LinnormStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_LinnormVengeance|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Linnorm Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Linnorm Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_LinnormWrath|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Linnorm Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Linnorm Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TatzlwyrmClawStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TatzlwyrmGrappler|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Tatzlwyrm Claw Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Tatzlwyrm Claw Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TatzlwyrmRake|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Tatzlwyrm Claw Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Tatzlwyrm Claw Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WyvernFuryStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WyvernSting|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Wyvern Fury Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Wyvern Fury Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WyvernWing|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Wyvern Fury Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Wyvern Fury Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DragonflyStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DragonflyWings|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dragonfly Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dragonfly Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DragonflyFlight|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dragonfly Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dragonfly Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_LinnormHunterStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_LinnormHunterRetreat|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Linnorm Hunter Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Linnorm Hunter Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_LinnormHunterCoordination|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Linnorm Hunter Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Linnorm Hunter Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OctopusStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OctopusFocus|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Octopus Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Octopus Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OctopusThrash|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Octopus Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Octopus Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShapeshifterStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShapeshifterTwist|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shapeshifter Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shapeshifter Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShapeshifterSavage|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shapeshifter Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shapeshifter Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShieldedStaffStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShieldedStaffAmbush|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shielded Staff Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shielded Staff Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShieldedStaffMaster|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shielded Staff Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shielded Staff Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShikigamiStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShikigamiMimicry|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shikigami Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shikigami Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShikigamiManipulation|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shikigami Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shikigami Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Stick-FightingStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Stick-FightingCounter|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Stick-Fighting Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Stick-Fighting Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Stick-FightingManeuver|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Stick-Fighting Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Stick-Fighting Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Bull-CatcherStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Bull-CatcherToss|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Bull-Catcher Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Bull-Catcher Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Bull-CatcherWrangler|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Bull-Catcher Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Bull-Catcher Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CudgelerStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CudgelerSweep|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Cudgeler Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Cudgeler Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CudgelerTakedown|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Cudgeler Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Cudgeler Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KrakenStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KrakenThrottle|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kraken Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kraken Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KrakenWrack|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kraken Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kraken Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_FoxStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_FoxInsight|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Fox Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Fox Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_FoxTrickery|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Fox Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Fox Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OwlStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OwlSwoop|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Owl Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Owl Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OwlDive|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Owl Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Owl Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StreetStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StreetSweep|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Street Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Street Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StreetCarnage|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Street Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Street Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BeastmasterStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BeastmasterSalvation|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Beastmaster Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Beastmaster Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BeastmasterIre|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Beastmaster Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Beastmaster Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CrashingWaveStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CrashingWaveBuffet|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Crashing Wave Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Crashing Wave Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CrashingWaveFist|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Crashing Wave Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Crashing Wave Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WolfStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WolfTrip|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Wolf Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Wolf Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WolfSavage|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Wolf Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Wolf Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_AsceticStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_AsceticForm|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Ascetic Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Ascetic Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_AsceticStrike|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Ascetic Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Ascetic Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DwarvenHatredStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DwarvenSeething|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dwarven Hatred Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dwarven Hatred Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DwarvenFury|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dwarven Hatred Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dwarven Hatred Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ElvenBattleStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ElvenBattleFocus|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Elven Battle Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Elven Battle Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ElvenBattleTorrent|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Elven Battle Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Elven Battle Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EmptyQuiverStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EmptyQuiverFlexibility|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Empty Quiver Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Empty Quiver Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EmptyQuiverFlurry|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Empty Quiver Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Empty Quiver Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_IllusiveGnomeStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_IllusiveGnomeSurprise|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Illusive Gnome Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Illusive Gnome Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_IllusiveGnomeBewilderment|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Illusive Gnome Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Illusive Gnome Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OrcFuryStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OrcRampage|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Orc Fury Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Orc Fury Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OrcSnarl|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Orc Fury Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Orc Fury Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OutslugStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OutslugWeave|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Outslug Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Outslug Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OutslugSprint|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Outslug Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Outslug Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OverwatchStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OverwatchTactician|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Overwatch Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Overwatch Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_OverwatchVortex|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Overwatch Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Overwatch Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SlipslingerStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SlipslingerGrenadier|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Slipslinger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Slipslinger Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SlipslingerBombardment|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Slipslinger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Slipslinger Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SmashingStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SmashingCrush|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Smashing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Smashing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SmashingDent|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Smashing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Smashing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SpearDancingStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SpearDancingSpiral|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Spear Dancing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Spear Dancing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SpearDancingReach|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Spear Dancing Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Spear Dancing Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StartossStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StartossComet|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Startoss Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Startoss Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StartossShower|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Startoss Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Startoss Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SwordplayStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SwordplayUpset|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Swordplay Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Swordplay Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SwordplayDeflection|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Swordplay Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Swordplay Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_WeaponStyleMastery|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ElementalFist|1|PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike|PRESTAT:2,CON=13,WIS=13|PRETOTALAB:8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StyleFeatWildcard1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StyleFeatWildcard2|1|[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Style Feat Wildcard 1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StyleFeatWildcard3|1|[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Style Feat Wildcard 2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StyleFeatWildcard4|1|[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Style Feat Wildcard 3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BoarStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BoarFerocity|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Boar Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Boar Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BoarShred|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Boar Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Boar Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CraneStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CraneRiposte|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Crane Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Crane Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CraneWing|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Crane Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Crane Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DjinniStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DjinniSpirit|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Djinni Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Djinni Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DjinniSpin|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Djinni Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Djinni Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DragonStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DragonFerocity|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dragon Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dragon Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DragonRoar|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Dragon Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Dragon Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EarthChildStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EarthChildTopple|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Earth Child Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Earth Child Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EarthChildBinder|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Earth Child Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Earth Child Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EfreetiStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EfreetiStance|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Efreeti Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Efreeti Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_EfreetiTouch|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Efreeti Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Efreeti Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_JanniStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_JanniTempest|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Janni Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Janni Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_JanniRush|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Janni Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Janni Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KirinStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KirinStrike|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kirin Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kirin Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_KirinPath|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Kirin Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Kirin Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MantisStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MantisWisdom|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Mantis Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Mantis Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MantisTorment|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Mantis Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Mantis Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MaridStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MaridSpirit|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Marid Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Marid Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MaridColdsnap|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Marid Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Marid Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MonkeyStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MonkeyMoves|1|PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Monkey Style],[PREABILITY:1,CATEGORY=FEAT,Monkey Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MonkeyShine|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Monkey Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Monkey Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PantherStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PantherClaw|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Panther Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Panther Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PantherParry|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Panther Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Panther Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShaitanStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShaitanSkin|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shaitan Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shaitan Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShaitanEarthblast|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Shaitan Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Shaitan Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnakeStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnakeSidewind|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Snake Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Snake Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnakeFang|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Snake Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Snake Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnappingTurtleStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnappingTurtleClutch|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Snapping Turtle Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Snapping Turtle Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnappingTurtleShell|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Snapping Turtle Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Snapping Turtle Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TigerStyle|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TigerClaws|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Tiger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Tiger Style]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TigerPounce|1|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Tiger Style],[PREABILITY:1,CATEGORY=Special Ability,Master of Many Styles ~ Tiger Style]"
       }
     ]
   },
@@ -51,8 +1003,8 @@
     "derived:bonus",
     "static:literal_magnitudes_only"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
   "codex_generated_name": false
 }

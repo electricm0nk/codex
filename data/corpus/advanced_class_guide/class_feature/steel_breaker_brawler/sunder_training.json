@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Steel-Breaker Brawler ~ Sunder Training",
     "name": "Sunder Training",
@@ -43,6 +43,26 @@
       {
         "key": "BONUS",
         "value": "VAR|CMB_Sunder,CMD_Sunder|SunderTrainingSunderBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SunderTrainingDisarmBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A steel-breaker gains a +%1 bonus when attempting a disarm combat maneuver checks and a +%1 bonus to her CMD when defending against this maneuver.|SunderTrainingDisarmBonus|PREVARGTEQ:SunderTrainingProgression,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SunderTrainingDisarmBonus|min((BrawlerLVL>6)+(BrawlerLVL>6)+(BrawlerLVL>10)+(BrawlerLVL>14)+(BrawlerLVL>18),0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Disarm,CMD_Disarm|SunderTrainingDisarmBonus"
       },
       {
         "key": "SOURCEPAGE",

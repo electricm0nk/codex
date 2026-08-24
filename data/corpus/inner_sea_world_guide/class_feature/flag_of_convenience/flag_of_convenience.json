@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Flag of Convenience ~ Low",
     "name": "Flag of Convenience",
@@ -35,6 +35,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.280"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
       }
     ]
   },

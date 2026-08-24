@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Wild Child",
     "name": "Wild Child",
@@ -63,6 +63,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Wild Child],[!PREFACT:1,ABILITIES,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_BonusFeats=True,Brawler_Archetype_CloseWeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_CloseWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_CloseWeaponMastery|true"
       }
     ]
   },

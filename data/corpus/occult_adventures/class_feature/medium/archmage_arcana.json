@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Medium ~ Archmage Arcana",
     "name": "Archmage Arcana",
@@ -59,6 +59,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.34"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 0|1|PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 1|1|PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 2|1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler],[PREVARGTEQ:MediumLVL,4]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 3|1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler],[PREVARGTEQ:MediumLVL,7]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 4|1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler],[PREVARGTEQ:MediumLVL,10]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 5|1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler],[PREVARGTEQ:MediumLVL,13]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Medium Wizard Spell 6|1|PREMULT:2,[PREABILITY:1,CATEGORY=Archetype,Medium Archetype ~ Relic Channeler],[PREVARGTEQ:MediumLVL,16]"
       }
     ]
   },

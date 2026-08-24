@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Adjustable Disguise",
     "name": "Adjustable Disguise",
     "class": "Magus",
-    "description": null,
+    "description": "As disguise self, but you can change the disguise as a swift action.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=3|Adjustable Disguise"
+      },
+      {
+        "key": "DESC",
+        "value": "As disguise self, but you can change the disguise as a swift action.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

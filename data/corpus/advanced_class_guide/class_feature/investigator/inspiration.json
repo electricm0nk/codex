@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Investigator ~ Inspiration",
     "name": "Inspiration",
@@ -63,6 +63,14 @@
       {
         "key": "ASPECT",
         "value": "CheckCount|%1|InvestigatorInspirationPoolBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationPoolBonus|ElfInvestigatorFavClassBonus/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationBonus|HalfElfInvestigatorFavClassBonus/4"
       }
     ]
   },

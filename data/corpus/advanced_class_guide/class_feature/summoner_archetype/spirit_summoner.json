@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Spirit Summoner",
     "name": "Spirit Summoner",
@@ -55,6 +55,62 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Spirit Summoner],[!PREFACT:1,ABILITIES,Summoner_Archetype_Aspect=True,Summoner_Archetype_MakersCall=True,Summoner_Archetype_MergeForms=True,Summoner_Archetype_Transposition=True,Summoner_Archetype_Eidolon=True,Summoner_Archetype_SummonMonster=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_MakersCall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_MergeForms|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_MakersCall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_MergeForms|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonster|true"
       }
     ]
   },

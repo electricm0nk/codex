@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Exemplar Brawler ~ Call to Arms",
     "name": "Call to Arms",
@@ -35,6 +35,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.86"
+      },
+      {
+        "key": "DESC",
+        "value": "Using this ability is a move action.|PREMULT:2,[PREVARGTEQ:CalltoArmsProgression,1],[PREVARLT:CalltoArmsProgression,6]"
+      },
+      {
+        "key": "DESC",
+        "value": "Using this ability is a swift or move action.|PREMULT:2,[PREVARGTEQ:CalltoArmsProgression,6],[PREVARLT:CalltoArmsProgression,10]"
+      },
+      {
+        "key": "DESC",
+        "value": "Using this ability is a free action.|PREMULT:2,[PREVARGTEQ:CalltoArmsProgression,10],[PREVARLT:CalltoArmsProgression,12]"
+      },
+      {
+        "key": "DESC",
+        "value": "Using this ability is a free or immediate action.|PREVARGTEQ:CalltoArmsProgression,12"
       }
     ]
   },

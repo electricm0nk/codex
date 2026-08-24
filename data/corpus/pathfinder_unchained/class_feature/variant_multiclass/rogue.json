@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Variant Multiclass ~ Rogue",
     "name": "Rogue",
@@ -39,6 +39,10 @@
       {
         "key": "DESC",
         "value": "&nl;Uncanny Dodge: At 15th level, she gains uncanny dodge. Improved Uncanny Dodge: At 19th level, she gains improved uncanny dodge, treating her character level as her effective rogue level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Rogue_Class_Selection|1|TYPE=Base"
       }
     ]
   },

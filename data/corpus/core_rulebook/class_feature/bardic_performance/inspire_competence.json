@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bardic Performance ~ Inspire Competence",
     "name": "Inspire Competence",
@@ -47,6 +47,30 @@
       {
         "key": "ASPECT",
         "value": "ChildAbility|Bardic Performance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|-1|PREVARGTEQ:InspireCompetenceCount,1|PREVAREQ:Bard_CF_InspireCompetence1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|-1|PREVARGTEQ:InspireCompetenceCount,2|PREVAREQ:Bard_CF_InspireCompetence2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|-1|PREVARGTEQ:InspireCompetenceCount,3|PREVAREQ:Bard_CF_InspireCompetence3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|-1|PREVARGTEQ:InspireCompetenceCount,4|PREVAREQ:Bard_CF_InspireCompetence4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|-1|PREVARGTEQ:InspireCompetenceCount,5|PREVAREQ:Bard_CF_InspireCompetence5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireCompetenceBonus|-1|PREVARGTEQ:InspireCompetenceCount,6|PREVAREQ:Bard_CF_InspireCompetence6,1"
       }
     ]
   },

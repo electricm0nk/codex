@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Stonelord",
     "name": "Stonelord",
@@ -95,6 +95,106 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Stonelord],[!PREFACT:1,ABILITIES,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_DivineGrace=True,Paladin_Archetype_DivineHealth=True,Paladin_Archetype_Mercy3=True,Paladin_Archetype_Mercy9=True,Paladin_Archetype_Mercy15=True,Paladin_Archetype_ChannelPositiveEnergy=True,Paladin_Archetype_DivineBond=True,Paladin_Archetype_AuraOfJustice=True,Paladin_Archetype_Mercy12=True,Paladin_Archetype_Mercy18=True,Paladin_Archetype_HolyChampion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_HolyChampion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineGrace|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_HolyChampion|true"
       }
     ]
   },

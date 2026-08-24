@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Magic Siege Engine (Greater)",
     "name": "Magic Siege Engine (Greater)",
     "class": "Magus",
-    "description": null,
+    "description": "Siege engine gains +(min(5,floor(CASTERLEVEL/4))) on targeting and damage rolls.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=4|Magic Siege Engine (Greater)"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "DESC",
+        "value": "Siege engine gains +(min(5,floor(CASTERLEVEL/4))) on targeting and damage rolls.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

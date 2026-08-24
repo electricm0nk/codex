@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cleric Archetype ~ Demonic Apostle",
     "name": "Demonic Apostle",
@@ -63,6 +63,90 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cleric"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Demonic Apostle],[!PREFACT:1,ABILITIES,Cleric_Archetype_ChannelEnergy1=True,Cleric_Archetype_ChannelEnergy2=True,Cleric_Archetype_ChannelEnergy3=True,Cleric_Archetype_ChannelEnergy4=True,Cleric_Archetype_ChannelEnergy5=True,Cleric_Archetype_ChannelEnergy6=True,Cleric_Archetype_ChannelEnergy7=True,Cleric_Archetype_ChannelEnergy8=True,Cleric_Archetype_ChannelEnergy9=True,Cleric_Archetype_ChannelEnergy10=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy10|true"
       }
     ]
   },

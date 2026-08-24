@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman",
     "name": "Shaman",
@@ -31,6 +31,262 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Shaman\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shaman ~ Class Skills|PREVAREQ:Shaman_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Orisons|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Spirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_SpiritAnimal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_SpiritMagic|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingHex|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Manifestation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_Hex20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingSpiritBase|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingSpiritTrue|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingSpiritGreater|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingHex6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Shaman_CF_WanderingHex14|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingSpiritBase|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingSpiritBase=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingSpiritTrue|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingSpiritTrue=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingSpiritGreater|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingSpiritGreater=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingHex6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingHex6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingHex14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingHex14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Orisons|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Orisons=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Spirit|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Spirit=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_SpiritAnimal|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_SpiritAnimal=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_SpiritMagic|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_SpiritMagic=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Hex=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingSpirit|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingSpirit=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingHex|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_WanderingHex=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Manifestation|1|TYPE=Boolean|PREFACT:1,ABILITIES,Shaman_CF_Manifestation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Orisons|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanOrisons"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Spirit|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanSpirit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_SpiritAnimal|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanSpiritAnimal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_SpiritMagic|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanSpiritMagic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Hex|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanHex"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingSpirit|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanWanderingSpirit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_WanderingHex|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanWanderingHex"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Shaman_CF_Manifestation|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.ShamanManifestation"
       }
     ]
   },

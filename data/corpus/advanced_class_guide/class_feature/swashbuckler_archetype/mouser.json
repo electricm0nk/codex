@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Mouser",
     "name": "Mouser",
@@ -63,6 +63,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Mouser],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_BleedingWoundDeed=True,Swashbuckler_Archetype_TargetedStrikeDeed=True,Swashbuckler_Archetype_OpportuneParryandRiposteDeed=True,Swashbuckler_Archetype_RiposteDeed=True,Swashbuckler_Archetype_MenacingSwordplayDeed=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_RiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_TargetedStrikeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_MenacingSwordplayDeed|true"
       }
     ]
   },

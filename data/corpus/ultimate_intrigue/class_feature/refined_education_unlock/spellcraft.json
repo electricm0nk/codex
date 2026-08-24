@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Refined Education Unlock ~ Spellcraft",
     "name": "Spellcraft",
@@ -55,6 +55,10 @@
       {
         "key": "BONUS",
         "value": "VAR|SpellcraftRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Spellcraft\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
       }
     ]
   },

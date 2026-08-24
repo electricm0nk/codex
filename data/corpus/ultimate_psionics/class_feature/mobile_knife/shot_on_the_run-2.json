@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Mobile Knife ~ Shot on the Run Bonus Feat",
     "name": "Shot on the Run",
@@ -27,6 +27,10 @@
       {
         "key": "ABILITY",
         "value": "FEAT|AUTOMATIC|Shot on the Run"
+      },
+      {
+        "key": "TYPE",
+        "value": "FinesseMarksmanBonus"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L2 ~ False Life",
     "name": "False Life",
     "class": "Sorcerer",
-    "description": null,
+    "description": "You harness the power of unlife to grant yourself a limited ability to avoid death. While this spell is in effect, you gain temporary hit points equal to 1d10 + 1 per caster level [maximum +10].|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,22 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=2|False Life"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants temporary hit points equal to 1d10 + 1 per caster level (maximum +10)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|HP|CURRENTMAX|%CHOICE|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=2|MAX=20|TITLE=Choose spell caster level (maximum 10) + 1d10"
+      },
+      {
+        "key": "DESC",
+        "value": "You harness the power of unlife to grant yourself a limited ability to avoid death. While this spell is in effect, you gain temporary hit points equal to 1d10 + 1 per caster level [maximum +10].|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Refined Education Unlock ~ Heal",
     "name": "Heal",
@@ -55,6 +55,14 @@
       {
         "key": "BONUS",
         "value": "VAR|HealRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Heal\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Notice medical evidence tampering"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
       }
     ]
   },

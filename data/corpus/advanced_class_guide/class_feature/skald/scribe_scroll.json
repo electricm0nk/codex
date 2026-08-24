@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald ~ Scribe Scroll",
     "name": "Scribe Scroll",
@@ -31,6 +31,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.51"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
       }
     ]
   },

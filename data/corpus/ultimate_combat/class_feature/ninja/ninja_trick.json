@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ninja ~ Ninja Trick",
     "name": "Ninja Trick",
@@ -43,6 +43,46 @@
       {
         "key": "BONUS",
         "value": "VAR|RogueTalentLVL|NinjaLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=2|PREVAREQ:Ninja_CF_NinjaTrick2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=4|PREVAREQ:Ninja_CF_NinjaTrick4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=6|PREVAREQ:Ninja_CF_NinjaTrick6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=8|PREVAREQ:Ninja_CF_NinjaTrick8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=10|PREVAREQ:Ninja_CF_NinjaTrick10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=12|PREVAREQ:Ninja_CF_NinjaTrick12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=14|PREVAREQ:Ninja_CF_NinjaTrick14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=16|PREVAREQ:Ninja_CF_NinjaTrick16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=18|PREVAREQ:Ninja_CF_NinjaTrick18,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=20|PREVAREQ:Ninja_CF_NinjaTrick20,1"
       }
     ]
   },

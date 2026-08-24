@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Archetype ~ Staff Magus",
     "name": "Staff Magus",
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Staff Magus],[!PREFACT:1,ABILITIES,Magus_Archetype_Proficiencies=True,Magus_Archetype_FighterTraining=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_WeaponProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_FighterTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_FighterTraining|true"
       }
     ]
   },

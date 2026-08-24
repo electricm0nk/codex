@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter ~ Bonus Tricks",
     "name": "Bonus Tricks",
@@ -39,6 +39,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.29"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterBonusTricks|1|PREMULT:2,[PRECLASS:1,Hunter=7],[PREVAREQ:Hunter_CF_BonusTrick7,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterBonusTricks|1|PREMULT:2,[PRECLASS:1,Hunter=13],[PREVAREQ:Hunter_CF_BonusTrick13,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HunterBonusTricks|1|PREMULT:2,[PRECLASS:1,Hunter=19],[PREVAREQ:Hunter_CF_BonusTrick19,0]"
       }
     ]
   },

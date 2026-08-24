@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Core Domain ~ Destruction Domain",
     "name": "Destruction",
     "class": "Cleric",
-    "description": null,
+    "description": "This spell instantly delivers 10 points of damage per caster level. If the spell slays the target, it consumes the remains utterly in holy [or unholy] fire [but not its equipment or possessions]. If the target's Fortitude saving throw succeeds, it instead takes 10d6 points of damage. The only way to restore life to a character who has failed to save against this spell [and was slain] is to use true resurrection, a carefully worded wish spell followed by resurrection, or miracle.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,14 @@
       {
         "key": "ABILITY",
         "value": "Internal|AUTOMATIC|Domain Base ~ Destruction"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Destruction],[PREVARLT:DestructionDomain,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell instantly delivers 10 points of damage per caster level. If the spell slays the target, it consumes the remains utterly in holy [or unholy] fire [but not its equipment or possessions]. If the target's Fortitude saving throw succeeds, it instead takes 10d6 points of damage. The only way to restore life to a character who has failed to save against this spell [and was slain] is to use true resurrection, a carefully worded wish spell followed by resurrection, or miracle.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

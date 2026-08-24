@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue ~ Unchained Class",
     "name": "Unchained Rogue",
@@ -23,6 +23,106 @@
       {
         "key": "COST",
         "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Armor Proficiency|PREVAREQ:Rogue_CF_ArmorProficiency,0|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Finesse Training|PREVAREQ:Rogue_CF_FinesseTraining,0|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Skills|PREVAREQ:Rogue_CF_Skills,0|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Sneak Attack|PREVAREQ:Rogue_CF_SneakAttack,0|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Trapfinding|PREVAREQ:Rogue_CF_Trapfinding,0|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Weapon Proficiency|PREVAREQ:Rogue_CF_WeaponProficiency,0|PREVARGTEQ:Rogue_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Evasion|PREVAREQ:Rogue_CF_Evasion,0|PREVARGTEQ:Rogue_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Rogue Talents|PREVAREQ:Rogue_CF_RogueTalents,0|PREVARGTEQ:Rogue_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Danger Sense|PREVAREQ:Rogue_CF_TrapSense,0|PREVARGTEQ:Rogue_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Debilitating Injury|PREVAREQ:Rogue_CF_DebilitatingInjury,0|PREVARGTEQ:Rogue_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Uncanny Dodge Tracker|PREVAREQ:Rogue_CF_UncannyDodge,0|PREVARGTEQ:Rogue_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Rogues Edge|PREVAREQ:Rogue_CF_RoguesEdge,0|PREVARGTEQ:Rogue_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Rogue Class Feature|AUTOMATIC|Unchained Rogue ~ Master Strike|PREVAREQ:Rogue_CF_MasterStrike,0|PREVARGTEQ:Rogue_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_FinesseTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_DebilitatingInjury|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_RoguesEdge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_FinesseTraining2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_FinesseTraining3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Rogue_CF_FinesseTraining4|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_FinesseTraining|1|PREFACT:1,ABILITIES,Rogue_CF_FinesseTraining=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_DebilitatingInjury|1|PREFACT:1,ABILITIES,Rogue_CF_DebilitatingInjury=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_RoguesEdge|1|PREFACT:1,ABILITIES,Rogue_CF_RoguesEdge=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_FinesseTraining2|1|PREFACT:1,ABILITIES,Rogue_CF_FinesseTraining2=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_FinesseTraining3|1|PREFACT:1,ABILITIES,Rogue_CF_FinesseTraining3=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Rogue_CF_FinesseTraining4|1|PREFACT:1,ABILITIES,Rogue_CF_FinesseTraining4=true"
       }
     ]
   },

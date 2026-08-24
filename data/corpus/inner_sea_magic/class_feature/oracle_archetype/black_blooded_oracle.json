@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Black-Blooded Oracle",
     "name": "Black-Blooded Oracle",
@@ -55,6 +55,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Black-Blooded Oracle],[!PREFACT:1,ABILITIES,Oracle_Archetype_OraclesCurse=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_OraclesCurse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_OraclesCurse|true"
       }
     ]
   },

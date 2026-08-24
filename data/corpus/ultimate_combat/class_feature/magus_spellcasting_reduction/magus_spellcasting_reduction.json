@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Magus SpellCasting Reduction",
     "name": "Magus SpellCasting Reduction",
@@ -11,6 +11,46 @@
       {
         "key": "BONUS",
         "value": "SPELLCAST|CLASS=Magus;LEVEL=0|-1|PREVARGTEQ:MagusLvl,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=0|-1|PREVARGTEQ:MagusLvl,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=1|-1|PREVARGTEQ:MagusLvl,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=2|-1|PREVARGTEQ:MagusLvl,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=3|-1|PREVARGTEQ:MagusLvl,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=4|-1|PREVARGTEQ:MagusLvl,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=5|-1|PREVARGTEQ:MagusLvl,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=6|-1|PREVARGTEQ:MagusLvl,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=7|-1|PREVARGTEQ:MagusLvl,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=8|-1|PREVARGTEQ:MagusLvl,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Magus;LEVEL=9|-1|PREVARGTEQ:MagusLvl,17"
       }
     ]
   },

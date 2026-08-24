@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Weaken Powder",
     "name": "Weaken Powder",
     "class": "Magus",
-    "description": null,
+    "description": "Targeted firearm's ammunition halves the firearm's range and imposes a -2 penalty on damage rolls.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=1|Weaken Powder"
+      },
+      {
+        "key": "DESC",
+        "value": "Targeted firearm's ammunition halves the firearm's range and imposes a -2 penalty on damage rolls.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

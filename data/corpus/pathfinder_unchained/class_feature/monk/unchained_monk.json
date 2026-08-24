@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Unchained Class",
     "name": "Unchained Monk",
@@ -71,6 +71,222 @@
       {
         "key": "COST",
         "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Weapon and Armor Proficiency|PREVAREQ:Monk_CF_WeaponandArmorProficiency,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ AC Bonus|PREVAREQ:Monk_CF_ACBonus,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Bonus Feat|PREVAREQ:Monk_CF_BonusFeat,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Flurry of Blows|PREVAREQ:Monk_CF_FlurryofBlows,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Stunning Fist|PREVAREQ:Monk_CF_StunningFist,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Unarmed Strike|PREVAREQ:Monk_CF_UnarmedStrike,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Evasion|PREVAREQ:Monk_CF_Evasion,0|PREVARGTEQ:Monk_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Fast Movement|PREVAREQ:Monk_CF_FastMovement,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Ki Pool|PREVAREQ:Monk_CF_KiPool,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Ki Powers|PREVAREQ:Monk_CF_KiPowers,0|PREVARGTEQ:Monk_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Still Mind|PREVAREQ:Monk_CF_StillMind,0|PREVARGTEQ:Monk_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Purity of Body|PREVAREQ:Monk_CF_PurityofBody,0|PREVARGTEQ:Monk_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Style Strike|PREVAREQ:Monk_CF_StyleStrike,0|PREVARGTEQ:Monk_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Improved Evasion|PREVAREQ:Monk_CF_ImprovedEvasion,0|PREVARGTEQ:Monk_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Tongue of the Sun and Moon|PREVAREQ:Monk_CF_TongueoftheSunandMoon,0|PREVARGTEQ:Monk_CFP_Level,13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Timeless Body|PREVAREQ:Monk_CF_TimelessBody,0|PREVARGTEQ:Monk_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Flawless Mind|PREVAREQ:Monk_CF_FlawlessMind,0|PREVARGTEQ:Monk_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Perfect Self|PREVAREQ:Monk_CF_PerfectSelf,0|PREVARGTEQ:Monk_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_WeaponandArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FlurryofBlows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StunningFist|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_UnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_Evasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FastMovement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StillMind|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_PurityofBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StyleStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ImprovedEvasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_TongueoftheSunandMoon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_TimelessBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FlawlessMind|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_PerfectSelf|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers20=True"
       }
     ]
   },

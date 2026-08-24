@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shifter Claw",
     "name": "Shifter Claw",
@@ -35,6 +35,82 @@
       {
         "key": "BONUS",
         "value": "WEAPONPROF=Shifter Claw|DAMAGE|MAX(STR/2,0)|PREVAREQ:NaturalAttacks,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shifter Claw|WIELDCATEGORY|SizeIncrease"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterClawSize|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterClawSize|NaturalAttackSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Diminutive)|PREVAREQ:ShifterClawSize,2|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Tiny)|PREVAREQ:ShifterClawSize,3|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Small)|PREVAREQ:ShifterClawSize,4|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Medium)|PREVAREQ:ShifterClawSize,5|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Large)|PREVAREQ:ShifterClawSize,6|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Huge)|PREVAREQ:ShifterClawSize,7|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Gargantuan)|PREVAREQ:ShifterClawSize,8|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 1 (Colossal)|PREVAREQ:ShifterClawSize,9|PREVAREQ:ShifterClawAttacks,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Diminutive)|PREVAREQ:ShifterClawSize,2|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Tiny)|PREVAREQ:ShifterClawSize,3|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Small)|PREVAREQ:ShifterClawSize,4|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Medium)|PREVAREQ:ShifterClawSize,5|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Large)|PREVAREQ:ShifterClawSize,6|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Huge)|PREVAREQ:ShifterClawSize,7|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Gargantuan)|PREVAREQ:ShifterClawSize,8|PREVAREQ:ShifterClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shifter Claw 2 (Colossal)|PREVAREQ:ShifterClawSize,9|PREVAREQ:ShifterClawAttacks,2"
       }
     ]
   },

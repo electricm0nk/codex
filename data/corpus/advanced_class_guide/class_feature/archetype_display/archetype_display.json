@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Archetype Display",
     "name": "Archetype Display",
@@ -11,6 +11,46 @@
       {
         "key": "ABILITY",
         "value": "Arcanist Archetype|AUTOMATIC|Archetype Arcanist|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Arcanist Archetype|AUTOMATIC|Archetype Arcanist|PRECLASS:1,Arcanist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Archetype|AUTOMATIC|Archetype Bloodrager|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Brawler Archetype|AUTOMATIC|Archetype Brawler|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Hunter Archetype|AUTOMATIC|Archetype Hunter|PRECLASS:1,Hunter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Investigator Archetype|AUTOMATIC|Archetype Investigator|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shaman Archetype|AUTOMATIC|Archetype Shaman|PRECLASS:1,Shaman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skald Archetype|AUTOMATIC|Archetype Skald|PRECLASS:1,Skald=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Slayer Archetype|AUTOMATIC|Archetype Slayer|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Swashbuckler Archetype|AUTOMATIC|Archetype Swashbuckler|PRECLASS:1,Swashbuckler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Warpriest Archetype|AUTOMATIC|Archetype Warpriest|PRECLASS:1,Warpriest=1"
       }
     ]
   },

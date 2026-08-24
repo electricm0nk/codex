@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Home Subdomain",
     "name": "Home Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Alarm|Druid=2|Shield Other|Druid=3|Glyph of Warding|Druid=4|Status|Druid=5|Telepathic Bond|Druid=6|Heroes' Feast|Druid=7|Guards and Wards|Druid=8|Cure Critical Wounds (Mass)|Druid=9|Miracle"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

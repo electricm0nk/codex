@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler ~ Brawler's Flurry",
     "name": "Brawler's Flurry",
@@ -39,6 +39,130 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.23"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlersFlurryLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlersFlurryExtraAttacks|min((BrawlersFlurryLVL+6)/7,3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlersFlurryAttackPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryExtraAttacks|min((FlurryLVL+6)/7,3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryBABBonus|FlurryLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryLVL|BrawlerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryAttacks|2+(BrawlerLVL>=6)+(BrawlerLVL>=8)+(BrawlerLVL>=11)+(BrawlerLVL>=15)+(BrawlerLVL>=16)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_1|FAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_2|FAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_3|FAB-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_4|FAB-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_5|FAB-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_6|FAB-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FAB_7|FAB-15"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryExtraAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryBABBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_7|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action. When doing so, you may make one additional attack, as if using the Two-Weapon Fighting feat. These attacks can be any combination of unarmed strikes, weapons from the close fighter weapon group or monk weapons. You may substitute any of these attacks for a disarm, sunder or trip combat maneuver. You cannot use Brawler's Flurry with natural weapons.|PREVARGTEQ:BrawlersFlurryLVL,1|PREVARLT:BrawlersFlurryLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action. When doing so, you may make two additional attacks using any combination of unarmed strikes, weapons from the close fighter weapon group or monk weapons as if using the Two-Weapon Fighting and Improved Two-Weapon Fighting feats. You may substitute any of these attacks for a disarm, sunder or trip combat maneuver. You cannot use Brawler's Flurry with natural weapons.|PREVARGTEQ:BrawlersFlurryLVL,8|PREVARLT:BrawlersFlurryLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a flurry of blows as a full-attack action. When doing so, you may make three additional attacks using any combination of unarmed strikes, weapons from the close fighter weapon group or monk weapons as if using the Two-Weapon Fighting, Improved Two-Weapon Fighting, and Greater Two-Weapon Fighting feats. You may substitute any of these attacks for a disarm, sunder or trip combat maneuver. You cannot use Brawler's Flurry with natural weapons.|PREVARGTEQ:BrawlersFlurryLVL,15"
       }
     ]
   },

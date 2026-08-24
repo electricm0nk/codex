@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Siege Gunner",
     "name": "Siege Gunner",
@@ -63,6 +63,50 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.45"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Siege Gunner],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Nimble=True,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunslingerInitiativeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeats|true"
       }
     ]
   },

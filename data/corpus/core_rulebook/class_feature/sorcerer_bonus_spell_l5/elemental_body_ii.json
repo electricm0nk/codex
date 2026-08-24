@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L5 ~ Elemental Body II",
     "name": "Elemental Body II",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell functions as elemental body I, except that it also allows you to assume the form of a Medium air, earth, fire, or water elemental. The abilities you gain depend upon the elemental. Air elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Earth elemental: As elemental body I except that you gain a +4 size bonus to your Strength and a +5 natural armor bonus. Fire elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Constitution and a +5 natural armor bonus.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=5|Elemental Body II"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as elemental body I, except that it also allows you to assume the form of a Medium air, earth, fire, or water elemental. The abilities you gain depend upon the elemental. Air elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Earth elemental: As elemental body I except that you gain a +4 size bonus to your Strength and a +5 natural armor bonus. Fire elemental: As elemental body I except that you gain a +4 size bonus to your Dexterity and a +3 natural armor bonus. Water elemental: As elemental body I except that you gain a +4 size bonus to your Constitution and a +5 natural armor bonus.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

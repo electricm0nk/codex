@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Terrain Mastery ~ Tracker",
     "name": "Terrain Mastery ~ Tracker",
@@ -11,6 +11,886 @@
       {
         "key": "CATEGORY",
         "value": "Special Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain1|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain2|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain3|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain4|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain5|PREABILITY:5,CATEGORY=Special Ability,Terrain Mastery 5 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain5|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain6|PREABILITY:6,CATEGORY=Special Ability,Terrain Mastery 6 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain6|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain7|PREABILITY:7,CATEGORY=Special Ability,Terrain Mastery 7 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain7|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain8|PREABILITY:8,CATEGORY=Special Ability,Terrain Mastery 8 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain8|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain9|PREABILITY:9,CATEGORY=Special Ability,Terrain Mastery 9 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain9|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainCold|FavoredTerrain10|PREABILITY:10,CATEGORY=Special Ability,Terrain Mastery 10 (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainDesert|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Desert)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainForest|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Forest)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainJungle|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Jungle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainMountains|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Mountain)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Plains)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainPlains|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Plane)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainSwamp|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Swamp)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUnderground|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Underground)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainUrban|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Urban)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredTerrainWater|FavoredTerrain10|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 1 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 2 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 3 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 4 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 5 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 6 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 7 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 8 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 9 (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Cold|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Desert|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Desert)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Forest|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Forest)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Jungle|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Jungle)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Mountain|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Mountain)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plains|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Plains)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Plane|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Plane)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Swamp|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Swamp)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Underground|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Underground)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Urban|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Urban)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Favored Terrain ~ Water|PREABILITY:1,CATEGORY=Special Ability,Terrain Mastery 10 (Water)"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Strangler",
     "name": "Strangler",
@@ -63,6 +63,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Strangler],[!PREFACT:1,ABILITIES,Brawler_Archetype_Knockout=True,Brawler_Archetype_BrawlersFlurry=True,Brawler_Archetype_UnarmedStrike=True,Brawler_Archetype_AwesomeBlow=True,Brawler_Archetype_ImprovedAwesomeBlow=True,Brawler_Archetype_ACBonus=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BrawlersFlurry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_Knockout|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_AwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ImprovedAwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BrawlersFlurry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_Knockout|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_AwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ImprovedAwesomeBlow|true"
       }
     ]
   },

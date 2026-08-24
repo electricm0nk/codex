@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Skirmisher",
     "name": "Skirmisher",
@@ -51,6 +51,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Skirmisher],[!PREFACT:1,ABILITIES,Ranger_Archetype_Spells=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Spells|true"
       }
     ]
   },

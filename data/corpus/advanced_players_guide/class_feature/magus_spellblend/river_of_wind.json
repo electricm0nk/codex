@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ River of Wind",
     "name": "River of Wind",
     "class": "Magus",
-    "description": null,
+    "description": "Summoning up the power of the tempest, you direct a current of forceful winds where you please. This spell creates a 5-foot-diameter line of wind-the direction of the wind is away from your location when you cast the spell, and remains constant in that direction for the spell duration. Creatures caught in a river of wind take 4d6 nonlethal damage and are knocked prone. A successful Fortitude save halves the damage and prevents being knocked prone.  A creature that begins its turn wholly or partially within a river of wind must make a Fortitude save or be pushed 20 feet in the wind's direction of flow, take 2d6 nonlethal damage, and be knocked prone-a successful Fortitude save means the creature merely takes 1d6 nonlethal damage. Creatures under the effect of freedom of movement and creatures with the air subtype are unaffected by a river of wind.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=4|River of Wind"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "Summoning up the power of the tempest, you direct a current of forceful winds where you please. This spell creates a 5-foot-diameter line of wind-the direction of the wind is away from your location when you cast the spell, and remains constant in that direction for the spell duration. Creatures caught in a river of wind take 4d6 nonlethal damage and are knocked prone. A successful Fortitude save halves the damage and prevents being knocked prone.  A creature that begins its turn wholly or partially within a river of wind must make a Fortitude save or be pushed 20 feet in the wind's direction of flow, take 2d6 nonlethal damage, and be knocked prone-a successful Fortitude save means the creature merely takes 1d6 nonlethal damage. Creatures under the effect of freedom of movement and creatures with the air subtype are unaffected by a river of wind.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

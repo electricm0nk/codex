@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Steelblood",
     "name": "Steelblood",
@@ -63,6 +63,94 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Steelblood],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_ArmorProficiency=True,Bloodrager_Archetype_FastMovement=True,Bloodrager_Archetype_UncannyDodge=True,Bloodrager_Archetype_ImprovedUncannyDodge=True,Bloodrager_Archetype_DamageReduction=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most bloodragers prefer light armor, but some learn the secret of using heavy armors. These steelbloods plod around the battlefield inspiring fear and delivering carnage from within a steel shell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Weapon and Armor Proficiency|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Indomitable Stance|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Armored Swiftness|PRECLASS:1,Bloodrager=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Armor Training|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Steelblood ~ Blood Deflection|PRECLASS:1,Bloodrager=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_DamageReduction|true"
       }
     ]
   },

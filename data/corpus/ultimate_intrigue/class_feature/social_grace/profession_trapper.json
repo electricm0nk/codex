@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Social Grace ~ Profession (Trapper)",
     "name": "Profession (Trapper)",
@@ -23,6 +23,10 @@
       {
         "key": "BONUS",
         "value": "SITUATION|Profession (Trapper)=In Social Identity|SocialGraceBonus|TYPE=Circumstance"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
       }
     ]
   },

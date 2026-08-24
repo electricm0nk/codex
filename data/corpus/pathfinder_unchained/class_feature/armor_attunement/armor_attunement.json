@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "ABP Armor Attunement",
     "name": "Armor Attunement",
@@ -59,6 +59,30 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Max Bonus +%1|ABP_ArmorBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+1|PREVARGTEQ:ABP_ArmorLVL,4|PREVARLT:ABP_ArmorLVL,8"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+1/+1|PREVARGTEQ:ABP_ArmorLVL,8|PREVARLT:ABP_ArmorLVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+1/+1 or +2|PREVARGTEQ:ABP_ArmorLVL,9|PREVARLT:ABP_ArmorLVL,14"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+2/+2 or +3|PREVARGTEQ:ABP_ArmorLVL,14|PREVARLT:ABP_ArmorLVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+3/+3 or +4|PREVARGTEQ:ABP_ArmorLVL,15|PREVARLT:ABP_ArmorLVL,17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+4/+3 or +5|PREVARGTEQ:ABP_ArmorLVL,17"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L9 ~ Energy Drain",
     "name": "Energy Drain",
     "class": "Sorcerer",
-    "description": null,
+    "description": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=9|Energy Drain"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ray"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions like enervation, except that the creature struck gains 2d4 temporary negative levels. Twenty-four hours after gaining them, the subject must make a Fortitude saving throw [DC = energy drain spell's save DC] for each negative level. If the save succeeds, that negative level is removed. If it fails, that negative level becomes permanent. An undead creature struck by the ray gains 2d4 ? 5 temporary hit points for 1 hour.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

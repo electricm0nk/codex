@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Maneuver Master ~ Bonus Feat",
     "name": "Bonus Feat",
@@ -35,6 +35,86 @@
       {
         "key": "ABILITY",
         "value": "Monk Class Feature|AUTOMATIC|Monk ~ Monk Bonus Feat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedBullRush|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedDirtyTrick|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedDisarm|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedOverrun|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedSunder|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedTrip|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterBullRush|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterDirtyTrick|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterDisarm|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterDrag|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterOverrun|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterSunder|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterTrip|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_BullRushStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DisarmingStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_RepositioningStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SunderingStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_TrippingStrike|1|PREVARGTEQ:MonkBonusFeatLVL,10"
       }
     ]
   },

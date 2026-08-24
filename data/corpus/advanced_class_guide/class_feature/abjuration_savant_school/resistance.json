@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Abjuration Savant School ~ Resistance",
     "name": "Resistance",
@@ -51,6 +51,10 @@
       {
         "key": "ASPECT",
         "value": "Ability Benefit|Immunity|PREVARGTEQ:ArcanistSavantSchoolLVL,20"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman=0"
       }
     ]
   },

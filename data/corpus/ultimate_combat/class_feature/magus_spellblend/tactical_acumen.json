@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Tactical Acumen",
     "name": "Tactical Acumen",
     "class": "Magus",
-    "description": null,
+    "description": "You gain an additional +1 on attack rolls or to AC due to battlefield positioning.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Tactical Acumen"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an additional +1 on attack rolls or to AC due to battlefield positioning.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L5 ~ Insect Plague",
     "name": "Insect Plague",
     "class": "Sorcerer",
-    "description": null,
+    "description": "You summon a number of swarms of wasps [one per three levels, to a maximum of six swarms at 18th level]. The swarms must be summoned so that each one is adjacent to at least one other swarm [that is, the swarms must fill one contiguous area]. You may summon the wasp swarms so that they share the area of other creatures. Each swarm attacks any creatures occupying its area. The swarms are stationary after being summoned, and won't pursue creatures that flee.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=5|Insect Plague"
+      },
+      {
+        "key": "DESC",
+        "value": "You summon a number of swarms of wasps [one per three levels, to a maximum of six swarms at 18th level]. The swarms must be summoned so that each one is adjacent to at least one other swarm [that is, the swarms must fill one contiguous area]. You may summon the wasp swarms so that they share the area of other creatures. Each swarm attacks any creatures occupying its area. The swarms are stationary after being summoned, and won't pursue creatures that flee.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

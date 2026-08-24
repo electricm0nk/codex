@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Tetori ~ Bonus Feat",
     "name": "Bonus Feat",
@@ -31,6 +31,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.61"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_GreaterGrapple|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_StunningPin|1|PREVARGTEQ:MonkBonusFeatLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PinningKnockout|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Chokehold|1|PREVARGTEQ:MonkBonusFeatLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Neckbreaker|1|PREVARGTEQ:MonkBonusFeatLVL,18"
       }
     ]
   },

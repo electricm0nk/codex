@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Spiritualist",
     "name": "Spiritualist",
@@ -31,6 +31,282 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|SpiritualistLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Class Skills|PREVAREQ:Spiritualist_CF_ClassSkills,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Weapon and Armor Proficiency|PREVAREQ:Spiritualist_CF_WeaponandArmorProficiency,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Spells|PREVAREQ:Spiritualist_CF_Spells,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Knacks|PREVAREQ:Spiritualist_CF_Knacks,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Phantom|PREVAREQ:Spiritualist_CF_Phantom,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Shared Consciousness|PREVAREQ:Spiritualist_CF_SharedConsciousness,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Etheric Tether|PREVAREQ:Spiritualist_CF_EthericTether,0|PREVARGTEQ:Spiritualist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Bonded Senses|PREVAREQ:Spiritualist_CF_BondedSenses,0|PREVARGTEQ:Spiritualist_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Bonded Manifestation|PREVAREQ:Spiritualist_CF_BondedManifestation,0|PREVARGTEQ:Spiritualist_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Ectoplasmic Bonded Manifestation|PREVAREQ:Spiritualist_CF_EctoplasmicBondedManifestation,0|PREVARGTEQ:Spiritualist_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Incorporeal Bonded Manifestation|PREVAREQ:Spiritualist_CF_IncorporealBondedManifestation,0|PREVARGTEQ:Spiritualist_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Spiritual Interference|PREVAREQ:Spiritualist_CF_SpiritualInterference,0|PREVARGTEQ:Spiritualist_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Detect Undead|PREVAREQ:Spiritualist_CF_DetectUndead,0|PREVARGTEQ:Spiritualist_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Phantom Recall|PREVAREQ:Spiritualist_CF_PhantomRecall,0|PREVARGTEQ:Spiritualist_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Calm Spirit|PREVAREQ:Spiritualist_CF_CalmSpirit,0|PREVARGTEQ:Spiritualist_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ See Invisibility|PREVAREQ:Spiritualist_CF_SeeInvisibility,0|PREVARGTEQ:Spiritualist_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Fused Consciousness|PREVAREQ:Spiritualist_CF_FusedConsciousness,0|PREVARGTEQ:Spiritualist_CFP_Level,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Greater Spiritual Interference|PREVAREQ:Spiritualist_CF_GreaterSpiritualInterference,0|PREVARGTEQ:Spiritualist_CFP_Level,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Spiritual Bond|PREVAREQ:Spiritualist_CF_SpiritualBond,0|PREVARGTEQ:Spiritualist_CFP_Level,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Call Spirit|PREVAREQ:Spiritualist_CF_CallSpirit,0|PREVARGTEQ:Spiritualist_CFP_Level,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Dual Bond|PREVAREQ:Spiritualist_CF_DualBond,0|PREVARGTEQ:Spiritualist_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spiritualist Class Feature|AUTOMATIC|Spiritualist ~ Empowered Consciousness|PREVAREQ:Spiritualist_CF_EmpoweredConsciousness,0|PREVARGTEQ:Spiritualist_CFP_Level,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Spiritualist;LEVEL=0|-4|PREMULT:2,[PREVAREQ:Spiritualist_CF_Knacks,1],[PRECLASS:1,Spiritualist=1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Spiritualist;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Spiritualist_CF_Knacks,1],[PRECLASS:1,Spiritualist=2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Spiritualist;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Spiritualist_CF_Knacks,1],[PRECLASS:1,Spiritualist=3]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_WeaponandArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_Knacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_Phantom|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_SharedConsciousness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_EthericTether|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_BondedSenses|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_BondedManifestation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_EctoplasmicBondedManifestation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_IncorporealBondedManifestation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_SpiritualInterference|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_DetectUndead|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_PhantomRecall|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_CalmSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_SeeInvisibility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_FusedConsciousness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_GreaterSpiritualInterference|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_SpiritualBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_CallSpirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_DualBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Spiritualist_CF_EmpoweredConsciousness|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_ClassSkills|1|PREFACT:1,ABILITIES,Spiritualist_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_WeaponandArmorProficiency|1|PREFACT:1,ABILITIES,Spiritualist_CF_WeaponandArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_Spells|1|PREFACT:1,ABILITIES,Spiritualist_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_Knacks|1|PREFACT:1,ABILITIES,Spiritualist_CF_Knacks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_Phantom|1|PREFACT:1,ABILITIES,Spiritualist_CF_Phantom=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_SharedConsciousness|1|PREFACT:1,ABILITIES,Spiritualist_CF_SharedConsciousness=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_EthericTether|1|PREFACT:1,ABILITIES,Spiritualist_CF_EthericTether=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_BondedSenses|1|PREFACT:1,ABILITIES,Spiritualist_CF_BondedSenses=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_BondedManifestation|1|PREFACT:1,ABILITIES,Spiritualist_CF_BondedManifestation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_EctoplasmicBondedManifestation|1|PREFACT:1,ABILITIES,Spiritualist_CF_EctoplasmicBondedManifestation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_IncorporealBondedManifestation|1|PREFACT:1,ABILITIES,Spiritualist_CF_IncorporealBondedManifestation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_SpiritualInterference|1|PREFACT:1,ABILITIES,Spiritualist_CF_SpiritualInterference=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_DetectUndead|1|PREFACT:1,ABILITIES,Spiritualist_CF_DetectUndead=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_PhantomRecall|1|PREFACT:1,ABILITIES,Spiritualist_CF_PhantomRecall=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_CalmSpirit|1|PREFACT:1,ABILITIES,Spiritualist_CF_CalmSpirit=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_SeeInvisibility|1|PREFACT:1,ABILITIES,Spiritualist_CF_SeeInvisibility=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_FusedConsciousness|1|PREFACT:1,ABILITIES,Spiritualist_CF_FusedConsciousness=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_GreaterSpiritualInterference|1|PREFACT:1,ABILITIES,Spiritualist_CF_GreaterSpiritualInterference=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_SpiritualBond|1|PREFACT:1,ABILITIES,Spiritualist_CF_SpiritualBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_CallSpirit|1|PREFACT:1,ABILITIES,Spiritualist_CF_CallSpirit=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_DualBond|1|PREFACT:1,ABILITIES,Spiritualist_CF_DualBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Spiritualist_CF_EmpoweredConsciousness|1|PREFACT:1,ABILITIES,Spiritualist_CF_EmpoweredConsciousness=True"
       }
     ]
   },

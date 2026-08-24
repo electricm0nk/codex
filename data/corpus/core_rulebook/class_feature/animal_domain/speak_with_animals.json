@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Animal Domain ~ Speak with Animals",
     "name": "Speak with Animals",
@@ -47,6 +47,10 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "DESC",
+        "value": "You can ask questions of and receive answers from animals, but the spell doesn't make them any more friendly than normal. Wary and cunning animals are likely to be terse and evasive, while the more stupid ones make inane comments. If an animal is friendly toward you, it may do some favor or service for you.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

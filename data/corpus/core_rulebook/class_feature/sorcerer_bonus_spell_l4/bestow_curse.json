@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L4 ~ Bestow Curse",
     "name": "Bestow Curse",
     "class": "Sorcerer",
-    "description": null,
+    "description": "You place a curse on the subject. Choose one of the following. . -6 decrease to an ability score [minimum 1]. . -4 penalty on attack rolls, saves, ability checks, and skill checks. . Each turn, the target has a 50%% chance to act normally; otherwise, it takes no action. You may also invent your own curse, but it should be no more powerful than those described above. The curse bestowed by this spell cannot be dispelled, but it can be removed with a break enchantment, limited wish, miracle, remove curse, or wish spell. Bestow curse counters remove curse.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=4|Bestow Curse"
+      },
+      {
+        "key": "DESC",
+        "value": "You place a curse on the subject. Choose one of the following. . -6 decrease to an ability score [minimum 1]. . -4 penalty on attack rolls, saves, ability checks, and skill checks. . Each turn, the target has a 50%% chance to act normally; otherwise, it takes no action. You may also invent your own curse, but it should be no more powerful than those described above. The curse bestowed by this spell cannot be dispelled, but it can be removed with a break enchantment, limited wish, miracle, remove curse, or wish spell. Bestow curse counters remove curse.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

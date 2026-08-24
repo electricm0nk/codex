@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Charm Domain",
     "name": "Charm",
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Charm=1|Charm Person|Charm=2|Calm Emotions|Charm=3|Suggestion|Charm=4|Heroism|Charm=5|Charm Monster|Charm=6|Geas/Quest|Charm=7|Insanity|Charm=8|Demand|Charm=9|Dominate Monster"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Charm],[PREVARLT:CharmDomain,1]"
       }
     ]
   },

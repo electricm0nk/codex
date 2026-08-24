@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Discovery ~ Bottled Ooze",
     "name": "Bottled Ooze",
@@ -63,6 +63,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Alchemist=6|Bottled Ooze (6)|!PRESPELL:1,Bottled Ooze (6)|PREVARGTEQ:AlchemistDiscoveryLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "Bottled ooze discovery may only be used to bottle oozes which appear in the Pathfinder RPG Bestiary."
       }
     ]
   },

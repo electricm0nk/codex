@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Ki Pool",
     "name": "Ki Pool",
@@ -35,6 +35,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.59"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KiPoolProgression|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolProgression|1|PREVAREQ:Monk_CF_KiPoolAbilities1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolProgression|1|PREVARGTEQ:KiPoolLVL,7|PREVAREQ:Monk_CF_KiPoolAbilities7,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolProgression|1|PREVARGTEQ:KiPoolLVL,10|PREVAREQ:Monk_CF_KiPoolAbilities10,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolProgression|1|PREVARGTEQ:KiPoolLVL,16|PREVAREQ:Monk_CF_KiPoolAbilities16,0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki Strike allows your unarmed attacks to be treated as magic weapons for the purpose of overcoming damage reduction. By spending 1 point from your ki pool, you can make one additional attack at your highest attack bonus when making a Flurry of Blows attack. In addition, you can spend 1 point to increase your speed by 20 feet for 1 round. Finally, you can spend 1 point from your ki pool to give yourself a +4 dodge bonus to AC for 1 round. Each use of these powers is activated as a swift action. The ki pool is replenished after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints|PREVAREQ:KiPoolProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki Strike allows your unarmed attacks to be treated as magic, cold iron and silver weapons for the purpose of overcoming damage reduction. By spending 1 point from your ki pool, you can make one additional attack at your highest attack bonus when making a Flurry of Blows attack. In addition, you can spend 1 point to increase your speed by 20 feet for 1 round. Finally, you can spend 1 point from your ki pool to give yourself a +4 dodge bonus to AC for 1 round. Each use of these powers is activated as a swift action. The ki pool is replenished after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints|PREVAREQ:KiPoolProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki strike allows your unarmed attacks to be treated as magic, cold iron, silver and lawful weapons for the purpose of overcoming damage reduction. By spending 1 point from your ki pool, you can make one additional attack at your highest attack bonus when making a Flurry of Blows attack. In addition, you can spend 1 point to increase your speed by 20 feet for 1 round. Finally, you can spend 1 point from your ki pool to give yourself a +4 dodge bonus to AC for 1 round. Each use of these powers is activated as a swift action. The ki pool is replenished after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints|PREVAREQ:KiPoolProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki strike allows your unarmed attacks to be treated as magic, cold iron, silver, lawful, and adamantine weapons for the purpose of overcoming damage reduction and bypassing hardness. By spending 1 point from your ki pool, you can make one additional attack at your highest attack bonus when making a Flurry of Blows attack. In addition, you can spend 1 point to increase your speed by 20 feet for 1 round. Finally, you can spend 1 point from your ki pool to give yourself a +4 dodge bonus to AC for 1 round. Each use of these powers is activated as a swift action. The ki pool is replenished after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints|PREVAREQ:KiPoolProgression,4"
       }
     ]
   },

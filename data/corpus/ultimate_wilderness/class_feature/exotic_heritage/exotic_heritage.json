@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Exotic Heritage",
     "name": "Exotic Heritage",
@@ -11,6 +11,754 @@
       {
         "key": "ABILITY",
         "value": "Internal|AUTOMATIC|Exotic Heritage"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Exotic Heritage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Appraise|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Appraise)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Appraise|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Appraise)|PRESKILL:1,Appraise=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Bluff)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Bluff)|PRESKILL:1,Bluff=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Climb)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Climb)|PRESKILL:1,Climb=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Alchemy)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Alchemy))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Alchemy)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Alchemy))|PRESKILL:1,Craft (Alchemy)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Armor)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Armor))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Armor)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Armor))|PRESKILL:1,Craft (Armor)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Baskets)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Baskets))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Baskets)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Baskets))|PRESKILL:1,Craft (Baskets)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Books)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Books))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Books)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Books))|PRESKILL:1,Craft (Books)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Bows)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Bows))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Bows)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Bows))|PRESKILL:1,Craft (Bows)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Calligraphy)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Calligraphy))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Calligraphy)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Calligraphy))|PRESKILL:1,Craft (Calligraphy)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Carpentry)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Carpentry))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Carpentry)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Carpentry))|PRESKILL:1,Craft (Carpentry)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Cloth)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Cloth))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Cloth)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Cloth))|PRESKILL:1,Craft (Cloth)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Clothing)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Clothing))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Clothing)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Clothing))|PRESKILL:1,Craft (Clothing)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Glass)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Glass))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Glass)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Glass))|PRESKILL:1,Craft (Glass)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Jewelry)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Jewelry))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Jewelry)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Jewelry))|PRESKILL:1,Craft (Jewelry)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Leather)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Leather))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Leather)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Leather))|PRESKILL:1,Craft (Leather)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Locks)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Locks))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Locks)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Locks))|PRESKILL:1,Craft (Locks)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Paintings)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Paintings))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Paintings)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Paintings))|PRESKILL:1,Craft (Paintings)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Pottery)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Pottery))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Pottery)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Pottery))|PRESKILL:1,Craft (Pottery)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Sculptures)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Sculptures))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Sculptures)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Sculptures))|PRESKILL:1,Craft (Sculptures)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Ships)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Ships))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Ships)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Ships))|PRESKILL:1,Craft (Ships)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Shoes)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Shoes))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Shoes)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Shoes))|PRESKILL:1,Craft (Shoes)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Stonemasonry)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Stonemasonry))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Stonemasonry)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Stonemasonry))|PRESKILL:1,Craft (Stonemasonry)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Traps)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Traps))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Traps)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Traps))|PRESKILL:1,Craft (Traps)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Untrained)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Untrained))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Untrained)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Untrained))|PRESKILL:1,Craft (Untrained)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Weapons)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Weapons))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Weapons)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Craft (Weapons))|PRESKILL:1,Craft (Weapons)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Diplomacy)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Diplomacy)|PRESKILL:1,Diplomacy=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Disable Device)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Disable Device)|PRESKILL:1,Disable Device=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Disguise)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Disguise)|PRESKILL:1,Disguise=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Escape Artist)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Escape Artist)|PRESKILL:1,Escape Artist=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Fly)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Fly)|PRESKILL:1,Fly=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Handle Animal)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Handle Animal)|PRESKILL:1,Handle Animal=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Heal)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Heal)|PRESKILL:1,Heal=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Intimidate)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Intimidate)|PRESKILL:1,Intimidate=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Arcana))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Arcana))|PRESKILL:1,Knowledge (Arcana)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Dungeoneering)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Dungeoneering))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Dungeoneering)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Dungeoneering))|PRESKILL:1,Knowledge (Dungeoneering)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Engineering)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Engineering))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Engineering)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Engineering))|PRESKILL:1,Knowledge (Engineering)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Geography))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Geography))|PRESKILL:1,Knowledge (Geography)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (History)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (History))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (History)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (History))|PRESKILL:1,Knowledge (History)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Local)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Local))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Local)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Local))|PRESKILL:1,Knowledge (Local)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Nature))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Nature))|PRESKILL:1,Knowledge (Nature)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nobility)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Nobility))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nobility)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Nobility))|PRESKILL:1,Knowledge (Nobility)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Planes))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Planes))|PRESKILL:1,Knowledge (Planes)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Religion)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Religion))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Religion)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Knowledge (Religion))|PRESKILL:1,Knowledge (Religion)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Linguistics|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Linguistics)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Linguistics|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Linguistics)|PRESKILL:1,Linguistics=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perception)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perception)|PRESKILL:1,Perception=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Act)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Act))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Act)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Act))|PRESKILL:1,Perform (Act)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Comedy)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Comedy))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Comedy)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Comedy))|PRESKILL:1,Perform (Comedy)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Dance)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Dance))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Dance)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Dance))|PRESKILL:1,Perform (Dance)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Keyboard Instruments)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Keyboard Instruments))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Keyboard Instruments)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Keyboard Instruments))|PRESKILL:1,Perform (Keyboard Instruments)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Oratory)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Oratory))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Oratory)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Oratory))|PRESKILL:1,Perform (Oratory)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Percussion Instruments)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Percussion Instruments))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Percussion Instruments)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Percussion Instruments))|PRESKILL:1,Perform (Percussion Instruments)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Sing)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Sing))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Sing)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Sing))|PRESKILL:1,Perform (Sing)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (String Instruments)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (String Instruments))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (String Instruments)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (String Instruments))|PRESKILL:1,Perform (String Instruments)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Untrained)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Untrained))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Untrained)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Untrained))|PRESKILL:1,Perform (Untrained)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Wind Instruments)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Wind Instruments))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Wind Instruments)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Perform (Wind Instruments))|PRESKILL:1,Perform (Wind Instruments)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Architect)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Architect))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Architect)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Architect))|PRESKILL:1,Profession (Architect)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Baker)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Baker))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Baker)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Baker))|PRESKILL:1,Profession (Baker)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Barrister)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Barrister))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Barrister)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Barrister))|PRESKILL:1,Profession (Barrister)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Brewer)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Brewer))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Brewer)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Brewer))|PRESKILL:1,Profession (Brewer)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Butcher)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Butcher))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Butcher)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Butcher))|PRESKILL:1,Profession (Butcher)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Clerk)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Clerk))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Clerk)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Clerk))|PRESKILL:1,Profession (Clerk)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Cook)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Cook))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Cook)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Cook))|PRESKILL:1,Profession (Cook)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Courtesan)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Courtesan))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Courtesan)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Courtesan))|PRESKILL:1,Profession (Courtesan)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Driver)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Driver))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Driver)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Driver))|PRESKILL:1,Profession (Driver)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Engineer)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Engineer))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Engineer)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Engineer))|PRESKILL:1,Profession (Engineer)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Farmer)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Farmer))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Farmer)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Farmer))|PRESKILL:1,Profession (Farmer)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Fisherman)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Fisherman))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Fisherman)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Fisherman))|PRESKILL:1,Profession (Fisherman)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gambler)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Gambler))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gambler)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Gambler))|PRESKILL:1,Profession (Gambler)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gardener)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Gardener))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gardener)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Gardener))|PRESKILL:1,Profession (Gardener)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Herbalist)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Herbalist))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Herbalist)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Herbalist))|PRESKILL:1,Profession (Herbalist)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Innkeeper)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Innkeeper))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Innkeeper)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Innkeeper))|PRESKILL:1,Profession (Innkeeper)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Librarian)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Librarian))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Librarian)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Librarian))|PRESKILL:1,Profession (Librarian)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Merchant)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Merchant))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Merchant)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Merchant))|PRESKILL:1,Profession (Merchant)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Midwife)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Midwife))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Midwife)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Midwife))|PRESKILL:1,Profession (Midwife)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Miller)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Miller))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Miller)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Miller))|PRESKILL:1,Profession (Miller)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Miner)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Miner))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Miner)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Miner))|PRESKILL:1,Profession (Miner)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Porter)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Porter))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Porter)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Porter))|PRESKILL:1,Profession (Porter)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Sailor)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Sailor))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Sailor)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Sailor))|PRESKILL:1,Profession (Sailor)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Scribe)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Scribe))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Scribe)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Scribe))|PRESKILL:1,Profession (Scribe)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Shepherd)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Shepherd))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Shepherd)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Shepherd))|PRESKILL:1,Profession (Shepherd)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Soldier)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Soldier))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Soldier)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Soldier))|PRESKILL:1,Profession (Soldier)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Stable Master)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Stable Master))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Stable Master)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Stable Master))|PRESKILL:1,Profession (Stable Master)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Tanner)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Tanner))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Tanner)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Tanner))|PRESKILL:1,Profession (Tanner)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Trapper)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Trapper))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Trapper)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Trapper))|PRESKILL:1,Profession (Trapper)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Woodcutter)|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Woodcutter))"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Woodcutter)|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Profession (Woodcutter))|PRESKILL:1,Profession (Woodcutter)=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Ride)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Ride)|PRESKILL:1,Ride=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Sense Motive)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Sense Motive)|PRESKILL:1,Sense Motive=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sleight of Hand|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Sleight of Hand)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sleight of Hand|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Sleight of Hand)|PRESKILL:1,Sleight of Hand=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Spellcraft|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Spellcraft)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Spellcraft|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Spellcraft)|PRESKILL:1,Spellcraft=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Stealth)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Stealth)|PRESKILL:1,Stealth=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Survival|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Survival)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Survival|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Survival)|PRESKILL:1,Survival=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Swim)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Swim)|PRESKILL:1,Swim=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|2|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Use Magic Device)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|4|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Exotic Heritage (Use Magic Device)|PRESKILL:1,Use Magic Device=10"
       }
     ]
   },

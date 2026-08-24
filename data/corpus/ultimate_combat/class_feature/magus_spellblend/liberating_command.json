@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Liberating Command",
     "name": "Liberating Command",
     "class": "Magus",
-    "description": null,
+    "description": "Target makes an Escape Artist check as an immediate action and gains a bonus on it.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=1|Liberating Command"
+      },
+      {
+        "key": "DESC",
+        "value": "Target makes an Escape Artist check as an immediate action and gains a bonus on it.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Refined Education Unlock ~ Profession",
     "name": "Profession",
@@ -55,6 +55,14 @@
       {
         "key": "BONUS",
         "value": "VAR|ProfessionRefinedEducationUnlockLVL|RogueLVL/2+HighestProfessionRank"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighestProfessionRank|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighestProfessionRank|max(skillinfo(\"RANK\", \"Profession (Architect)\"),skillinfo(\"RANK\", \"Profession (Baker)\"),skillinfo(\"RANK\", \"Profession (Barrister)\"),skillinfo(\"RANK\", \"Profession (Brewer)\"),skillinfo(\"RANK\", \"Profession (Butcher)\"),skillinfo(\"RANK\", \"Profession (Clerk)\"),skillinfo(\"RANK\", \"Profession (Cook)\"),skillinfo(\"RANK\", \"Profession (Courtesan)\"),skillinfo(\"RANK\", \"Profession (Driver)\"),skillinfo(\"RANK\", \"Profession (Engineer)\"),skillinfo(\"RANK\", \"Profession (Farmer)\"),skillinfo(\"RANK\", \"Profession (Fisherman)\"),skillinfo(\"RANK\", \"Profession (Gambler)\"),skillinfo(\"RANK\", \"Profession (Gardener)\"),skillinfo(\"RANK\", \"Profession (Herbalist)\"),skillinfo(\"RANK\", \"Profession (Innkeeper)\"),skillinfo(\"RANK\", \"Profession (Librarian)\"),skillinfo(\"RANK\", \"Profession (Merchant)\"),skillinfo(\"RANK\", \"Profession (Midwife)\"),skillinfo(\"RANK\", \"Profession (Miller)\"),skillinfo(\"RANK\", \"Profession (Miner)\"),skillinfo(\"RANK\", \"Profession (Porter)\"),skillinfo(\"RANK\", \"Profession (Sailor)\"),skillinfo(\"RANK\", \"Profession (Scribe)\"),skillinfo(\"RANK\", \"Profession (Shepherd)\"),skillinfo(\"RANK\", \"Profession (Soldier)\"),skillinfo(\"RANK\", \"Profession (Soothsayer)\"),skillinfo(\"RANK\", \"Profession (Stable Master)\"),skillinfo(\"RANK\", \"Profession (Tanner)\"),skillinfo(\"RANK\", \"Profession (Trapper)\"),skillinfo(\"RANK\", \"Profession (Woodcutter)\"))"
       }
     ]
   },

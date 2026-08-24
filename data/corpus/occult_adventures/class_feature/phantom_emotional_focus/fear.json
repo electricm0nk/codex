@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Phantom Emotional Focus ~ Fear",
     "name": "Fear",
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Mesmerist=3|Medium,Spiritualist=4"
       }
     ]
   },

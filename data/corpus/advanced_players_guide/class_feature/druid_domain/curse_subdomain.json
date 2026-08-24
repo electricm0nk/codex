@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Curse Subdomain",
     "name": "Curse Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Bane|Druid=2|Aid|Druid=3|Bestow Curse|Druid=4|Freedom of Movement|Druid=5|Break Enchantment|Druid=6|Eyebite|Druid=7|Spell Turning|Druid=8|Moment of Prescience|Druid=9|Miracle"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

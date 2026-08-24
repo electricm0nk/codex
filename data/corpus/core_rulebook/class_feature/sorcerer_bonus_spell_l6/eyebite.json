@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L6 ~ Eyebite",
     "name": "Eyebite",
     "class": "Sorcerer",
-    "description": null,
+    "description": "Each round, you can target a single living creature, striking it with waves of power. Depending on the target's HD, this attack has as many as three effects. &nl;HD &pipe; Effect &nl;10 or more &pipe; Sickened &nl;5-9 &pipe; Panicked, sickened &nl;4 or less &pipe; Comatose, panicked, sickened &nl;The effects are cumulative and concurrent. Sickened: Sudden pain and fever sweeps over the subject's body. A creature affected by this spell remains sickened for 10 minutes per caster level. The effects cannot be negated by a remove disease or heal spell, but a remove curse is effective. Panicked: The subject becomes panicked for 1d4 rounds. Even after the panic ends, the creature remains shaken for 10 minutes per caster level, and it automatically becomes panicked again if it comes within sight of you during that time. This is a fear effect. Comatose: The subject falls into a catatonic coma for 10 minutes per caster level. During this time, it cannot be awakened by any means short of dispelling the effect. This is not a sleep effect, and thus elves are not immune to it. You must spend a swift action each round after the first to target a foe.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=6|Eyebite"
+      },
+      {
+        "key": "DESC",
+        "value": "Each round, you can target a single living creature, striking it with waves of power. Depending on the target's HD, this attack has as many as three effects. &nl;HD &pipe; Effect &nl;10 or more &pipe; Sickened &nl;5-9 &pipe; Panicked, sickened &nl;4 or less &pipe; Comatose, panicked, sickened &nl;The effects are cumulative and concurrent. Sickened: Sudden pain and fever sweeps over the subject's body. A creature affected by this spell remains sickened for 10 minutes per caster level. The effects cannot be negated by a remove disease or heal spell, but a remove curse is effective. Panicked: The subject becomes panicked for 1d4 rounds. Even after the panic ends, the creature remains shaken for 10 minutes per caster level, and it automatically becomes panicked again if it comes within sight of you during that time. This is a fear effect. Comatose: The subject falls into a catatonic coma for 10 minutes per caster level. During this time, it cannot be awakened by any means short of dispelling the effect. This is not a sleep effect, and thus elves are not immune to it. You must spend a swift action each round after the first to target a foe.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

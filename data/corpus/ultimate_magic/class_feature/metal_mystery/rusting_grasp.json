@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Metal Mystery ~ Rusting Grasp",
     "name": "Rusting Grasp",
@@ -43,6 +43,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.56"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "MetalSchool"
       }
     ]
   },

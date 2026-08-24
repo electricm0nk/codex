@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Crafter's Fortune",
     "name": "Crafter's Fortune",
     "class": "Magus",
-    "description": null,
+    "description": "The target is struck by inspiration and gains a +5 luck bonus on its next Craft skill check.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=1|Crafter's Fortune"
+      },
+      {
+        "key": "DESC",
+        "value": "The target is struck by inspiration and gains a +5 luck bonus on its next Craft skill check.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

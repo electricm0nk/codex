@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Crossblooded Rager",
     "name": "Crossblooded Rager",
@@ -139,6 +139,10 @@
       {
         "key": "FACT",
         "value": "Bloodrager_Archetype_BloodlineSpell16|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
       }
     ]
   },

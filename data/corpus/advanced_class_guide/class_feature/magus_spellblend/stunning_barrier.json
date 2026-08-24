@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Stunning Barrier",
     "name": "Stunning Barrier",
     "class": "Magus",
-    "description": null,
+    "description": "Magical field grants a +1 bonus to AC and on saves, and stuns one creature attacking you.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,18 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=1|Stunning Barrier"
+      },
+      {
+        "key": "DESC",
+        "value": "Magical field grants a +1 bonus to AC and on saves, and stuns one creature attacking you.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|1|TYPE=Deflection"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|1|TYPE=Resistance"
       }
     ]
   },

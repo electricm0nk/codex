@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:53:24Z",
   "data": {
     "key": "Kensai ~ Weapon Proficiency",
     "name": "Kensai Weapon Proficiency",
@@ -47,6 +47,10 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Kensai Chosen Weapon|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Estoc)|PREABILITY:1,CATEGORY=Special Ability,Kensai ~ Weapon Proficiency (Estoc)"
       }
     ]
   },

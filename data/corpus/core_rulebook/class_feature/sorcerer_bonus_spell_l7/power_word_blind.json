@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bonus Spell L7 ~ Power Word Blind",
     "name": "Power Word Blind",
     "class": "Sorcerer",
-    "description": null,
+    "description": "You utter a single word of power that causes a creature to become blinded, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 201 or more hit points is unaffected. &nl;Hit Points &pipe; Duration &nl;50 or less &pipe; Permanent &nl;51-100 &pipe; 1d4+1 minutes &nl;101-200 &pipe; 1d4+1 rounds|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Sorcerer=7|Power Word Blind"
+      },
+      {
+        "key": "DESC",
+        "value": "You utter a single word of power that causes a creature to become blinded, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 201 or more hit points is unaffected. &nl;Hit Points &pipe; Duration &nl;50 or less &pipe; Permanent &nl;51-100 &pipe; 1d4+1 minutes &nl;101-200 &pipe; 1d4+1 rounds|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

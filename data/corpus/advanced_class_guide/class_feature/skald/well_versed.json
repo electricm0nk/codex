@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald ~ Well-Versed",
     "name": "Well-Versed",
@@ -39,6 +39,10 @@
       {
         "key": "ASPECT",
         "value": "SaveBonus|+%1 bonus on saving throws against bardic performance, as well as all sonic or language-dependent effects|SkaldWellVersedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SkaldWellVersedBonus|min(4,ElfSkaldFavClassBonus/4)"
       }
     ]
   },

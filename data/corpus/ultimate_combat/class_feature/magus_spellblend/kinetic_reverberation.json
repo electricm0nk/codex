@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Spellblend ~ Kinetic Reverberation",
     "name": "Kinetic Reverberation",
     "class": "Magus",
-    "description": null,
+    "description": "Channels the force of an enemy's attack back into its weapon.|!PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -23,6 +23,14 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Magus=2|Kinetic Reverberation"
+      },
+      {
+        "key": "DESC",
+        "value": "Channels the force of an enemy's attack back into its weapon.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
       }
     ]
   },

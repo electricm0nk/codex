@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Guide",
     "name": "Guide",
@@ -63,6 +63,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Guide],[!PREFACT:1,ABILITIES,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_Evasion=True,Ranger_Archetype_Quarry=True,Ranger_Archetype_ImprovedQuarry=True,Ranger_Archetype_ImprovedEvasion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedEvasion|true"
       }
     ]
   },

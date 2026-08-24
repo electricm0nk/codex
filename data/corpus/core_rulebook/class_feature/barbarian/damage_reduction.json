@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian ~ Damage Reduction",
     "name": "Damage Reduction",
@@ -51,6 +51,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.34"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|-1|PREVARGTEQ:(BarbarianDRLVL-4)/3,1|PREVAREQ:Barbarian_CF_DamageReduction1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|-1|PREVARGTEQ:(BarbarianDRLVL-4)/3,2|PREVAREQ:Barbarian_CF_DamageReduction2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|-1|PREVARGTEQ:(BarbarianDRLVL-4)/3,3|PREVAREQ:Barbarian_CF_DamageReduction3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|-1|PREVARGTEQ:(BarbarianDRLVL-4)/3,4|PREVAREQ:Barbarian_CF_DamageReduction4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BarbarianDR|-1|PREVARGTEQ:(BarbarianDRLVL-4)/3,5|PREVAREQ:Barbarian_CF_DamageReduction5,1"
       }
     ]
   },

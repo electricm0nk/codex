@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Infiltrator",
     "name": "Infiltrator",
@@ -59,6 +59,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Infiltrator],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_Track=True,Inquisitor_Archetype_DiscernLies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DiscernLies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DiscernLies|true"
       }
     ]
   },

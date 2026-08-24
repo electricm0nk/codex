@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -59,6 +59,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.62"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|-1|PREVARGTEQ:WarpriestBonusFeatLVL,3|PREVAREQ:Warpriest_CF_BonusFeat3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|-1|PREVARGTEQ:WarpriestBonusFeatLVL,6|PREVAREQ:Warpriest_CF_BonusFeat6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|-1|PREVARGTEQ:WarpriestBonusFeatLVL,9|PREVAREQ:Warpriest_CF_BonusFeat9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|-1|PREVARGTEQ:WarpriestBonusFeatLVL,12|PREVAREQ:Warpriest_CF_BonusFeat12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|-1|PREVARGTEQ:WarpriestBonusFeatLVL,15|PREVAREQ:Warpriest_CF_BonusFeat15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|-1|PREVARGTEQ:WarpriestBonusFeatLVL,18|PREVAREQ:Warpriest_CF_BonusFeat18,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestBonusFeatFavClassBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warpriest Bonus Feat|WarpriestBonusFeatFavClassBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBonusFeatFavClassBonus|HumanWarpriestFavClassBonus/6"
       }
     ]
   },

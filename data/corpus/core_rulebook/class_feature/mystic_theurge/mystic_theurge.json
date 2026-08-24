@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Mystic Theurge",
     "name": "Mystic Theurge",
@@ -19,6 +19,14 @@
       {
         "key": "BONUS",
         "value": "VAR|MysticTheurge_CFP_Level|MysticTheurgeLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mystic Theurge Class Feature|AUTOMATIC|Mystic Theurge ~ Combined Spells|PREVARGTEQ:MysticTheurge_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mystic Theurge Class Feature|AUTOMATIC|Mystic Theurge ~ Spell Synthesis|PREVARGTEQ:MysticTheurge_CFP_Level,10"
       }
     ]
   },

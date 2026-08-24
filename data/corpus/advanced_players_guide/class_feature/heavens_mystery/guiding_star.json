@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Heavens Mystery ~ Guiding Star",
     "name": "Guiding Star",
@@ -39,6 +39,10 @@
       {
         "key": "TEMPBONUS",
         "value": "PC|SKILL|TYPE=Wisdom|CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You form a bond with your surroundings when you cast this spell. For the remaining duration of the spell you can always, as a standard action, determine your approximate distance from that area as well as the direction you must travel in order to reach it. You cannot determine the location of the area if you are on a different plane. The area counts as \"very familiar\" for the purposes of teleport or similar spells. You can only attune yourself to one location at a time. If you cast the spell at another spot you lose the ability to locate your original area.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Occultist ~ Implements",
     "name": "Implements",
@@ -35,6 +35,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.47"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1|PREVARGTEQ:OccultistLVL,2|PREVAREQ:Occultist_CF_Implement2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1|PREVARGTEQ:OccultistLVL,6|PREVAREQ:Occultist_CF_Implement6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1|PREVARGTEQ:OccultistLVL,10|PREVAREQ:Occultist_CF_Implement10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1|PREVARGTEQ:OccultistLVL,14|PREVAREQ:Occultist_CF_Implement14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistImplementSchool|-1|PREVARGTEQ:OccultistLVL,18|PREVAREQ:Occultist_CF_Implement18,1"
       }
     ]
   },

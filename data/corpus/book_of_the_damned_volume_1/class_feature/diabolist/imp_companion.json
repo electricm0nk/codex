@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Diabolist ~ Imp Companion",
     "name": "Imp Companion",
@@ -51,6 +51,58 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|BardLVL+(\"BL=Bard\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|ClericLVL+(\"BL=Cleric\")|TYPE=NoStack|!PREABILITY:1,CATEGORY=Special Ability,Animal Domain ~ Animal Companion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|DruidLVL+(\"BL=Druid\")|TYPE=NoStack|!PREABILITY:1,CATEGORY=Special Ability,Nature's Bond ~ Animal Companion,Animal Domain ~ Animal Companion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(RangerLVL-3)+(\"BL=Ranger\")|TYPE=NoStack|!PREABILITY:1,CATEGORY=Special Ability,Hunter's Bond ~ Companion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|WizardLVL+(\"BL=Wizard\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|SorcererLVL+(\"BL=Sorcerer\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Magus\")+(\"BL=Magus\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Alchemist\")+(\"BL=Alchemist\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Inquisitor\")+(\"BL=Inquisitor\")|TYPE=NoStack|!PREABILITY:1,CATEGORY=Special Ability,Animal Domain ~ Animal Companion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Oracle\")+(\"BL=Oracle\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Witch\")+(\"BL=Witch\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Summoner\")+(\"BL=Summoner\")|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompHighestCasterLVL|(\"CL=Antipaladin\")+(\"BL=Antipaladin\")|TYPE=NoStack|PRECLASS:1,Antipaladin=4"
       }
     ]
   },

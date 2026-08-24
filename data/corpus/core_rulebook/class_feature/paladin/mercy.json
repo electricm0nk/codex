@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin ~ Mercy",
     "name": "Mercy",
@@ -43,6 +43,30 @@
       {
         "key": "BONUS",
         "value": "VAR|MercyLVL|PaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mercy|-1|PREVARGTEQ:Mercies,1|PREVAREQ:Paladin_CF_Mercy3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mercy|-1|PREVARGTEQ:Mercies,2|PREVAREQ:Paladin_CF_Mercy6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mercy|-1|PREVARGTEQ:Mercies,3|PREVAREQ:Paladin_CF_Mercy9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mercy|-1|PREVARGTEQ:Mercies,4|PREVAREQ:Paladin_CF_Mercy12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mercy|-1|PREVARGTEQ:Mercies,5|PREVAREQ:Paladin_CF_Mercy15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mercy|-1|PREVARGTEQ:Mercies,6|PREVAREQ:Paladin_CF_Mercy18,1"
       }
     ]
   },

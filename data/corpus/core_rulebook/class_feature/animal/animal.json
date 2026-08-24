@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Animal Domain",
     "name": "Animal",
@@ -75,6 +75,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Animal=1|Calm Animals|Animal=2|Hold Animal|Animal=3|Dominate Animal|Animal=4|Summon Nature's Ally IV (Animals Only)|Animal=5|Beast Shape III (Animals Only)|Animal=6|Antilife Shell|Animal=7|Animal Shapes|Animal=8|Summon Nature's Ally VIII (Animals Only)|Animal=9|Shapechange"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Animal],[PREVARLT:AnimalDomain,1]"
       }
     ]
   },

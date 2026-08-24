@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Archetype Display",
     "name": "Archetype Display",
@@ -11,6 +11,46 @@
       {
         "key": "ABILITY",
         "value": "Aegis Archetype|AUTOMATIC|Archetype Aegis|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Archetype|AUTOMATIC|Archetype Aegis|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Archetype|AUTOMATIC|Archetype Cryptic|PRECLASS:1,Cryptic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Archetype|AUTOMATIC|Archetype Dread|PRECLASS:1,Dread=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Archetype|AUTOMATIC|Archetype Psion|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Archetype|AUTOMATIC|Archetype Psychic Warrior|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Archetype|AUTOMATIC|Archetype Soulknife|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Archetype|AUTOMATIC|Archetype Marksman|PRECLASS:1,Marksman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Archetype|AUTOMATIC|Archetype Tactician|PRECLASS:1,Tactician=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Archetype|AUTOMATIC|Archetype Vitalist|PRECLASS:1,Vitalist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Archetype|AUTOMATIC|Archetype Wilder|PRECLASS:1,Wilder=1"
       }
     ]
   },

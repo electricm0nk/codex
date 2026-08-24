@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Purity Subdomain",
     "name": "Purity Subdomain",
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Protection from Chaos,Protection from Evil,Protection from Good,Protection from Law|Druid=2|Shield Other|Druid=3|Remove Blindness/Deafness|Druid=4|Spell Immunity|Druid=5|Atonement|Druid=6|Antimagic Field|Druid=7|Repulsion|Druid=8|Mind Blank|Druid=9|Prismatic Sphere"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },

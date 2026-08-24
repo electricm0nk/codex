@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Hex ~ Fetish",
     "name": "Fetish",
@@ -39,6 +39,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.36"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "The shaman receives Spell Focus as a bonus feat and gains a +4 insight bonus on Spellcraft checks to identify magic items permanently."
+      },
+      {
+        "key": "REMOVE",
+        "value": "FEAT|Craft Wondrous Item"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spell Focus|1"
       }
     ]
   },

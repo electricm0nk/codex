@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk",
     "name": "Monk",
@@ -31,6 +31,490 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|MonkLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsMonk|1|TYPE=Boolean"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_UnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FlurryOfBlows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StunningFist|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_Evasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FastMovement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ManeuverTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StillMind|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_HighJump|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_PurityOfBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_WholenessOfBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ImprovedEvasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_DiamondBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_AbundantStep|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_DiamondSoul|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_QuiveringPalm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_TimelessBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_EmptyBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_PerfectSelf|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_Alignment|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall30|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall40|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall50|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall60|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall70|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall80|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_SlowFall90|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPoolAbilities1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPoolAbilities7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPoolAbilities10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPoolAbilities16|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPoolAbilities1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPoolAbilities1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPoolAbilities7|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPoolAbilities7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPoolAbilities10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPoolAbilities10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPoolAbilities16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPoolAbilities16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall30|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall30=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall40|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall40=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall50|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall50=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall60|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall60=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall70|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall70=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall80|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall80=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall90|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall90=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeat18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_BonusFeat18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeat10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_BonusFeat10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeat6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_BonusFeat6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeat2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_BonusFeat2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeat1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_BonusFeat1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_Alignment|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_Alignment=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon and Armor Proficiency ~ Monk|PREVAREQ:Monk_CF_Proficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Proficiencies ~ Monk|PREVAREQ:Monk_CF_Proficiencies,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_UnarmedStrike|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_UnarmedStrike=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_FlurryOfBlows|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_FlurryOfBlows=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_BonusFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ACBonus|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_ACBonus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_StunningFist|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_StunningFist=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_Evasion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_Evasion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_FastMovement|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_FastMovement=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ManeuverTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_ManeuverTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_StillMind|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_StillMind=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_SlowFall=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_HighJump|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_HighJump=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_PurityOfBody|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_PurityOfBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_WholenessOfBody|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_WholenessOfBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ImprovedEvasion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_ImprovedEvasion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_DiamondBody|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_DiamondBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_AbundantStep|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_AbundantStep=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_DiamondSoul|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_DiamondSoul=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_QuiveringPalm|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_QuiveringPalm=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_TongueOfTheSunAndMoon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_TongueOfTheSunAndMoon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_TimelessBody|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_TimelessBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_EmptyBody|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_EmptyBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_PerfectSelf|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_PerfectSelf=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_FlurryOfBlows|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkFlurryOfBlows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_BonusFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkBonusFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ACBonus|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_StunningFist|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_Evasion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEvasion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_FastMovement|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkFastMovement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ManeuverTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkManeuverTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_StillMind|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPool|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkKiPool"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_SlowFall|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkSlowFall"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_HighJump|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkHighJump"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_PurityOfBody|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkPurityOfBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_WholenessOfBody|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkWholenessOfBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ImprovedEvasion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkImprovedEvasion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_DiamondBody|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkDiamondBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_AbundantStep|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkAbundantStep"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_DiamondSoul|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkDiamondSoul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_QuiveringPalm|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkQuiveringPalm"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_TongueOfTheSunAndMoon|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkTongueOfTheSunAndMoon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_TimelessBody|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkTimelessBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_EmptyBody|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEmptyBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_PerfectSelf|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkPerfectSelf"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_ClassSkills|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkClassSkills"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_Proficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.MonkWeaponProficiencies"
       }
     ]
   },

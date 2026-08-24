@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Two-Handed Fighter ~ Weapon Training",
     "name": "Weapon Training",
@@ -27,6 +27,262 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.108"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBase|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FighterWeaponTrainingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierOne|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierTwo|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierThree|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierFour|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingAxes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBladesHeavy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingDouble|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingFlails|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingHammers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingMonk|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingPoleArms|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingSpears|0"
+      },
+      {
+        "key": "DESC",
+        "value": " Attacks with a weapon from listed groups, gain a bonus on attack and damage rolls. (Included in weapon blocks)"
+      },
+      {
+        "key": "DESC",
+        "value": "Axes +%1|WeaponTrainingAxes|PREVARGT:WeaponTrainingAxes,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Heavy Blades +%1|WeaponTrainingBladesHeavy|PREVARGT:WeaponTrainingBladesHeavy,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Double Weapons +%1|WeaponTrainingDouble|PREVARGT:WeaponTrainingDouble,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Flails +%1|WeaponTrainingFlails|PREVARGT:WeaponTrainingFlails,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Hammers +%1|WeaponTrainingHammers|PREVARGT:WeaponTrainingHammers,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Monk Weapons +%1|WeaponTrainingMonk|PREVARGT:WeaponTrainingMonk,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Pole Arms +%1|WeaponTrainingPoleArms|PREVARGT:WeaponTrainingPoleArms,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spears +%1|WeaponTrainingSpears|PREVARGT:WeaponTrainingSpears,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Two-Handed Fighter Weapon Training I|1|PREVARGTEQ:FighterLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Two-Handed Fighter Weapon Training II|1|PREVARGTEQ:FighterLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Two-Handed Fighter Weapon Training III|1|PREVARGTEQ:FighterLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Two-Handed Fighter Weapon Training IV|1|PREVARGTEQ:FighterLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBase|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierOne|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=TwoHandedWeaponTraining\")-1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierTwo|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=TwoHandedWeaponTraining\")-2,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierThree|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=TwoHandedWeaponTraining\")-3,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierFour|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=TwoHandedWeaponTraining\")-4,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 1 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 2 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 3 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Two-Handed Weapon Training 4 Spears"
       }
     ]
   },

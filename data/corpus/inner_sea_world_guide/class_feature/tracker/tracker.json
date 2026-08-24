@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Tracker ~ HK",
     "name": "Tracker",
@@ -35,6 +35,14 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon a creature to aid you %1/day, either in battle or to track an enemy, as if using a summon monster spell, save that the summoned creature lingers for 1 hour before vanishing. You can summon either a dire wolf, a hell hound, an eagle, a riding dog, a wolf, or a leopard.|HKDiscipline|PREVARGTEQ:HellknightLvl,9"
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Monk Bonus Feat",
     "name": "Monk Bonus Feat",
@@ -35,6 +35,110 @@
       {
         "key": "BONUS",
         "value": "VAR|MonkBonusFeatLVL|MonkLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk Bonus Feat ~ Default|PREVAREQ:Monk_CF_BonusFeats,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeatCount|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeatCount|1+max((MonkBonusFeatLVL+2)/4,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|-1|PREVARGTEQ:MonkBonusFeatCount,1|PREVAREQ:Monk_CF_BonusFeat1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|-1|PREVARGTEQ:MonkBonusFeatCount,2|PREVAREQ:Monk_CF_BonusFeat2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|-1|PREVARGTEQ:MonkBonusFeatCount,3|PREVAREQ:Monk_CF_BonusFeat6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|-1|PREVARGTEQ:MonkBonusFeatCount,4|PREVAREQ:Monk_CF_BonusFeat10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|-1|PREVARGTEQ:MonkBonusFeatCount,5|PREVAREQ:Monk_CF_BonusFeat14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|-1|PREVARGTEQ:MonkBonusFeatCount,6|PREVAREQ:Monk_CF_BonusFeat18,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_CatchOffGuard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_CombatReflexes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_DeflectArrows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_Dodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedGrapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ScorpionStyle|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ThrowAnything|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_GorgonsFist|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedBullRush|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedDisarm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedFeint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedTrip|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_Mobility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_ImprovedCritical|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_MedusasWrath|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_SnatchArrows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkBonusFeat_SpringAttack|0"
       }
     ]
   },

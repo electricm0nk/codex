@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Vigilante",
     "name": "Vigilante",
@@ -23,6 +23,366 @@
       {
         "key": "BONUS",
         "value": "VAR|Vigilante_CFP_Level|VigilanteLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Class Skills|PREVAREQ:Vigilante_CF_ClassSkills,0|PREVARGTEQ:Vigilante_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Weapon and Armor Proficiencies|PREVARGTEQ:Vigilante_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Dual Identity|PREVAREQ:Vigilante_CF_DualIdentity,0|PREVARGTEQ:Vigilante_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Seamless Guise|PREVAREQ:Vigilante_CF_SeamlessGuise,0|PREVARGTEQ:Vigilante_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Social Talent|PREVAREQ:Vigilante_CF_SocialTalent,0|PREVARGTEQ:Vigilante_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Vigilante Specialization|PREVAREQ:Vigilante_CF_VigilanteSpecialization,0|PREVARGTEQ:Vigilante_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Vigilante Talent|PREVAREQ:Vigilante_CF_VigilanteTalent,0|PREVARGTEQ:Vigilante_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Unshakable|PREVAREQ:Vigilante_CF_Unshakable,0|PREVARGTEQ:Vigilante_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Startling Appearance|PREVAREQ:Vigilante_CF_StartlingAppearance,0|PREVARGTEQ:Vigilante_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Frightening Appearance|PREVAREQ:Vigilante_CF_FrighteningAppearance,0|PREVARGTEQ:Vigilante_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Stunning Appearance|PREVAREQ:Vigilante_CF_StunningAppearance,0|PREVARGTEQ:Vigilante_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vigilante Class Feature|AUTOMATIC|Vigilante ~ Vengeance Strike|PREVAREQ:Vigilante_CF_VengeanceStrike,0|PREVARGTEQ:Vigilante_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_FortSaves|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_ReflexSaves|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_WillSaves|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_ShieldProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_DualIdentity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SeamlessGuise|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteSpecialization|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_Unshakable|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_StartlingAppearance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_FrighteningAppearance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_StunningAppearance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VengeanceStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_Avenger|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_Stalker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent11|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent13|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent17|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_SocialTalent19|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vigilante_CF_VigilanteTalent20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_FortSaves|1|PREFACT:1,ABILITIES,Vigilante_CF_FortSaves=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_ReflexSaves|1|PREFACT:1,ABILITIES,Vigilante_CF_ReflexSaves=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_WillSaves|1|PREFACT:1,ABILITIES,Vigilante_CF_WillSaves=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_ClassSkills|1|PREFACT:1,ABILITIES,Vigilante_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_WeaponProficiencies|1|PREFACT:1,ABILITIES,Vigilante_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_ArmorProficiencies|1|PREFACT:1,ABILITIES,Vigilante_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_ShieldProficiency|1|PREFACT:1,ABILITIES,Vigilante_CF_ShieldProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_DualIdentity|1|PREFACT:1,ABILITIES,Vigilante_CF_DualIdentity=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SeamlessGuise|1|PREFACT:1,ABILITIES,Vigilante_CF_SeamlessGuise=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteSpecialization|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteSpecialization=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_Unshakable|1|PREFACT:1,ABILITIES,Vigilante_CF_Unshakable=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_StartlingAppearance|1|PREFACT:1,ABILITIES,Vigilante_CF_StartlingAppearance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_FrighteningAppearance|1|PREFACT:1,ABILITIES,Vigilante_CF_FrighteningAppearance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_StunningAppearance|1|PREFACT:1,ABILITIES,Vigilante_CF_StunningAppearance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VengeanceStrike|1|PREFACT:1,ABILITIES,Vigilante_CF_VengeanceStrike=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_Avenger|1|PREFACT:1,ABILITIES,Vigilante_CF_Avenger=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_Stalker|1|PREFACT:1,ABILITIES,Vigilante_CF_Stalker=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent1|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent3|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent5|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent7|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent9|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent11|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent11=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent13|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent13=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent15|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent17|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent17=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_SocialTalent19|1|PREFACT:1,ABILITIES,Vigilante_CF_SocialTalent19=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent2|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent4|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent6|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent8|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent10|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent12|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent14|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent16|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent18|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vigilante_CF_VigilanteTalent20|1|PREFACT:1,ABILITIES,Vigilante_CF_VigilanteTalent20=True"
       }
     ]
   },

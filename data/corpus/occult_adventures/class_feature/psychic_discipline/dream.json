@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Psychic Discipline ~ Dream",
     "name": "Dream",
@@ -47,6 +47,14 @@
       {
         "key": "BONUS",
         "value": "VAR|PhrenicPoolAbility|CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=3|Mesmerist=4|Spiritualist=5"
       }
     ]
   },

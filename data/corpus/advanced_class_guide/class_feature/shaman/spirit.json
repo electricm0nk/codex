@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:50:56Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman ~ Spirit",
     "name": "Spirit",
@@ -39,6 +39,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.35"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSpiritGreater|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSpiritGreater|1|PREMULT:2,[PRECLASS:1,Shaman=8],[PREVAREQ:Shaman_CF_SpiritGreater,0]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShamanSpiritTrue|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShamanSpiritTrue|1|PREMULT:2,[PRECLASS:1,Shaman=16],[PREVAREQ:Shaman_CF_SpiritTrue,0]"
       }
     ]
   },
