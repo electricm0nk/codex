@@ -74511,6 +74511,148 @@ mod generic_pool_group_selection_wiring_tests {
         );
     }
 
+    /// SD-32 T12 Epic 8 row 18 cycle 16 (`§17a`): whether a group's member resolves via the
+    /// SECOND generic resolver -- cycle 15's `resolved_description_for_formula_only_desc_argument`
+    /// (`class_feature_grant_consumer.rs`), the `%N`-substituted-DESC-formula path for a record
+    /// whose `bonus_vars` is EMPTY. `pool_group_closure_census_across_all_six_pools` (above) is
+    /// blind to this path BY CONSTRUCTION -- `group_has_a_resolvable_member` calls only
+    /// `resolve_pool_member_sole_magnitude`, which itself only ever reads `bonus_vars` and
+    /// therefore always returns `None` for a record this second resolver grounds. This function
+    /// closes that blind spot without touching or replacing the first one.
+    fn group_has_a_resolvable_member_via_description_formula(
+        _class: &str,
+        _registered_name: &str,
+        group: &str,
+    ) -> bool {
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let prefix = format!("{group} ~ ");
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        table.keys().filter(|key| key.starts_with(&prefix)).any(|key| {
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+            )
+            .is_some()
+        })
+    }
+
+    /// A group is genuinely resolvable if EITHER generic resolver grounds at least one of its
+    /// members -- the two are mutually exclusive per-record (`resolved_description_for_formula_
+    /// only_desc_argument`'s own `bonus_vars.is_empty()` guard, documented on that function),
+    /// never double-counting the same record through both paths.
+    fn group_has_a_resolvable_member_via_either_resolver(
+        class: &str,
+        registered_name: &str,
+        group: &str,
+    ) -> bool {
+        group_has_a_resolvable_member(class, registered_name, group)
+            || group_has_a_resolvable_member_via_description_formula(class, registered_name, group)
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 16: the honest, all-resolver census cycle 15 named but
+    /// deliberately did not self-apply (`§1a` -- widening the census's own measure is a separate,
+    /// deliberate act). Validated against known truth BEFORE being trusted (`§17a`): re-derives
+    /// the SAME six bonus_vars-only baselines `pool_group_closure_census_across_all_six_pools`
+    /// locks (proving this new pass reproduces, not contradicts, that instrument), THEN adds the
+    /// description-formula resolver on top and reports the combined figure per pool. Both figures
+    /// are printed for every pool so neither becomes unverifiable, per the brief's own instruction.
+    ///
+    /// `cargo test --locked --lib -- \
+    /// rules_core::pilot_compute::generic_pool_group_selection_wiring_tests::pool_group_closure_census_across_all_six_pools_both_resolvers \
+    /// --nocapture`
+    #[test]
+    fn pool_group_closure_census_across_all_six_pools_both_resolvers() {
+        let pools: &[(&str, &str)] = &[
+            ("Sorcerer", "Bloodline"),
+            ("Bloodrager", "Bloodline"),
+            ("Cleric", "Domain"),
+            ("Shaman", "Spirit"),
+            ("Warpriest", "Blessing"),
+            ("Cavalier", "Order"),
+        ];
+        let mut report = String::new();
+        for (class, registered_name) in pools {
+            let groups = real_groups_owned_by(class, registered_name);
+            let total = groups.len();
+            let bonus_vars_only = groups
+                .iter()
+                .filter(|g| group_has_a_resolvable_member(class, registered_name, g))
+                .count();
+            let combined = groups
+                .iter()
+                .filter(|g| group_has_a_resolvable_member_via_either_resolver(class, registered_name, g))
+                .count();
+            report.push_str(&format!(
+                "{class} {registered_name}: bonus_vars={bonus_vars_only}/{total}, \
+                 combined(bonus_vars OR desc_formula)={combined}/{total}\n"
+            ));
+        }
+        println!("{report}");
+        // `§17a` validation: the bonus_vars-only figures inside this combined report must
+        // reproduce `pool_group_closure_census_across_all_six_pools`'s own locked baseline
+        // exactly -- proof this pass did not silently change or duplicate the first resolver's
+        // own measure, only add a second one alongside it.
+        assert!(
+            report.contains("Sorcerer Bloodline: bonus_vars=31/53")
+                && report.contains("Bloodrager Bloodline: bonus_vars=5/12")
+                && report.contains("Cleric Domain: bonus_vars=34/72")
+                && report.contains("Shaman Spirit: bonus_vars=11/14")
+                && report.contains("Warpriest Blessing: bonus_vars=0/37")
+                && report.contains("Cavalier Order: bonus_vars=1/9"),
+            "the bonus_vars-only figures embedded in the combined census must still reproduce \
+             pool_group_closure_census_across_all_six_pools's own locked baseline exactly -- a \
+             mismatch here means this pass is measuring something different from the first \
+             resolver, not extending it:\n{report}"
+        );
+        // The honest, all-resolver figure (`§17a` -- re-derived, not assumed, and CORRECTING
+        // cycle 15's own manual count in the process, per `scripts/retro.py correction`
+        // `1787582848402-t9-onboarding-9a4294`). Cycle 15's receipt claimed only 6 Warpriest
+        // groups closed and that Cavalier Order stayed unclosed because Order of the Beast's
+        // "%2" argument -- `(CavalierLVL>=10)+(CavalierLVL>=14)+(CavalierLVL>=18)` -- hit a
+        // "comparison-as-numeric-term gap". Direct reproduction disproves that: every one of
+        // those three comparisons is PARENTHESISED, and `formula_interpreter.rs`'s wave-26
+        // shape closure already evaluates a parenthesised comparison as a numeric primary
+        // (`parse_primary`'s `LParen` branch -> `parse_arith_or_bool`) -- there is no gap here
+        // at all. Order of the Beast's whole description resolves cleanly and its group
+        // genuinely closes. The real, narrower gap this cycle found (see `§5` below) is an
+        // UNPARENTHESISED comparison used as a bare function argument (`min(WarpriestLVL>20,
+        // 2,...)`, `Protection Blessing ~ Increased Defense`) -- a real, different, smaller
+        // shape than what cycle 15 named.
+        //
+        // Re-derived totals: Warpriest Blessing 0/37 -> 8/37 (cycle 15's own 6 named groups --
+        // Earth, Trickery, Rune, Protection [via Aura of Protection], Repose, Knowledge -- PLUS
+        // Destruction and Strength Blessing, already hand-modelled by dedicated functions this
+        // codebase ships separately from either generic resolver, and now ALSO reachable
+        // through the generic description resolver directly off their own corpus record, which
+        // this census correctly counts since it measures corpus-record resolvability, not
+        // runtime double-emission avoidance). Cavalier Order 1/9 -> 2/9 (Order of the Beast, the
+        // correction above). Three pools this cycle's own diagnostic found ungrounded by cycle
+        // 15's manual review pick up exactly one new group each, all real, non-fabricated,
+        // single-member closures on records whose `bonus_vars` is empty and whose ONE `%N`
+        // argument is a bare, self-contained formula needing no comparison or multi-arg
+        // function at all: Bloodrager Bloodline 5/12 -> 6/12 (Abyssal Bloodrager Bloodline ~
+        // Demonic Aura, `%1`="CON", the CON modifier, resolving to 0 under this test's own
+        // `AbilityModifiers::default()` seed -- the SAME zero-ability-score convention every
+        // other function in this file already resolves against, not a new default introduced
+        // here), Cleric Domain 34/72 -> 35/72 (Clandestine Domain ~ Blessed Secrecy, `%1`="WIS",
+        // same convention), Shaman Spirit
+        // 11/14 -> 12/14 (Wood Spirit ~ Tree Form, `%1`=`5`, `ShamanLVL`-derived). Sorcerer
+        // Bloodline is genuinely unchanged at 31/53 -- no member of any of its remaining 22
+        // open groups has an empty `bonus_vars` chain with a resolvable `%N` argument.
+        assert!(
+            report.contains("Sorcerer Bloodline: bonus_vars=31/53, combined(bonus_vars OR desc_formula)=31/53")
+                && report.contains("Bloodrager Bloodline: bonus_vars=5/12, combined(bonus_vars OR desc_formula)=6/12")
+                && report.contains("Cleric Domain: bonus_vars=34/72, combined(bonus_vars OR desc_formula)=35/72")
+                && report.contains("Shaman Spirit: bonus_vars=11/14, combined(bonus_vars OR desc_formula)=12/14")
+                && report.contains("Warpriest Blessing: bonus_vars=0/37, combined(bonus_vars OR desc_formula)=8/37")
+                && report.contains("Cavalier Order: bonus_vars=1/9, combined(bonus_vars OR desc_formula)=2/9"),
+            "the honest all-resolver figure this cycle re-derived must reproduce exactly -- a \
+             future cycle's corpus/resolver change that moves these numbers must update this \
+             assertion deliberately, never silently:\n{report}"
+        );
+    }
+
     /// Celestial is a real Sorcerer bloodline (`data/corpus/advanced_class_guide/
     /// class_feature/celestial_bloodline/*.json`, 53 real bloodline groups total
     /// per the cycle-4 census) this codebase has never hand-modelled by name --

@@ -61,11 +61,27 @@
 //!    have the same `Math.floor` behaviour — right answer, wrong file). Unobservable against the
 //!    current 22 reproduction cases (all sampled level/ability-mod inputs are non-negative);
 //!    exercised only by this module's own synthetic negative-operand test.
-//! 3. **`max`/`min` are N-ary, not fixed at two arguments.**
-//!    `plugin/jepcommands/MaxCommand.java`: `numberOfParameters = -1` (variable-arity), summing
-//!    over the whole stack; `MinCommand.java` is the mirror. Confirmed directly (prior citation
-//!    was `PCGen-Formula`'s `MaxFunction`/`AbstractNaryFunction`, also N-ary, but again the wrong
-//!    engine). This module accepts 2 or more arguments.
+//! 3. **`max`/`min` are N-ary, not fixed at two arguments — INCLUDING one argument.**
+//!    `plugin/jepcommands/MaxCommand.java`: `numberOfParameters = -1` (variable-arity); its `run`
+//!    pops each parameter off the stack and folds via `first || param > result`, so a single
+//!    parameter simply becomes the result (`first` is true on the only iteration) — the oracle
+//!    accepts `max(X)` and returns `X` unchanged. `MinCommand.java` is the mirror. Confirmed
+//!    directly (prior citation was `PCGen-Formula`'s `MaxFunction`/`AbstractNaryFunction`, also
+//!    N-ary, but again the wrong engine). SD-32 T12 Epic 8 row 18 cycle 16: this module
+//!    previously refused a single-argument `min`/`max` call as an unimplemented shape (a
+//!    disclosed but INCORRECT restriction — real corpus records exist,
+//!    e.g. `Cavalier Order of the Beast ~ Class Skills`'s `max(floor(CavalierLVL/2))`,
+//!    `Barbarian Undead Bloodline (rage power) ~ Undead Blood (Lesser)`'s
+//!    `max(floor(BarbarianLVL/2))`, `Voice of the Wild ~ Wild Knowledge`'s
+//!    `max(floor(BardLVL/2))` — 3 corpus records total, sized via
+//!    `python3 -c "..."` walking `data/corpus/**/*.json` for a balanced-paren `min(`/`max(` call
+//!    with exactly one top-level comma-split argument, see cycle 16's own receipt for the full
+//!    script). Fixed to accept 1 or more arguments, matching the oracle's variable-arity
+//!    `MaxCommand`/`MinCommand` exactly — the parser already always supplies at least one
+//!    argument by construction (`parse_call`'s `min`/`max`/`floor`/`ceil`/`abs` branch always
+//!    pushes one `parse_expr()?` before the comma loop), so a genuine zero-argument call can
+//!    never reach this arity check at all; the fix removes the now-provably-wrong `< 2` guard
+//!    rather than replacing it with an unreachable `< 1` one.
 //! 4. **`if(cond, then, else)` accepts a bare NUMERIC condition (nonzero = true), not only a
 //!    boolean comparison — and this module does NOT implement that yet.**
 //!    `plugin/jepcommands/IfCommand.java`: "The first is a number interpreted as a boolean... if
@@ -725,12 +741,12 @@ impl<'a> Parser<'a> {
                             args.len()
                         )))
                     }
-                    "min" | "max" if args.len() < 2 => {
-                        return Err(FormulaEvalError(format!(
-                            "{lname}(...) takes at least 2 arguments, got {}",
-                            args.len()
-                        )))
-                    }
+                    // `min`/`max` accept 1 or more arguments (see this module's own doc point 3
+                    // — real `MaxCommand.java`/`MinCommand.java` are variable-arity and a
+                    // single-argument call simply returns that argument unchanged). No arity
+                    // check needed here: `args` always holds at least one element by
+                    // construction (the `let mut args = vec![self.parse_expr()?]` above), so
+                    // there is no reachable "too few arguments" shape for `min`/`max` to refuse.
                     _ => {}
                 }
                 Ok(Expr::Call(lname, args))
@@ -1364,8 +1380,31 @@ mod tests {
     #[test]
     fn wrong_arg_counts_refuse() {
         assert!(recognises_shape("floor(1,2)").is_err());
-        assert!(recognises_shape("max(1)").is_err());
         assert!(recognises_shape("if(X>=1,1)").is_err());
+        // `max(1)` (and `min(1)`) do NOT belong here any more (SD-32 T12 Epic 8 row 18 cycle 16,
+        // `scripts/retro.py correction` -- this test previously asserted `max(1)` refuses, a
+        // pinned wrong assumption: real PCGen's `MaxCommand.java` is variable-arity and a
+        // single-argument call is valid, returning that argument unchanged. See
+        // `single_argument_min_max_now_matches_the_oracles_variable_arity_max_min_command` below
+        // for the corrected, proven property.
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 16: corrects `wrong_arg_counts_refuse`'s own prior wrong
+    /// assumption that `max(1)` refuses. Verified directly against the pinned oracle,
+    /// `plugin/jepcommands/MaxCommand.java` (`numberOfParameters = -1`, `run()`'s `first ||
+    /// param > result` fold returns the sole parameter unchanged when there is only one) and its
+    /// mirror `MinCommand.java` -- both genuinely variable-arity, accepting 1 argument. Also
+    /// proves the real corpus shape this closes: `Cavalier Order of the Beast ~ Class Skills`'s
+    /// own `max(floor(CavalierLVL/2))`.
+    #[test]
+    fn single_argument_min_max_now_matches_the_oracles_variable_arity_max_min_command() {
+        let e = PcgenFormulaEvaluator;
+        assert_eq!(e.evaluate("max(7)", &BTreeMap::new()).unwrap(), 7);
+        assert_eq!(e.evaluate("min(7)", &BTreeMap::new()).unwrap(), 7);
+        assert_eq!(
+            e.evaluate("max(floor(CavalierLVL/2))", &vars(&[("CavalierLVL", 9)])).unwrap(),
+            4
+        );
     }
 
     #[test]
