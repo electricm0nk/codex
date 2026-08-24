@@ -213,14 +213,21 @@ class ClassifierReclassifiedUnitsTest(unittest.TestCase):
             {"id": "core_rulebook:class_feature:fab_no_evidence", "book": "core_rulebook",
              "kind": "class_feature", "wiring_class": "display", "status": "grounded",
              "evidence": "some_other_evidence_string"},
-            # Excluded book -- must NOT reclassify even though it otherwise matches.
-            {"id": "beginner_box:class_feature:fab_excluded", "book": "beginner_box",
+            # A book living in EXCLUDED_BOOKS -- must NOT reclassify even
+            # though it otherwise matches. `EXCLUDED_BOOKS` is empty by
+            # default since 2026-08-24 (`decisions.md §27b`: no carve-outs
+            # survive), so this case patches it in for the duration of this
+            # test to prove the inline `book not in EXCLUDED_BOOKS` guard
+            # still works for a FUTURE, genuinely admissible exclusion --
+            # it does not assert any particular book stays excluded.
+            {"id": "test_excluded_book:class_feature:fab_excluded", "book": "test_excluded_book",
              "kind": "class_feature", "wiring_class": "display", "status": "grounded",
              "evidence": self._EVIDENCE},
         ]
-        summary = producer.compute_wiring_class_summary(
-            doc_path=self._doc(units), cache_path=self.cache_path
-        )
+        with unittest.mock.patch.object(producer, "EXCLUDED_BOOKS", frozenset({"test_excluded_book"})):
+            summary = producer.compute_wiring_class_summary(
+                doc_path=self._doc(units), cache_path=self.cache_path
+            )
         record = summary.get("classifier_reclassified_units")
         self.assertIsNotNone(record, "classifier_reclassified_units missing from the cache")
         self.assertEqual(record["reclassified_to"], "computed")

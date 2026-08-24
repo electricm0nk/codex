@@ -58,7 +58,14 @@ UNIT_UNMEASURABLE_FEAT = _unit("book_a:feat:beta", "feat", "book_a", "unknown", 
 UNIT_DEFERRED_CF = _unit("book_a:class_feature:gamma", "class_feature", "book_a", "deferred-with-reason", "derived")
 UNIT_HELD_SPELL = _unit("book_b:spell:delta", "spell", "book_b", "grounded", "static")
 UNIT_DONE_EQUIPMENT = _unit("book_b:equipment:epsilon", "equipment", "book_b", "literal-verified", "static")
-UNIT_EXCLUDED_BOOK = _unit("beginner_box:feat:zeta", "feat", "beginner_box", "not-started", "static")
+# A book living in `excluded_books` -- used only by the dedicated exclusion
+# tests below via an EXPLICIT `excluded_books` argument, never via
+# `not_done_population()`'s default. `EXCLUDED_BOOKS` itself is empty by
+# default since 2026-08-24 (`decisions.md §27b`: no carve-outs survive), so
+# this fixture must not sit in `ALL_UNITS` -- doing so would make every
+# other test in this file silently depend on a book staying excluded by
+# default, exactly the drift `§27b` closed.
+UNIT_EXCLUDED_BOOK = _unit("test_excluded_book:feat:zeta", "feat", "test_excluded_book", "not-started", "static")
 
 ALL_UNITS = [
     UNIT_NOT_STARTED_RACE,
@@ -66,7 +73,6 @@ ALL_UNITS = [
     UNIT_DEFERRED_CF,
     UNIT_HELD_SPELL,
     UNIT_DONE_EQUIPMENT,
-    UNIT_EXCLUDED_BOOK,
 ]
 
 
@@ -75,7 +81,7 @@ def _inventory(units):
 
 
 class NotDonePopulationTest(unittest.TestCase):
-    def test_done_and_excluded_book_units_are_dropped(self):
+    def test_done_units_are_dropped(self):
         pop = CL.not_done_population(_inventory(ALL_UNITS))
         ids = {u["id"] for u in pop}
         self.assertEqual(
@@ -88,7 +94,85 @@ class NotDonePopulationTest(unittest.TestCase):
             },
         )
         self.assertNotIn(UNIT_DONE_EQUIPMENT["id"], ids, "done units must never enter the population")
-        self.assertNotIn(UNIT_EXCLUDED_BOOK["id"], ids, "EXCLUDED_BOOKS units must never enter the population")
+
+    def test_default_excluded_books_is_empty_so_no_book_is_hidden_by_default(self):
+        """Direct regression for the closed `beginner_box` carve-out
+        (`decisions.md §27b`, 2026-08-24): a book that is genuinely
+        not-done must be counted, not silently dropped, unless SOMETHING
+        explicitly names it as excluded. Before this closure,
+        `not_done_population()`'s default `excluded_books` was
+        `frozenset(P.EXCLUDED_BOOKS)` == `frozenset({"beginner_box"})`, so a
+        not-done `beginner_box` unit disappeared from this exact population
+        with no caller having to ask for that. Proven RED against the old
+        behavior: reverting `EXCLUDED_BOOKS` to `{"beginner_box"}` makes
+        this assertion fail (the unit below vanishes from `pop`) even
+        though nothing in this test names an exclusion."""
+        a_not_yet_ingested_book_unit = _unit(
+            "some_future_book:equipment:whatever", "equipment",
+            "some_future_book", "not-started", "static")
+        pop = CL.not_done_population(_inventory([a_not_yet_ingested_book_unit]))
+        ids = {u["id"] for u in pop}
+        self.assertIn(
+            a_not_yet_ingested_book_unit["id"], ids,
+            "a not-done unit from a book nobody named as excluded must "
+            "enter the population -- no book is excluded by default",
+        )
+
+    def test_excluded_books_argument_still_works_when_explicitly_passed(self):
+        """The exclusion mechanism itself is not deleted -- only its
+        default is empty. A FUTURE, genuinely admissible exclusion (source
+        data absent, or licensing forbids shipping) can still be passed
+        explicitly by a caller that has one."""
+        pop = CL.not_done_population(
+            _inventory(ALL_UNITS + [UNIT_EXCLUDED_BOOK]),
+            excluded_books=frozenset({"test_excluded_book"}),
+        )
+        ids = {u["id"] for u in pop}
+        self.assertNotIn(
+            UNIT_EXCLUDED_BOOK["id"], ids,
+            "an explicitly-passed excluded_books entry must still be dropped",
+        )
+
+
+class ExcludedBooksNeedsDeclaredAdmissibleReasonTest(unittest.TestCase):
+    """The mechanism `decisions.md §27b` asked for: no hardcoded book/kind
+    exclusion may gate a closure figure without a declared, admissible
+    reason. `pf1e_dashboard_producer.py` enforces this at IMPORT time (an
+    assertion right after `EXCLUDED_BOOKS_REASONS` is declared), so this
+    test re-derives the same invariant against the live module rather than
+    re-asserting the module imported cleanly (which only proves today's
+    state, not that a future edit re-adding a bare entry to `EXCLUDED_BOOKS`
+    without a reason would be caught)."""
+
+    def test_every_excluded_book_has_an_admissible_declared_reason(self):
+        missing = set(CL.P.EXCLUDED_BOOKS) - set(CL.P.EXCLUDED_BOOKS_REASONS)
+        self.assertEqual(
+            missing, set(),
+            f"EXCLUDED_BOOKS entries with no declared reason: {missing}",
+        )
+        inadmissible = {
+            book: reason
+            for book, reason in CL.P.EXCLUDED_BOOKS_REASONS.items()
+            if reason not in CL.P.ADMISSIBLE_EXCLUSION_REASONS
+        }
+        self.assertEqual(
+            inadmissible, {},
+            f"EXCLUDED_BOOKS_REASONS entries outside the admissible set: {inadmissible}",
+        )
+
+    def test_a_bare_exclusion_with_no_reason_is_caught_at_import_time(self):
+        """Proves the guard is load-bearing, not merely present: construct
+        the exact defect this closure fixed (a book added to EXCLUDED_BOOKS
+        with no paired reason) and confirm the module-level assertion
+        pattern actually raises for it, rather than trusting the assertion
+        exists without ever seeing it fire."""
+        excluded = frozenset({"some_future_carve_out"})
+        reasons: dict[str, str] = {}
+        with self.assertRaises(AssertionError):
+            assert set(excluded) <= set(reasons), (
+                "EXCLUDED_BOOKS entries missing a declared reason in "
+                f"EXCLUDED_BOOKS_REASONS: {sorted(set(excluded) - set(reasons))}"
+            )
 
 
 class LoadClassificationTableValidationTest(unittest.TestCase):

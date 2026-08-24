@@ -757,8 +757,12 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
     # ever did. Only the SIZE of what core_essentials legitimately owns has
     # changed, not the decision to show it.
     #
-    # `beginner_box` stays excluded -- 19 units, a genuinely simplified
-    # intro subset, the original 2026-08-02 rationale still holds for it.
+    # `beginner_box` is NO LONGER excluded (closed 2026-08-24, `decisions.md
+    # §27b`) -- see `EXCLUDED_BOOKS`'s own declaration for the full
+    # derivation. Its 19 equipment units now flow into every figure below
+    # like any other not-started population, which is the honest state:
+    # real records this dashboard was previously hiding from its own
+    # denominators, not a book with no source data to show.
     #
     # Filtered HERE rather than in `v06_work_inventory` on purpose (unchanged
     # from the original directive). `core_essentials`'s directories remain
@@ -3480,17 +3484,62 @@ _CATEGORY_GROUP_KEY_ALIASES = {
     "racialtrait": "racialtraits",
 }
 
-# Operator directive 2026-08-02 (see the long comment in work_inventory_panel
-# below for the `core_essentials` reversal history): `beginner_box` is a
-# genuinely simplified intro subset, 19 units, ruled out of scope for this
-# dashboard. Every corpus-wide figure this producer emits must exclude it --
-# by_status, by_kind, by_wiring_class, by_doneness, by_doneness_kind,
-# cross_tab, and the unit-search shard index all read from this one constant
-# so a book cannot silently stay excluded from some rollups and not others
-# the way `cross_tab` and `build_unit_shards()` did in round 1 (SD-29 QA
-# findings #7/#8, round 2, 2026-08-12: both drifted from this set and their
-# totals stopped matching the by-lane figures by exactly beginner_box's count).
-EXCLUDED_BOOKS = {"beginner_box"}
+# CLOSED 2026-08-24 (`decisions.md §27b`, operator ruling 2026-08-23:
+# "EVERYTHING" -- no carve-outs survive). This constant used to read
+# `{"beginner_box"}` on a 2026-08-02 operator directive ("genuinely
+# simplified intro subset ... ruled out of scope"). That directive did not
+# survive §27b: the only admissible reasons a unit may sit outside every
+# closure figure are a hard impossibility -- the source data does not
+# exist, or licensing forbids shipping it -- and neither holds for
+# `beginner_box`. Its 19 equipment units are real, declared records sourced
+# from the pinned PCGen oracle's own `bbox_equip_magic_items.lst` /
+# `bbox_equip_arms_armor.lst` (`data/pathfinder/paizo/roleplaying_game/
+# beginner_box/`, verified present at `PCGEN_ORACLE_SHA`
+# 7f818006e371188e5717fd18d74d18a420747fc6) -- "genuinely simplified" is a
+# cost/awkwardness judgment, exactly what §27b names as inadmissible. They
+# were already flowing into `docs/work-inventory.json` as `not-started`
+# units (evidence `no_compiled_rule_set_for_book`); the carve-out lived
+# ONLY in this dashboard-reporting layer, hiding them from every
+# denominator rather than reporting them honestly as not-done. Kept empty
+# now rather than deleted so the mechanism survives for a FUTURE
+# genuinely-admissible exclusion -- but any future entry here must carry a
+# paired, admissible reason in `EXCLUDED_BOOKS_REASONS` below, checked at
+# import time, so the next carve-out cannot hide silently in code the way
+# this one did (`decisions.md §27b`'s own diagnosis: "it survived every
+# prose sweep because it lives in Python rather than in a document").
+#
+# Historical note (why this constant exists at all): every corpus-wide
+# figure this producer emits reads from this one constant -- by_status,
+# by_kind, by_wiring_class, by_doneness, by_doneness_kind, cross_tab, and
+# the unit-search shard index -- so a book cannot silently stay excluded
+# from some rollups and not others the way `cross_tab` and
+# `build_unit_shards()` did in round 1 (SD-29 QA findings #7/#8, round 2,
+# 2026-08-12: both drifted from this set and their totals stopped matching
+# the by-lane figures by exactly beginner_box's count).
+EXCLUDED_BOOKS: frozenset[str] = frozenset()
+
+# The only reasons `decisions.md §27b` admits for a book to sit in
+# EXCLUDED_BOOKS. Anything else is a cost/awkwardness/novelty judgment and
+# must be escalated for an operator ruling instead, per the same decision.
+ADMISSIBLE_EXCLUSION_REASONS = frozenset({
+    "source_data_absent",
+    "licensing_forbids_shipping",
+})
+
+# book -> admissible reason. Every key of EXCLUDED_BOOKS must appear here
+# with a value drawn from ADMISSIBLE_EXCLUSION_REASONS; the assertion right
+# below enforces it at import time so a future carve-out cannot be added to
+# EXCLUDED_BOOKS alone without also declaring, in writing, why it qualifies.
+EXCLUDED_BOOKS_REASONS: dict[str, str] = {}
+
+assert set(EXCLUDED_BOOKS) <= set(EXCLUDED_BOOKS_REASONS), (
+    "EXCLUDED_BOOKS entries missing a declared reason in "
+    f"EXCLUDED_BOOKS_REASONS: {sorted(set(EXCLUDED_BOOKS) - set(EXCLUDED_BOOKS_REASONS))}"
+)
+assert all(reason in ADMISSIBLE_EXCLUSION_REASONS for reason in EXCLUDED_BOOKS_REASONS.values()), (
+    "EXCLUDED_BOOKS_REASONS carries a reason outside "
+    f"ADMISSIBLE_EXCLUSION_REASONS: {EXCLUDED_BOOKS_REASONS}"
+)
 
 # ---------------------------------------------------------------------------
 # wiring_class aggregation (added 2026-08-07, per GE-09
