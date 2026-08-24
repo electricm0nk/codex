@@ -767,9 +767,15 @@ fn gen_pathfinder_unchained() {
         }
     }
     if out_root.join("equipment").exists() {
-        // Single writer of `advanced_race_guide/equipment/` (verified: no
-        // other `cache_gen` module registers `advanced_race_guide` for the
-        // `equipment` kind -- SD-32 cross-generator sweep, 2026-08-23).
+        // Single writer of `pathfinder_unchained/equipment/` (verified: no
+        // other `cache_gen` module registers `pathfinder_unchained` for the
+        // `equipment` kind -- SD-32 cross-generator sweep, 2026-08-23; this
+        // comment's book name corrected 2026-08-24 -- it named
+        // `advanced_race_guide`, copy-pasted from a sibling call site, but
+        // this call site is inside `gen_pathfinder_unchained()`. The
+        // underlying verification (no other writer of THIS function's own
+        // `out_root.join("equipment")`) was already correct; only the
+        // comment's book name was wrong).
         codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("equipment"),
             &current_equipment_keys,
@@ -1155,17 +1161,27 @@ fn gen_advanced_race_guide() {
             None => feat_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),
         }
     }
-    if out_root.join("feat").exists() {
-        // Single writer of `pathfinder_unchained/feat/` (verified: neither
-        // `cache_gen::feat_gap` nor `cache_gen::hand_authored_feat_dump`
-        // registers `pathfinder_unchained` -- SD-32 cross-generator sweep,
-        // 2026-08-23), so an unscoped citation predicate is safe here.
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
-            &out_root.join("feat"),
-            &current_feat_keys,
-            &|_path, _line| true,
-        );
-    }
+    // **SD-32 Epic 5 protective sweep correction (2026-08-24), live-reproduced
+    // against the real pinned corpus**: the previous stale-key sweep here
+    // (`remove_stale_owned_files` with an unscoped `|_p,_l| true` predicate)
+    // carried a comment claiming "Single writer of `pathfinder_unchained/feat/`"
+    // -- the WRONG book, copy-pasted from `gen_pathfinder_unchained`'s own
+    // identical call above and never re-verified for `advanced_race_guide`.
+    // `cache_gen::feat_gap::FEAT_GAP_BOOKS` DOES register `advanced_race_guide`
+    // (it writes gap-filled feat records this generator's own curated
+    // `feat_tables()` list does not model, into this SAME `feat/` directory,
+    // parsed from the SAME `arg_feats.lst`). Reproduced live: one run deleted
+    // 48 real `cache_gen::feat_gap` records (e.g.
+    // `data/corpus/advanced_race_guide/feat/angelic_flesh_brazen.json`,
+    // `source.path` = `arg_feats.lst`, a flat top-level file -- never under
+    // this generator's own `feat/<category_slug>/` nesting) -- reverted
+    // immediately (`git checkout -- data/corpus`), never committed. No
+    // stale-key sweep here now, same carve-out already used for `equipment`
+    // just above (`cache_gen::equipment_gap`'s own 15 records) and for the
+    // identical reason: this generator can never regenerate a sibling
+    // generator's own gap-filled records, so it must never delete one either.
+    // A record already on disk is left alone via the `exists()` guard above;
+    // nothing here removes what this run does not itself own.
 
     let total = spell_written + equipment_written + feat_written;
 
