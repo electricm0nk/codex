@@ -150,13 +150,52 @@ fn every_cached_record_is_valid_json_matching_shape_b() {
 fn class_cache_has_exactly_one_record_per_real_class_id() {
     let root = cache_root().join("class");
     let files = json_files_under(&root);
+
+    // `scripts/ingest_class.py` (commit 033068f0cf, SD-32 T9 wave 2,
+    // `decisions.md §20` no_record closure: "class 157->21 (136 closed)")
+    // is a SECOND generator writing into this SAME `class/` directory this
+    // test was written before it existed -- the identical shape
+    // `equipment_cache_deduplicates_equipmods_and_covers_the_other_three_
+    // categories` below already documents for `equipment_gap_tables`'s CRB
+    // residue. It transcribes the 17 real, oracle-cited `cr_classes.lst`
+    // rows the live `ClassId` enum deliberately never models -- NPC
+    // classes (adept, aristocrat, commoner, expert, warrior) and
+    // prestige/variant classes (arcane_archer, arcane_trickster, assassin,
+    // dragon_disciple, duelist, eldritch_knight, ex_barbarian, ex_paladin,
+    // loremaster, mystic_theurge, pathfinder_chronicler, shadowdancer) --
+    // as a generic `key`/`raw_tokens` dump, because `ClassCacheData`'s
+    // structured `class_id`/`bab`/`save_*` shape only applies to classes
+    // with a `pilot_compute.rs` chassis formula seam (this file's own
+    // header comment, line 3-9). **17**, exact: `git show 033068f0cf
+    // --stat -- data/corpus/core_rulebook/class/` -> 17 files changed, all
+    // additions, 0 modified/removed.
+    const INGEST_CLASS_PY_CRB_NPC_AND_PRESTIGE_ADDITIONS: usize = 17;
+
+    let base_class_names: HashSet<String> =
+        ClassId::ALL.iter().map(|c| format!("{c:?}").to_lowercase()).collect();
+    let (base_files, extra_files): (Vec<&PathBuf>, Vec<&PathBuf>) = files.iter().partition(|p| {
+        p.file_stem()
+            .and_then(|s| s.to_str())
+            .map(|s| base_class_names.contains(s))
+            .unwrap_or(false)
+    });
+
     assert_eq!(
         files.len(),
-        ClassId::ALL.len(),
-        "class cache record count should match the live ClassId::ALL roster"
+        ClassId::ALL.len() + INGEST_CLASS_PY_CRB_NPC_AND_PRESTIGE_ADDITIONS,
+        "class cache record count should match the live ClassId::ALL roster PLUS the \
+         scripts/ingest_class.py NPC/prestige/variant residue (see this test's own comment above)"
     );
+    assert_eq!(
+        base_files.len(),
+        ClassId::ALL.len(),
+        "expected exactly one ClassCacheData-shaped record per live ClassId::ALL entry \
+         (filename must match a ClassId::ALL member, lowercased)"
+    );
+    assert_eq!(extra_files.len(), INGEST_CLASS_PY_CRB_NPC_AND_PRESTIGE_ADDITIONS);
+
     let mut seen_class_ids: HashSet<String> = HashSet::new();
-    for path in &files {
+    for path in &base_files {
         let text = fs::read_to_string(path).unwrap();
         let record: CorpusRecord<ClassCacheData> =
             serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} failed to deserialize as a class record: {e}"));
@@ -172,6 +211,24 @@ fn class_cache_has_exactly_one_record_per_real_class_id() {
         assert!(
             seen_class_ids.contains(&name),
             "expected a cached record for class {name}"
+        );
+    }
+
+    // Light shape check on the NPC/prestige residue -- real, in-scope,
+    // valid JSON carrying at least an identity field. NOT re-validated
+    // against `ClassCacheData`'s structured chassis schema, which these
+    // classes legitimately do not carry (see comment above).
+    for path in &extra_files {
+        let text = fs::read_to_string(path).unwrap();
+        let value: serde_json::Value =
+            serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not valid JSON: {e}"));
+        assert_eq!(
+            value["population"], "in_scope",
+            "{path:?}: expected in_scope population"
+        );
+        assert!(
+            value["data"]["key"].is_string(),
+            "{path:?}: expected a string data.key identity field"
         );
     }
 }
@@ -234,7 +291,23 @@ fn equipment_cache_deduplicates_equipmods_and_covers_the_other_three_categories(
     // test was written before that generator existed, the same shape
     // `pi_screening_regeneration_round_trip.rs`'s
     // `KNOWN_EXTRA_ON_DISK_FROM_A_DIFFERENT_GENERATOR` names for ACG.
-    const EQUIPMENT_GAP_TABLE_CRB_ADDITIONS: usize = 330;
+    // **+2, SD-32 `726fcdfb69`** (`decisions.md §20`, "equipment_modifier
+    // 6->4"): 2 more genuinely distinct `.COPY=`-named equipmods rows
+    // (citations 895/890, "Intelligent Item Purpose (Slay All)" /
+    // "(Slay Creature Type)") that used to slug-collide with an
+    // already-shipped base declaration -- real, oracle-cited, correctly
+    // split apart, not a regression. All 332 of this generator's residue
+    // records carry `data.category == "Equipmods"` (capitalized; the
+    // hand-authored 344 carry lowercase `"equipmods"` -- confirmed via
+    // `python3 -c "import json,glob; from collections import Counter; \
+    // c=Counter(json.load(open(f))['data'].get('category') for f in \
+    // glob.glob('data/corpus/core_rulebook/equipment/equipmods/*.json')); \
+    // print(c)"` -> `Counter({'equipmods': 344, 'Equipmods': 332})`), so
+    // this generator's residue is disjoint from, and never double-counted
+    // by, the `unique_cached_equipmods`/`live_unique_equipmods_keys`
+    // dedup check below (which filters on the lowercase literal only).
+    // 330 + 2 = 332.
+    const EQUIPMENT_GAP_TABLE_CRB_ADDITIONS: usize = 332;
     let expected_total =
         live_non_equipmods + live_unique_equipmods_keys.len() + EQUIPMENT_GAP_TABLE_CRB_ADDITIONS;
 

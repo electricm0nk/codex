@@ -609,7 +609,24 @@ impl RaceCorpus {
                 // Cross-record, so not knowable here; filled by
                 // `load_race_corpus`'s post-load pass.
                 granted_by_trait_key: None,
-                description_redacted: record.pi_field.as_deref() == Some("description")
+                // `pi_field` is a comma-joined list when more than one field
+                // was redacted (`ingest_race_traits.rs`'s own
+                // `raw_tokens`-widening idiom: `f.split(',').any(|p| p ==
+                // "raw_tokens")`) -- a record whose `raw_tokens` ALSO carried
+                // PI (concatenated-identifier scan hits) stores
+                // `"description,raw_tokens"`, not the bare `"description"`
+                // this used to require byte-for-byte. An exact-equals check
+                // here silently returned `false` for such a record even
+                // though its `description` field genuinely is the marker,
+                // which is exactly the class of defect this field's own doc
+                // comment above describes (redaction "live and ineffective"
+                // on the rendered surface) -- `render_description` would
+                // fall through to the `DESC:` raw-token path for a record
+                // this repo's OWN generator already knows is redacted.
+                description_redacted: record
+                    .pi_field
+                    .as_deref()
+                    .is_some_and(|f| f.split(',').any(|part| part == "description"))
                     && record.pi_marker.as_deref()
                         == Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED),
                 source_path,
