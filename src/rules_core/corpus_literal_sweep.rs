@@ -443,6 +443,38 @@ fn compare_typed_numeric_field(
 ///   [`SweepTally::codex_generated_name_records_exempted`]), so the gate log
 ///   states how many tokens it excused and in how many records
 ///   (`§22`'s divergence-must-be-visible condition, `§24b`-4).
+///
+/// **A fourth, sibling exemption for the same `§24` shape (t9-onboarding,
+/// corpus-literal-sweep-remainder cycle): a self-referential token whose
+/// redaction is the NEUTRAL NAME, not the bare marker.** `KEY`/`TYPE`/`DESC`
+/// redact to the literal [`REDACTED_PI_MARKER`] sentinel (the third
+/// exemption above), but a token whose semantic content IS the record's own
+/// name used mechanically -- `BONUS:ABILITYPOOL|<name>|1|TYPE=Base` (the
+/// ability's own pool, conventionally named after the ability),
+/// `PREMULT:1,[PREABILITY:1,CATEGORY=...,<name>],...` (a prerequisite
+/// referencing this same ability by name), `ABILITY:...|<parent name> ~
+/// <child name>|...` (a namespaced child ability under this record's own
+/// renamed parent key) -- cannot redact to the bare marker without shipping
+/// a value the compute engine cannot read as a pool/ability name at all.
+/// These generators correctly substitute the record's own neutral name in
+/// place of the original, which by construction still differs from the real
+/// corpus row's same-key value (the real row still carries the original PI
+/// name there) -- reproduced live re-deriving this sweep against the pinned
+/// oracle: 15 findings across 6 records
+/// (`adventurers_guide`/`inner_sea_gods`/`inner_sea_magic`/
+/// `inner_sea_world_guide`, `class_feature`/`trait_generic`/`feat_generic`),
+/// every one a `codex_generated_name: true` record whose flagged token's
+/// value contains that same record's own neutral name as a substring.
+/// Exempt ONLY when the token's value contains one of the record's own
+/// `identities` (`data.key`/`data.name`/`source.record_key`, all equal to
+/// the neutral name on a `§24` record) as a substring -- narrower than the
+/// third exemption in scope (a substring match, not exact) but identically
+/// narrow in gating (only `codex_generated_name` records, only a
+/// self-referential token, counted the same way, never silent). A token
+/// that drifts for an unrelated reason and does not reference the record's
+/// own renamed identity anywhere in its value is still compared and still
+/// reported
+/// (`a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token`).
 pub fn compare_tokens(
     record: &ShippedRecord,
     closure: &BTreeSet<String>,
@@ -475,6 +507,37 @@ pub fn compare_tokens(
         // carrying the record's own `codex_generated_name: true` marker,
         // and count it -- the divergence stays visible, never silent.
         if record.codex_generated_name && token.value == REDACTED_PI_MARKER {
+            tally.codex_generated_name_tokens_exempted += 1;
+            tally.codex_generated_name_records_exempted.insert(record.record_path.clone());
+            continue;
+        }
+        // A second §24 shape (t9-onboarding, corpus-literal-sweep-remainder
+        // cycle): a self-referential token that names the record's OWN
+        // ability/pool/prerequisite by its own key is not redacted to the
+        // bare marker at all -- it is redacted the way `§24b` actually
+        // requires content to ship usably: the neutral name is substituted
+        // IN PLACE of the original name, embedded inside an otherwise
+        // ordinary, mechanically-real token (`BONUS:ABILITYPOOL|<neutral
+        // name>|1|TYPE=Base`, `PREMULT:1,[PREABILITY:1,CATEGORY=...,<neutral
+        // name>],...`, `ABILITY:...|<neutral name> ~ Costume
+        // Proficiency|...` for a child ability namespaced under the
+        // renamed parent). Stamping the bare marker into `BONUS:`/`ABILITY:`
+        // would ship a value the compute engine cannot read as a pool/ability
+        // name at all -- substituting the neutral name is the correct
+        // shape, not a defect, and the real corpus closure's same-key row
+        // necessarily differs by exactly the name substring (the real row
+        // still carries the original PI name there). Exempt ONLY when the
+        // token's value contains one of the record's OWN identities
+        // (`data.key`/`data.name`/`source.record_key`, all equal to the
+        // neutral name on a codex_generated_name record) as a substring --
+        // narrow by construction: a token that merely happens to drift for
+        // an unrelated reason, with no self-reference to the record's own
+        // renamed identity anywhere in its value, is still compared and
+        // still reported (see
+        // `a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token`).
+        if record.codex_generated_name
+            && record.identities.iter().any(|identity| !identity.is_empty() && token.value.contains(identity.as_str()))
+        {
             tally.codex_generated_name_tokens_exempted += 1;
             tally.codex_generated_name_records_exempted.insert(record.record_path.clone());
             continue;
@@ -996,6 +1059,83 @@ mod tests {
             "the sentinel value alone, on a record NOT marked codex_generated_name, must still be a finding"
         );
         assert_eq!(tally.codex_generated_name_tokens_exempted, 0);
+    }
+
+    /// The fourth `§24` exemption (t9-onboarding, corpus-literal-sweep-
+    /// remainder cycle): a self-referential token whose redaction is the
+    /// record's own NEUTRAL NAME embedded inside an otherwise-mechanical
+    /// value, not the bare marker -- `BONUS:ABILITYPOOL|<name>|1|TYPE=Base`,
+    /// a `PREMULT:` prerequisite naming this same ability, and an `ABILITY:`
+    /// child namespaced under this record's own renamed parent key. All
+    /// three reproduce the live shape found re-deriving this sweep against
+    /// the pinned oracle (15 findings / 6 records before this fix).
+    #[test]
+    fn a_self_referential_token_containing_the_records_own_neutral_name_is_exempt() {
+        let mut rec = record(&[
+            ("KEY", "Codex-Named Unit (class_feature_x_1)"),
+            ("BONUS", "ABILITYPOOL|Codex-Named Unit (class_feature_x_1)|1|TYPE=Base"),
+            (
+                "PREMULT",
+                "1,[PREABILITY:1,CATEGORY=Special Ability,Codex-Named Unit (class_feature_x_1)]",
+            ),
+            (
+                "ABILITY",
+                "Special Ability|AUTOMATIC|Codex-Named Unit (class_feature_x_1) ~ Costume Proficiency|PRECLASS:1,Bard=5",
+            ),
+            ("COST", "5"),
+        ]);
+        rec.codex_generated_name = true;
+        rec.identities = ["Codex-Named Unit (class_feature_x_1)".to_string()].into_iter().collect();
+        let rows = [
+            "Thing\tKEY:The Real PI Name\tBONUS:ABILITYPOOL|The Real PI Name|1|TYPE=Base\
+             \tPREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,The Real PI Name]\
+             \tABILITY:Special Ability|AUTOMATIC|The Real PI Name ~ Costume Proficiency|PRECLASS:1,Bard=5\
+             \tCOST:5",
+        ];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![],
+            "every token that merely restates the record's own renamed identity must be exempt"
+        );
+        assert_eq!(
+            tally.codex_generated_name_tokens_exempted, 4,
+            "KEY, BONUS, PREMULT, and ABILITY all self-reference the renamed identity; COST is a \
+             real byte-match, not an exemption"
+        );
+        assert_eq!(tally.codex_generated_name_records_exempted.len(), 1);
+    }
+
+    /// Narrowness proof for the fourth exemption: a token on a
+    /// `codex_generated_name: true` record that drifts for a reason
+    /// UNRELATED to the record's own renamed identity -- it neither reads
+    /// the bare marker nor contains the identity substring anywhere -- must
+    /// still be reported. A `§24` record cannot smuggle an unrelated defect
+    /// through by merely containing some OTHER self-reference elsewhere.
+    #[test]
+    fn a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token() {
+        let mut rec = record(&[
+            ("KEY", "Codex-Named Unit (class_feature_x_1)"),
+            ("COST", "50"),
+        ]);
+        rec.codex_generated_name = true;
+        rec.identities = ["Codex-Named Unit (class_feature_x_1)".to_string()].into_iter().collect();
+        let rows = ["Thing\tKEY:The Real PI Name\tCOST:5"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "COST:50".to_string(),
+            }],
+            "a drifted COST token with no self-reference to the renamed identity must still be \
+             reported, even though the record is §24-renamed"
+        );
+        assert_eq!(tally.codex_generated_name_tokens_exempted, 1, "only KEY self-referenced");
     }
 
     #[test]

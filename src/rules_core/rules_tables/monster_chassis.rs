@@ -1110,7 +1110,7 @@ mod tests {
              per `decisions.md §17a`."
         );
         assert_eq!(
-            digest, 0x8b2c_a909_f967_5cd5,
+            digest, 0x874e_04c1_47ee_bb76,
             "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
              `Communicate` may only be reached by rows that previously raised \
              `parse_type`'s SystemExit — if this fires, some already-shipped \
@@ -1159,7 +1159,29 @@ mod tests {
              branch) — zero reclassification: every one of the 57 was previously ABSENT from \
              the set entirely (raised `UnmodelledDesc` and was dropped, never shipped under a \
              different facet), so no existing triple's facet/delivery value changed; re-derived \
-             live from this test's own failing run, never guessed, per `decisions.md §17a`."
+             live from this test's own failing run, never guessed, per `decisions.md §17a`. \
+             0x8b2ca909f9675cd5 -> 0x874e04c147eebb76 (t9-onboarding, \
+             corpus-literal-sweep-remainder cycle, round 10): the FIRST round where the triple \
+             COUNT above does not move (3806 -> 3806) yet the digest does — because this round is \
+             a genuine, DELIBERATE reclassification of 4 already-shipped triples, not an \
+             addition. `f76242cc69` (row 17's own closure cycle, `decisions.md §27`/`§27a`/ \
+             `§27b`) individually re-derived each of the 23 `§27`-provisional-default \
+             `monster_ability` units against corpus/oracle evidence and found 4 of them \
+             genuinely `SpecialAttack`, not the provisional `SpecialQuality` default they had \
+             shipped under: `bestiary_2 ~ Aurumvorax ~ Rake`, `bestiary_2 ~ Bunyip ~ Blood \
+             Rage`, `bestiary_2 ~ Yrthak ~ Sonic Lance`, `bestiary_2 ~ Howler ~ Abyssal Strike` \
+             — each corroborated by a genuinely-declared sibling record per that commit's own \
+             message, applied through the newly-sanctioned `_MONSTER_ABILITY_FACET_OVERRIDES` \
+             mechanism in `transcribe_monster_tables.py`, not by hand-editing `monster_data.rs`, \
+             and mutation-proved live (`§1a`) in that same cycle. This is exactly the class of \
+             change this test's own doc comment (`decisions.md §16`) exists to CATCH when it is \
+             an ACCIDENT of careless vocabulary widening — it is not that here: it is the \
+             intended, evidence-backed output of the row 17 categorization epic itself, verified \
+             per-record against the pinned oracle rather than asserted, and it is the reason the \
+             count assert above stays fixed at 3806 while this digest alone moves. Re-derived \
+             live from this test's own failing run at HEAD (`f76242cc69`, already merged to \
+             `origin/tranche/12` — this cycle only updates the stale ratchet pin left behind), \
+             never guessed, per `decisions.md §17a`."
         );
     }
 }
