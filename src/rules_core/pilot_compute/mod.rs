@@ -13167,6 +13167,25 @@ fn ground_cavalier_named_features(
         explanations,
     );
 
+    // SD-32 T12 Epic 8 row 18 cycle 15: the sibling generic pass for the DIFFERENT corpus shape
+    // cycle 14's own §16 finding named -- Order of the Beast's two members carry no BONUS:VAR at
+    // all but DO carry a real %N-substituted DESC formula, a shape the resolver above
+    // (bonus_vars-only) can never reach. No hand-modelled Order of the Beast function exists, so
+    // there is no exclusion list here (unlike Warpriest's own Destruction/Strength).
+    push_generic_pool_group_selection_description_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        CAVALIER_ORDER_CHOICE_ID,
+        "Cavalier",
+        "Order",
+        "order:",
+        "class_feature.apg.cavalier.order_description.generic",
+        1,
+        &[],
+        explanations,
+    );
+
     let order_selected = input
         .chosen
         .selected_choices
@@ -19062,6 +19081,29 @@ fn ground_or_block_warpriest_class_features(
         "blessing:",
         "class_feature.acg.warpriest.blessing.generic",
         1,
+        explanations,
+    );
+
+    // SD-32 T12 Epic 8 row 18 cycle 15: the sibling generic pass for the DIFFERENT corpus shape
+    // cycle 14's own §16 finding named -- 6 real Blessing groups (Earth, Trickery, Rune,
+    // Protection, Repose, Knowledge) carry no BONUS:VAR at all but DO carry a real
+    // %N-substituted DESC formula, a shape the resolver above (bonus_vars-only) can never reach.
+    // Destruction and Strength are excluded (`already_hand_modelled_keys`) -- both already
+    // grounded above by name, with activation-state gating this generic pass cannot reproduce.
+    push_generic_pool_group_selection_description_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        WARPRIEST_BLESSING_CHOICE_ID,
+        "Warpriest",
+        "Blessing",
+        "blessing:",
+        "class_feature.acg.warpriest.blessing_description.generic",
+        1,
+        &[
+            "Destruction Blessing ~ Destructive Attacks",
+            "Strength Blessing ~ Strength Surge",
+        ],
         explanations,
     );
 
@@ -39678,6 +39720,86 @@ fn push_generic_pool_group_selection_magnitude(
                      after resolving the recorded {choice_set_id} -> {selection_id} selection to \
                      its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
                      pool-group-selection magnitude resolver)."
+                ),
+            });
+        }
+    }
+}
+
+/// The sibling of [`push_generic_pool_group_selection_magnitude`] for the DIFFERENT corpus shape
+/// cycle 14's own `§16` finding named and refused to force through the wrong resolver (SD-32 T12
+/// Epic 8 row 18 cycle 15): a pool member with an EMPTY `bonus_vars` (so `resolve_pool_member_
+/// sole_magnitude` correctly refuses it, per that function's own `record.bonus_vars.is_empty()`
+/// guard) but a real `%N`-substituted `DESC:` argument that is itself a raw formula EXPRESSION.
+/// Never routes through `resolve_pool_member_sole_magnitude` -- a deliberately separate resolver
+/// for a deliberately different shape, wired through `class_feature_grant_consumer::resolved_
+/// description_for_formula_only_desc_argument` (`pcgen_desc.rs`'s own documented consumer), not
+/// the pool resolver.
+///
+/// `already_hand_modelled_keys`: member keys a caller ALREADY grounds through a dedicated,
+/// activation-gated function (e.g. Warpriest's own `Destruction Blessing ~ Destructive Attacks`
+/// and `Strength Blessing ~ Strength Surge`) -- skipped here so this purely-additive generic pass
+/// never emits a second, un-gated explanation for a magnitude a hand-modelled function already
+/// grounds correctly (with activation-state awareness this generic pass has no way to reproduce).
+fn push_generic_pool_group_selection_description_magnitude(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    choice_set_id: &str,
+    class: &str,
+    registered_name: &str,
+    namespace: &str,
+    id_prefix: &str,
+    min_level: u8,
+    already_hand_modelled_keys: &[&str],
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < min_level {
+        return;
+    }
+    for selection_id in input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+    {
+        let Some(slug) = selection_id.strip_prefix(namespace) else { continue };
+        let Some(group) = real_pool_group_for_selection_slug(class, registered_name, slug) else {
+            continue;
+        };
+        let prefix = format!("{group} ~ ");
+        let group_slug = class_feature_id_slug(&group);
+        for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe()
+            .iter()
+        {
+            let Some(member_name) = key.strip_prefix(&prefix) else { continue };
+            if already_hand_modelled_keys.contains(&key.as_str()) {
+                continue;
+            }
+            let Some((description, value)) =
+                class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                    key,
+                    level,
+                    ability_modifiers,
+                )
+            else {
+                continue;
+            };
+            let Ok(value) = i16::try_from(value) else { continue };
+            let member_slug = class_feature_id_slug(member_name);
+            explanations.push(ComputationExplanation {
+                id: format!("{id_prefix}.{group_slug}.{member_slug}.description"),
+                value,
+                detail: format!(
+                    "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                     {description} Resolved generically -- not a hand-picked, per-member \
+                     function -- through the real PCGen formula interpreter applied DIRECTLY to \
+                     this member's own `%N`-substituted DESC: argument text (this record carries \
+                     no BONUS:VAR token at all, a shape resolve_pool_member_sole_magnitude never \
+                     reaches), after resolving the recorded {choice_set_id} -> {selection_id} \
+                     selection to its real corpus group {group} (SD-32 T12 Epic 8 row 18 cycle \
+                     15, decisions.md §17 generic pool-group-selection description resolver)."
                 ),
             });
         }
@@ -74697,5 +74819,111 @@ mod generic_pool_group_selection_wiring_tests {
         let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:animal");
         let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
         assert!(count > 0, "Animal Domain must ground at least one real corpus member generically");
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 15: `push_generic_pool_group_selection_description_magnitude`,
+    /// the sibling generic pass cycle 14's own `§16` finding named -- Earth Blessing carries no
+    /// `BONUS:VAR` at all (`resolve_pool_member_sole_magnitude` returns `None` for it, confirmed
+    /// by the `class_feature.acg.warpriest.blessing.generic` prefix staying empty below), but its
+    /// own "Armor of Earth" member carries a real `%1`-substituted DESC formula
+    /// (`"if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)"`) this new resolver reaches directly.
+    #[test]
+    fn warpriest_generic_blessing_description_pass_grounds_a_zero_bonus_var_blessing() {
+        let input = class_input(WARPRIEST_CLASS_ID, 8, WARPRIEST_BLESSING_CHOICE_ID, "blessing:earth");
+        let old_shape_count =
+            generic_explanation_count(&input, "class_feature.acg.warpriest.blessing.generic");
+        assert_eq!(
+            old_shape_count, 0,
+            "Earth Blessing's own members carry no BONUS:VAR at all -- the bonus_vars-only \
+             resolver must find nothing"
+        );
+        let description_count = generic_explanation_count(
+            &input,
+            "class_feature.acg.warpriest.blessing_description.generic",
+        );
+        assert!(
+            description_count > 0,
+            "Earth Blessing's own %N-substituted DESC formula must ground generically through \
+             the new description resolver"
+        );
+    }
+
+    /// The same proof for Cavalier Order of the Beast -- ZERO `BONUS:VAR` tokens on any of its
+    /// own real members (cycle 12's own finding, unchanged), but "Wild Mount Shape" carries a
+    /// real `%1`-substituted DESC formula (`%1` = a bare `CavalierLVL` reference) this new
+    /// resolver reaches. "Class Skills" (`max(floor(CavalierLVL/2))`, a single-argument `max()`
+    /// call) is a real corpus shape the formula interpreter's own documented `min`/`max`
+    /// "at least 2 arguments" rule refuses -- an honest refusal, not fabricated, so it does not
+    /// need to be the member this test proves through.
+    #[test]
+    fn cavalier_generic_order_description_pass_grounds_order_of_the_beast() {
+        let input = class_input(CAVALIER_CLASS_ID, 10, CAVALIER_ORDER_CHOICE_ID, "order:beast");
+        let old_shape_count =
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic");
+        assert_eq!(
+            old_shape_count, 0,
+            "Order of the Beast's own members carry no BONUS:VAR at all -- the bonus_vars-only \
+             resolver must find nothing"
+        );
+        let description_count = generic_explanation_count(
+            &input,
+            "class_feature.apg.cavalier.order_description.generic",
+        );
+        assert!(
+            description_count > 0,
+            "Order of the Beast's own %N-substituted DESC formula must ground generically \
+             through the new description resolver"
+        );
+    }
+
+    /// Safety: the new description resolver never fires a SECOND time for Destruction or
+    /// Strength Blessing, both already grounded by their own dedicated, activation-gated
+    /// functions -- proving `already_hand_modelled_keys` genuinely excludes them rather than
+    /// merely happening not to collide.
+    #[test]
+    fn warpriest_generic_blessing_description_pass_never_double_grounds_destruction_or_strength() {
+        for selection in ["blessing:destruction", "blessing:strength"] {
+            let input = class_input(WARPRIEST_CLASS_ID, 8, WARPRIEST_BLESSING_CHOICE_ID, selection);
+            let description_count = generic_explanation_count(
+                &input,
+                "class_feature.acg.warpriest.blessing_description.generic",
+            );
+            assert_eq!(
+                description_count, 0,
+                "{selection} is already hand-modelled -- the generic description pass must \
+                 exclude its own key, never emit a duplicate explanation for the same magnitude"
+            );
+        }
+    }
+
+    /// Safety: an invented Blessing/Order selection grounds nothing through the new resolver
+    /// either -- the same "refuse rather than fabricate" contract every other generic pass proves.
+    #[test]
+    fn invented_selections_ground_nothing_through_the_description_resolver() {
+        let cases: &[(&str, u8, &str, &str, &str)] = &[
+            (
+                WARPRIEST_CLASS_ID,
+                8,
+                WARPRIEST_BLESSING_CHOICE_ID,
+                "blessing:not_a_real_blessing",
+                "class_feature.acg.warpriest.blessing_description.generic",
+            ),
+            (
+                CAVALIER_CLASS_ID,
+                10,
+                CAVALIER_ORDER_CHOICE_ID,
+                "order:not_a_real_order",
+                "class_feature.apg.cavalier.order_description.generic",
+            ),
+        ];
+        for (class_id, level, choice_set_id, selection_id, id_prefix) in cases {
+            let input = class_input(class_id, *level, choice_set_id, selection_id);
+            assert_eq!(
+                generic_explanation_count(&input, id_prefix),
+                0,
+                "an invented selection ({choice_set_id} -> {selection_id}) must never ground \
+                 anything through the description resolver"
+            );
+        }
     }
 }

@@ -468,6 +468,20 @@ fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
     (prose, args)
 }
 
+/// The `|`-delimited argument tail of a raw `DESC:` token, exactly as
+/// [`render_pcgen_desc_with_values`] itself reads it -- exposed read-only so a
+/// caller that wants to resolve an argument through a mechanism OTHER than
+/// [`PcgenDisplayValues`]'s named-lookup (e.g. evaluating the argument text
+/// directly as a PCGen formula, when it is itself a raw expression like
+/// `"max(1,WarpriestLVL/2)"` rather than a bare variable name) can see the
+/// exact argument strings this module's own renderer will later try to
+/// resolve, without duplicating `split_prose_and_args`'s own tail-taken-
+/// from-the-right parsing (SD-32 T12 Epic 8 row 18 cycle 15,
+/// `class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument`).
+pub(crate) fn desc_token_arguments(raw: &str) -> Vec<String> {
+    split_prose_and_args(raw).1
+}
+
 /// Whether `chars[i]` (a `'%'`) is part of standard "d%"/"D%" percentile-
 /// dice notation (= d100), a real, resolved shape that must be preserved
 /// literally, never treated as a leak or dropped. `chars` is the FULL text

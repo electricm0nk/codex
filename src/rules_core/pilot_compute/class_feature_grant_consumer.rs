@@ -1385,6 +1385,81 @@ pub(crate) fn resolved_description_for(
     Some(rendered.text)
 }
 
+/// A pool member's real `%N`-substituted `DESC:` formula resolved DIRECTLY (SD-32 T12 Epic 8
+/// row 18 cycle 15), for the corpus shape cycle 14's own `§16` finding named and refused to
+/// force through the wrong module: a record whose `bonus_vars` is EMPTY (so `resolve_pool_
+/// member_sole_magnitude` -- which only ever reads `bonus_vars` -- correctly returns `None` for
+/// it, per that function's own precondition) but whose `raw_description` carries a real `%N`
+/// argument that is itself a raw PCGen formula EXPRESSION (`"max(1,WarpriestLVL/2)"`,
+/// `"if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)"`, a bare `"WarpriestLVL"`) rather than a
+/// bare variable name a `BONUS:VAR` chain would bind. `formula_interpreter.rs`'s own module doc
+/// scopes `%N` DESC-argument substitution OUT of that module and names this one
+/// (`pcgen_desc.rs`) as the real consumer; this is that consumer, extended only by WHERE an
+/// argument's value comes from when [`resolve_desc_argument`](crate::rules_core::pcgen_desc)'s
+/// own three narrow shapes (integer literal, exact named lookup, `<Name><+|-><integer>` offset)
+/// do not cover it -- evaluated directly through the SAME real [`PcgenFormulaEvaluator`] every
+/// other resolver in this module already uses, seeded with the SAME two facts (class level,
+/// ability modifiers), never a new evaluation mechanism.
+///
+/// Returns `None` (never a guess) unless the ENTIRE description renders clean -- every `%N`
+/// argument resolves to a value, `leaked_pcgen_syntax` finds nothing raw left over -- exactly
+/// [`resolved_description_for`]'s own "drop and report, never partially-render" contract, reused
+/// unchanged. On success, also returns `%1`'s own resolved value as the caller's single
+/// representative magnitude (every real member this cycle's own corpus scan found states its
+/// primary number as `%1` first; a member whose `%1` is itself unresolvable already returned
+/// `None` above, so this unwrap is only ever reached after `%1`'s formula has already evaluated).
+///
+/// Deliberately does NOT read `bonus_vars` at all, unlike [`resolved_description_for`] -- a
+/// record that DOES carry a real `BONUS:VAR` chain is `resolved_description_for`'s own business,
+/// not this function's; the two are mutually exclusive by construction (see the `bonus_vars.
+/// is_empty()` guard below) so a caller can safely try both without ever double-resolving the
+/// same record two different ways.
+pub(crate) fn resolved_description_for_formula_only_desc_argument(
+    key: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(String, i64)> {
+    let record = class_feature_record_tokens_pre_gate_safe().get(key)?;
+    if !record.bonus_vars.is_empty() {
+        return None; // a real BONUS:VAR chain exists -- `resolved_description_for`'s business.
+    }
+    let args = crate::rules_core::pcgen_desc::desc_token_arguments(&record.raw_description);
+    if args.is_empty() {
+        return None; // no `%N` argument at all -- nothing this function grounds.
+    }
+    let class_level_var = class_level_variable_name(&record.class);
+    let evaluator = PcgenFormulaEvaluator;
+    let mut seed_vars = ability_modifier_seed_vars(ability_modifiers);
+    seed_vars.insert(class_level_var.clone(), i64::from(level));
+    if let Some(class_name) = class_level_var.strip_suffix("LVL") {
+        seed_vars.insert(format!("CLASSLEVEL::{class_name}"), i64::from(level));
+    }
+    let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
+    for arg in &args {
+        let trimmed = arg.trim();
+        if let Ok(value) = evaluator.evaluate(trimmed, &seed_vars) {
+            // Keyed under the exact argument text -- `resolve_desc_argument`'s own named-lookup
+            // shape (`values.get(arg)`) then finds it by that same exact text, with no change
+            // needed to that function or to `render_pcgen_desc_with_values` itself.
+            values.set(trimmed, value);
+        }
+        // An argument the interpreter refuses (an unbound identifier, a shape it does not
+        // implement) is simply never inserted -- `render_pcgen_desc_with_values` below then
+        // drops and reports it, exactly its existing no-fabrication contract for any other
+        // unresolved argument.
+    }
+    let rendered =
+        crate::rules_core::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);
+    if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
+        return None;
+    }
+    if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+        return None;
+    }
+    let primary_value = evaluator.evaluate(args[0].trim(), &seed_vars).ok()?;
+    Some((rendered.text, primary_value))
+}
+
 /// Pushes one `ComputationExplanation` (id
 /// `class_feature.<owner>.corpus_record.<feature_slug>`, same shape and
 /// convention as `push_pu_class_feature_records`) for every merged grant
