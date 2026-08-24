@@ -7993,4 +7993,75 @@ Root workspace: `cargo test --locked --lib bestiary_5` → 4 passed, 0 failed.
 **Kanban:** row 19 stays `in-progress` (cycle field 1 → 2); rows 11 and 15 untouched.
 
 Full receipt: `artifacts/epic-9-desktop-reach-and-catalog-reds/row19-cycle2-receipt.md`.
+
+## Cycle: row11-final-enumeration-and-two-closures (2026-08-24)
+
+**Dispatch:** establish what row 11 (`epic-2-cause-closure`) genuinely still needs, close what is
+reachable, sweep for named-but-unowned work.
+
+**§1 — full re-derivation (`§17a`) of row 11's eight measured shapes**, live, not from receipts:
+`scripts/verify.sh --only shape-coverage-standing-gate` → `population=34397 unclassified=0
+no_record=0` — zero `no_record` units of ANY kind corpus-wide, confirming T1/T2a/T2b/T4/T7/T8
+**ALREADY-CLOSED** and T9 (open at the prior closure-readiness audit, 56 units) **ALREADY-CLOSED**
+(closed by `t9-monster-ability-desc-concat-round9`, commit `be100ceea6`, before this cycle's own
+PIN). T12's own originally-measured 108/108 closed; the pool-shaped exclusion class T12's own
+sizing work surfaced is explicitly its own card now (row 18, `epic-8-pool-shaped-class-features`,
+in-progress, cycle 4 landed concurrently — `f461e742f3` — not part of row 11's measured shape).
+T5/T3 closed via Epic 4/5 cross-reference, kanban cards 12/16 `complete`. Row 17
+(`epic-7-shape-categorization-100`) independently re-confirmed `complete`: `python3
+scripts/row17_census.py --check` → `ROW 17 HONEST SIZE 0`.
+
+**§2 — two instrument-correction defects identified, closed by a CONCURRENT sibling cycle
+(`§16`, no corpus record or shape moved) — this cycle's own fix DROPPED on rebase in favour of the
+already-merged, functionally-identical one, per the branch's own "keep upstream's version" rule.**
+This cycle independently diagnosed and fixed both (a) the `monster_chassis::
+widening_the_facet_vocabulary_does_not_reclassify_any_existing_record` stale digest pin (root
+cause: `f76242cc69`'s legitimate row-17 provisional-default retirement of 4 `monster_ability`
+records) and (b) `corpus_literal_sweep`'s 15 findings/6 records (root cause: a `§24b`-2 exemption
+coverage gap — a compound token restating the record's neutral name inside a larger structural
+value, e.g. `BONUS:ABILITYPOOL|Codex-Named Unit (...)|1|TYPE=Base`, never the bare marker the
+pre-existing exemption checks for) — both RED→GREEN mutation-proven, both corpus-wide re-runs
+CLEAN. On `git fetch && git rebase origin/tranche/12`, commit `c8d347383e` ("corpus_literal_sweep
+4th §24 self-ref exemption; chassis digest pin retargeted") was found already on origin, landed
+concurrently, closing the SAME two defects by the SAME root-cause diagnosis (four independent
+corroborations of the digest-pin cause; two independent corroborations of the sweep gap, this
+cycle's `codex_generated_name_compound_tokens_exempted` as a new tally field vs. `c8d347383e`'s
+extension of the existing `codex_generated_name_tokens_exempted` counter — functionally
+equivalent). Per this branch's own kanban-conflict convention, this cycle's own `src/rules_core/
+corpus_literal_sweep.rs` / `src/rules_core/rules_tables/monster_chassis.rs` / `src/bin/
+corpus_literal_sweep.rs` edits were **discarded** during the rebase (`git checkout --ours`/`git
+checkout c8d347383e --`) in favour of the already-landed version — no functional work was lost, no
+duplicate mechanism shipped. Re-verified post-rebase: `cargo run --locked --bin
+corpus_literal_sweep` → `CLEAN`; `cargo test --locked --lib corpus_literal_sweep::` → 40/40; `cargo
+test --locked --lib monster_chassis::` → 8/8.
+
+**§3 — what stands between row 11 and `complete`, stated plainly (re-confirmed post-rebase):** row
+18's pool-shaped class-feature magnitudes (in-progress, cycle 4 landed concurrently, `f461e742f3`)
+and row 19's desktop reds (in-progress, cycle 2 landed concurrently, `64a2497ce5` — see immediately
+above, `514 passed, 5 failed`, `equipment_catalog::` already green, closed by a sibling cycle before
+either lane ran). **Both remaining conditions are sibling-lane territory, both in-progress, neither
+row 11's to close.**
+
+**§4 — named-but-unowned sweep:** row 11's own current kanban text carries zero hits for
+"deferred"/"flagged"/"escalated"/"named not attempted"/"next-cycle plan"/"logged not fixed"/"out of
+scope". `## Open blockers` above: all 4 entries already `RESOLVED, removed 2026-08-23`. The two
+`decisions.md §27b` "EVERYTHING" carve-outs (`occult_adventures` 5, `advanced_race_guide` companion
+2) and the `class_feature`/`bestiary` residuals `decision-27b-carveout-closure`'s own receipt named
+as "another lane's own territory" are all closed, confirmed live via row 17's `complete` status and
+the corpus-wide `no_record=0`. The one item this cycle DID independently find and diagnose (§2) was
+itself this sweep's catch — closed by the time this cycle rebased, by a sibling cycle running the
+same sweep. No other genuinely-open, unowned item was found.
+
+**Tests (post-rebase, on the merged tree):** `corpus_literal_sweep::` 40/40; `monster_chassis::`
+8/8; `corpus_literal_sweep` binary corpus-wide CLEAN; `declared_pi_shipping_audit` CLEAN; Gate 3
+standing gate PASS; `row17_census.py --check` → `ROW 17 HONEST SIZE 0`. `pi_scrub.
+normalized_term_hits()` on this cycle's own diff: `[]`.
+
+**Kanban:** row 11 (`epic-2-cause-closure`) entry prepended, stays `in-progress` — dependency on
+rows 18/19 named explicitly in its own notes. Row 15 untouched (already `complete`, not this
+cycle's to touch).
+
+Full receipt:
+`artifacts/gate-3-closure-invariant/row11-final-enumeration-and-two-closures_cycle-1_cycle_receipt.md`
+(revised post-rebase to reflect §2's superseded-by-concurrent-landing outcome).
 Commit: (this cycle's commit -- see push output).
