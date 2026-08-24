@@ -242,6 +242,26 @@ pub fn vars_for(case: &ReproductionCase, sample: SamplePoint) -> BTreeMap<String
     if !case.ability_var.is_empty() {
         vars.insert(case.ability_var.to_string(), sample.ability_mod);
     }
+    // SD-32 T12 Epic 8 row 18 cycle 6: `formula_interpreter.rs`'s production evaluator now keys
+    // `classlevel("X")` on `CLASSLEVEL::X`, never the class-blind `__LEVEL__` slot this harness
+    // still also binds above (kept for `tests::ToyReferenceEvaluator`, this module's own
+    // `#[cfg(test)]`-only comparison fixture, unaffected by that production change). Every
+    // `classlevel("...")` call this harness's 21 dispatched cases carry self-references "the
+    // record's own single class" (module doc open question (b)) -- so binding EVERY class name
+    // literally named inside `raw_formula` to this same sample's level reproduces that self-
+    // reference correctly without inventing a multiclass model this harness was never scoped to
+    // cover.
+    let mut rest = case.raw_formula;
+    while let Some(start) = rest.find("classlevel(\"") {
+        let after_open = &rest[start + "classlevel(\"".len()..];
+        if let Some(end) = after_open.find('"') {
+            let class_name = &after_open[..end];
+            vars.insert(format!("CLASSLEVEL::{class_name}"), i64::from(sample.level));
+            rest = &after_open[end + 1..];
+        } else {
+            break;
+        }
+    }
     vars
 }
 

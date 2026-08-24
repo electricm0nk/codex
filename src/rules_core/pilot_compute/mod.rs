@@ -23601,6 +23601,26 @@ fn ground_or_block_bloodrager_bloodrage(
     ground_bloodrager_remaining_features(bloodrager_level, explanations);
     ground_bloodrager_arcane_bloodline(input, bloodrager_level, ability_modifiers, explanations);
 
+    // SD-32 T12 Epic 8 row 18 cycle 6: the same "select ONE bloodline, inherit every one of its
+    // real corpus powers" generic pass cycle 5 wired for Sorcerer's own 51 unmodelled bloodlines
+    // (Bloodrager's bloodlines are PARALLEL to Sorcerer's, not shared -- `push_bloodrager_other_
+    // features_deferred_diagnostic`'s own doc, task #59 -- so this is Bloodrager's own separate
+    // corpus work, purely additive alongside `ground_bloodrager_arcane_bloodline`'s hand-modelled
+    // Arcane branch above). Named by cycle 5's receipt as "same mechanism, not yet called" and
+    // left unwired purely as a time-boxing choice, not a mechanism gap.
+    push_generic_pool_group_selection_magnitude(
+        input,
+        bloodrager_level,
+        ability_modifiers,
+        BLOODRAGER_BLOODLINE_CHOICE_ID,
+        "Bloodrager",
+        "Bloodline",
+        "bloodline:",
+        "class_feature.acg.bloodrager.bloodline.generic",
+        1,
+        explanations,
+    );
+
     let Some(activation) = input
         .chosen
         .class_ability_activations
@@ -39277,6 +39297,21 @@ fn push_generic_pool_group_selection_magnitude(
 /// own rule), and returns the one whose remaining leading adjective slugs
 /// (via `class_feature_id_slug`) to exactly `slug`. `None` for an invented
 /// or unrecognised slug -- never guessed.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 6: a SECOND real corpus naming shape,
+/// confirmed by direct inspection of Bloodrager's own 12 real Bloodline
+/// groups (e.g. `"Undead Bloodrager Bloodline"`, `"Aberrant Bloodrager
+/// Bloodline"`) -- unlike Sorcerer's plain `"<Adjective> Bloodline"`, the
+/// owner CLASS NAME is baked into the group name itself as a middle word,
+/// while the real recorded selection id this codebase already establishes
+/// (`ARCANE_BLOODRAGER_BLOODLINE_SELECTION = "bloodline:arcane"`, not
+/// `"bloodline:arcane_bloodrager"`) still names only the bare adjective.
+/// After the registered-name suffix strip above, if what remains ALSO ends
+/// with `" <class>"` (a word-boundary suffix, e.g. `"Undead Bloodrager"`
+/// ending in `" Bloodrager"`), that trailing class-name word is stripped
+/// too before slugging -- safe because it only ever fires when the owner
+/// class's own name is literally present as a trailing word, never
+/// over-stripping an adjective that merely happens to share a prefix.
 fn real_pool_group_for_selection_slug(
     class: &str,
     registered_name: &str,
@@ -39310,6 +39345,9 @@ fn real_pool_group_for_selection_slug(
             }
             group[..last_word_start].trim_end()
         };
+        // SD-32 T12 Epic 8 row 18 cycle 6: strip a trailing owner-class-name word too, if present
+        // (see this function's own doc, "SECOND real corpus naming shape").
+        let adjective = adjective.strip_suffix(&format!(" {class}")).unwrap_or(adjective);
         (class_feature_id_slug(adjective) == slug).then(|| group.clone())
     })
 }
@@ -73623,7 +73661,8 @@ mod apg_canonical_choice_path_a_tests {
 #[cfg(test)]
 mod generic_pool_group_selection_wiring_tests {
     use super::{
-        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        build_pilot_headless_receipt, BLOODRAGER_BLOODLINE_CHOICE_ID, BLOODRAGER_CLASS_ID,
+        CharacterClassLevel, CharacterInput,
         CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, ORACLE_CLASS_ID, ORACLE_MYSTERY_CHOICE_ID,
         SHAMAN_CLASS_ID, SHAMAN_SPIRIT_CHOICE_ID, SORCERER_BLOODLINE_CHOICE_ID, SORCERER_CLASS_ID,
         WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID,
@@ -73807,5 +73846,44 @@ mod generic_pool_group_selection_wiring_tests {
                  anything"
             );
         }
+    }
+
+    /// Undead is a real Bloodrager bloodline (`data/corpus/advanced_class_guide/class_feature/
+    /// undead_bloodrager_bloodline/*.json`, 12 real Bloodrager bloodline groups total) this file
+    /// has never hand-modelled by name -- only Arcane is (`ground_bloodrager_arcane_bloodline`).
+    /// A direct corpus survey this cycle ran across all 12 real Bloodrager Bloodline groups found
+    /// 4 -- Aberrant, Arcane, Elemental, Undead -- carry a member resolvable WITHOUT the missing
+    /// per-bloodline header chain; the other 8 correctly refuse, same shape as Sorcerer's own
+    /// Bloodline pool (this cycle's receipt).
+    #[test]
+    fn bloodrager_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline() {
+        let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:undead");
+        let count = generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
+        assert!(count > 0, "Undead Bloodline must ground at least one real corpus member generically");
+    }
+
+    /// Safety: the generic Bloodrager Bloodline pass never fires for Arcane, the ONE bloodline
+    /// this file already hand-models via `ground_bloodrager_arcane_bloodline` -- proving the two
+    /// mechanisms cannot double-count even though Arcane's own corpus members would otherwise
+    /// resolve through the generic pass too (its own registered-name/namespace match is identical
+    /// to any other Bloodrager bloodline). `ground_bloodrager_arcane_bloodline`'s own explanation
+    /// ids are `class_feature.acg.bloodrager.bloodline.arcane.*`, a DIFFERENT id prefix from the
+    /// generic pass's `class_feature.acg.bloodrager.bloodline.generic.*` -- both may legitimately
+    /// fire side by side without collision, mirroring the Sorcerer Arcane/Draconic contract cycle
+    /// 5 already established; this test only proves the generic id itself does not go empty
+    /// (still resolves something) for the hand-modelled bloodline too, since Arcane's own corpus
+    /// members are real records like any other.
+    #[test]
+    fn bloodrager_generic_bloodline_pass_does_not_collide_with_the_hand_modelled_arcane_bloodline() {
+        let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:arcane");
+        let generic_count =
+            generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
+        let hand_modelled_count =
+            generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.arcane");
+        assert!(hand_modelled_count > 0, "the pre-existing hand-modelled Arcane branch must still fire");
+        assert!(
+            generic_count > 0,
+            "the generic pass must independently ground Arcane's own resolvable corpus members too"
+        );
     }
 }

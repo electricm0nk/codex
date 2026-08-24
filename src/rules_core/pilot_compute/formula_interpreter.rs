@@ -124,18 +124,24 @@
 //!   form) — wave 26 widened what counts as a valid condition (a `&&`-chain of comparisons, not
 //!   only a single one) but did not touch this restriction; see point 4 above and `parse_call`'s
 //!   `"if"` arm.
-//! - **`classlevel(...)` does NOT verify its class-name argument against anything — this is a
-//!   real, currently-unfixed gap, not a refusal.** The real oracle's `classlevel("X")`
-//!   (`plugin/jepcommands/ClassLevelCommand.java`) looks up level in the SPECIFIC named class;
-//!   this module has no per-class variable environment (only a single `__LEVEL__` binding, per
-//!   the harness's own open question (b)), so `classlevel("Fighter")` and
-//!   `classlevel("Anything")` currently both silently return the same `__LEVEL__` value. For a
-//!   single-class formula in a single-class caller context this is harmless; for any genuinely
-//!   cross-class `classlevel("OtherClass")` formula (confirmed present in the corpus, see
-//!   `OPEN-ISSUES.md`) it is silently wrong, not merely incomplete. **No consumer may bank a value
-//!   through a `classlevel(...)`-bearing formula until this is resolved** — logged as a hard
-//!   precondition in `OPEN-ISSUES.md`, not merely a documented limitation, because the failure
-//!   mode is exactly the "plausible number nobody checks" shape §24.1 exists to prevent.
+//! - **`classlevel(...)` now verifies its class-name argument (SD-32 T12 Epic 8 row 18 cycle
+//!   6) — CLOSED for the same-class case, still a clean refusal for the genuinely cross-class
+//!   case.** The real oracle's `classlevel("X")` (`plugin/jepcommands/ClassLevelCommand.java`)
+//!   looks up level in the SPECIFIC named class. This module now has a per-class variable
+//!   environment: `Expr::ClassLevel(class_name)` looks up `CLASSLEVEL::<class_name>`, never a
+//!   class-blind `__LEVEL__` slot. Every consumer in this codebase only ever knows ONE class's
+//!   real level (the record's own granting class) and binds exactly that one `CLASSLEVEL::`
+//!   key — so `classlevel("SameClass")` now resolves CORRECTLY (the prior version's silent
+//!   coincidence, now an honest binding), while `classlevel("SomeOtherClass")` stays cleanly
+//!   unbound and refuses, exactly the "refuse, never guess" contract this module holds
+//!   everywhere else. **Genuine multiclass cross-referencing** (a caller that knows more than
+//!   one class's level and could bind more than one `CLASSLEVEL::` key) is still not
+//!   implemented by any consumer — no consumer in this codebase currently tracks multiple
+//!   classes' levels at once — so a formula naming a class the caller truly does not know about
+//!   still refuses, never fabricates. **No consumer may bank a value through a
+//!   `classlevel(...)`-bearing formula whose class name it cannot bind** — the failure mode this
+//!   guards against is exactly the "plausible number nobody checks" shape §24.1 exists to
+//!   prevent.
 //!
 //! ## Wave 26 shape closure (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on)
 //!
@@ -185,9 +191,10 @@
 //!   write scope).
 //! - `DEFINE:` envelope parsing beyond formula-segment extraction (see [`extract_formula_field`]).
 //! - Non-numeric formula results (string-valued `DEFINE:`s, `.EQUIP` object references, etc.).
-//! - Multiclass `classlevel("X")` resolution to a specific class's own level — see the refusal
-//!   list above; this is a silently-wrong gap, not a clean refusal, and is the single highest-
-//!   priority fix before any `classlevel`-bearing formula is banked.
+//! - Genuine multiclass `classlevel("X")` resolution for X other than the caller's one known
+//!   class — SD-32 T12 Epic 8 row 18 cycle 6 closed the same-class case (see the refusal list
+//!   above); a caller that tracks more than one class's level at once and could therefore bind
+//!   more than one `CLASSLEVEL::` key does not exist yet in this codebase.
 //! - `classlevel("X", "APPLIEDAS=NONEPIC")` — a real 2-argument form (confirmed present in the
 //!   corpus, e.g. Monk unarmed-damage formulas) this module has not investigated; refuses today as
 //!   a parse error (`expected RParen, got Some(Comma)`), not silently mishandled, but its oracle
@@ -767,9 +774,27 @@ fn eval_expr(expr: &Expr, vars: &BTreeMap<String, i64>) -> Result<f64, FormulaEv
             }
             Ok(eval_expr(a, vars)? / denom)
         }
-        Expr::ClassLevel(_class_name) => vars.get("__LEVEL__").map(|v| *v as f64).ok_or_else(|| {
-            FormulaEvalError("classlevel(...) needs a __LEVEL__ binding".to_string())
-        }),
+        // SD-32 T12 Epic 8 row 18 cycle 6: cross-class widening. Real PCGen's `classlevel("X")`
+        // (`plugin/jepcommands/ClassLevelCommand.java`) looks up level in the SPECIFIC named
+        // class -- this evaluator now honours that by keying the lookup on the class name
+        // itself, `CLASSLEVEL::<X>` (a caller-supplied per-class binding, never `__LEVEL__`
+        // any more). A caller that only knows ONE class's level (every consumer in this
+        // codebase today -- `resolve_pcgen_var_chain` seeds exactly the record's own granting
+        // class) binds only that one key; `classlevel("SameClass")` then resolves correctly
+        // and safely, while a GENUINELY different class name stays unbound and refuses --
+        // never silently answers with the wrong class's level, unlike the prior `__LEVEL__`
+        // shortcut this replaces (see this module's own doc, "not covered" section, prior
+        // text: "classlevel(...) does NOT verify its class-name argument against anything").
+        Expr::ClassLevel(class_name) => {
+            let key = format!("CLASSLEVEL::{class_name}");
+            vars.get(&key).map(|v| *v as f64).ok_or_else(|| {
+                FormulaEvalError(format!(
+                    "classlevel({class_name:?}) needs a {key:?} binding -- no caller-supplied \
+                     level is known for this class (refusing rather than guessing another \
+                     class's level)"
+                ))
+            })
+        }
         Expr::If(cond, a, b) => {
             if eval_expr(cond, vars)? != 0.0 {
                 eval_expr(a, vars)
@@ -959,10 +984,23 @@ mod tests {
 
     #[test]
     fn classlevel_reads_the_level_binding() {
+        // SD-32 T12 Epic 8 row 18 cycle 6: `classlevel("X")` now keys its lookup on `X` itself
+        // (`CLASSLEVEL::Summoner`), not a class-blind `__LEVEL__` slot.
         let e = PcgenFormulaEvaluator;
-        let v = vars(&[("__LEVEL__", 7)]);
+        let v = vars(&[("CLASSLEVEL::Summoner", 7)]);
         assert_eq!(e.evaluate("classlevel(\"Summoner\")", &v).unwrap(), 7);
         assert_eq!(e.evaluate("10+(X/2)+INT", &vars(&[("X", 7), ("INT", 3)])).unwrap(), 16);
+    }
+
+    #[test]
+    fn classlevel_refuses_a_genuinely_different_class_it_has_no_binding_for() {
+        // SD-32 T12 Epic 8 row 18 cycle 6: a caller that only knows ITS OWN class's level (every
+        // consumer today) must never have `classlevel("SomeOtherClass")` silently answer with
+        // that level -- the exact "plausible wrong number" shape the prior `__LEVEL__` shortcut
+        // produced. Binding only `CLASSLEVEL::Sorcerer` and asking about `"Bloodrager"` refuses.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Sorcerer", 7)]);
+        assert!(e.evaluate("classlevel(\"Bloodrager\")", &v).is_err());
     }
 
     // -- 1b. wave 26 shape closure: comparisons/`&&` as first-class numeric values, and

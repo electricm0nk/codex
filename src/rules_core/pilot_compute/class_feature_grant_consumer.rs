@@ -158,6 +158,7 @@ use std::sync::OnceLock;
 
 use serde_json::Value;
 
+use super::bonus_stack_reader;
 use super::formula_interpreter::PcgenFormulaEvaluator;
 use super::formula_reproduction_harness::FormulaEvaluator as _;
 use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
@@ -755,8 +756,48 @@ pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFe
 /// module doc names the real PRE-gate-aware summation mechanism
 /// (`bonus_stack_reader`, a sibling module elsewhere) as out of scope for
 /// this generic resolver; refusing is correct here, not merely expedient.
+/// SD-32 T12 Epic 8 row 18 cycle 6: widened to correctly RESOLVE two shapes this function used
+/// to unconditionally drop (module doc above still describes the original refusal; both
+/// widenings below only ADD a verified-safe path -- neither removes the original refusal for any
+/// shape it does not understand).
+///
+/// **Widening 1 -- `TYPE=<bonustype>` trailing fields are stripped, never treated as a gate.**
+/// `TYPE=` (`BONUS:VAR|<target>|<formula>|TYPE=<bonustype>`, e.g. this corpus's own
+/// `AC_Natural_Armor|2|TYPE=Base`, `Craft (Alchemy)|4|TYPE=Insight`, `DomainAirLVL|DomainLVL|
+/// TYPE=Domain`) is PCGen's real bonus-STACKING classification -- it governs whether two
+/// DIFFERENT bonus sources of the same type stack with each other, never whether THIS record's
+/// own contribution applies to this character at all. Every hand-modelled function elsewhere in
+/// this file that grounds a `TYPE=`-tagged token (cited throughout `mod.rs`, e.g. `AC_Natural_
+/// Armor|2|TYPE=Base`) already treats the formula as unconditional, confirming this is real
+/// oracle semantics, not a guess. Stripping it (rather than refusing on an unrecognised trailing
+/// field, as before) is therefore strictly safe.
+///
+/// **Widening 2 -- multi-row `PREVARGTEQ`-gated targets now resolve, via `bonus_stack_reader`.**
+/// `bonus_stack_reader` (SD-31 wave 26, `super::bonus_stack_reader`) already reads and proves
+/// exactly this shape: multiple `BONUS:VAR` rows sharing one target, each independently gated by
+/// its own `PREVARGTEQ:<var>,<threshold>` (real oracle semantics, `PreVariableTester.java` +
+/// `BonusManager.sumActiveBonusMap` -- summed, only the currently-qualifying rows -- both cited in
+/// that module's own doc). For each target name found on this record (after widening 1 strips
+/// any `TYPE=` field), `bonus_stack_reader::extract_addends` is tried; if it succeeds (every row
+/// is now either ungated or carries exactly one well-formed `PREVARGTEQ` field), the addends are
+/// re-expressed as a single formula string this module's OWN existing evaluator already parses --
+/// `if(<gate var>>=<threshold>,(<formula>),0)` per gated row, summed with `+` -- reusing the
+/// `if(...)`/`Cmp` grammar `formula_interpreter.rs` already implements (wave 26 shape closure)
+/// rather than adding a second evaluation path. A target whose rows still carry any OTHER shape
+/// (more than one non-`TYPE=` PRE-tag field, a non-`PREVARGTEQ`/non-`TYPE=` tag such as
+/// `PREABILITY`/`PREMULT`) still fails `extract_addends` and is still dropped entirely, unchanged
+/// from before -- this widening only accepts shapes this module and `bonus_stack_reader` have
+/// themselves verified against the pinned oracle, never a new guess.
 fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String, String> {
-    let mut occurrences: BTreeMap<String, Vec<(String, bool)>> = BTreeMap::new();
+    // Re-expand comma-joined `VAR|Name1,Name2|formula|PRE...` rows into one synthetic
+    // `"VAR|<name>|formula|PRE..."` value per name, exactly the shape `bonus_stack_reader::
+    // extract_addends` expects (one target name per token) -- mirrors the name-splitting the
+    // original version of this function already did before discarding it into a bare formula.
+    // Any `TYPE=...` trailing field is dropped here (widening 1, see doc above) before the value
+    // ever reaches `extract_addends`, so a `PREVARGTEQ`-only remainder is left recognisable.
+    let mut expanded: Vec<(String, String)> = Vec::new();
+    let mut target_order: Vec<String> = Vec::new();
+    let mut seen_targets: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
     for token in raw_tokens {
         if token["key"].as_str() != Some("BONUS") {
             continue;
@@ -767,21 +808,54 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
         let (Some(names), Some(formula_and_tail)) = (parts.next(), parts.next()) else {
             continue;
         };
-        let has_tail = formula_and_tail.contains('|');
-        let formula = formula_and_tail.split('|').next().unwrap_or(formula_and_tail).to_string();
+        let mut tail_fields: Vec<&str> = formula_and_tail.split('|').collect();
+        let formula = tail_fields.remove(0);
+        tail_fields.retain(|field| !field.starts_with("TYPE="));
+        let rebuilt = if tail_fields.is_empty() {
+            formula.to_string()
+        } else {
+            format!("{formula}|{}", tail_fields.join("|"))
+        };
         for name in names.split(',') {
             let name = name.trim();
-            if !name.is_empty() {
-                occurrences.entry(name.to_string()).or_default().push((formula.clone(), has_tail));
+            if name.is_empty() {
+                continue;
+            }
+            if seen_targets.insert(name.to_string()) {
+                target_order.push(name.to_string());
+            }
+            expanded.push(("BONUS".to_string(), format!("VAR|{name}|{rebuilt}")));
+        }
+    }
+    let borrowed: Vec<(&str, &str)> =
+        expanded.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
+    let mut out = BTreeMap::new();
+    for name in target_order {
+        let Ok(addends) = bonus_stack_reader::extract_addends(&name, borrowed.iter().copied())
+        else {
+            continue; // unrecognised PRE-tag shape -- refuse, exactly as before this widening
+        };
+        match addends.as_slice() {
+            [] => {}
+            [only] if only.gate.is_none() => {
+                out.insert(name, only.formula.clone());
+            }
+            _ => {
+                let synthesized = addends
+                    .iter()
+                    .map(|addend| match &addend.gate {
+                        None => format!("({})", addend.formula),
+                        Some(gate) => {
+                            format!("if({}>={},({}),0)", gate.variable, gate.threshold, addend.formula)
+                        }
+                    })
+                    .collect::<Vec<_>>()
+                    .join("+");
+                out.insert(name, synthesized);
             }
         }
     }
-    occurrences
-        .into_iter()
-        .filter_map(|(name, rows)| {
-            if rows.len() == 1 && !rows[0].1 { Some((name, rows[0].0.clone())) } else { None }
-        })
-        .collect()
+    out
 }
 
 /// A PRE-gate-safe sibling of [`class_feature_record_tokens`], identical in
@@ -950,6 +1024,18 @@ pub(crate) fn resolve_pcgen_var_chain(
     let evaluator = PcgenFormulaEvaluator;
     let mut vars: BTreeMap<String, i64> = ability_modifier_seed_vars(ability_modifiers);
     vars.insert(class_level_var.to_string(), i64::from(level));
+    // SD-32 T12 Epic 8 row 18 cycle 6: bind `classlevel("<ThisClass>")`'s own per-class key too
+    // (`formula_interpreter.rs`'s `Expr::ClassLevel` now looks up `CLASSLEVEL::<name>`, never a
+    // class-blind `__LEVEL__` slot). This caller only ever knows ONE class's real level -- the
+    // record's own granting class, recovered from `class_level_var` by stripping the trailing
+    // `LVL` PCGen's own auto-declared-variable convention always appends (`class_level_variable_
+    // name`'s own inverse) -- so only THAT class's key is bound; a formula naming any other class
+    // stays unbound and refuses, never fabricates (see `formula_interpreter.rs`'s own doc for why
+    // this is safe: same-class `classlevel(...)` now resolves correctly, genuinely-different-
+    // class arguments still refuse cleanly).
+    if let Some(class_name) = class_level_var.strip_suffix("LVL") {
+        vars.insert(format!("CLASSLEVEL::{class_name}"), i64::from(level));
+    }
     let mut progressed = true;
     let mut guard = 0;
     while progressed && guard < 16 {
@@ -1689,9 +1775,17 @@ mod tests {
         // the value was already suppressed downstream by `push_generic_class_feature_grant_records`'s
         // own already-computed-slug guard (Gunslinger's real Gun Training magnitude is served by
         // `class_ultimate_combat.rs`'s dedicated function), so no player-visible value changes.
+        // `newly_resolved` moved 15 -> 20, `chain_unresolvable` moved 14 -> 9 (SD-32 T12 Epic 8
+        // row 18 cycle 6): `classlevel("X")` now resolves correctly for the SAME-class case
+        // (`formula_interpreter.rs`'s `Expr::ClassLevel` widening) -- exactly the 5 Summoner
+        // records the new failure output names (Bond Senses, Maker's Call, Merge Forms, Summon
+        // Monster, Twin Eidolon), each of whose real corpus formula is a bare
+        // `classlevel("Summoner")` call this module could not bind before this cycle. Re-derive:
+        // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
+        // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned`.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (136, 15, 11, 14, 36),
+            (136, 20, 11, 9, 36),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \
