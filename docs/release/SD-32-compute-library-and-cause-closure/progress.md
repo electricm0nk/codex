@@ -8319,3 +8319,79 @@ sized, unbuilt; items (b) and (c) are now known to be the SAME residual, one sur
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle2-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row20-cycle3 (2026-08-24) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+**No production code touched this cycle — investigation only, per the brief's own
+"per-family read before wiring anything" and "check how much of the 1,573 is already
+text-complete" instructions.** Worktree started on the same stale-lineage footgun cycle 2
+hit (`1bb523773d`); recovered via `git reset --hard $PIN`, confirmed `origin/tranche/12`'s
+tip already equals `$PIN`. No sibling activity detected on `pilot_compute/mod.rs`,
+`class_feature_grant_consumer.rs`, or `companion_catalog.rs` since `$PIN`.
+
+**Item (a), per-family read of the 17 `classes` families (107 records):** read every
+record's own `raw_tokens` directly rather than trusting the family label. **Not one uniform
+population**: **61 records (13 of 17 families) are conventional PC classes** (real
+`BASEAB`+`SAVE` progression) needing exactly the `ClassId`+picker chassis the reach-gate
+remedy names; **38 records (5 families) are `TYPE:Monster`/`Monster.Companion`
+HD-progression pseudo-classes** — PCGen's own generic creature-type advancement tables
+(`beastiary1`'s 27 Aberration/Animal/Construct/…/Vermin entries, `bonus_bestiary`'s 3,
+`inner_sea_magic`'s Eidolon, `occult_adventures`'s Homunculus Companion/Phantom,
+`ultimate_psionics`'s Astral Warrior + 4 Horror variants) — **never player-selectable, no
+character-creation picker applies to them at all**; **8 records are support/reference
+shells** with no BAB/SAVE progression (`ultimate_intrigue`'s VCabalist/VWarlock,
+`ultimate_psionics`'s Gifted Blade ×2/Unlocked Talent, `occult_adventures`'s Psychic
+Detective, `horror_adventures`'s Undead Phantom, `beastiary1`'s Sorcerer/Cleric (Arcane)) —
+none need a picker either, several may need no engineering at all. 61 + 38 + 8 = 107, every
+record accounted for.
+
+**The 38 monster/companion pseudo-classes turn out to be directly relevant to item
+(b)/(c)'s own remedy, not a separate population.** Read a companion corpus record directly
+(`companion_gulper_plant.json`): it carries only `BONUS:STAT` deltas, never a base ability
+score. `pilot_compute`'s existing `animal_companion_*` helper functions (HD table index,
+natural-armor bonus, stat bonus, hit points) are already species-agnostic — proving the
+master-level-scaling half of a generic companion consumer already exists reusably. The
+missing half is a companion species' own BASE ability-score block, which is not ingested
+anywhere in the corpus and whose PCGen `.lst` source has not been located this cycle.
+Confirmed both `CharacterInput` (`character_input.rs`) and `PcgenFormulaEvaluator`
+(`pilot_compute::formula_interpreter`) are already `pub` and reachable from
+`apps/desktop/src-tauri` with **zero edit to `pilot_compute` required** — the write-scope
+boundary this cycle honored is not itself the blocker; the missing corpus input is.
+**Escalated precisely** (named input, named reusable machinery, named next investigative
+step — locate or confirm-absent a base-stat-block `.lst` source before choosing between
+ingesting it or hand-authoring per species) rather than left as "needs a new mechanism."
+
+**UPsi's 1,573 `class_features`, `§7` zero-magnitude check:** 1,106 (70%) carry a real
+description; 500 of those carry no `BONUS`/`DEFINE` formula token at all (`§7`'s exact
+pure-prose shape). 1,049 already carry the exact `{key, name, class, description}` shape
+the pre-existing, fully generic `class_feature_descriptions.rs`/
+`list_class_feature_descriptions` catalog (walks every book, no allowlist) requires to
+emit a record — but `classFeaturesModel.ts`'s own held-class gate means none reach a
+player until that class's `ClassId`+picker lands (item (a)'s own work). **Once it does,
+these 1,049 close for free through the already-wired generic pathway — zero further
+per-feature engineering.** Only the 606 formula-bearing records need real
+`epic-4-mechanism` compute, correctly still out of row 20's own scope (cycle 2's boundary,
+not reopened).
+
+**An unowned red found and fixed while re-confirming the baseline.**
+`apps/desktop/src-tauri cargo test --locked --bin codex-desktop` came back **536 passed, 2
+failed**, not the 538/0 both cycle 1 and cycle 2 reported. Both failures were
+`class_feature_feat_bridge.rs`'s own pinned-`613` assertions against a corpus-derived
+population that is deterministically `612` — reproduced twice single-threaded, corpus JSON
+validity swept (18,076 files, zero parse failures), `git status --porcelain` confirmed the
+corpus matches `$PIN` exactly, and an independent Python re-derivation of the loader's own
+filter produced the identical 940-candidate/612-served set a temporary Rust diagnostic dump
+confirmed. **Cycles 1/2's "538/0" claims were never independently re-verified at the
+assertion level** — a retro correction was filed against `row20-cycle2-receipt.md`.
+Corrected both assertions and doc comments from `613` to `612` (not a loosened bar — the
+loader's logic and candidate population are unchanged, only the proven-wrong literal moved),
+mutation-proved (reverted to `613` → failed for the intended reason → reverted → green).
+**Full suite re-run after the fix: 538 passed, 0 failed (80.29s) — the real baseline, not an
+inherited claim.**
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). Item (a) is now precisely resized
+(61-record real chassis scope, not a uniform 107); item (b)/(c) is escalated with a named,
+concrete missing corpus input rather than a vague blocker.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle3-receipt.md`.
+Commit: (this cycle's commit -- see push output).
