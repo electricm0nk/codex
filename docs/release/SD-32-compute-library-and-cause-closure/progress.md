@@ -8395,3 +8395,60 @@ concrete missing corpus input rather than a vague blocker.
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle3-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row20-cycle4 (2026-08-24) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+Fresh worktree started on a stale lineage (`1bb523773d`, far behind `$PIN`); recovered via
+`git reset --hard $PIN`, `BASE_OK` re-verified. `origin/tranche/12`'s tip already equalled
+`$PIN`, no rebase needed. Oracle slot was empty (fresh worktree); bootstrapped via
+`scripts/fetch-pcgen-oracle.sh`, confirmed at the same pin cycle 3 used (`7f818006e371`).
+
+**Item (b)/(c): the companion base-ability-score question, answered.** Per cycle 3's own
+named next step, read the pinned oracle's own `.lst` source directly (not just this repo's
+ingest of it) for the Gulper Plant companion sample: `uw_races_companion.lst` carries only
+`BONUS:STAT` deltas, never a base score, and a full-tree grep of the oracle for "Gulper
+Plant" (2 files, both companion-specific) and for "Animal Companion Base Statistics" (0
+matches) confirms this is not a transcription gap — **the base stat block is not `.lst` data
+anywhere in PCGen's own source.** It is computed by PCGen's Java runtime from a printed
+table, the same way this engine's Wolf/Horse constants already are. Not a `§27b` hard
+impossibility (the table is printed and reproducible) — settles the remedy choice cycle 3
+left open: hand-author, not ingest, and PF1's real base-stat table is organized by companion
+TYPE/size category (a handful of rows), not per-species, materially shrinking that follow-on
+task. Not built this cycle (stayed read-only in `pilot_compute`/`companion_catalog.rs`).
+
+**Item (a): 60 of 61 conventional PC classes now have a real, generically-computed BAB/save
+progression, wired into the browsable class catalog.** Added
+`apps/desktop/src-tauri/src/class_catalog_generic.rs`: re-derives cycle 3's 61/38/8
+classification from `raw_tokens` at runtime (never a hardcoded name list), then computes
+each qualifying class's BAB + 3 saves at every level via the already-`pub`,
+already-oracle-verified `PcgenFormulaEvaluator`, reading each record's own
+`BONUS:COMBAT|BASEAB|...`/`BONUS:SAVE|...` formulas directly — one generic function serving
+all 61, not 61 hand-typed tables (`decisions.md §17`). 60 resolve; wired into
+`class_catalog.rs::build_class_catalog()` (same additive pattern as the prior CRB->PU
+widening): catalog grew from 300 to 1108 rows. Two real corpus wrinkles handled, both
+mutation-proved: `Vigilante`'s two competing `BASEAB` tokens (a build-time toggle) resolved
+to the toggle-off/moderate row; `Ulfen Guard`'s absent `MAXLEVEL` (`PC.Prestige`) defaulted
+to 10 per the PF1 prestige-class rule. **`Demoniac` (the 61st) does not resolve**: its
+formulas call bare `classlevel()` with no string-literal argument, a shape
+`formula_interpreter.rs`'s own grammar arm refuses — a real, pre-existing evaluator gap in a
+file this cycle stayed out of (row 18's live territory), named explicitly in a passing test
+rather than hidden. 8 new unit tests added, all green; existing `class_catalog` tests updated
+for the new 1108-row total with the arithmetic cited inline.
+
+**`§16` — precisely scoped**: this builds the progression TABLE (what `class_tables()`/
+`pathfinder_unchained::class_chassis` already are for CRB/PU), matching `class_catalog.rs`'s
+own incremental-widening precedent. It does NOT wire a character-creation-time `ClassId`
+picker (`character_hub.rs`/`pf1_adapter.rs`, live territory this cycle stayed out of) — real,
+separate, cross-file work still open for a later cycle.
+
+Full desktop suite: **546 passed, 0 failed** (78.22s; 538 + 8 new, matching exactly). No
+corpus regen this cycle (`data/corpus/` read-only at runtime), so the before/after
+`declared_pi_shipping_audit` requirement does not apply; own-diff PI scrub and
+identifier/wired-integration audits both clean (zero hits).
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). Item (a)'s Demoniac gap and the
+character-creation-picker wiring, and item (b)/(c)'s hand-authored companion base-stat-block
+build, all remain real, sized, unbuilt work.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle4-receipt.md`.
+Commit: (this cycle's commit -- see push output).

@@ -6,6 +6,7 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
