@@ -4,20 +4,29 @@
 closure-readiness audit confirmed open and unowned: row 15's own stated integration cycle,
 the `apps/desktop/src-tauri equipment_catalog::` red, and `forward-scope-register.md` C2.5;
 plus finish the `declared_pi_shipping_audit` verification the audit's own turn could not).
-**Base/HEAD:** pinned base `901f1e083ea61734a0b3c7bf8262ddebf00e5a59`; rebase onto
-`origin/tranche/12` was a no-op (already at tip); fetched again mid-cycle, still a no-op — final
-HEAD before this commit `61b39ce00c1973c7783ce2859584f78161b055c8`.
+**Base/HEAD:** pinned base `901f1e083ea61734a0b3c7bf8262ddebf00e5a59`; first rebase onto
+`origin/tranche/12` was a no-op (already at tip); worked from there, committed locally
+(`ddb1fc8ff5`), then re-fetched at push time and found `origin/tranche/12` had moved to
+`f76242cc69` — rebase onto that tip **conflicted** in `apps/desktop/src-tauri/src/
+equipment_catalog.rs` (see "Collision" below). Final pushed HEAD is on top of `f76242cc69`.
 **Territory respected:** no writes under `data/corpus/**/monster_ability/**`,
-`scripts/transcribe_monster_tables.py`, `monster_chassis.rs`,
-`tests/sd26_cache_core_rulebook.rs`, `tests/pi_screening_regeneration_round_trip.rs`,
-`class_feature_pool_catalog.rs`. Confirmed via `git status --porcelain` throughout — only the four
-files this receipt's diff touches were ever modified. The sibling `unowned-reds` lane's own commits
-(`26012fb4b4`, `61b39ce00c`) landed the `sd26_cache_core_rulebook.rs`/`pi_screening_regeneration_
-round_trip.rs` fixes and opened kanban row 19 for 15 OTHER `apps/desktop` reds
-(`reach_gate`/`class_feature_feat_bridge`/`character_hub`/`companion_catalog`/
-`corpus_ingest_diagnostic`/`intelligent_item_catalog`/`spell_catalog`) — `equipment_catalog::` is
-not among that list, confirmed by reading row 19's own text before touching anything, so no
-collision.
+`scripts/transcribe_monster_tables.py`, `monster_chassis.rs`, `class_feature_pool_catalog.rs`.
+Confirmed via `git status --porcelain` throughout.
+
+**Collision, honestly reported (not the "no collision" this receipt originally claimed pre-rebase
+— corrected here rather than silently left stale):** the sibling `unowned-reds` lane's commit
+`26012fb4b4` (landed on `origin/tranche/12` while this cycle was mid-flight) **independently found
+and fixed the exact same 3 `equipment_catalog::` reds**, reading the exact same 9 stale pins the
+same way and landing **byte-for-byte identical assertion VALUES** (only the explanatory comment
+prose differs — confirmed by diffing the two versions directly: every `assert_eq!` target number
+matches). On rebase, this cycle's redundant `equipment_catalog.rs` diff was dropped in favour of
+the already-upstream sibling fix (`git checkout` the upstream side, not this cycle's own) — the
+independent agreement on every number is itself a form of corroboration this bundle values (two
+different derivations reaching the same ground truth), so nothing is lost by deferring to
+whichever commit landed first. `26012fb4b4`'s own commit message also opened kanban row 19 for 15
+OTHER `apps/desktop` reds (`reach_gate`/`class_feature_feat_bridge`/`character_hub`/
+`companion_catalog`/`corpus_ingest_diagnostic`/`intelligent_item_catalog`/`spell_catalog`) — not
+touched by this cycle, no overlap there.
 
 ## 1. Row 15 (`census-scope-closure`) — the integration cycle, run
 
@@ -93,6 +102,12 @@ restored `72`, reran the full 17-test suite: **17/17 GREEN**.
 **Data confirmed genuinely grown, not corrupted**: this is the ninth-through-however-many-more stale
 pin in this bundle, fixed the bundle's standard way — retargeting to a proven live truth, never
 loosening an assertion.
+
+**Post-hoc note:** at push time, `origin/tranche/12` had moved and the sibling `unowned-reds`
+lane's `26012fb4b4` turned out to have landed this exact fix independently, first. See "Collision"
+in the header above — this cycle's own redundant `equipment_catalog.rs` diff was dropped in favour
+of the already-upstream commit on rebase; every target number the two derivations reached agrees
+exactly, which is itself corroborating evidence the fix is right.
 
 ## 3. `forward-scope-register.md` C2.5 — corrected
 
