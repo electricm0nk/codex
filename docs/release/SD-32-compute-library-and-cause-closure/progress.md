@@ -8804,3 +8804,85 @@ refusals (`pachycephalosaurus`, `ornithomimosaur`) if a future cycle finds a sou
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle8-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## row20-cycle9 (2026-08-24)
+
+**Card:** `epic-10-reference-library-residual-reach`. **Status:** `in-progress` (unchanged --
+144 of 196 companion species remain real, sized, unbuilt work). **This cycle's own scope was a
+correctness fix to the 52 already-grounded species, not new coverage; the 52/196 count is
+unchanged.**
+
+### A correctness defect found before grinding the 142 untagged species
+
+Before adding any new species (this cycle's own named scope), reading `ground_companion_stat_
+block` to confirm exactly how the table's `strength`/`constitution` fields get consumed surfaced
+that `animal_companion_stat_bonus` is a UNIVERSAL, species-agnostic advance formula
+(`floor(MasterLevel/3)`, the companion CLASS's own token) -- it never reads the corpus RACE
+record's own per-species `BONUS:STAT` delta. `stats.strength` must therefore hold the species'
+printed 1st-level "Starting Statistics" total DIRECTLY, exactly as `WOLF_COMPANION_STRENGTH_
+SCORE`/`HORSE_COMPANION_STRENGTH_SCORE` (this module's own two hand-verified foundational
+species) already do (Wolf's own constant is `13`, the printed total, not backed out by anything).
+
+Cycles 5-8 instead subtracted the corpus's own per-species delta from the printed AoN total before
+storing it. Re-fetching Gulper Plant's own AoN page confirmed the printed total is Str 12/Con 13,
+but the table stored the delta-backed-out Str 10/Con 11. Systematically confirmed against every
+entry's own doc comment (which already recorded the correct printed total in its own text): **44
+of 52 grounded species were affected** -- every one of the 23 aquatic/plant/primate species, 20 of
+26 dinosaurs (6 had a genuine zero delta and were never wrong), and `gulper_plant` itself. Wolf and
+Horse were never affected. Natural armor was never affected either (the corpus's own `AC_Natural_
+Armor` token was always the base value directly, not a delta).
+
+Fixed all 44 struct literals to the printed AoN total each entry's own doc comment already
+recorded (no new external verification needed). Added a new module-doc `# Cycle 9 addendum`
+recording the full derivation. Corrected five tests to the real values (not weakened): the nine-,
+seventeen-, and twenty-three-species positive-counterpart tests, plus both `gulper_plant_*` tests
+(base_attack_bonus 1->2, hit_points 13->15, since Str 12/Con 13's modifiers are +1 not Str 10/Con
+11's +0). The first bulk regex correction pass missed 3 of 43 test-tuple entries (`allosaurus`,
+`elasmosaurus`, `eel_giant_moray` -- each the FIRST tuple in its own array, carrying an `i16`
+suffix on all three fields rather than the bare-number format every other tuple uses) -- caught by
+running the tests, not assumed clean from the script's own reported match count, and fixed by hand.
+
+`apps/desktop/src-tauri`'s own `character_hub.rs` carried a pinned test
+(`a_druid_who_selects_gulper_plant_grounds_gulper_plant_not_wolf_at_character_creation_altitude`)
+asserting the OLD wrong value (`base_attack.value == 1`). Per the standing guidance that a pinned
+test can encode a wrong assumption: its own safety property (a selected companion species must
+ground THAT species' real stat block, not Wolf's, through the real character-creation path) is
+still true and still worth proving -- only its hardcoded number was wrong, inherited from the same
+defect. Corrected to `2`, not deleted.
+
+### Why this took priority over the 142 untagged species
+
+`decisions.md §1a`: a gate that cannot fail is worse than no gate -- an uncaught systematic error
+in already-shipped, character-creation-reachable compute output is the same failure by another
+name. Adding 20-30 more species this cycle with the same wrong subtraction (already begun, using
+the established cycles-6-8 methodology, before the defect was found mid-gather) would have
+compounded it at scale. This cycle already gathered verified printed AoN totals for 18 of the 142
+untagged species (Badger, Bear, Bird, Boar, Camel, Cat Big, Cat Small, Crocodile, Dog, Pony, Dire
+Rat, Herd Animal (Ram), Hippopotamus, Primate (Baboon), Ray Manta, Ray Stingray, Turtle Giant
+Snapping, Snake Constrictor) -- not yet added to the table (time went to the correctness fix
+instead); named in the full receipt so a future cycle does not need to re-fetch it.
+
+### Test evidence
+
+`cargo test --locked -p codex --lib companion_base_stat_table` 11/11 (unchanged count, all now
+correct). `pilot_compute::` 952/952 (was 950). `companion` 121/121 (unchanged).
+`apps/desktop/src-tauri`: first run 547/1 (the one pinned-test failure above); after the fix,
+`cargo test --locked --bin codex-desktop` -> **548/0** (81.67s), matching cycle 8's own exit state.
+
+### PI / territory
+
+Own-diff (`git diff --unified=0 HEAD`) over each of the three touched files (`companion_base_
+stat_table.rs`, `character_hub.rs`, `kanban.md`): `pi_scrub.normalized_term_hits()` and the
+bundle-tag/stub-token greps -- zero hits, all clean. `git status --porcelain` confirmed clean
+before every write and listed only the three intended files after (plus `progress.md`/this
+receipt). `kanban.md`: 21 data rows, 21 unique row ids, 0 duplicates, row 20's own 9-raw-cell
+split confirmed with a backtick-aware parser before and after the edit; the diff against
+`kanban.md` is exactly one line (row 20's own). Rows 11 and 15 left untouched.
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). 144 of 196 companion species remain real,
+sized, unbuilt work: 142 untagged (`RACESUBTYPE`-less) records, plus the 2 named dinosaur
+refusals (`pachycephalosaurus`, `ornithomimosaur`). The 52/196 grounded count and the population
+figures are unchanged from cycle 8 -- this cycle's work was correctness, not coverage.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle9-receipt.md`.
+Commit: (this cycle's commit -- see push output).

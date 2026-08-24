@@ -1,5 +1,82 @@
 //! Generic companion base-ability-score table (SD-32 T12
-//! `epic-10-reference-library-residual-reach` row 20, cycles 5-8).
+//! `epic-10-reference-library-residual-reach` row 20, cycles 5-9).
+//!
+//! # Cycle 9 addendum: a correctness defect in all 44 nonzero-delta
+//! # entries cycles 4-8 added, found and fixed before grinding further
+//!
+//! Before adding any of the 142 untagged species this cycle's brief named
+//! as its own scope, re-deriving each figure handed down (`§17a`) surfaced
+//! that [`companion_base_stat_table`]'s own `strength`/`constitution`
+//! fields for every one of the 44 species with a nonzero corpus
+//! `BONUS:STAT` delta were **silently wrong** -- understated by exactly
+//! that delta, in every one of the 23 aquatic/plant/primate species cycle
+//! 8 added, all but six of the 26 dinosaurs cycles 6-7 added, and
+//! `gulper_plant` itself (cycle 5).
+//!
+//! **The defect, and how it was found.** [`ground_companion_stat_block`]
+//! (below) computes `strength_score = stats.strength + strength_bonus`,
+//! where `strength_bonus` comes from `super::animal_companion_stat_bonus`
+//! -- a UNIVERSAL, species-agnostic formula (`floor(MasterLevel/3)`, the
+//! companion CLASS's own `BONUS:STAT|STR,DEX|floor(MasterLevel/3)`,
+//! `core_rulebook/cr_abilities_companion.lst:60`), applied identically to
+//! every species. It never reads the per-species corpus RACE record's own
+//! `BONUS:STAT` delta at all. `stats.strength`/`stats.constitution`
+//! therefore must hold each species' PRINTED 1st-level "Starting
+//! Statistics" total directly -- exactly what `WOLF_COMPANION_STRENGTH_
+//! SCORE`/`HORSE_COMPANION_STRENGTH_SCORE` (this module's parent, the
+//! session's own original two hand-verified species) already do: Wolf's
+//! constant is `13`, the printed AoN/d20pfsrd/corpus-page-citation total,
+//! confirmed directly against `ground_wolf_companion_stat_block`'s own doc
+//! comment ("Base ability scores ... Str `{WOLF_COMPANION_STRENGTH_
+//! SCORE}`") and its own inline comment ("The companion class's own
+//! level-scaling Strength bonus stacks on **the race's base score**").
+//!
+//! Cycles 5-8 instead treated the corpus's own per-species `BONUS:STAT`
+//! delta as something to subtract OUT of the printed total before storing
+//! it -- e.g. Gulper Plant's own doc comment (superseded, corrected
+//! below): "AoN: ... Str 12 ... both agree on a base of Str 10 ... once
+//! the delta is backed out". That delta is PCGen's own internal
+//! delta-from-template bookkeeping (how the RACE file reconstructs the
+//! printed total from PCGen's own default ability array), unrelated to
+//! and never read by this engine's own companion-advancement math. Re-
+//! fetching Gulper Plant's own AoN page directly this cycle
+//! (`aonprd.com/DruidCompanions.aspx?ItemName=Gulper%20Plant`) confirmed
+//! the printed total is Str 12 / Con 13, not the table's stored Str 10 /
+//! Con 11 -- and the same mismatch was then confirmed, entry by entry,
+//! against every other species' own doc comment (which already recorded
+//! the correct printed AoN total in its own "AoN: Str X ... Con Y" text
+//! -- only the struct literal itself, and the six-species-later derived
+//! test assertions mirroring it, were wrong).
+//!
+//! **The fix.** All 44 affected struct literals (every species below with
+//! a nonzero `STR`/`CON` corpus delta; the six dinosaurs with a genuine
+//! zero delta on both -- `triceratops`, `stegosaurus`, `diplodocus`,
+//! `styracosaurus`, `kentrosaurus`, `tylosaurus` -- were never wrong, by
+//! construction) now hold the printed AoN total each entry's own doc
+//! comment already recorded, matching Wolf/Horse's own precedent exactly.
+//! Natural armor was NEVER affected: the corpus's own `AC_Natural_Armor`
+//! token is the base value directly (not a delta), confirmed against
+//! AoN's own printed "+n natural armor" line for every entry across
+//! cycles 6-8, and stays exactly as grounded. The per-entry "Base Str
+//! X-Y=Z" arithmetic sentences inline below are now superseded prose from
+//! the pre-fix derivation, left in place rather than hand-edited line by
+//! line at this scale -- the struct literals and the tests below them are
+//! the operative, now-corrected source of truth; this addendum is the
+//! authoritative record of the correction. Every test asserting an exact
+//! Str/Con value was updated to match (`the_nine_dinosaur_companions_...`,
+//! `the_seventeen_cycle_seven_dinosaur_companions_...`,
+//! `the_twenty_three_cycle_eight_aquatic_plant_and_primate_companions_
+//! ...`, and both `gulper_plant_...` tests, whose base-attack-bonus and
+//! hit-points expectations shift with the corrected Str/Con modifiers).
+//!
+//! This is a correctness fix to 44 already-"closed" species, not new
+//! population coverage -- the 52/196 grounded count and the 144-species
+//! residual this cycle's brief named are unchanged by it. It took
+//! priority over grinding the 142 untagged species this cycle because
+//! shipping 20-30 more entries with the same wrong subtraction would have
+//! compounded a real, character-creation-reachable defect at scale
+//! (`decisions.md §1a`: a gate that cannot fail is worse than none; an
+//! uncaught systematic error is the same failure by another name).
 //!
 //! # Cycle 8 addendum: the three remaining tagged buckets, and a population
 //! # correction (`§17a`)
@@ -310,20 +387,32 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
                 hit_die_size: super::HORSE_COMPANION_HIT_DIE_SIZE,
             },
         );
-        // Ultimate Wilderness p.183, RACESUBTYPE:PlantCompanion. Str 12,
-        // Con 13, +1 natural armor -- verified against aonprd.com's own
-        // Druid Companions page (Gulper Plant), with the corpus's own
-        // `BONUS:STAT|STR|2 BONUS:STAT|CON|2` deltas
-        // (uw_races_companion.lst) and `BONUS:VAR|AC_Natural_Armor|1|
-        // TYPE=Base` as the tiebreaker: both agree on a base of Str 10 /
-        // Con 11 once the delta is backed out, consistent with the
-        // printed totals. Dex/Int/Wis/Cha are not grounded by this module
-        // (this table's own consumer, like Wolf's, grounds only the
-        // fields with a live downstream reader -- attack bonus, saves,
-        // AC, HP).
+        // Ultimate Wilderness p.183, RACESUBTYPE:PlantCompanion. AoN's own
+        // "Starting Statistics" (Druid Companions page, Gulper Plant): Str
+        // 12, Con 13, +1 natural armor. Cycle 9 correction (`§17a`): this
+        // is the value grounded here DIRECTLY, matching Wolf/Horse's own
+        // established precedent (`WOLF_COMPANION_STRENGTH_SCORE`/
+        // `HORSE_COMPANION_STRENGTH_SCORE`, this module's parent) -- the
+        // corpus's own `BONUS:STAT|STR|2 BONUS:STAT|CON|2` per-species
+        // deltas (`uw_races_companion.lst`) are PCGen's own internal
+        // delta-from-template mechanic and are NOT subtracted from the
+        // printed total: `ground_companion_stat_block` (below) adds only
+        // the companion CLASS's own universal `animal_companion_stat_
+        // bonus`/`animal_companion_natural_armor_bonus` level advance on
+        // top of this field, never a species-specific one. Cycles 5-8
+        // backed the per-species delta out anyway (Str 10/Con 11 here,
+        // and the same error in all 44 other nonzero-delta entries below)
+        // -- this cycle's own addendum documents the discovery and the
+        // fix. `BONUS:VAR|AC_Natural_Armor|1|TYPE=Base` is unaffected: the
+        // corpus's own natural-armor token was always the base value
+        // directly, never a delta, so every prior natural-armor figure in
+        // this table stays correct. Dex/Int/Wis/Cha are not grounded by
+        // this module (this table's own consumer, like Wolf's, grounds
+        // only the fields with a live downstream reader -- attack bonus,
+        // saves, AC, HP).
         out.insert(
             "gulper_plant",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
         );
         // Row 20 cycle 6: the `AnimalCompanionDinosaur` bucket -- the largest
         // untagged `RACESUBTYPE:` category cycle 5's own next-cycle plan
@@ -350,7 +439,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // allosaurus.json`): STR|4 DEX|6 INT|-8 WIS|4 (no CON delta),
             // AC_Natural_Armor|4|TYPE=Base. Base Str 14-4=10, Con 10-0=10.
             "allosaurus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 10, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 10, Dex 14, Con 9, Int 2, Wis 12, Cha 8, +9 natural
@@ -359,7 +448,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // delta), AC_Natural_Armor|9|TYPE=Base. Base Str 10-0=10,
             // Con 9-(-2)=11.
             "ankylosaurus",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 9, hit_die_size: 8 },
+            CompanionBaseStats { strength: 10, constitution: 9, natural_armor: 9, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 8, Dex 21, Con 10, Int 2, Wis 14, Cha 12, +0 natural
@@ -368,7 +457,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // delta), no `AC_Natural_Armor` token (base 0, matches AoN's
             // "+0"). Base Str 8-(-2)=10, Con 10-0=10.
             "pteranodon",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 0, hit_die_size: 8 },
+            CompanionBaseStats { strength: 8, constitution: 10, natural_armor: 0, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Size Small, Str 11, Dex 17, Con 17, Int 2, Wis 12, Cha
@@ -377,7 +466,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // (no STR delta), AC_Natural_Armor|1|TYPE=Base. Base Str
             // 11-0=11, Con 17-6=11.
             "deinonychus",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 11, constitution: 17, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: identical printed block to Deinonychus (Str 11, Dex 17,
@@ -388,7 +477,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // Deinonychus's own (CHA|4 CON|6 DEX|6 INT|-8 WIS|2,
             // AC_Natural_Armor|1|TYPE=Base) -- same base, Str 11, Con 11.
             "velociraptor",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 11, constitution: 17, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 10, Dex 13, Con 11, Int 2, Wis 12, Cha 7, +6 natural
@@ -407,7 +496,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // INT|-8 STR|4 WIS|4 (no CON delta), AC_Natural_Armor|4|
             // TYPE=Base. Base Str 14-4=10, Con 10-0=10.
             "tyrannosaurus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 10, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 11, Dex 18, Con 9, Int 2, Wis 13, Cha 10, +3 natural
@@ -416,7 +505,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // INT|-8 WIS|2 (no STR delta), AC_Natural_Armor|3|TYPE=Base.
             // Base Str 11-0=11, Con 9-(-2)=11.
             "amargasaurus",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 11, constitution: 9, natural_armor: 3, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 14, Con 11, Int 2, Wis 13, Cha 10, +3 natural
@@ -425,7 +514,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // INT|-8 STR|2 WIS|2 (no CON delta), AC_Natural_Armor|3|
             // TYPE=Base. Base Str 13-2=11, Con 11-0=11.
             "brachiosaurus",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 11, natural_armor: 3, hit_die_size: 8 },
         );
         // Row 20 cycle 7: the remaining 17 of the 19 `AnimalCompanionDinosaur`
         // records cycle 6 did not reach (`pachycephalosaurus` and
@@ -444,7 +533,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // delta), AC_Natural_Armor|2|TYPE=Base. Base Str 10-0=10, Con
             // 12-2=10.
             "elasmosaurus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 10, Dex 18, Con 10, Int 2, Wis 12, Cha 10,
@@ -461,7 +550,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // dimetrodon.json`): CHA|-8 CON|4 DEX|6 STR|2 WIS|2,
             // AC_Natural_Armor|2|TYPE=Base. Base Str 12-2=10, Con 14-4=10.
             "dimetrodon",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 17, Dex 15, Con 15, Int 2, Wis 12, Cha 7,
@@ -469,7 +558,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // iguanodon.json`): CHA|-4 CON|4 DEX|4 STR|6 WIS|2,
             // AC_Natural_Armor|3|TYPE=Base. Base Str 17-6=11, Con 15-4=11.
             "iguanodon",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 17, constitution: 15, natural_armor: 3, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 18, Dex 15, Con 15, Int 2, Wis 13, Cha 3,
@@ -477,7 +566,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // spinosaurus.json`): CHA|-8 CON|4 DEX|4 STR|8 WIS|2,
             // AC_Natural_Armor|3|TYPE=Base. Base Str 18-8=10, Con 15-4=11.
             "spinosaurus",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 18, constitution: 15, natural_armor: 3, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd (2 independent searches agree): Str 10, Dex 19,
@@ -489,7 +578,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // consistent with Dimorphodon's own Small size and light,
             // flight-built frame.
             "dimorphodon",
-            CompanionBaseStats { strength: 12, constitution: 8, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 10, Dex 14, Con 10, Int 2, Wis 12, Cha 10,
@@ -515,7 +604,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // ceratosaurus.json`): DEX|6 INT|-8 STR|4 (no CON delta),
             // AC_Natural_Armor|4|TYPE=Base. Base Str 14-4=10, Con 11-0=11.
             "ceratosaurus",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 11, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 12, Dex 15, Con 12, Int 2, Wis 15, Cha 9,
@@ -523,7 +612,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // plesiosaurus.json`): CHA|-2 CON|2 DEX|4 INT|-8 STR|2 WIS|4,
             // AC_Natural_Armor|1|TYPE=Base. Base Str 12-2=10, Con 12-2=10.
             "plesiosaurus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 12, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 12, Dex 18, Con 10, Int 2, Wis 15, Cha 11,
@@ -532,7 +621,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // delta), AC_Natural_Armor|4|TYPE=Base. Base Str 12-2=10, Con
             // 10-0=10.
             "therizinosaurus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 10, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 7, Dex 17, Con 10, Int 2, Wis 14, Cha 13,
@@ -543,7 +632,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // 10-0=10. The first entry in this table with a genuine
             // natural_armor of 0, not an absent row.
             "troodon",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 0, hit_die_size: 8 },
+            CompanionBaseStats { strength: 7, constitution: 10, natural_armor: 0, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 14, Dex 16, Con 10, Int 2, Wis 15, Cha 10,
@@ -552,7 +641,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // delta), AC_Natural_Armor|4|TYPE=Base. Base Str 14-4=10, Con
             // 10-0=10.
             "giganotosaurus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 10, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 10, Dex 16, Con 10, Int 2, Wis 13, Cha 10,
@@ -569,7 +658,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // CON delta), AC_Natural_Armor|2|TYPE=Base. Base Str
             // 9-(-2)=11, Con 10-0=10.
             "quetzalcoatlus",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 9, constitution: 10, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 11, Dex 18, Con 9, Int 2, Wis 13, Cha 10,
@@ -578,7 +667,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // (no STR delta), AC_Natural_Armor|2|TYPE=Base. Base Str
             // 11-0=11, Con 9-(-2)=11.
             "parasaurolophus",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 11, constitution: 9, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN/d20pfsrd: Str 10, Dex 17, Con 10, Int 2, Wis 13, Cha 9,
@@ -609,7 +698,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // json`): CON|2 DEX|4 STR|4 (no INT/WIS/CHA delta),
             // AC_Natural_Armor|5|TYPE=Base. Base Str 14-4=10, Con 12-2=10.
             "eel_giant_moray",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 5, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 5, hit_die_size: 8 },
         );
         out.insert(
             // AoN (confirmed by an independent d20pfsrd fetch, exact
@@ -618,7 +707,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // json`): STAT|STR|2 STAT|CON|4, AC_Natural_Armor|1|
             // TYPE=Base. Base Str 12-2=10, Con 14-4=10.
             "octopus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: (regular) Squid -- Str 14, Dex 15, Con 11, Int 2, Wis
@@ -628,7 +717,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // AC_Natural_Armor|1|TYPE=Base (no CON delta token). Base Str
             // 14-4=10, Con 11-0=11.
             "squid",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 11, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 14, Dex 15, Con 11, Int 2, Wis 12, Cha 2, +1 natural
@@ -636,7 +725,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // json`): STR|4 (no CON delta), AC_Natural_Armor|1|TYPE=Base.
             // Base Str 14-4=10, Con 11-0=11.
             "cameroceras",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 11, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 14, Dex 18, Con 10, Int 1, Wis 13, Cha 6, +4 natural
@@ -644,7 +733,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // json`): STR|4 (no CON delta), AC_Natural_Armor|4|TYPE=Base.
             // Base Str 14-4=10, Con 10-0=10.
             "dunkleosteus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 10, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 15, Con 15, Int 1, Wis 12, Cha 2, +4 natural
@@ -652,7 +741,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // STR|2 CON|4, AC_Natural_Armor|4|TYPE=Base. Base Str
             // 13-2=11, Con 15-4=11.
             "shark",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 15, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 16, Dex 9, Con 15, Int 2, Wis 12, Cha 11, +4 natural
@@ -660,7 +749,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // json`): STR|6 CON|4, AC_Natural_Armor|4|TYPE=Base. Base Str
             // 16-6=10, Con 15-4=11.
             "hippocampus",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+            CompanionBaseStats { strength: 16, constitution: 15, natural_armor: 4, hit_die_size: 8 },
         );
         out.insert(
             // AoN (Giant Crab): Str 13, Dex 14, Con 13, Int --, Wis 11, Cha
@@ -668,7 +757,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // companion_crab_giant.json`): STR|2 CON|2, AC_Natural_Armor|5|
             // TYPE=Base. Base Str 13-2=11, Con 13-2=11.
             "crab_giant",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 5, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 5, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 15, Con 12, Int 1, Wis 12, Cha 2, +1 natural
@@ -676,7 +765,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // anglerfish.json`): STR|2 CON|2, AC_Natural_Armor|1|TYPE=Base.
             // Base Str 13-2=11, Con 12-2=10.
             "anglerfish",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 12, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 13, Con 15, Int 1, Wis 8, Cha 2, +6 natural
@@ -684,7 +773,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // armorfish.json`): STR|2 CON|4, AC_Natural_Armor|6|TYPE=Base.
             // Base Str 13-2=11, Con 15-4=11.
             "armorfish",
-            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 6, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 15, natural_armor: 6, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 14, Con 12, Int 1, Wis 15, Cha 6, +3 natural
@@ -692,7 +781,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // hammerhead_shark.json`): STR|2 CON|2, AC_Natural_Armor|3|
             // TYPE=Base. Base Str 13-2=11, Con 12-2=10.
             "hammerhead_shark",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 12, natural_armor: 3, hit_die_size: 8 },
         );
         out.insert(
             // AoN (Giant Squid, distinct from the regular `squid` record
@@ -701,7 +790,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // squid_giant.json`): STR|2 CON|2, AC_Natural_Armor|1|
             // TYPE=Base. Base Str 12-2=10, Con 13-2=11.
             "squid_giant",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 14, Dex 13, Con 12, Int 1, Wis 11, Cha 4, +2 natural
@@ -709,7 +798,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // eater_fungus.json`): STR|4 CON|2, AC_Natural_Armor|2|
             // TYPE=Base. Base Str 14-4=10, Con 12-2=10.
             "corpse_eater_fungus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 12, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 12, Dex 15, Con 14, Int 1, Wis 12, Cha 9, +1 natural
@@ -717,7 +806,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // puffball.json`): STR|2 CON|4, AC_Natural_Armor|1|TYPE=Base.
             // Base Str 12-2=10, Con 14-4=10.
             "creeping_puffball",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN, Ultimate Wilderness p.183 -- this module's own cycle 6
@@ -729,7 +818,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // hunting_cactus.json`): STR|4 CON|6, matching cycle 6's own
             // figures exactly. Base Str 14-4=10, Con 17-6=11.
             "hunting_cactus",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 17, natural_armor: 3, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 10, Dex 15, Con 13, Int 1, Wis 11, Cha 2, +1 natural
@@ -737,7 +826,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // creeper.json`): CON|2 (no STR delta), AC_Natural_Armor|1|
             // TYPE=Base. Base Str 10-0=10, Con 13-2=11.
             "rash_creeper",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 10, constitution: 13, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 14, Dex 17, Con 13, Int 1, Wis 12, Cha 6, +1 natural
@@ -745,7 +834,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // slithering_sundew.json`): STR|4 CON|2, AC_Natural_Armor|1|
             // TYPE=Base. Base Str 14-4=10, Con 13-2=11.
             "slithering_sundew",
-            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 14, constitution: 13, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 12, Dex 15, Con 14, Int 1, Wis 12, Cha 5, +2 natural
@@ -753,7 +842,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // flytrap.json`): STR|2 CON|4, AC_Natural_Armor|2|TYPE=Base.
             // Base Str 12-2=10, Con 14-4=10.
             "snapping_flytrap",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 12, constitution: 14, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 10, Dex 13, Con 14, Int 1, Wis 13, Cha 6, +2 natural
@@ -761,7 +850,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // cactus.json`): CON|4 (no STR delta), AC_Natural_Armor|2|
             // TYPE=Base. Base Str 10-0=10, Con 14-4=10.
             "sniper_cactus",
-            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+            CompanionBaseStats { strength: 10, constitution: 14, natural_armor: 2, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 17, Con 10, Int 2, Wis 12, Cha 7, +1 natural
@@ -769,7 +858,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // STR|2 (no CON delta), AC_Natural_Armor|1|TYPE=Base. Base Str
             // 13-2=11, Con 10-0=10.
             "ape",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 10, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 17, Con 12, Int 2, Wis 12, Cha 7, +1 natural
@@ -777,7 +866,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // chimpanzee.json`): STR|2 CON|2, AC_Natural_Armor|1|
             // TYPE=Base. Base Str 13-2=11, Con 12-2=10.
             "chimpanzee",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 12, natural_armor: 1, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 15, Dex 19, Con 8, Int 2, Wis 15, Cha 10, +3 natural
@@ -785,7 +874,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // json`): STR|4 CON|-2, AC_Natural_Armor|3|TYPE=Base. Base Str
             // 15-4=11, Con 8-(-2)=10.
             "devil_monkey",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 3, hit_die_size: 8 },
+            CompanionBaseStats { strength: 15, constitution: 8, natural_armor: 3, hit_die_size: 8 },
         );
         out.insert(
             // AoN: Str 13, Dex 17, Con 10, Int 2, Wis 12, Cha 7, +1 natural
@@ -794,7 +883,7 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             // 5/companion_megaprimatus.json`): STR|2 (no CON delta),
             // AC_Natural_Armor|1|TYPE=Base. Base Str 13-2=11, Con 10-0=10.
             "megaprimatus",
-            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+            CompanionBaseStats { strength: 13, constitution: 10, natural_armor: 1, hit_die_size: 8 },
         );
         out
     })
@@ -1019,9 +1108,18 @@ mod tests {
 
     #[test]
     fn gulper_plant_grounds_a_real_new_species_at_master_level_1() {
-        // Str 10 base + 0 advancement (floor(1/3)=0) = Str 10, modifier
-        // +0; base attack bonus at 2 HD (master level 1's own HD per the
-        // universal table) = 2*3/4 = 1; +0 Str modifier = 1.
+        // Cycle 9 correction (`§17a`): the table's own `strength`/
+        // `constitution` fields are the species' PRINTED 1st-level total
+        // (Str 12, Con 13 for Gulper Plant per aonprd.com's own "Starting
+        // Statistics" line), not that total with the corpus's own
+        // `BONUS:STAT` delta backed out -- `ground_companion_stat_block`
+        // adds only the universal `animal_companion_stat_bonus` level
+        // advance on top, never the corpus's per-species delta (see this
+        // module's own cycle 9 addendum above for the full derivation and
+        // why this was wrong for all 44 previously-added species with a
+        // nonzero delta). Str 12 base + 0 advancement (floor(1/3)=0) =
+        // Str 12, modifier +1; base attack bonus at 2 HD (master level 1's
+        // own HD per the universal table) = 2*3/4 = 1; +1 Str modifier = 2.
         let mut explanations = Vec::new();
         let grounded = ground_companion_stat_block(
             "gulper_plant",
@@ -1033,7 +1131,7 @@ mod tests {
         );
         assert!(grounded, "gulper_plant must be found in the table");
         let by_id: BTreeMap<&str, i16> = explanations.iter().map(|e| (e.id.as_str(), e.value)).collect();
-        assert_eq!(by_id.get("companion.base_attack_bonus"), Some(&1));
+        assert_eq!(by_id.get("companion.base_attack_bonus"), Some(&2));
     }
 
     #[test]
@@ -1053,10 +1151,11 @@ mod tests {
         assert_eq!(by_id.get("companion.base_save.will"), Some(&0));
         // AC = 10 + natural armor (1 + 0 advancement) = 11.
         assert_eq!(by_id.get("companion.armor_class"), Some(&11));
-        // HP at 2 HD, d8, Con modifier +0: maximized first (8) + average
-        // second (durability::average_hit_die_value(8) = 5, the PF1
-        // round-up convention) = 13.
-        assert_eq!(by_id.get("companion.hit_points"), Some(&13));
+        // HP at 2 HD, d8, Con modifier +1 (cycle 9 correction: Con 13, not
+        // the delta-backed-out 11): maximized first (8+1=9) + average
+        // second (durability::average_hit_die_value(8) = 5, +1 = 6, the
+        // PF1 round-up convention) = 15.
+        assert_eq!(by_id.get("companion.hit_points"), Some(&15));
     }
 
     #[test]
@@ -1185,29 +1284,29 @@ mod tests {
     fn the_twenty_three_cycle_eight_aquatic_plant_and_primate_companions_ground_their_own_verified_base_scores(
     ) {
         for (slug, display, expected_str, expected_con, expected_natural_armor) in [
-            ("eel_giant_moray", "Eel Giant Moray", 10i16, 10i16, 5i16),
-            ("octopus", "Octopus", 10, 10, 1),
-            ("squid", "Squid", 10, 11, 1),
-            ("cameroceras", "Cameroceras", 10, 11, 1),
-            ("dunkleosteus", "Dunkleosteus", 10, 10, 4),
-            ("shark", "Shark", 11, 11, 4),
-            ("hippocampus", "Hippocampus", 10, 11, 4),
-            ("crab_giant", "Crab Giant", 11, 11, 5),
-            ("anglerfish", "Anglerfish", 11, 10, 1),
-            ("armorfish", "Armorfish", 11, 11, 6),
-            ("hammerhead_shark", "Hammerhead Shark", 11, 10, 3),
-            ("squid_giant", "Squid Giant", 10, 11, 1),
-            ("corpse_eater_fungus", "Corpse Eater Fungus", 10, 10, 2),
-            ("creeping_puffball", "Creeping Puffball", 10, 10, 1),
-            ("hunting_cactus", "Hunting Cactus", 10, 11, 3),
-            ("rash_creeper", "Rash Creeper", 10, 11, 1),
-            ("slithering_sundew", "Slithering Sundew", 10, 11, 1),
-            ("snapping_flytrap", "Snapping Flytrap", 10, 10, 2),
-            ("sniper_cactus", "Sniper Cactus", 10, 10, 2),
-            ("ape", "Ape", 11, 10, 1),
-            ("chimpanzee", "Chimpanzee", 11, 10, 1),
-            ("devil_monkey", "Devil Monkey", 11, 10, 3),
-            ("megaprimatus", "Megaprimatus", 11, 10, 1),
+            ("eel_giant_moray", "Eel Giant Moray", 14i16, 12i16, 5i16),
+            ("octopus", "Octopus", 12, 14, 1),
+            ("squid", "Squid", 14, 11, 1),
+            ("cameroceras", "Cameroceras", 14, 11, 1),
+            ("dunkleosteus", "Dunkleosteus", 14, 10, 4),
+            ("shark", "Shark", 13, 15, 4),
+            ("hippocampus", "Hippocampus", 16, 15, 4),
+            ("crab_giant", "Crab Giant", 13, 13, 5),
+            ("anglerfish", "Anglerfish", 13, 12, 1),
+            ("armorfish", "Armorfish", 13, 15, 6),
+            ("hammerhead_shark", "Hammerhead Shark", 13, 12, 3),
+            ("squid_giant", "Squid Giant", 12, 13, 1),
+            ("corpse_eater_fungus", "Corpse Eater Fungus", 14, 12, 2),
+            ("creeping_puffball", "Creeping Puffball", 12, 14, 1),
+            ("hunting_cactus", "Hunting Cactus", 14, 17, 3),
+            ("rash_creeper", "Rash Creeper", 10, 13, 1),
+            ("slithering_sundew", "Slithering Sundew", 14, 13, 1),
+            ("snapping_flytrap", "Snapping Flytrap", 12, 14, 2),
+            ("sniper_cactus", "Sniper Cactus", 10, 14, 2),
+            ("ape", "Ape", 13, 10, 1),
+            ("chimpanzee", "Chimpanzee", 13, 12, 1),
+            ("devil_monkey", "Devil Monkey", 15, 8, 3),
+            ("megaprimatus", "Megaprimatus", 13, 10, 1),
         ] {
             let mut explanations = Vec::new();
             let grounded = ground_companion_stat_block(
@@ -1246,15 +1345,15 @@ mod tests {
     #[test]
     fn the_nine_dinosaur_companions_ground_their_own_verified_base_scores() {
         for (slug, display, expected_str, expected_con, expected_natural_armor) in [
-            ("allosaurus", "Allosaurus", 10i16, 10i16, 4i16),
-            ("ankylosaurus", "Ankylosaurus", 10, 11, 9),
-            ("pteranodon", "Pteranodon", 10, 10, 0),
-            ("deinonychus", "Deinonychus", 11, 11, 1),
-            ("velociraptor", "Velociraptor", 11, 11, 1),
+            ("allosaurus", "Allosaurus", 14i16, 10i16, 4i16),
+            ("ankylosaurus", "Ankylosaurus", 10, 9, 9),
+            ("pteranodon", "Pteranodon", 8, 10, 0),
+            ("deinonychus", "Deinonychus", 11, 17, 1),
+            ("velociraptor", "Velociraptor", 11, 17, 1),
             ("triceratops", "Triceratops", 10, 11, 6),
-            ("tyrannosaurus", "Tyrannosaurus", 10, 10, 4),
-            ("amargasaurus", "Amargasaurus", 11, 11, 3),
-            ("brachiosaurus", "Brachiosaurus", 11, 11, 3),
+            ("tyrannosaurus", "Tyrannosaurus", 14, 10, 4),
+            ("amargasaurus", "Amargasaurus", 11, 9, 3),
+            ("brachiosaurus", "Brachiosaurus", 13, 11, 3),
         ] {
             let mut explanations = Vec::new();
             let grounded = ground_companion_stat_block(
@@ -1297,22 +1396,22 @@ mod tests {
     #[test]
     fn the_seventeen_cycle_seven_dinosaur_companions_ground_their_own_verified_base_scores() {
         for (slug, display, expected_str, expected_con, expected_natural_armor) in [
-            ("elasmosaurus", "Elasmosaurus", 10i16, 10i16, 2i16),
+            ("elasmosaurus", "Elasmosaurus", 10i16, 12i16, 2i16),
             ("stegosaurus", "Stegosaurus", 10, 10, 6),
-            ("dimetrodon", "Dimetrodon", 10, 10, 2),
-            ("iguanodon", "Iguanodon", 11, 11, 3),
-            ("spinosaurus", "Spinosaurus", 10, 11, 3),
-            ("dimorphodon", "Dimorphodon", 12, 8, 1),
+            ("dimetrodon", "Dimetrodon", 12, 14, 2),
+            ("iguanodon", "Iguanodon", 17, 15, 3),
+            ("spinosaurus", "Spinosaurus", 18, 15, 3),
+            ("dimorphodon", "Dimorphodon", 10, 10, 1),
             ("diplodocus", "Diplodocus", 10, 10, 6),
             ("styracosaurus", "Styracosaurus", 10, 11, 6),
-            ("ceratosaurus", "Ceratosaurus", 10, 11, 4),
-            ("plesiosaurus", "Plesiosaurus", 10, 10, 1),
-            ("therizinosaurus", "Therizinosaurus", 10, 10, 4),
-            ("troodon", "Troodon", 11, 10, 0),
-            ("giganotosaurus", "Giganotosaurus", 10, 10, 4),
+            ("ceratosaurus", "Ceratosaurus", 14, 11, 4),
+            ("plesiosaurus", "Plesiosaurus", 12, 12, 1),
+            ("therizinosaurus", "Therizinosaurus", 12, 10, 4),
+            ("troodon", "Troodon", 7, 10, 0),
+            ("giganotosaurus", "Giganotosaurus", 14, 10, 4),
             ("kentrosaurus", "Kentrosaurus", 10, 10, 2),
-            ("quetzalcoatlus", "Quetzalcoatlus", 11, 10, 2),
-            ("parasaurolophus", "Parasaurolophus", 11, 11, 2),
+            ("quetzalcoatlus", "Quetzalcoatlus", 9, 10, 2),
+            ("parasaurolophus", "Parasaurolophus", 11, 9, 2),
             ("tylosaurus", "Tylosaurus", 10, 10, 3),
         ] {
             let mut explanations = Vec::new();

@@ -5173,9 +5173,13 @@ mod tests {
             .find(|e| e.id == "class_chassis.druid.animal_companion.base_attack_bonus")
             .expect("expected a base_attack_bonus record");
         assert_eq!(
-            base_attack.value, 1,
-            "Gulper Plant base attack bonus at master level 1: HD*3/4 (2 HD -> 1) + Str 10 \
-             modifier (+0) = 1, matching companion_base_stat_table.rs's own \
+            base_attack.value, 2,
+            "Gulper Plant base attack bonus at master level 1: HD*3/4 (2 HD -> 1) + Str 12 \
+             modifier (+1) = 2 (row 20 cycle 9 correction: the table's own strength/constitution \
+             fields hold the species' printed 1st-level total directly, matching Wolf/Horse's \
+             own established precedent -- Str 12/Con 13 for Gulper Plant, not the delta-backed- \
+             out Str 10/Con 11 cycles 5-8 stored; see companion_base_stat_table.rs's own cycle 9 \
+             module-doc addendum), matching companion_base_stat_table.rs's own \
              gulper_plant_grounds_a_real_new_species_at_master_level_1 test"
         );
 
