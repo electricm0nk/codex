@@ -39636,6 +39636,37 @@ fn pool_header_record_by_normalized_suffix(
             }
         }
     }
+    // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17`): a SIXTH real corpus header shape, a
+    // DIFFERENT directory from cycle 18's fifth (`domain/*.json`, bare-keyed) -- `class_feature/
+    // domain_base/*.json`, keyed `"Domain Base ~ <bare>"` (e.g. `"Domain Base ~ Void"`,
+    // confirmed live: `data/corpus/inner_sea_world_guide/class_feature/domain_base/void.json`,
+    // `CATEGORY:Internal`, real `BONUS:VAR|DomainVoidLVL|DomainLVL`/`...DC`/`...Times` chain).
+    // Its own `data.class` is the literal string `"Domain Base"` -- PCGen's own class-agnostic
+    // marker for this record family, not a real playable class name (every one of its 40 real
+    // members carries this exact string, never a PC class) -- so it is admitted the SAME way
+    // `header.class.is_empty()` already is above: a corpus-tagged "not owned by any one class"
+    // header can never collide with a real class-owned same-named record, so accepting it costs
+    // nothing in cross-class-collision risk. Scoped to `registered_name == Some("Domain")`
+    // exactly like cycle 18's fifth shape, for the same reason (no other pool family has a
+    // sibling `domain_base/` directory). This closes `Void Domain` (whose only bonus_vars
+    // member's sole terminal, `DomainVoidTimes`, chains through here) and corrects cycle 19's
+    // own `§27b` exhaustive-verification claim that `Scalykind` carries "no BONUS:VAR-bearing
+    // header exists anywhere in the corpus" -- `Domain Base ~ Scalykind` is real and was missed
+    // (that verification checked `domain-kind` and bare `class_feature` shapes, never this
+    // THIRD directory) -- filed as a retro correction, not silently.
+    if registered_name == Some("Domain") {
+        if let Some(bare) = pool_group.strip_suffix(" Domain") {
+            if let Some(header) = table
+                .get(&format!("Domain Base ~ {bare}"))
+                .filter(|header| header.class == "Domain Base")
+            {
+                class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+                    &mut merged,
+                    header.bonus_vars.clone(),
+                );
+            }
+        }
+    }
     merged
 }
 
@@ -39752,14 +39783,26 @@ fn pool_group_header_vars_merged(
     combined_vars
 }
 
-pub(crate) fn resolve_pool_member_sole_magnitude(
+/// SD-32 T12 Epic 8 row 18 cycle 20: the shared setup both
+/// [`resolve_pool_member_sole_magnitude`] and [`resolve_pool_member_all_magnitudes`] build on --
+/// looks the record up, merges in every real header source
+/// ([`pool_group_header_vars_merged`]), and resolves the FULL PCGen var chain once. Returns the
+/// record's own terminal target names (every `bonus_vars` key not itself referenced inside
+/// ANOTHER `bonus_vars` formula on this same record -- the existing, unchanged
+/// `is_referenced_elsewhere` filter, e.g. `Madness Domain`'s own `DomainMadnessLVL` is filtered
+/// out because `DomainMadnessDC`'s formula names it, leaving `DomainMadnessDC`/
+/// `DomainMadnessTimes`/`DomainMadnessAbilityTriggerLVL` as its three real terminals) together
+/// with the resolved value map every one of those names is looked up in. `None` for a record with
+/// no `bonus_vars` at all, or one whose target(s) never resolve through the chain -- both
+/// preserved exactly, unchanged from the pre-cycle-20 single-target function this factors out of.
+fn pool_member_terminal_targets_and_resolved_vars(
     key: &str,
     pool_group: &str,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     owning_class_override: Option<&str>,
     registered_name_for_tracker: Option<&str>,
-) -> Option<(String, i64)> {
+) -> Option<(Vec<String>, std::collections::BTreeMap<String, i64>)> {
     let record = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe().get(key)?;
     if record.bonus_vars.is_empty() {
         return None;
@@ -39771,10 +39814,14 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
             .iter()
             .any(|(other_name, formula)| other_name != name && formula_names_identifier(formula, name))
     };
-    let mut terminals = record.bonus_vars.keys().filter(|name| !is_referenced_elsewhere(name));
-    let target = terminals.next()?;
-    if terminals.next().is_some() {
-        return None; // more than one terminal target -- refuse, do not guess
+    let terminals: Vec<String> = record
+        .bonus_vars
+        .keys()
+        .filter(|name| !is_referenced_elsewhere(name))
+        .cloned()
+        .collect();
+    if terminals.is_empty() {
+        return None;
     }
     let mut combined_vars = record.bonus_vars.clone();
     let merged_header_vars =
@@ -39789,8 +39836,97 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
         level,
         ability_modifiers,
     );
+    Some((terminals, vars))
+}
+
+/// The ORIGINAL "exactly one terminal, or refuse" contract, load-bearing since SD-32 T12 Epic 8
+/// cycle 2 (re-proved unweakened by cycle 5): a caller that wants exactly ONE magnitude for a
+/// record must never receive a guessed pick among several real, independent targets. Unchanged
+/// behaviour -- still refuses (returns `None`) the instant a record carries more than one real
+/// terminal, e.g. `Forbidden Rites Domain ~ Madness Domain`'s own three
+/// (`DomainMadnessDC`/`...Times`/`...AbilityTriggerLVL`). Callers that can genuinely make use of
+/// MULTIPLE independent targets (a pool member's real corpus shape, not this function's own
+/// single-value contract) use [`resolve_pool_member_all_magnitudes`] instead -- see that
+/// function's own doc for why "more than one terminal" is not the same defect as "ambiguous
+/// which one is right": PCGen's `BONUS:VAR` targets with DIFFERENT names are independent
+/// quantities (`pcgen/core/PlayerCharacter.java:2136`'s `getTotalBonusTo("VAR", variableString)`
+/// sums contributions sharing ONE `variableString` -- see `bonus_stack_reader.rs`'s own module
+/// doc -- it says nothing about combining DIFFERENT variable names, because there is nothing to
+/// combine: each is its own accumulator). This function's own refusal is therefore not "PCGen's
+/// rule applied incompletely" -- it is this ONE caller's own single-value contract, kept exactly
+/// as strict as it always was.
+pub(crate) fn resolve_pool_member_sole_magnitude(
+    key: &str,
+    pool_group: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    owning_class_override: Option<&str>,
+    registered_name_for_tracker: Option<&str>,
+) -> Option<(String, i64)> {
+    let (terminals, vars) = pool_member_terminal_targets_and_resolved_vars(
+        key,
+        pool_group,
+        level,
+        ability_modifiers,
+        owning_class_override,
+        registered_name_for_tracker,
+    )?;
+    if terminals.len() != 1 {
+        return None; // more than one terminal target -- refuse, do not guess
+    }
+    let target = &terminals[0];
     let value = *vars.get(target)?;
     Some((target.clone(), value))
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 20: genuinely resolves EVERY independent terminal target a pool
+/// member record carries, rather than refusing once there is more than one. The real PCGen rule
+/// this implements (established by reading `pcgen/core/PlayerCharacter.java:2136` and
+/// `pcgen/core/BonusManager.java`'s `sumActiveBonusMap`, both already cited in
+/// `bonus_stack_reader.rs`'s own module doc): a `BONUS:VAR` target's value is the sum of every
+/// ACTIVE contribution filed under THAT variable's own name -- summation only ever happens WITHIN
+/// one target name. A record carrying several `BONUS:VAR` tokens with DIFFERENT target names
+/// (`Forbidden Rites Domain ~ Madness Domain`'s real `DomainMadnessDC`/`DomainMadnessTimes`/
+/// `DomainMadnessAbilityTriggerLVL`, confirmed live in `data/corpus/ultimate_magic/class_feature/
+/// forbidden_rites_domain/madness.json`) is not one ambiguous quantity needing a guess between
+/// three candidates -- it is THREE separate quantities, each already correctly and
+/// unambiguously computed by [`class_feature_grant_consumer::resolve_pcgen_var_chain`]'s existing
+/// full-chain evaluation (which was already computing every one of them correctly; only the
+/// single-value REPORTING contract was discarding all but a guessed one). This function changes
+/// nothing about HOW a value is computed -- it reports every terminal the shared resolver
+/// ([`pool_member_terminal_targets_and_resolved_vars`]) already correctly derives, instead of
+/// refusing. The refusal is preserved wherever it is still real: a record whose only terminal(s)
+/// never resolve through the chain (an unbound external reference, an unrecognised formula
+/// operator) is still silently absent from the returned `Vec`, exactly as `resolve_pool_member_
+/// sole_magnitude` silently returns `None` for the same case -- "cannot resolve" is never
+/// fabricated into a guessed 0 or omitted target here either. Callers push one
+/// `ComputationExplanation` per returned `(target, value)` pair; the existing explanation `id`
+/// scheme (`{id_prefix}.{group_slug}.{member_slug}.{target_slug}`,
+/// `push_generic_pool_group_selection_magnitude`'s own format string) already keys on
+/// `target_slug`, so multiple terminals from one member produce distinct ids with zero collision
+/// risk, unchanged from before this cycle for every existing single-terminal member.
+pub(crate) fn resolve_pool_member_all_magnitudes(
+    key: &str,
+    pool_group: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    owning_class_override: Option<&str>,
+    registered_name_for_tracker: Option<&str>,
+) -> Vec<(String, i64)> {
+    let Some((terminals, vars)) = pool_member_terminal_targets_and_resolved_vars(
+        key,
+        pool_group,
+        level,
+        ability_modifiers,
+        owning_class_override,
+        registered_name_for_tracker,
+    ) else {
+        return Vec::new();
+    };
+    terminals
+        .into_iter()
+        .filter_map(|target| vars.get(&target).copied().map(|value| (target, value)))
+        .collect()
 }
 
 /// Whether `identifier` appears in `formula` as a whole token (not as a
@@ -39882,26 +40018,30 @@ fn push_generic_pool_choice_magnitude(
         else {
             continue;
         };
-        let Some((target, value)) =
-            resolve_pool_member_sole_magnitude(&key, pool_group, level, ability_modifiers, None, None)
-        else {
-            continue;
-        };
-        let Ok(value) = i16::try_from(value) else { continue };
+        // SD-32 T12 Epic 8 row 18 cycle 20: resolves EVERY independent terminal the member
+        // carries (1 for the overwhelming majority, 2-3 for the newly-closed multi-terminal
+        // shape) rather than refusing whenever there is more than one -- see
+        // `resolve_pool_member_all_magnitudes`'s own doc for the PCGen citation. A single-
+        // terminal member still produces exactly the one explanation it always did.
         let member_name = key.strip_prefix(&prefix).unwrap_or(&key);
         let member_slug = class_feature_id_slug(member_name);
-        let target_slug = class_feature_id_slug(&target);
-        explanations.push(ComputationExplanation {
-            id: format!("{id_prefix}.{member_slug}.{target_slug}"),
-            value,
-            detail: format!(
-                "{pool_group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
-                 {target} = {value}. Resolved generically -- not a hand-picked, per-member \
-                 function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
-                 seeded with this character's real class level and real ability modifiers \
-                 (SD-32 T12 Epic 8, decisions.md §17 generic pool-choice magnitude resolver)."
-            ),
-        });
+        for (target, value) in
+            resolve_pool_member_all_magnitudes(&key, pool_group, level, ability_modifiers, None, None)
+        {
+            let Ok(value) = i16::try_from(value) else { continue };
+            let target_slug = class_feature_id_slug(&target);
+            explanations.push(ComputationExplanation {
+                id: format!("{id_prefix}.{member_slug}.{target_slug}"),
+                value,
+                detail: format!(
+                    "{pool_group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                     {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                     function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                     seeded with this character's real class level and real ability modifiers \
+                     (SD-32 T12 Epic 8, decisions.md §17 generic pool-choice magnitude resolver)."
+                ),
+            });
+        }
     }
 }
 
@@ -39958,32 +40098,35 @@ fn push_generic_pool_group_selection_magnitude(
             .iter()
         {
             let Some(member_name) = key.strip_prefix(&prefix) else { continue };
-            let Some((target, value)) = resolve_pool_member_sole_magnitude(
+            // SD-32 T12 Epic 8 row 18 cycle 20: every independent terminal (1-3), not a
+            // sole-terminal refusal -- closes `Forbidden Rites Domain` and its Starsoul/
+            // Celestial/Fey Bloodline siblings' genuine multi-terminal records. See
+            // `resolve_pool_member_all_magnitudes`'s own doc.
+            let member_slug = class_feature_id_slug(member_name);
+            for (target, value) in resolve_pool_member_all_magnitudes(
                 key,
                 &group,
                 level,
                 ability_modifiers,
                 Some(class),
                 Some(registered_name),
-            ) else {
-                continue;
-            };
-            let Ok(value) = i16::try_from(value) else { continue };
-            let member_slug = class_feature_id_slug(member_name);
-            let target_slug = class_feature_id_slug(&target);
-            explanations.push(ComputationExplanation {
-                id: format!("{id_prefix}.{group_slug}.{member_slug}.{target_slug}"),
-                value,
-                detail: format!(
-                    "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
-                     {target} = {value}. Resolved generically -- not a hand-picked, per-member \
-                     function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
-                     seeded with this character's real class level and real ability modifiers, \
-                     after resolving the recorded {choice_set_id} -> {selection_id} selection to \
-                     its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
-                     pool-group-selection magnitude resolver)."
-                ),
-            });
+            ) {
+                let Ok(value) = i16::try_from(value) else { continue };
+                let target_slug = class_feature_id_slug(&target);
+                explanations.push(ComputationExplanation {
+                    id: format!("{id_prefix}.{group_slug}.{member_slug}.{target_slug}"),
+                    value,
+                    detail: format!(
+                        "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                         {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                         function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                         seeded with this character's real class level and real ability modifiers, \
+                         after resolving the recorded {choice_set_id} -> {selection_id} selection to \
+                         its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
+                         pool-group-selection magnitude resolver)."
+                    ),
+                });
+            }
         }
     }
 }
@@ -72847,28 +72990,59 @@ mod opponent_conditioned_tier_zero_tests {
         );
     }
 
-    /// The generic resolver still refuses rather than guesses when a
-    /// record's own formulas name MORE THAN ONE terminal target with no
-    /// cross-reference between them -- `Slayer Talent ~ Combat Style I`
-    /// sets both `CombatStyleLVL|1` and `RangerDefaultCombatStyle|1`,
-    /// neither referencing the other, so `resolve_pool_member_sole_
-    /// magnitude` cannot tell which one is "the" magnitude and refuses for
-    /// both. Proves the header-suffix fix above did not weaken this
-    /// separate, still-live safety refusal.
+    /// SD-32 T12 Epic 8 row 18 cycle 20 correction (`§17a`): this test originally pinned
+    /// `resolve_pool_member_sole_magnitude`'s single-value "more than one terminal -> ground
+    /// nothing" refusal, at a time when that was the ONLY multi-terminal capability this
+    /// codebase had. Cycle 20 built the real capability the refusal was a placeholder for:
+    /// `push_generic_pool_choice_magnitude` now resolves through `resolve_pool_member_all_
+    /// magnitudes`, which reports EVERY independent terminal a record carries rather than
+    /// refusing the whole record. `Slayer Talent ~ Combat Style I` carries real, independent,
+    /// unconditional, corpus-verified constant-1 targets -- re-derived directly against the
+    /// real record rather than assumed: `CombatStyleLVL` plus SEVEN
+    /// `RangerCombatStyle<Option>Allowed` flags (Archery, Crossbow, MountedCombat,
+    /// NaturalWeapon, TwoHandedWeapon, TwoWeapon, WeaponAndShield), none of which references any
+    /// other, all of them now correctly grounding at their real value (1), restating the same
+    /// never-guess safety property for the real capability rather than a blanket refusal.
     #[test]
-    fn slayer_combat_style_i_refuses_rather_than_guess_between_two_terminal_targets() {
+    fn slayer_combat_style_i_resolves_every_independent_terminal_not_a_guess() {
         let mut input = character(SLAYER_CLASS_ID, 6);
         input.chosen.selected_choices.push(SelectedChoice {
             choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
             selection_id: "talent:combat_style_i".to_owned(),
         });
-        assert!(
-            build_pilot_headless_receipt(&input)
-                .computation
-                .explanations
-                .iter()
-                .all(|e| !e.id.contains("combat_style_i")),
-            "a record with two unrelated terminal targets must ground nothing, not guess one"
+        let receipt = build_pilot_headless_receipt(&input);
+        let mut combat_style_i_values: Vec<(String, i16)> = receipt
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.contains("combat_style_i"))
+            .map(|e| (e.id.clone(), e.value))
+            .collect();
+        combat_style_i_values.sort();
+        let expected_targets = [
+            "combatstylelvl",
+            "rangercombatstylearcheryallowed",
+            "rangercombatstylecrossbowallowed",
+            "rangercombatstylemountedcombatallowed",
+            "rangercombatstylenaturalweaponallowed",
+            "rangercombatstyletwohandedweaponallowed",
+            "rangercombatstyletwoweaponallowed",
+            "rangercombatstyleweaponandshieldallowed",
+        ];
+        let mut expected: Vec<(String, i16)> = expected_targets
+            .iter()
+            .map(|target| {
+                (
+                    format!("class_feature.acg.slayer.talent.generic.combat_style_i.{target}"),
+                    1,
+                )
+            })
+            .collect();
+        expected.sort();
+        assert_eq!(
+            combat_style_i_values, expected,
+            "every one of Combat Style I's independent terminals must ground, each at its real \
+             corpus-verified constant value (1), neither guessed nor dropped"
         );
     }
 
@@ -74241,25 +74415,46 @@ mod spellcasting_shaped_class_closure_tests {
         );
     }
 
-    /// A record whose own real corpus formula has MORE than one terminal
-    /// `BONUS:VAR` target (`Discovery ~ True Mutagen`:
-    /// `MutagenTierLVL` AND `MutagenACBonus`, neither referencing the
-    /// other) refuses rather than guessing which target is "the"
-    /// magnitude -- `decisions.md §1a`.
+    /// SD-32 T12 Epic 8 row 18 cycle 20 correction (`§17a`): this test originally pinned the
+    /// pre-cycle-20 single-value resolver's "more than one terminal -> ground nothing"
+    /// refusal. `Discovery ~ True Mutagen`'s own `MutagenTierLVL` and `MutagenACBonus` are not
+    /// ambiguous candidates for one magnitude -- they are two genuinely independent,
+    /// unconditional corpus quantities (neither's formula references the other). Cycle 20's
+    /// `resolve_pool_member_all_magnitudes` now correctly resolves BOTH, each at its own real,
+    /// independently-derived value, restating the same never-guess safety property for the real
+    /// capability rather than a blanket refusal (`decisions.md §1a`/`§27b`).
     #[test]
-    fn true_mutagen_discovery_refuses_a_multi_terminal_target_rather_than_guess() {
+    fn true_mutagen_discovery_resolves_both_independent_terminals_not_a_guess() {
         let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
         level10.chosen.selected_choices.push(SelectedChoice {
             choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
             selection_id: "discovery:true_mutagen".to_owned(),
         });
         let computation = compute_pilot_base_chassis(&level10);
-        assert!(
-            !computation
-                .explanations
-                .iter()
-                .any(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.true_mutagen.")),
-            "a two-terminal-target record must refuse, not guess: {:?}",
+        let mut true_mutagen_values: Vec<(String, i16)> = computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.true_mutagen."))
+            .map(|e| (e.id.clone(), e.value))
+            .collect();
+        true_mutagen_values.sort();
+        assert_eq!(
+            true_mutagen_values,
+            vec![
+                (
+                    "class_feature.apg.alchemist.discovery.generic.true_mutagen.mutagenacbonus"
+                        .to_string(),
+                    2
+                ),
+                (
+                    "class_feature.apg.alchemist.discovery.generic.true_mutagen.mutagentierlvl"
+                        .to_string(),
+                    1
+                ),
+            ],
+            "both of True Mutagen's independent terminals must resolve at their real, \
+             independently-derived values (MutagenACBonus=2, MutagenTierLVL=1 at level 10), \
+             neither guessed nor dropped: {:?}",
             computation.explanations
         );
     }
@@ -74723,9 +74918,39 @@ mod generic_pool_group_selection_wiring_tests {
         // majority-owned by the class (not just its Bloodline/Domain/... ones) was counted,
         // silently inflating both numerator and denominator (Sorcerer measured 72 groups, not
         // the real 53, before this filter was added).
+        // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17a`, correcting cycle 19's own retro
+        // note that this was "not fixed this cycle, named for a future cycle" -- the future
+        // cycle is this one): a THIRD, distinct naming-shape false positive on top of the
+        // majority-tally/header-ownership gates above. The bare `"<class> <registered_name>"`
+        // key prefix (`"Sorcerer Bloodline"`, `"Bloodrager Bloodline"`, `"Shaman Spirit"`) is a
+        // real corpus shape -- but it is the class-WIDE catalog record set, not a fourth
+        // selectable bloodline/spirit: `"Sorcerer Bloodline ~ Psychic"`,
+        // `"Sorcerer Bloodline ~ Ghoul"`, etc. are a SECOND, parallel naming convention for the
+        // SAME 52 real bloodlines `"<Specific> Bloodline ~ <power>"` already tallies as their
+        // own real groups (confirmed live: every one of `"Sorcerer Bloodline"`'s own 52
+        // "members" is itself the name of an already-counted real bloodline group). Because its
+        // own name happens to end with `" {registered_name}"`
+        // (`"Sorcerer Bloodline".ends_with(" Bloodline")`), the naming-shape filter above
+        // wrongly admits it as if it were itself a 53rd/13th selectable group -- inflating the
+        // denominator (and, since it always carries a resolvable "member", the numerator too)
+        // for every pool carrying this shape -- confirmed live by direct corpus re-derivation,
+        // not assumed pool-by-pool: Sorcerer/Bloodrager Bloodline and Shaman Spirit all carry
+        // it (`"Sorcerer Bloodline ~ <name>"`, etc.); Cleric Domain and Cavalier Order ALSO
+        // carry the same shape (`"Cleric Domain ~ Air"`, `"Cavalier Order ~ Order of the
+        // Beast"` -- both already named as real corpus records by cycle 11's own doc above,
+        // for a DIFFERENT reason: they contribute useful header `bonus_vars`/desc-formula
+        // content, which is real and unaffected by this fix) but the CENSUS re-run below shows
+        // whether their own bare `"Cleric Domain"`/`"Cavalier Order"` group name was ALSO being
+        // double-counted as a fake extra group; Warpriest Blessing carries no such bare-prefix
+        // record at all. Generic exclusion, not a per-pool table: a group whose OWN name is
+        // exactly `"<class> <registered_name>"` is never a real selectable member of itself.
+        let class_wide_catalog_shape = format!("{class} {registered_name}");
         owner_tally
             .into_iter()
             .filter_map(|(group, owners)| {
+                if group == class_wide_catalog_shape {
+                    return None;
+                }
                 let majority_class =
                     owners.iter().max_by_key(|(_, count)| **count).map(|(c, _)| c.clone())?;
                 let owned_by_class = majority_class == class
@@ -74756,12 +74981,23 @@ mod generic_pool_group_selection_wiring_tests {
     /// subset resolves -- a group with SOME real records still needing compute is not "closed"
     /// as a kanban line item, but every already-resolvable member inside it is already reaching
     /// a live character, which is what this census is measuring.
+    // SD-32 T12 Epic 8 row 18 cycle 20: switched from `resolve_pool_member_sole_magnitude` to
+    // `resolve_pool_member_all_magnitudes` (non-empty, not `.is_some()`) -- this census's own
+    // doc above states the bar explicitly: "the actual real-consumer contract:
+    // push_generic_pool_group_selection_magnitude resolves EVERY member independently ... which
+    // is what this census is measuring." Cycle 20 upgraded that real consumer to resolve every
+    // independent terminal a member carries, not just a lone one; a member this census would
+    // have called unresolvable before this cycle purely because it carried 2-3 real terminals
+    // (e.g. `Forbidden Rites Domain ~ Madness Domain`) now correctly counts as resolvable,
+    // because the real consumer now genuinely resolves it. A record with terminal(s) that still
+    // never bind through the chain still resolves to an empty `Vec`, so a true refusal is
+    // unaffected.
     fn group_has_a_resolvable_member(class: &str, registered_name: &str, group: &str) -> bool {
         let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
         let prefix = format!("{group} ~ ");
         let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
         table.keys().filter(|key| key.starts_with(&prefix)).any(|key| {
-            super::resolve_pool_member_sole_magnitude(
+            !super::resolve_pool_member_all_magnitudes(
                 key,
                 group,
                 5,
@@ -74769,7 +75005,7 @@ mod generic_pool_group_selection_wiring_tests {
                 Some(class),
                 Some(registered_name),
             )
-            .is_some()
+            .is_empty()
         })
     }
 
@@ -74859,6 +75095,72 @@ mod generic_pool_group_selection_wiring_tests {
             "Bones Spirit's Shedding Form must now resolve through the real, newly-merged \
              ShamanSpiritLVL chain (character level 5 -> ShamanLVL=5 -> ShamanSpiritLVL=5 -> \
              ShamanSheddingFormRounds=5), not stay refused"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20: `resolve_pool_member_sole_magnitude`'s load-bearing
+    /// refusal (cycle 2, re-proved cycle 5) is UNCHANGED by this cycle's multi-terminal work --
+    /// a record genuinely carrying more than one independent terminal target still, always,
+    /// refuses this single-value call, exactly as before. `Forbidden Rites Domain ~ Madness
+    /// Domain` (real corpus record, `data/corpus/ultimate_magic/class_feature/
+    /// forbidden_rites_domain/madness.json`) carries three: `DomainMadnessDC`,
+    /// `DomainMadnessTimes`, `DomainMadnessAbilityTriggerLVL` (its fourth `BONUS:VAR`,
+    /// `DomainMadnessLVL`, is filtered out as a chain intermediate -- `DomainMadnessDC`'s own
+    /// formula names it).
+    #[test]
+    fn sole_magnitude_still_refuses_a_genuine_multi_terminal_record() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let resolved = super::resolve_pool_member_sole_magnitude(
+            "Forbidden Rites Domain ~ Madness Domain",
+            "Forbidden Rites Domain",
+            5,
+            &ability_modifiers,
+            Some("Cleric"),
+            Some("Domain"),
+        );
+        assert_eq!(
+            resolved, None,
+            "a record with 3 independent terminals must still be refused by the sole-magnitude \
+             contract, never guessed at: {resolved:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20: the new multi-terminal resolver genuinely resolves TWO
+    /// of `Madness Domain`'s three independent terminals -- not a guess among them, each is
+    /// independently computed through the real PCGen formula evaluator: `DomainMadnessTimes`
+    /// chains to `DomainPowerTimes-1`, bound by the bare `"Domains"` base header
+    /// (`BONUS:VAR|DomainPowerTimes|3+WIS`); `DomainMadnessDC` chains to
+    /// `10+(DomainMadnessLVL/2)+CHA-1`, itself resolving `DomainMadnessLVL` via `DomainLVL-2`
+    /// (bound the same way). The third, `DomainMadnessAbilityTriggerLVL`
+    /// (`DomainAbilityTriggerLVL-SeparistDomainLVL`), correctly stays unresolved: `SeparistDomainLVL`
+    /// is a real corpus-bound identifier (`Separatist ~ Forbidden Rites`, `BONUS:VAR|
+    /// SeparistDomainLVL|-2`) but that record's own key shape (`"Separatist ~ Forbidden
+    /// Rites"`, prefixed by the ARCHETYPE, not `"Forbidden Rites Domain"` nor `"Cleric"`) is not
+    /// one any existing header-merge clause reaches -- a genuinely separate, narrower gap this
+    /// cycle names rather than forces (`§27b` point 5, remaining work, not this cycle's own
+    /// scope). `resolve_pcgen_var_chain`'s cycles 2/5 safety property correctly refuses to
+    /// 0-default the unreached identifier rather than fabricate a value for it -- this third
+    /// terminal is properly ABSENT from the returned set, not silently wrong.
+    #[test]
+    fn all_magnitudes_resolves_every_reachable_independent_terminal_on_a_multi_terminal_record() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let resolved = super::resolve_pool_member_all_magnitudes(
+            "Forbidden Rites Domain ~ Madness Domain",
+            "Forbidden Rites Domain",
+            5,
+            &ability_modifiers,
+            Some("Cleric"),
+            Some("Domain"),
+        );
+        let targets: std::collections::BTreeSet<&str> =
+            resolved.iter().map(|(name, _)| name.as_str()).collect();
+        assert_eq!(
+            targets,
+            std::collections::BTreeSet::from(["DomainMadnessDC", "DomainMadnessTimes"]),
+            "the two of Madness Domain's three real terminals whose chain is fully reachable \
+             must resolve, none guessed and none dropped; the third (blocked on the separate, \
+             named `SeparistDomainLVL` header gap) must correctly stay absent, not fabricated: \
+             {resolved:?}"
         );
     }
 
@@ -74959,14 +75261,62 @@ mod generic_pool_group_selection_wiring_tests {
         // members all carried `description: null` was invisible to `real_groups_owned_by`'s own
         // tally before this widening). Net movement from (1)+(2) combined: 34/72 -> 44/73.
         // Every other pool UNCHANGED, re-verified, not assumed.
+        // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17a`): `resolve_pool_member_sole_
+        // magnitude`'s refusal-when-more-than-one-terminal has NOT been weakened -- it is
+        // unchanged, still used unmodified by every existing caller that needs exactly one
+        // value. Two independent, additive fixes moved these baselines this cycle:
+        //
+        // (1) This census helper switched to `resolve_pool_member_all_magnitudes` (see that
+        // function's own doc, and `group_has_a_resolvable_member`'s), which genuinely resolves
+        // EVERY independent terminal a record carries rather than refusing the whole record
+        // once there is more than one: `Sorcerer Bloodline` numerator +3, `Bloodrager Bloodline`
+        // numerator +7 (every real bloodline carries its own per-bloodline "<Bloodline> ~ Feat
+        // Tracker" record, description:null, admitted since cycle 18's own widening, whose
+        // several `BONUS:VAR|Bloodrager_BloodlineFeat_<Feat>|1` entries are genuinely
+        // independent, unconditional, corpus-verified constant-1 targets -- confirmed live
+        // against `aberrant_bloodrager_bloodline_feat_tracker.json`), `Cleric Domain` numerator
+        // +2 (`Forbidden Rites Domain`'s own multi-terminal members, e.g. `Madness Domain`'s
+        // `DomainMadnessDC`/`...Times`), `Shaman Spirit` numerator +1.
+        //
+        // (2) `real_groups_owned_by`'s own new class-wide-catalog-shape exclusion (`§27b`/cycle
+        // 19's own retro note, fixed this cycle) drops a fake extra group per pool wherever the
+        // bare `"<class> <registered_name>"` key prefix exists as a real corpus record: `Sorcerer
+        // Bloodline` denominator 53 -> 52, `Bloodrager Bloodline` 12 -> 11, `Shaman Spirit` 14
+        // -> 13 (cycle 18's own named "Shaman Spirit" false positive, now actually fixed, not
+        // just re-named), `Cleric Domain` 73 -> 72 (a SECOND instance of the SAME shape,
+        // `"Cleric Domain ~ Air"` etc., not previously named by any cycle), `Cavalier Order` 9
+        // -> 8 (a THIRD instance, `"Cavalier Order ~ Order of the Beast"` etc., also newly
+        // found). `Warpriest Blessing` carries no such bare-prefix record at all -- denominator
+        // genuinely unchanged. Numerator effect of (2) alone, checked per pool, not assumed
+        // uniform: Sorcerer/Bloodrager/Cleric/Cavalier's own bare catalog "group" carries no
+        // resolvable `bonus_vars` (its "members" are duplicate-named real groups' spell-list/
+        // summary records) so removing it costs those four pools' numerators nothing; Shaman's
+        // OWN bare `"Shaman Spirit ~ <name>"` catalog members DO carry a real, independent,
+        // now-resolving constant-1 terminal (`ShamanXSpirit|1`, closed by fix (1) above), so
+        // removing this one fake group costs Shaman's numerator exactly 1 alongside its
+        // denominator.
+        //
+        // (3) `pool_header_record_by_normalized_suffix`'s new SIXTH header shape
+        // (`"Domain Base ~ <bare>"`, `data.class` literally `"Domain Base"` -- see that
+        // function's own doc) closes the 6 named desc-formula refusals' `Void Domain`, and
+        // corrects cycle 19's own `§27b` claim that `Scalykind` was a genuine hard-impossibility
+        // (it carries this exact header too -- `Domain Base ~ Scalykind` -- missed by cycle 19's
+        // verification, which checked only the `domain`-kind and bare `class_feature` shapes,
+        // never this third directory; retro correction filed). `Cleric Domain` numerator +1 via
+        // this fix's own bonus_vars reach (Scalykind).
+        //
+        // Combined re-derived baselines: `Sorcerer Bloodline` 31/53 -> 34/52, `Bloodrager
+        // Bloodline` 5/12 -> 11/11 (every remaining group now closes), `Cleric Domain` 44/73 ->
+        // 47/72, `Shaman Spirit` 11/14 -> 11/13, `Warpriest Blessing` UNCHANGED 0/37,
+        // `Cavalier Order` 1/9 -> 1/8.
         assert!(
-            report.contains("Sorcerer Bloodline: 31/53")
-                && report.contains("Bloodrager Bloodline: 5/12")
-                && report.contains("Cleric Domain: 44/73")
-                && report.contains("Shaman Spirit: 11/14")
+            report.contains("Sorcerer Bloodline: 34/52")
+                && report.contains("Bloodrager Bloodline: 11/11")
+                && report.contains("Cleric Domain: 47/72")
+                && report.contains("Shaman Spirit: 11/13")
                 && report.contains("Warpriest Blessing: 0/37")
-                && report.contains("Cavalier Order: 1/9"),
-            "cycle 18's own six re-derived baselines must still reproduce exactly:\n{report}"
+                && report.contains("Cavalier Order: 1/8"),
+            "cycle 20's own six re-derived baselines must still reproduce exactly:\n{report}"
         );
     }
 
@@ -75059,12 +75409,12 @@ mod generic_pool_group_selection_wiring_tests {
         // exactly -- proof this pass did not silently change or duplicate the first resolver's
         // own measure, only add a second one alongside it.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=31/53")
-                && report.contains("Bloodrager Bloodline: bonus_vars=5/12")
-                && report.contains("Cleric Domain: bonus_vars=44/73")
-                && report.contains("Shaman Spirit: bonus_vars=11/14")
+            report.contains("Sorcerer Bloodline: bonus_vars=34/52")
+                && report.contains("Bloodrager Bloodline: bonus_vars=11/11")
+                && report.contains("Cleric Domain: bonus_vars=47/72")
+                && report.contains("Shaman Spirit: bonus_vars=11/13")
                 && report.contains("Warpriest Blessing: bonus_vars=0/37")
-                && report.contains("Cavalier Order: bonus_vars=1/9"),
+                && report.contains("Cavalier Order: bonus_vars=1/8"),
             "the bonus_vars-only figures embedded in the combined census must still reproduce \
              pool_group_closure_census_across_all_six_pools's own locked baseline exactly -- a \
              mismatch here means this pass is measuring something different from the first \
@@ -75132,13 +75482,24 @@ mod generic_pool_group_selection_wiring_tests {
         // resolver, pre-fix, did not). Bonus_vars-only baselines for both pools UNCHANGED (already
         // asserted above) -- this cycle widens ONLY the desc-formula resolver's own reach, not the
         // bonus_vars resolver's. Every other pool's combined figure UNCHANGED, re-verified.
+        // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17a`): `bonus_vars` moved to cycle 20's own
+        // re-derived baseline above (34/52, 11/11, 47/72, 11/13, 0/37, 1/8 -- the multi-terminal
+        // resolver, the class-wide-catalog-shape census fix, AND the new `"Domain Base ~ <X>"`
+        // header shape closing Scalykind, see that test's own comment); `combined` moves by the
+        // same deltas PLUS one further desc-only closure this cycle's own header widening also
+        // reaches: Cleric's standing +4 desc-only closures (Cave/Desert/Mountain/Nobility) stack
+        // on the new 47/72 bonus_vars figure, PLUS Void Domain (`Part the Veil`'s `%1` =
+        // `DomainVoidTimes`, now reachable through the same new header): 52/72. Shaman's own
+        // standing +1 desc-only closure (Wood Spirit ~ Tree Form) stacks unchanged on the new
+        // 11/13: 12/13. Sorcerer/Bloodrager/Warpriest/Cavalier combined move by their own
+        // bonus_vars deltas alone, no further desc-only closure found for them this cycle.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=31/53, combined(bonus_vars OR desc_formula)=32/53")
-                && report.contains("Bloodrager Bloodline: bonus_vars=5/12, combined(bonus_vars OR desc_formula)=6/12")
-                && report.contains("Cleric Domain: bonus_vars=44/73, combined(bonus_vars OR desc_formula)=49/73")
-                && report.contains("Shaman Spirit: bonus_vars=11/14, combined(bonus_vars OR desc_formula)=12/14")
+            report.contains("Sorcerer Bloodline: bonus_vars=34/52, combined(bonus_vars OR desc_formula)=34/52")
+                && report.contains("Bloodrager Bloodline: bonus_vars=11/11, combined(bonus_vars OR desc_formula)=11/11")
+                && report.contains("Cleric Domain: bonus_vars=47/72, combined(bonus_vars OR desc_formula)=52/72")
+                && report.contains("Shaman Spirit: bonus_vars=11/13, combined(bonus_vars OR desc_formula)=12/13")
                 && report.contains("Warpriest Blessing: bonus_vars=0/37, combined(bonus_vars OR desc_formula)=8/37")
-                && report.contains("Cavalier Order: bonus_vars=1/9, combined(bonus_vars OR desc_formula)=2/9"),
+                && report.contains("Cavalier Order: bonus_vars=1/8, combined(bonus_vars OR desc_formula)=2/8"),
             "the honest all-resolver figure this cycle re-derived must reproduce exactly -- a \
              future cycle's corpus/resolver change that moves these numbers must update this \
              assertion deliberately, never silently:\n{report}"
@@ -75500,6 +75861,67 @@ mod generic_pool_group_selection_wiring_tests {
         let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:animal");
         let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
         assert!(count > 0, "Animal Domain must ground at least one real corpus member generically");
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17`): proves the SIXTH real header shape,
+    /// `"Domain Base ~ <bare>"` (`data.class` literally `"Domain Base"`, `pool_header_record_by_
+    /// normalized_suffix`'s own new doc) reaches Void Domain's real corpus chain end to end.
+    /// `Void Domain ~ Part the Veil`'s own `%N` desc-formula argument (`DomainVoidTimes`) was
+    /// unreachable before this cycle because its ONLY binding lived on `"Domain Base ~ Void"`, a
+    /// key shape no prior header clause tried. Tested at the same resolver level
+    /// `mountain_domain_foothold_desc_formula_needs_the_header_merge_to_resolve` above uses --
+    /// this pool has no production `push_generic_pool_group_selection_description_magnitude`
+    /// call site wired yet (only Cavalier Order and Warpriest Blessing do; a pre-existing gap,
+    /// unrelated to and not fixed by this cycle, named here rather than silently worked around).
+    #[test]
+    fn cleric_generic_domain_pass_grounds_void_via_the_domain_base_header_merge() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let key = "Void Domain ~ Part the Veil";
+        let header_vars = super::pool_group_header_vars_merged("Cleric", "Void Domain", Some("Domain"));
+        let resolved =
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &header_vars,
+            );
+        assert!(
+            resolved.is_some(),
+            "Part the Veil's %1 argument (DomainVoidTimes) must resolve through the new \
+             \"Domain Base ~ Void\" header merge: {resolved:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20 correction (`§27b`/`§17a`): cycle 19's own exhaustive
+    /// verification claimed `Scalykind` (one of its named 12 "genuine hard-impossibility data
+    /// gaps") carries "no BONUS:VAR-bearing header exists anywhere in the corpus" -- that check
+    /// covered the `domain`-kind and bare `class_feature` header shapes only, never the THIRD,
+    /// `class_feature/domain_base/` directory this cycle found (`"Domain Base ~ Scalykind"` is
+    /// real, `BONUS:VAR|DomainScalykindLVL|DomainLVL`). This test proves the correction:
+    /// `resolve_pool_member_all_magnitudes` now genuinely resolves a real Scalykind member,
+    /// disproving the prior hard-impossibility claim for this ONE domain (the other 11 named
+    /// domains were re-checked this cycle and remain genuinely headerless in all three shapes).
+    #[test]
+    fn cleric_generic_domain_pass_grounds_scalykind_correcting_cycle_19s_hard_impossibility_claim() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let prefix = "Scalykind Domain ~ ";
+        let resolved_any = table.keys().filter(|key| key.starts_with(prefix)).any(|key| {
+            !super::resolve_pool_member_all_magnitudes(
+                key,
+                "Scalykind Domain",
+                5,
+                &ability_modifiers,
+                Some("Cleric"),
+                Some("Domain"),
+            )
+            .is_empty()
+        });
+        assert!(
+            resolved_any,
+            "Scalykind Domain must now have at least one real corpus member resolve \
+             generically, correcting cycle 19's own hard-impossibility claim"
+        );
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 15: `push_generic_pool_group_selection_description_magnitude`,

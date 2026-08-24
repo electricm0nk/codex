@@ -8886,3 +8886,50 @@ figures are unchanged from cycle 8 -- this cycle's work was correctness, not cov
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle9-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Row 18 (`epic-8-pool-shaped-class-features`), cycle 20 -- multi-terminal resolution built
+
+Built genuine multi-terminal resolution (`resolve_pool_member_all_magnitudes`, factored from a
+shared `pool_member_terminal_targets_and_resolved_vars` helper), without weakening the load-bearing
+cycle 2/5 refusal `resolve_pool_member_sole_magnitude` still carries unchanged. The real PCGen
+rule (`bonus_stack_reader.rs`'s own already-cited `PlayerCharacter.java:2136`) is that only
+same-target `BONUS:VAR` entries sum; different targets are independent -- so every genuine terminal
+now resolves on its own, none guessed, none dropped. Closed `Forbidden Rites Domain`'s real
+2-3-terminal members and every Bloodrager bloodline's own "Feat Tracker" flag records.
+
+Also fixed two gaps cycle 19 named but did not fix: the 3-fake-group census instrument bug (found
+to actually be 5 groups across Sorcerer/Bloodrager/Cleric/Cavalier/Shaman, one generic exclusion)
+and 4 of the 6 unstudied desc-formula refusals (3 confirmed genuine `§27b` cross-class-only-binding
+data gaps; Void Domain closed via a new sixth header shape, `"Domain Base ~ <bare>"`). That same
+fix corrected cycle 19's own claim that Scalykind was a hard impossibility (retro correction filed,
+id `1787594559604-t9-onboarding-8197f0`).
+
+### Test evidence
+
+`cargo test --locked --lib -- rules_core::pilot_compute::generic_pool_group_selection_wiring_tests
+--nocapture`: 29/29 (was 23, +6 new/corrected). Broader sweep
+`cargo test --locked --lib -- rules_core::pilot_compute:: pool`: 1036/1036 (was 1032), zero
+regressions. Three independent mutation-proofs, each RED at both altitudes (unit test + six-pool
+census) then reverted GREEN.
+
+### Re-derived combined census (bonus_vars / combined bonus_vars+desc_formula)
+
+Sorcerer Bloodline 31/53->34/52, Bloodrager Bloodline 6/12->**11/11**, Cleric Domain 49/73->52/72,
+Shaman Spirit 12/14->12/13, Warpriest Blessing UNCHANGED 8/37, Cavalier Order 2/9->2/8.
+
+### PI / territory
+
+`pi_scrub.normalized_term_hits()` against `git diff --unified=0` for `mod.rs`, this receipt, and
+the `kanban.md` row-18 diff: zero hits. `kanban.md`: 22 rows, 22 unique ids, row 18's own diff is
+exactly one line (its own), verified with a backtick-aware row-boundary check before and after.
+Rows 11 and 15 left untouched.
+
+**Row 18 stays `in-progress`** (`decisions.md §10`). Real, substantial unresolved population
+remains, named honestly rather than closed on a comfortable reading: Warpriest Blessing 29/37
+groups (cycle 9's own "every member's bonus_vars is empty" gap, unreached by this cycle),
+Cavalier Order 6/8 (cycles 9-12's own "zero BONUS:VAR tokens" gap), Sorcerer Bloodline 18/52 and
+Cleric Domain ~20/72 (a named SUBSET is `§27b`-proven by cycles 17/19/20; the remainder has not
+been individually re-verified against that same exhaustive standard this cycle).
+
+Full receipt: `artifacts/gate-3-closure-invariant/t12-class-feature-pool-population_cycle-20_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).
