@@ -885,6 +885,183 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             "megaprimatus",
             CompanionBaseStats { strength: 13, constitution: 10, natural_armor: 1, hit_die_size: 8 },
         );
+        // Row 20 cycle 10: the first 22 of the 142 untagged (`RACESUBTYPE`-
+        // less) `core_rulebook` companion records, using the CORRECTED
+        // methodology cycle 9 established (this table's own cycle-9
+        // addendum, above): the printed AoN "Starting Statistics" total is
+        // grounded DIRECTLY -- never backed out by the corpus's own per-
+        // species `BONUS:STAT` delta, which `ground_companion_stat_block`'s
+        // own consumer (below) never reads. Every AoN total was gathered by
+        // cycle 9 (`row20-cycle9-receipt.md`, "Data gathered but not yet
+        // committed") via a direct `aonprd.com/DruidCompanions.aspx`
+        // fetch, cross-checked against d20pfsrd for Bear/Boar (exact
+        // match), and independently confirmed here by comparing the
+        // corpus's own `natural_armor` field (`data/corpus/core_rulebook/
+        // companion/companion_<slug>.json`) against AoN's printed "+n
+        // natural armor" line -- agreement on all 22 records, cross-
+        // checked fresh this cycle (`scratch_check.py`, not committed).
+        // Where AoN's own printed stat block covers more than one corpus
+        // record (Bird: Eagle/Hawk/Owl; Cat Big: Lion/Tiger; Cat Small:
+        // Cheetah/Leopard), each corpus record still gets its own table
+        // entry -- the 196-record population counts records, not species.
+        out.insert(
+            // AoN (Badger/Wolverine): Str 10, Dex 17, Con 15, Int 2, Wis 12,
+            // Cha 10, +2 natural armor. Corpus (`companion_badger_
+            // wolverine.json`) natural_armor: 2 -- agrees.
+            "badger_wolverine",
+            CompanionBaseStats { strength: 10, constitution: 15, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Bear): Str 15, Dex 15, Con 13, Int 2, Wis 12, Cha 6, +2
+            // natural armor -- cross-checked against d20pfsrd, exact match.
+            // Corpus (`companion_bear.json`) natural_armor: 2 -- agrees.
+            "bear",
+            CompanionBaseStats { strength: 15, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Bird: Eagle/Hawk/Owl, one shared stat block): Str 10,
+            // Dex 17, Con 12, Int 2, Wis 14, Cha 6, +1 natural armor.
+            // Corpus (`companion_bird_eagle.json`) natural_armor: 1 --
+            // agrees.
+            "bird_eagle",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Bird: Eagle/Hawk/Owl, one shared stat block): same as
+            // `bird_eagle` above. Corpus (`companion_bird_hawk.json`)
+            // natural_armor: 1 -- agrees.
+            "bird_hawk",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Bird: Eagle/Hawk/Owl, one shared stat block): same as
+            // `bird_eagle` above. Corpus (`companion_bird_owl.json`)
+            // natural_armor: 1 -- agrees.
+            "bird_owl",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Boar): Str 13, Dex 12, Con 15, Int 2, Wis 13, Cha 4, +6
+            // natural armor -- cross-checked against d20pfsrd, exact match.
+            // Corpus (`companion_boar.json`) natural_armor: 6 -- agrees.
+            "boar",
+            CompanionBaseStats { strength: 13, constitution: 15, natural_armor: 6, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Camel): Str 18, Dex 15, Con 14, Int 2, Wis 11, Cha 4, +1
+            // natural armor. Corpus (`companion_camel.json`) natural_armor:
+            // 1 -- agrees.
+            "camel",
+            CompanionBaseStats { strength: 18, constitution: 14, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Cat, Big: Lion/Tiger, one shared stat block): Str 13,
+            // Dex 17, Con 13, Int 2, Wis 12, Cha 6, +1 natural armor.
+            // Corpus (`companion_cat_big_lion.json`) natural_armor: 1 --
+            // agrees.
+            "cat_big_lion",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Cat, Big: Lion/Tiger, one shared stat block): same as
+            // `cat_big_lion` above. Corpus (`companion_cat_big_tiger.json`)
+            // natural_armor: 1 -- agrees.
+            "cat_big_tiger",
+            CompanionBaseStats { strength: 13, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Cat, Small: Cheetah/Leopard, one shared stat block): Str
+            // 12, Dex 21, Con 13, Int 2, Wis 12, Cha 6, +1 natural armor.
+            // Corpus (`companion_cat_small_cheetah.json`) natural_armor: 1
+            // -- agrees.
+            "cat_small_cheetah",
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Cat, Small: Cheetah/Leopard, one shared stat block):
+            // same as `cat_small_cheetah` above. Corpus (`companion_cat_
+            // small_leopard.json`) natural_armor: 1 -- agrees.
+            "cat_small_leopard",
+            CompanionBaseStats { strength: 12, constitution: 13, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Crocodile/Alligator): Str 15, Dex 15, Con 15, Int 1, Wis
+            // 12, Cha 2, +4 natural armor. Corpus (`companion_crocodile_
+            // alligator.json`) natural_armor: 4 -- agrees.
+            "crocodile_alligator",
+            CompanionBaseStats { strength: 15, constitution: 15, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Dog): Str 13, Dex 17, Con 15, Int 2, Wis 12, Cha 6, +2
+            // natural armor. Corpus (`companion_dog.json`) natural_armor:
+            // 2 -- agrees.
+            "dog",
+            CompanionBaseStats { strength: 13, constitution: 15, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Pony): Str 13, Dex 13, Con 12, Int 2, Wis 13, Cha 4, +2
+            // natural armor. Corpus (`companion_pony.json`) natural_armor:
+            // 2 -- agrees.
+            "pony",
+            CompanionBaseStats { strength: 13, constitution: 12, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Dire Rat): Str 10, Dex 17, Con 12, Int 2, Wis 13, Cha 4,
+            // +0 natural armor. Corpus (`companion_dire_rat.json`) carries
+            // no `AC_Natural_Armor` token (base 0) -- agrees.
+            "dire_rat",
+            CompanionBaseStats { strength: 10, constitution: 12, natural_armor: 0, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Herd Animal/Ram): Str 10, Dex 15, Con 11, Int 2, Wis 14,
+            // Cha 4, +1 natural armor. Corpus (`companion_herd_animal_
+            // ram.json`) natural_armor: 1 -- agrees.
+            "herd_animal_ram",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Hippopotamus): Str 11, Dex 8, Con 12, Int 2, Wis 13, Cha
+            // 4, +6 natural armor. Corpus (`companion_hippopotamus.json`)
+            // natural_armor: 6 -- agrees.
+            "hippopotamus",
+            CompanionBaseStats { strength: 11, constitution: 12, natural_armor: 6, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Primate/Baboon): Str 12, Dex 15, Con 12, Int 2, Wis 12,
+            // Cha 4, +0 natural armor. Corpus (`companion_primate_
+            // baboon.json`) carries no `AC_Natural_Armor` token (base 0) --
+            // agrees.
+            "primate_baboon",
+            CompanionBaseStats { strength: 12, constitution: 12, natural_armor: 0, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Ray/Manta): Str 8, Dex 15, Con 11, Int 2, Wis 12, Cha 4,
+            // +1 natural armor. Corpus (`companion_ray_manta.json`)
+            // natural_armor: 1 -- agrees.
+            "ray_manta",
+            CompanionBaseStats { strength: 8, constitution: 11, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Ray/Stingray): Str 6, Dex 13, Con 13, Int 2, Wis 12, Cha
+            // 4, +0 natural armor. Corpus (`companion_ray_stingray.json`)
+            // carries no `AC_Natural_Armor` token (base 0) -- agrees.
+            "ray_stingray",
+            CompanionBaseStats { strength: 6, constitution: 13, natural_armor: 0, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Turtle/Giant Snapping): Str 8, Dex 10, Con 9, Int 1, Wis
+            // 10, Cha 2, +10 natural armor. Corpus (`companion_turtle_
+            // giant_snapping.json`) natural_armor: 10 -- agrees.
+            "turtle_giant_snapping",
+            CompanionBaseStats { strength: 8, constitution: 9, natural_armor: 10, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN (Snake, Constrictor): Str 15, Dex 17, Con 13, Int 1, Wis
+            // 12, Cha 2, +2 natural armor. Corpus (`companion_snake_
+            // constrictor.json`) natural_armor: 2 -- agrees.
+            "snake_constrictor",
+            CompanionBaseStats { strength: 15, constitution: 13, natural_armor: 2, hit_die_size: 8 },
+        );
         out
     })
 }
@@ -1235,13 +1412,35 @@ mod tests {
             ("chimpanzee", "Chimpanzee"),
             ("devil_monkey", "Devil Monkey"),
             ("megaprimatus", "Megaprimatus"),
+            ("badger_wolverine", "Badger Wolverine"),
+            ("bear", "Bear"),
+            ("bird_eagle", "Bird Eagle"),
+            ("bird_hawk", "Bird Hawk"),
+            ("bird_owl", "Bird Owl"),
+            ("boar", "Boar"),
+            ("camel", "Camel"),
+            ("cat_big_lion", "Cat Big Lion"),
+            ("cat_big_tiger", "Cat Big Tiger"),
+            ("cat_small_cheetah", "Cat Small Cheetah"),
+            ("cat_small_leopard", "Cat Small Leopard"),
+            ("crocodile_alligator", "Crocodile Alligator"),
+            ("dog", "Dog"),
+            ("pony", "Pony"),
+            ("dire_rat", "Dire Rat"),
+            ("herd_animal_ram", "Herd Animal Ram"),
+            ("hippopotamus", "Hippopotamus"),
+            ("primate_baboon", "Primate Baboon"),
+            ("ray_manta", "Ray Manta"),
+            ("ray_stingray", "Ray Stingray"),
+            ("turtle_giant_snapping", "Turtle Giant Snapping"),
+            ("snake_constrictor", "Snake Constrictor"),
         ] {
             assert_eq!(companion_display_name(slug), expected);
         }
     }
 
     #[test]
-    fn only_fifty_two_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry() {
+    fn only_seventy_four_of_the_corpus_s_196_racetype_companion_records_have_a_base_stat_entry() {
         // Named exactly, not rounded away (§16/§17a): the honest residual
         // this cycle leaves for the next one. Row 20 cycle 8 re-derived the
         // true base-race `RACETYPE:Companion` population directly from
@@ -1263,16 +1462,21 @@ mod tests {
         // third-party (Ascension Games) book this repo's corpus has never
         // ingested (`data/corpus/` has no `path_of_iron` entry at all) --
         // out of the 196-record population this table targets, not merely
-        // unverified within it. 144 of 196 remain ungrounded: 2 named
-        // refusals (`pachycephalosaurus`, `ornithomimosaur`) plus 142
-        // untagged (`RACESUBTYPE`-less) records.
+        // unverified within it. Cycle 9 found and fixed a correctness
+        // defect in 44 of those 52 (see the module's cycle-9 addendum) but
+        // added no new species. Cycle 10 added the first 22 of the 142
+        // untagged (`RACESUBTYPE`-less) `core_rulebook` records (52 + 22 =
+        // 74). 122 remain ungrounded: 2 named refusals
+        // (`pachycephalosaurus`, `ornithomimosaur`) plus 120 untagged
+        // records.
         assert_eq!(
             companion_base_stat_table().len(),
-            52,
-            "wolf, horse, gulper_plant, 26 of 28 AnimalCompanionDinosaur species, and the full \
-             Aquatic/PlantCompanion/AnimalCompanionPrimate buckets (23 more) -- 144 of 196 real \
-             base-race RACETYPE:Companion corpus records still have no verified base-ability-\
-             score entry and must keep refusing until a future cycle adds them"
+            74,
+            "wolf, horse, gulper_plant, 26 of 28 AnimalCompanionDinosaur species, the full \
+             Aquatic/PlantCompanion/AnimalCompanionPrimate buckets (23 more), and 22 of the 142 \
+             untagged core_rulebook records -- 122 of 196 real base-race RACETYPE:Companion \
+             corpus records still have no verified base-ability-score entry and must keep \
+             refusing until a future cycle adds them"
         );
     }
 
@@ -1307,6 +1511,68 @@ mod tests {
             ("chimpanzee", "Chimpanzee", 13, 12, 1),
             ("devil_monkey", "Devil Monkey", 15, 8, 3),
             ("megaprimatus", "Megaprimatus", 13, 10, 1),
+        ] {
+            let mut explanations = Vec::new();
+            let grounded = ground_companion_stat_block(
+                slug,
+                "companion",
+                "Druid",
+                display,
+                1,
+                &mut explanations,
+            );
+            assert!(grounded, "{slug} must ground a real stat block");
+            let detail = &explanations
+                .iter()
+                .find(|e| e.id == format!("companion.{slug}_stat_block"))
+                .unwrap_or_else(|| panic!("expected a companion.{slug}_stat_block record"))
+                .detail;
+            assert!(
+                detail.contains(&format!("Str {expected_str}")),
+                "{slug} expected base Str {expected_str} in detail: {detail}"
+            );
+            assert!(
+                detail.contains(&format!("Con {expected_con}")),
+                "{slug} expected base Con {expected_con} in detail: {detail}"
+            );
+            let table = companion_base_stat_table();
+            let stats = table.get(slug).expect("entry must exist");
+            assert_eq!(stats.natural_armor, expected_natural_armor, "{slug} natural armor");
+            assert_eq!(stats.hit_die_size, 8, "{slug} hit die size is always d8 per the companion mechanic");
+        }
+    }
+
+    /// Row 20 cycle 10's own positive counterpart, pinning the printed AoN
+    /// base ability scores this cycle grounds DIRECTLY for the first 22 of
+    /// the 142 untagged `core_rulebook` companion records -- the corrected
+    /// methodology cycle 9's own addendum established (no per-species
+    /// `BONUS:STAT` delta backed out).
+    #[test]
+    fn the_twenty_two_cycle_ten_untagged_core_rulebook_companions_ground_their_own_verified_base_scores(
+    ) {
+        for (slug, display, expected_str, expected_con, expected_natural_armor) in [
+            ("badger_wolverine", "Badger Wolverine", 10i16, 15i16, 2i16),
+            ("bear", "Bear", 15, 13, 2),
+            ("bird_eagle", "Bird Eagle", 10, 12, 1),
+            ("bird_hawk", "Bird Hawk", 10, 12, 1),
+            ("bird_owl", "Bird Owl", 10, 12, 1),
+            ("boar", "Boar", 13, 15, 6),
+            ("camel", "Camel", 18, 14, 1),
+            ("cat_big_lion", "Cat Big Lion", 13, 13, 1),
+            ("cat_big_tiger", "Cat Big Tiger", 13, 13, 1),
+            ("cat_small_cheetah", "Cat Small Cheetah", 12, 13, 1),
+            ("cat_small_leopard", "Cat Small Leopard", 12, 13, 1),
+            ("crocodile_alligator", "Crocodile Alligator", 15, 15, 4),
+            ("dog", "Dog", 13, 15, 2),
+            ("pony", "Pony", 13, 12, 2),
+            ("dire_rat", "Dire Rat", 10, 12, 0),
+            ("herd_animal_ram", "Herd Animal Ram", 10, 11, 1),
+            ("hippopotamus", "Hippopotamus", 11, 12, 6),
+            ("primate_baboon", "Primate Baboon", 12, 12, 0),
+            ("ray_manta", "Ray Manta", 8, 11, 1),
+            ("ray_stingray", "Ray Stingray", 6, 13, 0),
+            ("turtle_giant_snapping", "Turtle Giant Snapping", 8, 9, 10),
+            ("snake_constrictor", "Snake Constrictor", 15, 13, 2),
         ] {
             let mut explanations = Vec::new();
             let grounded = ground_companion_stat_block(
