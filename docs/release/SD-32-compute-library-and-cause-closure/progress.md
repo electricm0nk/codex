@@ -8552,3 +8552,126 @@ newly-named companion-species-selection wiring gap remain real, sized, unbuilt w
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle6-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row20-cycle7 (2026-08-24) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+Starting state re-verified: worktree's own `HEAD` was `1bb523773d` (SD-31 PR #374 merge), the
+same stale-lineage footgun every prior cycle in this row hit. `git reset --hard $PIN`, then
+`git rebase origin/tranche/12` — `origin/tranche/12`'s own tip was already exactly `$PIN`
+(cycle 6's own commit), so no rebase conflicts. Oracle slot was empty (fresh worktree);
+`scripts/fetch-pcgen-oracle.sh --dest $PCGEN_REPO_DIR` bootstrapped it, re-confirmed via
+`scripts/verify.sh --only preflight-oracle`.
+
+### Item 1: closed cycle 6's own named wiring gap
+
+Cycle 6 named, not hidden: `ground_companion_stat_block` had zero live callers anywhere in the
+crate (confirmed by `cargo build`'s own dead-code warning), because no companion-bearing class
+offered a character-creation-time CHOICE among species. Built the real wiring, at the real
+character-creation altitude, not an isolated unit test:
+
+- `pilot_compute/mod.rs`: new `pub const COMPANION_SPECIES_CHOICE_ID` (`"choice:
+  companion_species"`), reusing the same generic `SelectedChoice` channel `choice:
+  druid_nature_bond`/`choice:cavalier_order` already use — zero schema change. New
+  `ground_selected_companion_or_default` dispatch function: reads the choice off the real
+  `CharacterInput`; if a real selection is present AND the table has a verified row for it,
+  grounds via the generic `ground_companion_stat_block`; otherwise (no selection, or an
+  unrecognized species) falls back to `default_ground`, the class's own prior hand-authored
+  function, UNCHANGED — the literal same code path, not merely equivalent output. This mattered:
+  an earlier version of the dispatch consulted the table even with no selection present, and
+  since the table already contains "wolf"/"horse" (cycle 5's own reproduction rows), it silently
+  dropped the hand-authored Wolf/Horse functions' own `bite_attack`/`hoof_attack` records for
+  every EXISTING character with no override — caught by
+  `druid_dispatch_widening_safety_tests::single_class_druid_level1_with_animal_companion_reaches_computed`
+  failing on a missing `bite_attack` record, fixed by gating the table lookup strictly behind an
+  actual present selection.
+- Wired into all three real production call sites: `ground_cavalier_mount_and_defer_the_rest`,
+  `ground_hunter_animal_companion_and_defer_the_rest`, and the Druid animal-companion block
+  inside `explain_druid_level1_spell_baseline` — all three already had `input: &CharacterInput`
+  in scope.
+- `apps/desktop/src-tauri/src/character_hub.rs`: new `CreateCharacterRequest.companion_species:
+  Option<String>` field, `#[serde(default)]`. Threaded to every literal struct-construction site
+  that doesn't already delegate via `..request_for(...)` (2 in `character_hub.rs`, 1 in
+  `pf1_adapter.rs`'s own `request_for` builder — every other pf1_adapter.rs test helper
+  delegates via `..`, 4 more single-site fixes in `rule_system_adapter.rs`, `stub_adapter.rs`,
+  `characterHub/appendToCharacter.rs`, `characterHub/reSaveCharacter.rs`).
+- `apps/desktop/src-tauri/src/pf1_adapter.rs`'s `compose_character_input`: when
+  `request.companion_species` is `Some` and the class is Druid/Hunter/Cavalier, pushes
+  `SelectedChoice { choice_set_id: COMPANION_SPECIES_CHOICE_ID, selection_id: species_slug }`
+  onto `selected_choices` — additive-only, scoped to exactly the three classes that read it.
+
+Proven at character-creation altitude: `character_hub.rs`'s new
+`a_druid_who_selects_gulper_plant_grounds_gulper_plant_not_wolf_at_character_creation_altitude`
+drives a real `CreateCharacterRequest` (with `companion_species: Some("gulper_plant")`) through
+`compose_character_input` -> `build_pilot_headless_receipt` (the real production path
+`character_hub.rs`'s own `create_character_at_root` uses), and asserts: (a) the default
+(no-override) request still reaches `Computed` and grounds Wolf, byte-for-byte unchanged; (b) the
+Gulper Plant request reaches `Computed` and grounds `class_chassis.druid.animal_companion.
+gulper_plant_stat_block` with the correct base attack bonus (+1), NOT the Wolf record; (c) an
+unrecognized species (`"griffon"`) falls back to Wolf, never fabricates, never blocks.
+
+### Item 2: continued the species table — 17 of 19, two named refusals
+
+Per cycle 6's own next-cycle order, continued the `AnimalCompanionDinosaur` bucket. Re-derived
+the exact remaining population by listing every `data/corpus/*/companion/*.json` file carrying
+`RACESUBTYPE:AnimalCompanionDinosaur` not already in the table: 19 records. Verified 17 against
+aonprd.com and/or d20pfsrd's own "Starting Statistics" (a second independent search query per
+species as the cross-check cycle 6 set), with the corpus's own `BONUS:STAT` delta as the numeric
+tiebreaker, reusing cycle 6's "natural armor is direct, no backing-out needed" simplification
+(reconfirmed for all 17, including Troodon's own genuine `natural_armor: 0` — the first table
+entry with a real, verified zero rather than an absent row). Added: `elasmosaurus`,
+`stegosaurus`, `dimetrodon`, `iguanodon`, `spinosaurus`, `dimorphodon`, `diplodocus`,
+`styracosaurus`, `ceratosaurus`, `plesiosaurus`, `therizinosaurus`, `troodon`, `giganotosaurus`,
+`kentrosaurus`, `quetzalcoatlus`, `parasaurolophus`, `tylosaurus`.
+
+**Two named, not silently skipped** (`§1a`/`§16`): `pachycephalosaurus` (Bestiary 3) — every
+source found returned only the full-grown CR-4 monster's own stat block (Str 22/Con 17), never
+separated from the animal-companion "Starting Statistics"; `ornithomimosaur` (Ultimate
+Wilderness) — the one source found gave a number ambiguous between the companion's own base and
+the shared "Companion Body Type ~ Avian" template baseline several Ultimate Wilderness companions
+read from, unresolved against a second independent source. Both refuse (`ground_companion_stat_
+block` returns `false`, grounds nothing) rather than risk a silently-wrong score; pinned by a new
+`pachycephalosaurus_and_ornithomimosaur_still_refuse_unverified` test.
+
+Table: 12 -> 29 of 213 (26 of 28 `AnimalCompanionDinosaur` records now closed, the two above the
+entire remaining residual in that bucket).
+
+### Test evidence
+
+```
+cargo test --locked -p codex --lib companion_base_stat_table   # 10 passed, 0 failed
+cargo test --locked -p codex --lib animal_companion             # 14 passed, 0 failed
+cargo test --locked -p codex --lib druid                        # 20 passed, 0 failed
+cargo test --locked -p codex --lib hunter                       # 40 passed, 0 failed
+cargo test --locked -p codex --lib cavalier                     # 16 passed, 0 failed
+cargo test --locked -p codex --lib companion                    # 120 passed, 0 failed
+cargo test --locked -p codex --lib pilot_compute::               # 948 passed, 0 failed
+```
+
+Full `apps/desktop/src-tauri` suite re-run: `cargo test --locked --bin codex-desktop` ->
+**548 passed, 0 failed** (77.02s) — cycle 6's own 547/0 baseline plus this cycle's one new
+`character_hub.rs` test.
+
+### PI / audit
+
+Own-diff (`git diff --unified=0 HEAD` over the 8 touched files): `OK_NO_BUNDLE_TAGS` (zero
+`sd[0-9]+_`/`t_[0-9a-f]{8,}` hits), `OK_NO_TOKENS` (zero `todo!`/`unimplemented!` hits). PI scrub
+(`pi_scrub.normalized_term_hits()`, imported not copied) initially found ONE hit: `Nethys` inside
+a doc comment's "Archives of Nethys" (the deity name is a blacklist term; `aonprd.com`, already
+used throughout this file since cycle 5, is not) — corrected to `aonprd.com` before pushing,
+re-scrubbed clean. No `data/corpus/` write this cycle.
+
+### Territory
+
+`git status --porcelain` confirmed clean before every write and listed only the 8 intended files
+after. `kanban.md`: 23 pipe-lines (21 data rows + header + separator), 21 unique row ids, row
+20's own 9-raw-cell (7 logical column) split confirmed with a backtick-aware parser before and
+after the edit. Rows 11 and 15 left untouched.
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). 184 of 213 companion species remain real,
+sized, unbuilt work (`Aquatic` 13, `PlantCompanion` 7 remaining, `AnimalCompanionPrimate` 4,
+`ConstructCompanion` 3, 154 untagged records, plus the 2 named dinosaur refusals if a future
+cycle resolves either against a second source). Item (a), the species-selection wiring, is now
+verified closed at the real altitude and needs no further cycle work.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle7-receipt.md`.
+Commit: (this cycle's commit -- see push output).

@@ -204,14 +204,14 @@ pub mod bonus_stack_reader;
 /// own module doc). `pub`: both binaries are separate compilation units, so
 /// this crate's own internals are not the only caller.
 pub mod race_trait_formula_binding;
-/// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — the generic
+/// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycles 5-7 — the generic
 /// companion base-ability-score table, generalizing `ground_wolf_companion_stat_block`/
 /// `ground_horse_companion_stat_block` (below) into a table-driven function. `pub(crate)`,
-/// mirroring `class_feature_grant_consumer`'s own visibility: `apps/desktop/src-tauri` is a
-/// separate crate and does not need `ground_companion_stat_block` yet (no character-creation-
-/// time companion-species picker exists in this engine for any class), but this module's own
-/// crate-internal tests (`super::super::ground_wolf_companion_stat_block` etc.) need it visible
-/// one level up.
+/// mirroring `class_feature_grant_consumer`'s own visibility: `apps/desktop/src-tauri` calls
+/// this module only indirectly, through this file's own `ground_selected_companion_or_default`
+/// (cycle 7's new dispatch point, reading the new `COMPANION_SPECIES_CHOICE_ID` choice set) —
+/// `ground_companion_stat_block` itself stays `pub(crate)`, never crossing the crate boundary
+/// directly. See this module's own doc comment for the cycle 7 wiring addendum.
 pub(crate) mod companion_base_stat_table;
 /// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — see its own module doc
 /// comment. `pub(crate)`: `resolve` is called from `compute_class_chassis` below (same crate);
@@ -11500,6 +11500,77 @@ fn explain_human_trait_bundle(
 /// which returns only the first.
 pub const RACE_ALTERNATE_TRAIT_CHOICE_ID: &str = "choice:race_alternate_trait";
 
+/// The choice-set id under which a real character-creation-time companion/
+/// mount species pick is persisted on `ChosenCharacterState::selected_
+/// choices` — SD-32 T12 `epic-10-reference-library-residual-reach` row 20
+/// cycle 7's own new dispatch point, closing the wiring gap cycle 6 named
+/// (`companion_base_stat_table.rs`'s own module doc: "`ground_companion_
+/// stat_block` has zero live callers anywhere in the crate"). The
+/// selection id is a `companion_base_stat_table::companion_base_stat_
+/// table` slug verbatim (`"gulper_plant"`, `"allosaurus"`, ...); see
+/// `ground_selected_companion_or_default` below for the read side and
+/// `apps/desktop/src-tauri/src/pf1_adapter.rs`'s `compose_character_input`
+/// for where a real `CreateCharacterRequest.companion_species` field
+/// writes it. Uses the same general choice channel `RACE_ALTERNATE_TRAIT_
+/// CHOICE_ID`'s own doc comment names, for the same reason: zero schema
+/// change needed for this to survive save/load/clone/level-up.
+pub const COMPANION_SPECIES_CHOICE_ID: &str = "choice:companion_species";
+
+/// Grounds the companion/mount stat block for whichever species a
+/// character-creation request selected via `COMPANION_SPECIES_CHOICE_ID`,
+/// when that species has a verified row in `companion_base_stat_table::
+/// companion_base_stat_table` — the real character-creation-time dispatch
+/// point `companion_base_stat_table.rs`'s own cycle-6 module doc named as
+/// missing. When no choice was made (an omitted `companion_species`
+/// field), OR the requested slug has no verified row yet (a typo, or a
+/// species this engine has not hand-authored — 201 of 213 `RACETYPE:
+/// Companion` corpus records as of cycle 6), falls back to `default_
+/// ground`, the class's own existing single-species hardcoded function
+/// (`ground_wolf_companion_stat_block`/`ground_horse_companion_stat_
+/// block`) — so an omitted or unrecognized choice never regresses any of
+/// the 61 classes below its already-`Computed` behavior, and an
+/// unverified species is never fabricated, only silently defaulted to the
+/// species this engine already has real, sourced data for.
+fn ground_selected_companion_or_default(
+    input: &CharacterInput,
+    id_prefix: &str,
+    owner_class_label: &str,
+    companion_level: u8,
+    default_ground: fn(&str, &str, u8, &mut Vec<ComputationExplanation>),
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    // No real player selection present (the overwhelming majority of
+    // characters, including every existing test that predates this
+    // dispatch point): use `default_ground`, the class's own prior
+    // hand-authored function, UNCHANGED -- not merely equivalent output,
+    // the literal same code path, so this is byte-for-byte non-regressive
+    // even where the generic table (`companion_base_stat_table.rs`)
+    // happens to already carry `default_species_slug`'s own row (it does,
+    // for both "wolf" and "horse" -- cycle 5's own reproduction proof) but
+    // grounds a narrower record set than the hand-authored function does
+    // (no per-species natural-attack record, e.g. Wolf's own `bite_
+    // attack`/Horse's own `hoof_attack` -- see companion_base_stat_table.
+    // rs's own module doc, "grounds only the fields with a live downstream
+    // reader"). Only an ACTUAL selection (including one that happens to
+    // name the same default species) takes the generic, narrower path.
+    let Some(species_slug) = choice_selection(input, COMPANION_SPECIES_CHOICE_ID) else {
+        default_ground(id_prefix, owner_class_label, companion_level, explanations);
+        return;
+    };
+    let display_name = companion_base_stat_table::companion_display_name(species_slug);
+    let grounded = companion_base_stat_table::ground_companion_stat_block(
+        species_slug,
+        id_prefix,
+        owner_class_label,
+        &display_name,
+        companion_level,
+        explanations,
+    );
+    if !grounded {
+        default_ground(id_prefix, owner_class_label, companion_level, explanations);
+    }
+}
+
 /// The namespace every alternate-racial-trait selection id carries.
 ///
 /// **Not decoration.** `SavedCharacterStore`'s serializer rejects any
@@ -13139,10 +13210,12 @@ fn ground_cavalier_mount_and_defer_the_rest(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    ground_horse_companion_stat_block(
+    ground_selected_companion_or_default(
+        input,
         "class_chassis.cavalier.mount",
         "Cavalier",
         level,
+        ground_horse_companion_stat_block,
         explanations,
     );
     ground_horse_companion_link_vacuous("class_feature.cavalier.mount", "cavalier", explanations);
@@ -25973,10 +26046,12 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    ground_wolf_companion_stat_block(
+    ground_selected_companion_or_default(
+        input,
         "class_chassis.hunter.animal_companion",
         "Hunter",
         level,
+        ground_wolf_companion_stat_block,
         explanations,
     );
     ground_wolf_companion_link_and_share_spells_vacuous(
@@ -44801,10 +44876,12 @@ fn explain_druid_level1_spell_baseline(
             // reuse this exact, already-3-source-verified math. Byte-for-
             // byte identical output to the original inline implementation
             // for Druid (owner_class_label = "Druid").
-            ground_wolf_companion_stat_block(
+            ground_selected_companion_or_default(
+                input,
                 "class_chassis.druid.animal_companion",
                 "Druid",
                 druid_level,
+                ground_wolf_companion_stat_block,
                 explanations,
             );
             ground_wolf_companion_link_and_share_spells_vacuous(

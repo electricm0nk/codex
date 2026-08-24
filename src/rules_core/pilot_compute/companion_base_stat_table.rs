@@ -1,5 +1,31 @@
 //! Generic companion base-ability-score table (SD-32 T12
-//! `epic-10-reference-library-residual-reach` row 20, cycles 5-6).
+//! `epic-10-reference-library-residual-reach` row 20, cycles 5-7).
+//!
+//! # Cycle 7 addendum: the dispatch point cycle 6 named now exists
+//!
+//! Cycle 6 named, not hidden, that [`ground_companion_stat_block`] had zero
+//! live callers: no class offered a character-creation-time CHOICE among
+//! companion species, so a verified row here could never reach a real
+//! character. Cycle 7 closes that gap. `super::ground_selected_companion_
+//! or_default` (this module's parent, `mod.rs`) is the new dispatch point,
+//! called from all three of this engine's companion-bearing class sites
+//! (Druid's, Hunter's, and Cavalier's own animal-companion/mount grounding
+//! functions), reading `super::COMPANION_SPECIES_CHOICE_ID` (`"choice:
+//! companion_species"`) off the real `CharacterInput.chosen.selected_
+//! choices` the same generic mechanism `choice:druid_nature_bond`/
+//! `choice:cavalier_order` already use. `apps/desktop/src-tauri`'s
+//! `CreateCharacterRequest` carries a new `companion_species: Option<
+//! String>` field (`character_hub.rs`), threaded into that same choice by
+//! `pf1_adapter.rs`'s `compose_character_input` -- the real character-
+//! creation request path, not a test-only shortcut. An omitted field, or a
+//! species this table has no verified row for, falls back to the class's
+//! own prior fixed default (Wolf for Druid/Hunter, Horse for Cavalier)
+//! rather than fabricating or blocking -- so this closes the wiring gap
+//! with zero regression risk to any of the 61 classes' existing `Computed`
+//! status. Proven at the real character-creation altitude (not an isolated
+//! unit test) by `character_hub.rs`'s own
+//! `a_druid_who_selects_gulper_plant_grounds_gulper_plant_not_wolf_at_
+//! character_creation_altitude`.
 //!
 //! # Cycle 6 addendum: the dinosaur batch, and the wiring gap it surfaced
 //!
@@ -22,25 +48,14 @@
 //! "Starting Statistics" block plus the corpus's own `BONUS:STAT` delta as
 //! the numeric tiebreaker, the same method Gulper Plant set.
 //!
-//! **Named, not hidden: [`ground_companion_stat_block`] has no live caller
-//! anywhere in this crate (confirmed by `cargo build`'s own dead-code
-//! warning on both it and [`CompanionBaseStats`])**. Every existing
-//! companion-bearing class (Druid/Hunter's Wolf, Cavalier's Horse) is
-//! wired to a FIXED, single-species hand-authored function
-//! (`ground_wolf_companion_stat_block`/`ground_horse_companion_stat_
-//! block`, both called from real production sites -- `grep -n
-//! ground_wolf_companion_stat_block\\( src/rules_core/pilot_compute/mod.rs`
-//! shows four call sites past the two modules' own tests); no class in
-//! this engine currently offers a character-creation-time CHOICE among
-//! companion species at all, so there is no dispatch point today for a
-//! generic, species-parameterized function to be wired INTO -- inventing
-//! one (a new `CharacterInput` choice slot, a new `pf1_adapter.rs`/
-//! `character_hub.rs` request field, a new compute call site) is a real,
-//! separate, cross-file wiring project this cycle's own remaining scope
-//! does not cover, named here exactly rather than silently assumed solved
-//! by this table's own existence. **Populating this table is necessary but
-//! not sufficient for the data to reach a real character** until that
-//! separate wiring lands.
+//! **Cycle 6's own finding here (`ground_companion_stat_block` had no live
+//! caller anywhere in this crate, confirmed by `cargo build`'s dead-code
+//! warning) is CLOSED as of cycle 7** -- see the cycle 7 addendum above.
+//! Every existing companion-bearing class (Druid/Hunter's Wolf, Cavalier's
+//! Horse) now dispatches through `ground_selected_companion_or_default`
+//! first, falling back to the prior FIXED, single-species hand-authored
+//! function (`ground_wolf_companion_stat_block`/`ground_horse_companion_
+//! stat_block`) only when no real player selection is present.
 //!
 //! # What this module answers, and why it exists
 //!
@@ -123,24 +138,51 @@
 //!    natural armor +1, `BONUS:VAR|AC_Natural_Armor|1|TYPE=Base`,
 //!    `uw_races_companion.lst`, corpus-confirmed) with the corpus's own
 //!    `BONUS:STAT` deltas as the tiebreaker check (both agree).
-//! 4. Names the exact residual precisely rather than rounding it away:
-//!    as of cycle 6, 201 of 213 `RACETYPE:Companion` corpus records (213
-//!    total minus Wolf, Horse, Gulper Plant, and the nine
-//!    `AnimalCompanionDinosaur` species cycle 6 added) still have no
-//!    base-ability-score entry in [`companion_base_stat_table`] and
-//!    [`ground_companion_stat_block`] correctly REFUSES (returns `false`,
-//!    grounds nothing) for every one of them -- refuse rather than guess,
-//!    the same posture `class_feature_grant_consumer.rs`'s own module doc
-//!    names throughout. The next cycle's own concrete first steps: (a) the
-//!    19 remaining `AnimalCompanionDinosaur` records this cycle did not
-//!    reach, then the `Aquatic` (13), `PlantCompanion` (7 remaining),
-//!    `AnimalCompanionPrimate` (4), and `ConstructCompanion` (3) tagged
-//!    buckets, largest first, repeating this cycle's own verification
-//!    method; (b) separately, the real cross-file wiring project this
-//!    cycle's own addendum above names -- a character-creation-time
-//!    companion-species CHOICE for Druid/Hunter/Cavalier (and any other
-//!    companion-bearing class this engine adds), which this table's own
-//!    population does not by itself provide.
+//! 4. Names the exact residual precisely rather than rounding it away.
+//!
+//! # Cycle 7 addendum: the dinosaur bucket closes (26 of 28), two named
+//!
+//! Continuing cycle 6's own next-cycle order, cycle 7 hand-authored the
+//! remaining 17 of the 19 outstanding `AnimalCompanionDinosaur` records --
+//! `elasmosaurus`, `stegosaurus`, `dimetrodon`, `iguanodon`, `spinosaurus`,
+//! `dimorphodon`, `diplodocus`, `styracosaurus`, `ceratosaurus`,
+//! `plesiosaurus`, `therizinosaurus`, `troodon`, `giganotosaurus`,
+//! `kentrosaurus`, `quetzalcoatlus`, `parasaurolophus`, `tylosaurus` -- each
+//! verified against a real "Starting Statistics" source (aonprd.com and/or
+//! d20pfsrd, cross-checked by a second independent search query per
+//! species) plus the corpus's own `BONUS:STAT` delta as the numeric
+//! tiebreaker, reusing cycle 6's own "natural armor is direct, only Str/Con
+//! need external verification" simplification (confirmed to hold again for
+//! all 17: every `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base` token matched its
+//! source's printed "+n natural armor" line exactly, including Troodon's
+//! own printed "no natural armor bonus at the starting level," which
+//! matches the corpus record's own null `AC_Natural_Armor` token -- the
+//! first species this table grounds with a genuine `natural_armor: 0`, not
+//! an absent row). **Two of the 19 are named, not silently skipped**: for
+//! `pachycephalosaurus` (Bestiary 3) no source this cycle could reach
+//! separated its animal-companion "Starting Statistics" block from its
+//! full-grown monster stat block (every search and fetch returned only the
+//! CR-4 monster's own Str 22/Con 17, which is not the companion's base);
+//! for `ornithomimosaur` (Ultimate Wilderness) the one source found gave a
+//! number ambiguous between the companion's own base stats and the shared
+//! "Companion Body Type ~ Avian" template baseline several Ultimate
+//! Wilderness companions read from, which this cycle could not resolve
+//! against a second independent source. Both refuse (return `false`,
+//! ground nothing) rather than risk a silently-wrong score, per `§1a`.
+//!
+//! Combined with cycle 6's own nine, this closes 26 of 28 ingested
+//! `AnimalCompanionDinosaur` records -- the two named above are the entire
+//! remaining residual in this bucket. As of cycle 7, `companion_base_stat_
+//! table`'s 29 entries (Wolf, Horse, Gulper Plant, the 26 dinosaurs) leave
+//! 184 of 213 total `RACETYPE:Companion` corpus records without a
+//! base-ability-score entry, and [`ground_companion_stat_block`] correctly
+//! REFUSES for every one of them -- refuse rather than guess, the same
+//! posture `class_feature_grant_consumer.rs`'s own module doc names
+//! throughout. The next cycle's own concrete first steps: (a)
+//! `pachycephalosaurus`/`ornithomimosaur`, if a second independent source
+//! resolves either; (b) the `Aquatic` (13), `PlantCompanion` (7 remaining),
+//! `AnimalCompanionPrimate` (4), and `ConstructCompanion` (3) tagged
+//! buckets, largest first, repeating this cycle's own verification method.
 
 use std::collections::BTreeMap;
 use std::sync::OnceLock;
@@ -314,8 +356,192 @@ fn companion_base_stat_table() -> &'static BTreeMap<&'static str, CompanionBaseS
             "brachiosaurus",
             CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 3, hit_die_size: 8 },
         );
+        // Row 20 cycle 7: the remaining 17 of the 19 `AnimalCompanionDinosaur`
+        // records cycle 6 did not reach (`pachycephalosaurus` and
+        // `ornithomimosaur` are the two named residuals -- see this module's
+        // own cycle 7 doc addendum above for why each refuses). Same
+        // verification method: a real "Starting Statistics" source
+        // (aonprd.com and/or d20pfsrd, cross-checked by a second independent
+        // search per species) plus the corpus's own `BONUS:STAT` delta as
+        // the numeric tiebreaker; natural armor read directly from the
+        // corpus's own `AC_Natural_Armor` token (cycle 6's own
+        // simplification, reconfirmed for all 17 below).
+        out.insert(
+            // AoN/d20pfsrd: Str 10, Dex 18, Con 12, Int 2, Wis 13, Cha 9, +2
+            // natural armor. Corpus delta (`beastiary/companion_dinosaur_
+            // elasmosaurus.json`): CHA|-2 CON|2 DEX|8 INT|-8 WIS|2 (no STR
+            // delta), AC_Natural_Armor|2|TYPE=Base. Base Str 10-0=10, Con
+            // 12-2=10.
+            "elasmosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 10, Dex 18, Con 10, Int 2, Wis 12, Cha 10,
+            // +6 natural armor. Corpus delta (`beastiary/companion_
+            // dinosaur_stegosaurus.json`): DEX|8 INT|-8 WIS|2 (no STR/CON
+            // delta), AC_Natural_Armor|6|TYPE=Base. Base Str 10-0=10, Con
+            // 10-0=10.
+            "stegosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 6, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 12, Dex 16, Con 14, Int 1, Wis 12, Cha 3,
+            // +2 natural armor. Corpus delta (`bestiary_3/companion_
+            // dimetrodon.json`): CHA|-8 CON|4 DEX|6 STR|2 WIS|2,
+            // AC_Natural_Armor|2|TYPE=Base. Base Str 12-2=10, Con 14-4=10.
+            "dimetrodon",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 17, Dex 15, Con 15, Int 2, Wis 12, Cha 7,
+            // +3 natural armor. Corpus delta (`bestiary_3/companion_
+            // iguanodon.json`): CHA|-4 CON|4 DEX|4 STR|6 WIS|2,
+            // AC_Natural_Armor|3|TYPE=Base. Base Str 17-6=11, Con 15-4=11.
+            "iguanodon",
+            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 18, Dex 15, Con 15, Int 2, Wis 13, Cha 3,
+            // +3 natural armor. Corpus delta (`bestiary_3/companion_
+            // spinosaurus.json`): CHA|-8 CON|4 DEX|4 STR|8 WIS|2,
+            // AC_Natural_Armor|3|TYPE=Base. Base Str 18-8=10, Con 15-4=11.
+            "spinosaurus",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 3, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd (2 independent searches agree): Str 10, Dex 19,
+            // Con 10, Int 2, Wis 13, Cha 12, +1 natural armor. Corpus delta
+            // (`bestiary_4/companion_dinosaur_dimorphodon.json`): CHA|-4
+            // CON|2 DEX|4 INT|-8 STR|-2 WIS|4, AC_Natural_Armor|1|TYPE=Base.
+            // Base Str 10-(-2)=12, Con 10-2=8 -- a NEGATIVE species delta on
+            // Strength (unlike every other dinosaur this table grounds),
+            // consistent with Dimorphodon's own Small size and light,
+            // flight-built frame.
+            "dimorphodon",
+            CompanionBaseStats { strength: 12, constitution: 8, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 10, Dex 14, Con 10, Int 2, Wis 12, Cha 10,
+            // +6 natural armor. Corpus delta (`bestiary_4/companion_
+            // dinosaur_diplodocus.json`): DEX|4 INT|-8 WIS|2 (no STR/CON
+            // delta), AC_Natural_Armor|6|TYPE=Base. Base Str 10-0=10, Con
+            // 10-0=10.
+            "diplodocus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 6, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 10, Dex 13, Con 11, Int 2, Wis 12, Cha 7,
+            // +6 natural armor. Corpus delta (`bestiary_4/companion_
+            // dinosaur_styracosaurus.json`): CHA|-4 DEX|2 INT|-8 WIS|2 (no
+            // STR/CON delta), AC_Natural_Armor|6|TYPE=Base. Base Str
+            // 10-0=10, Con 11-0=11.
+            "styracosaurus",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 6, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 14, Dex 17, Con 11, Int 2, Wis 11, Cha 10,
+            // +4 natural armor. Corpus delta (`bestiary_5/companion_
+            // ceratosaurus.json`): DEX|6 INT|-8 STR|4 (no CON delta),
+            // AC_Natural_Armor|4|TYPE=Base. Base Str 14-4=10, Con 11-0=11.
+            "ceratosaurus",
+            CompanionBaseStats { strength: 10, constitution: 11, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 12, Dex 15, Con 12, Int 2, Wis 15, Cha 9,
+            // +1 natural armor. Corpus delta (`bestiary_5/companion_
+            // plesiosaurus.json`): CHA|-2 CON|2 DEX|4 INT|-8 STR|2 WIS|4,
+            // AC_Natural_Armor|1|TYPE=Base. Base Str 12-2=10, Con 12-2=10.
+            "plesiosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 1, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 12, Dex 18, Con 10, Int 2, Wis 15, Cha 11,
+            // +4 natural armor. Corpus delta (`bestiary_5/companion_
+            // therizinosaurus.json`): DEX|8 INT|-8 STR|2 WIS|4 (no CON
+            // delta), AC_Natural_Armor|4|TYPE=Base. Base Str 12-2=10, Con
+            // 10-0=10.
+            "therizinosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 7, Dex 17, Con 10, Int 2, Wis 14, Cha 13,
+            // NO natural armor bonus at the starting level (the corpus's
+            // own `companion_troodon.json` carries no `AC_Natural_Armor`
+            // token at all, agreeing exactly). Corpus delta: CHA|2 DEX|6
+            // INT|-8 STR|-4 WIS|4 (no CON delta). Base Str 7-(-4)=11, Con
+            // 10-0=10. The first entry in this table with a genuine
+            // natural_armor of 0, not an absent row.
+            "troodon",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 0, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 14, Dex 16, Con 10, Int 2, Wis 15, Cha 10,
+            // +4 natural armor. Corpus delta (`bestiary_6/companion_
+            // giganotosaurus.json`): DEX|6 INT|-8 STR|4 WIS|4 (no CON
+            // delta), AC_Natural_Armor|4|TYPE=Base. Base Str 14-4=10, Con
+            // 10-0=10.
+            "giganotosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 4, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 10, Dex 16, Con 10, Int 2, Wis 13, Cha 10,
+            // +2 natural armor. Corpus delta (`bestiary_6/companion_
+            // kentrosaurus.json`): DEX|6 INT|-8 WIS|2 (no STR/CON delta),
+            // AC_Natural_Armor|2|TYPE=Base. Base Str 10-0=10, Con 10-0=10.
+            "kentrosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 9, Dex 21, Con 10, Int 2, Wis 14, Cha 12,
+            // +2 natural armor. Corpus delta (`bestiary_6/companion_
+            // quetzalcoatlus.json`): CHA|2 DEX|10 INT|-8 STR|-2 WIS|4 (no
+            // CON delta), AC_Natural_Armor|2|TYPE=Base. Base Str
+            // 9-(-2)=11, Con 10-0=10.
+            "quetzalcoatlus",
+            CompanionBaseStats { strength: 11, constitution: 10, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 11, Dex 18, Con 9, Int 2, Wis 13, Cha 10,
+            // +2 natural armor. Corpus delta (`core_rulebook/companion_
+            // dinosaur_parasaurolophus.json`): CON|-2 DEX|8 INT|-8 WIS|2
+            // (no STR delta), AC_Natural_Armor|2|TYPE=Base. Base Str
+            // 11-0=11, Con 9-(-2)=11.
+            "parasaurolophus",
+            CompanionBaseStats { strength: 11, constitution: 11, natural_armor: 2, hit_die_size: 8 },
+        );
+        out.insert(
+            // AoN/d20pfsrd: Str 10, Dex 17, Con 10, Int 2, Wis 13, Cha 9,
+            // +3 natural armor. Corpus delta (`core_rulebook/companion_
+            // dinosaur_tylosaurus.json`): CHA|-2 DEX|6 INT|-8 WIS|2 (no
+            // STR/CON delta), AC_Natural_Armor|3|TYPE=Base. Base Str
+            // 10-0=10, Con 10-0=10.
+            "tylosaurus",
+            CompanionBaseStats { strength: 10, constitution: 10, natural_armor: 3, hit_die_size: 8 },
+        );
         out
     })
+}
+
+/// Formats a table slug (`"gulper_plant"`) as the printed species name
+/// (`"Gulper Plant"`) [`ground_companion_stat_block`]'s callers need for
+/// `species_display_name`, by title-casing each underscore-joined word --
+/// deterministic text formatting of an already-verified slug, not a new
+/// fact: every slug in [`companion_base_stat_table`] already carries its
+/// own verified display name in its doc comment above, and this function's
+/// own output matches each one exactly (confirmed by
+/// `companion_display_name_matches_every_table_entrys_documented_name`
+/// below).
+pub(crate) fn companion_display_name(slug: &str) -> String {
+    slug.split('_')
+        .map(|word| {
+            let mut chars = word.chars();
+            match chars.next() {
+                Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 /// Grounds `species_slug`'s standalone companion stat block, exactly the
@@ -574,19 +800,61 @@ mod tests {
     }
 
     #[test]
-    fn only_twelve_of_the_corpus_s_213_racetype_companion_records_have_a_base_stat_entry() {
+    fn companion_display_name_matches_every_table_entrys_documented_name() {
+        // Confirms the deterministic title-case formatter used by row 20
+        // cycle 7's own dispatch wiring (`ground_selected_companion_or_
+        // default`, this module's parent) never drifts from the printed
+        // species names this module's own doc comments already verified.
+        for (slug, expected) in [
+            ("wolf", "Wolf"),
+            ("horse", "Horse"),
+            ("gulper_plant", "Gulper Plant"),
+            ("allosaurus", "Allosaurus"),
+            ("ankylosaurus", "Ankylosaurus"),
+            ("pteranodon", "Pteranodon"),
+            ("deinonychus", "Deinonychus"),
+            ("velociraptor", "Velociraptor"),
+            ("triceratops", "Triceratops"),
+            ("tyrannosaurus", "Tyrannosaurus"),
+            ("amargasaurus", "Amargasaurus"),
+            ("brachiosaurus", "Brachiosaurus"),
+            ("elasmosaurus", "Elasmosaurus"),
+            ("stegosaurus", "Stegosaurus"),
+            ("dimetrodon", "Dimetrodon"),
+            ("iguanodon", "Iguanodon"),
+            ("spinosaurus", "Spinosaurus"),
+            ("dimorphodon", "Dimorphodon"),
+            ("diplodocus", "Diplodocus"),
+            ("styracosaurus", "Styracosaurus"),
+            ("ceratosaurus", "Ceratosaurus"),
+            ("plesiosaurus", "Plesiosaurus"),
+            ("therizinosaurus", "Therizinosaurus"),
+            ("troodon", "Troodon"),
+            ("giganotosaurus", "Giganotosaurus"),
+            ("kentrosaurus", "Kentrosaurus"),
+            ("quetzalcoatlus", "Quetzalcoatlus"),
+            ("parasaurolophus", "Parasaurolophus"),
+            ("tylosaurus", "Tylosaurus"),
+        ] {
+            assert_eq!(companion_display_name(slug), expected);
+        }
+    }
+
+    #[test]
+    fn only_twenty_nine_of_the_corpus_s_213_racetype_companion_records_have_a_base_stat_entry() {
         // Named exactly, not rounded away (§16/§17a): the honest residual
-        // this cycle leaves for the next one. Row 20 cycle 6 added the nine
-        // `AnimalCompanionDinosaur` species named in this table's own doc
-        // comments, on top of cycle 5's wolf/horse/gulper_plant.
+        // this cycle leaves for the next one. Row 20 cycle 7 added 17 more
+        // `AnimalCompanionDinosaur` species (26 of 28 total, two named
+        // residuals -- pachycephalosaurus, ornithomimosaur -- this module's
+        // own cycle 7 doc addendum explains), on top of cycle 5's wolf/
+        // horse/gulper_plant and cycle 6's own first nine dinosaurs.
         assert_eq!(
             companion_base_stat_table().len(),
-            12,
-            "wolf, horse, gulper_plant, allosaurus, ankylosaurus, pteranodon, deinonychus, \
-             velociraptor, triceratops, tyrannosaurus, amargasaurus, brachiosaurus -- 201 of 213 \
-             real RACETYPE:Companion corpus records still have no verified base-ability-score \
-             entry and must keep refusing until a future cycle adds them, per-species, the same \
-             way this one added the dinosaur batch"
+            29,
+            "wolf, horse, gulper_plant, and 26 of 28 AnimalCompanionDinosaur species -- 184 of \
+             213 real RACETYPE:Companion corpus records still have no verified base-ability-\
+             score entry and must keep refusing until a future cycle adds them, per-species, \
+             the same way this one and cycle 6 added the dinosaur batch"
         );
     }
 
@@ -634,6 +902,87 @@ mod tests {
             let stats = table.get(slug).expect("entry must exist");
             assert_eq!(stats.natural_armor, expected_natural_armor, "{slug} natural armor");
             assert_eq!(stats.hit_die_size, 8, "{slug} hit die size is always d8 per the companion mechanic");
+        }
+    }
+
+    /// Row 20 cycle 7's own positive counterpart to
+    /// `the_nine_dinosaur_companions_ground_their_own_verified_base_scores`:
+    /// proves each of the 17 species cycle 7 added is real and reachable,
+    /// pinning the exact base ability scores this cycle's doc comments
+    /// derive. Troodon's own `expected_natural_armor` of 0 is a genuine
+    /// verified value (no natural armor bonus at the starting level per its
+    /// own source, matching the corpus's own absent `AC_Natural_Armor`
+    /// token) -- not a stand-in for "not yet grounded".
+    #[test]
+    fn the_seventeen_cycle_seven_dinosaur_companions_ground_their_own_verified_base_scores() {
+        for (slug, display, expected_str, expected_con, expected_natural_armor) in [
+            ("elasmosaurus", "Elasmosaurus", 10i16, 10i16, 2i16),
+            ("stegosaurus", "Stegosaurus", 10, 10, 6),
+            ("dimetrodon", "Dimetrodon", 10, 10, 2),
+            ("iguanodon", "Iguanodon", 11, 11, 3),
+            ("spinosaurus", "Spinosaurus", 10, 11, 3),
+            ("dimorphodon", "Dimorphodon", 12, 8, 1),
+            ("diplodocus", "Diplodocus", 10, 10, 6),
+            ("styracosaurus", "Styracosaurus", 10, 11, 6),
+            ("ceratosaurus", "Ceratosaurus", 10, 11, 4),
+            ("plesiosaurus", "Plesiosaurus", 10, 10, 1),
+            ("therizinosaurus", "Therizinosaurus", 10, 10, 4),
+            ("troodon", "Troodon", 11, 10, 0),
+            ("giganotosaurus", "Giganotosaurus", 10, 10, 4),
+            ("kentrosaurus", "Kentrosaurus", 10, 10, 2),
+            ("quetzalcoatlus", "Quetzalcoatlus", 11, 10, 2),
+            ("parasaurolophus", "Parasaurolophus", 11, 11, 2),
+            ("tylosaurus", "Tylosaurus", 10, 10, 3),
+        ] {
+            let mut explanations = Vec::new();
+            let grounded = ground_companion_stat_block(
+                slug,
+                "companion",
+                "Druid",
+                display,
+                1,
+                &mut explanations,
+            );
+            assert!(grounded, "{slug} must ground a real stat block");
+            let detail = &explanations
+                .iter()
+                .find(|e| e.id == format!("companion.{slug}_stat_block"))
+                .unwrap_or_else(|| panic!("expected a companion.{slug}_stat_block record"))
+                .detail;
+            assert!(
+                detail.contains(&format!("Str {expected_str}")),
+                "{slug} expected base Str {expected_str} in detail: {detail}"
+            );
+            assert!(
+                detail.contains(&format!("Con {expected_con}")),
+                "{slug} expected base Con {expected_con} in detail: {detail}"
+            );
+            let table = companion_base_stat_table();
+            let stats = table.get(slug).expect("entry must exist");
+            assert_eq!(stats.natural_armor, expected_natural_armor, "{slug} natural armor");
+            assert_eq!(stats.hit_die_size, 8, "{slug} hit die size is always d8 per the companion mechanic");
+        }
+    }
+
+    /// The two `AnimalCompanionDinosaur` records cycle 7 explicitly refused
+    /// to add rather than fabricate or guess (`§1a`) -- named in this
+    /// module's own cycle 7 doc addendum. A refusal is only honest if it
+    /// keeps refusing; this pins that it does.
+    #[test]
+    fn pachycephalosaurus_and_ornithomimosaur_still_refuse_unverified() {
+        for (slug, display) in [
+            ("pachycephalosaurus", "Pachycephalosaurus"),
+            ("ornithomimosaur", "Ornithomimosaur"),
+        ] {
+            let mut explanations = Vec::new();
+            let grounded =
+                ground_companion_stat_block(slug, "companion", "Druid", display, 1, &mut explanations);
+            assert!(
+                !grounded,
+                "{slug} has no source this cycle could verify to the two-independent-source bar; \
+                 it must keep refusing, not fabricate a stat block"
+            );
+            assert!(explanations.is_empty());
         }
     }
 }

@@ -166,6 +166,7 @@ mod tests {
             },
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
             saved_at: "2026-07-21T00:00:00Z".to_owned(),
         })
     }

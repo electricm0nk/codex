@@ -425,6 +425,23 @@ pub struct CreateCharacterRequest {
     /// exclusion guard blocks the save rather than being silently dropped.
     #[serde(default)]
     pub selected_alternate_trait_keys: Vec<String>,
+    /// A companion-bearing class's (Druid/Hunter/Cavalier) real
+    /// character-creation-time choice of companion/mount species, as a
+    /// `companion_base_stat_table.rs` slug (`"gulper_plant"`,
+    /// `"allosaurus"`, ...). `#[serde(default)]` so an omitted field (every
+    /// pre-existing saved payload, and every non-companion-bearing class)
+    /// keeps working unchanged and falls back to that class's own prior
+    /// fixed default species (Wolf for Druid/Hunter, Horse for Cavalier) --
+    /// row 20 cycle 6's own named wiring gap: `ground_companion_stat_
+    /// block`'s verified per-species table had no character-creation-time
+    /// dispatch point until this field and `compose_character_input`'s
+    /// own read of it. An unrecognized slug (a typo, or a species this
+    /// engine has not yet hand-authored a verified base-stat row for)
+    /// is never fabricated -- `ground_selected_companion_or_default`
+    /// (`pilot_compute/mod.rs`) falls back to the same class default
+    /// rather than guessing.
+    #[serde(default)]
+    pub companion_species: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1486,6 +1503,7 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         // Human Fighter, and seeding a swap nobody chose would be exactly the
         // fabricated-default this file's other seeds are each argued down to.
         selected_alternate_trait_keys: Vec::new(),
+        companion_species: None,
     };
 
     let character_input = compose_character_input(&request);
@@ -4922,6 +4940,7 @@ mod tests {
             },
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -5082,6 +5101,110 @@ mod tests {
         assert_eq!(
             checked, 61,
             "must have exercised all 61 conventional classes, not a partial sweep"
+        );
+    }
+
+    /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
+    /// gap ("`ground_companion_stat_block` has zero live callers anywhere
+    /// in the crate") and proves it at the real character-creation
+    /// altitude, the same way `all_61_generic_classes_reach_a_real_
+    /// chassis_at_character_creation_altitude` proved the class picker --
+    /// through `CreateCharacterRequest` -> `compose_character_input` ->
+    /// `build_pilot_headless_receipt`, never `generic_class_chassis::
+    /// resolve` or `ground_companion_stat_block` called directly in
+    /// isolation. A Druid whose request carries `companion_species:
+    /// Some("gulper_plant")` must reach `Computed` (the default Druid
+    /// nature-bond seed is unaffected -- only the species changes), and
+    /// its explanation records must carry Gulper Plant's own verified
+    /// stat block (`companion_base_stat_table.rs`'s table), never Wolf's.
+    #[test]
+    fn a_druid_who_selects_gulper_plant_grounds_gulper_plant_not_wolf_at_character_creation_altitude()
+    {
+        let default_request = request_for_class("race:human", "class:druid", 1);
+        let default_input = compose_character_input(&default_request);
+        let default_receipt = build_pilot_headless_receipt(&default_input);
+        assert_eq!(
+            default_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "precondition: a Druid with no companion_species override must still reach Computed \
+             (the existing Wolf default), got: {:?}",
+            default_receipt.computation.diagnostics
+        );
+        assert!(
+            default_receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.druid.animal_companion.wolf_stat_block"),
+            "precondition: the default (no override) Druid must ground Wolf, not some other \
+             species, or this test is not exercising the override case: {:?}",
+            default_receipt.computation.explanations.iter().map(|e| &e.id).collect::<Vec<_>>()
+        );
+
+        let gulper_plant_request = CreateCharacterRequest {
+            companion_species: Some("gulper_plant".to_owned()),
+            ..request_for_class("race:human", "class:druid", 1)
+        };
+        let gulper_plant_input = compose_character_input(&gulper_plant_request);
+        let gulper_plant_receipt = build_pilot_headless_receipt(&gulper_plant_input);
+        assert_eq!(
+            gulper_plant_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Druid who selects a verified-but-non-default companion species must still reach \
+             Computed, got: {:?}",
+            gulper_plant_receipt.computation.diagnostics
+        );
+        let ids: std::collections::BTreeSet<&str> =
+            gulper_plant_receipt.computation.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(
+            ids.contains("class_chassis.druid.animal_companion.gulper_plant_stat_block"),
+            "a Druid who selected gulper_plant must ground Gulper Plant's own verified stat \
+             block through the real character-creation request path, got: {ids:?}"
+        );
+        assert!(
+            !ids.contains("class_chassis.druid.animal_companion.wolf_stat_block"),
+            "a Druid who selected gulper_plant must NOT also ground Wolf's stat block -- the \
+             dispatch must replace the default, not merely add to it: {ids:?}"
+        );
+        let base_attack = gulper_plant_receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.druid.animal_companion.base_attack_bonus")
+            .expect("expected a base_attack_bonus record");
+        assert_eq!(
+            base_attack.value, 1,
+            "Gulper Plant base attack bonus at master level 1: HD*3/4 (2 HD -> 1) + Str 10 \
+             modifier (+0) = 1, matching companion_base_stat_table.rs's own \
+             gulper_plant_grounds_a_real_new_species_at_master_level_1 test"
+        );
+
+        // An unrecognized species slug must fall back to the class's own
+        // prior default, never fabricate a stat block for an unverified
+        // species and never block the character.
+        let unknown_species_request = CreateCharacterRequest {
+            companion_species: Some("griffon".to_owned()),
+            ..request_for_class("race:human", "class:druid", 1)
+        };
+        let unknown_species_receipt =
+            build_pilot_headless_receipt(&compose_character_input(&unknown_species_request));
+        assert_eq!(
+            unknown_species_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "an unrecognized companion_species must fall back to the class default, not block \
+             the character: {:?}",
+            unknown_species_receipt.computation.diagnostics
+        );
+        assert!(
+            unknown_species_receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.druid.animal_companion.wolf_stat_block"),
+            "an unrecognized companion_species (griffon, no verified table row) must fall back \
+             to grounding Wolf, this class's own prior default, never fabricate a Griffon stat \
+             block: {:?}",
+            unknown_species_receipt.computation.explanations.iter().map(|e| &e.id).collect::<Vec<_>>()
         );
     }
 
