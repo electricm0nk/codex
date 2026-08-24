@@ -1185,7 +1185,174 @@ pub(crate) fn resolve_pcgen_var_chain(
             }
         }
     }
+    // SD-32 T12 Epic 8 row 18 cycle 12: PCGen's own real 0-default for a bare
+    // identifier this corpus never binds ANYWHERE, under ANY condition.
+    //
+    // Oracle trace, file:line (pinned PCGen commit `7f818006e371`):
+    // `PlayerCharacter.java:2090-2140` (`getVariable`) tries a modern, DECLARED
+    // `VariableKey` first; failing that (`hasVariable`, `:2430-2440`, false for
+    // any name never registered as one) it falls to `getVariableValue`, which
+    // is exactly the path a `BONUS:VAR|Target|Formula` RHS resolves through
+    // (`JEPFormula.resolve` -> `character.getVariableValue`,
+    // `code/src/java/pcgen/cdom/base/JEPFormula.java`). That method
+    // (`VariableProcessor.java:125-139`) tries the modern JEP parser first
+    // (`:151-182`, `processJepFormula` `:433-513`): JEP requires EVERY symbol
+    // in the expression to resolve via `lookupVariable` (`:532-561`) or it
+    // returns `null` outright -- "we could not get a value for all of the
+    // variables, so it must not have been a JEP function after all" (`:469`).
+    // `getVariableValue` then falls through to the LEGACY, `+`/`-`/`*`/`/`-
+    // delimited parser (`processBrokenParser`, `:215-421`): its own per-term
+    // loop (`:357-421`) calls `lookupVariable` for each term and, when that
+    // returns `null` (not `hasVariable`, no internal/export variable either --
+    // exactly what a globally-unbound identifier hits), leaves the term's raw
+    // text unchanged; `Float.parseFloat` on that text then throws
+    // `NumberFormatException`, caught silently and treated as `0.0` (`:394-
+    // 402`, own comment: "Don't care, as it's just zero"). Real PCGen genuinely
+    // computes 0 for this shape, not a refusal.
+    //
+    // Matched here NARROWLY, per `decisions.md §17a`'s "implement the
+    // condition, not the convenience": only a bare `Expr::Var` lookup miss
+    // (the interpreter's own distinct `"unbound variable {name:?}"` text,
+    // `formula_interpreter.rs`'s `eval_expr`) is retried with THAT identifier
+    // defaulted to 0 -- never `classlevel(...)`'s own separately-worded
+    // refusal, division-by-zero, an unknown function, or any other refused
+    // shape, all of which keep refusing exactly as before (they fail with
+    // different error text this loop never matches). And only when the
+    // identifier is ABSENT from `every_corpus_bound_bonus_var_target()` --
+    // the full corpus-wide union of every `BONUS:VAR` target name any
+    // class/class_feature record binds anywhere, PRE-gated or not. An
+    // identifier present in that set (e.g. one this record's own PRE-gate-
+    // safe parse dropped for genuine multi-row ambiguity) is a REAL,
+    // possibly-nonzero conditional PCGen value this module cannot safely
+    // guess -- it keeps refusing, unchanged from every prior cycle's own
+    // safety property (cycles 2 and 5's proofs this doc inherits).
+    //
+    // A name genuinely absent from that set may STILL carry a real, more
+    // precise corpus fact than a bare guessed `0`: `DEFINE:<name>|0` is
+    // PCGen's own standard idiom for declaring a `BONUS:VAR` target's
+    // baseline (`DefineLst.java`: registers a `VariableKey`, and its own
+    // deprecation warning literally reads "please use a DEFINE of 0 and an
+    // appropriate bonus" for any non-zero use) -- confirmed live for exactly
+    // this family: `data/corpus/advanced_class_guide/class_feature/
+    // bloodrager/bloodrager_bloodline_tracker.json` carries `DEFINE:
+    // BloodragerBloodlinePower1LVLBonus|0` (and the 4/8/12/16/20 siblings),
+    // and `grep` confirms no `BONUS:VAR` row anywhere ever targets that same
+    // name, so there is no possible conditional addend this fallback could
+    // be hiding. `corpus_define_literal_defaults()` reads exactly that
+    // literal, falling back to `0` (real PCGen's own catch-all, see above)
+    // only when the corpus never says anything about the name at all --
+    // e.g. Sorcerer/Cleric/Shaman's bare `<Pool>PowerNLVLBonus` family,
+    // which carries no `DEFINE` either.
+    let bound_anywhere = every_corpus_bound_bonus_var_target();
+    let define_defaults = corpus_define_literal_defaults();
+    let mut progressed_zero = true;
+    let mut guard_zero = 0;
+    while progressed_zero && guard_zero < 16 {
+        progressed_zero = false;
+        guard_zero += 1;
+        for (name, formula) in bonus_vars {
+            if vars.contains_key(name) {
+                continue;
+            }
+            match evaluator.evaluate(formula, &vars) {
+                Ok(value) => {
+                    vars.insert(name.clone(), value);
+                    progressed_zero = true;
+                }
+                Err(e) => {
+                    if let Some(missing) =
+                        e.0.strip_prefix("unbound variable \"").and_then(|s| s.strip_suffix('"'))
+                    {
+                        if !vars.contains_key(missing) && !bound_anywhere.contains(missing) {
+                            let default_value =
+                                define_defaults.get(missing).copied().unwrap_or(0);
+                            vars.insert(missing.to_string(), default_value);
+                            progressed_zero = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
     vars
+}
+
+/// Every `BONUS:VAR` target name ANY corpus `class_feature` or `class` record
+/// binds, ANYWHERE, under ANY PRE-condition (SD-32 T12 Epic 8 row 18 cycle 12)
+/// -- the set [`resolve_pcgen_var_chain`]'s own 0-default widening checks an
+/// identifier against before treating it as PCGen's real 0-default (see that
+/// function's doc for the oracle citation). Built from the SAME two
+/// corpus-wide, PRE-gate-safe tables the header/member merges already use
+/// (`class_feature_bonus_vars_any_record`, `class_record_bonus_vars`) rather
+/// than a third scan, so this can never disagree with what those tables
+/// actually ingested.
+fn every_corpus_bound_bonus_var_target() -> &'static std::collections::BTreeSet<String> {
+    static SET: OnceLock<std::collections::BTreeSet<String>> = OnceLock::new();
+    SET.get_or_init(|| {
+        let mut out = std::collections::BTreeSet::new();
+        for record in class_feature_bonus_vars_any_record().values() {
+            out.extend(record.bonus_vars.keys().cloned());
+        }
+        for vars in class_record_bonus_vars().values() {
+            out.extend(vars.keys().cloned());
+        }
+        out
+    })
+}
+
+/// Every `DEFINE:<name>|<literal integer>` corpus fact, ANY book, ANY
+/// `class_feature`/`class` record (SD-32 T12 Epic 8 row 18 cycle 12) -- read
+/// directly from `raw_tokens`, first-book-wins per name (this is a baseline
+/// declaration, not an addend; a genuine cross-book disagreement on the same
+/// name would be a corpus authoring defect this function is not the place to
+/// adjudicate). Only literal-integer DEFINE values are captured (PCGen's own
+/// documented idiom for a `BONUS:VAR` target's zero baseline, `DefineLst.
+/// java`'s deprecation warning: "please use a DEFINE of 0 and an appropriate
+/// bonus" for any non-zero use) -- a `DEFINE` whose formula is itself a
+/// non-literal expression is skipped here rather than guessed at (this
+/// module has no need for it: no corpus record currently references such a
+/// name as an unbound term inside a `BONUS:VAR` chain this resolver walks).
+fn corpus_define_literal_defaults() -> &'static BTreeMap<String, i64> {
+    static TABLE: OnceLock<BTreeMap<String, i64>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out: BTreeMap<String, i64> = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            for subdir_name in ["class_feature", "class"] {
+                let dir = book_entry.path().join(subdir_name);
+                if !dir.is_dir() {
+                    continue;
+                }
+                let mut files = Vec::new();
+                walk_json_files(&dir, &mut files);
+                for file in files {
+                    let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                    let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                    let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
+                    for token in tokens {
+                        if token["key"].as_str() != Some("DEFINE") {
+                            continue;
+                        }
+                        let Some(value) = token["value"].as_str() else { continue };
+                        let mut parts = value.splitn(2, '|');
+                        let (Some(name), Some(literal)) = (parts.next(), parts.next()) else {
+                            continue;
+                        };
+                        let name = name.trim();
+                        if name.is_empty() {
+                            continue;
+                        }
+                        let Ok(parsed) = literal.trim().parse::<i64>() else { continue };
+                        out.entry(name.to_string()).or_insert(parsed);
+                    }
+                }
+            }
+        }
+        out
+    })
 }
 
 /// This grant fact's real corpus `DESC:` description with THIS CHARACTER's own numbers
@@ -1782,21 +1949,78 @@ mod tests {
         }
     }
 
-    /// An identifier the chain can never reach (here: a made-up sibling-record variable name,
-    /// standing in for the real, currently-unsupported cross-record-alias case) is never bound --
-    /// no entry, no guessed `0`, no panic.
+    /// SD-32 T12 Epic 8 row 18 cycle 12 correction: this test's ORIGINAL body used a made-up,
+    /// not-in-the-corpus name (`SiblingRecordOwnVariable`) to stand in for "an identifier the
+    /// chain can never reach", asserting the whole formula stayed unbound. Reading the pinned
+    /// oracle's own `VariableProcessor.java`/`PlayerCharacter.java` (this cycle's own receipt)
+    /// proved that assumption wrong for a name genuinely absent from the corpus under every
+    /// condition: real PCGen's `getVariable` -> `getVariableValue` -> `processBrokenParser`
+    /// chain silently treats such a bare additive term as `0`, not a refusal. Corrected to prove
+    /// the REAL safety property this test was reaching for -- a name that DOES exist elsewhere in
+    /// the corpus as a `BONUS:VAR` target (here, `AssassinPoisonSaveBonus`, real record
+    /// `data/corpus/core_rulebook/class_feature/assassin/save_against_poisons.json`) but is not
+    /// reachable from THIS formula's own local `bonus_vars` map still refuses -- it is a REAL,
+    /// possibly-conditional PCGen value this resolver cannot see from here, and must never guess.
     #[test]
-    fn resolve_pcgen_var_chain_never_binds_an_unreachable_identifier() {
+    fn resolve_pcgen_var_chain_never_binds_an_identifier_bound_elsewhere_in_the_corpus() {
         let mut bonus_vars = BTreeMap::new();
-        bonus_vars.insert("SomeBonus".to_string(), "10+(SomeLVL/2)+SiblingRecordOwnVariable".to_string());
+        bonus_vars
+            .insert("SomeBonus".to_string(), "10+(SomeLVL/2)+AssassinPoisonSaveBonus".to_string());
         bonus_vars.insert("SomeLVL".to_string(), "RogueLVL".to_string());
         let vars =
             resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10, &AbilityModifiers::default());
         assert_eq!(vars.get("SomeLVL"), Some(&10));
         assert!(
             vars.get("SomeBonus").is_none(),
-            "a formula referencing an unbound identifier (a sibling record's own variable) must \
-             never resolve to a guessed number: {vars:?}"
+            "a formula referencing an identifier bound elsewhere in the corpus (a sibling \
+             record's own real BONUS:VAR target) must never resolve to a guessed number: {vars:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 12: real PCGen's own 0-default for a bare identifier the
+    /// corpus never binds ANYWHERE, under ANY condition (this cycle's own receipt traces the
+    /// oracle's `VariableProcessor.java`/`PlayerCharacter.java` chain to it). `NeverBoundAnywhere`
+    /// is not a real corpus name and appears in no fixture -- standing in for the shape, proven
+    /// absent from `every_corpus_bound_bonus_var_target()`/`corpus_define_literal_defaults()` by
+    /// construction (a name this test file invents can never appear in either live-corpus table).
+    #[test]
+    fn resolve_pcgen_var_chain_defaults_a_corpus_wide_unbound_identifier_to_zero() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert("SomeBonus".to_string(), "10+(SomeLVL/2)+NeverBoundAnywhere".to_string());
+        bonus_vars.insert("SomeLVL".to_string(), "RogueLVL".to_string());
+        let vars =
+            resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10, &AbilityModifiers::default());
+        assert_eq!(vars.get("SomeLVL"), Some(&10));
+        assert_eq!(
+            vars.get("SomeBonus"),
+            Some(&15),
+            "10 + (10/2) + 0 = 15 -- a genuinely corpus-wide-unbound identifier is PCGen's own \
+             real 0, not a refusal: {vars:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 12: the concrete, real corpus case this cycle's fix targets
+    /// -- `data/corpus/advanced_class_guide/class_feature/bloodrager/bloodrager_bloodline_
+    /// tracker.json` carries `DEFINE:BloodragerBloodlinePower1LVLBonus|0` and no corpus
+    /// `BONUS:VAR` row ever targets that same name, so this resolves through the DEFINE-literal
+    /// path (`corpus_define_literal_defaults`), not the bare-0-fallback path -- both land on the
+    /// same real number here, but this proves the more precise mechanism actually fires.
+    #[test]
+    fn resolve_pcgen_var_chain_binds_a_real_corpus_define_zero_baseline() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert(
+            "Bloodrager_Draconic_BloodlinePower1LVL".to_string(),
+            "Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower1LVLBonus".to_string(),
+        );
+        bonus_vars
+            .insert("Bloodrager_Draconic_BloodlineLVL".to_string(), "BloodragerLVL".to_string());
+        let vars =
+            resolve_pcgen_var_chain(&bonus_vars, "BloodragerLVL", 7, &AbilityModifiers::default());
+        assert_eq!(
+            vars.get("Bloodrager_Draconic_BloodlinePower1LVL"),
+            Some(&7),
+            "Bloodrager_Draconic_BloodlineLVL (7) + BloodragerBloodlinePower1LVLBonus (real \
+             corpus DEFINE, 0) = 7: {vars:?}"
         );
     }
 
@@ -1949,9 +2173,23 @@ mod tests {
         // `classlevel("Summoner")` call this module could not bind before this cycle. Re-derive:
         // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
         // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned`.
+        //
+        // `newly_resolved` moved 20 -> 21, `chain_unresolvable` moved 9 -> 8 (SD-32 T12 Epic 8
+        // row 18 cycle 12): `resolve_pcgen_var_chain`'s new corpus-verified 0-default (see that
+        // function's own doc, oracle citation `VariableProcessor.java`/`PlayerCharacter.java`)
+        // resolves exactly ONE more record here -- `mystic theurge/Mystic Theurge ~ Combined
+        // Spells@1`. Its real corpus formula, `CombinedSpellsMaxLevel|(CombinedSpellsLVL+1)/2`,
+        // references `CombinedSpellsLVL`, which the SAME record carries only as `DEFINE:
+        // CombinedSpellsLVL|0` (no `BONUS:VAR` row anywhere ever targets it -- confirmed,
+        // `grep -rl "VAR|CombinedSpellsLVL" data/corpus/` -> 0 hits) -- exactly the "real corpus
+        // DEFINE zero baseline" shape `resolve_pcgen_var_chain_binds_a_real_corpus_define_zero_
+        // baseline` proves in isolation. `(0+1)/2 = 0` (integer division). Every other of the 20
+        // pre-existing `newly_resolved` records, and all 11/36 `class_excluded_otherwise_
+        // resolvable`/`no_record_at_all`, are unchanged -- confirmed by diffing this cycle's own
+        // full `newly_resolved_examples` list against the pre-cycle-12 one before landing.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (136, 20, 11, 9, 36),
+            (136, 21, 11, 8, 36),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

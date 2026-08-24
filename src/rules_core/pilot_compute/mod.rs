@@ -74217,11 +74217,31 @@ mod generic_pool_group_selection_wiring_tests {
         // Locked baseline, re-derived fresh this cycle (see receipt for the full per-pool
         // breakdown and closed-group names) -- a future cycle's corpus/resolver change that
         // moves these numbers must update this assertion deliberately, never silently.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 12: `Sorcerer Bloodline` moved 18/53 -> 31/53 (+13) --
+        // `resolve_pcgen_var_chain`'s new corpus-verified 0-default (see that function's own
+        // doc, oracle citation `VariableProcessor.java`/`PlayerCharacter.java`) unblocks the
+        // `Sorcerer_<Bloodline>_BloodlinePowerNLVL` terminal formulas cycle 11 traced to a bare
+        // `BloodlinePowerNLVLBonus` family this corpus never binds via any `BONUS:VAR` row --
+        // real PCGen genuinely computes 0 for that shape, not a refusal. `Bloodrager Bloodline`,
+        // `Cleric Domain`, `Shaman Spirit`, `Warpriest Blessing` and `Cavalier Order` are
+        // UNCHANGED (5/12, 26/72, 8/14, 0/37, 1/9) -- re-run and re-checked, not assumed. This
+        // cycle's own `resolve_pcgen_var_chain` unit tests prove the fix DOES reach real
+        // Bloodrager formulas (e.g. `Bloodrager_Draconic_BloodlinePower1LVL` now resolves through
+        // a real corpus `DEFINE:BloodragerBloodlinePower1LVLBonus|0`), but `group_has_a_
+        // resolvable_member` measures at the GROUP level via `resolve_pool_member_sole_magnitude`,
+        // which has its own independent per-member refusals (the single-terminal-target rule,
+        // header-chain gaps) this cycle did not change or fully trace -- the newly-var-resolvable
+        // Bloodrager formulas are not, on their own, sufficient to flip any group's tally. Named
+        // as an open question for a future cycle rather than guessed at here.
         assert!(
-            report.contains("Sorcerer Bloodline: 18/53")
+            report.contains("Sorcerer Bloodline: 31/53")
                 && report.contains("Bloodrager Bloodline: 5/12")
-                && report.contains("Cleric Domain: 26/72"),
-            "cycle 8's own three measured baselines must still reproduce exactly:\n{report}"
+                && report.contains("Cleric Domain: 26/72")
+                && report.contains("Shaman Spirit: 8/14")
+                && report.contains("Warpriest Blessing: 0/37")
+                && report.contains("Cavalier Order: 1/9"),
+            "cycle 12's own six measured baselines must still reproduce exactly:\n{report}"
         );
     }
 
