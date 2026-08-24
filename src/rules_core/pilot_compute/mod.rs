@@ -39087,7 +39087,18 @@ fn pool_header_record_by_normalized_suffix<'a>(
     // trusted from the bare key alone) so a same-named group owned by a
     // DIFFERENT class can never be picked up by mistake. Tried last so it
     // changes nothing for any pool the two checks above already served.
-    table.get(pool_group).filter(|header| header.class == class)
+    //
+    // SD-32 T12 Epic 8 row 18 cycle 8: `header.class.is_empty()` also accepted -- confirmed live,
+    // every real per-bloodline HEADER record in this corpus (Sorcerer's own "Marid Bloodline",
+    // "Draconic Bloodline", ... -- all 53 groups' own headers, `class_feature_bonus_vars_any_
+    // record`'s own doc) ingests with `class: null` (kept `""`, never fabricated) even after row
+    // 21 restored their real `.MOD`-appended `BONUS:VAR` rows. A bare, un-namespaced header key
+    // (`"Marid Bloodline"`, never `"<class> ~ Marid Bloodline"`) is already, by construction,
+    // globally unique across this corpus -- no other class defines a same-named bare-key header --
+    // so accepting an unowned one carries none of the cross-class-collision risk the `header.class
+    // == class` check above exists to prevent; it merely lets a header this corpus never tagged
+    // with its owner still contribute its own `BONUS:VAR` chain to the merge.
+    table.get(pool_group).filter(|header| header.class == class || header.class.is_empty())
 }
 
 /// `owning_class_override`: SD-32 T12 Epic 8 row 18 cycle 7. A real corpus quirk, confirmed live
@@ -39106,12 +39117,27 @@ fn pool_header_record_by_normalized_suffix<'a>(
 /// possibly-unreliable self-tag. `None` (the flat-pool caller,
 /// `push_generic_pool_choice_magnitude`, which has never needed this) preserves the exact
 /// original behaviour, unchanged.
+///
+/// `registered_name_for_tracker`: SD-32 T12 Epic 8 row 18 cycle 8. The "select ONE group, inherit
+/// every member" pool family (Bloodline, and PCGen's own equivalent convention elsewhere) very
+/// often binds its own per-group header's chain vars (`Sorcerer_Marid_BloodlineLVL`, ...) onto a
+/// SECOND, class-WIDE shared var (bare `BloodlineLVL`) via a real corpus record this codebase
+/// calls a "Tracker" -- confirmed live, `"Bloodline Tracker"` (Sorcerer's own, a BARE key) and
+/// `"Bloodrager ~ Bloodline Tracker"` (Bloodrager's own, the ordinary `"<class> ~ "`-prefixed
+/// shape) -- a DIFFERENT record from the per-group header `pool_header_record_by_normalized_
+/// suffix(owning_class, pool_group)` already merges. Passing `Some(registered_name)` (e.g.
+/// `"Bloodline"`) merges this SECOND header too, via the SAME generic `pool_header_record_by_
+/// normalized_suffix` lookup (parameterized by `"<registered_name> Tracker"`, not a hardcoded
+/// per-class table) -- reusing the existing function rather than building a new one (`§17`).
+/// `None` (every pre-existing caller) preserves the exact original single-header behaviour,
+/// unchanged.
 pub(crate) fn resolve_pool_member_sole_magnitude(
     key: &str,
     pool_group: &str,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     owning_class_override: Option<&str>,
+    registered_name_for_tracker: Option<&str>,
 ) -> Option<(String, i64)> {
     let record = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe().get(key)?;
     if record.bonus_vars.is_empty() {
@@ -39132,6 +39158,24 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
     let mut combined_vars = record.bonus_vars.clone();
     if let Some(header) = pool_header_record_by_normalized_suffix(owning_class, pool_group) {
         for (name, formula) in &header.bonus_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    if let Some(registered_name) = registered_name_for_tracker {
+        let tracker_name = format!("{registered_name} Tracker");
+        if let Some(tracker) = pool_header_record_by_normalized_suffix(owning_class, &tracker_name) {
+            for (name, formula) in &tracker.bonus_vars {
+                combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+            }
+        }
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
+    // (`class_record_bonus_vars`'s own doc -- Cleric's `DomainLVL`, real PCGen source
+    // `cr_classes.lst`, binds HERE, never on any `class_feature` record) merged in too, always
+    // tried (no gating flag -- a class with no such record simply merges nothing, exactly like an
+    // absent per-group/tracker header above).
+    if let Some(class_vars) = class_feature_grant_consumer::class_record_bonus_vars().get(owning_class) {
+        for (name, formula) in class_vars {
             combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
         }
     }
@@ -39236,7 +39280,7 @@ fn push_generic_pool_choice_magnitude(
             continue;
         };
         let Some((target, value)) =
-            resolve_pool_member_sole_magnitude(&key, pool_group, level, ability_modifiers, None)
+            resolve_pool_member_sole_magnitude(&key, pool_group, level, ability_modifiers, None, None)
         else {
             continue;
         };
@@ -39311,9 +39355,14 @@ fn push_generic_pool_group_selection_magnitude(
             .iter()
         {
             let Some(member_name) = key.strip_prefix(&prefix) else { continue };
-            let Some((target, value)) =
-                resolve_pool_member_sole_magnitude(key, &group, level, ability_modifiers, Some(class))
-            else {
+            let Some((target, value)) = resolve_pool_member_sole_magnitude(
+                key,
+                &group,
+                level,
+                ability_modifiers,
+                Some(class),
+                Some(registered_name),
+            ) else {
                 continue;
             };
             let Ok(value) = i16::try_from(value) else { continue };
@@ -74043,5 +74092,57 @@ mod generic_pool_group_selection_wiring_tests {
             0,
             "an invented Cavalier Order selection must never ground anything"
         );
+    }
+
+    /// Abyssal is a real Sorcerer bloodline cycle 7 found blocked (its own per-bloodline header,
+    /// `"Abyssal Bloodline"`, chains `Sorcerer_Abyssal_BloodlineLVL -> BloodlineLVL`, and
+    /// `BloodlineLVL` itself binds only on the corpus-wide, cross-book-duplicated `"Bloodline
+    /// Tracker"` record -- SD-32 T12 Epic 8 row 18 cycle 8's own `registered_name_for_tracker`
+    /// widening in `resolve_pool_member_sole_magnitude`). `§17a` re-derivation this cycle (after
+    /// row 21 restored the per-book `.MOD` rows `"Bloodline Tracker"` itself carries) found the
+    /// var STILL unbound: 8 separate book files share the SAME bare key, and the prior
+    /// `or_insert_with` kept only whichever book sorted first alphabetically
+    /// (`advanced_class_guide`, a single leftover `DEFINE`) over `core_rulebook`'s own complete
+    /// 308-token copy -- a second, cross-book collision loss surviving row 21's per-file fix.
+    /// `class_feature_bonus_vars_any_record`'s own MERGE-across-books widening (this cycle) is
+    /// what makes `BloodlineLVL` findable at all. Its "Bloodline Arcana" member (`Sorcerer_
+    /// AbyssalBloodlineArcana_SummonDR|max(Sorcerer_Abyssal_BloodlineLVL/2,1)`) is real level-
+    /// scaled magnitude.
+    #[test]
+    fn sorcerer_generic_bloodline_pass_grounds_abyssal_via_the_cross_book_tracker_merge() {
+        let input = class_input(SORCERER_CLASS_ID, 5, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:abyssal");
+        let count = generic_explanation_count(&input, "class_feature.sorcerer.bloodline.generic");
+        assert!(count > 0, "Abyssal Bloodline must ground at least one real corpus member generically");
+    }
+
+    /// Verdant is a real Bloodrager bloodline cycle 7 found blocked, needing `BloodragerBloodlineLVL`
+    /// -- bound on `"Bloodrager ~ Bloodline Tracker"` (Bloodrager's own, differently-shaped tracker
+    /// key, `"<class> ~ Bloodline Tracker"` rather than Sorcerer's bare `"Bloodline Tracker"`),
+    /// found via the SAME generic `registered_name_for_tracker` widening (this cycle) reusing
+    /// `pool_header_record_by_normalized_suffix` unchanged -- no per-class special case. Its "Oaken
+    /// Skin" member (`VerdantBloodragerOakenSkin|1+(BloodragerBloodlineLVL/4)`) is real level-
+    /// scaled magnitude.
+    #[test]
+    fn bloodrager_generic_bloodline_pass_grounds_verdant_via_the_tracker_merge() {
+        let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:verdant");
+        let count = generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
+        assert!(count > 0, "Verdant Bloodline must ground at least one real corpus member generically");
+    }
+
+    /// Animal is a real Cleric domain cycle 7 found blocked, needing `DomainAnimalLVL` (the
+    /// "Animal Domain" header's own chain) which itself needs `DomainLVL` -- bound ONLY on the
+    /// CLERIC CLASS RECORD (`data/corpus/core_rulebook/class/cleric.json`, `BONUS:VAR|DomainLVL|
+    /// ClericLVL`), never on any `class_feature` record at all (cycle 7's own receipt, "out of
+    /// `class_feature`'s ingestion scope entirely"). Row 21 restored `raw_tokens` onto all 168 real
+    /// class records; this cycle's own NEW `class_record_bonus_vars` table (mirroring `class_
+    /// feature_bonus_vars_any_record`'s shape one dir level up) is the missing READ side, merged
+    /// into `resolve_pool_member_sole_magnitude` unconditionally (every owning class, not gated by
+    /// a family flag). Its "Animal Companion" member (`AnimalCompanionMasterLVL|DomainAnimalLVL-3`)
+    /// is a genuine two-hop chain terminating on the class record.
+    #[test]
+    fn cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge() {
+        let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:animal");
+        let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
+        assert!(count > 0, "Animal Domain must ground at least one real corpus member generically");
     }
 }

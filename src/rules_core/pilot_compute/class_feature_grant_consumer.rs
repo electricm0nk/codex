@@ -926,22 +926,115 @@ pub(crate) fn class_feature_bonus_vars_any_record() -> &'static BTreeMap<String,
                 let Ok(text) = std::fs::read_to_string(&file) else { continue };
                 let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
                 let data = &doc["data"];
-                let (Some(key), Some(name), Some(class)) =
-                    (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
-                else {
+                let (Some(key), Some(name)) = (data["key"].as_str(), data["name"].as_str()) else {
                     continue;
                 };
+                // SD-32 T12 Epic 8 row 18 cycle 8: `class` tolerated as absent/`null` here (kept
+                // `""`, never a fabricated class name) -- confirmed live across every real
+                // per-bloodline HEADER record this corpus carries (`data/corpus/*/class_feature/
+                // <bloodline>/<bloodline>.json`, e.g. `"Marid Bloodline"`, `"Draconic Bloodline"`,
+                // `"Aberrant Bloodline"`; every single one of the 53 real Sorcerer Bloodline groups'
+                // own header ingests with `class: null` even after row 21's `.MOD`-token restoral
+                // put their real `BONUS:VAR|Sorcerer_<X>_BloodlineLVL|BloodlineLVL`-shaped chain
+                // rows back). This table exists ONLY to feed `pool_header_record_by_normalized_
+                // suffix`'s header-var MERGE (never rendered, never treated as a member's own
+                // ownership signal -- `resolve_pool_member_sole_magnitude`'s member lookup still
+                // goes through the DESCRIPTION-gated, class-`Some`-required sibling table
+                // unchanged), so an unowned header contributes vars but can never itself pass an
+                // ownership check anywhere in this file.
+                let class = data["class"].as_str().unwrap_or("");
                 let raw_desc = data["description"].as_str().unwrap_or("").to_string();
                 let bonus_vars = data["raw_tokens"]
                     .as_array()
                     .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
                     .unwrap_or_default();
-                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                // SD-32 T12 Epic 8 row 18 cycle 8: MERGED across every book carrying the SAME bare
+                // key, never first-book-wins. Confirmed live: `"Bloodline Tracker"` alone (the
+                // shared `BloodlineLVL`/`BloodlineCasterLVL`/`BloodlineProgressionLVL` var chain
+                // every one of the 53 real Sorcerer Bloodline groups' own per-bloodline header
+                // chains through) is real-ingested from 8 SEPARATE book files (`core_rulebook`,
+                // `advanced_class_guide`, `advanced_players_guide`, `advanced_race_guide`,
+                // `occult_adventures`, `ultimate_combat`, `ultimate_magic`, `monster_codex`), and
+                // 154 more bare `class_feature` keys carry this exact shape too (e.g. `"Verdant
+                // Bloodline"` alone in 4 books, `"Celestial Bloodline"` in 3) -- each book's own
+                // ingested copy carries a DIFFERENT subset of that one real ability's `.MOD`-
+                // appended rows (the same per-book `.MOD`-collision shape row 21 fixed at the
+                // per-FILE level; this is the same defect surviving at the per-KEY,
+                // cross-file level). The prior `or_insert_with` kept only whichever book sorted
+                // FIRST alphabetically (`"advanced_class_guide"` before `"core_rulebook"`) --
+                // silently discarding `core_rulebook`'s own COMPLETE 308-token `"Bloodline
+                // Tracker"` copy in favour of `advanced_class_guide`'s single leftover `DEFINE`.
+                // `.or_insert` per target name (never overwriting an already-bound target) means
+                // every book's own real rows contribute, and a genuine cross-book disagreement on
+                // the SAME target name keeps whichever book's row was seen first -- unchanged from
+                // this table's own pre-existing single-record collision policy (`parse_bonus_var_
+                // tokens_pre_gate_safe` already refuses an ambiguous multi-row target within one
+                // record; this only extends "one record" to "one key, merged across books").
+                let entry = out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
                     name: name.to_string(),
                     class: class.to_string(),
-                    raw_description: raw_desc,
-                    bonus_vars,
+                    raw_description: raw_desc.clone(),
+                    bonus_vars: BTreeMap::new(),
                 });
+                if entry.class.is_empty() && !class.is_empty() {
+                    entry.class = class.to_string();
+                }
+                if entry.raw_description.is_empty() && !raw_desc.is_empty() {
+                    entry.raw_description = raw_desc;
+                }
+                for (target, formula) in bonus_vars {
+                    entry.bonus_vars.entry(target).or_insert(formula);
+                }
+            }
+        }
+        out
+    })
+}
+
+/// Every corpus `data/corpus/*/class/*.json` CLASS record's own PRE-gate-safe `BONUS:VAR` chain,
+/// keyed by `class_id` (SD-32 T12 Epic 8 row 18 cycle 8). Real corpus fact, confirmed live:
+/// Cleric's own `DomainLVL` (`BONUS:VAR|DomainLVL|ClericLVL`, real PCGen source `cr_classes.lst`)
+/// binds on the CLASS record itself, `core_rulebook/class/cleric.json`, NOT on any `class_feature`
+/// record -- every one of the 67 real, never-hand-modelled Cleric Domain groups' own members needs
+/// this exact binding and none of them can ever supply it themselves (cycle 7's own receipt named
+/// this as a second, separate, larger gap than the Bloodline family's per-book `.MOD`-collision
+/// one). Row 21 restored `raw_tokens` onto every one of the 168 real class records (previously
+/// absent entirely) -- this table is the missing READ side, mirroring `class_feature_bonus_vars_
+/// any_record`'s own shape one dir level up. `class_id` is the record's plain display name
+/// (`"Cleric"`, confirmed live -- never a `"class:"`-prefixed id), so this table's own keys line up
+/// directly with every `owning_class`/`class` string this module already threads. One real class
+/// record per book-and-name pair observed so far (no cross-book duplication like the `class_
+/// feature` family's own "Tracker" shape), so first-insert-wins is safe here; a future duplicate
+/// would still merge safely via the same `.or_insert`-per-target policy `class_feature_bonus_vars_
+/// any_record` already uses, kept identical for consistency rather than re-derived per table.
+pub(crate) fn class_record_bonus_vars() -> &'static BTreeMap<String, BTreeMap<String, String>> {
+    static TABLE: OnceLock<BTreeMap<String, BTreeMap<String, String>>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let class_dir = book_entry.path().join("class");
+            if !class_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&class_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let Some(class_id) = data["class_id"].as_str() else { continue };
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                let entry = out.entry(class_id.to_string()).or_default();
+                for (target, formula) in bonus_vars {
+                    entry.entry(target).or_insert(formula);
+                }
             }
         }
         out
