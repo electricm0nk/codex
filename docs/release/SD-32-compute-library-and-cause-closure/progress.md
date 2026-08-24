@@ -8452,3 +8452,46 @@ build, all remain real, sized, unbuilt work.
 
 Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle4-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row20-cycle5 (2026-08-24) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+Fresh worktree started on a stale lineage (`1bb523773d`); recovered via `git reset --hard
+$PIN`, `BASE_OK` re-verified. `origin/tranche/12`'s tip already equalled `$PIN`, no rebase
+needed. Oracle slot was empty; bootstrapped, confirmed at the same pin (`7f818006e371`).
+
+**Item (b)/(c): companion base-stat table built, cycle 4's sizing corrected (`§17a`).** Cycle
+4 sized the remedy as "category-keyed, a handful of `RACESUBTYPE:` rows" but never checked a
+second same-category member against its own printed stats. Re-derived: 213 real
+`RACETYPE:Companion` corpus records total (only 59 carry any `RACESUBTYPE:` tag at all — 154
+are individually-named, individually-statted real species with no tag). Direct check on two
+`RACESUBTYPE:PlantCompanion` members (Gulper Plant, Hunting Cactus), verified via aonprd.com,
+backed against their own corpus `BONUS:STAT` deltas: they back out DIFFERENT base-ability-score
+vectors. **The shared-category-base hypothesis is refuted — this is genuinely per-species
+data.** Built `companion_base_stat_table.rs` (`pilot_compute`): a table-driven `ground_
+companion_stat_block` generalizing Wolf/Horse's own math (proven to reproduce their existing
+output byte-for-byte), populated with Wolf, Horse (re-derived) and Gulper Plant (new,
+externally verified). 210 of 213 species still correctly REFUSE (never fabricate) — named
+exactly, not rounded away, the same posture `class_feature_grant_consumer.rs`'s own
+anti-fabrication tests enforce elsewhere in this codebase.
+
+**Item (a): the character-creation-time `ClassId` picker, wired for 60 of 61 classes.**
+`character_hub.rs`'s own `class_id` field is already a free-form string, never an enum-gated
+UI dropdown — the real gap was `compute_class_chassis`'s own dispatch chain having no arm for
+cycle 4's generic BAB/save table. Built `generic_class_chassis.rs` (`pilot_compute`) as a
+crate-internal sibling of `class_catalog_generic.rs` (cross-crate direction forbids importing
+the apps/desktop module into the core crate), wired a new dispatch arm alongside `untabled_
+base_class_chassis`'s own. 60 of 61 resolve a real BAB/save chassis at character-creation
+time; Demoniac still refuses (`formula_interpreter.rs`'s bare-`classlevel()` gap has not
+landed as of this cycle's rebase base, row 18's live territory, unedited this cycle).
+
+Targeted test suites: `companion_base_stat_table` (6/0), `generic_class_chassis` (5/0),
+`animal_companion` (14/0, unchanged), `chassis_unsupported`/`prestige_class_entry_gate_wiring_
+tests`/`untabled_base_class_chassis_wiring_tests` (all green, unchanged) — no regression in
+any existing chassis-dispatch arm. Full `apps/desktop/src-tauri` suite re-run post-change; see
+this cycle's own commit message for the exact pass count.
+
+**Row 20 stays `in-progress`** (`decisions.md §10`). 210 of 213 companion species and
+Demoniac's one class remain real, sized, unbuilt/blocked work.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle5-receipt.md`.
+Commit: (this cycle's commit -- see push output).

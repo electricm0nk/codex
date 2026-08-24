@@ -204,6 +204,19 @@ pub mod bonus_stack_reader;
 /// own module doc). `pub`: both binaries are separate compilation units, so
 /// this crate's own internals are not the only caller.
 pub mod race_trait_formula_binding;
+/// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — the generic
+/// companion base-ability-score table, generalizing `ground_wolf_companion_stat_block`/
+/// `ground_horse_companion_stat_block` (below) into a table-driven function. `pub(crate)`,
+/// mirroring `class_feature_grant_consumer`'s own visibility: `apps/desktop/src-tauri` is a
+/// separate crate and does not need `ground_companion_stat_block` yet (no character-creation-
+/// time companion-species picker exists in this engine for any class), but this module's own
+/// crate-internal tests (`super::super::ground_wolf_companion_stat_block` etc.) need it visible
+/// one level up.
+pub(crate) mod companion_base_stat_table;
+/// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — see its own module doc
+/// comment. `pub(crate)`: `resolve` is called from `compute_class_chassis` below (same crate);
+/// no `apps/desktop/src-tauri` caller exists yet.
+mod generic_class_chassis;
 mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
@@ -26276,6 +26289,59 @@ fn compute_class_chassis(
             ground_psion_class_features(input, class_level.level, ability_modifiers, explanations);
         }
 
+        Some((base_attack_bonus, base_saves))
+    } else if let Some(row) = generic_class_chassis::resolve(&class_level.class_id, class_level.level) {
+        // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5: the
+        // character-creation-time dispatch arm for the 60 (of 61; Demoniac still refuses, see
+        // `generic_class_chassis`'s own module doc) conventional PC classes cycle 4 already
+        // re-derived a reference-catalog BAB/save TABLE for but never wired a chassis dispatch
+        // arm for. Same shape as the `untabled_base_class_chassis::resolve` arm above: real
+        // base attack bonus and all three base saves, computed from the class's own corpus
+        // `BONUS:COMBAT|BASEAB`/`BONUS:SAVE` formulas via `PcgenFormulaEvaluator`, not a
+        // hand-typed table.
+        let base_attack_bonus = row.base_attack_bonus;
+        let base_saves =
+            BaseSaves { fortitude: row.fort_save, reflex: row.ref_save, will: row.will_save };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_attack_bonus".to_owned(),
+            value: base_attack_bonus,
+            detail: format!(
+                "{} ({}) level {} base attack bonus from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {base_attack_bonus}",
+                row.display_name, class_level.class_id, class_level.level
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.fortitude".to_owned(),
+            value: base_saves.fortitude,
+            detail: format!(
+                "{} ({}) level {} base Fortitude save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.reflex".to_owned(),
+            value: base_saves.reflex,
+            detail: format!(
+                "{} ({}) level {} base Reflex save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.will".to_owned(),
+            value: base_saves.will,
+            detail: format!(
+                "{} ({}) level {} base Will save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.will
+            ),
+        });
         Some((base_attack_bonus, base_saves))
     } else if let Some(gate) =
         prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
