@@ -12737,6 +12737,7 @@ fn compute_apg_class_chassis(
     class_id_str: &str,
     level: u8,
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
@@ -12814,7 +12815,13 @@ fn compute_apg_class_chassis(
     // Inquisitor-, Oracle-, or Witch-containing multiclass mix never
     // reaches this function at all).
     if class_id == ApgClassId::Cavalier {
-        ground_cavalier_mount_and_defer_the_rest(input, level, explanations, diagnostics);
+        ground_cavalier_mount_and_defer_the_rest(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     } else if class_id == ApgClassId::Alchemist {
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
         let alchemist_intelligence_modifier =
@@ -12956,6 +12963,7 @@ fn compute_apg_class_chassis(
 fn ground_cavalier_named_features(
     input: &CharacterInput,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> bool {
@@ -13054,6 +13062,27 @@ fn ground_cavalier_named_features(
         ),
     });
 
+    // SD-32 T12 Epic 8 row 18 cycle 7: the same "select ONE named group, inherit every one of its
+    // real corpus members" generic pass cycles 5/6 wired for Sorcerer/Cleric/Bloodrager's own
+    // Bloodline/Domain pools -- Cavalier's "Order of the X" family is the SAME shape (see
+    // `real_pool_group_for_selection_slug`'s own doc, "THIRD real corpus naming/ownership
+    // shape"), purely additive alongside the hand-modelled Order of the Sword branch below (a
+    // DIFFERENT id prefix -- `class_feature.apg.cavalier.order.generic.*` vs
+    // `...order_of_the_sword.*` -- proven non-colliding by
+    // `cavalier_generic_order_pass_does_not_collide_with_the_hand_modelled_order_of_the_sword`).
+    push_generic_pool_group_selection_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        CAVALIER_ORDER_CHOICE_ID,
+        "Cavalier",
+        "Order",
+        "order:",
+        "class_feature.apg.cavalier.order.generic",
+        1,
+        explanations,
+    );
+
     let order_selected = input
         .chosen
         .selected_choices
@@ -13093,6 +13122,7 @@ fn ground_cavalier_named_features(
 fn ground_cavalier_mount_and_defer_the_rest(
     input: &CharacterInput,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -13103,8 +13133,13 @@ fn ground_cavalier_mount_and_defer_the_rest(
         explanations,
     );
     ground_horse_companion_link_vacuous("class_feature.cavalier.mount", "cavalier", explanations);
-    let order_of_the_sword_recorded =
-        ground_cavalier_named_features(input, level, explanations, diagnostics);
+    let order_of_the_sword_recorded = ground_cavalier_named_features(
+        input,
+        level,
+        ability_modifiers,
+        explanations,
+        diagnostics,
+    );
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cavalier.mount.advancement_absent".to_owned(),
         message: "Cavalier Mount advancement is grounded for every column that has a consumer \
@@ -26076,6 +26111,7 @@ fn compute_class_chassis(
             &class_level.class_id,
             class_level.level,
             input,
+            ability_modifiers,
             explanations,
             diagnostics,
         )
@@ -39054,16 +39090,34 @@ fn pool_header_record_by_normalized_suffix<'a>(
     table.get(pool_group).filter(|header| header.class == class)
 }
 
+/// `owning_class_override`: SD-32 T12 Epic 8 row 18 cycle 7. A real corpus quirk, confirmed live
+/// (`data/corpus/ultimate_wilderness/class_feature/order_of_the_green/favored_terrain.json`,
+/// key `"Order of the Green ~ Favored Terrain"`) -- some pool member records tag their own
+/// `data.class` field SELF-REFERENTIALLY with the pool GROUP's own name (`"Order of the Green"`)
+/// rather than the real owning PC class (`"Cavalier"`), even though the record's own formula text
+/// references the real class's auto-var directly (`BONUS:VAR|CavalierFavoredTerrainLVL|
+/// CavalierLVL`). Left at `record.class` (the original, unconditional behaviour, when this is
+/// `None`), `class_level_variable_name` would derive the WRONG level variable
+/// (`"OrderoftheGreenLVL"`, never bound) and the header lookup would filter on the wrong class
+/// too -- silently refusing a record whose own chain is otherwise complete. A caller that has
+/// ALREADY independently verified the real owning class (`push_generic_pool_group_selection_
+/// magnitude`'s own `class` parameter, confirmed by `real_pool_group_for_selection_slug`'s
+/// majority-tally-or-header-ownership-proof) may pass it here to override the member's own
+/// possibly-unreliable self-tag. `None` (the flat-pool caller,
+/// `push_generic_pool_choice_magnitude`, which has never needed this) preserves the exact
+/// original behaviour, unchanged.
 pub(crate) fn resolve_pool_member_sole_magnitude(
     key: &str,
     pool_group: &str,
     level: u8,
     ability_modifiers: &AbilityModifiers,
+    owning_class_override: Option<&str>,
 ) -> Option<(String, i64)> {
     let record = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe().get(key)?;
     if record.bonus_vars.is_empty() {
         return None;
     }
+    let owning_class = owning_class_override.unwrap_or(&record.class);
     let is_referenced_elsewhere = |name: &str| {
         record
             .bonus_vars
@@ -39076,12 +39130,12 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
         return None; // more than one terminal target -- refuse, do not guess
     }
     let mut combined_vars = record.bonus_vars.clone();
-    if let Some(header) = pool_header_record_by_normalized_suffix(&record.class, pool_group) {
+    if let Some(header) = pool_header_record_by_normalized_suffix(owning_class, pool_group) {
         for (name, formula) in &header.bonus_vars {
             combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
         }
     }
-    let class_level_var = class_feature_grant_consumer::class_level_variable_name(&record.class);
+    let class_level_var = class_feature_grant_consumer::class_level_variable_name(owning_class);
     let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
         &combined_vars,
         &class_level_var,
@@ -39182,7 +39236,7 @@ fn push_generic_pool_choice_magnitude(
             continue;
         };
         let Some((target, value)) =
-            resolve_pool_member_sole_magnitude(&key, pool_group, level, ability_modifiers)
+            resolve_pool_member_sole_magnitude(&key, pool_group, level, ability_modifiers, None)
         else {
             continue;
         };
@@ -39258,7 +39312,7 @@ fn push_generic_pool_group_selection_magnitude(
         {
             let Some(member_name) = key.strip_prefix(&prefix) else { continue };
             let Some((target, value)) =
-                resolve_pool_member_sole_magnitude(key, &group, level, ability_modifiers)
+                resolve_pool_member_sole_magnitude(key, &group, level, ability_modifiers, Some(class))
             else {
                 continue;
             };
@@ -39329,10 +39383,38 @@ fn real_pool_group_for_selection_slug(
     let normalized_registered = registered_name.trim_end_matches('s');
     owner_tally.into_iter().find_map(|(group, owners)| {
         let majority_class = owners.iter().max_by_key(|(_, count)| **count).map(|(c, _)| c.clone())?;
-        if majority_class != class {
+        // SD-32 T12 Epic 8 row 18 cycle 7: a THIRD real corpus ownership shape, confirmed by
+        // direct inspection of Cavalier's own "Order of the X" family --
+        // `data/corpus/advanced_class_guide/class_feature/order_of_the_blue_rose/*.json` and
+        // three siblings (Green, Seal, Tome) tag every one of their own members' `class` field
+        // with the ORDER'S OWN NAME (e.g. `"Order of the Blue Rose"`), never `"Cavalier"` --
+        // unlike Beast/Guard/Eastern Star/Shroud, whose members are correctly tagged `"Cavalier"`
+        // directly. Never trusted from the self-referential tag alone (that would let ANY
+        // same-shaped group from an unrelated class or archetype through): only admitted when a
+        // real, independently-verified `"<class> <registered_name> ~ <group>"` CHOOSER header
+        // record also exists and is itself tagged `class == class` (confirmed live --
+        // `"Cavalier Order ~ Order of the Blue Rose"`, `class: "Cavalier"` -- the same header key
+        // shape `push_generic_pool_group_selection_magnitude`'s own doc already cites for the
+        // Domain/Bloodline/Mystery family, reused here as ownership PROOF, not merely lookup).
+        // `"Order of the Sword"` (already hand-modelled, `ORDER_OF_THE_SWORD_SELECTION`) has no
+        // such header record and is correctly NOT picked up by this fallback -- no collision.
+        let owned_by_class = majority_class == class
+            || table
+                .get(&format!("{class} {registered_name} ~ {group}"))
+                .is_some_and(|header| header.class == class);
+        if !owned_by_class {
             return None;
         }
         let adjective = if let Some(adjective) = group.strip_suffix(&format!(" {registered_name}")) {
+            adjective
+        } else if let Some(adjective) = strip_prefix_case_insensitive(&group, &format!("{registered_name} of the "))
+        {
+            // SD-32 T12 Epic 8 row 18 cycle 7: the SAME third shape's naming convention --
+            // Cavalier's real corpus groups read `"<RegisteredName> of the <Adjective>"`
+            // (`"Order of the Beast"`, `"Order Of The Eastern Star"` -- case varies book to book,
+            // hence case-insensitive), the mirror image of the `"<Adjective> <RegisteredName>"`
+            // shape the first branch above already handles. Tried only after the exact-suffix
+            // branch so it changes nothing for any pool already served by that shape.
             adjective
         } else {
             let (last_word_start, last_word) = group
@@ -39350,6 +39432,16 @@ fn real_pool_group_for_selection_slug(
         let adjective = adjective.strip_suffix(&format!(" {class}")).unwrap_or(adjective);
         (class_feature_id_slug(adjective) == slug).then(|| group.clone())
     })
+}
+
+/// Case-insensitive `str::strip_prefix`, byte-length-based (ASCII only -- every real corpus
+/// group name and `registered_name` this codebase passes here is plain ASCII). `None` when
+/// `text` is shorter than `prefix` or the leading bytes do not match case-insensitively.
+fn strip_prefix_case_insensitive<'a>(text: &'a str, prefix: &str) -> Option<&'a str> {
+    if text.len() < prefix.len() {
+        return None;
+    }
+    text[..prefix.len()].eq_ignore_ascii_case(prefix).then(|| &text[prefix.len()..])
 }
 
 fn explain_rogue_level1_chassis(
@@ -73663,6 +73755,7 @@ mod generic_pool_group_selection_wiring_tests {
     use super::{
         build_pilot_headless_receipt, BLOODRAGER_BLOODLINE_CHOICE_ID, BLOODRAGER_CLASS_ID,
         CharacterClassLevel, CharacterInput,
+        CAVALIER_CLASS_ID, CAVALIER_ORDER_CHOICE_ID,
         CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, ORACLE_CLASS_ID, ORACLE_MYSTERY_CHOICE_ID,
         SHAMAN_CLASS_ID, SHAMAN_SPIRIT_CHOICE_ID, SORCERER_BLOODLINE_CHOICE_ID, SORCERER_CLASS_ID,
         WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID,
@@ -73884,6 +73977,71 @@ mod generic_pool_group_selection_wiring_tests {
         assert!(
             generic_count > 0,
             "the generic pass must independently ground Arcane's own resolvable corpus members too"
+        );
+    }
+
+    /// Green is a real Cavalier order (`data/corpus/*/class_feature/order_of_the_green/*.json`)
+    /// this file has never hand-modelled by name -- only Order of the Sword is
+    /// (`ground_cavalier_named_features`'s own `ORDER_OF_THE_SWORD_SELECTION` branch). SD-32 T12
+    /// Epic 8 row 18 cycle 7's THIRD real corpus naming/ownership shape
+    /// (`real_pool_group_for_selection_slug`'s own doc) is what makes "Order of the Green" findable
+    /// at all -- its own group name does not end in `" Order"`, so neither of cycles 5/6's two
+    /// existing branches would ever match it; its own corpus `class` field is also
+    /// self-referential (`"Order of the Green"`, never `"Cavalier"`), so it is only admitted
+    /// because a real, independently-verified `"Cavalier Order ~ Order of the Green"` CHOOSER
+    /// header record also exists and is itself tagged `class: "Cavalier"` (the ownership-proof
+    /// fallback this cycle added). Its "Favored Terrain" member (`BONUS:VAR|FavoredTerrainPool|
+    /// (CavalierFavoredTerrainLVL+4)/6` chained to the SAME record's own
+    /// `BONUS:VAR|CavalierFavoredTerrainLVL|CavalierLVL`) is a genuine two-hop, self-contained
+    /// chain needing no missing header var, resolving without any hand-picked `ground_cavalier_*`
+    /// function. A direct corpus survey this cycle ran across all 8 real, Cavalier-owned Order
+    /// groups (Beast, Guard, Eastern Star, Shroud, Blue Rose, Green, Seal, Tome) found exactly ONE
+    /// -- Green -- carries a member resolvable this way; Guard and Tome each carry one real
+    /// numeric member too (`BONUS:SKILL|...`, Knowledge (nobility) / Linguistics), but
+    /// `parse_bonus_var_tokens_pre_gate_safe` only ever reads `BONUS:VAR` tokens (this module's
+    /// own documented scope), so a `BONUS:SKILL`-only member correctly refuses, same shape as
+    /// every other pool's own `classlevel(...)`/missing-header refusals; the other 5 orders are
+    /// pure DESC-only display members (`§7` DONE already, not a resolver gap, the same correction
+    /// cycle 6 made for Warpriest Blessing).
+    #[test]
+    fn cavalier_generic_order_pass_grounds_a_never_hand_modelled_order() {
+        let input = class_input(CAVALIER_CLASS_ID, 5, CAVALIER_ORDER_CHOICE_ID, "order:green");
+        let count = generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic");
+        assert!(count > 0, "Order of the Green must ground at least one real corpus member generically");
+    }
+
+    /// Safety: the generic Cavalier Order pass never fires for Sword, the ONE order this file
+    /// already hand-models via the `ORDER_OF_THE_SWORD_SELECTION` branch in
+    /// `ground_cavalier_named_features` -- proving the two mechanisms cannot double-count even
+    /// though "Order of the Sword" has no `"Cavalier Order ~ Order of the Sword"` CHOOSER header at
+    /// all (its own corpus members are tagged `class: "Order of the Sword"`, matching neither the
+    /// majority-class check nor the header-ownership-proof fallback) -- the generic pass correctly,
+    /// safely refuses it outright, never colliding with the hand-modelled branch.
+    #[test]
+    fn cavalier_generic_order_pass_does_not_collide_with_the_hand_modelled_order_of_the_sword() {
+        let input = class_input(CAVALIER_CLASS_ID, 5, CAVALIER_ORDER_CHOICE_ID, "order:sword");
+        let generic_count =
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic");
+        let hand_modelled_count =
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order_of_the_sword");
+        assert!(hand_modelled_count > 0, "the pre-existing hand-modelled Order of the Sword branch must still fire");
+        assert_eq!(
+            generic_count, 0,
+            "Order of the Sword has no Cavalier-owned CHOOSER header in this corpus, so the \
+             generic pass must safely refuse it (not fabricate a match), never colliding with the \
+             hand-modelled branch"
+        );
+    }
+
+    /// Safety: an invented selection resolves to nothing on the Cavalier Order pool either.
+    #[test]
+    fn invented_cavalier_order_selection_grounds_nothing() {
+        let input =
+            class_input(CAVALIER_CLASS_ID, 5, CAVALIER_ORDER_CHOICE_ID, "order:not_a_real_order");
+        assert_eq!(
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic"),
+            0,
+            "an invented Cavalier Order selection must never ground anything"
         );
     }
 }
