@@ -8933,3 +8933,63 @@ been individually re-verified against that same exhaustive standard this cycle).
 
 Full receipt: `artifacts/gate-3-closure-invariant/t12-class-feature-pool-population_cycle-20_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Row 18 (`epic-8-pool-shaped-class-features`), cycle 21 -- re-verified against all six shapes; a seventh shape found
+
+Re-verified cycle 19's own 11 remaining "genuine `§27b`" Cleric Domains against the CURRENT
+`pool_header_record_by_normalized_suffix` (all six known shapes, post-cycle-20) plus an independent
+corpus grep -- all 11 confirmed still genuinely headerless. Traced Warpriest Blessing's full
+37-group population and Cavalier Order's full 8-group population exhaustively against the real
+corpus tables: every unresolved member of both, corpus-wide, carries neither a `BONUS:VAR` token
+nor a `%N` desc-formula argument -- both populations are now `§27b`-EXHAUSTIVELY PROVEN zero-content
+hard gaps (proven this cycle, not merely re-asserted from earlier cycles' own findings).
+
+Found a SEVENTH real corpus header shape tracing Sorcerer Bloodline's 18 remaining refusals: all 18
+are Wildblooded bloodline variants (`class_feature/wildblooded/*.json`, real PF1e Ultimate Magic
+mechanic), and every one's own `PREABILITY` token corpus-declares a real, different, PARENT
+bloodline as a level-1 prerequisite -- so the parent's own header vars are, by corpus-declared
+construction, always genuinely bound (NOT cycle 17/19's own proven unrelated-cross-bloodline
+refusal shape). New `wildblooded_variant_parent_pool_group` (`class_feature_grant_consumer.rs`)
+plus one new merge clause in `pool_header_record_by_normalized_suffix` closes 11 of the 18:
+**Sorcerer Bloodline 34/52 -> 45/52.** The remaining 7 are honestly re-classified: 2
+(`Groveborn`/`Primal`) are proven `§27b` zero-content gaps; 5 (`Anarchic`/`Karmic`/`Sanguine`/
+`Seaborn`/`Warped`) have their parent header's target now present but the chain still refuses for a
+further, un-traced reason -- named as real remaining work, NOT forced closed, NOT claimed
+`§27b`-proven.
+
+Cleric Domain's ~20/72 remainder is now fully itemized and proven: 11 headerless (re-confirmed) + 4
+cross-class-only-bound (cycle 20's own proof, unchanged) + 5 newly-identified zero-content gaps
+(Execution/Fate/Politics/Secrets/Seduction Domain, not previously named by any prior cycle).
+
+### Re-derived figures
+
+```
+cargo test --locked --lib -- rules_core::pilot_compute::generic_pool_group_selection_wiring_tests::pool_group_closure_census_across_all_six_pools_both_resolvers --nocapture
+```
+Sorcerer Bloodline 34/52->**45/52**, Bloodrager Bloodline 11/11 unchanged, Cleric Domain 47/72
+bonus_vars / 52/72 combined unchanged, Shaman Spirit 11/13 unchanged, Warpriest Blessing 0/37
+unchanged, Cavalier Order 1/8 unchanged.
+
+### Verification
+
+`generic_pool_group_selection_wiring_tests` 33/33 green (net); `pilot_compute:: pool` sweep
+1040/1040 green, 0 failed; `derived_evaluator_fixture_check::` 121/121 unchanged; `hunter
+oracle_dispatch_widening_safety_tests cavalier` 110/110 unchanged (Oracle Mystery stays withdrawn).
+Mutation-proved: the new merge clause disabled reproduces the pre-fix `34/52` exactly on both
+census tests, reverted GREEN.
+
+### PI / territory
+
+`pi_scrub.normalized_term_hits()` against `git diff --unified=0` for `mod.rs`,
+`class_feature_grant_consumer.rs`, this receipt, and the `kanban.md` row-18 diff: zero hits.
+`kanban.md`: 22 rows, 22 unique ids, row 18's own diff is exactly one line, verified with a
+backtick-aware row-boundary check before and after. Rows 11 and 15 left untouched.
+
+**Row 18 stays `in-progress`** (`decisions.md §10`). Real, substantial, verified movement this
+cycle -- Sorcerer Bloodline +11 groups via a genuinely new, generic mechanism; two full populations
+(Warpriest 29, Cavalier 6) moved from "named" to "exhaustively proven"; Cleric's ~20 fully itemized
+-- but 5 of Sorcerer's remaining 7 groups are real, named, un-traced work this cycle did not force
+closed.
+
+Full receipt: `artifacts/gate-3-closure-invariant/t12-class-feature-pool-population_cycle-21_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).

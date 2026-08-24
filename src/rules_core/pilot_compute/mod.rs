@@ -39667,6 +39667,24 @@ fn pool_header_record_by_normalized_suffix(
             }
         }
     }
+    // SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): a SEVENTH real corpus header shape -- not a new
+    // FILE location like shapes 5/6, but a corpus-DECLARED relationship: a Wildblooded bloodline
+    // variant's own PREABILITY token names a real, different, parent pool group its own header
+    // vars are always genuinely bound through (see `wildblooded_variant_parent_pool_group`'s own
+    // doc for the full derivation and why this is NOT cycle 17/19's unrelated-cross-bloodline
+    // refusal shape). Recurses exactly once (a variant's own parent is never itself a variant,
+    // confirmed live across all 20 real Wildblooded records) so no infinite loop is possible.
+    if registered_name == Some("Bloodline") {
+        if let Some(parent) =
+            class_feature_grant_consumer::wildblooded_variant_parent_pool_group().get(pool_group)
+        {
+            let parent_vars = pool_header_record_by_normalized_suffix(class, parent, registered_name);
+            class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+                &mut merged,
+                parent_vars,
+            );
+        }
+    }
     merged
 }
 
@@ -75309,14 +75327,31 @@ mod generic_pool_group_selection_wiring_tests {
         // Bloodline` 5/12 -> 11/11 (every remaining group now closes), `Cleric Domain` 44/73 ->
         // 47/72, `Shaman Spirit` 11/14 -> 11/13, `Warpriest Blessing` UNCHANGED 0/37,
         // `Cavalier Order` 1/9 -> 1/8.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): `Sorcerer Bloodline` 34/52 -> 45/52 (+11) --
+        // a SEVENTH real corpus header shape, `wildblooded_variant_parent_pool_group`'s own doc:
+        // a Wildblooded bloodline variant's own `PREABILITY` token corpus-declares its real parent
+        // bloodline as a level-1 prerequisite, so that parent's own header vars are, by
+        // corpus-declared construction, always genuinely bound -- NOT cycle 17/19's unrelated
+        // cross-bloodline refusal shape (a variant's own declared parent, not a stranger
+        // bloodline). Falsified cycle 19's own implicit assumption that these 18 groups were part
+        // of the SAME cross-bloodline-gap population as the real cross-bloodline refusals -- 11 of
+        // the 18 close via this fix; 7 remain, honestly re-classified (see receipt): `Groveborn`/
+        // `Primal` Bloodline are genuine `§27b` zero-content gaps (their own Wildblooded record
+        // carries neither a `BONUS:VAR` nor a `%N` desc-formula argument anywhere -- proven the
+        // same way Warpriest Blessing's 29 and Cavalier Order's 6 are, not a header gap at all);
+        // `Anarchic`/`Karmic`/`Sanguine`/`Seaborn`/`Warped` Bloodline's own parent header now
+        // supplies the needed target NAME but the full chain still refuses for a DIFFERENT,
+        // un-traced reason this cycle did not chase to ground (real remaining work, not proven
+        // impossible, not forced). Every other pool UNCHANGED, re-verified.
         assert!(
-            report.contains("Sorcerer Bloodline: 34/52")
+            report.contains("Sorcerer Bloodline: 45/52")
                 && report.contains("Bloodrager Bloodline: 11/11")
                 && report.contains("Cleric Domain: 47/72")
                 && report.contains("Shaman Spirit: 11/13")
                 && report.contains("Warpriest Blessing: 0/37")
                 && report.contains("Cavalier Order: 1/8"),
-            "cycle 20's own six re-derived baselines must still reproduce exactly:\n{report}"
+            "cycle 21's own re-derived baselines must still reproduce exactly:\n{report}"
         );
     }
 
@@ -75409,7 +75444,7 @@ mod generic_pool_group_selection_wiring_tests {
         // exactly -- proof this pass did not silently change or duplicate the first resolver's
         // own measure, only add a second one alongside it.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=34/52")
+            report.contains("Sorcerer Bloodline: bonus_vars=45/52")
                 && report.contains("Bloodrager Bloodline: bonus_vars=11/11")
                 && report.contains("Cleric Domain: bonus_vars=47/72")
                 && report.contains("Shaman Spirit: bonus_vars=11/13")
@@ -75493,8 +75528,12 @@ mod generic_pool_group_selection_wiring_tests {
         // standing +1 desc-only closure (Wood Spirit ~ Tree Form) stacks unchanged on the new
         // 11/13: 12/13. Sorcerer/Bloodrager/Warpriest/Cavalier combined move by their own
         // bonus_vars deltas alone, no further desc-only closure found for them this cycle.
+        // SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): `Sorcerer Bloodline` bonus_vars 34/52 ->
+        // 45/52 via the Wildblooded-parent-header seventh shape (see the OTHER census test's own
+        // comment for the full derivation); `combined` moves by the same delta, no further
+        // desc-only closure found. Every other pool UNCHANGED.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=34/52, combined(bonus_vars OR desc_formula)=34/52")
+            report.contains("Sorcerer Bloodline: bonus_vars=45/52, combined(bonus_vars OR desc_formula)=45/52")
                 && report.contains("Bloodrager Bloodline: bonus_vars=11/11, combined(bonus_vars OR desc_formula)=11/11")
                 && report.contains("Cleric Domain: bonus_vars=47/72, combined(bonus_vars OR desc_formula)=52/72")
                 && report.contains("Shaman Spirit: bonus_vars=11/13, combined(bonus_vars OR desc_formula)=12/13")

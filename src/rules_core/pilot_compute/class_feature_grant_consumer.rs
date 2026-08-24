@@ -1076,6 +1076,71 @@ pub(crate) fn class_feature_bonus_vars_any_record() -> &'static BTreeMap<String,
     })
 }
 
+/// SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): every `class_feature/wildblooded/*.json` record's
+/// own declared PARENT bloodline pool-group name, keyed by the VARIANT's own pool-group name
+/// (`"Bedrock Bloodline"` -> `"Deep Earth Bloodline"`).
+///
+/// Real corpus fact, confirmed live (`data/corpus/ultimate_magic/class_feature/wildblooded/
+/// bedrock.json`): a "Wildblooded" bloodline variant (PF1e RAW -- Ultimate Magic p.68, a Sorcerer
+/// swaps their bloodline's normal 1st-level power and bloodline arcana for a themed alternate)
+/// is corpus-KEYED as if it were its OWN pool group (`"Bedrock Bloodline ~ Bloodline Arcana"`,
+/// same `"<PoolGroup> ~ <Member>"` shape as every real bloodline), which is why
+/// `real_groups_owned_by` correctly counts it as a real, distinct, selectable group -- but its
+/// own `PREABILITY` token (`"1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"`) proves
+/// selecting it REQUIRES the character to already hold a real, different, named bloodline (`"Deep
+/// Earth Bloodline"`) as a level-1 prerequisite -- so that parent's own header vars
+/// (`Sorcerer_DeepEarth_BloodlinePowerNLVL`, ...) are, by corpus-declared construction, always
+/// genuinely bound whenever a Wildblooded variant's own member records reference them (cycle
+/// 17/19's own oracle-proven "cross-bloodline" refusal shape does NOT apply here -- that shape is
+/// a genuinely UNRELATED bloodline with no prerequisite link; this is a variant's own declared
+/// PARENT). All 20 real Wildblooded records checked (18 previously refused this way, `Empyreal`/
+/// `Sage` already resolving via another path): every one names its parent via this exact
+/// `PREABILITY:...,Sorcerer Bloodline ~ <Parent>` shape, none any other.
+///
+/// Parsing is deliberately narrow and corpus-literal: the LAST comma-separated segment of the
+/// FIRST real `PREABILITY` token, split on `" ~ "`, its own last segment -- never a guess, never a
+/// transform of the variant's own name (proven live against all 20 files above).
+pub(crate) fn wildblooded_variant_parent_pool_group() -> &'static BTreeMap<String, String> {
+    static TABLE: OnceLock<BTreeMap<String, String>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let wb_dir = book_entry.path().join("class_feature").join("wildblooded");
+            if !wb_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&wb_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let Some(name) = data["name"].as_str() else { continue };
+                let Some(tokens) = data["raw_tokens"].as_array() else { continue };
+                let Some(preability) = tokens
+                    .iter()
+                    .find(|t| t["key"].as_str() == Some("PREABILITY"))
+                    .and_then(|t| t["value"].as_str())
+                else {
+                    continue;
+                };
+                let Some(last_segment) = preability.rsplit(',').next() else { continue };
+                let Some(parent) = last_segment.rsplit(" ~ ").next() else { continue };
+                if parent == last_segment {
+                    // no " ~ " separator -- not the expected shape, skip rather than guess.
+                    continue;
+                }
+                out.entry(format!("{name} Bloodline")).or_insert_with(|| format!("{parent} Bloodline"));
+            }
+        }
+        out
+    })
+}
+
 /// Every corpus `data/corpus/*/class/*.json` CLASS record's own PRE-gate-safe `BONUS:VAR` chain,
 /// keyed by `class_id` (SD-32 T12 Epic 8 row 18 cycle 8). Real corpus fact, confirmed live:
 /// Cleric's own `DomainLVL` (`BONUS:VAR|DomainLVL|ClericLVL`, real PCGen source `cr_classes.lst`)
