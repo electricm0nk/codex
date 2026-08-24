@@ -110,5 +110,86 @@ class CloseCorpusTest(unittest.TestCase):
             self.assertEqual(touched, [])
 
 
+def _write_class_feature(root: str, book: str, subdir: str, name: str, key: str, provisional: bool) -> str:
+    cf_dir = os.path.join(root, book, "class_feature", subdir)
+    os.makedirs(cf_dir, exist_ok=True)
+    path = os.path.join(cf_dir, f"{name}.json")
+    data = {"key": key}
+    if provisional:
+        data["shape_provisional_default"] = True
+        data["shape_provisional_reason"] = "some reason"
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump({"data": data}, handle)
+    return path
+
+
+class CloseClassFeatureCorpusTest(unittest.TestCase):
+    def test_clears_the_marker_on_a_named_and_resolved_record(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = _write_class_feature(
+                root, "occult_adventures", "psychic", "phrenic_pool", "Psychic ~ Phrenic Pool", True
+            )
+            touched = CRP.close_class_feature_corpus(root)
+            self.assertEqual(len(touched), 1)
+            self.assertEqual(touched[0]["key"], "Psychic ~ Phrenic Pool")
+            self.assertTrue(touched[0]["was_provisional"])
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            self.assertNotIn("shape_provisional_default", record["data"])
+            self.assertNotIn("shape_provisional_reason", record["data"])
+
+    def test_a_record_not_named_by_the_resolution_table_is_untouched(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = _write_class_feature(
+                root, "occult_adventures", "sorcerer", "some_other_feature", "Sorcerer ~ Some Other Feature", True
+            )
+            touched = CRP.close_class_feature_corpus(root)
+            self.assertEqual(touched, [])
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            self.assertTrue(record["data"]["shape_provisional_default"])
+
+    def test_a_named_record_not_currently_provisional_is_untouched(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = _write_class_feature(
+                root, "occult_adventures", "psychic", "phrenic_pool", "Psychic ~ Phrenic Pool", False
+            )
+            touched = CRP.close_class_feature_corpus(root)
+            self.assertEqual(touched, [])
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            self.assertNotIn("shape_provisional_default", record["data"])
+
+    def test_idempotent_second_run_touches_nothing(self):
+        with tempfile.TemporaryDirectory() as root:
+            _write_class_feature(root, "occult_adventures", "psychic", "phrenic_pool", "Psychic ~ Phrenic Pool", True)
+            first = CRP.close_class_feature_corpus(root)
+            self.assertEqual(len(first), 1)
+            second = CRP.close_class_feature_corpus(root)
+            self.assertEqual(second, [])
+
+    def test_dry_run_reports_but_does_not_write(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = _write_class_feature(
+                root, "occult_adventures", "psychic", "phrenic_pool", "Psychic ~ Phrenic Pool", True
+            )
+            touched = CRP.close_class_feature_corpus(root, dry_run=True)
+            self.assertEqual(len(touched), 1)
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            self.assertTrue(record["data"]["shape_provisional_default"])
+
+    def test_monster_ability_kinds_are_never_scanned_by_the_class_feature_closer(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = _write(
+                root, "bestiary_2", "aurumvorax_rake", "Aurumvorax ~ Rake", "SpecialQuality", True
+            )
+            touched = CRP.close_class_feature_corpus(root)
+            self.assertEqual(touched, [])
+            with open(path, encoding="utf-8") as handle:
+                record = json.load(handle)
+            self.assertTrue(record["data"]["shape_provisional_default"])
+
+
 if __name__ == "__main__":
     unittest.main()

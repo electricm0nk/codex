@@ -7830,3 +7830,46 @@ and this cycle's own live `generator_name_key_screening_static_audit` run (4/4).
 No card status changed this cycle. Full receipt:
 `artifacts/gate-3-closure-invariant/closure-readiness-audit_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+
+## Cycle: row17-psychic-discipline-input (2026-08-24, t9-onboarding)
+
+**Row 17 residual closure.** Re-derived (`§17a`): `python3 scripts/row17_census.py` reconfirmed
+`ROW 17 HONEST SIZE` 1, the same residual unit named by the prior cycle
+(`occult_adventures:class_feature:Psychic ~ Phrenic Pool`). Added a real
+`chosen_psychic_discipline`-shaped input (`choice:psychic_discipline`, 9 selection ids) threaded
+into `ground_psychic_class_features` via a new `psychic_discipline_pool_ability` helper
+(`src/rules_core/pilot_compute/mod.rs`), derived from `oa_abilities_class.lst:1188`-1196's own
+`BONUS:VAR|PhrenicPoolAbility|<CHA|WIS>` tokens (fetched live via `scripts/fetch-pcgen-oracle.sh`,
+not recalled): Abomination/Dream/Pain/Rapport = CHA (4), Faith/Lore/Psychedelia/Self-Perfection/
+Tranquility = WIS (5). With no chosen discipline (or an unrecognized one), Phrenic Pool correctly
+grounds nothing rather than defaulting — the exact provisional-default shape `§27` exists to
+eliminate, not reintroduce.
+
+Proven per discipline (all 9), plus no-selection and unrecognized-selection cases, through the real
+`compute_pilot_base_chassis` -> `compute_class_chassis` dispatch (not unit-call-only). RED->GREEN
+mutation proof run live at the dispatch altitude: forced the ability resolver to always return
+Charisma unconditionally; both no-discipline-shaped tests failed for the intended reason; reverted;
+re-ran the full targeted suite green (`cargo test --lib rules_core::pilot_compute::` 901/901).
+
+Widened `scripts/close_row17_provisional_defaults.py` with a generic `close_class_feature_corpus`/
+`_CLASS_FEATURE_PROVISIONAL_RESOLUTIONS` counterpart to the pre-existing `monster_ability`-only
+path (6 new TDD tests, all green; the pre-existing 6, including the record that explicitly asserted
+`class_feature` kinds are never scanned by the OLD function, are unchanged and still pass — the new
+function is additive). Ran it against the live corpus (`--dry-run` first, then for real): cleared
+the marker on `occult_adventures/class_feature/psychic/phrenic_pool.json` (only that record
+changed, confirmed by `git status --porcelain` before/after and `git diff`).
+
+Re-derived after work: `python3 scripts/row17_census.py --check` — `ROW 17 HONEST SIZE` **0**,
+exit 0. Generalization check (`§17`): the corpus-wide `§27 provisional default` count is 0 after
+this cycle — no other unit currently carries the marker; Psychic ~ Phrenic Pool was the only unit
+of this shape, and the mechanism added generalizes to any future one without a second copy.
+
+Kanban row 17: `in-progress` -> `complete` (Cycle 1 -> 2). Rows 11 and 15 left untouched
+(`in-progress`), matching dispatch instruction. `pi_scrub.normalized_term_hits` returned `[]` on
+the full diff (code, scripts, tests, kanban row, corpus record diff) both before and after — no PI
+term written anywhere.
+
+Full receipt:
+`artifacts/gate-1-shape-closure/row17-psychic-discipline-input_cycle-2_cycle_receipt.md`.
+Commit: (this cycle's commit -- see push output).

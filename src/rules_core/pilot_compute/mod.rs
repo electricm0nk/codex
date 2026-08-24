@@ -26118,7 +26118,7 @@ fn compute_class_chassis(
         } else if class_level.class_id == "class:occultist" {
             ground_occultist_class_features(class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:psychic" {
-            ground_psychic_class_features(class_level.level, ability_modifiers, explanations);
+            ground_psychic_class_features(input, class_level.level, ability_modifiers, explanations);
         } else if class_level.class_id == "class:spiritualist" {
             ground_spiritualist_class_features(class_level.level, explanations);
         } else if class_level.class_id == "class:magus" {
@@ -28277,19 +28277,65 @@ fn ground_occultist_class_features(
     }
 }
 
+// SD-32 row 17 (§27/§27a/§27b) residual closure: Psychic Discipline choice
+// seam. `oa_abilities_class.lst:1188`-1196 (block "Psychic Disciplines")
+// declares nine `KEY:Psychic Discipline ~ <Name>` records, each with its own
+// `BONUS:VAR|PhrenicPoolAbility|<CHA|WIS>` token -- the source itself, not
+// domain recall, fixes the split: Abomination/Dream/Pain/Rapport = CHA (4),
+// Faith/Lore/Psychedelia/Self-Perfection/Tranquility = WIS (5). Recognition
+// only, same idiom as `SORCERER_BLOODLINE_CHOICE_ID`: no ability score is
+// ever fabricated for a choice the character input does not make.
+const PSYCHIC_DISCIPLINE_CHOICE_ID: &str = "choice:psychic_discipline";
+const PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS: [&str; 4] = [
+    "discipline:abomination",
+    "discipline:dream",
+    "discipline:pain",
+    "discipline:rapport",
+];
+const PSYCHIC_DISCIPLINE_WIS_SELECTION_IDS: [&str; 5] = [
+    "discipline:faith",
+    "discipline:lore",
+    "discipline:psychedelia",
+    "discipline:self_perfection",
+    "discipline:tranquility",
+];
+
+/// Resolves `oa_abilities_class.lst`'s `PhrenicPoolAbility` term
+/// (`Psychic ~ Phrenic Pool`'s own `BONUS:VAR|PhrenicPool|(PsychicLVL/2)+
+/// PhrenicPoolAbility`) to the real modifier and display name for whichever
+/// Psychic Discipline the character actually chose, via
+/// `PSYCHIC_DISCIPLINE_CHOICE_ID`. Returns `None` for no selection or an
+/// unrecognized one -- the caller must not guess an ability score for an
+/// unmade choice (`decisions.md §1a`: a relabelled shape is not a closed
+/// shape, and neither is a fabricated one).
+fn psychic_discipline_pool_ability(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(i16, &'static str)> {
+    let selection = choice_selection(input, PSYCHIC_DISCIPLINE_CHOICE_ID)?;
+    if PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS.contains(&selection) {
+        Some((ability_modifiers.charisma, "Charisma"))
+    } else if PSYCHIC_DISCIPLINE_WIS_SELECTION_IDS.contains(&selection) {
+        Some((ability_modifiers.wisdom, "Wisdom"))
+    } else {
+        None
+    }
+}
+
 /// Grounds Psychic's four magnitude-bearing features
 /// (`rules_tables::occult_adventures::psychic_features`) — SD-32 card 11
 /// (T12), cycle 4, the fifth of six `occult_adventures` classes sharing
-/// `oa_abilities_class.lst`. `Phrenic Pool`'s ability term is discipline-
-/// dependent (see that function's own doc comment); this dispatch supplies
-/// Charisma, the modifier four of the corpus's nine disciplines use.
+/// `oa_abilities_class.lst`; row 17 residual closure (cycle 2) then wired
+/// `Phrenic Pool`'s discipline-dependent ability term to the character's
+/// actual chosen Psychic Discipline (`psychic_discipline_pool_ability`)
+/// instead of hard-coding Charisma.
 fn ground_psychic_class_features(
+    input: &CharacterInput,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::rules_tables::occult_adventures::psychic_features as pf;
-    let cha = ability_modifiers.charisma;
 
     if let Some(v) = pf::phrenic_amplifications_count(level) {
         explanations.push(ComputationExplanation {
@@ -28300,15 +28346,20 @@ fn ground_psychic_class_features(
             ),
         });
     }
-    if let Some(v) = pf::phrenic_pool(level, cha) {
-        explanations.push(ComputationExplanation {
-            id: "class_feature.untabled.psychic.phrenic_pool.value".to_owned(),
-            value: v,
-            detail: format!(
-                "Psychic level {level} Phrenic Pool: {v} points (level/2 + discipline ability \
-                 modifier, here Charisma {cha})"
-            ),
-        });
+    if let Some((discipline_ability_modifier, discipline_ability_name)) =
+        psychic_discipline_pool_ability(input, ability_modifiers)
+    {
+        if let Some(v) = pf::phrenic_pool(level, discipline_ability_modifier) {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.untabled.psychic.phrenic_pool.value".to_owned(),
+                value: v,
+                detail: format!(
+                    "Psychic level {level} Phrenic Pool: {v} points (level/2 + discipline \
+                     ability modifier, {discipline_ability_name} {discipline_ability_modifier} \
+                     for the chosen Psychic Discipline)"
+                ),
+            });
+        }
     }
     if let Some(v) = pf::psychic_discipline_pool(level) {
         explanations.push(ComputationExplanation {
@@ -49147,7 +49198,7 @@ mod untabled_base_class_chassis_wiring_tests {
 #[cfg(test)]
 mod untabled_base_class_feature_roster_wiring_tests {
     use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
-    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput, SelectedChoice};
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -49901,6 +49952,14 @@ max_power_level"
         let mut input = antipaladin_input(20);
         input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
         input.chosen.ability_scores.charisma = 16; // +3
+        // Row 17 residual closure: Phrenic Pool's ability term is
+        // discipline-dependent (see `psychic_discipline_pool_ability`), so a
+        // real magnitude requires a real chosen discipline, same as
+        // Sorcerer's bloodline choice.
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:psychic_discipline".to_owned(),
+            selection_id: "discipline:rapport".to_owned(),
+        });
         let computation = compute_pilot_base_chassis(&input);
         let value = |id: &str| {
             computation
@@ -49911,9 +49970,105 @@ max_power_level"
                 .value
         };
         assert_eq!(value("class_feature.untabled.psychic.phrenic_amplifications.count"), 1 + 19 / 4);
-        assert_eq!(value("class_feature.untabled.psychic.phrenic_pool.value"), 13); // 10+3
+        assert_eq!(value("class_feature.untabled.psychic.phrenic_pool.value"), 13); // 10+3, Rapport = CHA
         assert_eq!(value("class_feature.untabled.psychic.psychic_discipline.pool"), 1);
         assert_eq!(value("class_feature.untabled.psychic.major_amplifications.count"), 1 + 9 / 4);
+    }
+
+    /// RED, confirmed manually before this wiring landed (mutated
+    /// `psychic_discipline_pool_ability` to `Some((ability_modifiers.charisma,
+    /// "Charisma"))` unconditionally, re-ran, watched `phrenic_pool.value`
+    /// appear with no chosen discipline at all -- then reverted). GREEN
+    /// below: with no `choice:psychic_discipline` selection, Phrenic Pool
+    /// is correctly left ungrounded rather than defaulting to any ability
+    /// score -- the exact provisional-default shape row 17 exists to close,
+    /// not reintroduce. Every OTHER psychic magnitude still grounds, since
+    /// only Phrenic Pool depends on the discipline choice.
+    #[test]
+    fn psychic_phrenic_pool_is_ungrounded_with_no_chosen_discipline() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+        input.chosen.ability_scores.charisma = 16;
+        input.chosen.ability_scores.wisdom = 18;
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value"),
+            "Phrenic Pool must not ground a value with no chosen Psychic Discipline: {:?}",
+            computation.explanations
+        );
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.untabled.psychic.phrenic_amplifications.count"),
+            "discipline-independent psychic magnitudes must still ground: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// Proves `psychic_discipline_pool_ability` per discipline
+    /// (`oa_abilities_class.lst:1188`-1196's own `BONUS:VAR|
+    /// PhrenicPoolAbility|<CHA|WIS>` tokens, not domain recall) — all 9,
+    /// not just one, per `decisions.md §27b` item 5 ("needs a new
+    /// mechanism" is not grounds to under-prove it).
+    #[test]
+    fn psychic_phrenic_pool_uses_the_real_ability_for_every_discipline() {
+        let disciplines_and_expected_ability: [(&str, &str); 9] = [
+            ("discipline:abomination", "cha"),
+            ("discipline:dream", "cha"),
+            ("discipline:pain", "cha"),
+            ("discipline:rapport", "cha"),
+            ("discipline:faith", "wis"),
+            ("discipline:lore", "wis"),
+            ("discipline:psychedelia", "wis"),
+            ("discipline:self_perfection", "wis"),
+            ("discipline:tranquility", "wis"),
+        ];
+        for (selection_id, expect_ability) in disciplines_and_expected_ability {
+            let mut input = antipaladin_input(4);
+            input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+            input.chosen.ability_scores.charisma = 14; // +2
+            input.chosen.ability_scores.wisdom = 20; // +5
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:psychic_discipline".to_owned(),
+                selection_id: selection_id.to_owned(),
+            });
+            let computation = compute_pilot_base_chassis(&input);
+            let fact = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value")
+                .unwrap_or_else(|| {
+                    panic!("expected Phrenic Pool to ground for {selection_id}: {:?}", computation.explanations)
+                });
+            let expected = 4 / 2 + if expect_ability == "cha" { 2 } else { 5 };
+            assert_eq!(fact.value, expected, "{selection_id} -> {expect_ability}: {:?}", fact);
+        }
+    }
+
+    /// An unrecognized selection under the right choice-set id must not be
+    /// treated as any real discipline (no silent default, `decisions.md
+    /// §1a`).
+    #[test]
+    fn psychic_phrenic_pool_is_ungrounded_for_an_unrecognized_discipline_selection() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:psychic_discipline".to_owned(),
+            selection_id: "discipline:not_a_real_discipline".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value"),
+            "an unrecognized discipline selection must not ground any value: {:?}",
+            computation.explanations
+        );
     }
 
     #[test]

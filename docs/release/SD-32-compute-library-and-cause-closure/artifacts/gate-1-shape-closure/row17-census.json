@@ -7,10 +7,10 @@
     "fallthrough": 0,
     "fallthrough_pi_redacted": 0,
     "not_ingested": 0,
-    "provisional_default_total": 1,
-    "provisional_default_in_not_done_population": 1,
+    "provisional_default_total": 0,
+    "provisional_default_in_not_done_population": 0,
     "provisional_default_missing_reason": 0,
-    "row17_honest_size": 1
+    "row17_honest_size": 0
   },
   "per_kind_book": [
     {
@@ -790,8 +790,8 @@
       "not_ingested": 0,
       "kind": "class_feature",
       "book": "occult_adventures",
-      "provisional_default": 1,
-      "row17_actionable": 1
+      "provisional_default": 0,
+      "row17_actionable": 0
     },
     {
       "derived": 105,
@@ -3878,13 +3878,5 @@
       "row17_actionable": 0
     }
   ],
-  "provisional_default_hits": [
-    {
-      "book": "occult_adventures",
-      "kind": "class_feature",
-      "id_or_key": "Psychic ~ Phrenic Pool",
-      "reason": "SD-32 card 11 (T12) psion cycle audit, decisions.md \u00a727: PhrenicPoolAbility (this record's own BONUS:VAR|PhrenicPool|(PsychicLVL/2)+PhrenicPoolAbility term) is set by whichever of the 9 Psychic Discipline records the character chose (CHA for 4 disciplines, WIS for 5) -- ground_psychic_class_features defaults it to Charisma because this engine does not track the chosen discipline. One of several possible correct answers chosen for now, not the only value the engine's inputs could produce.",
-      "path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_2834e112-2c4-1/data/corpus/occult_adventures/class_feature/psychic/phrenic_pool.json"
-    }
-  ]
+  "provisional_default_hits": []
 }
