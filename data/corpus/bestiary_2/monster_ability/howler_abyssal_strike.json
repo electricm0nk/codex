@@ -6,7 +6,7 @@
     "delivery": "Extraordinary",
     "description": "A howler's bite and quills are considered to be chaotic-aligned and evil-aligned for the purpose of overcoming damage reduction.",
     "description_variables": [],
-    "facet": "SpecialQuality",
+    "facet": "SpecialAttack",
     "key": "bestiary_2:monster_ability:howler_abyssal_strike",
     "name": "Abyssal Strike",
     "owners": [
@@ -35,8 +35,6 @@
       }
     ],
     "rename": null,
-    "shape_provisional_default": true,
-    "shape_provisional_reason": "delivery_only_no_facet_segment",
     "source_page": "p.159",
     "traits": []
   },

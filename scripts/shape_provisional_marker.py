@@ -72,6 +72,25 @@ def stamp_provisional_default(record: dict, reason: str) -> dict:
     return record
 
 
+def clear_provisional_default(record: dict) -> dict:
+    """The paired, sanctioned counterpart to `stamp_provisional_default` --
+    used when `decisions.md §27a`/§27b's final categorization pass has
+    determined a defaulted unit's shape IS genuinely correct (a real
+    measurement, not a placeholder chosen among several readings). Removes
+    both marker fields. Mutates and returns `record`.
+
+    Idempotent: calling it on a record that never carried the marker is a
+    no-op, not an error -- the row 17 categorization pass may re-run over
+    an already-resolved record without needing to track what it already
+    touched."""
+    data = record.get("data")
+    if not data:
+        return record
+    data.pop(PROVISIONAL_DEFAULT_FIELD, None)
+    data.pop(PROVISIONAL_DEFAULT_REASON_FIELD, None)
+    return record
+
+
 def is_provisional_default(record: dict) -> bool:
     """Reads the marker back. Never raises on a record missing `data` or
     the field entirely -- absence means "not provisional", the correct

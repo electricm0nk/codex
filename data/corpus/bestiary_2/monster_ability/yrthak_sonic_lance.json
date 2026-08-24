@@ -6,7 +6,7 @@
     "delivery": "Extraordinary",
     "description": "Once per round, a yrthak can focus sonic energy in a 60-foot ray that deals 8d6 sonic damage to one target.",
     "description_variables": [],
-    "facet": "SpecialQuality",
+    "facet": "SpecialAttack",
     "key": "bestiary_2:monster_ability:yrthak_sonic_lance",
     "name": "Sonic Lance",
     "owners": [
@@ -31,8 +31,6 @@
       }
     ],
     "rename": null,
-    "shape_provisional_default": true,
-    "shape_provisional_reason": "delivery_only_no_facet_segment",
     "source_page": null,
     "traits": []
   },

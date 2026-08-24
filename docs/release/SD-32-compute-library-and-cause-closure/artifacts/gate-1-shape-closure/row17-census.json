@@ -1,16 +1,16 @@
 {
   "totals": {
-    "population": 34521,
-    "derived": 11409,
-    "measured_empty": 22992,
-    "measured_pi_redacted": 14,
+    "population": 34397,
+    "derived": 11563,
+    "measured_empty": 22819,
+    "measured_pi_redacted": 15,
     "fallthrough": 0,
     "fallthrough_pi_redacted": 0,
-    "not_ingested": 106,
-    "provisional_default_total": 0,
-    "provisional_default_in_not_done_population": 0,
+    "not_ingested": 0,
+    "provisional_default_total": 1,
+    "provisional_default_in_not_done_population": 1,
     "provisional_default_missing_reason": 0,
-    "row17_honest_size": 0
+    "row17_honest_size": 1
   },
   "per_kind_book": [
     {
@@ -26,8 +26,8 @@
       "row17_actionable": 0
     },
     {
-      "derived": 123,
-      "measured_empty": 15,
+      "derived": 116,
+      "measured_empty": 7,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
@@ -219,7 +219,7 @@
     },
     {
       "derived": 0,
-      "measured_empty": 10,
+      "measured_empty": 8,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
@@ -278,12 +278,12 @@
       "row17_actionable": 0
     },
     {
-      "derived": 34,
-      "measured_empty": 58,
+      "derived": 32,
+      "measured_empty": 56,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "ability",
       "book": "ultimate_campaign",
       "provisional_default": 0,
@@ -327,7 +327,7 @@
     },
     {
       "derived": 193,
-      "measured_empty": 89,
+      "measured_empty": 88,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
@@ -783,15 +783,15 @@
     },
     {
       "derived": 249,
-      "measured_empty": 781,
+      "measured_empty": 723,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
       "kind": "class_feature",
       "book": "occult_adventures",
-      "provisional_default": 0,
-      "row17_actionable": 0
+      "provisional_default": 1,
+      "row17_actionable": 1
     },
     {
       "derived": 105,
@@ -854,9 +854,9 @@
       "row17_actionable": 0
     },
     {
-      "derived": 305,
+      "derived": 304,
       "measured_empty": 626,
-      "measured_pi_redacted": 0,
+      "measured_pi_redacted": 1,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
       "not_ingested": 0,
@@ -1251,7 +1251,7 @@
     },
     {
       "derived": 0,
-      "measured_empty": 15,
+      "measured_empty": 13,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
@@ -1287,7 +1287,7 @@
     },
     {
       "derived": 0,
-      "measured_empty": 8,
+      "measured_empty": 1,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
@@ -1303,7 +1303,7 @@
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "equipment",
       "book": "bestiary_3",
       "provisional_default": 0,
@@ -1491,11 +1491,11 @@
     },
     {
       "derived": 0,
-      "measured_empty": 117,
+      "measured_empty": 116,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "equipment",
       "book": "ultimate_equipment",
       "provisional_default": 0,
@@ -1515,11 +1515,11 @@
     },
     {
       "derived": 0,
-      "measured_empty": 13,
+      "measured_empty": 8,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 6,
+      "not_ingested": 0,
       "kind": "equipment",
       "book": "ultimate_magic",
       "provisional_default": 0,
@@ -1555,7 +1555,7 @@
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 14,
+      "not_ingested": 0,
       "kind": "equipment_modifier",
       "book": "advanced_class_guide",
       "provisional_default": 0,
@@ -1587,11 +1587,11 @@
     },
     {
       "derived": 0,
-      "measured_empty": 0,
+      "measured_empty": 1,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "equipment_modifier",
       "book": "adventurers_guide",
       "provisional_default": 0,
@@ -1707,11 +1707,11 @@
     },
     {
       "derived": 0,
-      "measured_empty": 0,
+      "measured_empty": 4,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 4,
+      "not_ingested": 0,
       "kind": "equipment_modifier",
       "book": "pathfinder_unchained",
       "provisional_default": 0,
@@ -2366,18 +2366,6 @@
       "row17_actionable": 0
     },
     {
-      "derived": 0,
-      "measured_empty": 1,
-      "measured_pi_redacted": 0,
-      "fallthrough": 0,
-      "fallthrough_pi_redacted": 0,
-      "not_ingested": 0,
-      "kind": "monster",
-      "book": "occult_adventures",
-      "provisional_default": 0,
-      "row17_actionable": 0
-    },
-    {
       "derived": 5,
       "measured_empty": 0,
       "measured_pi_redacted": 0,
@@ -2390,60 +2378,60 @@
       "row17_actionable": 0
     },
     {
-      "derived": 22,
-      "measured_empty": 83,
+      "derived": 62,
+      "measured_empty": 65,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 22,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "bestiary",
       "provisional_default": 0,
       "row17_actionable": 0
     },
     {
-      "derived": 62,
-      "measured_empty": 64,
+      "derived": 92,
+      "measured_empty": 43,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 9,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "bestiary_2",
       "provisional_default": 0,
       "row17_actionable": 0
     },
     {
-      "derived": 0,
-      "measured_empty": 135,
+      "derived": 16,
+      "measured_empty": 140,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 21,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "bestiary_3",
       "provisional_default": 0,
       "row17_actionable": 0
     },
     {
-      "derived": 3,
-      "measured_empty": 173,
+      "derived": 34,
+      "measured_empty": 149,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 7,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "bestiary_4",
       "provisional_default": 0,
       "row17_actionable": 0
     },
     {
-      "derived": 0,
-      "measured_empty": 12,
+      "derived": 2,
+      "measured_empty": 11,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "bestiary_5",
       "provisional_default": 0,
@@ -2486,24 +2474,24 @@
       "row17_actionable": 0
     },
     {
-      "derived": 0,
-      "measured_empty": 24,
+      "derived": 6,
+      "measured_empty": 27,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 9,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "horror_adventures",
       "provisional_default": 0,
       "row17_actionable": 0
     },
     {
-      "derived": 1,
-      "measured_empty": 24,
+      "derived": 9,
+      "measured_empty": 21,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 5,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "inner_sea_bestiary",
       "provisional_default": 0,
@@ -2511,11 +2499,11 @@
     },
     {
       "derived": 5,
-      "measured_empty": 22,
+      "measured_empty": 21,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 1,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "inner_sea_gods",
       "provisional_default": 0,
@@ -2535,7 +2523,7 @@
     },
     {
       "derived": 0,
-      "measured_empty": 5,
+      "measured_empty": 2,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
@@ -2546,12 +2534,12 @@
       "row17_actionable": 0
     },
     {
-      "derived": 0,
-      "measured_empty": 32,
+      "derived": 31,
+      "measured_empty": 4,
       "measured_pi_redacted": 0,
       "fallthrough": 0,
       "fallthrough_pi_redacted": 0,
-      "not_ingested": 3,
+      "not_ingested": 0,
       "kind": "monster_ability",
       "book": "pathfinder_unchained",
       "provisional_default": 0,
@@ -3890,5 +3878,13 @@
       "row17_actionable": 0
     }
   ],
-  "provisional_default_hits": []
+  "provisional_default_hits": [
+    {
+      "book": "occult_adventures",
+      "kind": "class_feature",
+      "id_or_key": "Psychic ~ Phrenic Pool",
+      "reason": "SD-32 card 11 (T12) psion cycle audit, decisions.md \u00a727: PhrenicPoolAbility (this record's own BONUS:VAR|PhrenicPool|(PsychicLVL/2)+PhrenicPoolAbility term) is set by whichever of the 9 Psychic Discipline records the character chose (CHA for 4 disciplines, WIS for 5) -- ground_psychic_class_features defaults it to Charisma because this engine does not track the chosen discipline. One of several possible correct answers chosen for now, not the only value the engine's inputs could produce.",
+      "path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_2834e112-2c4-1/data/corpus/occult_adventures/class_feature/psychic/phrenic_pool.json"
+    }
+  ]
 }

@@ -67,6 +67,37 @@ class StampAndReadTest(unittest.TestCase):
         self.assertTrue(SPM.is_provisional_default(record))
 
 
+class ClearProvisionalDefaultTest(unittest.TestCase):
+    """`clear_provisional_default` -- row 17's own paired counterpart, used
+    once a defaulted unit's real shape has been derived and confirmed
+    (`decisions.md §27a`/§27b: "record it as such, remove the provisional
+    marker")."""
+
+    def test_clears_both_marker_fields(self):
+        record = {"data": {"key": "Foo"}}
+        SPM.stamp_provisional_default(record, "reason A")
+        SPM.clear_provisional_default(record)
+        self.assertFalse(SPM.is_provisional_default(record))
+        self.assertIsNone(SPM.provisional_reason(record))
+
+    def test_leaves_other_data_fields_untouched(self):
+        record = {"data": {"key": "Foo", "facet": "SpecialQuality"}}
+        SPM.stamp_provisional_default(record, "reason A")
+        SPM.clear_provisional_default(record)
+        self.assertEqual(record["data"]["key"], "Foo")
+        self.assertEqual(record["data"]["facet"], "SpecialQuality")
+
+    def test_no_op_on_a_never_stamped_record(self):
+        record = {"data": {"key": "Foo"}}
+        SPM.clear_provisional_default(record)
+        self.assertFalse(SPM.is_provisional_default(record))
+
+    def test_no_op_on_a_record_with_no_data_object(self):
+        record = {}
+        SPM.clear_provisional_default(record)  # must not raise
+        self.assertFalse(SPM.is_provisional_default(record))
+
+
 class ScanCorpusTest(unittest.TestCase):
     def _write(self, root, book, kind, name, data, source_line=1):
         d = os.path.join(root, book, kind)

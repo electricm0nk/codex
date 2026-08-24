@@ -100,15 +100,6 @@
 //!   * `isb_abilities_race.lst:437`
 //!   * `isb_abilities_race.lst:439`
 //!   * `isb_abilities_race.lst:442`
-//!
-//! 2 ability row(s) ship with a `decisions.md §27`
-//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
-//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
-//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
-//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
-//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
-//!   * `Lorthact ~ Spell-Like Abilities` (delivery_only_no_facet_segment)
-//!   * `Petrified Maiden ~ Weapon Selection` (book_specific_type_label_no_facet_vocabulary_gap)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 

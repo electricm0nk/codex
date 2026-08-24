@@ -6,7 +6,7 @@
     "delivery": null,
     "description": null,
     "description_variables": [],
-    "facet": "SpecialQuality",
+    "facet": "SpecialAttack",
     "key": "bestiary_2:monster_ability:aurumvorax_rake",
     "name": "Rake",
     "owners": [
@@ -23,8 +23,6 @@
       }
     ],
     "rename": null,
-    "shape_provisional_default": true,
-    "shape_provisional_reason": "copy_row_base_ability_type_unresolved",
     "source_page": null,
     "traits": []
   },

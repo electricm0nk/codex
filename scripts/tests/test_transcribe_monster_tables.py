@@ -701,13 +701,21 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
 
 class ProvisionalFacetDefaultRound8(unittest.TestCase):
     """`decisions.md §27`/`§27a`/`§27b` -- a `TYPE:`-facet-gap row ships
-    instead of being dropped, `facet` forced to `SpecialQuality`, and
-    `parse_type_or_provisional_default`'s fourth return value names WHICH
-    of the four shapes T9 round 6/7's own corpus-wide re-derivation found.
-    Every row below is a REAL coordinate the round-8 re-derivation named,
-    transcribed verbatim (never a guessed synthetic), except the
-    `book_specific...` control which round 6/7's own receipt already used
-    (`TypeSegmentsUpstreamDivergenceCorrection` above)."""
+    instead of being dropped. Every row below is a REAL coordinate the
+    round-8 re-derivation named, transcribed verbatim (never a guessed
+    synthetic), except the `book_specific...` control which round 6/7's own
+    receipt already used (`TypeSegmentsUpstreamDivergenceCorrection`
+    above).
+
+    **Row 17 update (`kanban.md` row 17, `epic-7-shape-categorization-100`,
+    2026-08-23):** every named row below has now been individually
+    re-derived against the corpus/oracle
+    (`_MONSTER_ABILITY_FACET_OVERRIDES`) and no longer ships under `§27`'s
+    provisional default -- the fourth return value is `None` for all of
+    them now, the same as any row whose own `TYPE:` segments resolved
+    cleanly. `UnmodelledFacet` still fires from `parse_type` alone (the
+    override lives one layer up, in the wrapper), which is what each test
+    below still proves first."""
 
     def test_a_row_with_a_real_modeled_facet_is_unaffected(self) -> None:
         """Control: `parse_type_or_provisional_default` changes nothing for
@@ -720,6 +728,11 @@ class ProvisionalFacetDefaultRound8(unittest.TestCase):
 
     def test_type_internal_only_no_facet_no_delivery(self) -> None:
         # `bestiary/b1_abilities_race.lst:945` -- `Morlock ~ Sneak Attack`.
+        # Row 17: no other genuinely-declared `monster_ability` record
+        # anywhere in the corpus carries the `Internal` trait to compare
+        # against (round 6's own "genuinely novel shape"); none of the
+        # other six modeled facets fit a hidden numeric feed either, so
+        # `SpecialQuality` is confirmed by exclusion, not by placeholder.
         row = [
             "Sneak Attack",
             "KEY:Morlock ~ Sneak Attack",
@@ -731,13 +744,15 @@ class ProvisionalFacetDefaultRound8(unittest.TestCase):
         with self.assertRaises(tmt.UnmodelledFacet):
             tmt.parse_type(row)
         facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
-        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertEqual(facet, "SpecialQuality")
         self.assertIsNone(delivery)
         self.assertEqual(traits, ["Internal"])
-        self.assertEqual(reason, "type_internal_only_no_facet_no_delivery")
+        self.assertIsNone(reason)
 
     def test_delivery_only_no_facet_segment(self) -> None:
         # `bestiary_2/b2_abilities_race.lst:377` -- `Denizen of Leng ~ Planar Fast Healing`.
+        # Row 17: `decisions.md §27`'s own cited example. Fast Healing is a
+        # passive defensive trait, confirmed `SpecialQuality`.
         row = [
             "Planar Fast Healing",
             "KEY:Denizen of Leng ~ Planar Fast Healing",
@@ -745,14 +760,16 @@ class ProvisionalFacetDefaultRound8(unittest.TestCase):
             "TYPE:ModifyHP.Supernatural",
         ]
         facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
-        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertEqual(facet, "SpecialQuality")
         self.assertEqual(delivery, "Supernatural")
         self.assertEqual(traits, ["ModifyHP"])
-        self.assertEqual(reason, "delivery_only_no_facet_segment")
+        self.assertIsNone(reason)
 
     def test_missing_type_token_no_facet(self) -> None:
         # `bestiary_2/b2_abilities_race.lst:763` -- `Lamia Matriarch ~ Spells`,
-        # no `TYPE:` token on the row at all.
+        # no `TYPE:` token on the row at all. Row 17: a racial spellcasting
+        # grant fits none of the other six modeled facets, confirmed
+        # `SpecialQuality` by exclusion (matches its naga siblings).
         row = [
             "Spells",
             "KEY:Lamia Matriarch ~ Spells",
@@ -760,34 +777,52 @@ class ProvisionalFacetDefaultRound8(unittest.TestCase):
             "DESC:A lamia matriarch casts spells as a 6th-level sorcerer.",
         ]
         facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
-        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertEqual(facet, "SpecialQuality")
         self.assertIsNone(delivery)
         self.assertEqual(traits, [])
-        self.assertEqual(reason, "missing_type_token_no_facet")
+        self.assertIsNone(reason)
 
     def test_copy_row_base_ability_type_unresolved(self) -> None:
         # `bestiary_2/b2_abilities_race.lst:138` -- `Aurumvorax ~ Rake`, a
         # `.COPY=` overlay whose own field 1 carries no `TYPE:` prefix at all.
+        # Row 17: the universal monster rule "Rake" is `SpecialAttack`
+        # corpus-wide and unanimously (`data/corpus/beastiary/
+        # monster_ability/rake.json` and every other book's own "~ Rake"
+        # row) -- this row is RECLASSIFIED, not merely unmarked.
         row = [
             "CATEGORY=Special Ability|Rake.COPY=Rake",
             "KEY:Aurumvorax ~ Rake",
             "ASPECT:Ability Benefit|(4 claws +%1, 1d4+%2)|BAB+STR+1|STR",
         ]
         facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
-        self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
+        self.assertEqual(facet, "SpecialAttack")
         self.assertIsNone(delivery)
         self.assertEqual(traits, [])
-        self.assertEqual(reason, "copy_row_base_ability_type_unresolved")
+        self.assertIsNone(reason)
 
     def test_book_specific_type_label_no_facet_vocabulary_gap(self) -> None:
         # Same row `test_a_genuinely_unmodelled_dotted_segment_is_unaffected`
         # above already uses -- a real book-specific one-off label, not the
-        # `.COPY=`, `Internal`, or delivery shapes.
+        # `.COPY=`, `Internal`, or delivery shapes. Row 17: a flat
+        # `BONUS:STAT` ability-score choice fits none of the other six
+        # modeled facets, confirmed `SpecialQuality` by exclusion.
         row = ["Stat Selection", "KEY:Unfettered Eidolon ~ Str", "TYPE:Unfettered Eidolon Stat Selection"]
+        facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
+        self.assertEqual(facet, "SpecialQuality")
+        self.assertIsNone(delivery)
+        self.assertEqual(traits, ["Unfettered Eidolon Stat Selection"])
+        self.assertIsNone(reason)
+
+    def test_a_row_without_an_override_still_ships_provisional(self) -> None:
+        """Control proving the row-17 override table is scoped by `KEY:`,
+        not by shape: an UNNAMED row with the SAME shape as the
+        `book_specific...` case above (no override entry) still ships
+        under `§27`'s provisional default exactly as before."""
+        row = ["Something Else", "KEY:Some Unrelated Creature ~ Made Up Ability", "TYPE:SomeBookSpecificLabel"]
         facet, delivery, traits, reason = tmt.parse_type_or_provisional_default(row)
         self.assertEqual(facet, tmt.PROVISIONAL_FACET_DEFAULT)
         self.assertIsNone(delivery)
-        self.assertEqual(traits, ["Unfettered Eidolon Stat Selection"])
+        self.assertEqual(traits, ["SomeBookSpecificLabel"])
         self.assertEqual(reason, "book_specific_type_label_no_facet_vocabulary_gap")
 
     def test_mutation_proof_reverting_to_parse_type_alone_reproduces_the_drop(self) -> None:

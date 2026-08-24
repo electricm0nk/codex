@@ -35,8 +35,6 @@
       }
     ],
     "rename": null,
-    "shape_provisional_default": true,
-    "shape_provisional_reason": "type_internal_only_no_facet_no_delivery",
     "source_page": null,
     "traits": [
       "Internal"

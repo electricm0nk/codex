@@ -307,24 +307,6 @@
 //!   * `ce_abilities_race.lst:2337`
 //!   * `ce_abilities_race.lst:2338`
 //!   * `ce_abilities_race.lst:2339`
-//!
-//! 11 ability row(s) ship with a `decisions.md §27`
-//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
-//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
-//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
-//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
-//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
-//!   * `Adlet ~ Spell-Like Abilities` (delivery_only_no_facet_segment)
-//!   * `Asurendra ~ None` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Lunar Naga ~ Spells` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Royal Naga ~ Spells` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Unfettered Eidolon ~ Cha` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Unfettered Eidolon ~ Con` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Unfettered Eidolon ~ Dex` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Unfettered Eidolon ~ Int` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Unfettered Eidolon ~ Str` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Unfettered Eidolon ~ Wis` (book_specific_type_label_no_facet_vocabulary_gap)
-//!   * `Water Naga ~ Spells` (book_specific_type_label_no_facet_vocabulary_gap)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 

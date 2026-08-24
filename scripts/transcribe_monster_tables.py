@@ -1249,6 +1249,121 @@ def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
 PROVISIONAL_FACET_DEFAULT = "SpecialQuality"
 
 
+# `decisions.md §27a`/`§27b` — kanban.md row 17's final categorization pass
+# (`epic-7-shape-categorization-100`). Every row `provisional_facet_reason`
+# would otherwise have to default (per-book/`§27`) has now been individually
+# re-derived against the corpus/oracle, keyed by the row's own `KEY:` value.
+# A row with an entry here NEVER goes through the `§27` provisional-default
+# path: `parse_type` returns this facet directly, exactly as if the row's
+# own `TYPE:` segments had declared it (`§27a`: "F0/no-formula reached by
+# fallthrough is not an answer... derived by measurement or it is not
+# done" — the same standard applies to a facet default). Each entry cites
+# the corpus/oracle evidence it rests on so a future reader can re-verify
+# it without re-deriving from scratch. Never a guess; where genuinely
+# ambiguous, the majority-convention reading is used and named as such.
+#
+# Group 1 — reclassified to `SpecialAttack` (the `§27` `SpecialQuality`
+# default was wrong for these four; corroborated by a genuinely-declared
+# sibling record elsewhere in the corpus, not by domain recall):
+#   * "Aurumvorax ~ Rake" — the universal monster rule "Rake" is
+#     `SpecialAttack` corpus-wide and unanimously: the base rule record
+#     itself (`data/corpus/beastiary/monster_ability/rake.json`,
+#     `TYPE:SpecialAttack.Extraordinary.AttackOption`) plus every other
+#     book's own "~ Rake" row (`gynosphinx_rake.json`,
+#     `bandersnatch_rake.json`) all genuinely declare `SpecialAttack`.
+#   * "Bunyip ~ Blood Rage" — same shape: the universal rule's own base
+#     record (`data/corpus/bestiary_2/monster_ability/blood_rage.json`,
+#     `TYPE:SpecialAttack.Extraordinary`) and `inner_sea_bestiary`'s
+#     `volnagur_blood_rage.json` both genuinely declare `SpecialAttack`.
+#   * "Yrthak ~ Sonic Lance" — the SAME creature's sibling ability
+#     `Yrthak ~ Explosion` (`b2_abilities_race.lst:1416`) genuinely
+#     declares `TYPE:SpecialAttack.Extraordinary` and its own `DESC:`
+#     names the identical mechanic ("a yrthak can fire its sonic lance at
+#     the ground...") — the two rows describe one ability from two angles.
+#   * "Howler ~ Abyssal Strike" — identical shape ("natural weapons treated
+#     as aligned for the purpose of overcoming damage reduction") to
+#     `inner_sea_world_guide`'s genuinely-declared
+#     `nascent_demon_lord_aligned_strike.json` (`SpecialAttack`); the same
+#     creature's siblings `Howl`/`Pain`
+#     (`b2_abilities_race.lst:696`-`:697`) are also both `SpecialAttack`.
+#
+# Group 2 — confirmed `SpecialQuality` (the `§27` default was already the
+# genuinely-correct answer; marker removed because it is now a measurement,
+# not a placeholder):
+#   * "Adlet ~ Spell-Like Abilities", "Lorthact ~ Spell-Like Abilities",
+#     "Mothman ~ Agent of Fate" — an unqualified "Spell-Like Abilities" row
+#     (no facet segment declared) is `SpecialQuality` corpus-wide by a
+#     large majority: of the 277 genuinely-declared (non-provisional)
+#     "Spell-Like Abilities" `monster_ability` records in the corpus, 255
+#     declare `SpecialQuality.SpellLike` against 22 `SpecialAttack.
+#     SpellLike` — the majority-convention reading, named as such.
+#   * "Denizen of Leng ~ Planar Fast Healing" — Fast Healing is a passive
+#     defensive trait, not an attack; this is `decisions.md §27`'s own
+#     cited example (`ModifyHP.Supernatural`) and the corpus's own
+#     genuinely-declared Fast-Healing-shaped records agree.
+#   * "Xocothian ~ Speed Burst" — a self-only movement ability usable as a
+#     full-round action; not an attack, so `SpecialQuality` by exclusion
+#     among the seven modeled facets.
+#   * "Carnivorous Blob ~ Split" — the universal monster rule "Split" is
+#     `SpecialQuality` corpus-wide: 4 of 5 genuinely-declared "~ Split"
+#     records (`carnivorous_crystal_split.json`, `plasma_ooze_split.json`,
+#     `black_pudding_split.json`, `ocher_jelly_split.json`) declare
+#     `SpecialQuality`; the fifth (`amphisbaena_split.json`) declares
+#     `Defensive`, a distinguishable creature-specific variant, not a
+#     counter-example to this row.
+#   * "Lamia Matriarch ~ Spells", "Royal Naga ~ Spells", "Water Naga ~
+#     Spells", "Lunar Naga ~ Spells" — a bare "casts spells as an Nth-level
+#     sorcerer" racial spellcasting grant; none of the other six modeled
+#     facets fit a passive granted capability, so `SpecialQuality` by
+#     exclusion (matches the three siblings' own shared shape).
+#   * "Asurendra ~ None" — a content-less placeholder row (no `DESC:`,
+#     `TYPE:AsurendraAdditional` alone) sitting among sibling
+#     `AsurendraAdditional`-tagged rows (`Death`/`Sacrilege`/`Shaping`) that
+#     all genuinely declare `SpecialQuality`; `SpecialQuality` by structural
+#     analogy to those siblings.
+#   * "Unfettered Eidolon ~ Con/Str/Wis/Dex/Cha/Int" (6 rows) — a flat
+#     `BONUS:STAT` ability-score-choice row (`CHOOSE:NOCHOICE`); none of
+#     the other six modeled facets describe a stat bonus, so
+#     `SpecialQuality` by exclusion.
+#   * "Petrified Maiden ~ Weapon Selection" — a granted weapon-proficiency
+#     choice (`CHOOSE:WEAPONPROFICIENCY`), the same shape as the eidolon
+#     stat-selection rows above; `SpecialQuality` by exclusion.
+#   * "Morlock ~ Sneak Attack" — an invisible (`VISIBLE:NO`) internal
+#     numeric feed (`BONUS:VAR|SneakAttackDice|1`), `TYPE:Internal` (round
+#     6's own "genuinely novel shape" — no other genuinely-declared
+#     `monster_ability` record anywhere in the corpus carries the
+#     `Internal` trait to compare against). None of `SpecialAttack`/
+#     `Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate` describe a hidden
+#     numeric feed either, so `SpecialQuality` is the only fit within the
+#     seven modeled facets, matching the row's own `CATEGORY:Special
+#     Ability` declaration.
+_MONSTER_ABILITY_FACET_OVERRIDES: dict[str, str] = {
+    "Aurumvorax ~ Rake": "SpecialAttack",
+    "Bunyip ~ Blood Rage": "SpecialAttack",
+    "Yrthak ~ Sonic Lance": "SpecialAttack",
+    "Howler ~ Abyssal Strike": "SpecialAttack",
+    "Adlet ~ Spell-Like Abilities": "SpecialQuality",
+    "Lorthact ~ Spell-Like Abilities": "SpecialQuality",
+    "Mothman ~ Agent of Fate": "SpecialQuality",
+    "Denizen of Leng ~ Planar Fast Healing": "SpecialQuality",
+    "Xocothian ~ Speed Burst": "SpecialQuality",
+    "Carnivorous Blob ~ Split": "SpecialQuality",
+    "Lamia Matriarch ~ Spells": "SpecialQuality",
+    "Royal Naga ~ Spells": "SpecialQuality",
+    "Water Naga ~ Spells": "SpecialQuality",
+    "Lunar Naga ~ Spells": "SpecialQuality",
+    "Asurendra ~ None": "SpecialQuality",
+    "Unfettered Eidolon ~ Con": "SpecialQuality",
+    "Unfettered Eidolon ~ Str": "SpecialQuality",
+    "Unfettered Eidolon ~ Wis": "SpecialQuality",
+    "Unfettered Eidolon ~ Dex": "SpecialQuality",
+    "Unfettered Eidolon ~ Cha": "SpecialQuality",
+    "Unfettered Eidolon ~ Int": "SpecialQuality",
+    "Petrified Maiden ~ Weapon Selection": "SpecialQuality",
+    "Morlock ~ Sneak Attack": "SpecialQuality",
+}
+
+
 def provisional_facet_reason(row: list[str]) -> str:
     """Classify WHY a row's `TYPE:` segments name no modeled facet, for the
     `§27` provisional-default marker. Never guesses a real facet -- only
@@ -1311,6 +1426,12 @@ def parse_type_or_provisional_default(
     shipped JSON record via `scripts/shape_provisional_marker.py`'s
     `stamp_provisional_default`, the only sanctioned place that writes the
     marker (`workflow-instruction.md §6a`).
+
+    `decisions.md §27a`/`§27b` (kanban.md row 17): a row whose `KEY:` value
+    matches `_MONSTER_ABILITY_FACET_OVERRIDES` is a genuinely-derived
+    answer, not a placeholder -- it is returned with a `None` fourth value
+    (never provisional) exactly like a row whose own `TYPE:` segments
+    resolved cleanly, even though its segments alone could not resolve it.
     """
     try:
         facet, delivery, traits = parse_type(row)
@@ -1319,6 +1440,10 @@ def parse_type_or_provisional_default(
         segments = type_segments(row)
         delivery = next((segment for segment in segments if segment in DELIVERIES), None)
         traits = [segment for segment in segments if segment != delivery]
+        key = token(row, "KEY:")
+        override = _MONSTER_ABILITY_FACET_OVERRIDES.get(key) if key else None
+        if override is not None:
+            return override, delivery, traits, None
         return PROVISIONAL_FACET_DEFAULT, delivery, traits, provisional_facet_reason(row)
 
 

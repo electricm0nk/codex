@@ -115,21 +115,6 @@
 //!   * `ce_abilities_race.lst:2411`
 //!   * `ce_abilities_race.lst:2413`
 //!   * `ce_abilities_race.lst:2417`
-//!
-//! 8 ability row(s) ship with a `decisions.md §27`
-//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
-//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
-//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
-//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
-//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
-//!   * `Aurumvorax ~ Rake` (copy_row_base_ability_type_unresolved)
-//!   * `Bunyip ~ Blood Rage` (copy_row_base_ability_type_unresolved)
-//!   * `Carnivorous Blob ~ Split` (copy_row_base_ability_type_unresolved)
-//!   * `Denizen of Leng ~ Planar Fast Healing` (delivery_only_no_facet_segment)
-//!   * `Howler ~ Abyssal Strike` (delivery_only_no_facet_segment)
-//!   * `Lamia Matriarch ~ Spells` (missing_type_token_no_facet)
-//!   * `Mothman ~ Agent of Fate` (delivery_only_no_facet_segment)
-//!   * `Yrthak ~ Sonic Lance` (delivery_only_no_facet_segment)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -7126,7 +7111,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Aurumvorax ~ Rake",
         name: "Rake",
-        facet: MonsterAbilityFacet::SpecialQuality,
+        facet: MonsterAbilityFacet::SpecialAttack,
         delivery: None,
         traits: &[],
         description: None,
@@ -7494,7 +7479,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Bunyip ~ Blood Rage",
         name: "Blood Rage",
-        facet: MonsterAbilityFacet::SpecialQuality,
+        facet: MonsterAbilityFacet::SpecialAttack,
         delivery: None,
         traits: &[],
         description: Some("A bunyip's blood rage ability activates whenever it detects blood in the water using its keen scent, but otherwise functions as the universal monster rule of the same name."),
@@ -10214,7 +10199,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Howler ~ Abyssal Strike",
         name: "Abyssal Strike",
-        facet: MonsterAbilityFacet::SpecialQuality,
+        facet: MonsterAbilityFacet::SpecialAttack,
         delivery: Some(MonsterAbilityDelivery::Extraordinary),
         traits: &[],
         description: Some("A howler's bite and quills are considered to be chaotic-aligned and evil-aligned for the purpose of overcoming damage reduction."),
@@ -14950,7 +14935,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Yrthak ~ Sonic Lance",
         name: "Sonic Lance",
-        facet: MonsterAbilityFacet::SpecialQuality,
+        facet: MonsterAbilityFacet::SpecialAttack,
         delivery: Some(MonsterAbilityDelivery::Extraordinary),
         traits: &[],
         description: Some("Once per round, a yrthak can focus sonic energy in a 60-foot ray that deals 8d6 sonic damage to one target."),

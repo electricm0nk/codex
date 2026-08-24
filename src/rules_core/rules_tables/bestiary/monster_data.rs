@@ -344,14 +344,6 @@
 //!   * `ce_abilities_race.lst:2382`
 //!   * `ce_abilities_race.lst:2383`
 //!   * `ce_abilities_race.lst:2384`
-//!
-//! 1 ability row(s) ship with a `decisions.md §27`
-//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name
-//! no facet this chassis models) -- this is NOT a measured shape, only an ingest
-//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`
-//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are
-//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:
-//!   * `Morlock ~ Sneak Attack` (type_internal_only_no_facet_no_delivery)
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
