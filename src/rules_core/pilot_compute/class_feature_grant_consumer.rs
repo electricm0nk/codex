@@ -1149,6 +1149,38 @@ fn ability_modifier_seed_vars(ability_modifiers: &AbilityModifiers) -> BTreeMap<
 /// [`resolved_description_for`]'s own downstream `render_pcgen_desc_with_values` call then drops
 /// (and reports) any `%N` that still names it, exactly the way it already treats any other
 /// unresolved argument.
+///
+/// **SD-32 T12 Epic 8 row 18 cycle 17 -- why refusing an identifier bound only on an unrelated
+/// (cross-class or non-granting-source) record is the ORACLE-CORRECT behaviour, not merely a
+/// conservative guess, established by reading the real engine rather than assuming.** Real
+/// PCGen's variable read path, `PlayerCharacter.getVariable` (`code/src/java/pcgen/core/
+/// PlayerCharacter.java:2090`), sums `getTotalBonusTo("VAR", variableString)` -- EVERY
+/// `BONUS:VAR` contribution to that exact variable name from EVERY source the character actually
+/// possesses, character-wide, with no per-class scoping at all. This confirmed, on inspection,
+/// that this module's guard is not merely refusing to guess a class boundary the oracle also
+/// respects -- the oracle has NO class boundary here; it is genuinely global. But that global sum
+/// is only ever nonzero for a variable name a given character's OWN held sources actually bonus:
+/// re-derived for Bloodrager's remaining 7 single-terminal `Bloodline` members (row 18 cycle 13's
+/// own finding, re-verified cycle 16/17): each chains to a per-bloodline `Bloodrager_<X>_
+/// BloodlineLVL` identifier bound by exactly TWO real corpus records, NEITHER a plain Bloodrager
+/// who merely picked that bloodline through the class's own bloodline-choice mechanism would
+/// hold -- (a) `data/corpus/advanced_class_guide/ability/*_bloodline.json`, an ABILITY record
+/// under `CATEGORY:"Raging Blood Feat Bloodline"`, PREMULT-gated on holding a DIFFERENT, already-
+/// taken `Eldritch Heritage Bloodline` or `Sorcerer Bloodline` ability -- a feat a plain Bloodrager
+/// has no reason to hold, and (b) the `eldritch_scion_<x>_bloodline` class_feature record, `class:
+/// "Sorcerer"` (the cross-class archetype cycle 13 named). Confirmed exhaustively (`grep` across
+/// `data/corpus/**/*.json` for `<X>_BloodlineLVL|BloodragerLVL` or `<X>_BloodlineLVL|
+/// BloodragerBloodlineLVL`, any class): no THIRD record exists binding a plain Bloodrager's own
+/// per-bloodline `BloodlineLVL` to anything level-scaled. Importing either candidate's binding
+/// here would misrepresent EVERY Bloodrager as if they also held the Raging Blood feat or the
+/// Eldritch Scion archetype -- a live fabricated value, exactly the failure mode this bundle's
+/// own dispatch brief names as having already occurred once when a cross-record refusal like
+/// this one was loosened elsewhere. The guard therefore stays
+/// exactly as cycle 12 built it; this cycle's contribution is the oracle citation proving it is
+/// the correct model of the real engine's own semantics, not merely an unverified safety margin,
+/// and confirming (not merely repeating) that the remaining 7 are a genuine data/ingestion gap
+/// (no corpus record grants a plain Bloodrager's per-bloodline level at all) rather than a
+/// resolvable compute-shape gap this lane's own scope could close.
 pub(crate) fn resolve_pcgen_var_chain(
     bonus_vars: &BTreeMap<String, String>,
     class_level_var: &str,

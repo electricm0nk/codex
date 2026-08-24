@@ -728,10 +728,30 @@ impl<'a> Parser<'a> {
                 Ok(Expr::SkillInfoTotalRank(skill))
             }
             "min" | "max" | "floor" | "ceil" | "abs" => {
-                let mut args = vec![self.parse_expr()?];
+                // SD-32 T12 Epic 8 row 18 cycle 17: each comma-separated argument is now parsed
+                // via `parse_arith_or_bool`, not the plain-arithmetic `parse_expr`. Real PCGen's
+                // grammar is `org.nfunk.jep` (`pcgen/util/PJEP.java extends org.nfunk.jep.JEP`),
+                // a standard operator-precedence expression parser: relational operators
+                // (`org.nfunk.jep.function.Comparative`, confirmed pushing a plain `1.0`/`0.0`
+                // Double, same citation `Expr::Cmp`'s eval already cites) sit at their own
+                // precedence level and are valid anywhere an `expr` nonterminal appears --
+                // including a function call's comma-separated arguments -- not gated behind a
+                // parenthesised sub-expression the way this module's grammar previously required.
+                // Confirmed by the real corpus shape this module previously refused:
+                // `Protection Blessing ~ Increased Defense`'s
+                // `1+min(WarpriestLVL>20,2,WarpriestLVL/10)` -- `WarpriestLVL>20` as a BARE,
+                // unparenthesised `min()` argument. `parse_arith_or_bool` is a strict superset of
+                // `parse_expr` (identical behaviour whenever no comparison/`&&` operator follows),
+                // so this widening cannot change how any previously-accepted argument parses --
+                // it only accepts a new shape `parse_expr` alone refused. Applies uniformly to
+                // `floor`/`ceil`/`abs` too since they share this one parse branch; no oracle
+                // citation restricts comparisons to only `min`/`max` positions specifically, and
+                // narrowing to just two of the five functions here would be an arbitrary,
+                // unverified restriction of its own.
+                let mut args = vec![self.parse_arith_or_bool()?];
                 while let Some(Tok::Comma) = self.peek() {
                     self.bump();
-                    args.push(self.parse_expr()?);
+                    args.push(self.parse_arith_or_bool()?);
                 }
                 self.expect(&Tok::RParen)?;
                 match lname.as_str() {
@@ -745,7 +765,7 @@ impl<'a> Parser<'a> {
                     // — real `MaxCommand.java`/`MinCommand.java` are variable-arity and a
                     // single-argument call simply returns that argument unchanged). No arity
                     // check needed here: `args` always holds at least one element by
-                    // construction (the `let mut args = vec![self.parse_expr()?]` above), so
+                    // construction (the `let mut args = vec![self.parse_arith_or_bool()?]` above), so
                     // there is no reachable "too few arguments" shape for `min`/`max` to refuse.
                     _ => {}
                 }
@@ -761,14 +781,19 @@ impl<'a> Parser<'a> {
     /// to a boolean-valued [`Expr::Cmp`] node, then continues folding any further `&&`-joined
     /// comparison terms into [`Expr::And`] nodes. This is the ONE grammar rule used everywhere a
     /// boolean-as-numeric value can appear: as `if()`'s condition, inside a parenthesised
-    /// arithmetic primary (`1+(X>=15)`), and as an entire bare top-level formula (`RangerLVL>=6`)
-    /// — see each call site's own comment for why unifying them is safe rather than an
-    /// unverified precedence guess: every corpus occurrence of a comparison used as a value sits
-    /// at exactly one of those three positions, never embedded at an arbitrary point inside a
-    /// larger arithmetic expression (confirmed by `tests::corpus_shape_coverage`'s full refusal
-    /// listing), so this module does not need to — and does not — invent a general operator
-    /// precedence between comparisons and `+`/`-`/`*`//` that the real oracle's grammar was never
-    /// exercised against here.
+    /// arithmetic primary (`1+(X>=15)`), as an entire bare top-level formula (`RangerLVL>=6`),
+    /// and (SD-32 T12 Epic 8 row 18 cycle 17) as a bare, unparenthesised `min`/`max`/`floor`/
+    /// `ceil`/`abs` function argument (`min(WarpriestLVL>20,2,WarpriestLVL/10)`) — see each call
+    /// site's own comment for why unifying them is safe rather than an unverified precedence
+    /// guess. Real PCGen's grammar (`org.nfunk.jep`, a standard operator-precedence expression
+    /// parser `pcgen/util/PJEP.java` extends) treats relational operators as valid at every
+    /// `expr` position, including a function call's comma-separated arguments, not only the
+    /// three positions this module previously restricted them to — this module does not need to
+    /// — and does not — invent a general operator precedence between comparisons and
+    /// `+`/`-`/`*`//` beyond what `parse_arith_or_bool` already expresses (a comparison/`&&`
+    /// chain sits ABOVE arithmetic, never nested inside one); a comparison still cannot appear
+    /// nested inside a larger arithmetic term (`1+(X>=5)*2` is still refused, no corpus record
+    /// exercises that shape).
     fn parse_arith_or_bool(&mut self) -> Result<Expr, FormulaEvalError> {
         let mut lhs = self.parse_expr()?;
         if let Some(op) = Self::peek_cmp_op(self.peek()) {
@@ -1405,6 +1430,41 @@ mod tests {
             e.evaluate("max(floor(CavalierLVL/2))", &vars(&[("CavalierLVL", 9)])).unwrap(),
             4
         );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 17: an unparenthesised comparison as a bare `min`/`max`
+    /// function argument, the real corpus shape `Protection Blessing ~ Increased Defense`'s
+    /// `1+min(WarpriestLVL>20,2,WarpriestLVL/10)` previously refused (cycle 16 named it,
+    /// verified against `org.nfunk.jep`'s standard operator-precedence grammar — relational
+    /// operators are valid at any `expr` position, not gated behind parens — and sized the
+    /// blast radius: 1 corpus record). `WarpriestLVL>20` evaluates to `Expr::Cmp` -> 0.0/1.0
+    /// (`org.nfunk.jep.function.Comparative.run()`, same citation `Expr::Cmp`'s own eval arm
+    /// cites), so at level 20 the comparison is false (0) and `min(0,2,2)=0`, at level 21 true
+    /// (1) and `min(1,2,2.1)=1`.
+    #[test]
+    fn bare_comparison_as_a_min_max_function_argument_matches_the_warpriest_corpus_shape() {
+        let e = PcgenFormulaEvaluator;
+        assert_eq!(
+            e.evaluate(
+                "1+min(WarpriestLVL>20,2,WarpriestLVL/10)",
+                &vars(&[("WarpriestLVL", 20)])
+            )
+            .unwrap(),
+            1
+        );
+        assert_eq!(
+            e.evaluate(
+                "1+min(WarpriestLVL>20,2,WarpriestLVL/10)",
+                &vars(&[("WarpriestLVL", 21)])
+            )
+            .unwrap(),
+            2
+        );
+        // Same shape for max(), and for a bare (non-min/max-wrapped) comparison mixed with a
+        // plain arithmetic argument, proving this is the general `parse_arith_or_bool` widening
+        // and not a min()-specific special case.
+        assert_eq!(e.evaluate("max(WarpriestLVL>20,0)", &vars(&[("WarpriestLVL", 25)])).unwrap(), 1);
+        assert_eq!(e.evaluate("max(WarpriestLVL>20,0)", &vars(&[("WarpriestLVL", 5)])).unwrap(), 0);
     }
 
     #[test]

@@ -2118,13 +2118,164 @@ const HUNTER_CLASS_ID: &str = "class:hunter";
 /// already use, with a genuinely enforced per-day minutes budget.
 const HUNTER_ANIMAL_FOCUS_ABILITY_ID: &str = "animal_focus";
 /// The choice set for which Animal Focus type is currently active. 13
-/// real options exist in the corpus (`KEY:Hunter Animal Focus ~ ...`);
-/// this codebase recognizes only Bull, the cleanest flat self-scoped
-/// magnitude of the set (a pure STR enhancement bonus, `2 + 2 at level 8
-/// + 2 at level 15`), mirroring Oracle's Mystery/Shaman's Spirit
-/// canonical-narrowing shape -- the other 12 stay named-but-unbuilt.
+/// real options exist in the corpus (`KEY:Hunter Animal Focus ~ ...`).
+///
+/// **SD-32 T12 Epic 8 row 18 cycle 17: widened from Bull-only (the prior
+/// canonical-narrowing choice) to all 11 magnitude-bearing options plus
+/// Mouse's boolean evasion posture and No Ability's text-only posture --
+/// the full 13, a generic pass rather than a per-object one (`§17`).**
+/// Every magnitude-bearing option (`HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS`
+/// below) shares the SAME real corpus shape Bull already proved: a base
+/// `BONUS:VAR|HunterAnimalFocus<Name><Suffix>|<N>` plus two more additive
+/// `PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`-gated increments -- verified
+/// directly against each option's own `data/corpus/advanced_class_guide/
+/// class_feature/hunter_animal_focus/<name>.json`. Mouse (`Get evasion...
+/// and improved evasion|PREVARGTEQ:HunterAnimalFocusLVL,12`) and No
+/// Ability (`Get nothing`, no `BONUS:VAR` at all) are genuinely different
+/// shapes -- a boolean posture fact and a text-only fact respectively --
+/// handled as their own small branches rather than forced into the
+/// tiered-magnitude table.
 const HUNTER_ANIMAL_FOCUS_CHOICE_ID: &str = "choice:hunter_animal_focus";
 const HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID: &str = "animal_focus:bull";
+
+/// One magnitude-bearing Animal Focus option's real corpus shape: a base
+/// bonus plus two more additive tiers at Hunter level 8 and 15
+/// (`PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`, `HunterAnimalFocusLVL`
+/// itself unconditionally `HunterLVL` -- same chain Bull's own doc cites).
+struct HunterAnimalFocusTieredOption {
+    /// The `choice:hunter_animal_focus` selection id, `"animal_focus:<slug>"`.
+    selection_id: &'static str,
+    /// Human-readable label used only in explanation/diagnostic text.
+    label: &'static str,
+    /// What the magnitude is a bonus TO, for the explanation text (e.g.
+    /// `"enhancement bonus to Strength"`, `"competence bonus to Perception"`,
+    /// `"feet of darkvision range"`).
+    benefit: &'static str,
+    base: i16,
+    per_level_8: i16,
+    per_level_15: i16,
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 17: the 11 magnitude-bearing Animal Focus
+/// options (of the 13 total; Mouse and No Ability are handled separately,
+/// see `HUNTER_ANIMAL_FOCUS_CHOICE_ID`'s own doc). Each row verified
+/// directly against its own corpus record:
+/// - Bull: `STAT|STR|...|TYPE=Enhancement`, `2/2/2` (cycle predates this
+///   table; re-verified unchanged).
+/// - Bear: `STAT|CON|...|TYPE=Enhancement`, `2/2/2`.
+/// - Tiger: `STAT|DEX|...|TYPE=Enhancement`, `2/2/2` -- named in Bull's own
+///   prior doc as "structurally identical," now built.
+/// - Falcon: `SKILL|Perception|...|TYPE=Competence`, `4/2/2`.
+/// - Frog: `SITUATION|Acrobatics=When Jumping` + `SKILL|Swim|...
+///   |TYPE=Competence`, `4/2/2` (one magnitude, two skills -- the corpus's
+///   own single `HunterAnimalFocusFrogBonus` target feeds both BONUS rows).
+/// - Monkey: `SKILL|Climb|...|TYPE=Competence`, `4/2/2`.
+/// - Owl: `SKILL|Stealth|...|TYPE=Competence`, `4/2/2`.
+/// - Snake: no `BONUS:` target beyond the bare `VAR` itself (a flat
+///   attack-of-opportunity/AC bonus with no integrated total anywhere in
+///   this codebase, the same "standalone fact" bar Wild Empathy already
+///   established), `2/2/2`.
+/// - Stag: `MOVEADD|TYPE.Walk|...`, `5/5/5`.
+/// - Wolf: `VAR|ScentRange|HunterAnimalFocusWolfScent` (scent range in
+///   feet), `10/10/10`.
+/// - Bat: `VAR|DarkvisionRange|HunterAnimalFocusBatSight|TYPE=Base`
+///   (darkvision range in feet), `60/30/0` -- the real corpus record has
+///   NO third `PREVARGTEQ:...,15` numeric tier on the sight-range `VAR`
+///   itself; level 15's own benefit is the SEPARATE boolean "blindsense to
+///   10 feet" fact, handled in `ground_or_block_hunter_animal_focus`'s own
+///   Bat branch rather than folded into this numeric table.
+const HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS: &[HunterAnimalFocusTieredOption] = &[
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:bull",
+        label: "Bull",
+        benefit: "enhancement bonus to Strength",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:bear",
+        label: "Bear",
+        benefit: "enhancement bonus to Constitution",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:tiger",
+        label: "Tiger",
+        benefit: "enhancement bonus to Dexterity",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:falcon",
+        label: "Falcon",
+        benefit: "competence bonus to Perception",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:frog",
+        label: "Frog",
+        benefit: "competence bonus to Swim and to Acrobatics when jumping",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:monkey",
+        label: "Monkey",
+        benefit: "competence bonus to Climb",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:owl",
+        label: "Owl",
+        benefit: "competence bonus to Stealth",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:snake",
+        label: "Snake",
+        benefit: "bonus to attacks of opportunity and to AC against attacks of opportunity",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:stag",
+        label: "Stag",
+        benefit: "foot enhancement bonus to base land speed",
+        base: 5,
+        per_level_8: 5,
+        per_level_15: 5,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:wolf",
+        label: "Wolf",
+        benefit: "feet of scent range",
+        base: 10,
+        per_level_8: 10,
+        per_level_15: 10,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:bat",
+        label: "Bat",
+        benefit: "feet of darkvision range",
+        base: 60,
+        per_level_8: 30,
+        per_level_15: 0,
+    },
+];
+const HUNTER_ANIMAL_FOCUS_MOUSE_SELECTION_ID: &str = "animal_focus:mouse";
+const HUNTER_ANIMAL_FOCUS_NO_ABILITY_SELECTION_ID: &str = "animal_focus:no_ability";
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
 /// class-specific closure): APG Cavalier's 1st-level Mount is, per the
@@ -25729,26 +25880,35 @@ fn hunter_animal_focus_uses_per_day(
         )
 }
 
+/// The shared tiered-magnitude shape every `HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS` row uses: a base
+/// value, plus its own `per_level_8` increment once `level >= 8`, plus its own `per_level_15`
+/// increment once `level >= 15` -- the exact three-`BONUS:VAR` stacking shape each option's own
+/// corpus record carries (`HunterAnimalFocusLVL` itself always `HunterLVL` unconditionally, so
+/// this module's own `level` parameter, already the Hunter class level, is exactly that value).
+fn hunter_animal_focus_tiered_bonus(option: &HunterAnimalFocusTieredOption, level: u8) -> i16 {
+    let mut bonus = option.base;
+    if level >= 8 {
+        bonus += option.per_level_8;
+    }
+    if level >= 15 {
+        bonus += option.per_level_15;
+    }
+    bonus
+}
+
 /// Hunter Animal Focus (Bull)'s STR enhancement bonus: +2 base, +2 more
 /// at level 8, +2 more at level 15 (deepening 2026-07-26, task #2),
 /// verified directly against `acg_abilities_class.lst`'s own
-/// `KEY:Hunter Animal Focus ~ Bull` record (three stacking
-/// `BONUS:VAR|HunterAnimalFocusBullBonus|2` entries, the third and
-/// second gated on `PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`, and
-/// `HunterAnimalFocusLVL` itself resolves to `HunterLVL` unconditionally).
-/// Bull was picked as the one canonical focus of the 13 real options this
-/// closure grounds -- the cleanest flat, self-scoped ability-enhancement
-/// magnitude of the set (Tiger's own DEX version is structurally
-/// identical; the other 11 stay named-but-unbuilt).
+/// `KEY:Hunter Animal Focus ~ Bull` record. SD-32 T12 Epic 8 row 18 cycle
+/// 17: now a thin named wrapper over the generic `HUNTER_ANIMAL_FOCUS_
+/// TIERED_OPTIONS` table (kept for its own existing test's and doc's
+/// continuity), not a separate implementation of the same shape any more.
 fn hunter_animal_focus_bull_bonus(level: u8) -> i16 {
-    let mut bonus = 2;
-    if level >= 8 {
-        bonus += 2;
-    }
-    if level >= 15 {
-        bonus += 2;
-    }
-    bonus
+    let bull = HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS
+        .iter()
+        .find(|o| o.selection_id == HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID)
+        .expect("HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS must always carry a Bull row");
+    hunter_animal_focus_tiered_bonus(bull, level)
 }
 
 /// Grounds Hunter's Wild Empathy as a standalone explanation record
@@ -25778,19 +25938,23 @@ fn ground_hunter_wild_empathy(
 }
 
 /// Grounds or claim-blocks Hunter's Animal Focus execution engine for
-/// `level` (deepening 2026-07-26, task #2). Mirrors
-/// `ground_or_block_inquisitor_judgment`'s exact three-branch shape
-/// (activation-gating + choice-recognition): a character not currently
-/// focused (no `class_ability_activations` entry, or one present but not
-/// `EquippedActive`) is a genuinely valid PF1 posture -- grounds a real
-/// "not focused" recognition record, no claim-block. An active focus
-/// naming no recognized `choice:hunter_animal_focus` selection (or a
-/// request for one of the other 12 unbuilt options) is a genuine posture
-/// violation and claim-blocks. Only an active focus with the recognized
-/// Bull choice grounds the real STR enhancement bonus. The per-day
-/// minutes budget is genuinely enforced against
-/// `activation.rounds_consumed_today`, mirroring Rage's/Judgment's own
-/// enforced budget exactly.
+/// `level` (deepening 2026-07-26, task #2; widened SD-32 T12 Epic 8 row
+/// 18 cycle 17 from Bull-only to all 13 real corpus options -- a generic
+/// pass over `HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS` plus Mouse's and No
+/// Ability's own small branches, per `§17`, not 13 near-duplicate
+/// functions). Mirrors `ground_or_block_inquisitor_judgment`'s exact
+/// three-branch shape (activation-gating + choice-recognition): a
+/// character not currently focused (no `class_ability_activations` entry,
+/// or one present but not `EquippedActive`) is a genuinely valid PF1
+/// posture -- grounds a real "not focused" recognition record, no
+/// claim-block. An active focus naming no recognized
+/// `choice:hunter_animal_focus` selection is a genuine posture violation
+/// and claim-blocks. An active focus naming any of the 13 real options
+/// grounds its own real magnitude (or boolean/text-only posture fact for
+/// Mouse/No Ability). The per-day minutes budget is genuinely enforced
+/// against `activation.rounds_consumed_today`, mirroring Rage's/
+/// Judgment's own enforced budget exactly, unchanged from before this
+/// cycle.
 fn ground_or_block_hunter_animal_focus(
     input: &CharacterInput,
     level: u8,
@@ -25841,39 +26005,84 @@ fn ground_or_block_hunter_animal_focus(
     match activation.active_state {
         ActiveState::EquippedActive => {
             let focus_selection = choice_selection(input, HUNTER_ANIMAL_FOCUS_CHOICE_ID);
-            if focus_selection != Some(HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID) {
+            let minutes_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+
+            let recognized_tiered =
+                focus_selection.and_then(|s| HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS.iter().find(|o| o.selection_id == s));
+
+            if let Some(option) = recognized_tiered {
+                let bonus = hunter_animal_focus_tiered_bonus(option, level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                    value: bonus,
+                    detail: format!(
+                        "Hunter level {level} is actively using the {} Animal Focus, within the \
+                         grounded per-day budget ({uses_per_day} minutes; {minutes_consumed_today} \
+                         consumed today), granting +{bonus} {}. This is a standalone fact -- it is \
+                         not applied to any integrated ability modifier, skill total, speed total, \
+                         or vision-range total",
+                        option.label, option.benefit
+                    ),
+                });
+                if option.selection_id == "animal_focus:bat" && level >= 15 {
+                    explanations.push(ComputationExplanation {
+                        id: "class_feature.acg.hunter.animal_focus_execution.bat_blindsense"
+                            .to_owned(),
+                        value: 10,
+                        detail: "Hunter level 15+ Bat Animal Focus also grants blindsense to a \
+                                  range of 10 feet -- a separate boolean fact from the darkvision \
+                                  range magnitude above (real corpus DESC: \"and blindsense to 10 \
+                                  feet|PREVARGTEQ:HunterAnimalFocusLVL,15\"), not folded into it"
+                            .to_owned(),
+                    });
+                }
+            } else if focus_selection == Some(HUNTER_ANIMAL_FOCUS_MOUSE_SELECTION_ID) {
+                let improved = level >= 12;
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                    value: i16::from(improved),
+                    detail: format!(
+                        "Hunter level {level} is actively using the Mouse Animal Focus, within \
+                         the grounded per-day budget ({uses_per_day} minutes; \
+                         {minutes_consumed_today} consumed today), granting evasion{}. A boolean \
+                         posture fact (real corpus DESC: \"Get evasion ... and improved \
+                         evasion|PREVARGTEQ:HunterAnimalFocusLVL,12\") -- no `BONUS:VAR` \
+                         magnitude exists for this option at all, and this codebase has no \
+                         integrated evasion/improved-evasion total to apply it to",
+                        if improved { " and improved evasion (level 12+)" } else { "" }
+                    ),
+                });
+            } else if focus_selection == Some(HUNTER_ANIMAL_FOCUS_NO_ABILITY_SELECTION_ID) {
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                    value: 0,
+                    detail: format!(
+                        "Hunter level {level} is actively using Animal Focus but has chosen \
+                         \"No Ability\" (real corpus DESC: \"Ability not being used\"), within \
+                         the grounded per-day budget ({uses_per_day} minutes; \
+                         {minutes_consumed_today} consumed today): a genuinely valid, text-only \
+                         posture carrying no `BONUS:VAR` at all -- no focus bonus is claimed"
+                    ),
+                });
+            } else {
                 diagnostics.push(ComputationDiagnostic {
                     id: "class_feature.acg.hunter.animal_focus_execution.focus_choice_missing"
                         .to_owned(),
                     message: format!(
                         "Hunter level {level} claims an active Animal Focus \
                          ({HUNTER_ANIMAL_FOCUS_ABILITY_ID}) but has no recognized \
-                         {HUNTER_ANIMAL_FOCUS_CHOICE_ID} selection naming Bull (got \
-                         {focus_selection:?}): taking on an animal focus always requires \
-                         choosing a type first per the corpus's own sequencing, and Bull is the \
-                         only one of the 13 focus options this codebase grounds, so an active \
-                         focus naming any other type -- or none -- is a genuine posture \
-                         violation, not a silently passing one -- no focus bonus is claimed for \
-                         this input"
+                         {HUNTER_ANIMAL_FOCUS_CHOICE_ID} selection naming one of the 13 real \
+                         corpus options (got {focus_selection:?}): taking on an animal focus \
+                         always requires choosing a type first per the corpus's own sequencing, \
+                         so an active focus naming an unrecognized type -- or none -- is a \
+                         genuine posture violation, not a silently passing one -- no focus \
+                         bonus is claimed for this input"
                     ),
                     claim_blocking: true,
                 });
                 return;
             }
 
-            let bull_bonus = hunter_animal_focus_bull_bonus(level);
-            let minutes_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
-            explanations.push(ComputationExplanation {
-                id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
-                value: bull_bonus,
-                detail: format!(
-                    "Hunter level {level} is actively using the Bull Animal Focus, within the \
-                     grounded per-day budget ({uses_per_day} minutes; {minutes_consumed_today} \
-                     consumed today), granting a +{bull_bonus} enhancement bonus to Strength. \
-                     This is a standalone fact -- it is not applied to any integrated ability \
-                     modifier or ability-score total"
-                ),
-            });
             explanations.push(ComputationExplanation {
                 id: "class_feature.acg.hunter.animal_focus_execution.uses_per_day".to_owned(),
                 value: uses_per_day,
@@ -60078,9 +60287,171 @@ mod hunter_dispatch_widening_safety_tests {
         }
     }
 
-    /// An active Animal Focus naming no recognized choice (or one of the
-    /// other 12 unbuilt options) is a genuine posture violation and must
-    /// claim-block -- never silently passed.
+    /// SD-32 T12 Epic 8 row 18 cycle 17: every one of the 11 magnitude-bearing
+    /// Animal Focus options resolves to its own real level-scaled magnitude,
+    /// proven directly against `HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS`'s own
+    /// per-option base/tier fields (each independently verified against its
+    /// own `data/corpus/advanced_class_guide/class_feature/hunter_animal_focus/
+    /// <name>.json`, see that table's own doc). Tiger mirrors Bull exactly
+    /// (2/2/2); Falcon/Frog/Monkey/Owl share the 4/2/2 shape; Stag is 5/5/5;
+    /// Wolf is 10/10/10; Bat is 60/30/0 (its own level-15 benefit is the
+    /// separate blindsense boolean, proven in its own test below).
+    #[test]
+    fn every_tiered_animal_focus_option_matches_its_own_real_level_gates() {
+        let expectations: &[(&str, &[(u8, i16)])] = &[
+            ("animal_focus:bull", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:bear", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:tiger", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:falcon", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:frog", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:monkey", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:owl", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:snake", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:stag", &[(1, 5), (7, 5), (8, 10), (14, 10), (15, 15), (20, 15)]),
+            ("animal_focus:wolf", &[(1, 10), (7, 10), (8, 20), (14, 20), (15, 30), (20, 30)]),
+            ("animal_focus:bat", &[(1, 60), (7, 60), (8, 90), (14, 90), (15, 90), (20, 90)]),
+        ];
+        for (selection_id, per_level) in expectations {
+            let option = super::HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS
+                .iter()
+                .find(|o| &o.selection_id == selection_id)
+                .unwrap_or_else(|| panic!("missing tiered option {selection_id}"));
+            for (level, expected) in *per_level {
+                assert_eq!(
+                    super::hunter_animal_focus_tiered_bonus(option, *level),
+                    *expected,
+                    "{selection_id} at level {level}"
+                );
+            }
+        }
+    }
+
+    /// A single-class Hunter actively using the Tiger Animal Focus (of the
+    /// 12 options grounded this cycle, alongside Bull) applies its own real
+    /// DEX enhancement bonus through the full end-to-end pipeline, proving
+    /// the widened active-branch dispatch, not only the standalone formula.
+    #[test]
+    fn single_class_hunter_actively_focused_on_tiger_applies_the_real_bonus() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: "animal_focus:tiger".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+            .expect("expected Tiger Animal Focus grounded at level 1");
+        assert_eq!(active.value, 2, "level 1 Tiger bonus: {:?}", active);
+    }
+
+    /// Bat Animal Focus's own extra level-15 blindsense fact is a SEPARATE
+    /// boolean explanation from its darkvision-range magnitude -- proven
+    /// present at level 15 and absent below it.
+    #[test]
+    fn bat_animal_focus_blindsense_appears_only_at_level_15_and_above() {
+        for (level, expect_blindsense) in [(1u8, false), (14, false), (15, true), (20, true)] {
+            let mut input = human_hunter_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+                selection_id: "animal_focus:bat".to_owned(),
+            });
+            input.chosen.class_ability_activations.push(ClassAbilityActivation {
+                ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+                active_state: ActiveState::EquippedActive,
+                rounds_consumed_today: None,
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+            let has_blindsense = receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.bat_blindsense");
+            assert_eq!(
+                has_blindsense, expect_blindsense,
+                "level {level} Bat blindsense presence"
+            );
+        }
+    }
+
+    /// Mouse Animal Focus is a boolean evasion/improved-evasion posture
+    /// fact, not a `BONUS:VAR` magnitude -- proven at level 1 (evasion
+    /// only) and level 12+ (improved evasion too).
+    #[test]
+    fn mouse_animal_focus_grounds_evasion_and_improved_evasion_at_its_own_gate() {
+        for (level, expect_improved) in [(1u8, false), (11, false), (12, true), (20, true)] {
+            let mut input = human_hunter_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+                selection_id: "animal_focus:mouse".to_owned(),
+            });
+            input.chosen.class_ability_activations.push(ClassAbilityActivation {
+                ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+                active_state: ActiveState::EquippedActive,
+                rounds_consumed_today: None,
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+            let active = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+                .expect("expected Mouse Animal Focus grounded");
+            assert_eq!(
+                active.value,
+                i16::from(expect_improved),
+                "level {level} Mouse improved-evasion flag: {:?}",
+                active
+            );
+        }
+    }
+
+    /// No Ability is a genuinely valid, text-only choice -- grounds cleanly
+    /// with zero magnitude, never claim-blocks.
+    #[test]
+    fn no_ability_animal_focus_grounds_cleanly_with_zero_magnitude() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: "animal_focus:no_ability".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_ne!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "No Ability must never claim-block: {:?}",
+            receipt.computation.diagnostics
+        );
+        let active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+            .expect("expected No Ability grounded");
+        assert_eq!(active.value, 0, "No Ability must carry zero magnitude: {:?}", active);
+    }
+
+    /// An active Animal Focus naming no recognized choice at all (all 13
+    /// real corpus options are grounded as of cycle 17, so this now proves
+    /// the "no selection made" posture specifically) is a genuine posture
+    /// violation and must claim-block -- never silently passed.
     #[test]
     fn single_class_hunter_active_focus_without_a_recognized_bull_choice_stays_blocked() {
         let mut input = human_hunter_input(1);
