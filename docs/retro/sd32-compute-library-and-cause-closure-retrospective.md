@@ -329,3 +329,128 @@ to skip — it is `§13` step 3's own text, and `decisions.md §10`'s Definition
 this one cannot be cleared by this agent (the tool-permission wall applies to any `git worktree
 remove`, not just a bulk pass), so it is escalated here, by name, with the reproducible dry-run
 command and its 128/14 split, for the orchestrating session to execute directly.
+
+---
+
+## Operator retrospective, 2026-08-24 — conducted as a conversation, not a script run
+
+Everything above this line was produced by a closure lane running `scripts/retro.py`. This section
+is the retrospective the operator and orchestrator held afterwards. It corrects two figures above and
+adds four findings the tool could not have surfaced, because three of them are defects *in the
+instruments themselves*.
+
+### Corrections to this document's own headline block
+
+| stated above | actual | re-derive |
+|---|---|---|
+| 436 events | **445** | `python3 scripts/retro.py summary --since 2026-08-22` |
+| "10 deferrals logged across the bundle" | **29** | same command; see finding 1 |
+| "open deferrals at closure: 0" | **unknowable from the tool** | see finding 1 |
+
+### Finding 1 — `retro.py`'s `deferrals.open` has never measured openness
+
+`scripts/retro.py:755` computes `"open": [... for e in deferrals[-limit:]]`. It is **the last N
+deferral events**, N = `--limit` (default 10). There is no resolution tracking in the schema at all.
+
+Proven by varying the flag: `--limit 3 → open=3`, `--limit 10 → open=10`, `--limit 29 → open=29`.
+
+**Cost:** the closure lane read `open: 10` as the bundle's entire deferral list and re-verified those
+10 honestly. **The real total is 29. Nineteen were never checked.** Of those 19, 10 are covered by the
+now-green `no_record == 0` gate and 2 by the corpus-wide PI audits; **7 remain genuinely unverified**
+(a `gen_book_cache.rs` self-erasure fix merge, `census_independent.py`'s classification, T7's
+archetype traversal, T8's classifier blind spot, 18 base classes with no `class_tables()` row, the
+dashboard `wiring_class` classifier, and a stale dashboard JSON).
+
+This is `workflow-instruction.md` §9 lesson 7 — *"a ruling that defers must name the condition under
+which it is revisited, and that condition must be checked, not remembered"* — failing because the
+tool that was supposed to support it was silently broken and nobody checked the tool.
+
+### Finding 2 — the same defect, three times, in one session: the denominator
+
+None of these is a false number. Each is a true number over a partial population.
+
+1. `deferrals.open` — the last 10, read as all open. **19 missed.**
+2. **Gate 2's corpus-wide engine run reports 97.9% recognised** — of the **4,798 units it ran**, which
+   is **41% of the 11,652 formula-bearing units that exist**. **6,854 have never been through an
+   engine.** Per family: F1 28%, F8 21%, F2 64%. Re-derive: compare
+   `artifacts/gate-2-engines/formula_interpreter.corpus-wide.json` family populations against
+   `scripts/shape_ledger.py`'s `matched` rows grouped by family.
+3. The orchestrator's own "8,446 units remaining" — one row of a nine-row status × has-formula
+   cross-tab, relayed as the whole remaining scope.
+
+**Engines exist for every shape family. That is shape coverage, not unit coverage.** Gate 2 proved
+each engine handles its family against fixtures; it never claimed every unit of that family was run.
+
+### Finding 3 — what `unclassified = 0` actually covers, and the carve-out inside the instrument
+
+`shape_ledger.py:981` classifies `CL.not_done_population(inventory)`, which drops two things before
+counting. The arithmetic closes exactly:
+
+```
+49,438  inventory units
+34,397  ledger population        <- "unclassified = 0" is true over THIS
+15,022  dropped: verdict already "done"
+    19  dropped: EXCLUDED_BOOKS = ['beginner_box']
+```
+
+**SD-32 classified 100% of the work it defined as needing classification.** It never examined the
+15,022 already-`done` units — by design, not by accident.
+
+That is defensible only if `done` is trustworthy. `doneness_verdict()` maps `literal-verified`
+(6,589), `text-complete` (4,669), `grounded` (2,023) and **`fixture-verified` (1,741)** to `done`.
+`text-complete` is done by `decisions.md §7`'s ruling and is sound. But **8,330 units are blessed
+against a fixture or a literal check — never against the PCGen oracle** — and being outside the box
+means no future cycle re-examines them.
+
+**`EXCLUDED_BOOKS = ['beginner_box']` (19 units, status `not-started`) is a live carve-out that
+`decisions.md §27b` should have closed.** `beginner_box` is a real book; neither admissible reason
+(source absent, licensing) applies. It survived every §27b sweep because it lives in Python rather
+than in a document. 19 units is small; **the precedent is not — it sat in the one place a carve-out
+is invisible, the instrument that computes closure.**
+
+### Finding 4 — the handoff loses mechanisms, not lessons
+
+The operator's opening diagnosis was that lessons were not reaching the workflow-instructions. **The
+evidence says the opposite, which is worse.** `workflow-instruction.md` §9 carries **seven standing
+lessons transcribed verbatim from `docs/retro/sd31-retrospective.md`** (line 506 cites lines 126-153)
+plus five named footguns; the file cites the retrospective 14 times. Capture worked. The lessons were
+ignored anyway.
+
+What decayed was **THE-BOX**:
+
+| | |
+|---|---|
+| **SD-31** | a 377-line canonical living artifact — 46 groups, `uncovered: 0, overlap: 0`, enforced by `scripts/coverage_ledger.py`, amended every wave |
+| **SD-32** | 5 references, all backward-pointing and past-tense; one is an anecdote inside lesson 5; **no `THE-BOX.md` of its own** |
+
+**SD-32 never built its own box. It inherited a citation.** The goal lived in a mechanism — a document
+you must update every wave, backed by a tool that fails when the parts do not add up — and SD-32
+turned it into a sentence. A living document reminds you every cycle; a citation reminds you never.
+That is why the operator had to restate the bundle's goal repeatedly.
+
+**The pattern holds across the whole bundle.** Everything with a mechanical form held: `no_record == 0`,
+the PI sweep (which caught a real leak at closure), the base-SHA check (the wrong-base failure fired
+27 times in SD-31 and never recurred). **Everything written as prose broke**: lesson 2 (every figure
+carries its re-derive command) was violated five times in one session; lesson 7 is finding 1.
+
+**SD-32 mechanized its own new goals and de-mechanized the inherited ones.** Lesson 1 already says
+this — *"recurring incidents get a mechanical control, not a better-worded warning"* — and lesson 1
+is itself prose. Lesson 2 says *"documents get tests or expiry"*; THE-BOX is the document that most
+needed that and is the one that quietly expired.
+
+### What SD-33 inherits from this
+
+1. **A lesson carried forward must arrive with its enforcing tool**, or it arrives as a quote. Copy
+   the gate, not the sentence.
+2. **SD-33 builds its own box, rebuilt — not inherited.** SD-31's 46-group partition was cut for a
+   world where things were not yet ingested. Its column is now **agreement with the oracle**.
+3. **Every headline figure states its denominator in the same sentence**, and a percentage whose
+   denominator is not the full population is a gate failure, not a footnote.
+4. **The verification harness comes before the piping.** Presence gates cannot check correctness: a
+   wrong computed number looks exactly like a right one. Running ~11,000 formula-bearing units
+   through engines with nothing to check them against yields 11,000 unverified numbers and a green
+   board — the precise failure this program exists to prevent.
+5. **"Can't be checked" stays a visible bucket**, never folded into done. Unprovable units want to
+   look finished.
+6. **Carve-out sweeps must grep code, not only prose** — `EXCLUD*`, `SKIP*`, `_ALLOWLIST`, and any
+   hardcoded book/kind list in the scripts that compute closure figures.
