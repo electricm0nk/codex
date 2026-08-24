@@ -1518,3 +1518,21 @@ in this bundle the operator has answered a scope question by widening it (`§20`
 and this). The recurring error is not escalating too often — it is **presenting a narrowing as an
 option, or leaving an inherited exclusion "flagged for re-examination" instead of simply closing it.**
 Where the doctrine already supplies the answer, apply it. Bring the plan and its size, never the exit.
+
+---
+
+## §28 — The signed-off 60-term PI vocabulary stands as-is; no expansion
+
+**Operator ruling, 2026-08-24.** Presented with three options on whether `docs/governance/ogl-pi-blacklist.md`'s SIGNED-OFF vocabulary should expand to cover the 23,090-record candidate population that `scripts/pi_key_rawtokens_audit.py`'s heuristic scan surfaced, the operator chose **option 3: the ruling stands as-is.**
+
+**Decision.** The **60 terms approved under `§19` are the list.** The candidate population is **not** Product Identity by default, and no term is added to the blacklist on this bundle's authority.
+
+**Scope of what this settles:**
+
+1. The 23,090-record candidate population (capitalized-word-shaped, not-yet-listed, surfaced across `data.key` / `data.raw_tokens` corpus-wide) requires **no action**. It is not a backlog; it is a heuristic's output that has now been adjudicated.
+2. The specific sighting raised during closure — a **deity name appearing as a `class_feature` name** in a `site/status-data/*.json` public-facing artifact (coordinates only, per `§24b`-2) — is **acceptable Open Game Content**. It is not on the 60-term list, `scripts/verify.sh --only site-public-status-pi-gate` and `--only site-dashboard-pi-gate` both PASS against it, and those gates are correct as written.
+3. `scripts/pi_key_rawtokens_audit.py` remains a useful **heuristic**, not a gate. Its candidate output is a prompt for an operator question, never a defect list.
+
+**Why this is a closure, not a deferral.** The deferral this resolves (`retro.py` event `1787493382983-t9-onboarding-9161f5`) asked for an operator ruling, and `docs/governance/blocker-closure-doctrine.md` names exactly that as the legitimate second disposition: clear it, or raise your hand and wait. The hand was raised; the ruling has been given. **The blacklist's own standing caution — "stop and ask the operator rather than guess" — was honoured rather than bypassed**, and `§19`'s approval of a specific list (not a licence to keep adding terms unilaterally) is left intact.
+
+**Standing consequence for successor bundles.** A future cycle that finds a capitalized, unlisted term in the corpus has its answer already: **it is not PI unless it is on the `§19` list.** Re-raising the same question requires new evidence — a licensing change, or a term demonstrably inside OGL §1(e)'s definition that the `§19` review missed — not a fresh heuristic scan over the same population.
