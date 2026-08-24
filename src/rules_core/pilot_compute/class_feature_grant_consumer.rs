@@ -932,10 +932,37 @@ pub(crate) fn class_feature_record_tokens_pre_gate_safe() -> &'static BTreeMap<S
                 else {
                     continue;
                 };
-                let Some(raw_desc) = data["description"].as_str() else { continue };
-                if !is_real_description_value(raw_desc) {
-                    continue;
-                }
+                // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`): `description: null` is now ADMITTED
+                // (as an empty `raw_description`, never fabricated text) rather than skipped
+                // outright -- confirmed live, `data/corpus/ultimate_magic/class_feature/
+                // jungle_domain/trap_sense.json` (`VISIBLE:NO`, a real, invisible, purely
+                // mechanical sub-ability: `BONUS:VAR|TrapSenseBonus|DomainJungleLVL/3`, no
+                // description text at all) was refused by `resolve_pool_member_sole_magnitude`
+                // purely because this table's OLD `description.as_str()?` gate dropped the
+                // record before its real `bonus_vars` chain was ever read -- the exact same
+                // "header record with `description: null`" shape `class_feature_bonus_vars_any_
+                // record`'s own doc above already names and already admits for HEADER lookups;
+                // this widening applies the identical reasoning to MEMBER lookups. Safe for every
+                // existing consumer: `resolved_description_for`/`resolved_description_for_formula_
+                // only_desc_argument` both already refuse cleanly (return `None`, never render) on
+                // an empty `raw_description` -- `render_pcgen_desc_with_values("", ...).text.
+                // is_empty()` and `desc_token_arguments("").is_empty()` respectively -- so no
+                // caller anywhere gains a new, empty, fabricated rendering; only
+                // `resolve_pool_member_sole_magnitude`'s `BONUS:VAR`-only path (which never reads
+                // `raw_description` at all) gains real, previously-invisible magnitude-bearing
+                // records. A record whose description IS present but carries a REAL bad value
+                // (`.CLEAR`/`.CLEARALL`/a PI-redaction marker) is still refused exactly as before
+                // -- `is_real_description_value` only ever ran on a `Some` description, so this
+                // widening changes NOTHING about that PI-safety gate (`§15`).
+                let raw_desc = match data["description"].as_str() {
+                    Some(s) => {
+                        if !is_real_description_value(s) {
+                            continue;
+                        }
+                        s.to_string()
+                    }
+                    None => String::new(),
+                };
                 let bonus_vars = data["raw_tokens"]
                     .as_array()
                     .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
@@ -943,7 +970,7 @@ pub(crate) fn class_feature_record_tokens_pre_gate_safe() -> &'static BTreeMap<S
                 let entry = out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
                     name: name.to_string(),
                     class: class.to_string(),
-                    raw_description: raw_desc.to_string(),
+                    raw_description: raw_desc,
                     bonus_vars: BTreeMap::new(),
                 });
                 merge_bonus_var_target_map_never_overwriting(&mut entry.bonus_vars, bonus_vars);
@@ -1090,6 +1117,67 @@ pub(crate) fn class_record_bonus_vars() -> &'static BTreeMap<String, BTreeMap<St
                     .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
                     .unwrap_or_default();
                 let entry = out.entry(class_id.to_string()).or_default();
+                for (target, formula) in bonus_vars {
+                    entry.entry(target).or_insert(formula);
+                }
+            }
+        }
+        out
+    })
+}
+
+/// Every corpus `data/corpus/*/domain/*.json` DOMAIN record's own PRE-gate-safe `BONUS:VAR` chain,
+/// keyed by the domain's own bare `KEY:` (e.g. `"Cave"`, `"Aquatic"` -- never `"Cave Domain"`, the
+/// `class_feature` sibling family's own naming shape) (SD-32 T12 Epic 8 row 18 cycle 18, `§27b`).
+///
+/// Real corpus fact, confirmed live by direct inspection
+/// (`data/corpus/ultimate_magic/domain/cave.json`): a `domain`-kind record ALREADY carries the
+/// real, resolvable `BONUS:VAR|DomainCaveLVL|DomainLVL|TYPE=Domain`, `BONUS:VAR|DomainCaveDC|
+/// 10+(DomainCaveLVL/2)+WIS|TYPE=Domain`, `BONUS:VAR|DomainCaveTimes|DomainPowerTimes|TYPE=Domain`
+/// chain every one of that domain's `class_feature` MEMBER records (`"Cave Domain ~ Cavesight"`,
+/// ...) needs -- the exact same convention `pool_header_record_by_normalized_suffix`'s cycle-5
+/// widening already merges for domains whose header happens to live under `class_feature`
+/// (`"Air Domain"`, bare key, `data/corpus/core_rulebook/class_feature/air/air.json`). Neither
+/// `class_feature_bonus_vars_any_record` nor any other existing table ever reads this `domain`
+/// subdirectory at all -- every domain whose ONLY real header record lives here (23 of the
+/// cycle-18 census's 197 unresolved groups sampled this cycle: Aquatic, Arctic, Eagle, Frog,
+/// Jungle, Monkey, Mountain, Plains, Serpent, Swamp, Cave, Desert, ...) was refused purely for
+/// want of this read path, not for want of real data -- a genuine engine gap this cycle closes,
+/// not a data gap (`§27b` distinguishes the two; only a hard impossibility, never "no consumer
+/// reaches it", excuses a unit).
+///
+/// `data.class` is genuinely absent on this record shape (confirmed: the domain schema carries no
+/// `class` field at all, gated instead by a `PRECLASS:` token this table does not need to read --
+/// the domain-header convention is inherently class-independent the same way `"Domains"`'s own bare
+/// `DomainPowerTimes` chain already is, per that clause's own doc above). Merged across books
+/// exactly like every sibling table here (`.or_insert` per target name, never overwriting an
+/// already-bound target), so a genuine cross-book disagreement on the same target name keeps
+/// whichever book's row was seen first.
+pub(crate) fn domain_kind_bonus_vars_any_record() -> &'static BTreeMap<String, BTreeMap<String, String>> {
+    static TABLE: OnceLock<BTreeMap<String, BTreeMap<String, String>>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let domain_dir = book_entry.path().join("domain");
+            if !domain_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&domain_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let Some(key) = data["key"].as_str() else { continue };
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                let entry = out.entry(key.to_string()).or_default();
                 for (target, formula) in bonus_vars {
                     entry.entry(target).or_insert(formula);
                 }
@@ -2294,9 +2382,26 @@ mod tests {
         // pre-existing `newly_resolved` records, and all 11/36 `class_excluded_otherwise_
         // resolvable`/`no_record_at_all`, are unchanged -- confirmed by diffing this cycle's own
         // full `newly_resolved_examples` list against the pre-cycle-12 one before landing.
+        //
+        // `no_record_at_all` moved 36 -> 1, `chain_unresolvable` moved 8 -> 43 (SD-32 T12 Epic 8
+        // row 18 cycle 18, `§27b`/`§17a` -- a RECLASSIFICATION, not a resolver improvement:
+        // `class_feature_record_tokens_pre_gate_safe`'s own `description: null` gate widened (see
+        // that function's own doc comment -- a genuine engine gap, `Jungle Domain ~ Trap Sense`'s
+        // `VISIBLE:NO`/`description: null` shape was invisible to `resolve_pool_member_sole_
+        // magnitude` for want of this read path, not for want of real data). 35 of these 36
+        // records DO have a real corpus record after the widening -- they were never truly
+        // "absent", only mis-bucketed by a gate this table's own OLD code applied one layer too
+        // early -- but their OWN `raw_description` is empty (no `%N` text at all), so
+        // `resolved_description_for` still correctly returns `None` for every one of them
+        // (`render_pcgen_desc_with_values("", ...).text.is_empty()`), landing them in
+        // `chain_unresolvable` instead: a MORE ACCURATE label ("a record exists but nothing
+        // renders") than the old "no record at all", never a fabricated render. `newly_resolved`
+        // and `class_excluded_otherwise_resolvable` are UNCHANGED -- confirmed by diffing this
+        // cycle's own `newly_resolved_examples` list against cycle 12's, identical. Exactly 1
+        // genuinely absent key remains.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (136, 21, 11, 8, 36),
+            (136, 21, 11, 43, 1),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

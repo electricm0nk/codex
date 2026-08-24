@@ -39617,6 +39617,25 @@ fn pool_header_record_by_normalized_suffix(
     {
         merge_in(header);
     }
+    // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`): a FIFTH real corpus header shape -- a `domain`-
+    // kind record (never `class_feature`), keyed by the domain's own BARE name with no " Domain"
+    // suffix (`"Cave"`, not `"Cave Domain"`) -- confirmed live,
+    // `class_feature_grant_consumer::domain_kind_bonus_vars_any_record`'s own doc comment. Scoped
+    // to `registered_name == Some("Domain")` (the only pool family this corpus shape belongs to;
+    // Cavalier/Bloodline/Spirit groups never have a sibling `domain/` directory to collide with)
+    // and to a `pool_group` that actually ends with the expected `" Domain"` suffix, so a group
+    // this widening does not understand is never silently misrouted.
+    if registered_name == Some("Domain") {
+        if let Some(bare) = pool_group.strip_suffix(" Domain") {
+            if let Some(vars) = class_feature_grant_consumer::domain_kind_bonus_vars_any_record().get(bare)
+            {
+                class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+                    &mut merged,
+                    vars.clone(),
+                );
+            }
+        }
+    }
     merged
 }
 
@@ -74871,14 +74890,38 @@ mod generic_pool_group_selection_wiring_tests {
         // `"Shaman ~ Spirit"` merge -- diagnostic confirms `single_unresolved` dropped 8 -> 0 for
         // this pool). `Bloodrager Bloodline`, `Warpriest Blessing`, `Cavalier Order` UNCHANGED
         // (5/12, 0/37, 1/9) -- re-run and re-checked, not assumed.
+        // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`/`§17a`): `Cleric Domain` moved 34/72 -> 44/73
+        // via TWO independent, genuine ENGINE gaps this cycle's own classification diagnostic
+        // found and closed -- neither is a data fabrication.
+        //
+        // (1) `pool_header_record_by_normalized_suffix` gained a FIFTH header shape, a
+        // `domain`-kind corpus record (never `class_feature`), keyed by the domain's bare name
+        // (`"Cave"`, not `"Cave Domain"`). Confirmed live
+        // (`data/corpus/ultimate_magic/domain/cave.json`): this record ALREADY carries the real
+        // `BONUS:VAR|DomainCaveLVL|DomainLVL`/`DomainCaveDC`/`DomainCaveTimes` chain every one of
+        // that domain's `class_feature` member records needs -- it simply lived in a directory no
+        // existing table ever read. Re-derived (not assumed): the newly-closed groups are
+        // Aquatic, Arctic, Eagle, Frog, Monkey, Plains, Serpent, Swamp (8 groups; Jungle and
+        // Mountain also gained the same header merge but stayed unresolved for the SEPARATE
+        // reason (2) names).
+        //
+        // (2) `class_feature_record_tokens_pre_gate_safe`'s own `description: null` gate widened
+        // (see that function's own doc comment): a real, invisible, purely-mechanical member
+        // record (`VISIBLE:NO`, e.g. `Jungle Domain ~ Trap Sense`, `BONUS:VAR|TrapSenseBonus|
+        // DomainJungleLVL/3`, `description: null`) was refused purely for want of this read path.
+        // This ALSO revealed one previously wholly-invisible 73rd group (denominator moved
+        // 72 -> 73, a real population correction, not a resolver artefact -- a group whose only
+        // members all carried `description: null` was invisible to `real_groups_owned_by`'s own
+        // tally before this widening). Net movement from (1)+(2) combined: 34/72 -> 44/73.
+        // Every other pool UNCHANGED, re-verified, not assumed.
         assert!(
             report.contains("Sorcerer Bloodline: 31/53")
                 && report.contains("Bloodrager Bloodline: 5/12")
-                && report.contains("Cleric Domain: 34/72")
+                && report.contains("Cleric Domain: 44/73")
                 && report.contains("Shaman Spirit: 11/14")
                 && report.contains("Warpriest Blessing: 0/37")
                 && report.contains("Cavalier Order: 1/9"),
-            "cycle 13's own six re-derived baselines must still reproduce exactly:\n{report}"
+            "cycle 18's own six re-derived baselines must still reproduce exactly:\n{report}"
         );
     }
 
@@ -74967,7 +75010,7 @@ mod generic_pool_group_selection_wiring_tests {
         assert!(
             report.contains("Sorcerer Bloodline: bonus_vars=31/53")
                 && report.contains("Bloodrager Bloodline: bonus_vars=5/12")
-                && report.contains("Cleric Domain: bonus_vars=34/72")
+                && report.contains("Cleric Domain: bonus_vars=44/73")
                 && report.contains("Shaman Spirit: bonus_vars=11/14")
                 && report.contains("Warpriest Blessing: bonus_vars=0/37")
                 && report.contains("Cavalier Order: bonus_vars=1/9"),
@@ -75011,10 +75054,19 @@ mod generic_pool_group_selection_wiring_tests {
         // 11/14 -> 12/14 (Wood Spirit ~ Tree Form, `%1`=`5`, `ShamanLVL`-derived). Sorcerer
         // Bloodline is genuinely unchanged at 31/53 -- no member of any of its remaining 22
         // open groups has an empty `bonus_vars` chain with a resolvable `%N` argument.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`/`§17a`): `Cleric Domain` moved again,
+        // 35/72 -> 45/73, via `pool_group_closure_census_across_all_six_pools`'s own newly
+        // re-derived 44/73 `bonus_vars`-only baseline (see that test's own comment for the two
+        // real engine fixes: a `domain`-kind corpus header record this codebase never read
+        // before this cycle, and a `description: null` gate that hid real magnitude-bearing
+        // member records) PLUS the one already-standing `desc_formula`-only closure (Clandestine
+        // Domain) this pass adds on top, unaffected by either fix (it resolves via the OTHER
+        // resolver). Every other pool UNCHANGED.
         assert!(
             report.contains("Sorcerer Bloodline: bonus_vars=31/53, combined(bonus_vars OR desc_formula)=31/53")
                 && report.contains("Bloodrager Bloodline: bonus_vars=5/12, combined(bonus_vars OR desc_formula)=6/12")
-                && report.contains("Cleric Domain: bonus_vars=34/72, combined(bonus_vars OR desc_formula)=35/72")
+                && report.contains("Cleric Domain: bonus_vars=44/73, combined(bonus_vars OR desc_formula)=45/73")
                 && report.contains("Shaman Spirit: bonus_vars=11/14, combined(bonus_vars OR desc_formula)=12/14")
                 && report.contains("Warpriest Blessing: bonus_vars=0/37, combined(bonus_vars OR desc_formula)=8/37")
                 && report.contains("Cavalier Order: bonus_vars=1/9, combined(bonus_vars OR desc_formula)=2/9"),
