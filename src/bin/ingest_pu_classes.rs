@@ -230,21 +230,80 @@ fn type_tokens(row: &LstRow) -> Vec<String> {
     row.first("TYPE").map(|v| v.split('.').map(String::from).collect()).unwrap_or_default()
 }
 
-/// Every non-`BONUS:` token, preserved verbatim. `BONUS:` clauses are
+/// Every non-`BONUS:` token, preserved verbatim, unioned across every row in
+/// `rows` -- the record's own base row PLUS any `.MOD` row targeting the
+/// same identity ([`closure_lst_rows`]'s job to gather). `BONUS:` clauses are
 /// carried separately as [`RawBonusChain`]s, matching every pre-existing
 /// Shape B v1 record on disk.
-fn raw_tokens_excluding_bonus(row: &LstRow) -> Vec<RawToken> {
-    row.tokens()
+///
+/// SD-32 T12 row 21 cycle 2: this used to take a single `&LstRow` (the base
+/// row alone), inheriting the exact `.MOD`-appended-row-loss defect row 21
+/// fixed for the generic `class_feature.rs` path -- `class_feature::
+/// generate()`'s own post-fix blast-radius re-scan found exactly 9 records
+/// still missing real `.MOD` content, ALL in this book, all owned by THIS
+/// generator (its `foreign_citations` guard correctly refuses to overwrite a
+/// PU-owned coordinate, so the generic fix never reached them). Confirmed
+/// live: `Unchained Summoner ~ Eidolon` alone carries 14 real `.MOD` rows
+/// (`CATEGORY=Special Ability|Unchained Summoner ~ Eidolon.MOD`, e.g. the
+/// `EidolonEvolution` progression formula and 10 `EidolonSubtype_*`
+/// selection bonuses) that the single-row read silently dropped -- 8 of the
+/// 9 records lose real `BONUS:` content this way, not merely inert tokens.
+fn raw_tokens_excluding_bonus(rows: &[LstRow]) -> Vec<RawToken> {
+    rows.iter()
+        .flat_map(LstRow::tokens)
         .filter(|(k, _)| *k != "BONUS")
         .map(|(k, v)| RawToken { key: k.to_string(), value: v.to_string() })
         .collect()
 }
 
-fn raw_bonus_chains(row: &LstRow) -> Vec<RawBonusChain> {
-    row.tokens()
+/// Same closure-union widening as [`raw_tokens_excluding_bonus`], for the
+/// `BONUS:` half.
+fn raw_bonus_chains(rows: &[LstRow]) -> Vec<RawBonusChain> {
+    rows.iter()
+        .flat_map(LstRow::tokens)
         .filter(|(k, _)| *k == "BONUS")
         .map(|(_, v)| RawBonusChain { qualifiers: v.split('|').map(String::from).collect() })
         .collect()
+}
+
+/// This record's own base row, plus every `.MOD` row targeting the SAME
+/// identity within this book -- the identical closure
+/// `WiringClassIndex::closure_rows` already resolves for `wiring_class`
+/// classification (`wiring_index.wiring_class_for`'s own call, a few lines
+/// below every call site of this function), reused here so `raw_tokens`/
+/// `raw_bonus_chains` see exactly the rows the wiring-class read already
+/// "sees" -- row 21's own fix for `class_feature.rs`, applied here rather
+/// than a fourth mechanism (`decisions.md §17`). A row's own text is
+/// re-tokenized through [`parse_rows`]' identical per-line split so every
+/// caller downstream (`LstRow::tokens`/`::first`/`::name`) behaves exactly
+/// as it does for the base row it has always read.
+fn closure_lst_rows(
+    wiring_index: &WiringClassIndex,
+    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    lst_basename: &str,
+    base: &LstRow,
+    name: &str,
+    key: &str,
+) -> Vec<LstRow> {
+    wiring_index
+        .closure_rows(lines, lst_basename, base.line_no, name, key)
+        .into_iter()
+        .filter_map(|row_text| row_text.map(|text| lst_row_from_text(base.line_no, &text)))
+        .collect()
+}
+
+/// One raw `.lst` line's own `LstRow`, split identically to [`parse_rows`]'
+/// per-line logic -- reused here for a `.MOD`/`.COPY=` closure row's text,
+/// which `WiringClassIndex::closure_rows` returns as a bare `String`
+/// (already resolved to a real line via [`CorpusLines`], never re-read from
+/// this file's own `.lst` handle). `line_no` is carried through from the
+/// CALLER's own base row -- the true origin line of a closure row is not
+/// needed by any consumer here (`LstRow::tokens`/`::first`/`::name` never
+/// read it), so reusing the base row's number keeps this a total function.
+fn lst_row_from_text(line_no: u32, text: &str) -> LstRow {
+    let fields: Vec<String> =
+        text.split('\t').map(str::trim).filter(|f| !f.is_empty()).map(String::from).collect();
+    LstRow { line_no, fields }
 }
 
 /// `SOURCEPAGE:p.14` → `Some("p.14")`; `SOURCEPAGE:p.xx` → `None`
@@ -964,6 +1023,8 @@ fn main() {
         }
 
         let overrides = chassis_overrides(row, spec.base_class_key);
+        let variant_closure_rows =
+            closure_lst_rows(&wiring_index, &mut wiring_lines, lst_basename, row, variant_key, variant_key);
 
         let mut class_skills: Vec<String> = Vec::new();
         for key in granted_internal_class_skill_keys(row) {
@@ -1007,8 +1068,8 @@ fn main() {
             feature_grants: variant_grants.clone(),
             description: rendered.text,
             source_page: source_page(row),
-            raw_tokens: raw_tokens_excluding_bonus(row),
-            raw_bonus_chains: raw_bonus_chains(row),
+            raw_tokens: raw_tokens_excluding_bonus(&variant_closure_rows),
+            raw_bonus_chains: raw_bonus_chains(&variant_closure_rows),
         };
 
         let desc = data.description.clone().unwrap_or_default();
@@ -1121,6 +1182,8 @@ fn main() {
                 (License::Ogl, None, None, rendered.text.clone())
             };
 
+            let feature_closure_rows =
+                closure_lst_rows(&wiring_index, &mut wiring_lines, lst_basename, frow, &key, &key);
             let data = ClassFeatureCacheData {
                 key: key.clone(),
                 name: frow.name().to_string(),
@@ -1134,8 +1197,8 @@ fn main() {
                 class_skills: cskills(frow),
                 description,
                 source_page: page,
-                raw_tokens: raw_tokens_excluding_bonus(frow),
-                raw_bonus_chains: raw_bonus_chains(frow),
+                raw_tokens: raw_tokens_excluding_bonus(&feature_closure_rows),
+                raw_bonus_chains: raw_bonus_chains(&feature_closure_rows),
             };
 
             let desc = data.description.clone().unwrap_or_default();
@@ -1434,7 +1497,7 @@ mod tests {
     #[test]
     fn raw_tokens_keep_the_placeholder_verbatim_even_though_source_page_drops_it() {
         let r = row("X\tSOURCEPAGE:p.xx");
-        assert!(raw_tokens_excluding_bonus(&r).iter().any(|t| t.key == "SOURCEPAGE" && t.value == "p.xx"));
+        assert!(raw_tokens_excluding_bonus(std::slice::from_ref(&r)).iter().any(|t| t.key == "SOURCEPAGE" && t.value == "p.xx"));
     }
 
     // --- declared Product Identity (`NAMEISPI`/`DESCISPI`) ---------------
@@ -1533,7 +1596,7 @@ mod tests {
         assert_eq!(rendered.text, None);
         assert!(rendered.undecidable.is_some(), "the reason must be reported, not swallowed");
         // The raw prose survives for a later hand-modelled feature to use.
-        assert_eq!(raw_tokens_excluding_bonus(&r).iter().filter(|t| t.key == "DESC").count(), 4);
+        assert_eq!(raw_tokens_excluding_bonus(std::slice::from_ref(&r)).iter().filter(|t| t.key == "DESC").count(), 4);
     }
 
     #[test]
@@ -1544,7 +1607,7 @@ mod tests {
         assert_eq!(rendered.text, None);
         assert_eq!(rendered.dropped_app_instructions, vec![instruction.to_string()]);
         // ...and the raw token survives untouched.
-        assert!(raw_tokens_excluding_bonus(&r).iter().any(|t| t.key == "DESC" && t.value == instruction));
+        assert!(raw_tokens_excluding_bonus(std::slice::from_ref(&r)).iter().any(|t| t.key == "DESC" && t.value == instruction));
     }
 
     #[test]

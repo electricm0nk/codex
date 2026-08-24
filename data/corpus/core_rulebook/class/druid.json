@@ -1,28 +1,126 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "bab": "level*3/4",
     "class_id": "Druid",
     "maxlevel": 20,
-    "bab": "level*3/4",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Sylvan"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DruidLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CasterLevelBLDruid|0"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Druidic"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_BL_Stripped_Druid|Caster_Level_Druid-CasterLevelBLDruid"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Druid|CL+Caster_Level_Bonus+CasterLevelBLDruid"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CasterLevelBL_x_Druid|charbonusto(\"PCLEVEL\",\"Druid\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Highest__Divine|Caster_Level_Druid|TYPE=Base"
+      },
+      {
+        "key": "ROLE",
+        "value": "Druid"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Drd"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Divine"
+      }
+    ],
     "save_fort": "level/2+2",
     "save_ref": "level/3",
     "save_will": "level/2+2"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
-    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
     "line": 93,
-    "record_key": "CLASS:Druid"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "record_key": "CLASS:Druid",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

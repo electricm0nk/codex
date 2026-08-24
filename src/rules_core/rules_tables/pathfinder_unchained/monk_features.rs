@@ -1202,15 +1202,30 @@ mod tests {
             "BONUS:VAR|StunningFistMonkLVL|MonkLVL",
         );
 
-        // Flurry of Blows carries no BONUS chain on its base row -- its
-        // formulas are on the separate `.MOD` block at lines 492-504, which
-        // the ingestion cycle did not fold into the record. Pinned as an
-        // explicit fact so "no token here" is checked, not assumed; the real
-        // tokens are pinned against the raw .lst below.
-        assert!(
-            bonus_tokens(&record_for("Unchained Monk ~ Flurry of Blows")).is_empty(),
-            "Flurry of Blows' base row carries no BONUS chain"
-        );
+        // SD-32 T12 row 21 cycle 2: Flurry of Blows' formulas live on a
+        // separate `.MOD` block (raw `.lst` lines 492-504) that
+        // `ingest_pu_classes.rs` used to read only the base row and silently
+        // drop -- the exact `.MOD`-appended-row-loss defect row 21 fixed for
+        // the generic `class_feature.rs` path, found live in THIS book's own
+        // generator too and fixed here (`raw_tokens_excluding_bonus`/
+        // `raw_bonus_chains` now read the full `.MOD` closure, matching
+        // `out_of_record_formulas_are_byte_exact_against_the_real_lst_rows`
+        // below, which independently pins the same raw `.lst` tokens). No
+        // longer an honest absence -- the real tokens now ship.
+        for token in [
+            "BONUS:VAR|FlurryExtraAttacks|2+(Total_BAB>=11)+(Total_BAB>=6)+(Total_BAB>=11)+(Total_BAB>=16)",
+            "BONUS:VAR|Total_BAB|BAB",
+            "BONUS:VAR|FlurryAttacks|2+(Total_BAB>=6)+if(Total_BAB>=11,2,0)+(Total_BAB>=16)",
+            "BONUS:VAR|FAB_1|FAB",
+            "BONUS:VAR|FAB_2|FAB",
+            "BONUS:VAR|FAB_3|FAB+if(FlurryAttacks==3,-5,0)",
+            "BONUS:VAR|FAB_4|FAB-5",
+            "BONUS:VAR|FAB_5|FAB-10",
+            "BONUS:VAR|FAB_6|FAB-15",
+            "BONUS:VAR|FAB_7|FAB",
+        ] {
+            assert_bonus_token("Unchained Monk ~ Flurry of Blows", token);
+        }
     }
 
     /// The magnitudes that live outside the ingested records — the flurry

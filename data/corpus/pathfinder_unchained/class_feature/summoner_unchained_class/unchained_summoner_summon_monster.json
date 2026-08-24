@@ -1,26 +1,31 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Summoner ~ Summon Monster",
-    "name": "Summon Monster I",
-    "class_key": "Summoner ~ Unchained Class",
     "base_class_key": "Summoner",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Summoner Class Feature",
-      "SpecialQuality",
-      "SpellLike",
-      "Summon Monster",
-      "Summon Monster SLA"
-    ],
-    "min_level": 1,
-    "is_granted": true,
-    "visible": null,
+    "class_key": "Summoner ~ Unchained Class",
     "class_skills": [],
     "description": "At 1st level, a summoner can cast summon monster I as a spell-like ability a number of times per day equal to 3 + his Charisma modifier. Drawing on this ability uses up the same power that the summoner uses to call his eidolon. As a result, he can use this ability only when his eidolon is not summoned. He can cast this spell as a standard action, and the creatures remain for 1 minute per level (instead of 1 round per level). At 3rd level, and every 2 levels thereafter, the power of this ability increases by 1 spell level, allowing him to summon more powerful creatures (to a maximum of summon monster IX at 17th level). At 19th level, this ability can be used as gate or summon monster IX. If used as gate, the summoner must pay any required material components. A summoner cannot have more than one summon monster or gate spell active in this way at one time. If this ability is used again, any existing summon monster or gate from this spell-like ability immediately ends. These summon spells are considered to be part of the summoner's spell list for the purposes of spell trigger and spell completion items. In addition, the summoner can expend uses of this ability to fulfill the construction requirements of any magic item he creates, so long as he can use this ability to cast the required spell.",
-    "source_page": "p.26",
+    "is_granted": true,
+    "key": "Unchained Summoner ~ Summon Monster",
+    "min_level": 1,
+    "name": "Summon Monster I",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SummonerSummonMonsterLVL",
+          "min((Summoner_CFP_Level+1)/2,9)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SummonerSummonMonsterTimes",
+          "max(CHA,0)+3"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -85,35 +90,66 @@
       {
         "key": "ASPECT",
         "value": "NAME|Summon Monster IX|PREVAREQ:SummonerSummonMonsterLVL,9"
-      }
-    ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "VAR",
-          "SummonerSummonMonsterLVL",
-          "min((Summoner_CFP_Level+1)/2,9)"
-        ]
       },
       {
-        "qualifiers": [
-          "VAR",
-          "SummonerSummonMonsterTimes",
-          "max(CHA,0)+3"
-        ]
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster I|PREVAREQ:SummonerSummonMonsterLVL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster II|PREVAREQ:SummonerSummonMonsterLVL,2"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster III|PREVAREQ:SummonerSummonMonsterLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster IV|PREVAREQ:SummonerSummonMonsterLVL,4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster V|PREVAREQ:SummonerSummonMonsterLVL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster VI|PREVAREQ:SummonerSummonMonsterLVL,6"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster VII|PREVAREQ:SummonerSummonMonsterLVL,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster VIII|PREVAREQ:SummonerSummonMonsterLVL,8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=SummonerSummonMonsterTimes|CASTERLEVEL=SummonerLVL|Summoner Summon Monster IX|PREVARGTEQ:SummonerSummonMonsterLVL,9"
       }
-    ]
+    ],
+    "source_page": "p.26",
+    "type_tokens": [
+      "Unchained Summoner Class Feature",
+      "SpecialQuality",
+      "SpellLike",
+      "Summon Monster",
+      "Summon Monster SLA"
+    ],
+    "visible": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 733,
-    "record_key": "Unchained Summoner ~ Summon Monster"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 733,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Summoner ~ Summon Monster",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

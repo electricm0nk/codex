@@ -1,26 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Barbarian ~ Danger Sense",
-    "name": "Danger Sense",
-    "class_key": "Barbarian ~ Unchained Class",
     "base_class_key": "Barbarian",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Barbarian Class Feature",
-      "ClassFeatures",
-      "Internal",
-      "ClassFeatures",
-      "Trap Sense"
-    ],
-    "min_level": 3,
-    "is_granted": true,
-    "visible": "NO",
+    "class_key": "Barbarian ~ Unchained Class",
     "class_skills": [],
     "description": null,
-    "source_page": null,
+    "is_granted": true,
+    "key": "Unchained Barbarian ~ Danger Sense",
+    "min_level": 3,
+    "name": "Danger Sense",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "BarbarianTrapSenseLVL/3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianTrapSenseLVL",
+          "BarbarianLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "-1",
+          "PREVARGTEQ:BarbarianTrapSenseLVL/3,1",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "-1",
+          "PREVARGTEQ:BarbarianTrapSenseLVL/3,2",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "-1",
+          "PREVARGTEQ:BarbarianTrapSenseLVL/3,3",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "-1",
+          "PREVARGTEQ:BarbarianTrapSenseLVL/3,4",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "-1",
+          "PREVARGTEQ:BarbarianTrapSenseLVL/3,5",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapSenseBonus",
+          "-1",
+          "PREVARGTEQ:BarbarianTrapSenseLVL/3,6",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense6"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -51,33 +110,28 @@
         "value": "Special Ability|AUTOMATIC|Danger Sense"
       }
     ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "VAR",
-          "TrapSenseBonus",
-          "BarbarianTrapSenseLVL/3"
-        ]
-      },
-      {
-        "qualifiers": [
-          "VAR",
-          "BarbarianTrapSenseLVL",
-          "BarbarianLVL"
-        ]
-      }
-    ]
+    "source_page": null,
+    "type_tokens": [
+      "Unchained Barbarian Class Feature",
+      "ClassFeatures",
+      "Internal",
+      "ClassFeatures",
+      "Trap Sense"
+    ],
+    "visible": "NO"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 292,
-    "record_key": "Unchained Barbarian ~ Danger Sense"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 292,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Barbarian ~ Danger Sense",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

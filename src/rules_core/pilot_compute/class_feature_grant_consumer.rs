@@ -660,82 +660,31 @@ pub(crate) struct ClassFeatureRecordTokens {
     pub(crate) bonus_vars: BTreeMap<String, String>,
 }
 
-/// Parses every `BONUS:VAR|<name[,name2,...]>|<formula>[|<extra qualifiers>]` row out of one
-/// record's `raw_tokens` array, keyed by target name. A row whose formula segment is itself
-/// followed by further `|`-delimited PRE-gate qualifiers keeps only the formula (the text before
-/// the next `|`) -- this resolver does not evaluate PRE-gates, the same restriction
-/// `extract_formula_field` (`formula_interpreter.rs`) documents for its own positional heuristic.
-fn parse_bonus_var_tokens(raw_tokens: &[Value]) -> BTreeMap<String, String> {
-    let mut bonus_vars = BTreeMap::new();
-    for token in raw_tokens {
-        if token["key"].as_str() != Some("BONUS") {
-            continue;
-        }
-        let Some(value) = token["value"].as_str() else { continue };
-        let Some(rest) = value.strip_prefix("VAR|") else { continue };
-        let mut parts = rest.splitn(2, '|');
-        let (Some(names), Some(formula_and_tail)) = (parts.next(), parts.next()) else {
-            continue;
-        };
-        let formula = formula_and_tail.split('|').next().unwrap_or(formula_and_tail);
-        for name in names.split(',') {
-            let name = name.trim();
-            if !name.is_empty() {
-                bonus_vars.insert(name.to_string(), formula.to_string());
-            }
-        }
-    }
-    bonus_vars
-}
-
 /// Every `data/corpus/*/class_feature/**/*.json` record that carries a real (non-empty,
 /// non-`.CLEAR`, non-PI-marker) description, keyed by corpus `KEY:`, regardless of whether that
 /// description carries an unresolved `%N` -- the strictly WIDER sibling of
 /// `corpus_records_with_real_description` above, which additionally requires the description to
 /// already render clean with no character context. First book (alphabetically) wins a duplicate
 /// key, mirroring that function's own convention.
+///
+/// SD-32 T12 row 21 cycle 2: this is now a thin alias for
+/// [`class_feature_record_tokens_pre_gate_safe`] rather than a second, independently-built table.
+/// Before row 21 cycle 1 restored the corpus's real `.MOD`-appended `BONUS:VAR` rows, every
+/// record this table covered carried at most one raw row per target name, so the now-deleted
+/// `parse_bonus_var_tokens`'s last-write-wins behaviour and `parse_bonus_var_tokens_pre_gate_safe`'s
+/// PRE-gate-aware summation agreed on every record and the duplication was harmless. Restoring
+/// those dropped rows exposed the disagreement for real: `core_rulebook:class_feature:
+/// barbarian_damage_reduction` now carries multiple same-named, PRE-gated `BONUS:VAR|BarbarianDR|`
+/// rows, and last-write-wins silently picked the WRONG one (`resolve_pcgen_var_chain` bound
+/// `BarbarianDR=-1` at level 7 where the pinned upstream `.lst` states `+1` --
+/// `tests/derived_evaluator_fixture_check.rs::
+/// engine_evaluator_output_equals_the_corpus_derived_expected_value`). The PRE-gate-safe sibling
+/// parser (built for `resolve_pool_member_sole_magnitude`, see its own doc above) already exists
+/// and already proves this shape safe generically; reusing it here -- rather than writing a third
+/// parser or patching the deleted one to also understand PRE-gates -- is Decision `§17`'s generic-
+/// pass requirement, not a per-record special case.
 pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFeatureRecordTokens> {
-    static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
-    TABLE.get_or_init(|| {
-        let mut out = BTreeMap::new();
-        let corpus_root = repo_root().join("data/corpus");
-        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
-        let mut book_dirs: Vec<_> = books.flatten().collect();
-        book_dirs.sort_by_key(|e| e.file_name());
-        for book_entry in book_dirs {
-            let cf_dir = book_entry.path().join("class_feature");
-            if !cf_dir.is_dir() {
-                continue;
-            }
-            let mut files = Vec::new();
-            walk_json_files(&cf_dir, &mut files);
-            for file in files {
-                let Ok(text) = std::fs::read_to_string(&file) else { continue };
-                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
-                let data = &doc["data"];
-                let (Some(key), Some(name), Some(class)) =
-                    (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
-                else {
-                    continue;
-                };
-                let Some(raw_desc) = data["description"].as_str() else { continue };
-                if !is_real_description_value(raw_desc) {
-                    continue;
-                }
-                let bonus_vars = data["raw_tokens"]
-                    .as_array()
-                    .map(|tokens| parse_bonus_var_tokens(tokens))
-                    .unwrap_or_default();
-                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
-                    name: name.to_string(),
-                    class: class.to_string(),
-                    raw_description: raw_desc.to_string(),
-                    bonus_vars,
-                });
-            }
-        }
-        out
-    })
+    class_feature_record_tokens_pre_gate_safe()
 }
 
 /// A stricter sibling of [`parse_bonus_var_tokens`] (SD-32 T12 Epic 8,
@@ -785,9 +734,29 @@ pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFe
 /// `if(...)`/`Cmp` grammar `formula_interpreter.rs` already implements (wave 26 shape closure)
 /// rather than adding a second evaluation path. A target whose rows still carry any OTHER shape
 /// (more than one non-`TYPE=` PRE-tag field, a non-`PREVARGTEQ`/non-`TYPE=` tag such as
-/// `PREABILITY`/`PREMULT`) still fails `extract_addends` and is still dropped entirely, unchanged
-/// from before -- this widening only accepts shapes this module and `bonus_stack_reader` have
-/// themselves verified against the pinned oracle, never a new guess.
+/// `PREABILITY`/`PREMULT`) still fails `extract_addends` -- widening 3 below then decides what
+/// happens next, rather than the whole target being silently dropped as before.
+///
+/// **Widening 3 -- when `extract_addends` refuses, fall back to the target's own sole UNGATED
+/// row, if it has exactly one.** Found live: SD-32 T12 row 21 cycle 2, `core_rulebook:
+/// class_feature:barbarian_damage_reduction`. Its real corpus record (only visible once row 21
+/// cycle 1 restored the `.MOD`-appended rows this function reads) carries ONE unconditional row
+/// (`BONUS:VAR|BarbarianDR|(BarbarianDRLVL-4)/3`) plus five rows each gated by BOTH a
+/// `PREVARGTEQ` AND a `PREVAREQ` tag (a rage-power-selection offset,
+/// `PREVAREQ:Barbarian_CF_DamageReduction<N>,1`) -- two PRE-tag kinds on one row, a shape
+/// `bonus_stack_reader` correctly refuses (its own module doc: "Recognises exactly one PRE-tag
+/// kind, `PREVARGTEQ`"). `PREVAREQ` gates on a feat/rage-power SELECTION, not a value this module
+/// has ever modelled (`ability_modifier_seed_vars` seeds only ability scores and class level) --
+/// there is no live binding this resolver could evaluate that gate against even if a fourth
+/// parser were built for it, so refusing to evaluate those five rows is correct, not merely
+/// expedient. What is NOT correct is discarding the target's own unconditional row along with
+/// them: a character who has selected none of those rage powers (the common case, and the exact
+/// case `derived_evaluator_fixture_check`'s pinned fixture -- re-derived independently from the
+/// upstream `.lst`'s single base row, which is the ONLY row that script's own single-line reader
+/// sees -- covers) still has a real, fully-determined `BarbarianDR` from the base formula alone.
+/// This widening returns that base formula ONLY when the target carries exactly one row with no
+/// PRE-tag tail at all (after widening 1 strips any `TYPE=`); a target with zero ungated rows, or
+/// more than one (which would itself be an ambiguous shape), still refuses entirely, unchanged.
 fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String, String> {
     // Re-expand comma-joined `VAR|Name1,Name2|formula|PRE...` rows into one synthetic
     // `"VAR|<name>|formula|PRE..."` value per name, exactly the shape `bonus_stack_reader::
@@ -798,6 +767,9 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
     let mut expanded: Vec<(String, String)> = Vec::new();
     let mut target_order: Vec<String> = Vec::new();
     let mut seen_targets: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+    // Widening 3's own bookkeeping: every UNGATED (no PRE-tag tail at all, post-`TYPE=`-strip)
+    // row's formula, per target name -- judged on the target's OWN rows, not the reader's.
+    let mut ungated_formulas: BTreeMap<String, std::collections::BTreeSet<String>> = BTreeMap::new();
     for token in raw_tokens {
         if token["key"].as_str() != Some("BONUS") {
             continue;
@@ -824,6 +796,9 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
             if seen_targets.insert(name.to_string()) {
                 target_order.push(name.to_string());
             }
+            if tail_fields.is_empty() {
+                ungated_formulas.entry(name.to_string()).or_default().insert(formula.to_string());
+            }
             expanded.push(("BONUS".to_string(), format!("VAR|{name}|{rebuilt}")));
         }
     }
@@ -833,7 +808,15 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
     for name in target_order {
         let Ok(addends) = bonus_stack_reader::extract_addends(&name, borrowed.iter().copied())
         else {
-            continue; // unrecognised PRE-tag shape -- refuse, exactly as before this widening
+            // Widening 3: an unrecognised PRE-tag shape refuses `extract_addends`'s summed
+            // result, but a lone ungated row for this same target is still a real,
+            // unconditional fact -- use it rather than dropping the target outright.
+            if let Some(formulas) = ungated_formulas.get(&name) {
+                if let [only] = formulas.iter().collect::<Vec<_>>().as_slice() {
+                    out.insert(name, (*only).clone());
+                }
+            }
+            continue;
         };
         match addends.as_slice() {
             [] => {}

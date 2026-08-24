@@ -1,24 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Rogue ~ Finesse Training",
-    "name": "Finesse Training",
-    "class_key": "Rogue ~ Unchained Class",
     "base_class_key": "Rogue",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Rogue Class Feature",
-      "SpecialQuality",
-      "Extraordinary"
-    ],
-    "min_level": 1,
-    "is_granted": true,
-    "visible": null,
+    "class_key": "Rogue ~ Unchained Class",
     "class_skills": [],
     "description": "At 1st level, a rogue gains Weapon Finesse as a bonus feat. In addition, starting at 3rd level, she can select any one type of weapon that can be used with Weapon Finesse (such as rapiers or daggers). Once this choice is made, it cannot be changed. Whenever she makes a successful melee attack with the selected weapon, she adds her Dexterity modifier instead of her Strength modifier to the damage roll. If any effect would prevent the rogue from adding her Strength modifier to the damage roll, she does not add her Dexterity modifier. The rogue can select a second weapon at 11th level and a third at 19th level.",
-    "source_page": "p.20",
+    "is_granted": true,
+    "key": "Unchained Rogue ~ Finesse Training",
+    "min_level": 1,
+    "name": "Finesse Training",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Finesse Damage Choice",
+          "RogueFinesseTrainingLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RogueFinesseTrainingLVL",
+          "(RogueLvl+5)/8"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Finesse Damage Choice",
+          "-1",
+          "PREVARGTEQ:RogueFinesseTrainingLVL,2",
+          "PREVAREQ:Rogue_CF_FinesseTraining2,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Finesse Damage Choice",
+          "-1",
+          "PREVARGTEQ:RogueFinesseTrainingLVL,3",
+          "PREVAREQ:Rogue_CF_FinesseTraining3,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Finesse Damage Choice",
+          "-1",
+          "PREVARGTEQ:RogueFinesseTrainingLVL,4",
+          "PREVAREQ:Rogue_CF_FinesseTraining4,1"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,33 +83,26 @@
         "value": "p.20"
       }
     ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "ABILITYPOOL",
-          "Unchained Rogue Finesse Damage Choice",
-          "RogueFinesseTrainingLVL"
-        ]
-      },
-      {
-        "qualifiers": [
-          "VAR",
-          "RogueFinesseTrainingLVL",
-          "(RogueLvl+5)/8"
-        ]
-      }
-    ]
+    "source_page": "p.20",
+    "type_tokens": [
+      "Unchained Rogue Class Feature",
+      "SpecialQuality",
+      "Extraordinary"
+    ],
+    "visible": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 585,
-    "record_key": "Unchained Rogue ~ Finesse Training"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 585,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Rogue ~ Finesse Training",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

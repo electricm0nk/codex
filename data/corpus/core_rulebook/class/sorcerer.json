@@ -1,28 +1,122 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "bab": "level/2",
     "class_id": "Sorcerer",
     "maxlevel": 20,
-    "bab": "level/2",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "6"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.SpontaneousArcane.Spontaneous"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SorcererLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CasterLevelBLSorcerer|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")/2|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABPoor|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SorcererLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_BL_Stripped_Sorcerer|Caster_Level_Sorcerer-CasterLevelBLSorcerer"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Sorcerer|CL+Caster_Level_Bonus+CasterLevelBLSorcerer"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CasterLevelBL_x_Sorcerer|charbonusto(\"PCLEVEL\",\"Sorcerer\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Highest__Arcane|Caster_Level_Sorcerer|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Total__Arcane|Caster_Level_Sorcerer"
+      },
+      {
+        "key": "ROLE",
+        "value": "Sorcerer"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Sor"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
+    ],
     "save_fort": "level/3",
     "save_ref": "level/3",
     "save_will": "level/2+2"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
-    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
     "line": 246,
-    "record_key": "CLASS:Sorcerer"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "record_key": "CLASS:Sorcerer",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

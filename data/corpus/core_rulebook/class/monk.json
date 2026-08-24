@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "bab": "level*3/4",
     "class_id": "Monk",
     "maxlevel": 20,
-    "bab": "level*3/4",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "10"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryOfBlows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KiPoolWis|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MonkFeatQualify|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FlurryOfBlows|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolWis|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPool|1"
+      },
+      {
+        "key": "ROLE",
+        "value": "None"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Mnk"
+      }
+    ],
     "save_fort": "level/2+2",
     "save_ref": "level/2+2",
     "save_will": "level/2+2"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
-    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
     "line": 147,
-    "record_key": "CLASS:Monk"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "record_key": "CLASS:Monk",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

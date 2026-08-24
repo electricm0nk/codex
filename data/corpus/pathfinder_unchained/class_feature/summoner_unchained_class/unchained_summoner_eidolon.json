@@ -1,24 +1,136 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Summoner ~ Eidolon",
-    "name": "Eidolon",
-    "class_key": "Summoner ~ Unchained Class",
     "base_class_key": "Summoner",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Summoner Class Feature",
-      "SpecialQuality",
-      "Eidolon"
-    ],
-    "min_level": 1,
-    "is_granted": true,
-    "visible": null,
+    "class_key": "Summoner ~ Unchained Class",
     "class_skills": [],
     "description": "A summoner begins play with the ability to summon to his side a powerful outsider called an eidolon. The eidolon forms a link with the summoner, who forever after summons an aspect of the same creature. Each eidolon has a subtype, chosen when the eidolon is first summoned, that determines its origin and many of its abilities. An eidolon must be within one alignment step of the summoner who calls it (so a neutral good summoner can call a neutral, lawful good, or chaotic good eidolon) and can speak all of his languages. An eidolon is treated as a summoned creature, except it is not sent back to its home plane until reduced to a number of negative hit points equal to or greater than its Constitution score. In addition, due to its tie to its summoner, an eidolon can touch and attack creatures warded by protection from evil and similar effects that prevent contact with summoned creatures. A summoner can summon his eidolon in a ritual that takes 1 minute to perform. When summoned in this way, the eidolon's hit points are unchanged from the last time it was summoned. The only exception to this is if the eidolon was slain, in which case it returns with half its normal hit points. The eidolon does not heal naturally. The eidolon remains until dismissed by the summoner (a standard action). If the eidolon is sent back to its home plane due to death, it cannot be summoned again until the following day. The eidolon cannot be sent back to its home plane by means of dispel magic, but spells such as dismissal and banishment function normally. If the summoner is unconscious, asleep, or killed, his eidolon is immediately banished. The eidolon takes a form shaped by the summoner's desires. The eidolon's Hit Dice, saving throws, skills, feats, and abilities are tied to the summoner's class level and increase as the summoner gains levels. In addition, each eidolon gains a pool of evolution points based on the summoner's class level that can be used to give the eidolon different abilities and powers. Whenever the summoner gains a level, he must decide how these points are spent, and they are set until he gains another level of summoner. The eidolon's physical appearance is up to the summoner, but it always appears as some sort of fantastical creature appropriate to its subtype. This control is not fine enough to make the eidolon appear like a specific creature. The eidolon also bears a glowing rune that is identical to a rune that appears on the summoner's forehead as long as the eidolon is summoned. While this rune can be hidden through mundane means, it cannot be concealed through magic that changes appearance, such as alter self or polymorph (although invisibility does conceal it as long as the spell lasts).",
-    "source_page": "p.25",
+    "is_granted": true,
+    "key": "Unchained Summoner ~ Eidolon",
+    "min_level": 1,
+    "name": "Eidolon",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonCompanionLVL",
+          "SummonerLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonEvolution",
+          "1+(EidolonCompanionLVL>=2)+(EidolonCompanionLVL>=3)+(EidolonCompanionLVL>=5)+(EidolonCompanionLVL>=6)+(EidolonCompanionLVL>=7)+(EidolonCompanionLVL>=9)+(EidolonCompanionLVL>=10)+(EidolonCompanionLVL>=11)+(EidolonCompanionLVL>=13)+(EidolonCompanionLVL>=14)+(EidolonCompanionLVL>=15)+(EidolonCompanionLVL>=17)+(EidolonCompanionLVL>=18)+(EidolonCompanionLVL>=19)",
+          "PREVAREQ:Eidolon_CF_EvolutionProgression,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Agathion",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Agathion,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Angel",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Angel,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Archon",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Archon,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Azata",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Azata,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Daemon",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Daemon,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Demon",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Demon,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Devil",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Devil,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Div",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Div,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Elemental",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Elemental,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Fey",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Fey,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Inevitable",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Inevitable,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Protean",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Protean,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EidolonSubtype_Psychopomp",
+          "1",
+          "PREVAREQ:Summoner_CF_EidolonSubtype_Psychopomp,1"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -43,28 +155,36 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.25"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonEvolution|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Eidolon_CF_EvolutionProgression|0"
       }
     ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "VAR",
-          "EidolonCompanionLVL",
-          "SummonerLVL"
-        ]
-      }
-    ]
+    "source_page": "p.25",
+    "type_tokens": [
+      "Unchained Summoner Class Feature",
+      "SpecialQuality",
+      "Eidolon"
+    ],
+    "visible": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 731,
-    "record_key": "Unchained Summoner ~ Eidolon"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 731,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Summoner ~ Eidolon",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
