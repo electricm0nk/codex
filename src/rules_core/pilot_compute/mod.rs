@@ -39798,6 +39798,37 @@ fn pool_group_header_vars_merged(
             combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
         }
     }
+    // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`/`§17a`): an EIGHTH real corpus header shape -- the
+    // class's own `"<class> ~ Spells"` record, carrying the base spellcasting-stat `BONUS:VAR`
+    // chain (`Sorcerer_Spells_StatBonus|CHA`, confirmed live: `data/corpus/core_rulebook/
+    // class_feature/sorcerer/spells.json`). Traced end to end: Karmic/Seaborn/Warped Bloodline's
+    // own real DC-formula members (`Fate's Retribution`/`Water Blast`/`Warp Touch`) all resolve
+    // `10+(<Parent>BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus` -- every term but this LAST one
+    // was already reachable through the SEVENTH shape's parent-header recursion (cycle 21); this
+    // identifier alone was never merged anywhere, by ANY existing clause above (it lives on a
+    // `"<class> ~ Spells"` record, a shape none of the per-group/Tracker/`"<class>
+    // <registered_name>"` clauses reach), which is why `resolve_pcgen_var_chain`'s own corpus-wide
+    // unbound-identifier default correctly REFUSED to fabricate a value for it (`Sorcerer_Spells_
+    // StatBonus` IS bound elsewhere in the corpus -- `every_corpus_bound_bonus_var_target()` -- so
+    // the 0-default fallback never applies; this was a genuine missing READ PATH, not a data gap).
+    // The SAME missing var also blocked Sanguine Bloodline's `The Blood Is the Life` (`%1` desc-
+    // formula argument `Sorcerer_Undead_BloodlinePower1Times`, itself chained through `Undead`'s
+    // own `BloodlinePowerTimes|3+Sorcerer_Spells_StatBonus`) -- confirmed live by direct trace, not
+    // assumed from the DC-formula fix alone. Two bloodlines override this base value locally on
+    // their OWN member record (`Empyreal`: `WIS-CHA`, `Sage`: `INT-CHA`, confirmed live,
+    // `data/corpus/ultimate_magic/class_feature/{empyreal,sage}_bloodline/bloodline_arcana.json`)
+    // -- `combined_vars.entry(...).or_insert_with(...)` merged HERE, LAST and lowest-priority,
+    // never overwrites either override, so both keep resolving through their own local bind
+    // exactly as before this cycle. Unconditional and class-parameterized (no per-pool gating
+    // flag), exactly like the class-record clause immediately above it: a class with no `"<class>
+    // ~ Spells"` record (Cavalier, a non-caster) simply merges nothing, unchanged.
+    if let Some(header) = class_feature_grant_consumer::class_feature_bonus_vars_any_record()
+        .get(&format!("{owning_class} ~ Spells"))
+    {
+        for (name, formula) in &header.bonus_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
     combined_vars
 }
 
@@ -75344,14 +75375,28 @@ mod generic_pool_group_selection_wiring_tests {
         // supplies the needed target NAME but the full chain still refuses for a DIFFERENT,
         // un-traced reason this cycle did not chase to ground (real remaining work, not proven
         // impossible, not forced). Every other pool UNCHANGED, re-verified.
+        // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): `Sorcerer Bloodline` 45/52 -> 48/52 (+3) --
+        // the EIGHTH real corpus header shape (`pool_group_header_vars_merged`'s own new doc: the
+        // class's own `"<class> ~ Spells"` record, carrying the base spellcasting-stat `BONUS:VAR`
+        // chain, `Sorcerer_Spells_StatBonus|CHA`). Traced end to end per the brief's own five-group
+        // instruction: Karmic/Seaborn/Warped Bloodline's own real DC-formula members (`Fate's
+        // Retribution`/`Water Blast`/`Warp Touch`) all needed this ONE identifier -- every other
+        // term in their formula was already reachable through cycle 21's seventh-shape parent-
+        // header recursion; this was a genuine missing READ PATH (the identifier IS bound
+        // elsewhere in the corpus, so `resolve_pcgen_var_chain`'s own 0-default fallback correctly
+        // refused to fabricate a value for it), not a data gap. `Groveborn`/`Primal` Bloodline
+        // (cycle 21's own proven zero-content gaps) and `Anarchic` Bloodline (this cycle's own
+        // newly-traced zero-content gap, see receipt) remain the honest 3 unresolved via this
+        // resolver -- `52 - 48 - 1(Sanguine, desc-formula only, see the sibling test below) = 3`.
+        // Every other pool UNCHANGED, re-verified.
         assert!(
-            report.contains("Sorcerer Bloodline: 45/52")
+            report.contains("Sorcerer Bloodline: 48/52")
                 && report.contains("Bloodrager Bloodline: 11/11")
                 && report.contains("Cleric Domain: 47/72")
                 && report.contains("Shaman Spirit: 11/13")
                 && report.contains("Warpriest Blessing: 0/37")
                 && report.contains("Cavalier Order: 1/8"),
-            "cycle 21's own re-derived baselines must still reproduce exactly:\n{report}"
+            "cycle 22's own re-derived baselines must still reproduce exactly:\n{report}"
         );
     }
 
@@ -75444,7 +75489,7 @@ mod generic_pool_group_selection_wiring_tests {
         // exactly -- proof this pass did not silently change or duplicate the first resolver's
         // own measure, only add a second one alongside it.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=45/52")
+            report.contains("Sorcerer Bloodline: bonus_vars=48/52")
                 && report.contains("Bloodrager Bloodline: bonus_vars=11/11")
                 && report.contains("Cleric Domain: bonus_vars=47/72")
                 && report.contains("Shaman Spirit: bonus_vars=11/13")
@@ -75532,8 +75577,21 @@ mod generic_pool_group_selection_wiring_tests {
         // 45/52 via the Wildblooded-parent-header seventh shape (see the OTHER census test's own
         // comment for the full derivation); `combined` moves by the same delta, no further
         // desc-only closure found. Every other pool UNCHANGED.
+        // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): `Sorcerer Bloodline` bonus_vars 45/52 ->
+        // 48/52 via the eighth shape (`"<class> ~ Spells"`'s own `Sorcerer_Spells_StatBonus`,
+        // see the OTHER census test's own comment) -- Karmic/Seaborn/Warped Bloodline. `combined`
+        // moves ONE FURTHER, 48/52 -> 49/52: Sanguine Bloodline's `The Blood Is the Life` (empty
+        // `bonus_vars`, `%1` desc-formula argument `Sorcerer_Undead_BloodlinePower1Times`) needed
+        // the SAME missing identifier one hop further down its own parent's `BloodlinePowerTimes|
+        // 3+Sorcerer_Spells_StatBonus` chain -- confirmed live, traced end to end, not assumed
+        // from the DC-formula fix alone. `Anarchic Bloodline ~ Wild Feedback` (this cycle's own
+        // newly-traced group) carries neither a `BONUS:VAR` token nor a `%N` desc-formula argument
+        // anywhere in any of its 3 real members -- a genuine `§27b` zero-content hard gap, the
+        // SAME proof standard as `Groveborn`/`Primal` (cycle 21). `52 - 49 = 3` unresolved:
+        // Groveborn, Primal, Anarchic -- all three now exhaustively `§27b`-proven, zero real,
+        // un-traced Sorcerer Bloodline work remaining. Every other pool UNCHANGED.
         assert!(
-            report.contains("Sorcerer Bloodline: bonus_vars=45/52, combined(bonus_vars OR desc_formula)=45/52")
+            report.contains("Sorcerer Bloodline: bonus_vars=48/52, combined(bonus_vars OR desc_formula)=49/52")
                 && report.contains("Bloodrager Bloodline: bonus_vars=11/11, combined(bonus_vars OR desc_formula)=11/11")
                 && report.contains("Cleric Domain: bonus_vars=47/72, combined(bonus_vars OR desc_formula)=52/72")
                 && report.contains("Shaman Spirit: bonus_vars=11/13, combined(bonus_vars OR desc_formula)=12/13")
@@ -75566,6 +75624,35 @@ mod generic_pool_group_selection_wiring_tests {
         assert!(
             count > 0,
             "Celestial Bloodline must ground at least one real corpus member generically"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): Karmic is a real Wildblooded Sorcerer
+    /// Bloodline VARIANT (`data/corpus/ultimate_magic/class_feature/karmic_bloodline/*.json`,
+    /// `Wildblooded ~ Karmic`'s own `PREABILITY` corpus-declares its real parent, `Destined`).
+    /// Its "Fate's Retribution" member's DC formula
+    /// (`10+(Sorcerer_Destined_BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus`) needed BOTH
+    /// cycle 21's seventh shape (the Wildblooded-parent-header recursion, for
+    /// `Sorcerer_Destined_BloodlinePower1LVL`) AND this cycle's eighth shape (`"Sorcerer ~
+    /// Spells"`'s own `Sorcerer_Spells_StatBonus|CHA`) to ground -- proves the two shapes
+    /// compose correctly on a real character, not just in the census's own group-membership
+    /// tally. At character level 20, CHA modifier 0 (`AbilityModifiers::default()`), this
+    /// resolves to exactly `Sorcerer_KarmicFatesRetribution_DC = 30`
+    /// (`10 + ((BloodlineLVL=2*SorcererLVL=40)/2=20) + CHA(0)`), matching the direct-resolver
+    /// trace this cycle's own receipt cites.
+    #[test]
+    fn sorcerer_generic_bloodline_pass_grounds_karmic_wildblooded_variant() {
+        let input =
+            class_input(SORCERER_CLASS_ID, 20, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:karmic");
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id.starts_with("class_feature.sorcerer.bloodline.generic"));
+        assert!(
+            explanation.is_some(),
+            "Karmic Bloodline must ground at least one real corpus member generically"
         );
     }
 
