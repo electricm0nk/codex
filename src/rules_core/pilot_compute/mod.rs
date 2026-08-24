@@ -39340,6 +39340,32 @@ fn pool_header_record_by_normalized_suffix(
     {
         merge_in(header);
     }
+    // SD-32 T12 Epic 8 row 18 cycle 13: a FOURTH real corpus header shape -- a bare (no `" ~ "`),
+    // PLURAL class-independent record, confirmed live: `data/corpus/core_rulebook/class_feature/
+    // domains/domains.json` (key exactly `"Domains"`, `data.class` genuinely absent -- real PCGen
+    // never tags this record with a `CLASS:` token, it is granted generically via the Cleric
+    // class's own `ABILITY:...|Domains` reference, `Cleric ~ Domains` `core_rulebook/class_
+    // feature/cleric/domains.json`) carrying the REAL `BONUS:VAR|DomainPowerTimes|3+WIS` every
+    // Domain member's own `Times` formula (`DomainAirTimes|DomainPowerTimes`, ...) chains through.
+    // The exact bare-key clause above misses it (`"Domain"` singular != `"Domains"` plural); this
+    // clause tolerates the same trailing-`s` PCGen already uses inconsistently between a pool's
+    // registered name and its shared base record's key, the SAME normalization the `"<class> ~ "`
+    // wildcard clause above already applies. Traced end to end for THIS one case before writing:
+    // no other corpus record anywhere ever also targets `DomainPowerTimes` (confirmed by direct
+    // grep), so merging this is a real, unambiguous corpus fact, not a guess. Class-checked
+    // exactly like the exact-match clause above, so a same-named bare record genuinely owned by a
+    // different class still cannot be picked up by mistake.
+    let normalized_pool_group = pool_group.trim_end_matches('s');
+    if let Some(header) = table
+        .iter()
+        .find_map(|(key, header)| {
+            (!key.contains(" ~ ") && key.trim_end_matches('s') == normalized_pool_group)
+                .then_some(header)
+        })
+        .filter(|header| header.class == class || header.class.is_empty())
+    {
+        merge_in(header);
+    }
     merged
 }
 
@@ -39411,6 +39437,34 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
         let tracker_vars =
             pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
         for (name, formula) in &tracker_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+        // SD-32 T12 Epic 8 row 18 cycle 13: a THIRD real corpus shape for the class-wide shared
+        // base of a "select ONE group, inherit every member" pool, distinct from both the
+        // per-group header (`pool_header_record_by_normalized_suffix(owning_class, pool_group)`)
+        // and the `"<RegisteredName> Tracker"` shape above. Confirmed live: `data/corpus/
+        // advanced_class_guide/class_feature/shaman/spirit.json` (key `"Shaman ~ Spirit"`, class
+        // `"Shaman"`, real `BONUS:VAR|ShamanSpiritLVL|ShamanLVL`) -- the EXACT `"<class> ~
+        // <registered_name>"` shape (no `" Tracker"` suffix), never merged before this cycle
+        // because neither the per-group lookup (`pool_group` is the specific spirit's own name,
+        // e.g. `"Bones Spirit"`, never the bare `"Spirit"` word) nor the Tracker lookup (which
+        // only ever tries `"<rn> Tracker"`) reaches it. Traced end to end: every one of Shaman's
+        // real per-spirit member formulas (e.g. `Bones Spirit ~ Shedding Form`'s
+        // `ShamanSheddingFormRounds|ShamanSpiritLVL`) references this bare `ShamanSpiritLVL`
+        // directly, with no competing corpus record anywhere else ever targeting that same name
+        // (`every_corpus_bound_bonus_var_target()` unaffected -- this is a REAL, unambiguous
+        // corpus-verified bind, not a guessed default), so merging it here closes real members
+        // rather than fabricating one. Cavalier's own `"Cavalier ~ Order"` record matches this
+        // same shape too (binds `OrderAbilityLVL`) but changes nothing there -- every real
+        // Cavalier Order group's own members carry zero `BONUS:VAR` tokens at all
+        // (`record.bonus_vars.is_empty()` returns `None` before `combined_vars` is even built),
+        // confirmed unchanged by this cycle's own re-derived census. `None` for every class with
+        // no such record (Sorcerer, Bloodrager, Cleric, Warpriest all lack a `"<class> ~
+        // <registered_name>"` key -- confirmed by direct corpus lookup) preserves prior behaviour
+        // exactly, unchanged.
+        let base_vars =
+            pool_header_record_by_normalized_suffix(owning_class, registered_name, None);
+        for (name, formula) in &base_vars {
             combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
         }
     }
@@ -74186,6 +74240,71 @@ mod generic_pool_group_selection_wiring_tests {
         );
     }
 
+    /// SD-32 T12 Epic 8 row 18 cycle 13: proves the NEW bare-key, `s`-tolerant clause
+    /// `pool_header_record_by_normalized_suffix` gained this cycle -- real corpus
+    /// `data/corpus/core_rulebook/class_feature/domains/domains.json` carries KEY `"Domains"`
+    /// (plural, `data.class` genuinely absent) but every caller ever asks for the SINGULAR
+    /// registered name `"Domain"`; without the trailing-`s` tolerance this merge never reaches
+    /// the real `BONUS:VAR|DomainPowerTimes|3+WIS` chain every Domain member's own `...Times`
+    /// formula depends on.
+    #[test]
+    fn pool_header_lookup_reaches_a_bare_plural_class_independent_base_record() {
+        let merged = super::pool_header_record_by_normalized_suffix("Cleric", "Domain", None);
+        assert_eq!(
+            merged.get("DomainPowerTimes").map(String::as_str),
+            Some("3+WIS"),
+            "the bare, plural \"Domains\" base record's own DomainPowerTimes chain must merge \
+             when looked up by its singular registered name \"Domain\": {merged:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 13: proves the existing `"<class> ~ "`-prefixed wildcard
+    /// clause (already `s`-tolerant since cycle 5) now ALSO fires when the caller passes the
+    /// bare REGISTERED NAME rather than a specific group name -- real corpus `"Shaman ~ Spirit"`
+    /// (class `"Shaman"`, `BONUS:VAR|ShamanSpiritLVL|ShamanLVL`) is the class-wide shared base
+    /// every per-spirit member (e.g. `"Bones Spirit ~ Shedding Form"`'s own
+    /// `ShamanSheddingFormRounds|ShamanSpiritLVL`) chains through, but was never reached before
+    /// this cycle because no per-group lookup or `"<rn> Tracker"` lookup ever tried the bare
+    /// registered name itself.
+    #[test]
+    fn pool_header_lookup_reaches_the_class_wide_registered_name_base_record() {
+        let merged = super::pool_header_record_by_normalized_suffix("Shaman", "Spirit", None);
+        assert_eq!(
+            merged.get("ShamanSpiritLVL").map(String::as_str),
+            Some("ShamanLVL"),
+            "\"Shaman ~ Spirit\"'s own real ShamanSpiritLVL chain must merge when looked up by \
+             its own bare registered name: {merged:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 13: end-to-end proof through the real generic pool
+    /// resolver -- `"Bones Spirit ~ Shedding Form"` (`data/corpus/advanced_class_guide/
+    /// class_feature/bones_spirit/shedding_form.json`, real single-terminal member
+    /// `ShamanSheddingFormRounds|ShamanSpiritLVL`) was one of this cycle's own re-derivation
+    /// diagnostic's confirmed `UNRESOLVED` cases before this fix (its own `ShamanSpiritLVL` term
+    /// was never bound anywhere in `combined_vars`); it resolves now, at a real, non-fabricated
+    /// value (character level 5 seeds `ShamanLVL=5`, chained straight through the newly-merged
+    /// `"Shaman ~ Spirit"` base record).
+    #[test]
+    fn shaman_generic_spirit_pass_now_grounds_a_bare_registered_name_chain() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let resolved = super::resolve_pool_member_sole_magnitude(
+            "Bones Spirit ~ Shedding Form",
+            "Bones Spirit",
+            5,
+            &ability_modifiers,
+            Some("Shaman"),
+            Some("Spirit"),
+        );
+        assert_eq!(
+            resolved,
+            Some(("ShamanSheddingFormRounds".to_string(), 5)),
+            "Bones Spirit's Shedding Form must now resolve through the real, newly-merged \
+             ShamanSpiritLVL chain (character level 5 -> ShamanLVL=5 -> ShamanSpiritLVL=5 -> \
+             ShamanSheddingFormRounds=5), not stay refused"
+        );
+    }
+
     /// Re-derivation, not a trust of cycle 8's own transcribed figures (`§17a`): run for real,
     /// print the population and command, THEN assert. `cargo test --locked --lib -- \
     /// rules_core::pilot_compute::generic_pool_group_selection_wiring_tests::pool_group_closure_census_across_all_six_pools \
@@ -74218,30 +74337,55 @@ mod generic_pool_group_selection_wiring_tests {
         // breakdown and closed-group names) -- a future cycle's corpus/resolver change that
         // moves these numbers must update this assertion deliberately, never silently.
         //
-        // SD-32 T12 Epic 8 row 18 cycle 12: `Sorcerer Bloodline` moved 18/53 -> 31/53 (+13) --
-        // `resolve_pcgen_var_chain`'s new corpus-verified 0-default (see that function's own
-        // doc, oracle citation `VariableProcessor.java`/`PlayerCharacter.java`) unblocks the
-        // `Sorcerer_<Bloodline>_BloodlinePowerNLVL` terminal formulas cycle 11 traced to a bare
-        // `BloodlinePowerNLVLBonus` family this corpus never binds via any `BONUS:VAR` row --
-        // real PCGen genuinely computes 0 for that shape, not a refusal. `Bloodrager Bloodline`,
-        // `Cleric Domain`, `Shaman Spirit`, `Warpriest Blessing` and `Cavalier Order` are
-        // UNCHANGED (5/12, 26/72, 8/14, 0/37, 1/9) -- re-run and re-checked, not assumed. This
-        // cycle's own `resolve_pcgen_var_chain` unit tests prove the fix DOES reach real
-        // Bloodrager formulas (e.g. `Bloodrager_Draconic_BloodlinePower1LVL` now resolves through
-        // a real corpus `DEFINE:BloodragerBloodlinePower1LVLBonus|0`), but `group_has_a_
-        // resolvable_member` measures at the GROUP level via `resolve_pool_member_sole_magnitude`,
-        // which has its own independent per-member refusals (the single-terminal-target rule,
-        // header-chain gaps) this cycle did not change or fully trace -- the newly-var-resolvable
-        // Bloodrager formulas are not, on their own, sufficient to flip any group's tally. Named
-        // as an open question for a future cycle rather than guessed at here.
+        // SD-32 T12 Epic 8 row 18 cycle 13: cycle 12 named an open question rather than guessing
+        // at it -- `resolve_pool_member_sole_magnitude` has independent per-member refusals
+        // (empty own `bonus_vars`, the multi-terminal-target rule, and unresolved header-chain
+        // gaps) beyond var-chain resolution. Traced with a per-member diagnostic (printed, then
+        // removed before commit, per this bundle's own methodology) across Bloodrager/Cleric/
+        // Shaman/Warpriest: the dominant remaining bucket (Cleric 50, Shaman 8 members) was a
+        // single-terminal member whose formula chains to a bare header var
+        // (`DomainAirTimes|DomainPowerTimes`, `ShamanSheddingFormRounds|ShamanSpiritLVL`) never
+        // merged into `combined_vars` -- a THIRD real corpus header shape,
+        // `pool_header_record_by_normalized_suffix` now also covers (see that function's own new
+        // doc comment): a bare, PLURAL, class-independent base record
+        // (`data/corpus/core_rulebook/class_feature/domains/domains.json`, key exactly
+        // `"Domains"`, real `BONUS:VAR|DomainPowerTimes|3+WIS`, `data.class` genuinely absent --
+        // confirmed no other corpus record anywhere else also targets `DomainPowerTimes`), and
+        // the exact `"<class> ~ <registered_name>"` shape (`"Shaman ~ Spirit"`, class `"Shaman"`,
+        // real `BONUS:VAR|ShamanSpiritLVL|ShamanLVL"`), reached via the existing per-pool
+        // `registered_name_for_tracker` merge site (now also tries the bare registered name, not
+        // only `"<rn> Tracker"`). This ALSO reaches Warpriest's own `"Warpriest ~ Blessings"`
+        // record (`WarpriestBlessingLVL|WarpriestLVL`) via the same trim-trailing-`s` wildcard
+        // already present in the `"<class> ~ "`-prefixed clause -- but Warpriest stays 0/37
+        // because every real Blessing member's OWN `bonus_vars` is empty (`§17a` re-derivation:
+        // diagnostic showed `empty=74, multi_terminal=0` for all 74 Warpriest members), a
+        // DIFFERENT, deeper gap this merge cannot reach and this cycle did not force. `Bloodrager
+        // Bloodline` and `Cavalier Order` are honestly UNCHANGED: Bloodrager's remaining 7
+        // single-terminal members each chain to a per-bloodline `BloodlineLVL` identifier that
+        // IS bound elsewhere in the corpus (a same-named cross-class `Eldritch Scion` record,
+        // e.g. `Bloodrager_Aberrant_BloodlineLVL|BloodragerBloodlineLVL`,
+        // `data/corpus/advanced_class_guide/class_feature/eldritch_scion_aberrant_bloodline/
+        // eldritch_scion_aberrant_bloodline.json`, `class: "Sorcerer"`) -- `resolve_pcgen_var_
+        // chain`'s cycle-12 safety property correctly refuses to 0-default a genuinely
+        // corpus-bound identifier (cycles 2/5's proven property), and this cycle found no header
+        // record anywhere binding a pure Bloodrager's own per-bloodline `BloodlineLVL`; Cavalier's
+        // 8 Order groups still carry zero `BONUS:VAR` tokens at all, unaffected by any header
+        // merge (`§17`, unchanged from cycles 9/10/11/12).
+        //
+        // Net real movement this cycle: `Sorcerer Bloodline` UNCHANGED at 31/53 (cycle 12's own
+        // fix, re-verified). `Cleric Domain` moved 26/72 -> 34/72 (+8, all via the new bare
+        // `"Domains"` merge). `Shaman Spirit` moved 8/14 -> 11/14 (+3, all via the new
+        // `"Shaman ~ Spirit"` merge -- diagnostic confirms `single_unresolved` dropped 8 -> 0 for
+        // this pool). `Bloodrager Bloodline`, `Warpriest Blessing`, `Cavalier Order` UNCHANGED
+        // (5/12, 0/37, 1/9) -- re-run and re-checked, not assumed.
         assert!(
             report.contains("Sorcerer Bloodline: 31/53")
                 && report.contains("Bloodrager Bloodline: 5/12")
-                && report.contains("Cleric Domain: 26/72")
-                && report.contains("Shaman Spirit: 8/14")
+                && report.contains("Cleric Domain: 34/72")
+                && report.contains("Shaman Spirit: 11/14")
                 && report.contains("Warpriest Blessing: 0/37")
                 && report.contains("Cavalier Order: 1/9"),
-            "cycle 12's own six measured baselines must still reproduce exactly:\n{report}"
+            "cycle 13's own six re-derived baselines must still reproduce exactly:\n{report}"
         );
     }
 
