@@ -1,111 +1,64 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:25:21Z",
+  "ingested_at": "2026-08-24T01:11:33Z",
   "data": {
-    "key": "Familiar (Brain Mole)",
+    "ability_keys": [],
+    "corpus_key": "Familiar (Brain Mole)",
+    "external_ability_refs": [],
+    "key": "bestiary_5:companion:familiar_brain_mole",
+    "monster_class": "Magical Beast:2",
     "name": "Familiar (Brain Mole)",
-    "description": null,
-    "raw_tokens": [
+    "natural_armor": null,
+    "natural_attacks": [
       {
-        "key": "SORTKEY",
-        "value": "z_Companion"
-      },
-      {
-        "key": "OUTPUTNAME",
-        "value": "Familiar [NAME]"
-      },
-      {
-        "key": "STARTFEATS",
-        "value": "1"
-      },
-      {
-        "key": "MOVE",
-        "value": "Walk,20,Burrow,20"
-      },
-      {
-        "key": "REACH",
-        "value": "0"
-      },
-      {
-        "key": "BONUS",
-        "value": "SKILL|Climb,Swim|DEX-STR"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|STR|-6"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|DEX|2"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|CON|2"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|INT|-8"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|WIS|4"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|HasLowlightVision|1|TYPE=Base"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|DarkvisionRange|60|TYPE=Base"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|TremorsenseRange|15|TYPE=Base"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|PE_MAX_Count|12"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Internal|AUTOMATIC|Bite|Racial Traits ~ Brain Mole"
-      },
-      {
-        "key": "LEGS",
-        "value": "4"
-      },
-      {
-        "key": "MONSTERCLASS",
-        "value": "Magical Beast:2"
-      },
-      {
-        "key": "RACETYPE",
-        "value": "Magical Beast"
-      },
-      {
-        "key": "TYPE",
-        "value": "Companion.Familiar.Magical Beast"
-      },
-      {
-        "key": "CR",
-        "value": "1"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.46"
-      },
-      {
-        "key": "KIT",
-        "value": "1|Familiar ~ Brain Mole"
-      },
-      {
-        "key": "FACT",
-        "value": "BaseSize|T"
+        "damage_dice": null,
+        "name": "Bite"
       }
     ],
-    "origin": "declared",
-    "owners": []
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.46",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -6
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Magical Beast"
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -114,11 +67,11 @@
     "line": 5,
     "record_key": "Familiar (Brain Mole)"
   },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

@@ -941,6 +941,67 @@ mod tests {
         assert_eq!(served, expected, "an ability row reaches no creature on the wire");
     }
 
+    /// Corpus records that genuinely exist on disk under one `<book>/companion/`
+    /// directory but are deliberately NOT part of `companion_chassis`' transcribed
+    /// table -- named row for row against `rules_tables/beastiary1/companion_data.rs`'s
+    /// own header comment (SD-32 row 19 cycle 2), so this stays a NAMED, evidenced
+    /// exception set rather than a loosened gate: any record not on this list still
+    /// fails `every_served_key_matches_a_corpus_record_file` the moment it appears
+    /// unaccounted for. Confirmed by re-running `scripts/transcribe_companion_tables.py
+    /// beastiary`, which reports the identical 27 refusals (`.COPY=`/`.MOD` delta rows
+    /// this chassis has no second-citation mechanism to resolve, per
+    /// `decisions.md §59.2`/`§63.1`) plus one owned-but-unmodelled `ASPECT:`-only row
+    /// (`§61.2`), and produces a byte-identical `companion_data.rs`. Per `decisions.md
+    /// §27b`: "needs a new mechanism" is grounds for sizing, not silent exclusion --
+    /// this is escalated by coordinate in the row 19 cycle 2 receipt, not invented here.
+    const KNOWN_UNTRANSCRIBED_COMPANION_RECORDS: &[(&str, &str)] = &[
+        // 22 `.COPY=` creature rows: each states a delta (a `TEMPLATE:` token) on a
+        // base creature this chassis already carries, not a standalone chassis of its
+        // own -- resolving one needs a creature-template application engine (Celestial
+        // Creature / Fiendish Creature), which does not exist anywhere in this program
+        // today (`companion_data.rs:24-61`).
+        ("beastiary", "bat_celestial"),
+        ("beastiary", "bat_fiendish"),
+        ("beastiary", "cat_celestial"),
+        ("beastiary", "cat_fiendish"),
+        ("beastiary", "hawk_celestial"),
+        ("beastiary", "hawk_fiendish"),
+        ("beastiary", "lizard_celestial"),
+        ("beastiary", "lizard_fiendish"),
+        ("beastiary", "monkey_celestial"),
+        ("beastiary", "monkey_fiendish"),
+        ("beastiary", "owl_celestial"),
+        ("beastiary", "owl_fiendish"),
+        ("beastiary", "rat_celestial"),
+        ("beastiary", "rat_fiendish"),
+        ("beastiary", "raven_celestial"),
+        ("beastiary", "raven_fiendish"),
+        ("beastiary", "toad_celestial"),
+        ("beastiary", "toad_fiendish"),
+        ("beastiary", "viper_celestial"),
+        ("beastiary", "viper_fiendish"),
+        ("beastiary", "weasel_celestial"),
+        ("beastiary", "weasel_fiendish"),
+        // 4 `.MOD` ability rows: each states a delta on an existing ability record;
+        // this chassis carries no second citation to resolve a `.MOD` target
+        // (`companion_data.rs:29-32`).
+        ("beastiary", "universal_monster_rule_change_shape"),
+        ("beastiary", "universal_monster_rule_disease_extraordinary"),
+        ("beastiary", "universal_monster_rule_fast_healing"),
+        ("beastiary", "universal_monster_rule_poison_extraordinary"),
+        // 1 orphan ability: no creature row of this book owns it, so nothing could
+        // ever reach it on screen (`companion_data.rs:15-22`, `decisions.md §50`/`§56.1`).
+        ("beastiary", "summon"),
+        // 1 owned-but-unmodelled ability: states only `ASPECT:`, which no companion
+        // chassis in this program models yet (`companion_data.rs:63-69`, `§61.2`).
+        ("beastiary", "tail"),
+        // bestiary_4: 2 `.COPY=` ability rows, same delta shape as `beastiary`'s
+        // 4 `.MOD` rows above -- no second-citation mechanism to resolve them
+        // (`rules_tables/bestiary_4/companion_data.rs:14-20`, `decisions.md §59.2`).
+        ("bestiary_4", "pooka_change_shape"),
+        ("bestiary_4", "psychopomp_nosoi_change_shape"),
+    ];
+
     /// The served key is the corpus record's own file name. This is the join
     /// `reach_gate` makes, and the only thing that proves the wire and the disk
     /// agree — a second copy of the slug formula would agree with itself.
@@ -957,6 +1018,23 @@ mod tests {
                     name.strip_suffix(".json").map(str::to_owned)
                 })
                 .collect();
+            let known_gaps: BTreeSet<&str> = KNOWN_UNTRANSCRIBED_COMPANION_RECORDS
+                .iter()
+                .filter(|(b, _)| *b == book.corpus_book)
+                .map(|(_, slug)| *slug)
+                .collect();
+            for gap in &known_gaps {
+                assert!(
+                    on_disk.contains(*gap),
+                    "{}: named exception {gap:?} no longer exists on disk -- remove it from \
+                     KNOWN_UNTRANSCRIBED_COMPANION_RECORDS, it is stale",
+                    book.corpus_book
+                );
+            }
+            let on_disk_accounted_for: BTreeSet<String> = on_disk
+                .difference(&known_gaps.iter().map(|s| s.to_string()).collect())
+                .cloned()
+                .collect();
             let mut served: BTreeSet<String> = book
                 .companions
                 .iter()
@@ -972,7 +1050,7 @@ mod tests {
                 .map(|k| k.rsplit(':').next().expect("the key has a slug").to_owned())
                 .collect();
             assert_eq!(
-                served_slugs, on_disk,
+                served_slugs, on_disk_accounted_for,
                 "{}: the served keys and the corpus record files disagree",
                 book.corpus_book
             );

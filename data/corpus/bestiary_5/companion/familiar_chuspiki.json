@@ -1,143 +1,72 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:25:21Z",
+  "ingested_at": "2026-08-24T01:11:33Z",
   "data": {
-    "key": "Familiar (Chuspiki)",
+    "ability_keys": [],
+    "corpus_key": "Familiar (Chuspiki)",
+    "external_ability_refs": [],
+    "key": "bestiary_5:companion:familiar_chuspiki",
+    "monster_class": "Magical Beast:3",
     "name": "Familiar (Chuspiki)",
-    "description": null,
-    "raw_tokens": [
+    "natural_armor": null,
+    "natural_attacks": [
       {
-        "key": "SORTKEY",
-        "value": "z_Companion"
+        "damage_dice": "1d4",
+        "name": "Tail Fan"
       },
       {
-        "key": "OUTPUTNAME",
-        "value": "Familiar [NAME]"
-      },
-      {
-        "key": "STARTFEATS",
-        "value": "1"
-      },
-      {
-        "key": "MOVE",
-        "value": "Walk,30,Fly,60"
-      },
-      {
-        "key": "REACH",
-        "value": "0"
-      },
-      {
-        "key": "BONUS",
-        "value": "SKILL|Climb,Swim|DEX-STR"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|STR|-4"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|DEX|6"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|CON|2"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|INT|2"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|WIS|-2"
-      },
-      {
-        "key": "BONUS",
-        "value": "STAT|CHA|2"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|SLA_CL|3"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|HasLowlightVision|1|TYPE=Base"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|DarkvisionRange|60|TYPE=Base"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|PE_MAX_Count|5"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|Maneuverability|5"
-      },
-      {
-        "key": "BONUS",
-        "value": "WEAPONPROF=Tail Fan|Reach|5"
-      },
-      {
-        "key": "BONUS",
-        "value": "WEAPONPROF=Tail Fan|CRITMULTADD|1"
-      },
-      {
-        "key": "AUTO",
-        "value": "LANG|Auran|Common"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Internal|AUTOMATIC|Racial Traits ~ Chuspiki"
-      },
-      {
-        "key": "LEGS",
-        "value": "4"
-      },
-      {
-        "key": "NATURALATTACKS",
-        "value": "Tail Fan,Natural.Melee.Finesseable.Weapon,*1,1d4"
-      },
-      {
-        "key": "NATURALATTACKS",
-        "value": "Air Blast,Natural.Ranged.Weapon.Touch,*1,0"
-      },
-      {
-        "key": "MONSTERCLASS",
-        "value": "Magical Beast:3"
-      },
-      {
-        "key": "RACETYPE",
-        "value": "Magical Beast"
-      },
-      {
-        "key": "RACESUBTYPE",
-        "value": "Air"
-      },
-      {
-        "key": "TYPE",
-        "value": "Companion.Familiar.Magical Beast"
-      },
-      {
-        "key": "CR",
-        "value": "2"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.56"
-      },
-      {
-        "key": "KIT",
-        "value": "1|Familiar ~ Chuspiki"
-      },
-      {
-        "key": "FACT",
-        "value": "BaseSize|T"
+        "damage_dice": "0",
+        "name": "Air Blast"
       }
     ],
-    "origin": "declared",
-    "owners": []
+    "race_subtype": "Air",
+    "race_type": "Magical Beast",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.56",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": -2
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Magical Beast"
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -146,11 +75,11 @@
     "line": 6,
     "record_key": "Familiar (Chuspiki)"
   },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

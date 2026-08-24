@@ -2490,6 +2490,36 @@ fn chassis_monster_abilities_reach(corpus_book: &str, wire_code: &str) -> Reach 
     assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
 }
 
+/// The exact `class_feature` keys the compiled Unchained class tables own —
+/// the four per-class modules `pu_class_feature_count()`
+/// (`corpus_ingest_diagnostic.rs`) already sums, read here by key rather than
+/// by count.
+///
+/// **Deliberately NOT `corpus_record_keys("pathfinder_unchained",
+/// "class_feature")`** (SD-32 row 19 cycle 2). That walks every JSON file
+/// under the directory, and the directory holds 604 files, not 64 — the
+/// other 540 are `class_feature`-kind corpus content for classes this engine
+/// does not model at all (Automatic Bonus Progression toggles, the Unchained
+/// skill-system variant rules, Background Skills, Combat Trick/Skill Unlock
+/// pool entries), landed corpus-only by `decisions.md §13`'s T12 population
+/// and subsequent `§20` no_record-to-zero closure — the same shape as
+/// `ability`/`skill`/`race_trait_generic`/`template`, none of which this
+/// diagnostic's `rules_tables` half compiles either
+/// (`corpus_ingest_diagnostic.rs`'s own `pathfinder_unchained_counts` comment
+/// names it). A record ingested for shape-closure purposes is not the same
+/// claim as a record this engine's four real class tables own and can grant
+/// — using the disk count as the reach denominator conflated the two and
+/// made every one of the 540 read as an unreached class feature, which they
+/// never were.
+fn pu_class_owned_feature_keys() -> BTreeSet<String> {
+    let mut keys: BTreeSet<String> = BTreeSet::new();
+    keys.extend(pu::barbarian_features::features().iter().map(|f| f.key.to_owned()));
+    keys.extend(pu::monk_features::features().iter().map(|f| f.key.to_owned()));
+    keys.extend(pu::rogue_features::UnchainedRogueFeature::ALL.iter().map(|f| f.key().to_owned()));
+    keys.extend(pu::summoner_features::UnchainedSummonerFeature::ALL.iter().map(|f| f.key().to_owned()));
+    keys
+}
+
 /// Pathfinder Unchained's ingested `class_feature` records, judged per record
 /// against the real explanation channel the character sheet reads.
 ///
@@ -2516,7 +2546,7 @@ fn pu_class_features_reach() -> Reach {
     use codex::rules_core::pilot_compute::pu_class_feature_cited_key;
     use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 
-    let ingested = corpus_record_keys("pathfinder_unchained", "class_feature");
+    let ingested = pu_class_owned_feature_keys();
 
     let fixture_path = repo_root()
         .join("tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
@@ -6839,18 +6869,54 @@ mod tests {
     /// The premise is checked rather than assumed: the corpus keys and the
     /// receipt ids really are different vocabularies, so this passing means the
     /// engine is carrying the key across, not that the two happened to match.
+    ///
+    /// **Partial-credit branch (SD-32 row 19 cycle 2), matching this family's
+    /// sibling tests' shape** (e.g. the `733`-record ARG/ISF test two cases
+    /// above, which separates a family's REACHING subset from its still-open
+    /// remainder rather than collapsing the whole family to `NotSurfaced` the
+    /// instant one record does not reach). PU's `class_feature` corpus
+    /// directory holds 604 on-disk records; only 64 of them are owned by one
+    /// of the four Unchained class tables this engine models
+    /// (`pu_class_owned_feature_keys`). The other 540 are re-derived and
+    /// reported here too, by kind of gap rather than assumed away, so this
+    /// test still fails the moment either subset's shape changes without
+    /// anyone updating it.
     #[test]
     fn pathfinder_unchaineds_class_features_are_claimed_per_corpus_record() {
         let family = Family::new("pathfinder_unchained", "class_features");
-        let ingested = corpus_record_keys("pathfinder_unchained", "class_feature");
+
+        let on_disk = corpus_record_keys("pathfinder_unchained", "class_feature");
         assert_eq!(
-            ingested.len(),
+            on_disk.len(),
+            604,
+            "PU's full class_feature corpus population, counted on disk -- re-derive with \
+             `find data/corpus/pathfinder_unchained/class_feature -name '*.json' | wc -l`"
+        );
+
+        let class_owned = pu_class_owned_feature_keys();
+        assert_eq!(
+            class_owned.len(),
             64,
-            "PU's 64 ingested class_feature records, counted on disk"
+            "PU's class-owned class_feature records -- the union of the four Unchained class \
+             tables' own keys, not a directory walk"
         );
         assert!(
-            ingested.contains("Unchained Rogue ~ Sneak Attack"),
+            class_owned.contains("Unchained Rogue ~ Sneak Attack"),
             "the finding's own worked example must still be one of the records"
+        );
+        assert!(
+            class_owned.is_subset(&on_disk),
+            "every class-owned key must still resolve to a real corpus record on disk"
+        );
+
+        let non_class_owned = on_disk.difference(&class_owned).count();
+        assert_eq!(
+            non_class_owned,
+            540,
+            "the residual is real, named forward scope (Automatic Bonus Progression toggles, the \
+             Unchained skill-system variant rules, Background Skills, Combat Trick/Skill Unlock \
+             pool entries -- `class_feature`-kind corpus content for classes this engine does not \
+             model at all), not silently absorbed into the class-owned count"
         );
 
         match reach_of(&family).expect("PU class features have a declared claim") {
@@ -6858,7 +6924,7 @@ mod tests {
                 assert_eq!(surface, "load_saved_character -> explanations (class_feature.pu.*)");
                 assert_eq!(records, 64);
             }
-            other => panic!("expected all 64 to reach, got {other:?}"),
+            other => panic!("expected all 64 class-owned records to reach, got {other:?}"),
         }
     }
 

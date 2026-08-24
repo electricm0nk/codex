@@ -2066,15 +2066,22 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     // Implemented" -- so this generator, not the monster one, is the whole of
     // what those books contribute.
     //
-    // **B5's `support/b5_races_companion_oa.lst` is deliberately NOT named
-    // here.** `_bestiary_5.pcc:69` loads it under
-    // `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested;
-    // `decisions.md §47.2`. The transcriber excludes its two rows from the
-    // table by reading that pcc gate, so this spec has nothing to point at.
+    // **B5's `support/b5_races_companion_oa.lst` IS named here (SD-32 row
+    // 19, cycle 2).** It used to be excluded on the premise that
+    // `PRECAMPAIGN:1,Occult Adventures` (`_bestiary_5.pcc:69`) gated it
+    // behind an uningested book (`decisions.md §47.2`). That premise is
+    // false: `occult_adventures` is an ingested book
+    // (`reach_gate.rs::CORPUS_BOOK_IDS`), and `decisions.md §27b`
+    // ("EVERYTHING") separately overturned this exact reachability-driven
+    // exclusion shape. `classify_companion_rows.py`'s
+    // `UNINGESTED_CAMPAIGN_GATES` was emptied and the transcriber now
+    // includes both of this file's rows in `COMPANIONS`, so this spec must
+    // point at the file that owns them or `gen_companion_book` panics on
+    // an unresolvable citation.
     CompanionBookSpec {
         corpus_book: "bestiary_5",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
-        races_lsts: &["b5_races_companion.lst"],
+        races_lsts: &["b5_races_companion.lst", "b5_races_companion_oa.lst"],
         abilities_lsts: &["b5_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section",
