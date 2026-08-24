@@ -8512,6 +8512,24 @@ pub fn ability_modifier(score: i16) -> i16 {
     score.div_euclid(2) - 5
 }
 
+/// Builds a full [`AbilityModifiers`] straight from the character's raw
+/// [`AbilityScores`], without pushing any `ComputationExplanation` --
+/// `compute_ability_modifiers` (above) does that plus the six baseline
+/// explanation records, but several call sites (SD-32 T12 Epic 8's generic
+/// pool-choice magnitude resolver) need only the plain struct to seed a
+/// formula evaluator's variable environment, not a second copy of the six
+/// already-pushed baseline explanations.
+fn ability_modifiers_from_scores(scores: &AbilityScores) -> AbilityModifiers {
+    AbilityModifiers {
+        strength: ability_modifier(scores.strength),
+        dexterity: ability_modifier(scores.dexterity),
+        constitution: ability_modifier(scores.constitution),
+        intelligence: ability_modifier(scores.intelligence),
+        wisdom: ability_modifier(scores.wisdom),
+        charisma: ability_modifier(scores.charisma),
+    }
+}
+
 fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i16) {
     match ability {
         "strength" => modifiers.strength = modifier,
@@ -12809,6 +12827,19 @@ fn compute_apg_class_chassis(
             explanations,
         );
         ground_alchemist_feral_mutagen_discovery(input, level, explanations);
+        // SD-32 T12 Epic 8: generic pass over the OTHER 34 Discoveries
+        // (and Grand Discovery) this file has never hand-modelled by name.
+        push_generic_pool_choice_magnitude(
+            input,
+            level,
+            &ability_modifiers_from_scores(&input.chosen.ability_scores),
+            ALCHEMIST_DISCOVERY_CHOICE_ID,
+            "Discovery",
+            "discovery:",
+            "class_feature.apg.alchemist.discovery.generic",
+            ALCHEMIST_DISCOVERY_GRANT_LEVEL,
+            explanations,
+        );
         let extract_unmet =
             unmet_alchemist_extract_conditions(input, level, alchemist_intelligence_modifier);
         if extract_unmet.is_empty() {
@@ -38848,6 +38879,198 @@ fn resolve_class_feature_bonus_var(
         ability_modifiers,
     );
     vars.get(target_var).copied().and_then(|v| i16::try_from(v).ok())
+}
+
+/// SD-32 T12 Epic 8 (`epic-2-cause-closure`, row 18, "pool-shaped class
+/// features"). `resolve_class_feature_bonus_var` above (SD-32 Epic 1) still
+/// needs its caller to already know the record's OWN target variable name
+/// (`"MasterHunterDC"`), which is fine for a handful of hand-picked named
+/// grants but does not scale to a 1,913-group, 5,981-numeric-magnitude
+/// open-ended-choice-pool population (Alchemist Discovery, Witch Hex,
+/// Oracle Curse/Mystery/Revelation, Shaman Spirit, Cavalier Order, Hunter
+/// Animal Focus, Inquisitor Judgment, ...) one bespoke function per member
+/// at a time.
+///
+/// This is the group-agnostic generalisation `decisions.md §17` requires:
+/// given only a corpus `" ~ "`-qualified key, it finds the record's OWN
+/// "terminal" `BONUS:VAR`/`DEFINE` target -- the one target name that is
+/// never itself referenced inside another of the SAME record's formulas
+/// (an intermediate hop like a `DomainXLVL`-shaped chain variable IS
+/// referenced by its sibling and is therefore never picked as the
+/// terminal) -- and resolves it through the SAME already-fixture-checked
+/// `resolve_pcgen_var_chain` mechanism `resolve_class_feature_bonus_var`
+/// uses, seeded with the real class level and the real six ability
+/// modifiers. A record with zero or more than one terminal target refuses
+/// (`None`) rather than guessing which one is "the" magnitude -- exactly
+/// the four named shapes (flat, level-scaled, ability-modifier-only,
+/// level+ability) resolve to a single terminal target; anything genuinely
+/// novel (two independent magnitudes on one record, an unresolvable
+/// `classlevel("OtherClass")`/dice-notation/multi-target formula) refuses
+/// cleanly and is reported, never fabricated.
+/// `pool_group` is used to look up the pool's own HEADER record
+/// (`"<class> ~ <pool_group>"` -- e.g. `"Alchemist ~ Discovery"`,
+/// `"Witch ~ Hex"`, real corpus keys distinct from any member's own
+/// `"<pool_group> ~ <member>"` key), whose own `BONUS:VAR` chain very
+/// often defines the pool-specific level variable individual members
+/// scale on (`AlchemistDiscoveryLVL|AlchemistLVL`, confirmed live in
+/// `advanced_players_guide/class_feature/alchemist/discovery.json`) --
+/// without merging that header chain in, a member formula referencing
+/// `AlchemistDiscoveryLVL` would refuse for want of a binding, even
+/// though the corpus itself defines exactly what that variable is. A
+/// header var never overrides a member's own same-named var (`or_insert`
+/// only fills gaps), and a pool with no such header record simply merges
+/// nothing, unchanged from before this widening.
+pub(crate) fn resolve_pool_member_sole_magnitude(
+    key: &str,
+    pool_group: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(String, i64)> {
+    let record = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe().get(key)?;
+    if record.bonus_vars.is_empty() {
+        return None;
+    }
+    let is_referenced_elsewhere = |name: &str| {
+        record
+            .bonus_vars
+            .iter()
+            .any(|(other_name, formula)| other_name != name && formula_names_identifier(formula, name))
+    };
+    let mut terminals = record.bonus_vars.keys().filter(|name| !is_referenced_elsewhere(name));
+    let target = terminals.next()?;
+    if terminals.next().is_some() {
+        return None; // more than one terminal target -- refuse, do not guess
+    }
+    let mut combined_vars = record.bonus_vars.clone();
+    let header_key = format!("{} ~ {pool_group}", record.class);
+    if let Some(header) =
+        class_feature_grant_consumer::class_feature_bonus_vars_any_record().get(&header_key)
+    {
+        for (name, formula) in &header.bonus_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    let class_level_var = class_feature_grant_consumer::class_level_variable_name(&record.class);
+    let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
+        &combined_vars,
+        &class_level_var,
+        level,
+        ability_modifiers,
+    );
+    let value = *vars.get(target)?;
+    Some((target.clone(), value))
+}
+
+/// Whether `identifier` appears in `formula` as a whole token (not as a
+/// substring of a longer identifier) -- splits on every character that is
+/// not `[A-Za-z0-9_]`, PCGen formula syntax's own identifier-boundary set
+/// (the same character class `formula_interpreter.rs`'s tokenizer treats
+/// as an identifier body).
+fn formula_names_identifier(formula: &str, identifier: &str) -> bool {
+    formula
+        .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
+        .any(|token| token == identifier)
+}
+
+/// Resolves a real, recorded `SelectedChoice::selection_id` (e.g.
+/// `"discovery:feral_mutagen"`) back to the exact corpus `" ~ "`-qualified
+/// key it names (e.g. `"Discovery ~ Feral Mutagen"`), group-agnostically:
+/// scans every corpus `class_feature` record whose key starts with
+/// `"<pool_group> ~ "`, folds each member's own display name through the
+/// SAME `class_feature_id_slug` transform this codebase's own hand-picked
+/// selection constants were built with (`FERAL_MUTAGEN_DISCOVERY_SELECTION
+/// = "discovery:feral_mutagen"` <- `class_feature_id_slug("Feral
+/// Mutagen")`), and returns the one whose `"<namespace><slug>"` matches
+/// the recorded selection id exactly. `None` for an invented or
+/// unrecognised selection id -- never guessed, mirroring
+/// `chooser_option_selected`'s own "an invented id must never ground a
+/// real magnitude" contract this module's existing Rage Power tests pin.
+pub(crate) fn resolve_pool_selection_corpus_key(
+    pool_group: &str,
+    namespace: &str,
+    selection_id: &str,
+) -> Option<String> {
+    let prefix = format!("{pool_group} ~ ");
+    class_feature_grant_consumer::class_feature_record_tokens()
+        .keys()
+        .find(|key| {
+            key.strip_prefix(&prefix)
+                .is_some_and(|member_name| {
+                    format!("{namespace}{}", class_feature_id_slug(member_name)) == selection_id
+                })
+        })
+        .cloned()
+}
+
+/// Pushes one `ComputationExplanation` per REAL, recorded selection under
+/// `choice_set_id` whose corpus pool member (`"<pool_group> ~ <member>"`)
+/// carries a single resolvable terminal magnitude -- the generic pass
+/// closing the residual tail of a large open-ended chooser (Discovery,
+/// Hex, Curse, Mystery, Revelation, Spirit, Order, Animal Focus, Judgment,
+/// Evolution, Blessing, Bloodline, Talent, ...) beyond whatever handful of
+/// members this codebase already hand-models by name elsewhere in this
+/// file. Purely ADDITIVE: an already hand-modelled selection's own
+/// `ground_*` function still runs and still emits its own, differently-
+/// named id (dice-notation magnitudes like Feral Mutagen's claw damage die
+/// are refused here anyway, since `formula_interpreter.rs` does not parse
+/// dice notation -- `resolve_pool_member_sole_magnitude` returns `None`
+/// for them), so this function cannot collide with or double-count an
+/// existing hand-picked explanation. A record that does not resolve is
+/// silently skipped (never a fabricated value) -- the population that
+/// still needs a bespoke function or an upstream data fix is reported by
+/// the census script, not silently guessed at here.
+fn push_generic_pool_choice_magnitude(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    choice_set_id: &str,
+    pool_group: &str,
+    namespace: &str,
+    id_prefix: &str,
+    min_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < min_level {
+        // The pool itself is not yet granted at this level (e.g. Alchemist
+        // Discovery's own `AlchemistDiscoveryLVL/2` gate does not open
+        // until level 2) -- a recorded selection below that gate must
+        // never ground a magnitude, mirroring every hand-picked `ground_*`
+        // function's own level check.
+        return;
+    }
+    let prefix = format!("{pool_group} ~ ");
+    for selection_id in input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+    {
+        let Some(key) = resolve_pool_selection_corpus_key(pool_group, namespace, selection_id)
+        else {
+            continue;
+        };
+        let Some((target, value)) =
+            resolve_pool_member_sole_magnitude(&key, pool_group, level, ability_modifiers)
+        else {
+            continue;
+        };
+        let Ok(value) = i16::try_from(value) else { continue };
+        let member_name = key.strip_prefix(&prefix).unwrap_or(&key);
+        let member_slug = class_feature_id_slug(member_name);
+        let target_slug = class_feature_id_slug(&target);
+        explanations.push(ComputationExplanation {
+            id: format!("{id_prefix}.{member_slug}.{target_slug}"),
+            value,
+            detail: format!(
+                "{pool_group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                 {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                 function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                 seeded with this character's real class level and real ability modifiers \
+                 (SD-32 T12 Epic 8, decisions.md §17 generic pool-choice magnitude resolver)."
+            ),
+        });
+    }
 }
 
 fn explain_rogue_level1_chassis(
@@ -72193,8 +72416,9 @@ mod ultimate_combat_chassis_gate_tests {
 #[cfg(test)]
 mod spellcasting_shaped_class_closure_tests {
     use super::{
-        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, ALCHEMIST_CLASS_ID, ALCHEMIST_DISCOVERY_CHOICE_ID,
+        build_pilot_headless_receipt, compute_pilot_base_chassis, AcquisitionMode,
+        CharacterClassLevel, CharacterInput, HeadlessReceiptStatus, ALCHEMIST_CLASS_ID,
+        ALCHEMIST_DISCOVERY_CHOICE_ID,
         ARCANE_BLOODRAGER_BLOODLINE_SELECTION, BLOODRAGER_BLOODLINE_CHOICE_ID,
         BLOODRAGER_CLASS_ID, CANONICAL_EXTRACT_SPELL_ID, DESTRUCTION_BLESSING_SELECTION,
         FERAL_MUTAGEN_DISCOVERY_SELECTION, INVESTIGATOR_CLASS_ID, INVESTIGATOR_TALENT_CHOICE_ID,
@@ -72467,6 +72691,175 @@ mod spellcasting_shaped_class_closure_tests {
             ),
             Some(6),
             "Feral Mutagen claws: 1d6 for a Medium alchemist"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 (`epic-2-cause-closure` row 18, pool-shaped class
+    /// features): the GENERIC pool-choice magnitude resolver, proven
+    /// end-to-end through `compute_pilot_base_chassis` (not a unit-call-
+    /// only proof) on a real Discovery this codebase never hand-modelled
+    /// by name -- `Discovery ~ Spontaneous Healing`
+    /// (`ultimate_magic/class_feature/discovery/spontaneous_healing.json`,
+    /// `BONUS:VAR|SpontaneousHealingAmount|floor(AlchemistDiscoveryLVL/2)*5`).
+    /// `AlchemistDiscoveryLVL` is never bound by the member record itself
+    /// -- it is only defined by the pool's own HEADER record
+    /// (`Alchemist ~ Discovery`'s `BONUS:VAR|AlchemistDiscoveryLVL|
+    /// AlchemistLVL`), so this also proves the header-chain merge is
+    /// load-bearing, not decorative.
+    #[test]
+    fn spontaneous_healing_discovery_resolves_generically_through_the_pool_header_chain() {
+        let mut level4 = bare(ALCHEMIST_CLASS_ID, 4);
+        level4.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        assert_eq!(
+            explanation_value(
+                &level4,
+                "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                 spontaneoushealingamount"
+            ),
+            Some(10),
+            "level 4: floor(AlchemistDiscoveryLVL/2)*5 = floor(4/2)*5 = 10"
+        );
+
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        assert_eq!(
+            explanation_value(
+                &level10,
+                "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                 spontaneoushealingamount"
+            ),
+            Some(25),
+            "level 10: floor(AlchemistDiscoveryLVL/2)*5 = floor(10/2)*5 = 25"
+        );
+    }
+
+    /// A real selection recorded BELOW the pool's own grant gate must
+    /// never ground a magnitude -- mirrors every hand-picked `ground_*`
+    /// function's own level check (`alchemist_feral_mutagen_discovery_
+    /// grounds_from_its_own_grant_level`, above).
+    #[test]
+    fn the_generic_resolver_stays_silent_below_the_pools_own_grant_level() {
+        let mut level1 = bare(ALCHEMIST_CLASS_ID, 1);
+        level1.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        assert_eq!(
+            explanation_value(
+                &level1,
+                "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                 spontaneoushealingamount"
+            ),
+            None,
+            "AlchemistDiscoveryLVL/2 grants no Discovery yet at level 1"
+        );
+    }
+
+    /// MUTATION-PROOF guard: an invented Discovery selection id must never
+    /// resolve to a real corpus key or ground a real magnitude, even
+    /// though it is recorded under the real, live `choice:
+    /// alchemist_discovery` choice set id -- mirrors the Rage Power
+    /// `an_invented_selection_id_never_grounds_the_superstition_bonus`
+    /// guard's own contract for this new, generic resolver.
+    #[test]
+    fn an_invented_discovery_selection_never_grounds_a_generic_magnitude() {
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:made_up_discovery".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&level10);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.")),
+            "an invented selection id must never ground a real magnitude: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// A record whose own real corpus formula has MORE than one terminal
+    /// `BONUS:VAR` target (`Discovery ~ True Mutagen`:
+    /// `MutagenTierLVL` AND `MutagenACBonus`, neither referencing the
+    /// other) refuses rather than guessing which target is "the"
+    /// magnitude -- `decisions.md §1a`.
+    #[test]
+    fn true_mutagen_discovery_refuses_a_multi_terminal_target_rather_than_guess() {
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:true_mutagen".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&level10);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.true_mutagen.")),
+            "a two-terminal-target record must refuse, not guess: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// A record whose real corpus `BONUS:VAR` rows are PRE-gated
+    /// (`Discovery ~ Force Bomb`:
+    /// `VAR|ForceBombDieSize|3|PREVAREQ:...,1` vs
+    /// `VAR|ForceBombDieSize|4|PREVAREQ:...,0`, two rows for the SAME
+    /// target) refuses rather than silently keeping whichever row a naive
+    /// last-write-wins parse would pick -- proves
+    /// `class_feature_record_tokens_pre_gate_safe`'s own safety gate is
+    /// load-bearing at this generic consumer's real call site, not merely
+    /// present in the library function.
+    #[test]
+    fn force_bomb_discovery_refuses_a_pre_gated_multi_row_target() {
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:force_bomb".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&level10);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.force_bomb.")),
+            "a PRE-gated multi-row target must refuse, not silently keep the last row: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// Reachability proof (per the dispatch's own "reachability is proven
+    /// through a headless pilot receipt" precedent): the real headless
+    /// receipt entry point reaches `Computed` for a Human Alchemist with a
+    /// genuine, generically-resolved Discovery selection, and the real
+    /// receipt's own explanations carry the grounded record.
+    #[test]
+    fn the_headless_pilot_receipt_carries_the_generic_discovery_magnitude() {
+        let mut level4 = seeded(ALCHEMIST_CLASS_ID, 4);
+        level4.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&level4);
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id
+                    == "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                        spontaneoushealingamount"
+                    && e.value == 10),
+            "the generic Discovery magnitude must reach the real headless receipt's own \
+             explanations: {:?}",
+            receipt.computation.explanations
         );
     }
 

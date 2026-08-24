@@ -737,6 +737,160 @@ pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFe
     })
 }
 
+/// A stricter sibling of [`parse_bonus_var_tokens`] (SD-32 T12 Epic 8,
+/// `epic-2-cause-closure` row 18: pool-shaped class features). Refuses
+/// (drops the target entirely, never guesses) any `BONUS:VAR` target name
+/// that carries MORE THAN ONE raw row for the same record, or whose
+/// formula segment is followed by a further `|`-delimited PRE-gate
+/// qualifier (`PREVAREQ:`/`PREVARGTEQ:`/...) -- both shapes
+/// [`parse_bonus_var_tokens`] silently resolves by keeping only the LAST
+/// row, which is safe for the handful of records SD-32 Epic 1's callers
+/// hand-picked and independently verified one at a time, but NOT safe for
+/// a generic pass over an unverified population: silently picking the
+/// wrong PRE-gated variant (e.g. `advanced_players_guide`'s Force Bomb
+/// discovery, `BONUS:VAR|ForceBombDieSize|3|PREVAREQ:...,1` vs
+/// `BONUS:VAR|ForceBombDieSize|4|PREVAREQ:...,0`) would ship a genuinely
+/// wrong number as a real computed value -- exactly the failure
+/// `decisions.md §1a` exists to prevent. `formula_interpreter.rs`'s own
+/// module doc names the real PRE-gate-aware summation mechanism
+/// (`bonus_stack_reader`, a sibling module elsewhere) as out of scope for
+/// this generic resolver; refusing is correct here, not merely expedient.
+fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String, String> {
+    let mut occurrences: BTreeMap<String, Vec<(String, bool)>> = BTreeMap::new();
+    for token in raw_tokens {
+        if token["key"].as_str() != Some("BONUS") {
+            continue;
+        }
+        let Some(value) = token["value"].as_str() else { continue };
+        let Some(rest) = value.strip_prefix("VAR|") else { continue };
+        let mut parts = rest.splitn(2, '|');
+        let (Some(names), Some(formula_and_tail)) = (parts.next(), parts.next()) else {
+            continue;
+        };
+        let has_tail = formula_and_tail.contains('|');
+        let formula = formula_and_tail.split('|').next().unwrap_or(formula_and_tail).to_string();
+        for name in names.split(',') {
+            let name = name.trim();
+            if !name.is_empty() {
+                occurrences.entry(name.to_string()).or_default().push((formula.clone(), has_tail));
+            }
+        }
+    }
+    occurrences
+        .into_iter()
+        .filter_map(|(name, rows)| {
+            if rows.len() == 1 && !rows[0].1 { Some((name, rows[0].0.clone())) } else { None }
+        })
+        .collect()
+}
+
+/// A PRE-gate-safe sibling of [`class_feature_record_tokens`], identical in
+/// every respect except its `bonus_vars` field is built via
+/// [`parse_bonus_var_tokens_pre_gate_safe`] rather than
+/// [`parse_bonus_var_tokens`] -- see that function's own doc comment for
+/// why a generic, per-record-unverified consumer (SD-32 T12 Epic 8's
+/// [`super::resolve_pool_member_sole_magnitude`]) must use this table
+/// instead of the original.
+pub(crate) fn class_feature_record_tokens_pre_gate_safe() -> &'static BTreeMap<String, ClassFeatureRecordTokens>
+{
+    static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let cf_dir = book_entry.path().join("class_feature");
+            if !cf_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let (Some(key), Some(name), Some(class)) =
+                    (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
+                else {
+                    continue;
+                };
+                let Some(raw_desc) = data["description"].as_str() else { continue };
+                if !is_real_description_value(raw_desc) {
+                    continue;
+                }
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                    name: name.to_string(),
+                    class: class.to_string(),
+                    raw_description: raw_desc.to_string(),
+                    bonus_vars,
+                });
+            }
+        }
+        out
+    })
+}
+
+/// Every corpus `class_feature` record's own PRE-gate-safe `BONUS:VAR`
+/// chain, keyed by `KEY:` -- WITHOUT [`class_feature_record_tokens_pre_gate_
+/// safe`]'s `data.description` requirement (SD-32 T12 Epic 8). A pool's own
+/// HEADER record (`"Alchemist ~ Discovery"`, `"Witch ~ Hex"`, ...) very
+/// often defines the pool-specific level variable individual members scale
+/// on (`AlchemistDiscoveryLVL|AlchemistLVL`) but carries `description:
+/// null` in this corpus (confirmed live,
+/// `advanced_players_guide/class_feature/alchemist/discovery.json`) -- the
+/// sibling table's description gate would silently exclude it, starving
+/// `super::resolve_pool_member_sole_magnitude`'s header-chain merge of
+/// exactly the variable it exists to supply. This table's own consumer
+/// never renders `raw_description` (it is a real corpus record's own field,
+/// kept `.to_string()`-of-empty rather than `Option` only to reuse
+/// [`ClassFeatureRecordTokens`]'s existing shape without a second struct).
+pub(crate) fn class_feature_bonus_vars_any_record() -> &'static BTreeMap<String, ClassFeatureRecordTokens> {
+    static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let cf_dir = book_entry.path().join("class_feature");
+            if !cf_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let (Some(key), Some(name), Some(class)) =
+                    (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
+                else {
+                    continue;
+                };
+                let raw_desc = data["description"].as_str().unwrap_or("").to_string();
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                    name: name.to_string(),
+                    class: class.to_string(),
+                    raw_description: raw_desc,
+                    bonus_vars,
+                });
+            }
+        }
+        out
+    })
+}
+
 /// PCGen's own auto-declared per-class level variable name: the class's display name with every
 /// whitespace character removed, plus `LVL` -- confirmed corpus-wide (`Bard` -> `BardLVL`,
 /// `Barbarian` -> `BarbarianLVL`, `Arcane Archer` -> `ArcaneArcherLVL`, ...) by grepping every
