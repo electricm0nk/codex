@@ -39122,22 +39122,118 @@ fn resolve_class_feature_bonus_var(
 /// `None` when no header record exists at all -- callers already treat that
 /// as "this pool has no header chain to merge", unchanged from before this
 /// widening.
-fn pool_header_record_by_normalized_suffix<'a>(
+///
+/// SD-32 T12 Epic 8 row 18 cycle 11: this function used to return the FIRST
+/// matching header record and stop -- correct while every pool had at most
+/// one real header-shaped record, but WRONG once a pool has more than one
+/// each contributing a DIFFERENT slice of the real chain. Confirmed live:
+/// Cleric's own `"Cleric Domain ~ Air"` (a domain SPELL LIST record, class
+/// `"Cleric"`, CATEGORY `"Internal"`, carrying a `SPELLLEVEL` token and ZERO
+/// `BONUS:VAR` tokens) is a WHOLLY DIFFERENT record from the real power
+/// header `"Air Domain"` (bare key, the one this function's own cycle-5
+/// widening below already finds, carrying the actually useful
+/// `DomainAirLVL`/`DomainAirDC`/`DomainAirTimes` chain) -- both real, both
+/// legitimately named "the header" by different naming conventions, and a
+/// single-match `Option` return can only ever surface one of them. This
+/// function now MERGES every real header candidate's own `bonus_vars`
+/// (never overwriting an already-bound target, same never-clobber policy
+/// `merge_bonus_var_target_map_never_overwriting` already uses for the
+/// cross-book merges) rather than returning the first hit, so a pool with
+/// several real per-shape header records gets the union of all of them.
+///
+/// `registered_name` widening (cycle 11): a FOURTH real header shape, found
+/// by tracing WHY Sorcerer Bloodline's terminal `BONUS:VAR` targets (e.g.
+/// `Sorcerer_Aberrant_BloodlinePower1LVL`) sit unbound even though a
+/// resolvable, wholly UNGATED definition exists in the corpus. Cycle 10
+/// traced one such target to a row it believed was gated by a `PREABILITY:`
+/// tag this module could not verify without the oracle's own `.java`
+/// sources (its own receipt); the oracle's `.java` sources ARE readable from
+/// its git objects without widening the sparse checkout (`git show
+/// HEAD:code/src/java/plugin/pretokens/{parser/PreAbilityParser,
+/// test/PreAbilityTester}.java`, confirmed live this cycle) -- but reading
+/// them surfaces a DIFFERENT root cause than a PRE-gate this module cannot
+/// evaluate: the record cycle 10 traced (`class_feature_bonus_vars_any_
+/// record`'s bare-key `"Aberrant Bloodline"` match, contributed by
+/// `advanced_class_guide`'s own Eldritch-Heritage-shaped fallback record,
+/// `VAR|Sorcerer_Aberrant_BloodlinePower1LVL|1|!PREABILITY:...|!PREABILITY:
+/// ...`) is NOT the real per-bloodline header PCGen's own class chooser
+/// binds when a Sorcerer selects this bloodline normally. A SEPARATE,
+/// wholly UNGATED corpus record this lookup never tried carries the real
+/// formula: `"Sorcerer Bloodline ~ Aberrant"` (confirmed live,
+/// `data/corpus/core_rulebook/class_feature/sorcerer_bloodline/
+/// aberrant_bloodline.json`, `BONUS:VAR|Sorcerer_Aberrant_BloodlinePower1LVL
+/// |Sorcerer_Aberrant_BloodlineLVL+BloodlinePower1LVLBonus`, no PRE-tag tail
+/// at all) -- keyed `"<class> <registered_name> ~ <pool_group with its own
+/// trailing \" <registered_name>\" stripped>"`. Confirmed the SAME shape,
+/// not a one-bloodline coincidence, across every pool this row's census
+/// already tracks that carries a `registered_name_for_tracker`: `"Cleric
+/// Domain ~ Air"` (22 domains -- itself the SPELL LIST record above, not
+/// the power header, which is exactly why merging rather than
+/// first-match-wins matters here), `"Shaman Spirit ~ Battle"` (12 spirits),
+/// `"Bloodrager Bloodline ~ ..."` (11), `"Cavalier Order ~ Order of the
+/// ..."` (7, this one keeping the FULL unstripped `pool_group` as its own
+/// suffix rather than a stripped one -- both shapes are tried below).
+/// Warpriest Blessing carries ZERO such records (`grep` count 0) -- this
+/// widening changes nothing for it, matching cycle 10's own finding that
+/// Warpriest's gap is a genuinely different shape. `registered_name` is
+/// `None` for the tracker-header call site below (unchanged -- that lookup
+/// already targets a wholly different key, `"<registered_name> Tracker"`,
+/// and never needs this widening) and for every caller that has never
+/// passed a `registered_name_for_tracker` at all.
+///
+/// Returns the merged map directly (never a bare record reference) -- empty
+/// when no header candidate matches at all, exactly equivalent to the old
+/// `None` for every caller (`for (name, formula) in &merged { ... }` over an
+/// empty map is a no-op, same as the old `if let Some(header) = ...`).
+fn pool_header_record_by_normalized_suffix(
     class: &str,
     pool_group: &str,
-) -> Option<&'a class_feature_grant_consumer::ClassFeatureRecordTokens> {
+    registered_name: Option<&str>,
+) -> std::collections::BTreeMap<String, String> {
     let table = class_feature_grant_consumer::class_feature_bonus_vars_any_record();
+    let mut merged: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+    let mut merge_in = |header: &class_feature_grant_consumer::ClassFeatureRecordTokens| {
+        class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+            &mut merged,
+            header.bonus_vars.clone(),
+        );
+    };
+
     let exact_key = format!("{class} ~ {pool_group}");
     if let Some(header) = table.get(&exact_key) {
-        return Some(header);
+        merge_in(header);
     }
+
+    if let Some(rn) = registered_name {
+        // Widening 4 (cycle 11): try the unstripped shape (Cavalier Order's
+        // own convention -- `pool_group` is already the header's own
+        // suffix verbatim), then the trailing-`" <rn>"`-stripped shape
+        // (Bloodline/Domain/Spirit's own convention).
+        let unstripped_key = format!("{class} {rn} ~ {pool_group}");
+        if let Some(header) = table
+            .get(&unstripped_key)
+            .filter(|header| header.class == class || header.class.is_empty())
+        {
+            merge_in(header);
+        }
+        if let Some(suffix) = pool_group.strip_suffix(&format!(" {rn}")) {
+            let stripped_key = format!("{class} {rn} ~ {suffix}");
+            if let Some(header) = table
+                .get(&stripped_key)
+                .filter(|header| header.class == class || header.class.is_empty())
+            {
+                merge_in(header);
+            }
+        }
+    }
+
     let prefix = format!("{class} ~ ");
     let normalized_target = pool_group.trim_end_matches('s');
     if let Some(header) = table.iter().find_map(|(key, header)| {
         let suffix = key.strip_prefix(&prefix)?;
         (suffix.trim_end_matches('s') == normalized_target).then_some(header)
     }) {
-        return Some(header);
+        merge_in(header);
     }
     // SD-32 T12 Epic 8 row 18 cycle 5: a SECOND real corpus header shape,
     // confirmed by direct inspection of `data/corpus/core_rulebook/
@@ -39150,10 +39246,9 @@ fn pool_header_record_by_normalized_suffix<'a>(
     // everything" pool family keys its own header record with the BARE
     // group name (no `"<class> ~ "` prefix, no `" ~ "` separator at all)
     // -- the exact string `pool_group` already names (`"Air Domain"`,
-    // `"Aberrant Bloodline"`). Class-checked before returning (never
-    // trusted from the bare key alone) so a same-named group owned by a
-    // DIFFERENT class can never be picked up by mistake. Tried last so it
-    // changes nothing for any pool the two checks above already served.
+    // `"Aberrant Bloodline"`). Class-checked before merging (never trusted
+    // from the bare key alone) so a same-named group owned by a DIFFERENT
+    // class can never be picked up by mistake.
     //
     // SD-32 T12 Epic 8 row 18 cycle 8: `header.class.is_empty()` also accepted -- confirmed live,
     // every real per-bloodline HEADER record in this corpus (Sorcerer's own "Marid Bloodline",
@@ -39165,7 +39260,12 @@ fn pool_header_record_by_normalized_suffix<'a>(
     // so accepting an unowned one carries none of the cross-class-collision risk the `header.class
     // == class` check above exists to prevent; it merely lets a header this corpus never tagged
     // with its owner still contribute its own `BONUS:VAR` chain to the merge.
-    table.get(pool_group).filter(|header| header.class == class || header.class.is_empty())
+    if let Some(header) =
+        table.get(pool_group).filter(|header| header.class == class || header.class.is_empty())
+    {
+        merge_in(header);
+    }
+    merged
 }
 
 /// `owning_class_override`: SD-32 T12 Epic 8 row 18 cycle 7. A real corpus quirk, confirmed live
@@ -39223,17 +39323,20 @@ pub(crate) fn resolve_pool_member_sole_magnitude(
         return None; // more than one terminal target -- refuse, do not guess
     }
     let mut combined_vars = record.bonus_vars.clone();
-    if let Some(header) = pool_header_record_by_normalized_suffix(owning_class, pool_group) {
-        for (name, formula) in &header.bonus_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
-        }
+    let header_vars = pool_header_record_by_normalized_suffix(
+        owning_class,
+        pool_group,
+        registered_name_for_tracker,
+    );
+    for (name, formula) in &header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
     }
     if let Some(registered_name) = registered_name_for_tracker {
         let tracker_name = format!("{registered_name} Tracker");
-        if let Some(tracker) = pool_header_record_by_normalized_suffix(owning_class, &tracker_name) {
-            for (name, formula) in &tracker.bonus_vars {
-                combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
-            }
+        let tracker_vars =
+            pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
+        for (name, formula) in &tracker_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
         }
     }
     // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
@@ -73980,6 +74083,30 @@ mod generic_pool_group_selection_wiring_tests {
             )
             .is_some()
         })
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 11: proves `pool_header_record_by_normalized_suffix`'s
+    /// cycle-11 widening MERGES every real header candidate rather than returning the first hit
+    /// and stopping. Cleric's own "Air Domain" pool has TWO real header-shaped corpus records
+    /// (confirmed live): the bare-key `"Air Domain"` record (`data/corpus/core_rulebook/
+    /// class_feature/air/air.json`, carrying the useful `DomainAirDC`/`DomainAirLVL`/
+    /// `DomainAirTimes` chain) and the `"Cleric Domain ~ Air"` record (`.../cleric_domain/
+    /// cleric_domain_air.json`, a domain SPELL LIST record with a `SPELLLEVEL` token and ZERO
+    /// `BONUS:VAR` tokens). A first-match-wins version of this function that tried the
+    /// `"<class> <registered_name> ~ <suffix>"` shape BEFORE the bare-key shape would find the
+    /// EMPTY spell-list record first and never reach the useful one -- exactly the regression
+    /// this cycle caught live (`pool_group_closure_census_across_all_six_pools` dropped from
+    /// 18/53 to 15/53 Sorcerer and 26/72 to 14/72 Cleric on the first (short-circuiting) version
+    /// of this widening, before it was rewritten to merge).
+    #[test]
+    fn pool_header_lookup_merges_every_real_header_shape_not_just_the_first_match() {
+        let merged = super::pool_header_record_by_normalized_suffix("Cleric", "Air Domain", Some("Domain"));
+        assert!(
+            merged.contains_key("DomainAirDC"),
+            "the bare-key \"Air Domain\" header's own real BONUS:VAR chain must still merge in \
+             even though \"Cleric Domain ~ Air\" (an empty spell-list record sharing the \
+             registered-name naming shape) also matches: {merged:?}"
+        );
     }
 
     /// Re-derivation, not a trust of cycle 8's own transcribed figures (`§17a`): run for real,

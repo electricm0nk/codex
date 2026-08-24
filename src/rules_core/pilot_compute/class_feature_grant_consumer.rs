@@ -851,7 +851,7 @@ fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String
 /// cannot drift into two different collision policies the way the header
 /// and member tables' own WHOLE-RECORD `or_insert_with` calls silently did
 /// before cycle 8/10 fixed them one at a time.
-fn merge_bonus_var_target_map_never_overwriting(
+pub(crate) fn merge_bonus_var_target_map_never_overwriting(
     into: &mut BTreeMap<String, String>,
     from: BTreeMap<String, String>,
 ) {
