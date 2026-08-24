@@ -142,6 +142,12 @@
 //!   `classlevel(...)`-bearing formula whose class name it cannot bind** — the failure mode this
 //!   guards against is exactly the "plausible number nobody checks" shape §24.1 exists to
 //!   prevent.
+//! - **Bare `classlevel()` with no argument now PARSES (SD-32 T12 Epic 8 row 18 cycle 9)** — a
+//!   real corpus shape (`book_of_the_damned_volume_2/demoniac.json`'s BASEAB/SAVE formulas) the
+//!   grammar previously refused outright. It reuses the exact same `CLASSLEVEL::<name>` lookup
+//!   above with an empty string as the "no class name given" sentinel (`CLASSLEVEL::`) — this
+//!   was a pure parser-shape gap, not a semantic widening: no consumer in this codebase binds
+//!   the empty key yet, so evaluation still refuses cleanly until one explicitly does.
 //!
 //! ## Wave 26 shape closure (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on)
 //!
@@ -572,13 +578,30 @@ impl<'a> Parser<'a> {
         let lname = name.to_ascii_lowercase();
         match lname.as_str() {
             "classlevel" => {
+                // SD-32 T12 Epic 8 row 18 cycle 9: bare `classlevel()` with NO argument is a
+                // real corpus shape (`book_of_the_damned_volume_2/demoniac.json`'s BASEAB/SAVE
+                // formulas: `classlevel()*3/4`, `(classlevel()+1)/2`, `(classlevel()+1)/3`) that
+                // the pre-existing grammar refused outright before ever reaching evaluation — a
+                // parser-shape gap, not a semantic one. Widened to accept it: `Expr::ClassLevel(
+                // String::new())` reuses the SAME `CLASSLEVEL::<name>` lookup cycle 6 already
+                // built, with the empty string as the "no class name given" sentinel — the exact
+                // "unowned = \"\", never fabricated" convention this codebase already applies
+                // elsewhere (e.g. row 18 cycle 8's bare-key header merge). No caller today binds
+                // `CLASSLEVEL::` (empty key), so this still refuses cleanly at evaluation time
+                // until a caller explicitly does — never silently answers with any other class's
+                // level, exactly the "refuse, never guess" contract this module holds everywhere.
+                if let Some(Tok::RParen) = self.peek() {
+                    self.bump();
+                    return Ok(Expr::ClassLevel(String::new()));
+                }
                 match self.bump() {
                     Some(Tok::Str(s)) => {
                         self.expect(&Tok::RParen)?;
                         Ok(Expr::ClassLevel(s))
                     }
                     other => Err(FormulaEvalError(format!(
-                        "classlevel(...) expects a string literal class name, got {other:?}"
+                        "classlevel(...) expects a string literal class name or no argument, got \
+                         {other:?}"
                     ))),
                 }
             }
@@ -1001,6 +1024,31 @@ mod tests {
         let e = PcgenFormulaEvaluator;
         let v = vars(&[("CLASSLEVEL::Sorcerer", 7)]);
         assert!(e.evaluate("classlevel(\"Bloodrager\")", &v).is_err());
+    }
+
+    #[test]
+    fn classlevel_with_no_argument_parses_and_reads_the_empty_key_binding() {
+        // SD-32 T12 Epic 8 row 18 cycle 9: bare `classlevel()` (real shape:
+        // `book_of_the_damned_volume_2/demoniac.json`'s BASEAB/SAVE formulas) now parses instead
+        // of refusing outright, reusing the SAME `CLASSLEVEL::<name>` lookup with an empty-string
+        // sentinel for "no class name given" — a caller must still explicitly bind `CLASSLEVEL::`
+        // (empty key) for it to resolve.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::", 12)]);
+        assert_eq!(e.evaluate("classlevel()*3/4", &v).unwrap(), 9);
+        assert_eq!(e.evaluate("(classlevel()+1)/2", &v).unwrap(), 6);
+    }
+
+    #[test]
+    fn classlevel_with_no_argument_refuses_without_a_binding() {
+        // Widening the grammar to PARSE `classlevel()` must never widen what it silently
+        // ANSWERS — no binding means refuse, exactly like every other unbound reference in this
+        // module.
+        let e = PcgenFormulaEvaluator;
+        assert!(e.evaluate("classlevel()", &BTreeMap::new()).is_err());
+        // And a bound NAMED class must never leak into the unnamed lookup.
+        let v = vars(&[("CLASSLEVEL::Summoner", 7)]);
+        assert!(e.evaluate("classlevel()", &v).is_err());
     }
 
     // -- 1b. wave 26 shape closure: comparisons/`&&` as first-class numeric values, and

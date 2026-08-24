@@ -73836,6 +73836,124 @@ mod generic_pool_group_selection_wiring_tests {
             .count()
     }
 
+    /// SD-32 T12 Epic 8 row 18 cycle 9 (`§17a` re-derivation, `§12c` population+command named).
+    /// Cycle 8 measured the cross-book-merge/`DomainLVL` fix's effect against only 3 of the 6
+    /// real pools sharing `push_generic_pool_group_selection_magnitude` (Sorcerer/Bloodrager/
+    /// Cleric; Shaman measured but not locked, Warpriest re-checked unchanged) -- this test
+    /// re-derives group-level reach across ALL SIX, including Cavalier Order, never checked by
+    /// any prior cycle. "Group carries a resolvable member" mirrors cycle 5/8's own measure
+    /// exactly (see `group_has_a_resolvable_member`'s own doc for the re-derivation that
+    /// confirmed this, not a stricter bar invented fresh) -- at least one real `"<group> ~
+    /// <member>"` record resolves via `resolve_pool_member_sole_magnitude`.
+    fn real_groups_owned_by(class: &str, registered_name: &str) -> Vec<String> {
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let mut owner_tally: std::collections::BTreeMap<
+            String,
+            std::collections::BTreeMap<String, u32>,
+        > = std::collections::BTreeMap::new();
+        for (key, record) in table.iter() {
+            if let Some((group, _member)) = key.split_once(" ~ ") {
+                *owner_tally.entry(group.to_string()).or_default().entry(record.class.clone()).or_default() +=
+                    1;
+            }
+        }
+        // Mirrors `real_pool_group_for_selection_slug`'s own ownership + naming-shape gates
+        // exactly (both the majority-tally/header-record ownership proof AND the "does this
+        // group's NAME actually belong to this registered pool word" filter its own adjective-
+        // stripping logic applies) -- §17a's own validate-against-a-known-case check caught this
+        // exact gap on the first pass here: without the naming-shape filter, EVERY " ~ "-group
+        // majority-owned by the class (not just its Bloodline/Domain/... ones) was counted,
+        // silently inflating both numerator and denominator (Sorcerer measured 72 groups, not
+        // the real 53, before this filter was added).
+        owner_tally
+            .into_iter()
+            .filter_map(|(group, owners)| {
+                let majority_class =
+                    owners.iter().max_by_key(|(_, count)| **count).map(|(c, _)| c.clone())?;
+                let owned_by_class = majority_class == class
+                    || table
+                        .get(&format!("{class} {registered_name} ~ {group}"))
+                        .is_some_and(|header| header.class == class);
+                if !owned_by_class {
+                    return None;
+                }
+                let matches_naming_shape = group.ends_with(&format!(" {registered_name}"))
+                    || super::strip_prefix_case_insensitive(&group, &format!("{registered_name} of the "))
+                        .is_some();
+                matches_naming_shape.then_some(group)
+            })
+            .collect()
+    }
+
+    /// For one real group, whether at least one member resolves via the shared resolver -- the
+    /// SAME "carries a member resolvable" measure cycle 5/8's own receipts and doc comments use
+    /// (`sorcerer_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline`'s own doc:
+    /// "found only 15 ... carry a member resolvable"), re-validated here (`§17a`) rather than a
+    /// stricter "every member" bar invented fresh -- confirmed by first re-deriving with an
+    /// "every member" bar and finding it reproduced NEITHER cycle 8's denominators (a naming-
+    /// shape filter bug, fixed above) NOR its numerators (4/53 vs. cycle 8's own 18/53) before
+    /// switching to this measure, which reproduces cycle 8's three baselines exactly. This is
+    /// also the actual real-consumer contract: `push_generic_pool_group_selection_magnitude`
+    /// resolves EVERY member independently once a player picks the group, closing whichever
+    /// subset resolves -- a group with SOME real records still needing compute is not "closed"
+    /// as a kanban line item, but every already-resolvable member inside it is already reaching
+    /// a live character, which is what this census is measuring.
+    fn group_has_a_resolvable_member(class: &str, registered_name: &str, group: &str) -> bool {
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let prefix = format!("{group} ~ ");
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        table.keys().filter(|key| key.starts_with(&prefix)).any(|key| {
+            super::resolve_pool_member_sole_magnitude(
+                key,
+                group,
+                5,
+                &ability_modifiers,
+                Some(class),
+                Some(registered_name),
+            )
+            .is_some()
+        })
+    }
+
+    /// Re-derivation, not a trust of cycle 8's own transcribed figures (`§17a`): run for real,
+    /// print the population and command, THEN assert. `cargo test --locked --lib -- \
+    /// rules_core::pilot_compute::generic_pool_group_selection_wiring_tests::pool_group_closure_census_across_all_six_pools \
+    /// --nocapture`
+    #[test]
+    fn pool_group_closure_census_across_all_six_pools() {
+        let pools: &[(&str, &str)] = &[
+            ("Sorcerer", "Bloodline"),
+            ("Bloodrager", "Bloodline"),
+            ("Cleric", "Domain"),
+            ("Shaman", "Spirit"),
+            ("Warpriest", "Blessing"),
+            ("Cavalier", "Order"),
+        ];
+        let mut report = String::new();
+        for (class, registered_name) in pools {
+            let groups = real_groups_owned_by(class, registered_name);
+            let total = groups.len();
+            let closed: Vec<&String> = groups
+                .iter()
+                .filter(|g| group_has_a_resolvable_member(class, registered_name, g))
+                .collect();
+            report.push_str(&format!(
+                "{class} {registered_name}: {}/{total} groups carry a resolvable member\n",
+                closed.len()
+            ));
+        }
+        println!("{report}");
+        // Locked baseline, re-derived fresh this cycle (see receipt for the full per-pool
+        // breakdown and closed-group names) -- a future cycle's corpus/resolver change that
+        // moves these numbers must update this assertion deliberately, never silently.
+        assert!(
+            report.contains("Sorcerer Bloodline: 18/53")
+                && report.contains("Bloodrager Bloodline: 5/12")
+                && report.contains("Cleric Domain: 26/72"),
+            "cycle 8's own three measured baselines must still reproduce exactly:\n{report}"
+        );
+    }
+
     /// Celestial is a real Sorcerer bloodline (`data/corpus/advanced_class_guide/
     /// class_feature/celestial_bloodline/*.json`, 53 real bloodline groups total
     /// per the cycle-4 census) this codebase has never hand-modelled by name --
