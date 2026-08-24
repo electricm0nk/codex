@@ -8193,3 +8193,61 @@ engine, unchanged from cycle 1's sizing.
 
 Full receipt: `artifacts/epic-9-desktop-reach-and-catalog-reds/row19-cycle4-receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle row20-cycle1 (2026-08-23) — Epic 10, row 20 (`epic-10-reference-library-residual-reach`)
+
+Worktree started on a stale lineage tip (`1bb523773d`, the SD-31 PR #374 merge commit — footgun 1,
+again); recovered via `git reset --hard $PIN` + `git rebase origin/tranche/12` (reported "up to
+date" — HEAD after reset already equalled `origin/tranche/12`, row 19 cycle 4's own commit).
+Oracle bootstrapped fresh, confirmed populated (`7f818006e371188e5717fd18d74d18a420747fc6`).
+
+**Item (a) — the 43-family gap, 25 of 43 closed.** Re-derived and confirmed exactly 43 (matching
+the brief). All 11 `spells`, all 11 `feats`, and all 3 `equipment` books turned out to be pure
+chaining onto already-generated tooling, never new ingest work: every spell table already existed
+(`src/bin/ingest_spells.rs`'s `BOOKS` list), every feat book already had an empty
+`hand_authored_feat_tables()` slot for `feat_gap_tables` to join onto, every equipment book was
+already registered in `gen_equipment_gap_tables.rs`'s `BOOK_INPUTS`. `beastiary1`'s "spell" content
+turned out to be Core Essentials content transcribed under the Bestiary corpus directory
+(`data/corpus/bestiary/spell/*.json`'s own `source.path`, all 111 records), the same shared-
+library-host shape `decisions.md §9` already documents for this book's equipment. Wired
+`spell_resolver.rs`'s chain, 25 new `reach_gate.rs` dispatch arms, and widened `spell_catalog.rs`'s
+own SECOND, independent book registry (found and fixed the same "two lists drift" defect its own
+doc comment already warns about). Found and excluded 8 genuine cross-book verbatim-reprint
+collisions plus 2 within-book corpus duplicates (`bestiary_4` ×2, `inner_sea_races`'s "Elemental
+Mastery" ×5) — the `mapping_helpers_agree_with_the_registry` test now applies production's own
+global first-key-wins dedup pass instead of hand-listing every duplicate. Spell catalog: 2197 →
+2481 records. **Not closed**: the 17 `classes` chassis + `ultimate_psionics`'s 1,573
+`class_features` — genuinely new per-book chassis engineering, sized unchanged from cycle 4.
+
+**Item (b) — companion formula residual, stale citations corrected, zero new closures.** Sampled
+every `%`-carrying companion record in APG (14 of 220) directly against `raw_tokens`: all resolve
+through live-character variables (`HD`, `CON`, feat possession via `PREABILITY`) or a player's own
+`CHOOSE` selection (`%LIST`), never a pure corpus constant. **The interpreter is not the blocker;
+the absence of a character-scoped consumer surface is** — corrected all 6 stale `§24` citations in
+`reach_gate.rs`'s `OPEN_FINDINGS` to name the real remaining gap, per
+`docs/governance/deferral-revisit-doctrine.md`. Honest null result: zero records closed, because
+none of the sampled formulas were genuinely resolvable without a character.
+
+**Item (c) — 30 delta-row companions, 25 of 30 closed, engine-need withdrawn.** Read
+`companion_pool_catalog.rs` first, per the brief. Re-derived corpus-wide: all 25 real `.COPY=`
+companion records carry `description: null` plus a real, self-contained mechanical token
+(`TEMPLATE`/`KIT` for a creature-template header, `ASPECT` for an ability variant) — never a
+dangling fragment needing base-record merge, unlike `origin: "mod_only"`. Row 19 cycle 1's "needs a
+creature-template application engine" sizing is **withdrawn as overstated**. Built a generic
+`origin == "copy"` tier-3 admission reusing `reference_library_catalog.rs`'s own
+`mechanical_summary()`. Closed 22 `beastiary1` + 2 `bestiary_4` + 1 `ultimate_wilderness` ("Margay ~
+Sound Mimicry", found live during re-derivation, not in the original named 30) = 25 of 30.
+**Not closed**: 4 genuine `origin: "mod_only"` dangling-fragment rows (`beastiary1`'s Universal
+Monster Rule Change Shape/Disease/Fast Healing/Poison) need a real base-record delta-merge
+mechanism — sized, not built.
+
+**Full sweep:** `apps/desktop/src-tauri` → `cargo test --locked --bin codex-desktop` → **538
+passed, 0 failed** (up from 536/0 — net +2, both new tests, whole workspace still green). Two
+mutation proofs run (`("adventurers_guide","equipment")` dispatch arm and the `.COPY=` admission
+arm, each disabled, confirmed RED for the intended reason, then reverted).
+
+**Row 20 stays `in-progress`** (`decisions.md §10`) — the 17-family class chassis / 1,573
+`class_features` and the 4-record delta-merge residual are real, sized, unbuilt work.
+
+Full receipt: `artifacts/epic-10-reference-library-residual-reach/row20-cycle1-receipt.md`.
+Commit: (this cycle's commit -- see push output).

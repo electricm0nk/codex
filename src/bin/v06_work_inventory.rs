@@ -4885,6 +4885,29 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // single-line registration every prior spell-lane cycle made here
         // before it. See `src/bin/ingest_spells.rs`.
         "HA" => "horror_adventures",
+        // SD-32 row 20 (`decisions.md §17`/`§27b`): eleven more books joined
+        // `spell_resolver::spell_catalog_rows()`'s chain this cycle -- same
+        // additive, single-line registration every prior spell-lane cycle
+        // made here before it. `"B1"` maps to `"bestiary_1"`, matching
+        // `rule_set_id(RuleSetId::Bestiary1)`'s own spelling (the corpus
+        // directory is `bestiary`, the engine id is `bestiary_1` -- see
+        // `corpus_dir_for`'s own comment on this exact rename).
+        // `"UMWP"` (Ultimate Magic's Words of Power example spells) has no
+        // `RuleSetId` of its own -- it is a second source file inside the
+        // already-compiled `ultimate_magic` book, not a new book -- so it
+        // maps to that book's own slug, the same book its sibling `UM`
+        // arm above already resolves to.
+        "B1" => "bestiary_1",
+        "B4" => "bestiary_4",
+        "BOTD1" => "book_of_the_damned_volume_1",
+        "BOTD2" => "book_of_the_damned_volume_2",
+        "ISI" => "inner_sea_intrigue",
+        "ISR" => "inner_sea_races",
+        "ISWG" => "inner_sea_world_guide",
+        "MC" => "monster_codex",
+        "MYTHIC" => "mythic_adventures",
+        "UE" => "ultimate_equipment",
+        "UMWP" => "ultimate_magic",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \
@@ -16444,9 +16467,32 @@ mod spell_probe_tests {
         let outcomes = probe_spell_effect_wiring(&fixture(), &repo_root());
         let keys_by_book = probe_spell_keys_by_book();
         let mut expected = 0usize;
+        // SD-32 row 20: `OBSERVABLE_BOOK_DIRS` carries TWO directory entries
+        // for the same engine book -- `"beastiary"` (the misspelled alias,
+        // `CORPUS_DIR_ALIASES` maps it to `"bestiary"`) and `"bestiary"`
+        // itself (the correctly-spelled directory, added later for
+        // equipment reasons, see its own comment above) -- both resolve to
+        // `engine_book_for_corpus_dir` = `"bestiary_1"`. `probe_spell_
+        // effect_wiring`'s `outcomes` is a `BTreeMap<(book, key), _>`, so
+        // examining the same `(engine_book, key)` pair twice (once per dir
+        // entry) is naturally idempotent there. This loop used to count it
+        // TWICE (`expected += 1` inside a `for key in keys` with no
+        // per-book dedup), which only ever matched `outcomes.len()` by
+        // coincidence because `"bestiary_1"` carried zero spell keys before
+        // this cycle (`beastiary1` had no `spell_list` table to chain) --
+        // the double-count was latent and inert. Now that
+        // `keys_by_book.get("bestiary_1")` is real and non-empty (111
+        // keys), the latent bug surfaces: `seen_books` makes this loop
+        // count each engine book's keys exactly once, matching the
+        // production map's own dedup, instead of once per aliased
+        // directory entry.
+        let mut seen_books: std::collections::BTreeSet<&'static str> = std::collections::BTreeSet::new();
         for dir_name in OBSERVABLE_BOOK_DIRS {
             let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else { continue };
             if rule_set_for_engine_book(engine_book).is_none() {
+                continue;
+            }
+            if !seen_books.insert(engine_book) {
                 continue;
             }
             let Some(keys) = keys_by_book.get(engine_book) else { continue };

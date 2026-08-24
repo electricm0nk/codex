@@ -78,6 +78,8 @@ use serde_json::Value;
 use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 use codex::rules_core::rules_tables::companion_chassis;
 
+use crate::reference_library_catalog::mechanical_summary;
+
 /// One reference-pool member's real corpus row, with a description proven to
 /// render with nothing missing.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -109,6 +111,12 @@ pub struct CompanionPoolAbilityDto {
     /// "render-and-refuse" section). Never empty or the PI-redaction marker
     /// — those never reach this struct at all.
     pub description: String,
+    /// `true` when `description` is a rendered mechanical-token summary (a
+    /// `.COPY=` template/variant row's `TEMPLATE`/`KIT`/`ASPECT` tokens,
+    /// SD-32 row 20) rather than real authored prose — the same honesty
+    /// distinction `reference_library_catalog.rs`'s own tier-3 carries, so a
+    /// caller can tell a rendered token dump from a genuine sentence.
+    pub is_mechanical_summary: bool,
 }
 
 /// One book's pool, grouped by the `" ~ "` prefix every member shares.
@@ -155,6 +163,7 @@ struct RawPoolEntry {
     slug: String,
     name: String,
     description: String,
+    is_mechanical_summary: bool,
 }
 
 /// Reads every `" ~ "`-qualified, `owners: []` companion record across every
@@ -192,19 +201,50 @@ fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
             // right, the shared reference-library shape this module's doc
             // comment names) from a delta row that states only a CHANGE on
             // some other record (`"mod_only"` / `"copy"` -- PCGen `.MOD`/
-            // `.COPY=` rows). A delta row's `description` can render
+            // `.COPY=` rows). A `mod_only` row's `description` can render
             // perfectly clean PCGen syntax while still being a meaningless
             // fragment without the base row it modifies (confirmed: real
             // record `beastiary/companion/universal_monster_rule_fast_
             // healing.json`, `origin: "mod_only"`, description "Works only
             // in gusty and windy areas." -- a dangling conditional clause,
-            // not a sentence). These are exactly the shape `companion_
-            // catalog.rs`'s `KNOWN_UNTRANSCRIBED_COMPANION_RECORDS` already
-            // names individually (no second-citation mechanism exists to
-            // resolve a delta against its base) -- structurally excluded
-            // here so this catalog never re-admits one of those, or a
-            // future book's equivalent, by accident of clean rendering.
-            if data["origin"].as_str() != Some("declared") {
+            // not a sentence) -- structurally excluded, unchanged.
+            //
+            // SD-32 row 20: `"copy"` (a `.COPY=` row) is admitted separately
+            // below, NOT folded into the `"declared"` description path,
+            // because it is a genuinely different shape from `mod_only`: a
+            // `.COPY=` template/variant row does not carry a dangling
+            // fragment of some other record's prose at all -- re-derived
+            // corpus-wide (`data/corpus/*/companion/*.json`, `origin ==
+            // "copy"`), all 25 real `.COPY=` companion records carry
+            // `description: null` and instead carry real, self-contained
+            // mechanical tokens (`TEMPLATE`/`KIT` for a creature-template
+            // application header like `Cat (Fiendish)`, or `ASPECT` for an
+            // ability variant like `Pooka ~ Change Shape`'s "2 of the
+            // following forms: cat, goat, rabbit ..."). This is the exact
+            // tier-3 shape `reference_library_catalog.rs` already built for
+            // the twelve reference-library kinds, reused here rather than
+            // reinvented (`mechanical_summary`).
+            let origin = data["origin"].as_str();
+            if origin == Some("copy") {
+                let Some(name) = data["name"].as_str() else { continue };
+                let Some(summary) = mechanical_summary(data) else { continue };
+                let group = key.split(" ~ ").next().unwrap_or(key).to_string();
+                let Some(slug) = file.file_stem().map(|s| s.to_string_lossy().into_owned())
+                else {
+                    continue;
+                };
+                out.push(RawPoolEntry {
+                    corpus_book: book.corpus_book.to_string(),
+                    corpus_key: key.to_string(),
+                    pool_group: group,
+                    slug,
+                    name: name.trim_end_matches('*').trim().to_string(),
+                    description: summary,
+                    is_mechanical_summary: true,
+                });
+                continue;
+            }
+            if origin != Some("declared") {
                 continue;
             }
             let Some(name) = data["name"].as_str() else { continue };
@@ -233,6 +273,7 @@ fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
                 slug,
                 name: name.trim_end_matches('*').trim().to_string(),
                 description: rendered.text,
+                is_mechanical_summary: false,
             });
         }
     }
@@ -258,6 +299,7 @@ pub fn build_companion_pool_groups(
             pool_group: entry.pool_group,
             name: entry.name,
             description: entry.description,
+            is_mechanical_summary: entry.is_mechanical_summary,
         });
     }
     groups
@@ -328,6 +370,54 @@ mod tests {
                 .iter()
                 .any(|e| e.corpus_book == "beastiary" && e.slug == "universal_monster_rule_fast_healing"),
             "a .MOD-only delta row must never be served as a standalone pool member"
+        );
+    }
+
+    /// SD-32 row 20: a `.COPY=` creature-template row (`beastiary/companion/
+    /// cat_fiendish.json`, real corpus record, `origin: "copy"`,
+    /// `description: null`, `TEMPLATE`/`KIT` raw tokens) is admitted via the
+    /// new tier-3 mechanical-summary path, distinct from `mod_only`'s
+    /// structural refusal immediately above -- the two `origin` values are
+    /// NOT treated the same way, on purpose.
+    #[test]
+    fn a_copy_template_row_is_served_as_a_mechanical_summary() {
+        let repo = repo_root();
+        let path = repo.join("data/corpus/beastiary/companion/cat_fiendish.json");
+        assert!(path.exists(), "fixture record moved or was renamed: {}", path.display());
+        let entries = load_raw_pool_entries(&repo);
+        let found = entries
+            .iter()
+            .find(|e| e.corpus_book == "beastiary" && e.slug == "cat_fiendish")
+            .expect("Cat (Fiendish) must be served via the .COPY= tier-3 admission");
+        assert_eq!(found.corpus_key, "Cat (Fiendish)");
+        assert!(found.is_mechanical_summary, "a .COPY= template row has no real prose to render");
+        assert!(
+            found.description.contains("TEMPLATE") && found.description.contains("Fiendish"),
+            "expected the mechanical summary to name the real TEMPLATE token, got: {}",
+            found.description
+        );
+        assert!(!found.description.is_empty());
+    }
+
+    /// The same `.COPY=` admission for an ability-variant row carrying a real
+    /// `ASPECT` token (`bestiary_4/companion/pooka_change_shape.json`) --
+    /// proves the mechanism serves more than just creature-template headers.
+    #[test]
+    fn a_copy_ability_variant_row_is_served_from_its_aspect_token() {
+        let repo = repo_root();
+        let path = repo.join("data/corpus/bestiary_4/companion/pooka_change_shape.json");
+        assert!(path.exists(), "fixture record moved or was renamed: {}", path.display());
+        let entries = load_raw_pool_entries(&repo);
+        let found = entries
+            .iter()
+            .find(|e| e.corpus_book == "bestiary_4" && e.slug == "pooka_change_shape")
+            .expect("Pooka ~ Change Shape must be served via the .COPY= tier-3 admission");
+        assert_eq!(found.pool_group, "Pooka");
+        assert!(found.is_mechanical_summary);
+        assert!(
+            found.description.contains("ASPECT"),
+            "expected the mechanical summary to name the real ASPECT token, got: {}",
+            found.description
         );
     }
 

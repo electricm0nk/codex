@@ -178,7 +178,7 @@ fn render_clean(raw: &str) -> Option<String> {
 /// unresolved `%N` — this is structured token data, not authored prose, and
 /// showing `KEYSTAT: WIS` is honest regardless of whether some other token on
 /// the same record happens to carry an unresolved formula).
-fn mechanical_summary(data: &Value) -> Option<String> {
+pub(crate) fn mechanical_summary(data: &Value) -> Option<String> {
     let tokens = data.get("raw_tokens")?.as_array()?;
     let mut parts = Vec::new();
     for tok in tokens {
