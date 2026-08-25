@@ -33,7 +33,7 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | 13 | `unknown-rootcause` | 4 | AT-33-E4-001 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-001_cycle_receipt.md` |
 | 14 | `unknown-to-zero` | 4 | AT-33-E4-002 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-002_cycle_receipt.md` |
 | 15 | `no-effort-named-buckets` | 4 | AT-33-E4-003 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-003_cycle_receipt.md` |
-| 16 | `reverify-fixture-verified` | 5 | AT-33-E5-001 | in-progress | `artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md` (11 of 1,741 examined) |
+| 16 | `reverify-fixture-verified` | 5 | AT-33-E5-001 | in-progress | `artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md` (1,128 of 1,741 examined — 279 agree/103 disagree/746 unverifiable; remaining 613 named: 598 no-casting-ability-mapping + 15 class_feature) |
 | 17 | `reverify-literal-verified` | 5 | AT-33-E5-002 | complete | `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md` (5,812 of 6,589 dispositioned: 41 agree, 5,771 unverifiable-with-reason; 777 remain unexamined, named per-shape) |
 | 18 | `disagreement-resolution` | 5 | AT-33-E5-003 | complete | `artifacts/epic-5-reverification/AT-33-E5-003_cycle_receipt.md` (0 of 32 examined units disagree) |
 | 19 | `final-acceptance-scan` | 6 | AT-33-E6-001 | blocked-escalated | `artifacts/epic-6-closure/AT-33-E6-001_cycle_receipt.md` (gate FAIL — rows 16/17/18 short) |

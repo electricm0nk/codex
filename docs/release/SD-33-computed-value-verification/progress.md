@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 started, AT-33-E5-001 in-progress (11 of 1,741 fixture-verified units re-examined) and AT-33-E5-002 in-progress (21 of 6,589 literal-verified units re-examined), rows 16-17 not yet complete; AT-33-E5-003 (row 18) complete — 0 disagreements among the 32 units examined so far
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5: AT-33-E5-001 (row 16) in-progress (1,128 of 1,741 fixture-verified units re-examined: 279 agree/103 disagree/746 unverifiable; remaining 613 named — 598 no-casting-ability-mapping + 15 class_feature); AT-33-E5-002 (row 17) complete (5,812 of 6,589 literal-verified units dispositioned, 777 named-unexamined); AT-33-E5-003 (row 18) needs re-opening over AT-33-E5-001's own 103 new disagreements
 date: 2026-08-24
 ---
 
@@ -48,9 +48,9 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 16 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
-Epics 1-4 (rows 1-15) plus row 18 (`AT-33-E5-003`). Rows 16-17 (`AT-33-E5-001`/`AT-33-E5-002`,
-gated on Epic 2) and Epic 6 (rows 19-21) remain.
+**Cards complete: 17 / 21** (re-derive: `grep -cE '\| complete \|' docs/release/SD-33-computed-value-verification/kanban.md`) —
+Epics 1-4 (rows 1-15) plus row 17 (`AT-33-E5-002`, complete as of its own remediation cycle) and
+row 18 (`AT-33-E5-003`). Row 16 (`AT-33-E5-001`) and Epic 6 (rows 19-21) remain.
 
 **Epic 4 complete; rows 13-15 (`AT-33-E4-001..003`) all landed.** The 4,224 units at
 `status: "unknown"` reach zero (`jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json`
@@ -89,22 +89,33 @@ corrected form → exit 0. See the cycle receipt for the full transcript.
 `fixture-verified` population is 1,741 (spell 1,288 / companion 187 / monster 140 /
 monster_ability 100 / class_feature 15 / equipment 11 —
 `jq -r '[.units[]|select(.status=="fixture-verified")]|group_by(.kind)|map({kind:.[0].kind,count:length})' docs/work-inventory.json`).
-This cycle extended `AT-33-E2-004`'s proven Path A mechanism from Epic 2's one hand-authored
-fighter to a real batch: the entire `equipment` kind (**11 of 1,741**) was re-verified against a
-live PCGen `BatchExporter` round-trip (11 separate `.pcg` characters, 11/11 `./gradlew run`
-invocations exit 0) with `ours` sourced from a live call into the real
-`codex::rules_core::equipment_effects::compute_equipment_effects` engine function — **11 of 11
-agree, 0 disagree**, verified through `scripts/oracle_harness/run.py` and independently through
-`scripts/box_ledger.py --check --oracle-results ...` (exit 0). The remaining **1,730 of 1,741**
-are not yet examined and are **not** folded into a false 100%: 1,303 (`spell`+`class_feature`)
-carry a real magnitude probe and are queued with a concrete next-cycle plan (real per-unit/batch
-`.pcg`+template authoring cost — the sizing question `AT-33-E2-004`'s receipt named as Epic 5's
-own scope); 427 (`companion`+`monster`+`monster_ability`) carry **no** magnitude probe at all
-(`AT-33-E1-003`'s pre-existing finding, `probe_exists: false`) and cannot be oracle-compared by
-this cycle's mechanism until Epic 1's probe surface widens. No `## Open blockers` entry is filed
-— this is decomposition and first-slice execution of a population `AT-33-E2-004` already named as
-too large for one cycle, not an escalation. Full detail:
-`artifacts/epic-5-reverification/README.md` and `AT-33-E5-001_cycle_receipt.md`.
+
+**Remediation cycle (this entry supersedes the attempt-1 paragraph it replaced):** attempt 1
+hand-authored one `.pcg` per unit outside the repo (11 of 1,741, throughput-bound). This cycle
+replaced that with a repo-local generator (`fixture-generate-spell-batch.py`) + a repo-local batch
+"ours" probe binary (`src/bin/fixture_verified_oracle_probe.rs`) and reached **1,128 of 1,741 (64.8%)**:
+the 11 `equipment` units folded forward from attempt 1's own real oracle round-trip
+(11/11 agree, unchanged); **690 `spell` units newly examined** via 6 batched, real, live PCGen
+`BatchExporter` characters (one per casting class: Wizard 424/Cleric 102/Druid 92/Bard 37/
+Paladin 24/Ranger 11 — up to 424 units verified in one JVM start) against the real, live
+`codex::rules_core::spellbook::compute_spellbook_coverage` engine output — **268 agree, 103
+disagree, 319 unverifiable**; and **427 `companion`/`monster`/`monster_ability` units** recorded
+`unverifiable` per-unit with their real structural reason (`AT-33-E1-003`: `probe_exists: false`).
+The remaining **613 of 1,741** are named with concrete structural reasons, not throughput: **598
+`spell` units** (evidence `spell_list_entry_with_resolved_level`, a population attempt 1 did not
+know was distinct from the 690 DC-probe-eligible ones) have no "ours" value this engine can
+produce via `compute_spellbook_coverage` at all — `casting_ability_for_class`
+(`src/rules_core/spellbook.rs:143-150`) maps exactly seven classes and none of these 598 spells'
+casting classes are among them; **15 `class_feature` units** need the full pilot-compute pipeline
+(`probe_class_feature_effect_wiring`'s mechanism), not the narrow library seam this cycle used, and
+were not attempted. **A real, uniform finding among the 103 disagreements: every one carries
+`ours-oracle == 4`** (`SPELL_PROBE_ABILITY_MODIFIER`'s own value) — candidate root cause: these are
+plausibly no-save spells where PCGen's DC export omits the ability modifier while this engine's
+probe formula adds it unconditionally; not fixed this cycle (see Disagreement ledger below; this
+criterion's write scope does not include the engine files a fix would touch). No `## Open
+blockers` entry is filed — decomposition and a much larger next slice, not an escalation. Full
+detail: `AT-33-E5-001_cycle_receipt.md` (overwritten in place this cycle; attempt 1's `README.md`
+methodology kept, not rebuilt).
 
 **`AT-33-E5-002` (row 17) is also `in-progress`, not `complete`.** The `literal-verified`
 population is **6,589** — a separate, non-overlapping population from `AT-33-E5-001`'s 1,741
@@ -141,16 +152,35 @@ caught by an existing gate, not by memory. Full detail: `artifacts/epic-5-reveri
 ## Disagreement ledger
 
 Per `AT-33-E5-003`'s evidence line: one entry per disagreement, each resolved to a commit or an
-operator escalation. **Current entries: none — 0 disagreements found in the 32 units
-`AT-33-E5-001`/`AT-33-E5-002` have examined to date** (re-derive:
-`python3 -c "import json,collections;a=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment.oracle-results.json'));b=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-literal.oracle-results.json'));print(collections.Counter(r['verdict'] for r in a['results']+b['results']))"`
-→ `Counter({'agree': 32})`). This is a live section: the next `AT-33-E5-001`/`AT-33-E5-002` cycle
-whose oracle-results file contains a `disagree` record must add an entry here, root-caused per the
-criterion's Evidence line, before that entry's disagreement can be considered resolved.
+operator escalation. **This cycle's remediation of `AT-33-E5-001` found 103 new disagreements** —
+`AT-33-E5-003` (row 18, previously marked `complete` over the 32-unit population that predated
+this cycle) needs to **reopen** over these; not done by this cycle (different criterion, different
+write scope). Re-derive the count: `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-verified.combined-oracle-results.json')); print(collections.Counter(r['verdict'] for r in d['results']))"`
+→ `Counter({'unverifiable': 746, 'agree': 279, 'disagree': 103})`.
+
+**All 103 share one root-cause hypothesis** (not yet confirmed against the corpus `SAVE:` token —
+`AT-33-E5-003`'s job): every disagreement carries `ours - oracle == 4`, exactly
+`SPELL_PROBE_ABILITY_MODIFIER`. Candidate cause: these are spells with no real saving throw, and
+PCGen's `SPELLMEM.*.DC` export reports a bare `10 + level` for them while this engine's DC formula
+(`compute_spellbook_coverage` / `probe_spell_key`) adds the ability modifier unconditionally,
+regardless of whether the spell actually grants a save. Full 103-row detail (unit_id/ours/oracle)
+is in `artifacts/epic-5-reverification/fixture-spell.oracle-results.json`
+(`jq '[.[]|select(.verdict=="disagree")]' <(jq .results fixture-spell.oracle-results.json)`); the
+first 10 by unit_id, as a sample:
 
 | unit_id | ours | oracle | root cause | resolution | commit |
 |---|---:|---:|---|---|---|
-| _(none yet — 0 of 32 examined units disagree)_ | | | | | |
+| `advanced_class_guide:spell:align_weapon_communal` | 17 | 13 | candidate: no-save spell, DC formula adds ability mod unconditionally (unconfirmed) | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:anti_incorporeal_shell` | 18 | 14 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:blazing_rainbow` | 20 | 16 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:enemy_insight` | 16 | 12 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:fairy_ring_retreat` | 21 | 17 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:guardian_of_faith` | 18 | 14 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:holy_ice_weapon` | 16 | 12 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:marching_chant` | 16 | 12 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:mark_of_obvious_ethics` | 17 | 13 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| `advanced_class_guide:spell:nauseating_dart` | 15 | 11 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
+| _(93 more — see `fixture-spell.oracle-results.json`, all `ours-oracle=4`)_ | | | | | |
 
 ## Cycle entry schema
 
@@ -216,6 +246,18 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 - **Movement, four buckets:** closure 0 / reclassification 0 / reachability 0 /
   instrument-correction 2 (the two fixes above).
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md`.
+
+### Cycle AT-33-E5-001 (remediation) — reverify-fixture-verified (row 16, Epic 5) — in-progress, 1,128 of 1,741
+
+- **Criterion:** `AT-33-E5-001` — the 1,741 `fixture-verified` units are re-examined against the oracle.
+- **Why this cycle exists:** attempt 1 (previous entry, hand-authored `.pcg`s outside the repo) reached 11 of 1,741 — a throughput ceiling, not a correctness problem. This cycle builds and runs a repo-local, batched replacement.
+- **What landed:** `src/bin/fixture_verified_oracle_probe.rs` (new batch "ours" probe, calls the real `compute_spellbook_coverage` engine function per fixture-verified spell unit); `fixture-generate-spell-batch.py` + `fixture-compare-spell-batch.py` (new, batch 690 spell units into 6 live PCGen characters — one per casting class — and join back to `ours` by `(level, name)`); 6 real `./gradlew run` invocations, all exit 0.
+- **Population reached:** **1,128 of 1,741 (64.8%)** — 11 `equipment` (folded forward from attempt 1's own real round-trip) + 690 `spell` (new: 268 agree / 103 disagree / 319 unverifiable) + 427 `companion`/`monster`/`monster_ability` (new: unverifiable, per-unit, real no-probe reason). Re-derive: `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-verified.combined-oracle-results.json')); print(len(d['results'])); print(collections.Counter(r['verdict'] for r in d['results']))"` → `1128`, `Counter({'unverifiable': 746, 'agree': 279, 'disagree': 103})`.
+- **Not reached, with real reasons (613 of 1,741):** 598 `spell` units (evidence `spell_list_entry_with_resolved_level`) — `codex::rules_core::spellbook::casting_ability_for_class` maps exactly 7 classes and none of these spells' casting classes are among them, so this engine produces no "ours" DC for them via this mechanism at all; 15 `class_feature` units — need the full pilot-compute pipeline (`probe_class_feature_effect_wiring`'s mechanism), out of this cycle's budget.
+- **Genuine finding for `AT-33-E5-003`:** all 103 disagreements carry `ours-oracle == 4` (`SPELL_PROBE_ABILITY_MODIFIER`) — candidate root cause: no-save spells, PCGen's DC export omits the ability modifier, this engine's formula adds it unconditionally. Not fixed here (different criterion, different write scope).
+- **Deferral resolved:** attempt 1's `1787634716478-sd33-e5-fixture-c725c5` resolved via `scripts/retro.py resolution` (event `1787639860118-sd33-r-e5-fixture-14ee14`) — superseded by this cycle's own more precise 613-unit remainder. **No replacement deferral filed.**
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0.
+- **Status:** in-progress — not `complete`. See `AT-33-E5-001_cycle_receipt.md` (overwritten in place) for full figures, the per-unit result files, and the next-cycle plan (class_feature via the full pilot-compute pipeline; the 598-unit boundary needs an engine-capability question answered before any harness work).
 
 ### Cycle AT-33-E6-001 — final-acceptance-scan (row 19, Epic 6) — blocked-escalated, gate **FAIL**
 

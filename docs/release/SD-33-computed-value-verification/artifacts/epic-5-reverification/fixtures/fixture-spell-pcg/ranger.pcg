@@ -1,0 +1,58 @@
+PCGVERSION:2.0
+
+# System Information
+CAMPAIGN:Core Rulebook
+CAMPAIGN:Advanced Player's Guide
+CAMPAIGN:Advanced Class Guide
+CAMPAIGN:Advanced Race Guide
+CAMPAIGN:Ultimate Combat
+CAMPAIGN:Ultimate Equipment
+CAMPAIGN:Ultimate Magic
+CAMPAIGN:Ultimate Intrigue
+CAMPAIGN:Ultimate Wilderness
+CAMPAIGN:Occult Adventures
+CAMPAIGN:Bestiary
+CAMPAIGN:Bestiary 2
+CAMPAIGN:Bestiary 3
+VERSION:6.09.08.RC1
+GAMEMODE:Pathfinder_RPG
+CHARACTERTYPE:PC
+PURCHASEPOINTS:N
+AUTOSPELLS:N
+
+# Character Bio
+CHARACTERNAME:E5 Spell Batch Ranger
+PLAYERNAME:sd-33-e5-fixture
+
+# Character Attributes
+STAT:STR|SCORE:10
+STAT:DEX|SCORE:10
+STAT:CON|SCORE:10
+STAT:INT|SCORE:18
+STAT:WIS|SCORE:10
+STAT:CHA|SCORE:18
+ALIGN:LN
+RACE:Human
+
+# Character Class(es)
+CLASS:Ranger|LEVEL:20|SKILLPOOL:0
+
+# Character Experience
+EXPERIENCE:0
+EXPERIENCETABLE:Medium
+
+# Character Spells Information
+SPELLNAME:Chameleon Stride (Greater)|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Enemy Insight|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Bloodhound|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Bow Spirit|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:4|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Chameleon Stride|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Hunter's Eye|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Hunter's Howl|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Instant Enemy|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Perceive Cues|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Protective Spirit|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:2|SOURCE:[TYPE:CLASS|NAME:Ranger]
+SPELLNAME:Tireless Pursuit|TIMES:1|CLASS:Ranger|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Ranger]
+
+# Character Equipment
+MONEY:0
