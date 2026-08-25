@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete, rows 1-15 (AT-33-E1-001..004, AT-33-E2-001..004, AT-33-E3-001..004, AT-33-E4-001..003) all complete
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 started, AT-33-E5-001 in-progress (11 of 1,741 fixture-verified units re-examined against a live oracle round-trip, row 16 not yet complete)
 date: 2026-08-24
 ---
 
@@ -84,6 +84,27 @@ proven both ways through the real stage invocation, not just the underlying scri
 `DENOMINATOR_GATE_PATHS=<malformed file> bash scripts/verify.sh --only denominator-gate` → exit 1;
 corrected form → exit 0. See the cycle receipt for the full transcript.
 
+**Epic 5 in progress; `AT-33-E5-001` (row 16) is `in-progress`, not `complete`.** The
+`fixture-verified` population is 1,741 (spell 1,288 / companion 187 / monster 140 /
+monster_ability 100 / class_feature 15 / equipment 11 —
+`jq -r '[.units[]|select(.status=="fixture-verified")]|group_by(.kind)|map({kind:.[0].kind,count:length})' docs/work-inventory.json`).
+This cycle extended `AT-33-E2-004`'s proven Path A mechanism from Epic 2's one hand-authored
+fighter to a real batch: the entire `equipment` kind (**11 of 1,741**) was re-verified against a
+live PCGen `BatchExporter` round-trip (11 separate `.pcg` characters, 11/11 `./gradlew run`
+invocations exit 0) with `ours` sourced from a live call into the real
+`codex::rules_core::equipment_effects::compute_equipment_effects` engine function — **11 of 11
+agree, 0 disagree**, verified through `scripts/oracle_harness/run.py` and independently through
+`scripts/box_ledger.py --check --oracle-results ...` (exit 0). The remaining **1,730 of 1,741**
+are not yet examined and are **not** folded into a false 100%: 1,303 (`spell`+`class_feature`)
+carry a real magnitude probe and are queued with a concrete next-cycle plan (real per-unit/batch
+`.pcg`+template authoring cost — the sizing question `AT-33-E2-004`'s receipt named as Epic 5's
+own scope); 427 (`companion`+`monster`+`monster_ability`) carry **no** magnitude probe at all
+(`AT-33-E1-003`'s pre-existing finding, `probe_exists: false`) and cannot be oracle-compared by
+this cycle's mechanism until Epic 1's probe surface widens. No `## Open blockers` entry is filed
+— this is decomposition and first-slice execution of a population `AT-33-E2-004` already named as
+too large for one cycle, not an escalation. Full detail:
+`artifacts/epic-5-reverification/README.md` and `AT-33-E5-001_cycle_receipt.md`.
+
 ## Cycle entry schema
 
 Each entry states, at minimum:
@@ -99,6 +120,65 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E5-001 — reverify-fixture-verified (row 16, Epic 5) — in-progress
+
+- **Criterion:** `AT-33-E5-001` — the 1,741 `fixture-verified` units are re-examined against the oracle.
+- **Files:** `artifacts/epic-5-reverification/README.md` (new), `AT-33-E5-001_cycle_receipt.md` (new),
+  `equipment.oracle-export.txt` / `equipment.ours.json` / `equipment.oracle-results.json` (new),
+  `fixtures/e5-equip-stats.txt.ftl` (new), `fixtures/equipment-pcg/*.pcg` (new, 11),
+  `fixtures/equipment-oracle-txt/*.txt` (new, 11), 2 build-transcript files (new),
+  `ours-derivation/equipment-ours-probe.{rs,Cargo.toml,output.json}` (new — reference copy of a
+  scratch program that reads the `codex` crate as a path dependency from outside this repo; it
+  writes nothing into the repo).
+- **What landed:** extended `AT-33-E2-004`'s proven Path A mechanism (one hand-authored fighter)
+  to a real re-verification batch covering the entire `equipment` kind (11 of 1,741
+  `fixture-verified` units) — 11 live `.pcg` characters, each with one
+  `Belt of Mighty Hurling`/`Shifter's Headband` item real-`EQUIPSET`-equipped into its correct
+  PCGen slot, exported through `./gradlew run` for real (11/11 exit 0) against a real `ours` value
+  from a live call into `codex::rules_core::equipment_effects::compute_equipment_effects` (not
+  read from the corpus's `raw_bonus_chains` field directly — that would only check ingestion, not
+  computation). Compared via `scripts/oracle_harness/run.py` (`AT-33-E2-003`'s CLI, unmodified).
+- **Figures:**
+  - `fixture-verified` population: 1,741 of 49,438
+    (`jq '[.units[]|select(.status=="fixture-verified")]|length' docs/work-inventory.json`)
+  - Examined against a live oracle round-trip this cycle: 11 of 1,741 (0.63%)
+    (`AT-33-E5-001_cycle_receipt.md`'s per-unit table; source `equipment.oracle-results.json`)
+  - Agreement: 11 of 11 examined; disagreement: 0 of 11 examined
+    (`python3 scripts/oracle_harness/run.py --oracle-export artifacts/epic-5-reverification/equipment.oracle-export.txt --ours artifacts/epic-5-reverification/equipment.ours.json --output <out>.json`)
+  - `box_ledger.py --check` against this cycle's real oracle-results: `uncovered=0 overlap=0
+    population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False`, exit 0
+    (`python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/equipment.oracle-results.json`)
+  - Not yet examined, real probe exists (`spell`+`class_feature`): 1,303 of 1,741
+    (`jq -r '[.units[]|select(.status=="fixture-verified" and (.kind=="spell" or .kind=="class_feature"))]|length' docs/work-inventory.json`)
+  - Not yet examined, no probe exists at all (`companion`+`monster`+`monster_ability`): 427 of 1,741
+    (`jq -r '[.units[]|select(.status=="fixture-verified" and (.kind=="companion" or .kind=="monster" or .kind=="monster_ability"))]|length' docs/work-inventory.json`)
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — no `docs/work-inventory.json` `status` field changed this cycle;
+  the oracle-agreement result is recorded in `equipment.oracle-results.json`, not as a status
+  transition.
+- **RED→GREEN:** before this cycle, `AT-33-E5-001`'s evidence obligation had zero real per-unit
+  rows against the 1,741 population (`equipment.oracle-results.json` did not exist, no
+  `fixture-verified` unit had an authored `.pcg`/template pair). After: 11 real rows, each backed
+  by an independently-executed live PCGen export (11/11 `./gradlew run` exit 0) and a live engine
+  call (`cargo run --release` against the real `codex` crate, exit 0) — `agree=11 disagree=0
+  unverifiable=0`, cross-checked by `box_ledger.py --check` exiting 0 on the same file.
+- **Status: in-progress, not `complete`.** 11 of 1,741 is genuine progress, not the full
+  population the criterion's Evidence line asks for. Per `workflow-instruction.md §8` /
+  `AGENTS.md`'s blocker-closure doctrine, a blocker bigger than one cycle is decomposed and run
+  across cycles, not exempted or marked done early — marking this row `complete` on 11 of 1,741
+  would be the false-100% shape `decisions.md §2` and `AGENTS.md` rule 2 exist to prevent. No
+  `## Open blockers` entry filed; the bundle is not paused. Kanban row 16 stays `in-progress`.
+- **Notes:** full methodology, the honest 6-kind partition, and a concrete next-cycle plan (per
+  sub-population) in `artifacts/epic-5-reverification/README.md`. `AT-33-E5-002`
+  (6,589 `literal-verified` units) is a separate criterion, not started by this cycle.
+- **Test scoping:** ran `scripts/oracle_harness/run.py` and `scripts/box_ledger.py --check`
+  (both Epic 2/Epic 1 tools, unmodified, against this cycle's real output). Did not re-run
+  `scripts/tests/test_oracle_harness.py`/`test_box_ledger.py` (neither file changed this cycle).
+  Did not run the codex repo's own `cargo test`/`cargo build` (no `src/` file changed — the
+  scratch `equip_probe` program lives outside the repo). Did not run `apps/desktop/src-tauri`
+  (separate cargo workspace, untouched).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md`.
 
 ### Cycle AT-33-E4-001..003 — unknown classification (rows 13-15, Epic 4)
 

@@ -1,0 +1,57 @@
+[
+  {
+    "ability": "STR",
+    "bonus": 4,
+    "name": "Belt of Mighty Hurling (Greater)"
+  },
+  {
+    "ability": "STR",
+    "bonus": 2,
+    "name": "Belt of Mighty Hurling (Lesser)"
+  },
+  {
+    "ability": "CHA",
+    "bonus": 2,
+    "name": "Shifter's Headband (CHA) +2"
+  },
+  {
+    "ability": "CHA",
+    "bonus": 4,
+    "name": "Shifter's Headband (CHA) +4"
+  },
+  {
+    "ability": "CHA",
+    "bonus": 6,
+    "name": "Shifter's Headband (CHA) +6"
+  },
+  {
+    "ability": "INT",
+    "bonus": 2,
+    "name": "Shifter's Headband (INT) +2"
+  },
+  {
+    "ability": "INT",
+    "bonus": 4,
+    "name": "Shifter's Headband (INT) +4"
+  },
+  {
+    "ability": "INT",
+    "bonus": 6,
+    "name": "Shifter's Headband (INT) +6"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 2,
+    "name": "Shifter's Headband (WIS) +2"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 4,
+    "name": "Shifter's Headband (WIS) +4"
+  },
+  {
+    "ability": "WIS",
+    "bonus": 6,
+    "name": "Shifter's Headband (WIS) +6"
+  }
+]
