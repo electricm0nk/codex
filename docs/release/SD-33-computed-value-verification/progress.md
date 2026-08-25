@@ -225,6 +225,41 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-last67-eqm — remediation wave 5, eqm-modifier-family lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
+
+- **Criterion:** `AT-33-E5-002` — this lane's 7-unit slice of the 67 unrowed units named by
+  `AT-33-E5-last75`'s own remainder table: `EQMARMOR` material family (`draco`/`dragonhide`/
+  `material_dragonhide`, 3), `EQMWEAPON|DAMAGESIZE` (`special_quality_spikes_shieldbash`/
+  `spike_sb`, 2), `EQMWEAPON|RANGEADD` (`arrow_iron_tipped_distance_20`, 1), `EQM|WEIGHTDIV`
+  (`material_darkleaf_cloth_clothing`, 1).
+- **Population re-derivation (first action):** `python3 -c "...pop-set difference..."` → 67 (matches
+  the brief), this lane's 7 confirmed a subset by direct corpus-record read
+  (`raw_bonus_chains`, not a filtered view).
+- **Method attempted:** host-application via a hand-authored `.pcg` `CUSTOMIZATION:[BASEITEM:...|
+  DATA:EQMOD=...]` block — the exact real-PCGen-save-format syntax, confirmed byte-for-byte
+  against a real player-saved character and against `pcgen.io.PCGVer2Creator`/`PCGVer2Parser`
+  source, traced line-by-line. **Result: the attachment does not take effect** — 2 independent
+  shapes (materials via `VAR.ArmorCheckPenalty.INTVAL`, weight-division via `EQ.MERGELOC.0.WT`),
+  2 independent hosts, 2 independent export tokens, all show the modifier's contribution as
+  exactly zero with no load warning/error (ruling out a simple key-lookup miss). Full trace and
+  live-run transcripts in the receipt.
+- **Figures:** `population=7` (`this receipt's own table`); `rows_written=0`
+  (`python3 -c "import json; print(len(json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last67-eqm.oracle-results.json'))['results']))"` → `0`; re-derive: `jq '.results | length' docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last67-eqm.oracle-results.json`).
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 1 (the `.pcg` `CUSTOMIZATION:` host-attachment mechanism does not work as
+  documented in this harness — named this cycle, `scripts/retro.py incident`,
+  `sd33-r5-eqm.jsonl`, recurrence-key `pcg-customization-eqmod-not-applied`).
+- **RED→GREEN:** none — no resolver was written, since no shape reached a trustworthy oracle value
+  to verify a resolver against.
+- **Notes:** `general::compute_var_effect` + `general::apply_eqmod_var_bonus` already exist and
+  would have been reused unmodified for the `EQMARMOR` shape had the oracle side worked. The
+  `EQMWEAPON|RANGEADD` unit's standalone run separately crashed loading `Ultimate Combat`
+  (`Could not get Reference Manufacturer for Category: Cavalier Class Feature`) — a pre-existing
+  oracle-data defect unrelated to this construction, not reached this cycle either way.
+- **Test scoping:** no `src/` or `apps/` file changed (fixtures/results/receipt only); root
+  `cargo test` sweep and `apps/desktop/src-tauri` not run.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last67-eqm_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-finalize-wave4 — total Epic 5 across wave-4's two lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
 
 - **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.
