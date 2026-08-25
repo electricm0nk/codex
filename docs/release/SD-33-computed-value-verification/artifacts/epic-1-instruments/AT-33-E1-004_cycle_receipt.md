@@ -1,6 +1,6 @@
 # Cycle AT-33-E1-004 — Epic 1 Instruments / AT-33-E1-004
 
-- **Commit SHA:** `53fae7abf8`
+- **Commit SHA:** `53fae7abf8` (initial land), `2bf50e7bb5` (self-correction, see Notes)
 - **Files touched:**
   - `scripts/denominator_gate.py` (new)
   - `scripts/tests/test_denominator_gate.py` (new)
