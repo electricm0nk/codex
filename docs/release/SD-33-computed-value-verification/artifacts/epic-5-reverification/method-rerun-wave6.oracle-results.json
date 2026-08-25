@@ -1,0 +1,243 @@
+{
+  "results": [
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "prior_combined_value": {
+        "ours": 5,
+        "oracle": 5
+      },
+      "note": "Shortfall-3 merge-propagation gap (AT-33-E6-001 attempt 6): this row was already re-run live by wave 5's full-rerun-wave5.oracle-results.json (66-unit AC-isolator already-judged population) but never propagated into AT-33-E5-003.combined-oracle-results.json, which still carried the pre-re-run (5,5) pair. Re-affirmed here from full-rerun-wave5.oracle-results.json verbatim (not re-invoked live this cycle -- the live run already happened and was verified 66/66 agree by that wave); this cycle's job is closing the propagation gap, not repeating the PCGen invocation."
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:goblin_plate",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "prior_combined_value": {
+        "ours": 6,
+        "oracle": 6
+      },
+      "note": "Shortfall-3 merge-propagation gap, same as ring_of_unquenchable_passions above. This is the unit AT-33-E5-003-disagreement-fixes-wave5's own commit message named as a coincidental double-error (stale ours=9 landed at the SAME value the old diff-oracle produced, 9==9, masking a real staleness) -- the combined file still carried the OLDER (6,6) pair from before that wave's own correction reached it."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:goggles_of_far_sight",
+      "ours": -1,
+      "oracle": -1,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_heavy",
+      "ours": 9,
+      "oracle": 9,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_light",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_medium",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (2) to the current engine output (5) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "prior_combined_value": {
+        "ours": 2,
+        "oracle": null
+      }
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_heavy",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_light",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_medium",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield_heavy",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield_tower",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:plate_of_the_juggernaut",
+      "ours": 11,
+      "oracle": 11,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (9) to the current engine output (11) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "prior_combined_value": {
+        "ours": 9,
+        "oracle": null
+      }
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:shadow_shirt",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (4) to the current engine output (6) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "prior_combined_value": {
+        "ours": 4,
+        "oracle": null
+      }
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:skinwalker_s_leather",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "campaign-key",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (3) to the current engine output (5) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "prior_combined_value": {
+        "ours": 3,
+        "oracle": null
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:backpack_masterwork",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "method": "var_diff_isolated(LOADSCORE)",
+      "correction": "identity-resolve",
+      "note": "Identity-resolve fix blast radius (corpus_loader.rs KEY-synthesis, 9df1c0b514): 'Backpack (Masterwork)' has raw_tokens (OUTPUTNAME/TYPE/CONTAINS/COST/WT/SOURCEPAGE) but no literal KEY: token, and name ('Backpack, Masterwork') != key ('Backpack (Masterwork)') -- exactly the shape the fix addresses. equipment_id_resolve now succeeds (confirmed live, e6_identity_rerun_ours). Oracle side never previously attempted (prior lane recorded ours=None, oracle=None, dropped before any PCGen invocation) -- new single-item .pcg fixture + a VAR.LOADSCORE export template built this cycle, run against a matching-context baseline (bare L1 Human Fighter, same convention wave-3's own 44-unit VAR-shape population uses): item=17.0, baseline=16.0, diff=+1, matching the corpus's own literal BONUS:VAR|LOADSCORE|1|TYPE=Masterwork exactly. No other LOADSCORE-affecting source exists on this baseline (single-variable diff, not the multi-component AC.Total shape the AC-isolator fix was needed for)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:companion_stone_electrical_protection",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "method": "var_absolute(ElectricityResistanceBonus)",
+      "correction": "identity-resolve",
+      "note": "Identity-resolve fix blast radius, same shape as backpack_masterwork ('Companion Stone of [NAME]' OUTPUTNAME display name vs real key 'Companion Stone (Electrical Protection)', no literal KEY: token). equipment_id_resolve now succeeds. New single-item .pcg fixture (CAMPAIGN:DSP - Ultimate Psionics, campaign-key fix applied) + VAR.ElectricityResistanceBonus export: item=10.0, baseline (bare Fighter, Ultimate Psionics loaded, no item)=0.0, diff=10, matching the corpus's own literal BONUS:VAR|ElectricityResistanceBonus|10 exactly."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_psion",
+      "ours": 7,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline",
+      "correction": "identity-resolve",
+      "note": "Identity-resolve fix blast radius: equipment_id_resolve now succeeds (was equipment_id_resolve_no_match_keyless_outputname_record) and the engine computes a real, unconditional ours=7 (BONUS:VAR|BonusPowerPoints|7|TYPE=PsionSkin, no PRE gate on the token itself). Live-run this cycle (new fixture, CAMPAIGN:DSP - Ultimate Psionics, VAR.BonusPowerPoints export) against a bare L1 Human Fighter: PCGen exports 0.0 both with and without the item equipped -- the SAME var_gated_by_unbuilt_class_feature_zero_on_generic_baseline shape AT-33-E5-shape-var already established for 60 other VAR units (a psionics power-point pool variable that a non-psionic generic baseline character never populates, PF1's real rule, not an engine or harness defect). Not an agree (oracle is genuinely un-observable on this baseline) and not fabricated as agree/disagree."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_defender",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method": "ac_isolated_bonus_by_type",
+      "correction": "identity-resolve",
+      "note": "Identity-resolve fix blast radius (the shape-combat lane's own narrower engine_id_resolve_fails_templated_variant_record finding, generalized by 9df1c0b514). Single bonus chain (COMBAT|AC|4|TYPE=NaturalArmor). New fixture + ac-isolate.txt.ftl (absolute per-type isolator, no baseline needed): AC.ISOLATED=4, matching the engine's fresh armor_class_bonus=4 exactly."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_hero",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "multi_shape_partial_resolver_gap",
+      "correction": "identity-resolve",
+      "multi_shape_sources": [
+        {
+          "dimension": "AC",
+          "ours": 3,
+          "oracle": 3,
+          "verdict": "agree",
+          "method": "ac_isolated_bonus_by_type"
+        },
+        {
+          "dimension": "TOHIT",
+          "ours": null,
+          "oracle": null,
+          "verdict": "unverifiable",
+          "reason": "no_resolver: bare COMBAT|TOHIT|3|TYPE=Enhancement chain outside a WEAPON context -- no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs reads a general COMBAT|TOHIT bonus"
+        },
+        {
+          "dimension": "SAVE",
+          "ours": null,
+          "oracle": null,
+          "verdict": "unverifiable",
+          "reason": "no_probe_surface: SAVE|Fortitude,Reflex,Will|3|TYPE=Resistance -- no SAVE resolver in the current dispatch (matches crystal_mask_mindarmor's own no_probe_surface(shape: SAVE) finding elsewhere in this population)"
+        }
+      ],
+      "note": "Identity-resolve fix blast radius: equipment_id_resolve now succeeds (was engine_id_resolve_fails_templated_variant_record). The record carries THREE independent bonus chains (AC/TOHIT/SAVE); only the AC dimension has a live resolver and it agrees exactly (AC.ISOLATED=3 == ours=3). Per AT-33-E5-finalize-wave3's duplicate-unit_id/multi-shape merge rule (worst of the per-shape verdicts, never last-writer-wins, never a fabricated whole-record agree over a partially-verified record), the merged verdict is unverifiable, not agree -- 2 of 3 dimensions have no comparable engine output at all, a real, honestly-reported resolver gap, not a wrong value."
+    }
+  ],
+  "meta": {
+    "lane": "sd33-r6-method-rerun",
+    "purpose": "AT-33-E5-003's own 'fix the harness, and re-run everything it already judged' obligation, applied to all three wave-5 corrections (AC isolator, campaign-key, identity-resolve), not just the AC isolator's own already-verified 66-row rerun.",
+    "rows": 21
+  }
+}

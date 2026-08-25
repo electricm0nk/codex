@@ -360,6 +360,57 @@ RED→GREEN landing the widening.
 - **Next-cycle plan:** (1) investigate PCGen's own EQMOD-application code path for why a Special-Quality-category `WeaponEnhancement.Psionic` eqmod silently no-ops via `CUSTOMIZATION` (2 units, shared root cause with `AT-33-E5-last67-eqm`'s wield-size trio); (2) cross-record class-feature variable resolution for `flurry_of_fists`/`flurry_of_strikes` (2 units, a real design decision, not a one-line widening); (3) new `ResolvedEquipmentEffect` fields + aggregation wiring for COMBAT non-AC subtokens (6 units, `AT-33-E5-shape-combat`'s own next-cycle item 4).
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last39-skill-combat_cycle_receipt.md`.
 
+### Cycle sd33-r6-method-rerun — remediation wave 6, method-change re-run obligation (`AT-33-E5-003`, `method_change_rerun_verified`) — complete
+
+- **Criterion:** `AT-33-E5-003`'s "fix the harness, and re-run everything it already judged" clause,
+  applied to all three wave-5 corrections carrying it, not only the AC isolator's own already-proven
+  66-unit re-run (`AT-33-E6-001-attempt6`'s named shortfall: `method_change_rerun_verified: false`).
+- **Files:** `src/bin/e6_identity_rerun_ours.rs` (new probe, no new resolver logic),
+  `artifacts/epic-5-reverification/method-rerun-wave6.oracle-results.json` (new, 21 rows),
+  `artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json` (21 rows corrected,
+  row count unchanged at 8,291), this cycle's receipt.
+- **Blast radius, derived by execution, three corrections:**
+  - AC isolator (`a68fbeea3d`): 66 of 66 already re-run by wave 5 itself; this cycle closed
+    `AT-33-E6-001`'s Shortfall 3 (2 of 66 re-run rows never propagated into the combined file —
+    `ring_of_unquenchable_passions`, `goblin_plate`) by re-affirming and merging them.
+  - Campaign-key fix (`9df1c0b514`, `scripts/oracle_harness/campaign_key.py`): **14 of 14** rows
+    carrying `oracle_harness_ultimate_psionics_campaign_load_failure`, re-run live against the
+    already-committed `combat-shape-work/ac-pcg/*.pcg` fixtures (campaign line corrected in a
+    scratch copy) — all 14 now `agree`. 4 of the 14 (`plate_of_the_juggernaut`, `shadow_shirt`,
+    `skinwalker_s_leather`, `leather_of_confined_spaces`) also had a STALE `ours` in the combined
+    file (an `abc72f75ec`-EQMOD-resolver staleness, the same class Shortfall 2's audit found on
+    2 other units) — corrected to the current engine value in the same pass.
+  - Identity-resolve fix (`9df1c0b514`, `corpus_loader.rs` KEY synthesis): corpus-wide population
+    derived by execution — **436 of 7,807** equipment/equipment_modifier records have no literal
+    `KEY:` token and `name != key`; **209 of 436** are already-examined (rowed); of those, **5**
+    carried a pre-fix identity-resolve-failure reason (the rest are either unaffected
+    `no_bonus_chain` short-circuits or already-current post-fix rows from `9df1c0b514`'s own 14-row
+    `agree` population). All 5 re-run live with new single-item `.pcg` fixtures (never previously
+    attempted — every prior lane had recorded `ours=None, oracle=None`): 3 `agree`
+    (`backpack_masterwork`, `companion_stone_electrical_protection`, `psychoactive_skin_defender`),
+    2 `unverifiable` for an honest, now-accurate reason
+    (`psychoactive_skin_psion` — `var_gated_by_unbuilt_class_feature_zero_on_generic_baseline`, the
+    same shape 60 other `AT-33-E5-shape-var` units already established;
+    `psychoactive_skin_hero` — `multi_shape_partial_resolver_gap`, AC dimension agrees 3/3 but
+    TOHIT/SAVE have no live resolver, merged per the multi-shape worst-of-dimensions rule).
+- **Coverage: 21 of 21 derived-affected rows re-run — full coverage, no subset left un-re-run.**
+- **What moved:** 17 of 21 verdicts changed (all `unverifiable` → `agree`); 20 of 21 values changed.
+  **New disagreements surfaced: 0** — re-derived live,
+  `python3 scripts/box_ledger.py --check --oracle-results .../AT-33-E5-003.combined-oracle-results.json`
+  → `oracle_disagreement=1` (unchanged, still only `rending_claw_blades`). Buckets before → after:
+  `agree` 786 → 803, `unverifiable` 7,504 → 7,487, `disagree` 1 → 1 (unchanged), row count 8,291 →
+  8,291 (unchanged).
+- **`method_change_rerun_verified` is now `true`** for all three corrections.
+- **Test scoping:** `cargo test --locked --lib corpus_loader::` → 6/6 (no `src/rules_core/` file
+  touched this cycle). Denominator gate re-run clean after this cycle's own receipt entered scope.
+- **Movement, four buckets:** closure 0. Reclassification 0. Reachability 0 (all 21 rows were
+  already-examined; row 17's unrowed-39 population is disjoint, sibling-lane scope). Instrument-
+  correction 21.
+- **Kanban call:** none — this lane does not mark rows 16/17/18, per this dispatch's own
+  coordination note (four sibling lanes running concurrently: one fixing corpus extraction, three
+  closing the last 39 units).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003-method-rerun_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-003-corpus-extraction-fix — clear the `rending_claw_blades` corpus-extraction blocker (`sd33-r6-corpus-extraction`) — complete (extraction), new narrower blocker filed (resolver)
 
 - **Criterion:** clear the `## Open blockers` entry filed by `sd33-r5-e5-finalize` (a blocker is never a closure path — decompose it and run the cycles, `blocker-closure-doctrine.md`).

@@ -16290,11 +16290,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "equipment_id_resolve_no_match_keyless_outputname_record",
       "unit_id": "advanced_players_guide:equipment:backpack_masterwork",
-      "verdict": "unverifiable"
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "identity-resolve",
+        "method": "var_diff_isolated(LOADSCORE)"
+      }
     },
     {
       "oracle": null,
@@ -43500,27 +43503,14 @@
       "verdict": "unverifiable"
     },
     {
-      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
-      "multi_shape_sources": [
-        {
-          "lane": "literal-verified",
-          "oracle": 5,
-          "ours": 5,
-          "reason": null,
-          "verdict": "agree"
-        },
-        {
-          "lane": "combat-weapon-shape",
-          "oracle": 1,
-          "ours": 1,
-          "reason": null,
-          "verdict": "agree"
-        }
-      ],
-      "oracle": 5,
-      "ours": 5,
       "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
-      "verdict": "agree"
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "ac-isolator-shortfall3",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": 2,
@@ -44442,27 +44432,14 @@
       "verdict": "agree"
     },
     {
-      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
-      "multi_shape_sources": [
-        {
-          "lane": "var-bonus-shape",
-          "oracle": 6,
-          "ours": 6,
-          "reason": null,
-          "verdict": "agree"
-        },
-        {
-          "lane": "combat-weapon-shape",
-          "ours": 10,
-          "oracle": 10,
-          "verdict": "agree",
-          "reason": null
-        }
-      ],
-      "oracle": 6,
-      "ours": 6,
       "unit_id": "inner_sea_races:equipment:goblin_plate",
-      "verdict": "agree"
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "ac-isolator-shortfall3",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
@@ -58444,11 +58421,14 @@
       "verdict": "agree"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "equipment_id_resolve_no_match_keyless_outputname_record",
       "unit_id": "ultimate_psionics:equipment:companion_stone_electrical_protection",
-      "verdict": "unverifiable"
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "identity-resolve",
+        "method": "var_absolute(ElectricityResistanceBonus)"
+      }
     },
     {
       "oracle": null,
@@ -58949,11 +58929,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": -1,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:goggles_of_far_sight",
-      "verdict": "unverifiable"
+      "ours": -1,
+      "oracle": -1,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -58970,25 +58953,34 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 9,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:improved_mind_armor_heavy",
-      "verdict": "unverifiable"
+      "ours": 9,
+      "oracle": 9,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
-      "oracle": null,
-      "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:improved_mind_armor_light",
-      "verdict": "unverifiable"
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
-      "oracle": null,
-      "ours": 6,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:improved_mind_armor_medium",
-      "verdict": "unverifiable"
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59019,11 +59011,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 2,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
-      "verdict": "unverifiable"
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59093,25 +59088,34 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 7,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_armor_heavy",
-      "verdict": "unverifiable"
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
-      "oracle": null,
-      "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_armor_light",
-      "verdict": "unverifiable"
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
-      "oracle": null,
-      "ours": 6,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_armor_medium",
-      "verdict": "unverifiable"
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59254,25 +59258,34 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 2,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_shield",
-      "verdict": "unverifiable"
-    },
-    {
-      "oracle": null,
       "ours": 2,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
-      "unit_id": "ultimate_psionics:equipment:mind_shield_heavy",
-      "verdict": "unverifiable"
+      "oracle": 2,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
-      "oracle": null,
-      "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
+      "unit_id": "ultimate_psionics:equipment:mind_shield_heavy",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
+    },
+    {
       "unit_id": "ultimate_psionics:equipment:mind_shield_tower",
-      "verdict": "unverifiable"
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59359,11 +59372,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 9,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:plate_of_the_juggernaut",
-      "verdict": "unverifiable"
+      "ours": 11,
+      "oracle": 11,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59596,11 +59612,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "engine_id_resolve_fails_templated_variant_record",
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_defender",
-      "verdict": "unverifiable"
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "identity-resolve",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59610,11 +59629,39 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "engine_id_resolve_fails_templated_variant_record",
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_hero",
-      "verdict": "unverifiable"
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "multi_shape_partial_resolver_gap",
+      "multi_shape_sources": [
+        {
+          "dimension": "AC",
+          "ours": 3,
+          "oracle": 3,
+          "verdict": "agree",
+          "method": "ac_isolated_bonus_by_type"
+        },
+        {
+          "dimension": "TOHIT",
+          "ours": null,
+          "oracle": null,
+          "verdict": "unverifiable",
+          "reason": "no_resolver: bare COMBAT|TOHIT|3|TYPE=Enhancement chain outside a WEAPON context -- no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs reads a general COMBAT|TOHIT bonus"
+        },
+        {
+          "dimension": "SAVE",
+          "ours": null,
+          "oracle": null,
+          "verdict": "unverifiable",
+          "reason": "no_probe_surface: SAVE|Fortitude,Reflex,Will|3|TYPE=Resistance -- no SAVE resolver in the current dispatch (matches crystal_mask_mindarmor's own no_probe_surface(shape: SAVE) finding elsewhere in this population)"
+        }
+      ],
+      "multi_shape_note": "unit carries >1 independently-examined bonus-chain dimension; merged verdict is the worst of the per-dimension verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins).",
+      "method_rerun_wave6": {
+        "correction": "identity-resolve",
+        "method": null
+      }
     },
     {
       "oracle": null,
@@ -59637,11 +59684,15 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "equipment_id_resolve_no_match_keyless_outputname_record",
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_psion",
-      "verdict": "unverifiable"
+      "ours": 7,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline",
+      "method_rerun_wave6": {
+        "correction": "identity-resolve",
+        "method": null
+      }
     },
     {
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
@@ -59775,11 +59826,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:shadow_shirt",
-      "verdict": "unverifiable"
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
@@ -59866,11 +59920,14 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 3,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:skinwalker_s_leather",
-      "verdict": "unverifiable"
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "method_rerun_wave6": {
+        "correction": "campaign-key",
+        "method": "ac_isolated_bonus_by_type"
+      }
     },
     {
       "oracle": null,
