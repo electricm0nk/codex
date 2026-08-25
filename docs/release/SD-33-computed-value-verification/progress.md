@@ -422,6 +422,57 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle AT-33-E6-001 (attempt 9) — final-acceptance scan — gate FAIL, blocked-escalated
+
+- **Criterion / card:** `AT-33-E6-001`, kanban row 19.
+- **Commit SHA:** this cycle's own landing commit.
+- **Scanned tree:** clean detached worktree at `origin/tranche/13` = `a0e1c017dd`
+  (`.worktrees/sd33-r9-scan`); the shared checkout was 8 commits behind with 158 foreign
+  `git status` entries and was not written to (`AGENTS.md`, "One writer per tree").
+- **Gate result: FAIL.** Ninth consecutive halt. Attempt 8's sole surviving shortfall is CLOSED;
+  one decisive shortfall remains, and it is a *disposition*, not a missing measurement.
+- **CLOSED — attempt 8's sole surviving shortfall (the workspace test build):**
+  `cargo test --locked --no-run` → **exit 0**, **543 of 543** `tests/*.rs` targets built;
+  `cargo test --locked --no-fail-fast` → **599 of 599** built executables reported a result, of
+  which **543 of 543** are the integration targets that attempt 8 measured at **0 of 543**.
+  Closed by real work, not a weakened assertion: the `+1 Weapon` case now asserts
+  `tohit_bonus == Some(1)` **and** `damage_bonus == Some(1)`, the `Adamantine` case
+  `tohit_bonus == Some(1)` **and** `damage_bonus == None` — the second gained a real negative
+  assertion the old `affects` string only implied. Sibling search re-run by this scan:
+  **0 residual references of 2 old field names** across `tests/`, `src/`, `apps/`.
+- **Shortfall 1 (BLOCKING) — the `corpus-sweep` gate is RED on SD-33's own corpus regeneration,
+  and the finding was filed rather than cleared.** Re-run live:
+  `cargo run --locked --bin corpus_literal_sweep` → **105 findings across 10 of 137 changed
+  corpus records**, exit 1. All 10 are inside this bundle's own 137-record corpus diff; each moved
+  `data.raw_tokens` from `[]` (vacuously passing) to populated, written by
+  `src/bin/enrich_equipment_raw_tokens.rs` (+243 lines this bundle, wave 6), while the sweep's
+  independent `.MOD`-chain closure-builder is unchanged since the cut. It sits in
+  `## Open blockers` as **1 of 1 active entry** plus a `deferral` retro event in
+  `docs/retro/events/sd33-r8-build-green.jsonl`. `AGENTS.md` Blocker Discipline and this bundle's
+  own `kanban.md` both classify that as a **pause**, not a closure path — and rows 16-18 are
+  `complete` over it, the same `complete`-with-a-deferred-half shape attempts 7 and 8 blocked on.
+- **Shortfall 2 (REPORTED, inheritance verified):** `cargo test --locked` → **exit 101** at the
+  pre-existing `ingest_races` assertion. **31 of 599** executed suites fail, carrying **49 of
+  8,023** executed test failures. **0 of 31** are caused by SD-33: the failing set, its per-target
+  `N passed; M failed` pairs and their order are identical at `f652db7ac7` and HEAD (normalised
+  diff of the cut/HEAD runs), and **0 of 31** failing targets carry any commit since the cut.
+  The **2** targets that WERE SD-33's own were fixed, not reported, and pass here
+  (`sd25_monk_level_up_explanation_filter_audit` 6 of 6; `v06_work_inventory` 16 of 16).
+- **Everything else re-derived and holding:** lib **2,836 of 2,836** pass / **0 of 2,836** fail;
+  desktop crate **548 of 548** pass, exit 0; Epic 5 rows **1,741 / 6,589 / 8,330** with the
+  unexamined set **empty as a set** (and **0 of 8,330** rowed-not-blessed), **0 of 8,330**
+  `disagree`, **0 of 811** `agree`-with-mismatch, **0 of 7,519** reasonless `unverifiable`,
+  `box_ledger.py --check` exit 0; denominator gate **0 violations of 57 files checked** with the
+  matcher untouched and detection re-proven live by a planted-and-removed probe; work-inventory
+  `unknown` **0 of 49,438**; kanban-cited receipts **0 missing of 33**; corpus integrity
+  **0 of 137** lost license/PI and **0 of 137** shrank `raw_tokens`; `EXCLUDED_BOOKS` size 0;
+  SD-32's package **untouched** since the cut.
+- **Movement, four buckets:** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt9_cycle_receipt.md`
+- **Next:** the reconciliation cycle named in Shortfall 1
+  (`enrich_equipment_raw_tokens.rs` vs `corpus_literal_sweep.rs` `.MOD`-fold), then attempt 10.
+
 ### Cycle AT-33-E6-001 (build-green lane) — Shortfall 1 closed — complete
 
 - **Criterion / card:** `AT-33-E6-001`'s Shortfall 1 (workspace test build did not compile), kanban
