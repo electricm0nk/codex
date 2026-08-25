@@ -30,9 +30,9 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | 10 | `coverage-f1` | 3 | AT-33-E3-002 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
 | 11 | `coverage-f2-f9` | 3 | AT-33-E3-003 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
 | 12 | `coverage-100-with-denominator` | 3 | AT-33-E3-004 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
-| 13 | `unknown-rootcause` | 4 | AT-33-E4-001 | not-started | |
-| 14 | `unknown-to-zero` | 4 | AT-33-E4-002 | not-started | |
-| 15 | `no-effort-named-buckets` | 4 | AT-33-E4-003 | not-started | |
+| 13 | `unknown-rootcause` | 4 | AT-33-E4-001 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-001_cycle_receipt.md` |
+| 14 | `unknown-to-zero` | 4 | AT-33-E4-002 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-002_cycle_receipt.md` |
+| 15 | `no-effort-named-buckets` | 4 | AT-33-E4-003 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-003_cycle_receipt.md` |
 | 16 | `reverify-fixture-verified` | 5 | AT-33-E5-001 | not-started | |
 | 17 | `reverify-literal-verified` | 5 | AT-33-E5-002 | not-started | |
 | 18 | `disagreement-resolution` | 5 | AT-33-E5-003 | not-started | |

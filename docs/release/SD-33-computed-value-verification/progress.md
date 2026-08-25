@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-3 complete, rows 1-12 (AT-33-E1-001..004, AT-33-E2-001..004, AT-33-E3-001..004) all complete
+status: in progress — Epics 1-4 complete, rows 1-15 (AT-33-E1-001..004, AT-33-E2-001..004, AT-33-E3-001..004, AT-33-E4-001..003) all complete
 date: 2026-08-24
 ---
 
@@ -48,8 +48,34 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 12 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
-Epics 1-3 (rows 1-12); Epic 4 (rows 13-15) is a concurrent worktree-isolated lane, status as of this cycle's own commit.
+**Cards complete: 15 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
+Epics 1-4 (rows 1-15). Epic 5 (rows 16-18, gated on Epic 2) and Epic 6 (rows 19-21) remain.
+
+**Epic 4 complete; rows 13-15 (`AT-33-E4-001..003`) all landed.** The 4,224 units at
+`status: "unknown"` reach zero (`jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json`
+→ `0`), root-caused before any count moved (`unknown-rootcause.md`) and reported in the four required
+buckets: **closure 0 / reclassification 3,906 (854 → `ingested-magnitude`, 3,052 → `not-ingested`,
+both because the instrument already had the evidence and lacked the code path to say so) /
+reachability 0 / instrument-correction 318** (the genuinely-irreducible remainder, renamed
+`unknown` → `unmeasurable`, disposition unchanged). `python3 scripts/box_ledger.py --check` →
+`uncovered=0 overlap=0 population=49438 unverifiable_done=0 stale=False`, no warnings. See
+`artifacts/epic-4-unknown-classification/AT-33-E4-001..003_cycle_receipt.md` (three files, one per
+criterion) for the full per-unit verification.
+
+**Discovery, disclosed (not this criterion's own movement): the committed `docs/work-inventory.json`
+was stale by 3,985 units unrelated to `unknown`.** It had not been regenerated since 2026-08-23;
+`AT-33-E4-002`'s regen (the only way to prove the classifier fix) necessarily also captured real
+SD-32 engine work that had landed on `develop`/`tranche/13` in the interim but was never reflected on
+the board — `grounded` +106, `text-complete` +3,739, `not-ingested` net −896 aside from `AT-33-E4`'s
+own +3,052, `ingested-magnitude` +100 aside from `AT-33-E4`'s own +854. Verified by an `id`-keyed
+join, not an aggregate count; full breakdown in `AT-33-E4-002`'s receipt.
+
+**Cross-file follow-up, disclosed, not a blocker:** `scripts/observer/pf1e_dashboard_producer.py`'s
+`_doneness_verdict_uncapped()` raises on any `(wiring_class, status)` pair it has no rule for, and its
+table still names `status == "unknown"` rather than the renamed `"unmeasurable"`. Outside
+`AT-33-E4`'s write scope (`src/bin/v06_work_inventory.rs`, `docs/work-inventory.json`,
+`artifacts/epic-4-unknown-classification/`, `THE-BOX.md` append-only); a one-line fix for whichever
+cycle next touches that file.
 
 **Denominator gate is now live** (`AT-33-E1-004`): `scripts/verify.sh --only denominator-gate`
 runs `scripts/denominator_gate.py --check` against this bundle's own `artifacts/**/*_cycle_receipt.md`
@@ -73,6 +99,50 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E4-001..003 — unknown classification (rows 13-15, Epic 4)
+
+- **Criteria:** `AT-33-E4-001` (root cause established before any count moves), `AT-33-E4-002`
+  (the 4,224 reach zero, movement in four buckets), `AT-33-E4-003` (nothing lands in a bucket meaning
+  "we did not look").
+- **Commits:** `5bce7235d6` (E4-001, root-cause doc), `00ca087775` (E4-002, classifier fixes +
+  regenerated inventory), `acdc10de3f` (E4-003, `THE-BOX.md` updated).
+- **Files:** `artifacts/epic-4-unknown-classification/unknown-rootcause.md` (new),
+  `src/bin/v06_work_inventory.rs` (5 `classify()` call sites + `STATUS_VOCABULARY` + 12 test
+  assertions), `docs/work-inventory.json` (regenerated, sole-writer scope), `THE-BOX.md`
+  (append-only: group counts, `unknown` → `unmeasurable` rename).
+- **Root cause (`unknown-rootcause.md`):** 5 evidence shapes inside the 4,224. Three
+  (519 + 309 + 26 = 854) were instrument asymmetry — every sibling `Kind` already reads
+  `ingested-magnitude` for the identical "real magnitude, no observed consumer" shape, or
+  `wiring_class::signals`' own guard conditions prove the closure carries a magnitude the record's own
+  line does not show. One (3,052, `ClassFeature` owner-unresolved) is the same instrument asymmetry
+  for the disposition (its `text_only` sibling already reaches `not-ingested` off the identical probe
+  finding), plus a named, unattempted research opportunity (2 registered pools vs 1,128 distinct
+  unmatched group prefixes). The remainder (270 + 48 = 318) is genuinely irreducible this cycle: no
+  existing status honestly fits either shape (a truly-empty corpus record; a served description
+  corrupted by an upstream PI/not-implemented marker, outside this file's write scope).
+- **Figures:** before `4,224` at `status:"unknown"` (`jq '[.units[]|select(.status=="unknown")]|length'
+  docs/work-inventory.json`, denominator `49,438` total units); after `0`. Per-unit verified movement
+  (`id`-keyed join, not aggregate deltas): `3,052 → not-ingested`, `854 → ingested-magnitude`,
+  `318 → unmeasurable` (renamed from `unknown`, disposition unchanged); `3052+854+318=4224` exact.
+  `box_ledger.py --check` → `uncovered=0 overlap=0 population=49438 unverifiable_done=0 stale=False`,
+  no warnings.
+- **Movement, four buckets:** closure 0 / reclassification 3,906 / reachability 0 /
+  instrument-correction 318.
+- **Discovery, disclosed, not counted in the four buckets above:** the committed inventory was stale
+  by 3,985 units unrelated to `unknown` (last regenerated 2026-08-23; real SD-32 engine work landed
+  since was never captured). Full breakdown in `AT-33-E4-002`'s receipt.
+- **RED → GREEN:** pre-fix pinned tests encoded `"unknown"` as correct for these shapes; confirmed RED
+  for the intended reason, fixed `classify()`, updated the 12 assertions to the new honest values,
+  `cargo test --bin v06_work_inventory` → 359/359.
+- **Test scoping:** ran `cargo test --bin v06_work_inventory` (this criterion's only in-scope binary).
+  Did not run a full workspace sweep or `apps/desktop/src-tauri` (separate cargo workspace, untouched
+  by this cycle).
+- **Cross-file follow-up, disclosed, not a blocker:** `scripts/observer/pf1e_dashboard_producer.py`
+  still names `status == "unknown"` in its fail-closed `(wiring_class, status)` table; outside this
+  criterion's write scope, a one-line fix for whichever cycle next touches that file.
+- **Receipts:** `artifacts/epic-4-unknown-classification/AT-33-E4-001_cycle_receipt.md`,
+  `AT-33-E4-002_cycle_receipt.md`, `AT-33-E4-003_cycle_receipt.md`.
 
 ### Cycle AT-33-E3-001..004 — engine coverage (rows 9-12, Epic 3)
 
