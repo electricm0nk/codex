@@ -84,7 +84,7 @@ Epic 2's closing receipt states Path A or Path B explicitly. **If Path B, the co
 
 ### AT-33-E3-001 — the cause of the 41% is diagnosed before anything is run
 
-**41% coverage is a symptom.** A committed root-cause statement explains *why* 6,854 units were never run — per family, since the gap is uneven (F1 28%, F8 21%, F2 64%).
+**41% (4,798 of 11,652) coverage is a symptom.** A committed root-cause statement explains *why* 6,854 units were never run — per family, since the gap is uneven (F1 28% = 1,790 of 6,308, F8 21% = 41 of 196, F2 64% = 1,490 of 2,337).
 
 **Evidence:** `artifacts/epic-3-engine-coverage/coverage-gap-rootcause.md`, with the coordinates of sampled units traced concretely. **Generic pass, not per-object lanes** — the analysis is by mechanism.
 
@@ -94,13 +94,13 @@ F1 is the largest absolute gap (6,308 formula-bearing, 1,790 run). Its uncovered
 
 **Evidence:** a fresh corpus-wide run reporting F1 population == F1 formula-bearing count, both figures stated.
 
-### AT-33-E3-003 — every remaining family closes to 100%
+### AT-33-E3-003 — every remaining family closes to full population coverage
 
 F2–F9 reach full population coverage.
 
 **Evidence:** per-family table in the receipt, each row stating run-population and true-population.
 
-### AT-33-E3-004 — the corpus-wide run reports 100% with its denominator
+### AT-33-E3-004 — the corpus-wide run reports 11,652 of 11,652 (100%)
 
 The regenerated `formula_interpreter.corpus-wide.json` covers **11,652 of 11,652**, and the receipt states both numbers.
 

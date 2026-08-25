@@ -225,6 +225,69 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E1-004-scope-widening — denominator-gate scan scope (row 4, Epic 1) — complete
+
+- **Criterion:** `AT-33-E1-004` — `scripts/verify.sh --only denominator-gate` runs and fails on a
+  denominator-less percentage.
+- **Why this cycle exists:** `AT-33-E6-001` attempt 3's scan recorded an instrument-correction:
+  a first probe at the bundle root was never scanned (`files_checked` stayed at 23/24) because
+  `DEFAULT_GLOBS` covered only `artifacts/**/*_cycle_receipt.md` + `progress.md` — a percentage
+  stated without its denominator in any of this bundle's headline package documents was invisible
+  to the gate.
+- **What landed:** `DEFAULT_GLOBS` (`scripts/denominator_gate.py`) widened to also cover the 7
+  root-level headline docs an operator actually reads — `README.md`, `decisions.md`,
+  `epic-breakdown.md`, `release-notes.md`, `scope-draft.md`, `kanban.md`, `THE-BOX.md` — following
+  the extension mechanism the module's own docstring already named ("a later bundle extends
+  `DEFAULT_GLOBS`"), not a second mechanism. `files_checked` moves **24 → 31**
+  (`python3 scripts/denominator_gate.py --check`).
+- **New violations surfaced by the widening, all real (prose), none a matcher false positive:**
+  5 lines across 2 files, all fixed by adding the true denominator inline (re-derived from
+  `README.md §4` row E/F/G and `artifacts/epic-3-engine-coverage/coverage-gap-rootcause.md`'s
+  per-family table, not invented). Before/after quoted verbatim in a fence below (the gate's own
+  documented fenced-block exemption — these lines are evidence of the defect, not this receipt's
+  own figures):
+  ```
+  epic-breakdown.md:87   before: 41% coverage ... (F1 28%, F8 21%, F2 64%)
+                         after:  41% (4,798 of 11,652) coverage ... (F1 28% = 1,790 of 6,308,
+                                 F8 21% = 41 of 196, F2 64% = 1,490 of 2,337)
+  epic-breakdown.md:97   before: ... every remaining family closes to 100%
+                         after:  ... every remaining family closes to full population coverage
+                                 (no single denominator applies -- 9 different per-family
+                                 populations -- so the bare percent is dropped, not fabricated)
+  epic-breakdown.md:103  before: ... the corpus-wide run reports 100% with its denominator
+                                 (the number lived one line below -- out of the gate's own-line
+                                 construct)
+                         after:  ... the corpus-wide run reports 11,652 of 11,652 (100%)
+  scope-draft.md:30      before: closed to 100% ... population: the 6,854 units ... (the percent
+                                 and its denominator sat >24 chars apart -- the matcher's
+                                 deliberate anti-false-negative window, decisions.md §2)
+                         after:  closed to 100% of the 6,854-unit formula-bearing population
+  scope-draft.md:67      before: the 6,854 units, 41% -> 100%  (no "of"/fraction marker at all)
+                         after:  6,854 units move coverage from 41% (4,798 of 11,652) to 100%
+                                 (11,652 of 11,652)
+  ```
+- **Detection re-proven live, inside the real widened default scope** (not a synthetic path): two
+  bare-percentage probe lines (one plain rate, one bare hundred-percent token) appended to the
+  real `README.md`, neither carrying a denominator on its own line, made
+  `bash scripts/verify.sh --only denominator-gate` fail (`violations=2`, both cited by file:line).
+  Adding an inline `of <N>` denominator to each line, same line, made it pass
+  (`violations=0`). Probe lines then fully removed (`git diff` on `README.md` empty) and the real
+  baseline re-confirmed clean: `files_checked=31 violations=0`. Full before/after transcript in the
+  cycle receipt.
+- **Regression pinned in tests**, not left to prose: 2 new unit tests in
+  `scripts/tests/test_denominator_gate.py` assert all 7 headline docs are present in
+  `DEFAULT_GLOBS` and are real files `expand_paths` actually resolves. RED confirmed against the
+  pre-change module (`git show f53b8e32da2ae1939b9ddb1b8375ba1baefd00ba:scripts/denominator_gate.py`
+  — all 7 missing, for the intended reason); GREEN against the current module (26/26,
+  `python3 -m unittest scripts.tests.test_denominator_gate`).
+- **Result:** `bash scripts/verify.sh --only denominator-gate` → `PASS (files_checked=31
+  violations=0)`, exit 0.
+- **Movement, four buckets:** closure 0, reclassification 0, reachability 0, instrument-correction
+  6 (1 the scan-scope gap itself + 5 prose lines it made visible).
+- **`verify.sh` full run:** other stages not fixed (out of this criterion's file-touch set) —
+  see the cycle receipt for what was observed.
+- **Receipt:** `artifacts/epic-1-instruments/AT-33-E1-004-scope-widening_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-finalize — totals the Epic 5 population, owns the kanban call on rows 16/17/18 — in-progress
 
 - **Criterion:** owns totaling `AT-33-E5-001`/`-002`/`-003` (rows 16/17/18) across the three wave-2

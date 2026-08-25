@@ -223,5 +223,46 @@ class TestDefaultScopeIsCleanOnRealBundle(unittest.TestCase):
         self.assertEqual(status, 0, out.getvalue())
 
 
+class TestDefaultGlobsCoverHeadlinePackageDocs(unittest.TestCase):
+    """`AT-33-E1-004` scope-widening remediation (wave 3): attempt 3's
+    final-acceptance scan found the bundle root was never scanned --
+    `files_checked` stayed at the receipts+progress.md count because
+    `DEFAULT_GLOBS` covered only those two paths. Pins the fix so a future
+    edit cannot silently narrow the scope back to the pre-remediation set
+    -- the exact failure mode `AT-33-E1-002`'s own gate exists to catch,
+    applied here to this gate's own configuration."""
+
+    EXPECTED_HEADLINE_DOCS = (
+        "README.md",
+        "decisions.md",
+        "epic-breakdown.md",
+        "release-notes.md",
+        "scope-draft.md",
+        "kanban.md",
+        "THE-BOX.md",
+    )
+
+    def test_default_globs_include_every_headline_package_doc(self):
+        expected = {
+            os.path.join(dg.BUNDLE_DIR, name)
+            for name in self.EXPECTED_HEADLINE_DOCS
+        }
+        missing = expected - set(dg.DEFAULT_GLOBS)
+        self.assertEqual(
+            missing, set(),
+            f"headline package doc(s) dropped from DEFAULT_GLOBS: {missing}",
+        )
+
+    def test_headline_docs_are_real_files_the_gate_actually_reads(self):
+        # Not just present in the pattern list -- actually resolved and
+        # counted by expand_paths, the same function run_check uses.
+        paths, missing = dg.expand_paths(list(dg.DEFAULT_GLOBS))
+        self.assertEqual(missing, [])
+        resolved = set(paths)
+        for name in self.EXPECTED_HEADLINE_DOCS:
+            full = os.path.join(dg.BUNDLE_DIR, name)
+            self.assertIn(full, resolved, f"{name} not in the resolved file set")
+
+
 if __name__ == "__main__":
     unittest.main()

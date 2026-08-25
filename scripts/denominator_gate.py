@@ -60,26 +60,34 @@ denominator was stated in the same construct -- exactly the discipline
 `decisions.md` §2's corollary asks for ("read its implementation before
 quoting it" starts with "state it next to a number").
 
-Scope, deliberately narrow
----------------------------
-The default target set is **this bundle's own** generated evidence:
+Scope
+-----
+The target set is **this bundle's own** generated evidence --
 `docs/release/SD-33-computed-value-verification/artifacts/**/*_cycle_receipt.md`
-plus this bundle's `progress.md`. Not `receipts.md` (a different thing --
-the Epic 6 closure-pipeline's YAML block log, not a place cycle figures are
-reported). Not this bundle's planning prose (`epic-breakdown.md`,
-`technical-design.md`, `risks-and-open-questions.md`, `decisions.md`
-itself) -- those documents narrate *known, already-diagnosed* problem
-percentages (the same "41%" and "97.9%" `decisions.md` §2 cites as the
-motivating defect) and are owned by the bundle author, outside this
-criterion's write scope; scanning them would turn this gate permanently
-red over prose this cycle has no authority to edit, which is a false
-positive, not a caught defect. Not every prior bundle's receipts (261
-files repo-wide, unaudited, out of this criterion's scope -- auditing them
-is a task of its own, not a side effect of wiring this stage).
+plus `progress.md` -- **and, as of `AT-33-E1-004`'s scope-widening remediation
+(wave 3), this bundle's headline package documents**: `README.md`,
+`decisions.md`, `epic-breakdown.md`, `release-notes.md`, `scope-draft.md`,
+`kanban.md`, and `THE-BOX.md`. Attempt 3's final-acceptance scan found the
+gap this closes: a first probe at the bundle root was never scanned
+(`files_checked` stayed at the receipts+progress.md count) because
+`DEFAULT_GLOBS` covered only the two original paths -- a percentage stated
+without its denominator in one of these seven root documents was invisible
+to the gate, which is the least defensible place for that blind spot given
+they are the documents an operator actually reads.
 
-A later bundle extends `DEFAULT_GLOBS` (or passes its own paths / sets
-`DENOMINATOR_GATE_PATHS`, the env var `scripts/verify.sh`'s stage reads)
-for its own receipts -- the same per-bundle-hardcoded-path shape
+Still **not** `receipts.md` (a different thing -- the Epic 6
+closure-pipeline's YAML block log, not a place cycle figures are reported).
+Still not `technical-design.md`, `risks-and-open-questions.md`,
+`acceptance-and-verification.md`, `content-unit-inventory.md`,
+`forward-scope-register.md`, or `technical-requirements.md` -- narrower
+supporting documents, not the seven the operator reads as the bundle's
+own headline account; widening to them is a task of its own, not a side
+effect of this remediation. Still not every prior bundle's receipts (261
+files repo-wide, unaudited, out of this criterion's scope).
+
+A later bundle extends `DEFAULT_GLOBS` again (or passes its own paths /
+sets `DENOMINATOR_GATE_PATHS`, the env var `scripts/verify.sh`'s stage
+reads) for its own receipts -- the same per-bundle-hardcoded-path shape
 `supersession-gate` already uses for SD-31's register.
 """
 
@@ -97,6 +105,17 @@ BUNDLE_DIR = os.path.join(
 DEFAULT_GLOBS = [
     os.path.join(BUNDLE_DIR, "artifacts", "**", "*_cycle_receipt.md"),
     os.path.join(BUNDLE_DIR, "progress.md"),
+    # AT-33-E1-004 scope-widening remediation (wave 3): the seven headline
+    # package documents an operator actually reads, per the module
+    # docstring's "Scope" section. Deliberately root-level only (no
+    # `artifacts/**` here -- receipts are already covered above).
+    os.path.join(BUNDLE_DIR, "README.md"),
+    os.path.join(BUNDLE_DIR, "decisions.md"),
+    os.path.join(BUNDLE_DIR, "epic-breakdown.md"),
+    os.path.join(BUNDLE_DIR, "release-notes.md"),
+    os.path.join(BUNDLE_DIR, "scope-draft.md"),
+    os.path.join(BUNDLE_DIR, "kanban.md"),
+    os.path.join(BUNDLE_DIR, "THE-BOX.md"),
 ]
 
 # A bare percentage token: digits (commas allowed), optional decimal, a `%`
