@@ -1,8 +1,8 @@
 # Cycle AT-33-E5-002-remediation — Epic 5 Re-verification / AT-33-E5-002
 
-- **Commit SHA:** recorded by a follow-up commit on `tranche/13` (this receipt's own landing
-  commit cannot cite its own SHA before it exists — same convention attempt 1's receipt used for
-  `AT-33-E5-001`'s `e10dead123` precedent).
+- **Commit SHA:** `114bba8ec4` (the artifact-landing commit this receipt describes; recorded by this
+  follow-up commit, same convention attempt 1's receipt used for `AT-33-E5-001`'s `e10dead123`
+  precedent).
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md` (overwritten in place — this file)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/README.md` (superseded-note inserted above attempt 1's `AT-33-E5-002` section, kept verbatim below it)
