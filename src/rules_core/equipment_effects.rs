@@ -425,8 +425,8 @@ fn resolve_weapon_to_hit_bonus(
             if bonus.natural_attack_only && !weapon_is_natural_attack {
                 continue;
             }
-            if bonus.affects.contains("TOHIT") {
-                total += bonus.bonus;
+            if let Some(tohit) = bonus.tohit_bonus {
+                total += tohit;
             }
         }
     }
@@ -1050,7 +1050,8 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
             .as_ref()
             .expect("the Amulet of Mighty Fists chain must now resolve to a real bonus");
         assert!(bonus.natural_attack_only, "the Amulet of Mighty Fists family scopes to natural attacks only");
-        assert_eq!(bonus.bonus, 1);
+        assert_eq!(bonus.tohit_bonus, Some(1));
+        assert_eq!(bonus.damage_bonus, Some(1));
     }
 
     /// `SD31-W18-INTEGRATE-001` (adversarial review, `OPEN-ISSUES.md` row

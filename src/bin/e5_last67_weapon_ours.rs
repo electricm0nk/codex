@@ -18,8 +18,16 @@
 //!
 //! `manifest.json`: `[{"unit_id","book","key"}, ...]`
 //!
-//! Output: `{"unit_id": {"bonus", "affects", "natural_attack_only",
-//! "weapon_prof_scope"} | null, ...}` -- `null` means this record carries
+//! Output: `{"unit_id": {"tohit_bonus", "damage_bonus",
+//! "natural_attack_only", "weapon_prof_scope"} | null, ...}` (updated by
+//! the SD-33 remediation wave-5 finalize cycle: `WeaponEnhancementBonus`
+//! split its single `bonus`/`affects` pair into independent
+//! `tohit_bonus: Option<i16>`/`damage_bonus: Option<i16>` fields so a
+//! record with two separately-scoped chains -- `ultimate_equipment:
+//! equipment:heavy_hammer`'s real `WEAPONPROF=Warhammer|TOHIT|-2` +
+//! `WEAPONPROF=Warhammer|DAMAGE|4` -- carries two different magnitudes
+//! instead of the first chain silently shadowing the second; see
+//! `equipmods.rs`'s own doc comment) -- `null` means this record carries
 //! no `compute_equipmods_effect`-matched chain (the deliberately-excluded
 //! shapes this lane's sibling shapes cover: bare `TYPE=Enhancement`-less
 //! `WEAPON` chains, `WIELDCATEGORY` chains, `DAMAGEMULT` chains -- see
@@ -95,8 +103,8 @@ fn main() -> ExitCode {
         };
         let value = match &resolved.weapon_enhancement_bonus {
             Some(b) => serde_json::json!({
-                "bonus": b.bonus,
-                "affects": b.affects,
+                "tohit_bonus": b.tohit_bonus,
+                "damage_bonus": b.damage_bonus,
                 "natural_attack_only": b.natural_attack_only,
                 "weapon_prof_scope": b.weapon_prof_scope,
             }),

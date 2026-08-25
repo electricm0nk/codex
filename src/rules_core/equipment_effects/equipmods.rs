@@ -91,11 +91,25 @@ use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 /// TYPE=Enhancement` corpus token.
 #[derive(Debug, Clone, PartialEq)]
 pub struct WeaponEnhancementBonus {
-    /// The affected roll(s), verbatim from the corpus token's second
-    /// pipe-delimited segment — `"TOHIT"`, `"DAMAGE"`, `"DAMAGE,TOHIT"`,
-    /// or `"TOHIT,DAMAGE"`.
-    pub affects: String,
-    pub bonus: i16,
+    /// The record's TOHIT-affecting magnitude, summed across every
+    /// qualifying chain on this record that affects `TOHIT` (`None` if no
+    /// qualifying chain affects it). Before SD-33 remediation wave 5 this
+    /// was a single `bonus: i16` shared by whichever roll(s) a lone
+    /// `affects: String` named — insufficient for a record carrying TWO
+    /// separate qualifying chains with DIFFERENT per-roll magnitudes
+    /// (`ultimate_equipment:equipment:heavy_hammer`'s real
+    /// `BONUS:WEAPONPROF=Warhammer|TOHIT|-2` +
+    /// `BONUS:WEAPONPROF=Warhammer|DAMAGE|4`, confirmed against the pinned
+    /// oracle: `WEAPON.n.MAGICHIT=-2`, `WEAPON.n.MAGICDAMAGE=+4` — two
+    /// genuinely different numbers, not one scalar). A corpus-wide scan
+    /// (`data/corpus/**/equipment*/*.json`, 579 records with any bonus
+    /// chain) confirms `heavy_hammer` is the ONLY record with 2+
+    /// qualifying chains, so this split is a pure widening: every other
+    /// record's resolved value is byte-identical before and after.
+    pub tohit_bonus: Option<i16>,
+    /// The record's DAMAGE-affecting magnitude, summed the same way. See
+    /// `tohit_bonus`'s doc comment.
+    pub damage_bonus: Option<i16>,
     /// `true` when the source chain's qualifier[0] subject is
     /// `WEAPONPROF=TYPE.Natural` (the Amulet of Mighty Fists family) —
     /// real, verbatim from the token, not inferred. `damage_total::
@@ -126,22 +140,41 @@ pub struct WeaponEnhancementBonus {
 /// Resolve one `equipmods` corpus record's weapon-enhancement-bonus
 /// contribution.
 ///
-/// Reads the record's first `BONUS:<WEAPON|WEAPONPROF=TYPE.Natural>|
-/// <TOHIT|DAMAGE|DAMAGE,TOHIT|TOHIT,DAMAGE>|<n>|TYPE=Enhancement` chain, if
-/// any. A record with no such chain (the majority of `equipmods` records)
+/// Reads EVERY `BONUS:<WEAPON|WEAPONPROF=TYPE.Natural|WEAPONPROF=<name>>|
+/// <TOHIT|DAMAGE|DAMAGE,TOHIT|TOHIT,DAMAGE>|<n>|TYPE=Enhancement` chain on
+/// the record (SD-33 remediation wave 5: was the FIRST such chain only,
+/// via `find_map` — silently dropped a second, separately-scoped chain on
+/// the same record; see `WeaponEnhancementBonus::tohit_bonus`'s doc
+/// comment) and sums each roll's magnitude across every qualifying chain.
+/// A record with no such chain (the majority of `equipmods` records)
 /// yields `None`: that means this record's raw tokens do not carry the
 /// field, not that its value is zero. `BONUS:WEAPON|WIELDCATEGORY|...`
 /// chains and `TYPE=Enhancement`-less `BONUS:WEAPON|...` chains are
 /// deliberately not matched (see module doc comment).
 pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
-    record.bonus_chains.iter().find_map(|bonus| {
+    let mut tohit_bonus: Option<i16> = None;
+    let mut damage_bonus: Option<i16> = None;
+    let mut natural_attack_only = false;
+    let mut weapon_prof_scope: Option<String> = None;
+    let mut matched = false;
+
+    let mut apply = |affects: &str, bonus_value: i16| {
+        if affects.contains("TOHIT") {
+            tohit_bonus = Some(tohit_bonus.unwrap_or(0) + bonus_value);
+        }
+        if affects.contains("DAMAGE") {
+            damage_bonus = Some(damage_bonus.unwrap_or(0) + bonus_value);
+        }
+    };
+
+    for bonus in &record.bonus_chains {
         let qualifiers = &bonus.qualifiers;
         let subject = qualifiers.first().map(String::as_str);
-        let natural_attack_only = subject == Some("WEAPONPROF=TYPE.Natural");
+        let this_natural_attack_only = subject == Some("WEAPONPROF=TYPE.Natural");
         let is_roll_shape = qualifiers.len() >= 2
             && matches!(qualifiers[1].as_str(), "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE");
 
-        if (subject == Some("WEAPON") || natural_attack_only) && is_roll_shape {
+        if (subject == Some("WEAPON") || this_natural_attack_only) && is_roll_shape {
             // Unchanged from before this cycle: a bare `WEAPON` chain or
             // `WEAPONPROF=TYPE.Natural` chain still requires the trailing
             // `TYPE=Enhancement` qualifier (see module doc comment for
@@ -149,14 +182,13 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
             // to-hit-offset chains, which are real but are not a magic
             // enhancement bonus).
             if qualifiers.len() >= 4 && qualifiers[3] == "TYPE=Enhancement" {
-                return qualifiers[2].parse::<i16>().ok().map(|bonus_value| WeaponEnhancementBonus {
-                    affects: qualifiers[1].clone(),
-                    bonus: bonus_value,
-                    natural_attack_only,
-                    weapon_prof_scope: None,
-                });
+                if let Ok(bonus_value) = qualifiers[2].parse::<i16>() {
+                    matched = true;
+                    natural_attack_only = this_natural_attack_only;
+                    apply(&qualifiers[1], bonus_value);
+                }
             }
-            return None;
+            continue;
         }
 
         // SD-33 Epic 5 combat/weapon lane: a bare `WEAPONPROF=<name>|
@@ -181,15 +213,20 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
             // literal proficiency name PCGen's own `getProfName(eq)`
             // would compare a specific weapon's proficiency against.
             if !name.starts_with("TYPE.") && is_roll_shape && qualifiers.len() >= 3 {
-                return qualifiers[2].parse::<i16>().ok().map(|bonus_value| WeaponEnhancementBonus {
-                    affects: qualifiers[1].clone(),
-                    bonus: bonus_value,
-                    natural_attack_only: false,
-                    weapon_prof_scope: Some(name.to_string()),
-                });
+                if let Ok(bonus_value) = qualifiers[2].parse::<i16>() {
+                    matched = true;
+                    weapon_prof_scope = Some(name.to_string());
+                    apply(&qualifiers[1], bonus_value);
+                }
             }
         }
-        None
+    }
+
+    matched.then_some(WeaponEnhancementBonus {
+        tohit_bonus,
+        damage_bonus,
+        natural_attack_only,
+        weapon_prof_scope,
     })
 }
 
@@ -236,8 +273,8 @@ mod tests {
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
-                affects: "DAMAGE,TOHIT".to_string(),
-                bonus: 1,
+                tohit_bonus: Some(1),
+                damage_bonus: Some(1),
                 natural_attack_only: false,
                 weapon_prof_scope: None,
             })
@@ -257,8 +294,8 @@ mod tests {
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
-                affects: "TOHIT".to_string(),
-                bonus: 1,
+                tohit_bonus: Some(1),
+                damage_bonus: None,
                 natural_attack_only: false,
                 weapon_prof_scope: None,
             })
@@ -281,8 +318,8 @@ mod tests {
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
-                affects: "TOHIT,DAMAGE".to_string(),
-                bonus: 3,
+                tohit_bonus: Some(3),
+                damage_bonus: Some(3),
                 natural_attack_only: false,
                 weapon_prof_scope: None,
             })
@@ -338,8 +375,8 @@ mod tests {
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
-                affects: "TOHIT,DAMAGE".to_string(),
-                bonus: -2,
+                tohit_bonus: Some(-2),
+                damage_bonus: Some(-2),
                 natural_attack_only: false,
                 weapon_prof_scope: Some("Longsword".to_string()),
             })
@@ -360,8 +397,8 @@ mod tests {
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
-                affects: "TOHIT".to_string(),
-                bonus: 4,
+                tohit_bonus: Some(4),
+                damage_bonus: None,
                 natural_attack_only: false,
                 weapon_prof_scope: Some("Bite".to_string()),
             })
@@ -400,10 +437,43 @@ mod tests {
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
-                affects: "TOHIT,DAMAGE".to_string(),
-                bonus: 1,
+                tohit_bonus: Some(1),
+                damage_bonus: Some(1),
                 natural_attack_only: true,
                 weapon_prof_scope: None,
+            })
+        );
+    }
+
+    /// SD-33 remediation wave 5 (`AT-33-E5-002`/`003`, weapon-token-family
+    /// lane): real verbatim tokens copied from
+    /// `data/corpus/ultimate_equipment/equipment/heavy_hammer.json`'s
+    /// `raw_bonus_chains` — a TOHIT-only `WEAPONPROF=Warhammer|TOHIT|-2`
+    /// chain and a SEPARATE DAMAGE-only `WEAPONPROF=Warhammer|DAMAGE|4`
+    /// chain on the SAME record (plus an unrelated `MOVEADD` chain, which
+    /// this test also carries to prove it's correctly skipped). Before
+    /// this cycle `compute_equipmods_effect` used `find_map` and stopped
+    /// at the first qualifying chain, so only `-2`/`TOHIT` was ever seen —
+    /// the real, player-facing `+4` damage bonus never reached
+    /// `WeaponEnhancementBonus` at all. Confirmed against the pinned
+    /// oracle (direct-java runner, Heavy Hammer worn as its own weapon,
+    /// `PROFICIENCY WEAPON|Warhammer`): `WEAPON.n.MAGICHIT=-2`,
+    /// `WEAPON.n.MAGICDAMAGE=+4` — both magnitudes real, and different.
+    #[test]
+    fn record_with_two_separately_scoped_chains_sums_both_rolls_independently() {
+        let text = "Heavy Hammer\tKEY:Heavy Hammer\tTYPE:Magic.Cursed.Weapon\tPROFICIENCY:WEAPON|Warhammer\tCOST:0\tWT:20\tBONUS:MOVEADD|TYPE.All|-10\tBONUS:WEAPONPROF=Warhammer|TOHIT|-2\tBONUS:WEAPONPROF=Warhammer|DAMAGE|4\n";
+        let result = parse_equipment_entries("ue_equip_magic_items.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_equipmods_effect(record);
+        assert_eq!(
+            effect,
+            Some(WeaponEnhancementBonus {
+                tohit_bonus: Some(-2),
+                damage_bonus: Some(4),
+                natural_attack_only: false,
+                weapon_prof_scope: Some("Warhammer".to_string()),
             })
         );
     }

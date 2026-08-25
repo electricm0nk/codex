@@ -386,11 +386,11 @@ pub fn resolve_weapon_enhancement_modifier(
         if bonus.natural_attack_only && !weapon_is_natural_attack {
             continue;
         }
-        if bonus.affects.contains("TOHIT") {
-            attack_bonus += bonus.bonus;
+        if let Some(tohit) = bonus.tohit_bonus {
+            attack_bonus += tohit;
         }
-        if bonus.affects.contains("DAMAGE") {
-            damage_bonus += bonus.bonus;
+        if let Some(damage) = bonus.damage_bonus {
+            damage_bonus += damage;
         }
     }
 

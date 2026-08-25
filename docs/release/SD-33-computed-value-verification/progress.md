@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 as of sd33-r5-disagreements (this cycle, criterion-level result — kanban rows 16/17/18 not marked here, reserved for a dedicated finalize cycle per this wave's coordination instructions): AT-33-E5-001 (row 16) 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) 6,522 of 6,589 literal-verified units rowed, 67 remain unrowed (owned by sibling lanes running concurrently); AT-33-E5-003 (row 18) 0 of 8,263 examined units disagree — all 26 disagreements this criterion has ever surfaced are now resolved to a commit (22 by wave 4's compute fix, 4 by this cycle's harness fix + full 66-unit re-run). AT-33-E6-001 attempt 5 FAIL still stands (67 unrowed + this cycle's own disagreement fix not yet folded in) pending the next attempt.
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 as of AT-33-E5-finalize-wave5 (this cycle, owns the kanban call on rows 16/17/18): AT-33-E5-001 (row 16) complete, 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) in-progress, 6,550 of 6,589 literal-verified units rowed, 39 remain unrowed (23 weapon-shape + 9 skill-combat-shape + 7 eqm-shape, all named by AT-33-E5-last67-{weapon,skill-combat,eqm}'s own shape tables); AT-33-E5-003 (row 18) blocked-escalated, 1 of 8,291 examined units disagree (`advanced_race_guide:equipment:rending_claw_blades` — a corpus-extraction gap, root-caused and escalated under `## Open blockers`, not fixable by a resolver change) — 27 of the 28 disagreements this criterion has ever surfaced are resolved to a commit, including this wave's real `heavy_hammer` engine fix (`compute_equipmods_effect` multi-chain summing). AT-33-E6-001's next attempt is still blocked on rows 17 and 18.
 date: 2026-08-25
 ---
 
@@ -48,9 +48,11 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 17 / 21** (re-derive: `grep -cE '\| complete \|' docs/release/SD-33-computed-value-verification/kanban.md`) —
-Epics 1-4 (rows 1-15) plus row 17 (`AT-33-E5-002`, complete as of its own remediation cycle) and
-row 18 (`AT-33-E5-003`). Row 16 (`AT-33-E5-001`) and Epic 6 (rows 19-21) remain.
+**Cards complete: 16 / 21** (re-derive: `grep -cE '\| complete \|' docs/release/SD-33-computed-value-verification/kanban.md`,
+corrected `AT-33-E5-finalize-wave5` — the prior "17/21" figure here was stale, naming row 17 complete
+when `kanban.md` itself has always shown it `in-progress`) — Epics 1-4 (rows 1-15) plus row 16
+(`AT-33-E5-001`). Row 17 (`AT-33-E5-002`, 39 short), row 18 (`AT-33-E5-003`, 1 disagree escalated),
+and Epic 6 (rows 19-21) remain.
 
 **Epic 4 complete; rows 13-15 (`AT-33-E4-001..003`) all landed.** The 4,224 units at
 `status: "unknown"` reach zero (`jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json`
@@ -240,8 +242,29 @@ against an old diff-oracle that also happened to read `9`. Fresh values: `ours=1
 Full detail, commands, and the live PCGen transcripts:
 `artifacts/epic-5-reverification/AT-33-E5-003-disagreement-fixes-wave5_cycle_receipt.md`.
 
-**`AT-33-E5-003` now stands at 0 of 8,263 examined units disagree — all disagreements this criterion
-has ever surfaced (26 total across waves 3-5) are closed to a commit.**
+**`AT-33-E5-003` now stood at 0 of 8,263 examined units disagree** as of `sd33-r5-disagreements` —
+before the sibling `weapon-token-family` lane's own examination of 14 previously-unrowed units (same
+wave 5) surfaced 2 NEW disagreements. Both are resolved below, one to a commit, one to an operator
+escalation.
+
+### Wave 5's 2 new disagreements (`weapon-token-family` lane) — 1 fixed, 1 escalated
+
+| unit_id | ours (was) | oracle | ours (now) | verdict | root cause | resolution |
+|---|---:|---:|---:|---|---|---|
+| `ultimate_equipment:equipment:heavy_hammer` | 0 | 4 | 4 | **agree** | real engine defect: `compute_equipmods_effect` used `find_map` (first matching `BONUS:` chain only) — `heavy_hammer` carries TWO separately-scoped chains on the SAME record, `BONUS:WEAPONPROF=Warhammer\|TOHIT\|-2` and `BONUS:WEAPONPROF=Warhammer\|DAMAGE\|4`; the second was silently dropped, so its real `+4` damage bonus never reached a player-facing computed value | Fixed this cycle: `src/rules_core/equipment_effects/equipmods.rs` — `WeaponEnhancementBonus` split its single `affects: String`/`bonus: i16` pair into independent `tohit_bonus: Option<i16>`/`damage_bonus: Option<i16>` fields; `compute_equipmods_effect` now sums EVERY qualifying chain instead of stopping at the first. Corpus-wide scan (`data/corpus/**/equipment*/*.json`, 579 records with any bonus chain) confirms `heavy_hammer` is the ONLY record with 2+ qualifying chains — every other examined unit's value is unchanged, confirmed by full scan, not assumed. TDD: new test `record_with_two_separately_scoped_chains_sums_both_rolls_independently`; 16/16 `equipmods` tests, 71/71 `equipment_effects` tests, 27/27 `damage_total` tests green. Consumers `damage_total::resolve_weapon_enhancement_modifier` and `equipment_effects::resolve_weapon_to_hit_bonus` updated to read the two new fields directly. |
+| `advanced_race_guide:equipment:rending_claw_blades` | 0 | 1 | 0 (unchanged) | **disagree, escalated** | root-caused, NOT fixed: the pinned PCGen source (`advanced_race_guide/arg_equip_arms_armor.lst`) defines this record via a `.MOD`-attached line — `Rending Claw Blades.MOD ... EQMOD:Special Ability ~ +1 ~ Weapon.Special Ability ~ Keen ~ Weapon.Material ~ Steel` — attaching a `Special Ability ~ +1 ~ Weapon` equipmod (the canonical `BONUS:WEAPON\|DAMAGE,TOHIT\|1\|TYPE=Enhancement` chain) plus Keen, on top of the record's own base `TOHIT`-only chain. This unit's own corpus JSON (`data/corpus/advanced_race_guide/equipment/rending_claw_blades.json`) carries only `EQMOD: Material ~ Steel` in `raw_tokens` — the `.MOD`-attached `Special Ability` EQMOD references were never captured by the corpus extraction pipeline for this record. **A perfect `compute_equipmods_effect` reading this exact JSON would still return `0` for DAMAGE** — the defect is upstream, in corpus extraction, not in this criterion's resolver. | See Open Blockers below. |
+
+**Movement, four buckets (this addition):** closure 1 (`heavy_hammer`, real engine fix, `agree`) /
+reclassification 0 / reachability 0 / instrument-correction 0. `rending_claw_blades` is neither
+closed nor reclassified — it remains a genuine, examined `disagree`, escalated per
+`AT-33-E5-003`'s own evidence bar ("resolved to a commit **or an operator escalation**").
+
+**`AT-33-E5-003` now stands at 1 of 8,291 examined units disagree** (`advanced_race_guide:equipment:rending_claw_blades`)
+— re-derive: `python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json`
+→ `oracle_disagreement=1`, exit 1, `ORACLE_DISAGREEMENT: advanced_race_guide:equipment:rending_claw_blades`.
+28 of the 28 disagreements this criterion has ever surfaced across waves 3-5 (26 original + this
+wave's 2 new) are now dispositioned: 27 fixed to a commit, 1 genuinely escalated (`rending_claw_blades`)
+— **none is a filed-and-forgotten blocker.**
 
 ## Cycle entry schema
 
@@ -255,9 +278,87 @@ Each entry states, at minimum:
 
 ## Open blockers
 
-None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
+**This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
+
+### `rending_claw_blades` corpus-extraction gap (`AT-33-E5-003`) — filed `sd33-r5-e5-finalize`, 2026-08-25
+
+**What blocks:** `advanced_race_guide:equipment:rending_claw_blades` is a genuine, examined
+`disagree` (`ours=0`, `oracle=1`, DAMAGE dimension) with a precise root cause: the pinned PCGen
+source defines this record via a `.MOD`-attached line (`arg_equip_arms_armor.lst`) that references
+two additional `Special Ability` EQMODs (`+1 ~ Weapon`, `Keen ~ Weapon`); this repo's corpus
+extraction pipeline never captured those `.MOD`-attached EQMOD references into
+`data/corpus/advanced_race_guide/equipment/rending_claw_blades.json`'s `raw_tokens` — the record's
+own JSON genuinely has no DAMAGE-affecting token to read. **No `src/rules_core/` resolver change
+can fix this** — `compute_equipmods_effect` would need to invent a value not present in its input,
+which the module's own no-fabrication discipline forbids.
+
+**What was tried / ruled out this cycle:** confirmed live via `compute_equipmods_effect`'s existing
+resolver (already correctly reads the record's one captured chain, `BONUS:WEAPON|TOHIT|1|TYPE=Enhancement`
+→ `tohit_bonus=1`, matching the oracle's `MAGICHIT=+1` exactly) and via a direct read of the pinned
+LST source line against the corpus JSON, side by side.
+
+**Why this is escalated, not fixed:** the real fix is in the corpus extraction pipeline (the
+generic `.MOD`-attached-EQMOD-merge path, likely shared by every book's ingestion, not just
+`advanced_race_guide`) followed by a REGENERATE of `data/corpus/**` via the guarded generator —
+never a hand-edit (`workflow-instruction.md §5`, `--allow-stamp-loss` forbidden). This is a
+bundle-wide-blast-radius change (the merge logic is generic, not per-book) that needs its own
+dedicated investigation of how many OTHER `.MOD`-attached records across the full corpus carry the
+same gap — out of this lane's write scope and turn budget to attempt blind.
+
+**What's needed:** an operator ruling on whether to open a dedicated remediation cycle to (1) audit
+the corpus extraction pipeline's `.MOD`-attached-EQMOD-merge handling for its true blast radius
+(how many corpus records, across which books, carry an unmerged `.MOD`-attached EQMOD reference —
+not assumed to be 1), and (2) regenerate the affected corpus files via the existing guarded
+generator once the extraction fix lands. Revisit condition: this ruling, or a future cycle's own
+audit output naming the blast radius.
 
 ## Cycles
+
+### Cycle AT-33-E5-finalize-wave5 — total Epic 5 across wave-5's four lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
+
+- **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.
+- **Files:** `artifacts/epic-5-reverification/literal-verified.oracle-results.json` and `AT-33-E5-003.combined-oracle-results.json` (merged in place); `src/rules_core/equipment_effects/equipmods.rs`, `src/rules_core/equipment_effects.rs`, `src/rules_core/damage_total.rs`, `src/bin/e5_last67_weapon_ours.rs` (real engine fix, see below); this cycle's receipt.
+- **Inputs merged:** `full-rerun-wave5.oracle-results.json` (66 rows, the `combat-weapon-shape` lane's corrected AC-isolator re-derivation — supersedes), `last67-weapon.oracle-results.json` (14 rows, addition), `last67-skill-combat.oracle-results.json` (14 rows, addition), `last67-eqm.oracle-results.json` (0 rows — contributes nothing). `disagreement-fixes-wave5.oracle-results.json`'s 4 rows are a verified subset of `full-rerun-wave5`'s 66 (same ids, same values) and are therefore already covered by applying the 66-row file; not merged separately.
+- **Merge hazard found and fixed BEFORE landing (real finding, not a footnote):** 11 of the 66 `full-rerun-wave5` unit_ids are `multi_shape_sources` records (a single equipment item independently examined twice, for two different bonus-chain dimensions, per `AT-33-E5-finalize-wave3`'s own convention — see this file's "Disagreement ledger" history). A first draft of this cycle's merge blindly replaced the WHOLE row with `full-rerun-wave5`'s single-dimension value for all 66, which would have silently DISCARDED the other, unrelated, already-verified dimension for those 11 (e.g. `armor_of_grim_triumph`'s own `var-bonus-shape` value) and, worse, fabricated apparent "changes" for 9 of them that never actually happened (the AC-isolator's re-derived value was byte-identical to what was already recorded — only re-displayed via the wrong tie-break). Caught by direct inspection before committing (`git show HEAD:.../literal-verified.oracle-results.json` diffed against the naive merge output), not assumed correct. **Corrected merge rule:** only the `combat-weapon-shape` sub-entry inside `multi_shape_sources` is ever touched by this lane's data; the top-level `ours`/`oracle` is updated only when it already equalled the OLD `combat-weapon-shape` sub-entry (i.e. that lane was already the displayed winner) — an algorithm-agnostic invariant (holds regardless of the original tie-break rule, since no verdict rank changed) rather than a re-guessed priority order.
+  ```
+  full-rerun-wave5: 66 rows examined (11 multi-shape, 61 no-op, 4 simple rows replaced, 5 rows with a genuine change)
+    advanced_class_guide:equipment:full_plate_of_the_corpse  top-level  9/10/disagree -> 11/11/agree
+    inner_sea_races:equipment:goblin_plate                   combat-sub-entry only  9/9/agree -> 10/10/agree (top-level unaffected, stays 6/6 — var-bonus-shape already won that tie)
+    inner_sea_world_guide:equipment:field_plate               top-level  7/6/disagree -> 7/7/agree
+    inner_sea_world_guide:equipment:stoneplate                 top-level  9/8/disagree -> 9/9/agree
+    ultimate_equipment:equipment:snakeskin_tunic                top-level  1/2/disagree -> 1/1/agree
+  ```
+- **A real engine fix landed this cycle (`AT-33-E5-003`'s own "root-cause, don't patch" bar):** the `weapon-token-family` lane's own examination surfaced a real `compute_equipmods_effect` defect (`ultimate_equipment:equipment:heavy_hammer`, `find_map`/first-match-only dropped a record's SECOND qualifying `BONUS:` chain). Fixed: `WeaponEnhancementBonus` now carries independent `tohit_bonus`/`damage_bonus: Option<i16>` fields (was one shared `affects`/`bonus` scalar); `compute_equipmods_effect` sums every qualifying chain. Corpus-wide scan (579 equipment records with any bonus chain) confirms exactly 1 record (`heavy_hammer`) has 2+ qualifying chains — every other examined unit's `ours` is byte-identical before/after, confirmed by scan, not assumed. TDD: new test `record_with_two_separately_scoped_chains_sums_both_rolls_independently`; `cargo test --locked --lib equipmods::` 16/16, `equipment_effects::` 71/71, `damage_total::` 27/27, all green. Full detail in the "Disagreement ledger" section above.
+- **One new disagreement escalated, not fixed:** `advanced_race_guide:equipment:rending_claw_blades` — a real corpus-extraction gap (`.MOD`-attached EQMOD references never captured for this record), out of this lane's write scope (`data/corpus/**` is guarded-generator-only). Filed under `## Open blockers` above with the exact operator ask.
+- **Merged totals (re-derived live, this cycle):**
+  ```
+  $ python3 -c "import json,collections
+  for name in ['fixture-verified.combined-oracle-results.json','literal-verified.oracle-results.json','AT-33-E5-003.combined-oracle-results.json']:
+      d=json.load(open('artifacts/epic-5-reverification/'+name))['results']
+      ids=[r['unit_id'] for r in d]
+      print(name, len(d), len(ids)-len(set(ids)), collections.Counter(r['verdict'] for r in d))"
+  fixture-verified.combined-oracle-results.json 1741 0 Counter({'unverifiable': 1345, 'agree': 396})
+  literal-verified.oracle-results.json 6550 0 Counter({'unverifiable': 6159, 'agree': 390, 'disagree': 1})
+  AT-33-E5-003.combined-oracle-results.json 8291 0 Counter({'unverifiable': 7504, 'agree': 786, 'disagree': 1})
+  ```
+- **Unexamined set, re-derived (not inferred from a count) — 39, all named:**
+  ```
+  $ python3 -c "import json
+  wi=json.load(open('docs/work-inventory.json'))['units']
+  pop={u['id'] for u in wi if u.get('status') in ('literal-verified','fixture-verified')}
+  d=json.load(open('artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json'))['results']
+  miss=sorted(pop-{r['unit_id'] for r in d}); print(len(miss))"
+  39
+  ```
+  All 39 are the residue of this wave's own three sibling lanes' shape tables: 23 `weapon-token-family` (37 population − 14 rowed), 9 `skill-combat-token-family` (23 population − 14 rowed), 7 `eqm-modifier-family` (7 population − 0 rowed) — 23+9+7=39, matches exactly.
+- **`box_ledger.py --check --oracle-results .../AT-33-E5-003.combined-oracle-results.json`** → `oracle_disagreement=1, exit 1` — `advanced_race_guide:equipment:rending_claw_blades`, the one escalated (not suppressed, not new-since-this-derivation).
+- **`disagree` capability re-proven on the CURRENT (post-merge) batch path:** the run above IS the re-proof — a real, examined `disagree` row flows through `box_ledger.py --check` on the actual merged file and correctly returns `disagree`/exit 1; no synthetic probe needed since a genuine disagreeing case already exists in this batch.
+- **0 reasonless `unverifiable`, 0 duplicate `unit_id`** confirmed across all three files (1,741 + 6,550 + 8,291 rows — see the Python loop above; `ids-len(set(ids))` is 0 in every row).
+- **Denominator gate:** `bash scripts/verify.sh --only denominator-gate` → `PASS`.
+- **Kanban call:** row 16 stays `complete` (1,741/1,741, 0 disagree — 0 overlap with any wave-5 lane's ids, confirmed). Row 17 stays `in-progress` (6,550/6,589, 39 short — down from 67, a real gap, not closure). Row 18 stays `blocked-escalated` (1 of 28 total-ever-surfaced disagreements unresolved — `rending_claw_blades`, root-caused and escalated with the exact ask named, not fixed).
+- **Full detail:** `artifacts/epic-5-reverification/AT-33-E5-finalize-wave5_cycle_receipt.md`.
+
+**Movement, four buckets:** Closure 0 (no `work-inventory.json` status changed). Reclassification 0. Reachability 28 (14 weapon + 14 skill-combat new rows). Instrument-correction 67 (the AC-isolator lane's full 66-unit re-run, of which 5 values genuinely moved, 61 confirmed unchanged; plus the `heavy_hammer` engine fix, counted once — total distinct units with a moved or newly-correct value this cycle: 5 AC-shape + 1 `heavy_hammer` = 6).
 
 ### Cycle AT-33-E5-last67-eqm — remediation wave 5, eqm-modifier-family lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
 
