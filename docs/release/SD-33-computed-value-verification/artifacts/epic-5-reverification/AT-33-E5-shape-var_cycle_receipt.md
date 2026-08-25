@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-shape-var — Epic 5 Re-verification / AT-33-E5-002 (VAR-shape sub-population)
 
-- **Commit SHA:** `<pending — recorded by the same-cycle follow-up push, matching `AT-33-E5-remainder-equipment_cycle_receipt.md`'s own convention>`
+- **Commit SHA:** `dd274ffa2f` (feature commit); `83fe2de103` (follow-up retro-transcription commit); both pushed to `tranche/13`
 - **Files touched:**
   - `src/rules_core/equipment_effects/general.rs` (new `compute_var_effect`/`VarBonus` — real, live engine resolver for `BONUS:VAR|<name(s)>|<value>` equipment chains, genuinely unhandled by any resolver before this cycle; 4 new tests, TDD RED confirmed via `cannot find function compute_var_effect`/`cannot find type VarBonus` before the implementation existed)
   - `src/bin/e5_var_shape_ours.rs` (new — repo-local batch "ours" probe, real live calls into `compute_var_effect` via `equipment_id_resolve`, same pattern as `e5_equipment_remainder_skill_ours.rs`)
