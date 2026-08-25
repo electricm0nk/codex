@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 started, AT-33-E5-001 in-progress (11 of 1,741 fixture-verified units re-examined) and AT-33-E5-002 in-progress (21 of 6,589 literal-verified units re-examined), rows 16-17 not yet complete
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 started, AT-33-E5-001 in-progress (11 of 1,741 fixture-verified units re-examined) and AT-33-E5-002 in-progress (21 of 6,589 literal-verified units re-examined), rows 16-17 not yet complete; AT-33-E5-003 (row 18) complete — 0 disagreements among the 32 units examined so far
 date: 2026-08-24
 ---
 
@@ -48,8 +48,9 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 15 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
-Epics 1-4 (rows 1-15). Epic 5 (rows 16-18, gated on Epic 2) and Epic 6 (rows 19-21) remain.
+**Cards complete: 16 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
+Epics 1-4 (rows 1-15) plus row 18 (`AT-33-E5-003`). Rows 16-17 (`AT-33-E5-001`/`AT-33-E5-002`,
+gated on Epic 2) and Epic 6 (rows 19-21) remain.
 
 **Epic 4 complete; rows 13-15 (`AT-33-E4-001..003`) all landed.** The 4,224 units at
 `status: "unknown"` reach zero (`jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json`
@@ -124,6 +125,33 @@ carry **no** magnitude probe at all (`AT-33-E1-003`'s pre-existing finding, same
 `artifacts/epic-5-reverification/README.md` ("AT-33-E5-002" section) and
 `AT-33-E5-002_cycle_receipt.md`.
 
+**`AT-33-E5-003` (row 18) is `complete`.** Independently re-derived (not transcribed) from the two
+committed oracle-results files rows 16/17 produced: **0 disagreements among the 32 units examined
+to date** (`equipment.oracle-results.json` 11 records + `equipment-literal.oracle-results.json` 21
+records, merged and re-checked through `scripts/box_ledger.py --check --oracle-results` — condition
+3, `AT-33-E1-002` — `oracle_disagreement=0`, exit 0). Zero `progress.md` disagreement-ledger entries
+are required because zero disagreements exist. **Not a claim that the full 8,330-unit population
+has no disagreement** — 32 of 8,330 (0.38%) is examined; rows 16/17 remain `in-progress` and own
+examining the rest. The reopening condition is mechanical, proven by mutation this cycle: a single
+injected `"verdict": "disagree"` record makes `box_ledger.py --check` exit 1 and name the unit
+(`oracle_disagreement=1`) — so a future rows-16/17 cycle that lands a real disagreement will be
+caught by an existing gate, not by memory. Full detail: `artifacts/epic-5-reverification/README.md`
+("AT-33-E5-003" section) and `AT-33-E5-003_cycle_receipt.md`.
+
+## Disagreement ledger
+
+Per `AT-33-E5-003`'s evidence line: one entry per disagreement, each resolved to a commit or an
+operator escalation. **Current entries: none — 0 disagreements found in the 32 units
+`AT-33-E5-001`/`AT-33-E5-002` have examined to date** (re-derive:
+`python3 -c "import json,collections;a=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment.oracle-results.json'));b=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-literal.oracle-results.json'));print(collections.Counter(r['verdict'] for r in a['results']+b['results']))"`
+→ `Counter({'agree': 32})`). This is a live section: the next `AT-33-E5-001`/`AT-33-E5-002` cycle
+whose oracle-results file contains a `disagree` record must add an entry here, root-caused per the
+criterion's Evidence line, before that entry's disagreement can be considered resolved.
+
+| unit_id | ours | oracle | root cause | resolution | commit |
+|---|---:|---:|---|---|---|
+| _(none yet — 0 of 32 examined units disagree)_ | | | | | |
+
 ## Cycle entry schema
 
 Each entry states, at minimum:
@@ -139,6 +167,53 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E5-003 — disagreement-resolution (row 18, Epic 5) — complete
+
+- **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
+- **Files:** `artifacts/epic-5-reverification/README.md` (extended, new "AT-33-E5-003" section),
+  `AT-33-E5-003_cycle_receipt.md` (new),
+  `AT-33-E5-003.combined-oracle-results.json` (new — `AT-33-E5-001`'s 11 + `AT-33-E5-002`'s 21
+  records merged), `progress.md` (this entry + `## Disagreement ledger` section), `kanban.md`
+  (row 18).
+- **What landed:** independently re-derived the current disagreement population directly from the
+  two committed oracle-results JSON files (not transcribed from either prior receipt's prose) —
+  **0 disagreements among the 32 units examined to date**, re-checked through
+  `scripts/box_ledger.py --check --oracle-results` (`AT-33-E1-002`'s condition-3 gate) on the
+  merged file, independently of the harness that produced the two source files.
+- **Figures:** 32 of 8,330 (0.38%) of the `fixture-verified`+`literal-verified` population examined
+  by `AT-33-E5-001`/`AT-33-E5-002` to date; 0 of 32 disagree; `box_ledger.py --check` on the merge
+  → `oracle_disagreement=0`, exit 0. Full table with commands: `AT-33-E5-003_cycle_receipt.md`.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — no inventory unit's status changes; this criterion resolves
+  disagreements and none exist to resolve.
+- **RED→GREEN:** mutation proof against the detection mechanism (not new production code, since
+  0 disagreements exist to fix): a scratch copy of the committed merge with one record's `verdict`
+  set to `disagree` → `box_ledger.py --check` reports `oracle_disagreement=1`, names
+  `ultimate_equipment:equipment:belt_of_mighty_hurling_greater`, exit 1 (RED). The real, unmutated,
+  committed merge → `oracle_disagreement=0`, exit 0 (GREEN). Mutated file lived only in `/tmp`, never
+  committed.
+- **Status: complete** — the evidence line's obligation (one `progress.md` entry per disagreement,
+  each resolved) is satisfied because the set of disagreements to resolve is empty, verified
+  independently rather than assumed. **This is not a claim about the 8,298 not-yet-examined units**
+  of the 8,330-unit population — that is `AT-33-E5-001`/`AT-33-E5-002`'s own scope (rows 16/17,
+  correctly `in-progress`). This criterion's scope is reactive to what those two produce, and what
+  they have produced so far is zero disagreements. The reopening condition is mechanical
+  (`box_ledger.py` condition 3, proven live by the mutation proof above), not a promise to
+  remember — the next disagreement either row surfaces will fail that gate by name.
+- **Notes:** considered and rejected fabricating a synthetic production disagreement (e.g.
+  temporarily reverting a real fix) to exercise the fix/escalate machinery end-to-end — rejected as
+  the same shape of dishonesty the criterion explicitly forbids in reverse ("never closed by
+  adjusting the expectation to match our output"); the mutation proof above tests the **detection**
+  mechanism only, the same legitimate technique `AT-33-E1-002`'s own five mutation proofs used, and
+  makes no claim about production correctness.
+- **Test scoping:** ran `box_ledger.py --check` (three invocations: real merge before mutation, the
+  mutated scratch copy, real merge after) and independent Python verdict tallies against both
+  source oracle-results files. Did not re-run `test_box_ledger.py`/`test_oracle_harness.py` (neither
+  file changed this cycle — confirmed via `git status --porcelain` before this cycle's first
+  write). Did not run `cargo test`/`cargo build` (no `src/` file touched) or
+  `apps/desktop/src-tauri` (separate cargo workspace, untouched).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003_cycle_receipt.md`.
 
 ### Cycle AT-33-E5-002 — reverify-literal-verified (row 17, Epic 5) — in-progress
 

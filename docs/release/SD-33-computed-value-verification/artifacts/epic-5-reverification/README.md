@@ -223,3 +223,70 @@ of the next slice, not escalation.
    authoring pattern (named above); not yet started.
 5. **`monster`/`monster_ability`/`companion` (1,090):** not an Epic 5 task — needs Epic 1's probe
    surface to widen first, same as `AT-33-E5-001`'s equivalent 427.
+
+## AT-33-E5-003 — disagreement-resolution
+
+**Criterion:** every disagreement produced by `AT-33-E5-001`/`AT-33-E5-002` is a named defect,
+fixed or escalated; never closed by adjusting the expectation to match our output. Evidence: one
+entry per disagreement in `progress.md`, each resolved to a commit or an operator escalation.
+
+**Independently re-derived combined state, this cycle** (not transcribed from the two prior
+receipts' prose — computed directly from the two committed oracle-results files):
+
+```
+$ python3 -c "
+import json,collections
+a = json.load(open('equipment.oracle-results.json'))
+b = json.load(open('equipment-literal.oracle-results.json'))
+merged = a['results'] + b['results']
+print('combined records:', len(merged))
+print(collections.Counter(r['verdict'] for r in merged))
+"
+combined records: 32
+Counter({'agree': 32})
+```
+
+Merged, committed as `AT-33-E5-003.combined-oracle-results.json`, and re-checked independently
+through Epic 1's own fail-closed instrument:
+
+```
+$ python3 scripts/box_ledger.py --check --oracle-results \
+    docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json
+uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False
+```
+
+**Disagreement population as of this cycle: 0 of 32 units examined by `AT-33-E5-001`/`AT-33-E5-002`
+to date.** Zero entries are required in `progress.md`'s disagreement ledger because zero
+disagreements exist — a legitimate, verified outcome (`workflow-instruction.md §12` row 6:
+"measurement waves that bank zero units are legitimate deliverables"), not an unexamined gap. This
+is **not** a claim that the full 8,330-unit `fixture-verified`+`literal-verified` population has no
+disagreement anywhere — that population is 0.38% examined (32 of 8,330) and `AT-33-E5-001`/
+`AT-33-E5-002` are `in-progress`, not `complete`, precisely because most of it is still unexamined.
+That is those criteria's own scope, not this one's.
+
+**The reopening condition is mechanical, not a promise to remember it** (`decisions.md §4`): any
+future `AT-33-E5-001`/`AT-33-E5-002` cycle that lands an oracle-results file containing a
+`"verdict": "disagree"` record will make `scripts/box_ledger.py --check --oracle-results <that
+file>` exit non-zero and name the offending `unit_id` (`AT-33-E1-002`'s condition 3, already wired
+and already proven able to fire — see the mutation proof below). That failing exit code is what
+reopens this criterion's work; nobody has to remember to check.
+
+**RED→GREEN (mutation proof that the reopening mechanism actually fires):**
+
+```
+$ python3 -c "
+import json
+d = json.load(open('AT-33-E5-003.combined-oracle-results.json'))
+d['results'][0]['verdict'] = 'disagree'; d['results'][0]['ours'] = 999
+json.dump(d, open('/tmp/mutated.json','w'))
+"
+$ python3 scripts/box_ledger.py --check --oracle-results /tmp/mutated.json
+uncovered=0 overlap=0 population=49438 oracle_disagreement=1 unverifiable_done=0 stale=False
+ORACLE_DISAGREEMENT: ultimate_equipment:equipment:belt_of_mighty_hurling_greater
+$ echo $?
+1
+```
+
+RED: a single injected `disagree` record is caught by name, exit 1. GREEN: the real, unmutated,
+committed `AT-33-E5-003.combined-oracle-results.json` — exit 0. The temp mutated copy was never
+committed.
