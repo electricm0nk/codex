@@ -225,6 +225,28 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle sd33-r3-statsave — Epic 5 remediation wave 3, stat/save/situation/tail lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
+
+- **Criterion:** `AT-33-E5-002` remediation — the equipment `other_bonus_shape`/`equipment_modifier`
+  remainder's `STAT_multi_or_other_slot`/`SITUATION`/`SAVE`/11-smaller-shapes/(re-derived) `SKILL`
+  population.
+- **Population re-derived, not inherited:** the dispatch brief's own estimate of 158 corrected to
+  **160** — `SKILL` (42 units) is unclaimed by either sibling shape name (`VAR`; `COMBAT`/`WEAPON`/
+  `WEAPONPROF=*`) and falls to this lane under the brief's own tail-ownership rule. Logged:
+  `scripts/retro.py summary` correction `1787651068927-sd33-r3-statsave-208363`.
+- **Rows written: 141 of 160** (`python3 -c "import json;print(len(json.load(open('artifacts/epic-5-reverification/equipment-shape-stat-save-tail.oracle-results.json'))['results']))"` → `141`) — 62 agree, 0 disagree, 79 `unverifiable` (all `no_probe_surface`, 0 reasonless). 19 unexamined, each for a
+  real, this-cycle-confirmed reason (resolver gap, PCGen harness campaign-load defect, or a
+  book-wide `%LIST` data-load defect in the pinned oracle checkout) — none a skipped-for-time unit.
+- **Two instrument-corrections, found and fixed this cycle before either produced a false result:**
+  a two-handed-weapon item (`staff_of_mithral_might`) needing `EQUIPSET:Both Hands` rather than the
+  generic `Equipped`; a bare-item-slug `.pcg`/`.ftl` filename collision across 3 genuine cross-book
+  reprints, independently re-verified per-book after the fix.
+- **Status: blocked-escalated** (141 rows < 160 population, per this wave's own row-count-is-status
+  rule). Not a failure — 141 real, per-unit `(ours, oracle, verdict)` rows landed, 0 disagreements,
+  0 reasonless `unverifiable`, 0 duplicate `unit_id`s.
+- **Commit:** `b1838c8d38` (code + results + retro event).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-shape-stat-save-tail_cycle_receipt.md`.
+
 ### Cycle AT-33-E1-004-scope-widening — denominator-gate scan scope (row 4, Epic 1) — complete
 
 - **Criterion:** `AT-33-E1-004` — `scripts/verify.sh --only denominator-gate` runs and fails on a
