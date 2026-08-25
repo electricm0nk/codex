@@ -225,6 +225,45 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-shape-var — VAR-bonus-shape lane (rows 16/17, Epic 5) — complete
+
+- **Criterion:** `AT-33-E5-002` — the `VAR` sub-population (108 of the 391 units
+  `AT-33-E5-remainder-equipment_cycle_receipt.md`'s own next-cycle plan left unattempted, itself 391
+  of the 6,589 `literal-verified` population).
+- **Files:** `src/rules_core/equipment_effects/general.rs` (new `compute_var_effect`/`VarBonus` —
+  genuinely unhandled by any resolver before this cycle), `src/bin/e5_var_shape_ours.rs` (new),
+  `artifacts/epic-5-reverification/equipment-shape-var.oracle-results.json` (new, 108 rows),
+  `artifacts/epic-5-reverification/AT-33-E5-shape-var_cycle_receipt.md`.
+- **Figures:** 108 of 108 units carry a real `(ours, oracle, verdict)` row (`python3 -c "import
+  json;d=json.load(open('artifacts/epic-5-reverification/equipment-shape-var.oracle-results.json'));
+  print(len(d['results']))"` → `108`). **44 agree / 1 disagree / 63 unverifiable**, of 108 examined.
+  63 unverifiable rows: 60 `var_gated_by_unbuilt_class_feature_zero_on_generic_baseline` (real,
+  per-unit, empirically confirmed — the named PCGen variable genuinely does not exist on a generic
+  Level-1 Human Fighter without the specific class/feat that grants it) + 3
+  `equipment_id_resolve_no_match_keyless_outputname_record` (a real resolver limitation, same class
+  `AT-33-E5-remainder-equipment_cycle_receipt.md` already named for 11 `SKILL`-shape units). 0
+  reasonless unverifiable. `box_ledger.py --check` → `oracle_disagreement=1`, exit 1 (correctly).
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 1 — a real batch cross-contamination methodology defect (CMD/CMB-derived
+  `VAR` names are live formulas re-reading the character's current `CMD`/`CMB`, not independent
+  accumulators) found and fixed within this cycle, before it reached the committed results (see
+  receipt and `docs/retro/events/sd33-r3-var.jsonl`).
+- **The 1 real disagreement, root-caused:** `inner_sea_races:equipment:panoply_of_the_fierani_knight`
+  (`ours=6`, `oracle=3`) — a base-item-plus-attached-Mithril-material-EQMOD compound
+  `ArmorCheckPenalty` computation, the same `EQMARMOR` base-item-plus-attached-modifier
+  fixture-construction gap `AT-33-E5-remainder-equipment_cycle_receipt.md` already named, confirmed
+  to recur here for `VAR`. Not fixed this cycle (a genuinely different, larger fixture pattern); named
+  for next-cycle pickup.
+- **RED→GREEN:** `compute_var_effect`/`VarBonus` did not exist before this cycle — `cargo test
+  --locked --lib rules_core::equipment_effects::general::` failed to compile
+  (`error[E0425]: cannot find function 'compute_var_effect'`) before, `9 passed; 0 failed` after (4
+  new tests, real corpus-verbatim fixtures). `cargo test --locked --lib
+  rules_core::equipment_effects::` (whole module): 62 passed, 0 failed. `cargo build --locked --bins`
+  (full workspace sweep): exit 0.
+- **Notes:** does NOT mark kanban rows 16/17/18 (a finalize cycle owns that call, per the dispatch
+  brief). Sibling lanes ran the other shapes of the same 391 in parallel this wave.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-shape-var_cycle_receipt.md`.
+
 ### Cycle sd33-r3-statsave — Epic 5 remediation wave 3, stat/save/situation/tail lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
 
 - **Criterion:** `AT-33-E5-002` remediation — the equipment `other_bonus_shape`/`equipment_modifier`

@@ -1,0 +1,938 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_players_guide:equipment:backpack_masterwork",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "equipment_id_resolve_no_match_keyless_outputname_record"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:gloves_of_dueling",
+      "ours": {
+        "CMD_Disarm": 4,
+        "CMD_Sunder": 4,
+        "WeaponTrainingBase": 2
+      },
+      "oracle": {
+        "CMD_Disarm": 4,
+        "CMD_Sunder": 4,
+        "WeaponTrainingBase": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:muleback_cords",
+      "ours": 8,
+      "oracle": 8,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:necklace_of_ki_serenity",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:robe_of_arcane_heritage",
+      "ours": {
+        "BloodlineLVL": 4,
+        "BloodlineProgressionLVL": 4,
+        "BloodlineFeatProgression": -4,
+        "EldritchHeritageBloodlineLVL": 4
+      },
+      "oracle": {
+        "BloodlineLVL": 0,
+        "BloodlineProgressionLVL": 0,
+        "BloodlineFeatProgression": 0,
+        "EldritchHeritageBloodlineLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:sash_of_the_war_champion",
+      "ours": {
+        "ArmorTrainingLVL": 4,
+        "BraveryLVL": 4
+      },
+      "oracle": {
+        "ArmorTrainingLVL": 0,
+        "BraveryLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:silver_smite_bracelet",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_resistance_1",
+      "ours": {
+        "FortitudeSave_ResistanceBonus": 1,
+        "ReflexSave_ResistanceBonus": 1,
+        "WillSave_ResistanceBonus": 1
+      },
+      "oracle": {
+        "FortitudeSave_ResistanceBonus": 1,
+        "ReflexSave_ResistanceBonus": 1,
+        "WillSave_ResistanceBonus": 1
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_resistance_2",
+      "ours": {
+        "FortitudeSave_ResistanceBonus": 2,
+        "ReflexSave_ResistanceBonus": 2,
+        "WillSave_ResistanceBonus": 2
+      },
+      "oracle": {
+        "FortitudeSave_ResistanceBonus": 2,
+        "ReflexSave_ResistanceBonus": 2,
+        "WillSave_ResistanceBonus": 2
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_resistance_3",
+      "ours": {
+        "FortitudeSave_ResistanceBonus": 3,
+        "ReflexSave_ResistanceBonus": 3,
+        "WillSave_ResistanceBonus": 3
+      },
+      "oracle": {
+        "FortitudeSave_ResistanceBonus": 3,
+        "ReflexSave_ResistanceBonus": 3,
+        "WillSave_ResistanceBonus": 3
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_resistance_4",
+      "ours": {
+        "FortitudeSave_ResistanceBonus": 4,
+        "ReflexSave_ResistanceBonus": 4,
+        "WillSave_ResistanceBonus": 4
+      },
+      "oracle": {
+        "FortitudeSave_ResistanceBonus": 4,
+        "ReflexSave_ResistanceBonus": 4,
+        "WillSave_ResistanceBonus": 4
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_resistance_5",
+      "ours": {
+        "FortitudeSave_ResistanceBonus": 5,
+        "ReflexSave_ResistanceBonus": 5,
+        "WillSave_ResistanceBonus": 5
+      },
+      "oracle": {
+        "FortitudeSave_ResistanceBonus": 5,
+        "ReflexSave_ResistanceBonus": 5,
+        "WillSave_ResistanceBonus": 5
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_orange_prism",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_greater_acid",
+      "ours": 30,
+      "oracle": 30,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_greater_cold",
+      "ours": 30,
+      "oracle": 30,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_greater_electricity",
+      "ours": 30,
+      "oracle": 30,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_greater_fire",
+      "ours": 30,
+      "oracle": 30,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_greater_sonic",
+      "ours": 30,
+      "oracle": 30,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_major_acid",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_major_cold",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_major_electricity",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_major_fire",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_major_sonic",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_minor_acid",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_minor_cold",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_minor_electricity",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_minor_fire",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_energy_resistance_minor_sonic",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:staff_of_power",
+      "ours": {
+        "FortitudeSave_LuckBonus": 2,
+        "ReflexSave_LuckBonus": 2,
+        "WillSave_LuckBonus": 2
+      },
+      "oracle": {
+        "FortitudeSave_LuckBonus": 0,
+        "ReflexSave_LuckBonus": 0,
+        "WillSave_LuckBonus": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:vestment_druid_s",
+      "ours": 1,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "horror_adventures:equipment:gloves_of_feasting",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:stagger_proof_boots",
+      "ours": {
+        "CMD_Trip": 4,
+        "CMD_BullRush": 4
+      },
+      "oracle": {
+        "CMD_Trip": 4,
+        "CMD_BullRush": 4
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:coat_of_shells",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:goblin_plate",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+      "ours": 6,
+      "oracle": 3,
+      "verdict": "disagree",
+      "reason": "base item explicit VAR|ArmorCheckPenalty|6 chain + attached Material~Mithril EQMOD's own separate ArmorCheckPenalty reduction chain (real PF1 rule: Mithril reduces ACP by 3) -- a compound base-item-plus-attached-EQMOD computation compute_var_effect (record-level only) does not resolve; the same EQMARMOR base+modifier fixture-construction gap AT-33-E5-remainder-equipment_cycle_receipt.md already named, not a fresh defect."
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:zoic_fetish_amphibian",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:zoic_fetish_bird",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:zoic_fetish_fish",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:zoic_fetish_mammal",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:zoic_fetish_reptile",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:acrobat_slippers",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:agile_alpenstock",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:armbands_of_the_brawler",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_the_avenging_knight",
+      "ours": {
+        "SmiteEvilLVL": 4,
+        "DomainDestructionLVL": 4
+      },
+      "oracle": {
+        "SmiteEvilLVL": 0,
+        "DomainDestructionLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+      "ours": 1,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:dragon_staff",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:flame_of_guidance",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_ninjitsu",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+      "ours": 1,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:juggernaut_s_pauldrons",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:necklace_of_ki_serenity",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_bull",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_serpent",
+      "ours": {
+        "CMD_Bullrush": 2,
+        "CMD_Grapple": 2,
+        "CMD_Reposition": 2,
+        "CMD_Trip": 2
+      },
+      "oracle": {
+        "CMD_Bullrush": 2,
+        "CMD_Grapple": 2,
+        "CMD_Reposition": 0,
+        "CMD_Trip": 2
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:robe_of_arcane_heritage",
+      "ours": {
+        "BloodlineLVL": 4,
+        "BloodlineProgressionLVL": 4,
+        "BloodlineFeatProgression": -4,
+        "EldritchHeritageBloodlineLVL": 4
+      },
+      "oracle": {
+        "BloodlineLVL": 0,
+        "BloodlineProgressionLVL": 0,
+        "BloodlineFeatProgression": 0,
+        "EldritchHeritageBloodlineLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_escape",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:tunic_of_deadly_might",
+      "ours": {
+        "CMD_Disarm": 2,
+        "CMD_Sunder": 2
+      },
+      "oracle": {
+        "CMD_Disarm": 2,
+        "CMD_Sunder": 2
+      },
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:unlucky_figurine",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:vambraces_of_the_tactician",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+      "ours": 0,
+      "oracle": 0,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:boots_of_the_nomad",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:bracers_of_disruption",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:circlet_of_the_sheltered_mind",
+      "ours": -5,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:companion_stone_electrical_protection",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "equipment_id_resolve_no_match_keyless_outputname_record"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mender_s_vestments_extra_1d6",
+      "ours": 1,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mender_s_vestments_extra_time",
+      "ours": 1,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mender_s_vestments_extra_time_and_1d6",
+      "ours": {
+        "TransferWoundsTimes": 1,
+        "TransferWoundsDice": 1
+      },
+      "oracle": {
+        "TransferWoundsTimes": 0,
+        "TransferWoundsDice": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psicrystal_crown",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psicrystal_harness",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psicrystal_staff",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psicrystal_staff_greater",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_psion",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "equipment_id_resolve_no_match_keyless_outputname_record"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:student_s_robes",
+      "ours": {
+        "PsychometabolismDisciplineLVL": 5,
+        "PsychokinesisDisciplineLVL": 5,
+        "PsychoportationDisciplineLVL": 5,
+        "ClairsentienceDisciplineLVL": 5,
+        "MetacreativityDisciplineLVL": 5,
+        "TelepathyDisciplineLVL": 5,
+        "GeneralistDisciplineLVL": 5
+      },
+      "oracle": {
+        "PsychometabolismDisciplineLVL": 0,
+        "PsychokinesisDisciplineLVL": 0,
+        "PsychoportationDisciplineLVL": 0,
+        "ClairsentienceDisciplineLVL": 0,
+        "MetacreativityDisciplineLVL": 0,
+        "TelepathyDisciplineLVL": 0,
+        "GeneralistDisciplineLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warblade_staff",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warblade_staff_greater",
+      "ours": 2,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_archer_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_ascetic_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_assassin_s_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_brawling_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_dervish_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_feral_warrior_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_gladiator_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_infiltrator_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_interceptor_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_mind_knight_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_survivor_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:warrior_s_bracer_weaponmaster_path",
+      "ours": 4,
+      "oracle": 0,
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_bat",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterBatAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterBatAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_bear",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterBearAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterBearAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_bull",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterBullAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterBullAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_deinonychus",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterDeinonychusAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterDeinonychusAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_falcon",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterFalconAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterFalconAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_frog",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterFrogAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterFrogAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_lizard",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterLizardAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterLizardAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_monkey",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterMonkeyAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterMonkeyAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_mouse",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterMouseAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterMouseAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_owl",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterOwlAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterOwlAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_snake",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterSnakeAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterSnakeAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_stag",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterStagAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterStagAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_tiger",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterTigerAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterTigerAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_wolf",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterWolfAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterWolfAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:bestial_rags_wolverine",
+      "ours": {
+        "ShifterAspectMinutes": 5,
+        "ShifterWolverineAspectLVL": 2
+      },
+      "oracle": {
+        "ShifterAspectMinutes": 0,
+        "ShifterWolverineAspectLVL": 0
+      },
+      "verdict": "unverifiable",
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline"
+    }
+  ]
+}
