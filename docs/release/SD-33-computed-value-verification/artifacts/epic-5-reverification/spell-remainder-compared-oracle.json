@@ -1,0 +1,904 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_class_guide:spell:memorize_page",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "Memorize Page"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:mirror_polish",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "Mirror Polish"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:stricken_heart",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Stricken Heart"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:thunderstomp_greater",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Thunderstomp (Greater)"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:time_shudder",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Time Shudder"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:wave_shield",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "Wave Shield"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:accelerate_poison",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Accelerate Poison"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:beguiling_gift",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Bard",
+      "level": 1,
+      "name": "Beguiling Gift"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:blood_biography",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Blood Biography"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:create_treasure_map",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Create Treasure Map"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:fire_of_vengeance",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Paladin",
+      "level": 4,
+      "name": "Fire of Vengeance"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:fool_s_forbiddance",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "class_human": "Bard",
+      "level": 6,
+      "name": "Fool's Forbiddance"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:grace",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 1,
+      "name": "Grace"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:hero_s_defiance",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Paladin",
+      "level": 1,
+      "name": "Hero's Defiance"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:holy_whisper",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Paladin",
+      "level": 3,
+      "name": "Holy Whisper"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:hydraulic_torrent",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Hydraulic Torrent"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:jester_s_jaunt",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Bard",
+      "level": 3,
+      "name": "Jester's Jaunt"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:nap_stack",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 3,
+      "name": "Nap Stack"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:nature_s_exile",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Druid",
+      "level": 3,
+      "name": "Nature's Exile"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:residual_tracking",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Ranger",
+      "level": 1,
+      "name": "Residual Tracking"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:rest_eternal",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 4,
+      "name": "Rest Eternal"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:reviving_finale",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Bard",
+      "level": 3,
+      "name": "Reviving Finale"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:sculpt_corpse",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "Sculpt Corpse"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:sift",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Bard",
+      "level": 0,
+      "name": "Sift"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:swarm_skin",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Druid",
+      "level": 6,
+      "name": "Swarm Skin"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:threefold_aspect",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Druid",
+      "level": 4,
+      "name": "Threefold Aspect"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:venomous_bolt",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Ranger",
+      "level": 3,
+      "name": "Venomous Bolt"
+    },
+    {
+      "unit_id": "core_rulebook:spell:arcane_mark",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 0,
+      "name": "Arcane Mark"
+    },
+    {
+      "unit_id": "core_rulebook:spell:atonement",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 5,
+      "name": "Atonement"
+    },
+    {
+      "unit_id": "core_rulebook:spell:awaken",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "class_human": "Druid",
+      "level": 5,
+      "name": "Awaken"
+    },
+    {
+      "unit_id": "core_rulebook:spell:bestow_curse",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Bestow Curse"
+    },
+    {
+      "unit_id": "core_rulebook:spell:bless_water",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 1,
+      "name": "Bless Water"
+    },
+    {
+      "unit_id": "core_rulebook:spell:clone",
+      "ours": 22,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 8,
+      "name": "Clone"
+    },
+    {
+      "unit_id": "core_rulebook:spell:color_spray",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "Color Spray"
+    },
+    {
+      "unit_id": "core_rulebook:spell:contact_other_plane",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 5,
+      "name": "Contact Other Plane"
+    },
+    {
+      "unit_id": "core_rulebook:spell:contagion",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Contagion"
+    },
+    {
+      "unit_id": "core_rulebook:spell:continual_flame",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Continual Flame"
+    },
+    {
+      "unit_id": "core_rulebook:spell:control_weather",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Control Weather"
+    },
+    {
+      "unit_id": "core_rulebook:spell:curse_water",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 1,
+      "name": "Curse Water"
+    },
+    {
+      "unit_id": "core_rulebook:spell:demand",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 8,
+      "name": "Demand"
+    },
+    {
+      "unit_id": "core_rulebook:spell:detect_scrying",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 4,
+      "name": "Detect Scrying"
+    },
+    {
+      "unit_id": "core_rulebook:spell:discern_location",
+      "ours": 22,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 8,
+      "name": "Discern Location"
+    },
+    {
+      "unit_id": "core_rulebook:spell:dream",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 5,
+      "name": "Dream"
+    },
+    {
+      "unit_id": "core_rulebook:spell:endure_elements",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "Endure Elements"
+    },
+    {
+      "unit_id": "core_rulebook:spell:explosive_runes",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Explosive Runes"
+    },
+    {
+      "unit_id": "core_rulebook:spell:freedom",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 9,
+      "name": "Freedom"
+    },
+    {
+      "unit_id": "core_rulebook:spell:ghoul_touch",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Ghoul Touch"
+    },
+    {
+      "unit_id": "core_rulebook:spell:guidance",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 0,
+      "name": "Guidance"
+    },
+    {
+      "unit_id": "core_rulebook:spell:gust_of_wind",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Gust of Wind"
+    },
+    {
+      "unit_id": "core_rulebook:spell:hallow",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 5,
+      "name": "Hallow"
+    },
+    {
+      "unit_id": "core_rulebook:spell:heal_mount",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Paladin",
+      "level": 3,
+      "name": "Heal Mount"
+    },
+    {
+      "unit_id": "core_rulebook:spell:imbue_with_spell_ability",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 4,
+      "name": "Imbue with Spell Ability"
+    },
+    {
+      "unit_id": "core_rulebook:spell:imprisonment",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 9,
+      "name": "Imprisonment"
+    },
+    {
+      "unit_id": "core_rulebook:spell:instant_summons",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Instant Summons"
+    },
+    {
+      "unit_id": "core_rulebook:spell:irresistible_dance",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 6,
+      "name": "Irresistible Dance"
+    },
+    {
+      "unit_id": "core_rulebook:spell:know_direction",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Druid",
+      "level": 0,
+      "name": "Know Direction"
+    },
+    {
+      "unit_id": "core_rulebook:spell:legend_lore",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 4,
+      "name": "Legend Lore"
+    },
+    {
+      "unit_id": "core_rulebook:spell:limited_wish",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Limited Wish"
+    },
+    {
+      "unit_id": "core_rulebook:spell:mage_s_lucubration",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 6,
+      "name": "Mage's Lucubration"
+    },
+    {
+      "unit_id": "core_rulebook:spell:magic_stone",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 1,
+      "name": "Magic Stone"
+    },
+    {
+      "unit_id": "core_rulebook:spell:mark_of_justice",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 4,
+      "name": "Mark of Justice"
+    },
+    {
+      "unit_id": "core_rulebook:spell:miracle",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 9,
+      "name": "Miracle"
+    },
+    {
+      "unit_id": "core_rulebook:spell:mnemonic_enhancer",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 4,
+      "name": "Mnemonic Enhancer"
+    },
+    {
+      "unit_id": "core_rulebook:spell:permanency",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 5,
+      "name": "Permanency"
+    },
+    {
+      "unit_id": "core_rulebook:spell:phantom_trap",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 2,
+      "name": "Phantom Trap"
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_binding",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 6,
+      "name": "Planar Binding"
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_binding_greater",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 8,
+      "name": "Planar Binding (Greater)"
+    },
+    {
+      "unit_id": "core_rulebook:spell:plane_shift",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 5,
+      "name": "Plane Shift"
+    },
+    {
+      "unit_id": "core_rulebook:spell:poison",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 3,
+      "name": "Poison"
+    },
+    {
+      "unit_id": "core_rulebook:spell:prestidigitation",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 0,
+      "name": "Prestidigitation"
+    },
+    {
+      "unit_id": "core_rulebook:spell:prismatic_spray",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Prismatic Spray"
+    },
+    {
+      "unit_id": "core_rulebook:spell:refuge",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Refuge"
+    },
+    {
+      "unit_id": "core_rulebook:spell:reincarnate",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "class_human": "Druid",
+      "level": 4,
+      "name": "Reincarnate"
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_blindness_deafness",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 3,
+      "name": "Remove Blindness/Deafness"
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_curse",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Remove Curse"
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_disease",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 3,
+      "name": "Remove Disease"
+    },
+    {
+      "unit_id": "core_rulebook:spell:resistance",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 0,
+      "name": "Resistance"
+    },
+    {
+      "unit_id": "core_rulebook:spell:restoration",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 4,
+      "name": "Restoration"
+    },
+    {
+      "unit_id": "core_rulebook:spell:restoration_greater",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 7,
+      "name": "Restoration (Greater)"
+    },
+    {
+      "unit_id": "core_rulebook:spell:restoration_lesser",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 1,
+      "name": "Restoration (Lesser)"
+    },
+    {
+      "unit_id": "core_rulebook:spell:secret_page",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 3,
+      "name": "Secret Page"
+    },
+    {
+      "unit_id": "core_rulebook:spell:sending",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 4,
+      "name": "Sending"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shades",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 9,
+      "name": "Shades"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_conjuration",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 4,
+      "name": "Shadow Conjuration"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_conjuration_greater",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Shadow Conjuration (Greater)"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_evocation",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 5,
+      "name": "Shadow Evocation"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_evocation_greater",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 8,
+      "name": "Shadow Evocation (Greater)"
+    },
+    {
+      "unit_id": "core_rulebook:spell:simulacrum",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Simulacrum"
+    },
+    {
+      "unit_id": "core_rulebook:spell:spellstaff",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "class_human": "Druid",
+      "level": 6,
+      "name": "Spellstaff"
+    },
+    {
+      "unit_id": "core_rulebook:spell:symbol_of_stunning",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Symbol of Stunning"
+    },
+    {
+      "unit_id": "core_rulebook:spell:teleport_greater",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Teleport (Greater)"
+    },
+    {
+      "unit_id": "core_rulebook:spell:temporal_stasis",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 8,
+      "name": "Temporal Stasis"
+    },
+    {
+      "unit_id": "core_rulebook:spell:time_stop",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "class_human": "Wizard",
+      "level": 9,
+      "name": "Time Stop"
+    },
+    {
+      "unit_id": "core_rulebook:spell:transport_via_plants",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Druid",
+      "level": 6,
+      "name": "Transport via Plants"
+    },
+    {
+      "unit_id": "core_rulebook:spell:true_strike",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 1,
+      "name": "True Strike"
+    },
+    {
+      "unit_id": "core_rulebook:spell:unhallow",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 5,
+      "name": "Unhallow"
+    },
+    {
+      "unit_id": "core_rulebook:spell:virtue",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Cleric",
+      "level": 0,
+      "name": "Virtue"
+    },
+    {
+      "unit_id": "core_rulebook:spell:waves_of_exhaustion",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 7,
+      "name": "Waves of Exhaustion"
+    },
+    {
+      "unit_id": "core_rulebook:spell:waves_of_fatigue",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "class_human": "Wizard",
+      "level": 5,
+      "name": "Waves of Fatigue"
+    },
+    {
+      "unit_id": "core_rulebook:spell:word_of_recall",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "class_human": "Cleric",
+      "level": 6,
+      "name": "Word of Recall"
+    }
+  ]
+}
