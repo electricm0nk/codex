@@ -799,19 +799,24 @@ mod tests {
         // ingested_book_with_their_real_counts`) contribute 4 more real
         // descriptions (14 -> 18).
         assert_eq!(with_description("AG"), 18);
-        // Re-derived fresh this cycle (`t9-onboarding-unowned-reds`) as the
+        // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
+        // 19 rows carry a real `DESC:`/`SPROP:` token (6 `description:
+        // None`), re-derived directly against the regenerated
+        // `equipment_gap_tables.rs`.
+        assert_eq!(with_description("BB"), 13);
+        // Re-derived fresh this cycle (`sd32-desktop-count-resweep`) as the
         // real, measured total -- not the old 4719 plus a hand-adjusted
         // delta, because `OA`/`HA`/`ISR`/`ISWG`/`MC`/`B2`/`B3`/`B4` are not
         // individually pinned above and their own description counts moved
         // too (their ROW counts drifted in `catalog_spans_every_ingested_
         // book_with_their_real_counts` above, and some of that growth
-        // carries real `DESC:`/`SPROP:` text). Command: `cd apps/desktop/
-        // src-tauri && cargo test --locked --bin codex-desktop
-        // equipment_catalog -- --nocapture` with a temporary per-book
-        // description-count dump.
+        // carries real `DESC:`/`SPROP:` text). 4756 -> 4769 (+13, `BB`
+        // above). Command: `cd apps/desktop/src-tauri && cargo test
+        // --locked --bin codex-desktop equipment_catalog -- --nocapture`
+        // with a temporary per-book description-count dump.
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4756
+            4769
         );
     }
 
@@ -967,11 +972,19 @@ mod tests {
         // `equipment_modifier` object). `tests/equipment_gap_tables.rs`'s
         // own already-correct `EXPECTED_PER_BOOK` independently agrees.
         assert_eq!(count_by_book(&response, "AG"), 116);
+        // SD-32 desktop count re-sweep: `beginner_box` (`BB`) was ingested
+        // (`decisions.md §27b`, the `EXCLUDED_BOOKS` carve-out removed) --
+        // 19 new corpus files under `data/corpus/beginner_box/equipment/`,
+        // every one routed through the same corpus gap lane as `UW`/`ISG`/
+        // etc above, one catalog row per shipped JSON file. Re-derived
+        // directly against the regenerated `equipment_gap_tables.rs`
+        // (`grep -c 'book: "BB"'`).
+        assert_eq!(count_by_book(&response, "BB"), 19);
 
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
-        // growing. Re-derived fresh this cycle (`t9-onboarding-unowned-
-        // reds`) by summing every `count_by_book` assertion above (equal
+        // growing. Re-derived fresh this cycle (`sd32-desktop-count-
+        // resweep`) by summing every `count_by_book` assertion above (equal
         // to `response.entries.len()` itself, run via `cd apps/desktop/
         // src-tauri && cargo test --locked --bin codex-desktop
         // equipment_catalog -- --nocapture` with a temporary per-book
@@ -984,8 +997,12 @@ mod tests {
         // assertion above was already 1614, but the OLD total assertion
         // (8025) had never been updated off the superseded 1613, so 8025
         // was already 1 short of its own per-book sum before this cycle
-        // touched anything).
-        assert_eq!(response.entries.len(), 8100);
+        // touched anything) -> 8119 (+19, `BB` above; `beginner_box`
+        // ingestion, `decisions.md §27b` -- a pinned-count staleness
+        // regression, not a logic regression: this workspace is a
+        // SEPARATE cargo build from the root-level sweep that ingested
+        // `beginner_box`, so nothing here re-ran until now).
+        assert_eq!(response.entries.len(), 8119);
     }
 
     #[test]
@@ -1300,7 +1317,17 @@ mod tests {
         // cross-book collisions from the `ISM` routing/citation fix and the
         // new `AG`/`UM` books, every one verified below (the loop
         // immediately following) to involve a gap row -- not hand-counted.
-        assert_eq!(cross_book.len(), 225);
+        // SD-32 desktop count re-sweep (`beginner_box` ingested,
+        // `decisions.md §27b`): 225 -> 230, +5 new cross-book collisions
+        // from `BB` (`Bandages of Rapid Recovery`, `Campfire Bead`,
+        // `Dawnflower Sash`, `Flying Ointment`, `Glowing Glove`, each
+        // shared with an already-cataloged book's hand table or gap row),
+        // every one verified below (the loop immediately following) to
+        // involve a gap row -- not hand-counted. Command: `cd apps/desktop/
+        // src-tauri && cargo test --locked --bin codex-desktop
+        // keys_do_not_collide -- --nocapture` with a temporary
+        // `cross_book.difference(&expected_cross_book)` dump.
+        assert_eq!(cross_book.len(), 230);
         for key in cross_book.difference(&expected_cross_book) {
             assert!(
                 gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
@@ -1403,7 +1430,10 @@ mod tests {
         // src-tauri && cargo test --locked --bin codex-desktop
         // equipment_catalog -- --nocapture` with a temporary per-book
         // `ArmsArmor`-count dump.
-        assert_eq!(response.entries.len(), 1095);
+        // SD-32 desktop count re-sweep: 1095 -> 1097 (+2, `BB`'s 2
+        // `ArmsArmor` rows -- `beginner_box` ingestion, `decisions.md
+        // §27b`).
+        assert_eq!(response.entries.len(), 1097);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }

@@ -705,6 +705,15 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("inner_sea_faiths", "inner_sea_faiths"),
     ("inner_sea_temples", "inner_sea_temples"),
     ("core_essentials", "core_essentials"),
+    // SD-32 desktop count re-sweep (2026-08-24): `beginner_box` was
+    // ingested (`decisions.md §27b`, the `EXCLUDED_BOOKS` carve-out that
+    // had been concealing 14 un-ingested equipment units removed) but
+    // never registered here -- this workspace is a SEPARATE cargo
+    // workspace from the root-level sweep that did the ingest, so the
+    // gap went uncaught until this bin's own suite ran. Same-name
+    // pairing, matching every other book above; `equipment_catalog.rs`'s
+    // `BOOK_*` short code for this book is `"BB"`.
+    ("beginner_box", "beginner_box"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1524,6 +1533,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("adventurers_guide", "equipment") => Some(equipment_reach("AG", BTreeSet::new())),
         ("inner_sea_magic", "equipment") => Some(equipment_reach("ISM", BTreeSet::new())),
         ("inner_sea_temples", "equipment") => Some(equipment_reach("ISTEM", BTreeSet::new())),
+        // SD-32 desktop count re-sweep (2026-08-24): `beginner_box` was
+        // ingested (`decisions.md §27b`) and its 19 `equipment` rows are
+        // already routed through the corpus gap lane under book code `BB`
+        // (`equipment_catalog.rs`'s `count_by_book(&response, "BB")`) --
+        // the identical no-hand-authored-table shape as `UW`/`AG`/`ISM`
+        // above. The gap was purely this match arm never having been
+        // added, same as those.
+        ("beginner_box", "equipment") => Some(equipment_reach("BB", BTreeSet::new())),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
