@@ -314,6 +314,61 @@ audit output naming the blast radius.
 
 ## Cycles
 
+### Cycle AT-33-E5-last39-weapon — remediation wave 6, weapon-shape-final lane (row 17, AT-33-E5-002 remediation) — complete (lane-scoped)
+
+- **Criterion:** `AT-33-E5-002`/`AT-33-E5-003` — this lane's 23-unit slice of the 39 unrowed
+  units named by `AT-33-E6-001` attempt 6 (23 weapon-shape + 9 skill-combat-shape + 7 eqm-shape),
+  derived by set-subtracting the sibling lanes' own named populations
+  (`AT-33-E5-last67-skill-combat`'s 9 "NOT examined" units,
+  `AT-33-E5-last67-eqm`'s 7-unit population table) from the 39 — confirmed by direct set
+  subtraction, 39-9-7=23, verified against the full 39-id list one for one.
+- **Method:** reused `src/bin/e5_last67_weapon_ours.rs` UNMODIFIED (no fork — the existing
+  manifest-driven binary already generalizes to any unit) for "ours" (23/23 resolved, 13
+  non-null, 10 null, all real probe output). New `scripts/oracle_harness/weapon-family.txt.ftl`
+  (reusable `WEAPON.n` batch-dump template, generalized from wave 5's own uncommitted scratch
+  fixture) + `charbuild_remainder_run_one.sh` (unmodified, reused) for oracle: 1 real live
+  agreement (`cursed_sword_2`, -2/-2 both sides).
+- **The natural-attack investigation (12 of 23 units):** three independent, real, live attempts
+  to get an oracle magnitude for `WEAPONPROF=TYPE.Natural`/`Bite`/`Hoof`/`Claw` bonuses, all
+  documented in the receipt — (1) equipping NATURALATTACKS-self-granting items (`Belt of Teeth`,
+  `Talons of Leng`) showed `WEAPON.COUNT=1` (natural attacks never appeared as `WEAPON.n` rows);
+  (2) `TEMPLATESAPPLIED:Hoof 2 (Medium)` (a real, in-pin PCGen monster-template) produced
+  `TEMPLATE.COUNT=0` (key lookup failure, root cause not isolated); (3) a Monk wielding the
+  corpus's own `Unarmed Strike` (a real natural-typed weapon record) exported cleanly but showed
+  no delta when `Amulet of Mighty Fists +1` was added (`Unarmed Strike`'s base `WeaponProf`
+  carries no `Natural` TYPE token; only a conditional `.MOD` entry does, not proven live). A
+  real, reproducible, well-evidenced probe-surface gap — `ours` is real (non-null) for all 12;
+  recorded `unverifiable`/`no_probe_surface`, not fabricated.
+- **Figures:** `population=23`; `rows_written=23`
+  (`jq '.results | length' docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last39-weapon.oracle-results.json`
+  → `23`); `agree=1 unverifiable=22` (`jq '[.results[].verdict]|group_by(.)|map({(.[0]):length})|add'`
+  on the same file); `reasonless_unverifiable=0`; `unexamined=0` (`23-23`).
+- **Movement (four buckets):** closure 23 (real dispositions for the first time, this lane's full
+  population) / reclassification 0 / reachability — `cursed_sword_2` needed zero new
+  `src/rules_core/` code (matches wave 5's own finding for this family); the 12 natural-attack
+  units' `ours` side is now reachable (real, non-null) even though the oracle side is not yet /
+  instrument-correction 0 (no prior finding revised); 3 new findings named for next-cycle
+  remediation (the `NaturalWeaponFacet`/`NaturalEquipSetFacet` Equipment-source gap, the
+  `TEMPLATESAPPLIED` key-lookup failure, the `Unarmed Strike` `.MOD`-conditional non-activation).
+- **RED→GREEN:** `weapon-family.txt.ftl` is new tooling (BatchExporter template, not a
+  `src/rules_core/` behavior change) — RED: no committed, reusable `WEAPON.n` batch-dump template
+  existed in `scripts/oracle_harness/` before this cycle; GREEN: run live against two different
+  characters, two different correct outputs (`cursed_sword_2` -2/-2, `Unarmed Strike` +0/+0
+  baseline). No `src/rules_core/` production behavior changed this cycle.
+- **Notes:** 0 new disagreements surfaced. `DAMAGEMULT` (3 units, Advanced Class Guide) and the
+  bare-`WEAPON`-chain units (`heartstake_bolts_5`, 3 wield-size, 3 flurry) apply
+  `AT-33-E5-last67-weapon`'s own established rules directly (no re-derivation needed, no
+  truncation performed) — confirmed live via the probe that `ours=null` for all 10, not assumed
+  from the rule text alone.
+- **Test scoping:** `cargo build --locked --bin e5_last67_weapon_ours` clean; no `src/rules_core/`
+  file changed, so the root `cargo test` sweep and `apps/desktop/src-tauri` were not run this
+  cycle. `python3 scripts/box_ledger.py --check --oracle-results last39-weapon.oracle-results.json`
+  → `uncovered=0 overlap=0 oracle_disagreement=0 unverifiable_done=0 stale=False`, exit 0.
+- **Kanban call:** none — per this lane's own coordination note, row 17 stays whatever
+  `AT-33-E5-finalize`-type cycle sets it to; this entry documents this lane's own 23-unit
+  population as fully rowed, one of three sibling slices of the 39.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last39-weapon_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-finalize-wave5 — total Epic 5 across wave-5's four lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
 
 - **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.
