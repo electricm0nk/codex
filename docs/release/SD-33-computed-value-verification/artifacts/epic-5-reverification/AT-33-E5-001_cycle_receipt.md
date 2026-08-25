@@ -1,8 +1,6 @@
 # Cycle AT-33-E5-001 — Epic 5 Re-verification / AT-33-E5-001
 
-- **Commit SHA:** (recorded in a follow-up commit to this same file, per this bundle's own
-  precedent — `AT-33-E1-004_cycle_receipt.md`'s "self-correction commit SHA" pattern — since
-  the schema asks this receipt to name the commit that carries it)
+- **Commit SHA:** `a2f84f90e1`
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/README.md` (new)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md` (this file)
