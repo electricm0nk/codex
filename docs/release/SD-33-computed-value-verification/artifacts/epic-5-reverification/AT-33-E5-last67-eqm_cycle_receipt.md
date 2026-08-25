@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-last67-eqm — Epic 5 Re-verification / AT-33-E5-002
 
-- **Commit SHA:** recorded on landing (see `progress.md` entry `AT-33-E5-last67-eqm`)
+- **Commit SHA:** `c8bd0364f2`
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last67-eqm.oracle-results.json` (new — this lane's committed deliverable, 0 rows)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-last67-eqm_cycle_receipt.md` (this file)
