@@ -88,6 +88,33 @@ class TestFindViolations(unittest.TestCase):
         text = "```text 97.9%\ncontent\n```\n"
         self.assertEqual(dg.find_violations(text), [])
 
+    def test_false_100_percent_idiom_space_form_not_flagged(self):
+        text = (
+            "are not yet examined and are **not** folded into a false 100%: "
+            "5,478 (`equipment` remainder + `spell`) carry a real magnitude probe\n"
+        )
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_false_100_percent_idiom_hyphen_form_not_flagged(self):
+        text = (
+            "marking this row `complete` on 11 of 1,741 would be the "
+            "false-100% shape `decisions.md §2` and `AGENTS.md` rule 2 exist to prevent.\n"
+        )
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_idiom_does_not_shadow_a_real_percentage_on_the_same_line(self):
+        # The idiom must only exempt its own "100%" token -- a genuine,
+        # separate percentage claim on the same line, with no denominator
+        # of its own, is still a violation.
+        text = "not a false 100% claim, but a real 63% figure with no denominator here\n"
+        violations = dg.find_violations(text, source="idiom-shadow.md")
+        self.assertEqual(len(violations), 1)
+        self.assertIn("63%", violations[0]["text"])
+
+    def test_idiom_with_its_own_denominator_still_passes(self):
+        text = "## Not folded into a false 100% (of 6,589): the real 777 unexamined\n"
+        self.assertEqual(dg.find_violations(text), [])
+
 
 class TestExpandPaths(unittest.TestCase):
     def test_literal_existing_file(self):

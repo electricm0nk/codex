@@ -32,6 +32,15 @@ its own line is a violation. The unit of "same construct" is the line --
 the same granularity `workflow-instruction.md` §6 step 2's identifier/token
 audits already use (`git diff --unified=0`, line-addressed).
 
+**The idiom "a false 100%" / "the false-100% shape" is exempted.** This
+bundle's own receipts and `progress.md` coined that exact phrase to *name*
+the anti-pattern this gate exists to catch -- not to report a measured
+percentage. "100%" there names a shape of bad report, and has no
+denominator to state because it is not a completion rate over any
+population. Only the idiom's own token is blanked before the percent scan
+runs; a real, separate percentage placed on the same line is still caught
+in full (`test_idiom_does_not_shadow_a_real_percentage_on_the_same_line`).
+
 **Lines inside a fenced code block (``` ... ```) are skipped.** A receipt's
 "RED -> GREEN evidence" section verbatim-quotes a malformed fixture's raw
 bytes and a real command's raw stdout -- that transcript is evidence *of*
@@ -107,6 +116,23 @@ DENOMINATOR_RE = re.compile(
     re.IGNORECASE,
 )
 
+# The bundle-wide idiom naming the anti-pattern itself -- "a false 100%" /
+# "the false-100% shape" -- coined across `progress.md` and the Epic 5
+# receipts to name the exact defect `decisions.md` §2 and this gate exist to
+# catch (a `complete` claim over a slice, not the population). "100%" in
+# that phrase is not a measured figure about any population -- there is no
+# denominator to state, because the sentence is not reporting a completion
+# rate; it is naming, and disclaiming, the shape of a bad report. Matched
+# and blanked out of the line *before* `PERCENT_RE`/`DENOMINATOR_RE` run, so
+# only the idiom's own "100%" token is exempted -- a genuine, separate
+# percentage claim placed on the same line is still caught in full (proven
+# by `test_idiom_does_not_shadow_a_real_percentage_on_the_same_line`).
+# AT-33-E6-001's scan misread six of seven original violations as this same
+# idiom before the receipts were rewritten; this remediation re-derived the
+# live violation set and found the two that survive are both this idiom
+# verbatim -- see the remediation cycle receipt for the re-derivation.
+FALSE_100_IDIOM_RE = re.compile(r"\bfalse[\s-]100%", re.IGNORECASE)
+
 
 def find_violations(text, source="<text>"):
     """Return a list of {source, line, text} dicts, one per line that
@@ -129,7 +155,8 @@ def find_violations(text, source="<text>"):
             continue
         if in_fence:
             continue
-        if PERCENT_RE.search(line) and not DENOMINATOR_RE.search(line):
+        scan_line = FALSE_100_IDIOM_RE.sub(" ", line)
+        if PERCENT_RE.search(scan_line) and not DENOMINATOR_RE.search(scan_line):
             violations.append(
                 {"source": source, "line": lineno, "text": line.strip()}
             )

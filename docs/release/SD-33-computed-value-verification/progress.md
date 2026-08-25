@@ -225,6 +225,28 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E1-004-remediation — denominator-gate (row 4, Epic 1) — complete
+
+- **Criterion:** `AT-33-E1-004` — `scripts/verify.sh --only denominator-gate` runs and passes.
+- **Why this cycle exists:** `AT-33-E6-001`'s scan found the stage RED (`violations=7 of
+  files_checked=16`) and halted the bundle on it (shortfall 3).
+- **Re-derived, not inherited:** by this cycle's start the live violation set had already moved to
+  **2 of 17** (Epic 5 lanes had rewritten receipts since the scan ran, including the construct the
+  scan judged the one real violation). Recorded as a `correction` retro event
+  (`docs/retro/events/sd33-r-denominator-gate.jsonl`), not silently relayed.
+- **Disposition:** both live violations were the bundle-wide "false 100%" idiom naming the
+  anti-pattern itself, not a figure subject to `decisions.md` §2 — a matcher precision bug, fixed
+  in `scripts/denominator_gate.py` (5 new unit tests, including an anti-shadowing case proving the
+  fix does not exempt a real percentage sharing a line with the idiom). No prose was reworded.
+- **Result:** `python3 scripts/denominator_gate.py --check` → `files_checked=18 violations=0`
+  (18 = 17 real files + a transient mutation-proof fixture removed before commit).
+  `bash scripts/verify.sh --only denominator-gate` → `RESULT: PASS`, exit 0. Detection power
+  re-proven live: a deliberately-malformed receipt inside the real default scope still fails; the
+  corrected form passes.
+- **Movement, four buckets:** closure 0, reclassification 0, reachability 0, instrument-correction
+  1 (the matcher, corrected and re-proven).
+- **Receipt:** `artifacts/epic-1-instruments/AT-33-E1-004-remediation_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-003-remediation — disagreement-resolution (row 18, Epic 5) — complete
 
 - **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
