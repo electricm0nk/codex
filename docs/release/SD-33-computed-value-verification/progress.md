@@ -83,17 +83,17 @@ None. **This section is not a parking lot.** An entry here is a request for an o
   no inventory unit.
 - **RED→GREEN:** `ModuleNotFoundError: No module named 'denominator_gate'` before the module
   existed (intended reason); 17/17 green after. **The criterion's own evidence obligation** — a
-  mutation proof through `scripts/verify.sh --only denominator-gate` itself:
-  `DENOMINATOR_GATE_PATHS=<a deliberately-malformed synthetic receipt carrying "**97.9% recognised**"
-  with no denominator> bash scripts/verify.sh --only denominator-gate` → `FAIL`, exit 1; same
-  invocation against the corrected form (denominator added in the same construct) → `PASS`, exit
-  0; default invocation with no override, against the real committed 4-file scope → `PASS`, exit 0.
-  Full transcripts in the receipt.
+  mutation proof through `scripts/verify.sh --only denominator-gate` itself, pointed via
+  `DENOMINATOR_GATE_PATHS` at a synthetic fixture whose only figure is a bare, undenominated
+  percentage (`decisions.md` §2's own motivating shape) → `FAIL`, exit 1; the identical fixture
+  corrected to state 97.9% of 4,798 and 41% of 11,652, denominator in the same construct → `PASS`,
+  exit 0; default invocation with no override, against the real committed 4-file scope → `PASS`,
+  exit 0. Full transcripts in the receipt.
 - **Notes:** scope is deliberately narrow — this bundle's own receipts + `progress.md`, not
-  repo-wide and not this bundle's own planning prose (which narrates the exact "41%"/"97.9%"
-  figures `decisions.md` §2 cites as the motivating defect, and is outside this criterion's write
-  scope). See the receipt's Notes for the full reasoning and the 261-file repo-wide sweep that
-  informed the scoping decision.
+  repo-wide and not this bundle's own planning prose (which narrates the same 41%-of-11,652 /
+  97.9%-of-4,798 figures `decisions.md` §2 cites as the motivating defect, and is outside this
+  criterion's write scope). See the receipt's Notes for the full reasoning and the 261-file
+  repo-wide sweep that informed the scoping decision.
 - **Test scoping:** ran `scripts/tests/test_denominator_gate.py` (17/17, new) and
   `scripts/tests/test_box_ledger.py` + `test_probe_surface_census.py` (36/36, regression).
   `bash -n scripts/verify.sh` (syntax check) and `bash scripts/verify.sh --only denominator-gate`

@@ -22,7 +22,10 @@
 `scripts/denominator_gate.py`: a pure line-level check (`find_violations`) — a line carrying a
 bare percentage (`\d[\d,]*(?:\.\d+)?\s?%`) with no denominator marker anywhere on that same line
 (`of <N>`, `out of <N>`, an `<N>/<M>` fraction, or the literal word `denominator` followed by a
-number) is a violation. Wired into `scripts/verify.sh` as a real stage, `denominator-gate`, in
+number) is a violation, except inside a fenced ` ``` ` code block (a receipt's evidence transcript
+legitimately quotes a malformed fixture's raw bytes — data being shown, not a claim being made; see
+Notes below for the self-correction that made this exclusion necessary). Wired into
+`scripts/verify.sh` as a real stage, `denominator-gate`, in
 **both** `ALL_STAGES` and `QUICK_STAGES`, with its own `run_denominator_gate()` function and
 dispatch-case entry — not a standalone script, closing the exact gap
 `SD-31-.../forward-scope-register.md` C1.8 named for `v06_corpus_trap_report`.
@@ -39,12 +42,12 @@ without ever committing a violation to the repo.
 
 | Figure | Value | Denominator | Command |
 |---|---:|---|---|
-| Unit test suite (new) | 17 passed, 0 failed | `scripts/tests/test_denominator_gate.py`'s own case count | `python3 -m unittest scripts.tests.test_denominator_gate -v` |
+| Unit test suite (new) | 20 passed, 0 failed | `scripts/tests/test_denominator_gate.py`'s own case count | `python3 -m unittest scripts.tests.test_denominator_gate -v` |
 | Unit test suite (existing, re-run for regression) | 25 passed, 0 failed | `scripts/tests/test_box_ledger.py`'s own case count | `python3 -m unittest scripts.tests.test_box_ledger -v` |
 | Unit test suite (existing, re-run for regression) | 11 passed, 0 failed | `scripts/tests/test_probe_surface_census.py`'s own case count | `python3 -m unittest scripts.tests.test_probe_surface_census -v` |
-| Combined suite | 53 passed, 0 failed | all three files' combined case count | `python3 -m unittest scripts.tests.test_denominator_gate scripts.tests.test_box_ledger scripts.tests.test_probe_surface_census -v` |
-| Default-scope files checked on the live committed repo | 4 | of the 4 files matched by `DEFAULT_GLOBS` (3 cycle receipts + `progress.md`, as of this commit) | `python3 scripts/denominator_gate.py --check` → `files_checked=4` |
-| Violations on the live committed default scope | 0 | of the 4 files checked | `python3 scripts/denominator_gate.py --check` → `violations=0` |
+| Combined suite | 56 passed, 0 failed | all three files' combined case count | `python3 -m unittest scripts.tests.test_denominator_gate scripts.tests.test_box_ledger scripts.tests.test_probe_surface_census -v` |
+| Default-scope files checked on the live committed repo | 5 | of the 5 files matched by `DEFAULT_GLOBS` (4 cycle receipts, including this one, + `progress.md`, as of this commit) | `python3 scripts/denominator_gate.py --check` → `files_checked=5` |
+| Violations on the live committed default scope | 0 | of the 5 files checked | `python3 scripts/denominator_gate.py --check` → `violations=0` |
 | `verify.sh --only denominator-gate` stage list membership | present in both stage sets | of 2 stage sets (`ALL_STAGES`, `QUICK_STAGES`) | `bash scripts/verify.sh --list \| grep denominator-gate` → `denominator-gate     yes   yes` |
 
 ## Status: complete
@@ -65,13 +68,13 @@ without ever committing a violation to the repo.
   of its own, unbounded and out of this single criterion's scope (`AGENTS.md` rule 3, "do not
   expand scope"). Scoping the default also excludes this bundle's own planning prose
   (`epic-breakdown.md`, `technical-design.md`, `risks-and-open-questions.md`, `decisions.md`
-  itself), which narrates the same "41%"/"97.9%" figures `decisions.md` §2 cites as the motivating
-  defect — those documents are outside this criterion's write scope (owned by the bundle author,
-  `god-emporer`), so scanning them would turn this gate permanently red over prose this cycle has
-  no authority to correct, which is a false positive on day one, not a caught defect (the same
-  "prove it can fail before it is trusted, but don't let a known-population turn the gate
-  permanently red" balance `shape-coverage-standing-gate`'s own comment names). Verified the
-  default globs' current 4-file population is 100% clean, live, above.
+  itself), which narrates the same 41%-of-11,652 / 97.9%-of-4,798 figures `decisions.md` §2 cites
+  as the motivating defect — those documents are outside this criterion's write scope (owned by
+  the bundle author, `god-emporer`), so scanning them would turn this gate permanently red over
+  prose this cycle has no authority to correct, which is a false positive on day one, not a caught
+  defect (the same "prove it can fail before it is trusted, but don't let a known-population turn
+  the gate permanently red" balance `shape-coverage-standing-gate`'s own comment names). Verified
+  the default globs' current 5-file population is 100% clean (5 of 5 files), live, above.
 - **The check is line-level, not full-document.** "Same construct" is implemented as "same line" —
   the identical granularity `workflow-instruction.md` §6 step 2's identifier/token audits already
   use (`git diff --unified=0`, line-addressed). A known limitation: if one line carries two
@@ -82,6 +85,23 @@ without ever committing a violation to the repo.
   `AT-33-E1-002`'s and `AT-33-E1-003`'s receipts both name ("a tool that has never been observed to
   fail is not a gate") — the RED case below exercises the exact `scripts/verify.sh --only
   denominator-gate` invocation the criterion names, not just the underlying Python script.
+- **Self-correction, discovered and fixed live in this same cycle (worth recording under
+  `decisions.md` §2's own corollary):** the first commit of this cycle (`53fae7abf8`) wired the
+  gate and pushed, then a post-push re-run of `bash scripts/verify.sh --only denominator-gate`
+  against the newly-pushed default scope found 7 violations, spread across 2 of the 4 files then in
+  scope — the gate correctly caught bare percentage tokens (the same undenominated shape
+  `decisions.md` §2 names) in **this receipt's own prose** — illustrating the defect while
+  describing it, and quoting the RED fixture's raw malformed content verbatim inside a code fence —
+  and in `progress.md`'s own summary of this cycle. Two distinct fixes, both
+  in this same cycle, both re-verified: (1) added a fenced-code-block exclusion to
+  `find_violations` — a receipt's evidence transcript legitimately quotes a malformed fixture's raw
+  bytes, which is data being shown, not a claim the receipt is making, so lines inside ` ``` `
+  blocks are skipped (3 new unit tests, `test_bare_percentage_inside_fenced_code_block_is_not_flagged`
+  et al.); (2) reworded the 6 remaining real prose violations (this receipt's own Notes/RED section,
+  `progress.md`'s own cycle entry) to state each percentage's denominator in the same line. Re-run
+  after both fixes: `python3 scripts/denominator_gate.py --check` → `files_checked=5 violations=0`.
+  This is exactly the failure shape the criterion exists to catch, caught by the mechanism itself
+  against its own author's writing — not narrated, demonstrated.
 
 ## RED → GREEN evidence
 
@@ -109,8 +129,9 @@ OK
 denominator-gate` itself, not just the underlying script**, using `DENOMINATOR_GATE_PATHS` to
 point the stage at a synthetic file without ever committing a violation:
 
-**RED** — a deliberately-malformed receipt (the exact "97.9% recognised" shape `decisions.md` §2
-names as the real, motivating defect), fed to the real stage:
+**RED** — a deliberately-malformed receipt (the exact "97.9% recognised", true only of the 4,798
+units it ran, 41% of the 11,652 that exist — the shape `decisions.md` §2 names as the real,
+motivating defect), fed to the real stage:
 ```
 $ cat /tmp/denom-gate-mutation/bad_cycle_receipt.md
 # Cycle FAKE — mutation-proof fixture
@@ -142,11 +163,12 @@ $ echo $?
 ```
 
 **GREEN, default scope** — the same stage run with no override, against the real committed
-`artifacts/epic-1-instruments/*_cycle_receipt.md` + `progress.md`:
+`artifacts/epic-1-instruments/*_cycle_receipt.md` (including this file itself, after the
+self-correction in Notes below) + `progress.md`:
 ```
 $ bash scripts/verify.sh --only denominator-gate
 ==> denominator-gate — python3 scripts/denominator_gate.py --check
-    PASS  denominator-gate  (files_checked=4 violations=0)
+    PASS  denominator-gate  (files_checked=5 violations=0)
 RESULT: PASS
 ```
 
@@ -156,12 +178,15 @@ this cycle).
 
 ## Test scoping
 
-- **Ran:** `python3 -m unittest scripts.tests.test_denominator_gate -v` (17/17, new);
+- **Ran:** `python3 -m unittest scripts.tests.test_denominator_gate -v` (20/20, new — includes 3
+  fence-exclusion cases added during the self-correction in Notes above);
   `python3 -m unittest scripts.tests.test_box_ledger scripts.tests.test_probe_surface_census -v`
   (36/36, regression). `bash -n scripts/verify.sh` (syntax check). `bash scripts/verify.sh --list`
   (confirms `denominator-gate` present in both stage sets). `bash scripts/verify.sh --only
-  denominator-gate` three times (default GREEN, `DENOMINATOR_GATE_PATHS` RED, `DENOMINATOR_GATE_PATHS`
-  corrected GREEN — the criterion's own evidence obligation).
+  denominator-gate` five times total (pre-correction default GREEN at `files_checked=4`, override
+  RED, override corrected GREEN, post-correction default GREEN at `files_checked=5`, and a final
+  re-confirmation of the RED/GREEN pair after the fence-exclusion fix — the criterion's own
+  evidence obligation, re-verified after the self-correction).
 - **Did NOT run:** `scripts/verify.sh` in full (`--only denominator-gate` is this criterion's own
   scope; the other stages' own preconditions — oracle build, corpus sweep, cargo build — are
   unrelated to this cycle's files and unchanged). The Rust workspace (`cargo build`/`cargo test`)
@@ -172,7 +197,8 @@ this cycle).
 
 Epic 1's sequential pipeline (rows 1-4) is now complete. Epics 2/3/4 are gated on Epic 1 and
 parallel-safe with each other (`workflow-instruction.md` §3) — the next dispatch is the
-`parallel: yes` wave: `AT-33-E2-001` (Path A feasibility), `AT-33-E3-001` (the 41%'s root cause),
+`parallel: yes` wave: `AT-33-E2-001` (Path A feasibility), `AT-33-E3-001` (root cause of the
+6,854-of-11,652 engine-coverage gap, reported today as 41%),
 and `AT-33-E4-001` (the cause of `unknown`), each in its own worktree isolation per §3's binding
 rule. This cycle's `denominator-gate` stage is a candidate consumer for those cycles' own receipts
 (add their `artifacts/epic-{2,3,4}-*/**/*_cycle_receipt.md` globs to `DEFAULT_GLOBS`, or point

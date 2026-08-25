@@ -62,6 +62,32 @@ class TestFindViolations(unittest.TestCase):
         violations = dg.find_violations(text, source="z.md")
         self.assertEqual([v["line"] for v in violations], [1, 2])
 
+    def test_bare_percentage_inside_fenced_code_block_is_not_flagged(self):
+        text = (
+            "Prose before, no percentage.\n"
+            "```\n"
+            "$ some command\n"
+            "reports 97.9% recognised with no denominator here\n"
+            "```\n"
+            "Prose after, also no percentage.\n"
+        )
+        self.assertEqual(dg.find_violations(text), [])
+
+    def test_bare_percentage_after_a_closed_fence_is_still_flagged(self):
+        text = (
+            "```\n"
+            "97.9% inside the fence, skipped\n"
+            "```\n"
+            "97.9% outside the fence, must be flagged\n"
+        )
+        violations = dg.find_violations(text, source="w.md")
+        self.assertEqual(len(violations), 1)
+        self.assertEqual(violations[0]["line"], 4)
+
+    def test_fence_marker_itself_never_flagged_even_with_percent_in_info_string(self):
+        text = "```text 97.9%\ncontent\n```\n"
+        self.assertEqual(dg.find_violations(text), [])
+
 
 class TestExpandPaths(unittest.TestCase):
     def test_literal_existing_file(self):

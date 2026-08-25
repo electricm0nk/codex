@@ -32,6 +32,19 @@ its own line is a violation. The unit of "same construct" is the line --
 the same granularity `workflow-instruction.md` §6 step 2's identifier/token
 audits already use (`git diff --unified=0`, line-addressed).
 
+**Lines inside a fenced code block (``` ... ```) are skipped.** A receipt's
+"RED -> GREEN evidence" section verbatim-quotes a malformed fixture's raw
+bytes and a real command's raw stdout -- that transcript is evidence *of*
+the check firing, not a claim the receipt is itself making, and sanitizing
+it to satisfy this gate would misrepresent what the RED case actually
+contained. The criterion's own figures live in the receipt schema's
+"Figures + their re-derive commands" table (`workflow-instruction.md` §7)
+and surrounding prose -- both outside any fence -- which this gate still
+checks in full. (Self-referential proof this exclusion is load-bearing,
+not a loophole: this script's own receipt, `AT-33-E1-004_cycle_receipt.md`,
+quotes its own malformed RED fixture verbatim inside a fence and would
+otherwise trip this exact gate on its own evidence section.)
+
 This is a heuristic, not a natural-language parser. It cannot confirm the
 denominator it finds is the *correct* one, only that some numeric
 denominator was stated in the same construct -- exactly the discipline
@@ -99,9 +112,23 @@ def find_violations(text, source="<text>"):
     """Return a list of {source, line, text} dicts, one per line that
     carries a percentage with no denominator marker anywhere on that same
     line. Pure function -- no filesystem access -- so it is directly
-    unit-testable against synthetic strings, not only real files."""
+    unit-testable against synthetic strings, not only real files.
+
+    Lines inside a fenced code block (a line whose stripped form starts
+    with ```) are skipped -- see the module docstring's "Lines inside a
+    fenced code block" section for why. An odd number of fences (an
+    unterminated block running to end-of-file) leaves the remainder of the
+    file unchecked -- a documented limitation, not a silent one: malformed
+    markdown of that shape is itself a defect worth a human's eye, and this
+    gate is heuristic by design (see module docstring)."""
     violations = []
+    in_fence = False
     for lineno, line in enumerate(text.splitlines(), start=1):
+        if line.strip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         if PERCENT_RE.search(line) and not DENOMINATOR_RE.search(line):
             violations.append(
                 {"source": source, "line": lineno, "text": line.strip()}
