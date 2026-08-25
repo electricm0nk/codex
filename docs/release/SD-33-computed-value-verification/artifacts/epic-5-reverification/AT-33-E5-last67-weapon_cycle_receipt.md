@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-last67-weapon — Epic 5 Re-verification / AT-33-E5-002, AT-33-E5-003
 
-- **Commit SHA:** recorded on landing (see `progress.md` entry `AT-33-E5-last67-weapon`)
+- **Commit SHA:** `9b54e79366` (progress.md/kanban.md update landed separately, see `progress.md` entry `AT-33-E5-last67-weapon`)
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last67-weapon.oracle-results.json` (new — this lane's committed deliverable, 14 rows)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-last67-weapon_cycle_receipt.md` (this file)

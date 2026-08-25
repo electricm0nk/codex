@@ -260,6 +260,49 @@ None. **This section is not a parking lot.** An entry here is a request for an o
   `cargo test` sweep and `apps/desktop/src-tauri` not run.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last67-eqm_cycle_receipt.md`.
 
+### Cycle AT-33-E5-last67-weapon — remediation wave 5, weapon/WEAPONPROF token-family lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
+
+- **Criterion:** `AT-33-E5-002`/`AT-33-E5-003` — this lane's 37-unit slice of the 67 unrowed
+  units named by `AT-33-E5-last75`'s own remainder table: `WEAPONPROF=<x>`/`WEAPON` enhancement
+  family (24), bare `WEAPON|TOHIT,DAMAGE,ATTACKS` no `TYPE=` (6), `WEAPON|DAMAGEMULT` fractional
+  crit-multiplier (4), wield-size `WIELDCATEGORY`+bare `WEAPON|TOHIT` no-penalty variants (3).
+- **Population re-derivation (first action):** `python3 -c "...pop-set difference..."` → 67
+  (matches the brief); this lane's 37 confirmed by reading every one of the 67 units' full
+  `raw_bonus_chains` and classifying by mechanism — sums to the brief's stated 24+6+4+3=37
+  exactly; the sibling `not mine` set is 30, 37+30=67, none double-counted.
+- **Method:** new `src/bin/e5_last67_weapon_ours.rs` (real `compute_equipment_effects` calls,
+  37/37 resolved, never hand-typed) for "ours"; `scripts/oracle_harness/charbuild_remainder_run_one.sh`
+  (unmodified, reused) against one hand-built multi-weapon `.pcg` fixture — up to 17 items worn/
+  wielded simultaneously via PCGen's generic `Equipped` `EQUIPSET` location (no hand assignment
+  needed, confirmed this cycle), one `BatchExporter` run, `WEAPON.n.MAGICHIT`/`MAGICDAMAGE`/`MULT`
+  queried per weapon.
+- **Figures:** `population=37`; `rows_written=14`
+  (`jq '.results | length' docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last67-weapon.oracle-results.json`
+  → `14`); `agree=9 disagree=2 unverifiable=3` (`jq '[.results[].verdict]|group_by(.)|map({(.[0]):length})|add'`
+  on the same file); `reasonless_unverifiable=0`; `unexamined=23` (`37-14`).
+- **Movement (four buckets):** closure 14 (real dispositions for the first time) / reclassification
+  0 / reachability — confirmed 24-unit `WEAPONPROF`/`WEAPON` family needs zero new
+  `src/rules_core/` code (11 of 24 examined), plus the multi-weapon-per-export batching technique
+  (up to 17 items/run vs. 1/run in prior waves) / instrument-correction 1
+  (`scripts/retro.py correction`: `AT-33-E5-last75`'s open `mattock_of_the_titans` MAGICHIT-sign
+  question resolved — a real, size-confound explanation, not a defect) plus 3 new incidents named
+  (`compute_equipmods_effect` single-chain-per-record limitation on `heavy_hammer`; a corpus
+  `.MOD`/`EQMOD`-merge gap on `rending_claw_blades`; two oracle-harness campaign-load failures,
+  Advanced Class Guide and Ultimate Psionics' gamemode mismatch, blocking 7 units).
+- **RED→GREEN:** `e5_last67_weapon_ours` is new tooling (batch probe, not a `src/rules_core/`
+  behavior change) — RED: no repo-local binary computed `weapon_enhancement_bonus` in batch for
+  this population before this cycle; GREEN: `cargo run --locked --bin e5_last67_weapon_ours`,
+  37/37 resolved, backed by the same real `compute_equipment_effects` the shipped engine calls.
+  No `src/rules_core/` production behavior changed this cycle.
+- **Notes:** 2 real `disagree`s recorded honestly rather than suppressed (doctrine: a
+  disagreement is a find, not a failure) — both root-caused to a specific, named defect outside
+  this lane's write scope to fix this cycle. `DAMAGEMULT`'s fractional value is `unverifiable`
+  (no export token isolates it, confirmed live), never truncated to an integer.
+- **Test scoping:** `cargo build --locked --bin e5_last67_weapon_ours` clean; no `src/rules_core/`
+  file changed, so the root `cargo test` sweep and `apps/desktop/src-tauri` were not run this
+  cycle.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last67-weapon_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-finalize-wave4 — total Epic 5 across wave-4's two lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
 
 - **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.
