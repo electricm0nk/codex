@@ -1,0 +1,84 @@
+{
+  "lane": "skill-combat-final",
+  "population_nominal": 9,
+  "population_actual": 11,
+  "results": [
+    {
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_main",
+      "ours": {"tohit_bonus": 1, "damage_bonus": 1},
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: this cycle landed a real engine fix (RED->GREEN, `src/rules_core/equipment_effects/equipmods.rs`'s new `resolve_var_reference`/`resolve_bonus_magnitude` + case-insensitive `TYPE=Enhancement` match) so `compute_equipmods_effect` now resolves this record's own `BONUS:VAR|DissonanceEnhancementBonusMain|1` + `BONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusMain|TYPE=ENHANCEMENT` pair to a real, non-fabricated tohit_bonus=1/damage_bonus=1 (confirmed live via `e5_last39_skill_combat_ours` against the real corpus record, not hand-typed). The comparable magnitude is stated and applied consistently to both dissonance units (TOHIT and DAMAGE, the chain's own affected rolls -- same convention `AT-33-E5-last67-weapon`'s own bare-WEAPON-chain audit already established). No live-oracle round-trip is proven this cycle: this is an `ITYPE:WeaponEnhancement.Psionic` Special-Quality-category eqmod, and a live attachment attempt this cycle (real `.pcg` fixture, `CUSTOMIZATION:[BASEITEM:Longsword (Base)|DATA:EQMOD=Special Quality ~ Dissonance / Enhancement Bonus / Main]`, corrected `CAMPAIGN:DSP - Ultimate Psionics` KEY per `campaign_key.py`, direct-java run against the pinned oracle, character loaded cleanly with no SEVERE/equip-failure line) exported `WEAPON.0.MAGICHIT=+0`/`WEAPON.0.MAGICDAMAGE=+0` -- the eqmod silently did not apply, the SAME unproven-live-attachment shape `AT-33-E5-last67-eqm`'s own receipt already named for the sibling `special_quality_wield_size_*` Special-Quality-category eqmods (\"This cycle did not prove a live attachment round-trip for a Special-Quality-category eqmod ... within its time budget\"). Not a new failure of this cycle's own making -- an independently re-confirmed, pre-existing gap in the oracle-harness's Special-Quality-eqmod attachment mechanism. See `last39-skill-combat-work/dissonance_main.pcg` + `run2.log` (real, live invocation artifacts, kept for re-derivation)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_alt",
+      "ours": {"tohit_bonus": 1, "damage_bonus": 1},
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_probe_surface: identical shape and identical engine fix as `special_quality_dissonance_enhancement_bonus_main` (the record's own `BONUS:VAR|DissonanceEnhancementBonusAlt|1` + `BONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusAlt|TYPE=ENHANCEMENT` pair resolves to tohit_bonus=1/damage_bonus=1, confirmed live). Comparable magnitude (TOHIT and DAMAGE) applied consistently with the Main unit. No live-oracle attachment round-trip proven this cycle -- same Special-Quality-category eqmod attachment gap named on the Main unit's row above, not separately re-attempted (same mechanism, same expected outcome)."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:rod_alertness",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: the record's own comparable chain is `BONUS:COMBAT|INITIATIVE|1|TYPE=Insight` -- confirmed live via `e5_last39_skill_combat_ours` (real `compute_equipment_effects` call): `armor_class_bonus`=None (not an AC subtoken), `skill_bonus`=None (not a SKILL chain), `weapon_enhancement_bonus`=None (not a WEAPON/equipmods record), `to_hit_bonus`=0 (an unrelated field -- the weapon-modifier attachment slot, not this record's own INITIATIVE bonus; Rod (Alertness) is itself a +1 light mace so `is_weapon_record` is true, but no applied_modifiers means that field is a real, unrelated 0, not a stand-in for INITIATIVE). No `src/rules_core/` field aggregates a COMBAT|INITIATIVE contribution at all -- confirmed still open from `AT-33-E5-shape-combat`/`AT-33-E5-last67-skill-combat`. Additionally, and independently: `AT-33-E5-last67-skill-combat`'s own live oracle round-trip on this exact unit already found the ORACLE side has no comparable token either -- `rod_alertness`'s live `INITIATIVEMOD`/`INITIATIVEMISC` export shows the equipment Insight bonus unreflected in either token -- so even a future engine resolver would still have no oracle value to compare against without also closing that export-token gap."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:stone_of_good_luck_luckstone",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: three chains, all formula-valued (`1+Global_LuckBonus`) -- `COMBAT|INITIATIVE`, `SAVE|ALL`, `SKILL|TYPE.Strength,TYPE.Dexterity,TYPE.Intelligence,TYPE.Wisdom,TYPE.Charisma`. Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None, `skill_bonus`=None (the SKILL chain's own magnitude segment `1+Global_LuckBonus` fails `i16::parse`, so `compute_general_effect`'s `find_map` yields None for this record, not a fabricated zero), `weapon_enhancement_bonus`=None, `to_hit_bonus`=None (not a weapon record). No `src/rules_core/` resolver exists for COMBAT|INITIATIVE or SAVE at all (same gap as `rod_alertness`), and there is no formula evaluator for `Global_LuckBonus`-style chain values (confirmed architecturally 0 for an isolated test character in the pinned corpus per `AT-33-E5-003-disagreement-fixes-wave5`'s own finding, but 'the variable resolves to a real number' is a different question from 'the engine has code that evaluates a formula string at all' -- it does not, for any of this record's three dimensions)."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gunfighter_s_poncho",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: `BONUS:COMBAT|AC|2+Global_LuckBonus|TYPE=Luck` -- an AC subtoken, which DOES have an engine resolver (`arms_armor.rs`'s widened AC match), but the magnitude segment `2+Global_LuckBonus` is not a literal integer and there is no formula evaluator to resolve it (`i16::parse` fails, matching `armor_class_bonus`=None confirmed live via `e5_last39_skill_combat_ours`). Same shape `AT-33-E5-shape-combat`'s own receipt already named as 'not attempted' for `staff_of_power`/`gunfighter_s_poncho`/`staff_of_the_hierophant` (formula-valued AC, no evaluator for `Global_LuckBonus`)."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:robe_of_vermin",
+      "ours": {"skill": "ALL", "bonus": -2},
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_comparable_export_token: four literal chains -- `COMBAT|INITIATIVE|-5`, `COMBAT|TOHIT|-2`, `SAVE|ALL|-2`, `SKILL|ALL|-2`. Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None, `weapon_enhancement_bonus`=None, `to_hit_bonus`=None (not a weapon record) -- INITIATIVE/TOHIT/SAVE have no engine resolver at all, the same gap named on `rod_alertness`'s row. `skill_bonus` DOES resolve (`compute_general_effect` matches any `SKILL|<qualifier>|<n>` chain literally, including a qualifier of `ALL`), yielding a real `SkillCheckBonus{skill:\"ALL\", bonus:-2}` -- but `\"ALL\"` is not a real PF1 skill name and no single PCGen `SKILL.<name>.MISC` export token represents 'every skill at once', so this real engine value has no oracle counterpart to compare against (the same 'no single PCGen token' shape wave 4 already established for multi-skill comma-joined chains, extended here to the `ALL` qualifier rather than a comma list -- not a fabricated comparison either way)."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:scattershot_bracers",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: `BONUS:COMBAT|TOHIT.Ranged|-2`, a bare (no `TYPE=`) non-AC COMBAT subtoken. Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None (not `AC`), `skill_bonus`=None, `weapon_enhancement_bonus`=None (this is a general equipment record, not an `equipmods`-category record, so `compute_equipmods_effect`'s WEAPON-chain match never applies), `to_hit_bonus`=None (not a weapon record). No `src/rules_core/` field aggregates a non-AC COMBAT subtoken -- same gap as `rod_alertness`/`companion_stone_far_sight`."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:staff_of_the_hierophant",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: `BONUS:COMBAT|AC|2+Global_LuckBonus|TYPE=Luck` + `BONUS:SAVE|ALL|2+Global_LuckBonus|TYPE=Luck` -- both formula-valued, no evaluator (same `Global_LuckBonus` gap as `gunfighter_s_poncho`/`stone_of_good_luck_luckstone`). Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None (formula parse fails), `skill_bonus`=None, `weapon_enhancement_bonus`=None (this record's own separate Staff/`EQMOD` weapon-enhancement dimension is a distinct unit_id/dimension, out of this row's scope), `to_hit_bonus`=0 (real but unrelated -- the item is itself a Quarterstaff weapon with no applied_modifiers)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:companion_stone_far_sight",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: `BONUS:COMBAT|TOHIT.RANGED|2|TYPE=Competence` -- a bare non-AC COMBAT subtoken, same gap as `scattershot_bracers`. Confirmed live via `e5_last39_skill_combat_ours` (resolved by KEY `Companion Stone (Far Sight)`, not the OUTPUTNAME-divergent display `Companion Stone of [NAME]` -- the wave-5 `corpus_loader.rs` OUTPUTNAME fix confirmed still applying, record resolves cleanly): `armor_class_bonus`=None, `skill_bonus`=None, `weapon_enhancement_bonus`=None, `to_hit_bonus`=None (not a weapon record)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:flurry_of_fists",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: two chains -- `BONUS:WEAPON|ATTACKS|FlurryOfFistsExtraAttacks` (a variable-named formula whose value is only meaningful in the context of the SEPARATE `Blade Skill ~ Flurry of Fists` ability record's own `DEFINE:FlurryOfFistsExtraAttacks|0` + `BONUS:VAR|FlurryOfFistsExtraAttacks|1` -- genuine cross-record resolution, deliberately out of scope for `resolve_var_reference`'s same-record-only discipline, see `equipmods.rs`'s own doc comment) and `BONUS:WEAPON|TOHIT|-2` (a bare, no-`TYPE=` chain, deliberately excluded by `compute_equipmods_effect`'s module doc comment -- same shape as `crossbow_double`/`rod_withering`'s established `no_resolver` disposition, `AT-33-E5-last67-weapon`). Confirmed live via `e5_last39_skill_combat_ours`: `weapon_enhancement_bonus`=None, `to_hit_bonus`=0 (real but unrelated -- this IS a real weapon record, Unarmed Strike proficiency, but with no applied_modifiers)."
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:flurry_of_strikes",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: same shape as `flurry_of_fists` -- `BONUS:WEAPON|WEAPONBAB|MeditantFlurryBABBonus`, `BONUS:WEAPON|ATTACKS|MeditantFlurryExtraAttacks` (both cross-record class-feature-defined variables, out of `resolve_var_reference`'s same-record scope) and a bare `BONUS:WEAPON|TOHIT|-2` (deliberately excluded, same as `flurry_of_fists`). Confirmed live via `e5_last39_skill_combat_ours`: `weapon_enhancement_bonus`=None, `to_hit_bonus`=0 (real, unrelated)."
+    }
+  ]
+}

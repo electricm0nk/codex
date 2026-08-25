@@ -151,6 +151,40 @@ pub struct WeaponEnhancementBonus {
 /// field, not that its value is zero. `BONUS:WEAPON|WIELDCATEGORY|...`
 /// chains and `TYPE=Enhancement`-less `BONUS:WEAPON|...` chains are
 /// deliberately not matched (see module doc comment).
+/// SD-33 remediation wave 6 (`AT-33-E5-last39-skill-combat`): a record's
+/// own `BONUS:VAR|<name>|<n>` chain, when `name` matches exactly. Used
+/// only as a narrow substitution for a sibling `WEAPON|...` chain's own
+/// magnitude segment when that segment is not a literal integer -- never
+/// consulted for any other purpose, and never looks outside this ONE
+/// record (no cross-record variable resolution, no character context).
+/// `n` is required to be a literal integer itself; a non-literal `VAR`
+/// value (none observed in the pinned corpus) yields `None` rather than a
+/// fabricated number, same discipline as every other resolver in this
+/// module.
+fn resolve_var_reference(record: &EquipmentRecord, name: &str) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "VAR" && qualifiers[1] == name {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// A `WEAPON`-chain magnitude segment: a literal signed integer, or (SD-33
+/// remediation wave 6) the name of a variable this same record defines via
+/// its own `BONUS:VAR|<name>|<n>` chain (see [`resolve_var_reference`]).
+/// Real corpus example: `ultimate_psionics`'s dissonance-modifier family
+/// carries both `BONUS:VAR|DissonanceEnhancementBonusMain|1` and
+/// `BONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusMain|
+/// TYPE=ENHANCEMENT` on the SAME record -- the second chain's magnitude
+/// segment names the first chain's own variable, whose value (`1`) is a
+/// real, verbatim corpus literal, not computed by any formula evaluator.
+fn resolve_bonus_magnitude(record: &EquipmentRecord, raw: &str) -> Option<i16> {
+    raw.parse::<i16>().ok().or_else(|| resolve_var_reference(record, raw))
+}
+
 pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
     let mut tohit_bonus: Option<i16> = None;
     let mut damage_bonus: Option<i16> = None;
@@ -181,8 +215,30 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
             // why: it excludes `WIELDCATEGORY` and untyped Wield-Size
             // to-hit-offset chains, which are real but are not a magic
             // enhancement bonus).
-            if qualifiers.len() >= 4 && qualifiers[3] == "TYPE=Enhancement" {
-                if let Ok(bonus_value) = qualifiers[2].parse::<i16>() {
+            //
+            // SD-33 remediation wave 6 (`AT-33-E5-last39-skill-combat`):
+            // matched case-insensitively -- the `ultimate_psionics`
+            // dissonance-modifier family (`up_equipmods.lst:141-142`)
+            // carries the SAME shape with `TYPE=ENHANCEMENT` (uppercase),
+            // which the prior exact-string match never matched. Named,
+            // not fixed, by `AT-33-E5-last75_cycle_receipt.md` Finding 4
+            // and `AT-33-E5-last67-skill-combat_cycle_receipt.md`. No real
+            // corpus record's `TYPE=` qualifier for this shape is
+            // observed in any casing other than these two, and
+            // case-insensitive comparison cannot turn an unrelated
+            // qualifier into a false match (it only widens this exact
+            // string, never a substring).
+            if qualifiers.len() >= 4 && qualifiers[3].eq_ignore_ascii_case("TYPE=Enhancement") {
+                // SD-33 remediation wave 6: the magnitude segment is
+                // either a literal signed integer (the common case) or
+                // the NAME of a variable this SAME record itself defines
+                // via a sibling `BONUS:VAR|<name>|<n>` chain (the
+                // dissonance-modifier family's `WEAPON|DAMAGE,TOHIT|
+                // DissonanceEnhancementBonus{Alt,Main}|TYPE=ENHANCEMENT`
+                // shape) -- resolved via `resolve_var_reference`, never a
+                // blind/general formula evaluator, and never a value from
+                // any OTHER record.
+                if let Some(bonus_value) = resolve_bonus_magnitude(record, &qualifiers[2]) {
                     matched = true;
                     natural_attack_only = this_natural_attack_only;
                     apply(&qualifiers[1], bonus_value);
@@ -564,5 +620,62 @@ mod tests {
         let record = &result.entries[0];
 
         assert_eq!(resolve_spell_resistance_bonus(record), None);
+    }
+
+    /// SD-33 remediation wave 6 (`AT-33-E5-last39-skill-combat`): real
+    /// verbatim tokens copied from `ultimate_psionics/up_equipmods.lst:141`
+    /// (`KEY:Special Quality ~ Dissonance / Enhancement Bonus / Main`,
+    /// `data/corpus/ultimate_psionics/equipment/equipmods/
+    /// special_quality_dissonance_enhancement_bonus_main.json`). Two real
+    /// gaps this record exposes together, both closed by this cycle:
+    /// (1) the chain's affected-roll magnitude is the NAME of a variable
+    /// (`DissonanceEnhancementBonusMain`), not a literal integer --
+    /// `qualifiers[2].parse::<i16>()` fails closed on a bare name. The
+    /// record's OWN sibling `BONUS:VAR|DissonanceEnhancementBonusMain|1`
+    /// chain states that variable's own contribution as a real literal
+    /// `1`, and the record's `DEFINE:DissonanceEnhancementBonusMain|0`
+    /// token (base 0, no other source in an isolated single-item read)
+    /// means the variable's total, knowable value is `0 + 1 = 1` -- not a
+    /// guess, cross-referenced against the record's own chain.
+    /// (2) the chain's `TYPE=` qualifier is `TYPE=ENHANCEMENT`
+    /// (uppercase), which `qualifiers[3] == "TYPE=Enhancement"`'s exact
+    /// string match never matches -- named but not fixed by
+    /// `AT-33-E5-last75_cycle_receipt.md` Finding 4 and reconfirmed still
+    /// open by `AT-33-E5-last67-skill-combat_cycle_receipt.md`. Before this
+    /// cycle: `compute_equipmods_effect(record)` returns `None` (matches
+    /// neither gate). After: real `tohit_bonus`/`damage_bonus` of `Some(1)`
+    /// each, traced to the record's own two chains, no formula evaluator
+    /// and no fabricated number.
+    #[test]
+    fn dissonance_enhancement_bonus_var_referenced_chain_resolves_via_its_own_sibling_var_chain() {
+        let text = "Enhancement Bonus for Dissonance Main\tKEY:Special Quality ~ Dissonance / Enhancement Bonus / Main\tTYPE:Weapon\tVISIBLE:NO\tBONUS:VAR|DissonanceEnhancementBonusMain|1\tBONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusMain|TYPE=ENHANCEMENT\tDEFINE:DissonanceEnhancementBonusMain|0\n";
+        let result = parse_equipment_entries("up_equipmods.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_equipmods_effect(record);
+        assert_eq!(
+            effect,
+            Some(WeaponEnhancementBonus {
+                tohit_bonus: Some(1),
+                damage_bonus: Some(1),
+                natural_attack_only: false,
+                weapon_prof_scope: None,
+            })
+        );
+    }
+
+    /// Negative control: a bare `WEAPON` chain whose magnitude names a
+    /// variable with NO sibling `VAR` chain on the same record must still
+    /// yield `None` -- the substitution is scoped to the record's own
+    /// verified `VAR` chain, never a blind lookup that could fabricate a
+    /// value for an unrelated or undefined variable name.
+    #[test]
+    fn weapon_chain_referencing_an_undefined_variable_name_has_no_weapon_enhancement_bonus() {
+        let text = "Fabricated\tKEY:Fabricated Test Record\tTYPE:Weapon\tBONUS:WEAPON|TOHIT|SomeUndefinedVariable|TYPE=Enhancement\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        let record = &result.entries[0];
+
+        assert_eq!(compute_equipmods_effect(record), None);
     }
 }
