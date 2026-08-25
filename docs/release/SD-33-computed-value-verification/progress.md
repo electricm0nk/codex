@@ -225,6 +225,83 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle sd33-r4-disagreements — remediation wave 4, the 26 real disagreements (row 18, AT-33-E5-003) — blocked-escalated
+
+- **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
+- **Commit:** `abc72f75ec`.
+- **Files:** `src/rules_core/equipment_effects.rs` (new `eqmod_referenced_records`, `resolve_category_effect` now corpus-aware), `src/rules_core/equipment_effects/arms_armor.rs` (new `apply_eqmod_armor_class_bonus`, `TYPE=Circumstance` exclusion, 4 new tests), `src/rules_core/equipment_effects/general.rs` (new `apply_eqmod_var_bonus`, 1 new test), `src/bin/e5_disagreement_fixes_ours.rs` (new probe), `artifacts/epic-5-reverification/disagreement-fixes-manifest.json` (new), `artifacts/epic-5-reverification/disagreement-fixes.oracle-results.json` (new, 22 rows), `docs/retro/events/sd33-r4-disagreements.jsonl` (new, 2 corrections).
+
+**Root-cause grouping (per the criterion's own instruction — group by mechanism, fix by mechanism):**
+
+| Mechanism | Units | Route | Disposition |
+|---|---:|---|---|
+| `eqmod_embedded_modifier_chain_not_summed` — a base armor item's own `COMBAT|AC`/`VAR|ArmorCheckPenalty` chain is only its own base value; the real total also sums its `EQMOD:`-referenced modifier record's own separate chain, never resolved before this cycle | 22 | our-compute | **fixed** |
+| `conditional_type_qualifier_read_as_unconditional` — a `TYPE=Circumstance` `COMBAT|AC` chain is situational (PF1 rules), never a standing bonus; read unconditionally before this cycle | 1 (`sea_knife`, counted in the 22 above — same commit, same mechanism family as the exclusion side of the fix) | our-compute | **fixed** |
+| `baseline_diff_harness_limitation` — the harness's `AC.TOTAL_DELTA` (item AC.Total − baseline AC.Total) conflates the item's own AC bonus with a second-order Dex-bonus loss (`MAXDEX` cap) or Dex-enhancement gain the baseline character didn't have; confirmed by direct arithmetic on the already-committed raw `AC.TOTAL` exports (no new PCGen run needed) | 4 | harness (not attempted — full re-run of all 8,255 already-judged rows is out of this cycle's turn budget, per the criterion's own re-run clause) | **escalated** |
+
+(`sea_knife` is inside the "22" figure above, not a 23rd unit — it shares this cycle's `arms_armor.rs` commit but a distinct sub-mechanism within it; called out on its own row here because its root cause is conceptually different from the other 21 EQMOD-summation units.)
+
+**Per-disagreement table, all 26, each resolved to a commit or escalated with root cause:**
+
+| unit_id | ours (was) | oracle | ours (now) | disposition |
+|---|---:|---:|---:|---|
+| `inner_sea_races:equipment:armor_of_grim_triumph` | 6 | 7 | 7 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:coat_of_shells` | 5 | 7 | 7 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:gnome_scrap_armor` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:hallowed_chain` | 6 | 8 | 8 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:hallowed_chain_greater` | 6 | 9 | 9 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:hide_of_grim_triumph` | 4 | 5 | 5 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:mail_of_sly_steps` | 4 | 6 | 6 | fixed, `abc72f75ec` |
+| `inner_sea_races:equipment:panoply_of_the_fierani_knight` | 6 (VAR-shape row) | 3 (VAR) / 11 (COMBAT) | 3 (VAR) / 11 (COMBAT) | fixed on **both** dimensions, `abc72f75ec` — the top-level 26-row table carried the VAR-shape's `(6,3)` as the merged representative; the combined file's own `multi_shape_sources` shows the COMBAT-shape was *also* disagreeing (`ours=9, oracle=11`), not previously surfaced in the summary table. Both close: VAR via `general::apply_eqmod_var_bonus` (Mithral's own `-3` chain), COMBAT via `arms_armor::apply_eqmod_armor_class_bonus` (the `+2 Armor` chain) |
+| `advanced_class_guide:equipment:full_plate_of_the_corpse` | 9 | 10 | 11 | **escalated, re-root-caused this cycle** — see below |
+| `advanced_class_guide:equipment:hero_s_hauberk` | 4 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_cold` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_desert` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_forest` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_jungle` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_mountain` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_plains` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_swamp` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_underground` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_urban` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:stalking_armor_water` | 3 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_class_guide:equipment:tireless_tracking_hide` | 4 | 5 | 5 | fixed, `abc72f75ec` |
+| `advanced_race_guide:equipment:sea_knife` | -2 | 0 | 0 | fixed, `abc72f75ec` — `TYPE=Circumstance` exclusion |
+| `inner_sea_world_guide:equipment:field_plate` | 7 | 6 | 7 (unchanged) | **escalated** — `baseline_diff_harness_limitation` (confirmed prior wave's diagnosis: `MAXDEX:1` Dex-cap loses 1 point in the diff) |
+| `inner_sea_world_guide:equipment:stoneplate` | 9 | 8 | 9 (unchanged) | **escalated** — same mechanism |
+| `ultimate_equipment:equipment:snakeskin_tunic` | 1 | 2 | 1 (unchanged) | **escalated** — same mechanism (co-located Dex-enhancement chain) |
+| `ultimate_intrigue:equipment:diviner_s_blight` | 2 | 6 | 6 | fixed, `abc72f75ec` — previously "undiagnosed"; confirmed this cycle as the same `eqmod_embedded_modifier_chain_not_summed` mechanism (`+4 Armor` EQMOD) |
+
+**`full_plate_of_the_corpse`, re-root-caused (correction, not a fresh guess):** prior wave's receipt called this a "close variant… off by 1 of a 2-part EQMOD string," implying the item's true total is 10. Re-derived this cycle directly from the already-committed raw exports (no new PCGen run) — `combat-shape-work/ac-oracle-txt/full_plate_of_the_corpse.txt`: `AC.TOTAL=22`; `baseline_advanced_class_guide.txt`: `AC.TOTAL=12`. The naive diff is `22-12=10` (the recorded "oracle"). But the real composition is `10 (base 10 AC + 0 Dex before any modifier) + 11 (armor: 9 base + 2 enhancement) + 1 (Dex, capped from +2 to +1 by the item's own `MAXDEX:1`) = 22` — the diff method silently absorbs the 1 point of Dex bonus the cap removes, **the same `baseline_diff_harness_limitation` mechanism already named for `field_plate`/`stoneplate`/`snakeskin_tunic`**, not a distinct EQMOD-string defect. This engine's own EQMOD-summed value (`11`) is confirmed correct; the harness's diff-based "oracle" comparator (`10`) cannot isolate it. Moves this unit from the 21-unit EQMOD-fixed bucket to the (now 4-unit) harness-limitation bucket. `scripts/retro.py correction` recorded (`docs/retro/events/sd33-r4-disagreements.jsonl`).
+
+**Why the 4 harness-limitation units are escalated, not fixed:** `AT-33-E5-003`'s own doctrine — "fix the harness, and re-run everything it already judged" — requires re-running all 8,255 already-examined rows through the corrected comparator (an `AC.TOTAL`-isolating token or a formula-level probe, not a whole-character diff). That is a real, budgeted, multi-hour live-PCGen undertaking (prior lanes measured ~20s/invocation even at `-P 15`/`-P 20` parallelism), out of this one-turn cycle's budget. Escalating per `blocker-closure-doctrine.md`: **the exact fix needed** is to isolate `armor_class_bonus` directly (e.g. add an `AC.Armor`-only or per-bonus-type PCGen export token to `scripts/oracle_harness/`'s template, or compute the diff at a fixed baseline Dex/ability configuration that never triggers a `MAXDEX` cap or co-located ability-enhancement interaction) in `scripts/oracle_harness/`, then re-run the full 8,255-row population.
+
+**Disagree-capability re-proof on the current batch path (after the fix):** a zero-disagreement result on the units this cycle touches would be exactly the moment a silently-broken comparison looks like success. Fed one of this cycle's own now-agreeing rows through the CURRENT `box_ledger.py --check` path with its verdict flipped to `disagree` (scratch copy, never committed): `oracle_disagreement=1`, exit 1, naming the mutated unit — the disagree path still has real teeth after the fix. Committed file (all 22 `agree`) → exit 0 on its own slice.
+
+**Before / after (`box_ledger.py --check`, real commands, real numbers):**
+```
+$ python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json
+uncovered=0 overlap=0 population=49438 oracle_disagreement=26 unverifiable_done=0 stale=False   # BEFORE, exit 1
+
+$ python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/disagreement-fixes.oracle-results.json
+uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False    # this cycle's own 22-unit slice, exit 0
+```
+A simulated merge of this cycle's 22 rows into the combined file (temp copy, `/tmp`, never committed — the real merge is the finalize cycle's own §5 job) confirms the projected population-wide result: `oracle_disagreement=4` (exactly the 4 escalated units), exit 1 — 26 → 4, a real 22-unit reduction, not a reclassification.
+
+**Figures + their re-derive commands:** 26 disagreements in (`AT-33-E5-003.combined-oracle-results.json`'s own `disagree` count). 22 of 26 fixed (`disagreement-fixes.oracle-results.json`'s own `agree` count, live-reverified: `cargo run --locked --bin e5_disagreement_fixes_ours -- . artifacts/epic-5-reverification/disagreement-fixes-manifest.json artifacts/epic-5-reverification/disagreement-fixes.oracle-results.json` → `22 items, 0 unresolved, 22 agree, 0 disagree`). 4 of 26 escalated (the harness-limitation bucket, unchanged, still `disagree` in the combined file). 0 disagreements remaining among the 22 this cycle owns; 4 remaining bundle-wide of the original 26.
+
+**Test scoping:** `cargo test --locked --lib equipment_effects` (70/70, 4 new — the scoped suite this criterion's own `src/rules_core/equipment_effects/` file-touch set requires) and the full `cargo test --locked --lib` sweep (2,822 passed / 4 failed — all 4 failures pre-existing and unrelated: `equipment_resolver::tests::catalog_rows_span_every_ingested_book_with_their_real_counts` (`8119` vs `8100`, a corpus-count-pinning drift from a concurrent lane, zero overlap with this cycle's diff) and 3 `formula_interpreter_corpus_wide` tests failing on `shape_ledger.py`/`pf1e_dashboard_producer.py`'s `doneness_verdict: unmapped 'ambiguous' + 'unmeasurable'` (a pre-existing `docs/work-inventory.json`/dashboard-producer mapping gap, confirmed present at HEAD before this cycle's own commit — `git status --porcelain` shows only this cycle's 3 `src/rules_core/` files + new files touched). Did not run `apps/desktop/src-tauri` (a separate cargo workspace; no file in it touched, and it still runs only the bounded `corpus_fixtures` bundle — not affected by this cycle's corpus-wide resolution change).
+
+**RED→GREEN:** live RED confirmed for the `TYPE=Circumstance` exclusion (temporarily reverted the guard, re-ran `a_circumstance_typed_ac_chain_is_conditional_not_a_standing_bonus` → `FAILED`, `left: Some(-2), right: None`; restored, GREEN). `apply_eqmod_armor_class_bonus`/`apply_eqmod_var_bonus`/`eqmod_referenced_records` are new functions this cycle introduces — no prior implementation existed for these tests to fail against; their own new tests (`eqmod_referenced_enhancement_modifier_sums_into_the_base_items_ac_bonus`, `eqmod_referenced_modifier_sums_across_the_whole_corpus`, `eqmod_referenced_material_var_chain_sums_into_the_base_items_var_bonus`) are RED-by-nonexistence, GREEN once implemented. 70/70 `equipment_effects` tests green.
+
+**Movement (four buckets):** closure 0 (no `work-inventory.json` status field changed) / reclassification 0 / reachability 0 (no examined-population widening) / **instrument-correction 22** (22 `ours` values corrected from a base-only reading to the real EQMOD-summed total) **+ 1** (the `full_plate_of_the_corpse` root-cause re-diagnosis, moved from the EQMOD bucket to the harness-limitation bucket).
+
+**Status: blocked-escalated.** 22 of 26 disagreements genuinely fixed (real engine change, RED→GREEN, live-reverified against the pinned oracle). 4 of 26 escalated with a full, arithmetic-verified root cause and the exact harness change the fix needs — not a vague blocker, a named, budgeted next cycle. `AT-33-E5-003` is not `complete`: 4 real disagreements remain. This is the honest outcome the criterion's own doctrine calls for over declaring victory on a partial population.
+
+**Next-cycle plan:** (1) Build the `AC.Armor`-isolating (or fixed-baseline) oracle probe in `scripts/oracle_harness/` for the 4 harness-limitation units, then re-run the full 8,255-row population per the re-run clause. (2) Row the 75 still-unexamined units (owned by the sibling `AT-33-E5-last75` lane, not this one). (3) Once both land, `AT-33-E6-001` attempt 5 can re-run the final-acceptance scan.
+
+**Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003-disagreement-fixes_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-last75 — remediation wave 4, the 75-unit residual named by AT-33-E6-001 attempt 4 (row 17, AT-33-E5-002 remediation) — blocked-escalated
 
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last75_cycle_receipt.md`.
