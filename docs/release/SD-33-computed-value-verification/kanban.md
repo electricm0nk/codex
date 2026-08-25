@@ -34,7 +34,7 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | 14 | `unknown-to-zero` | 4 | AT-33-E4-002 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-002_cycle_receipt.md` |
 | 15 | `no-effort-named-buckets` | 4 | AT-33-E4-003 | complete | `artifacts/epic-4-unknown-classification/AT-33-E4-003_cycle_receipt.md` |
 | 16 | `reverify-fixture-verified` | 5 | AT-33-E5-001 | in-progress | `artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md` (11 of 1,741 examined) |
-| 17 | `reverify-literal-verified` | 5 | AT-33-E5-002 | not-started | |
+| 17 | `reverify-literal-verified` | 5 | AT-33-E5-002 | in-progress | `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md` (21 of 6,589 examined) |
 | 18 | `disagreement-resolution` | 5 | AT-33-E5-003 | not-started | |
 | 19 | `final-acceptance-scan` | 6 | AT-33-E6-001 | not-started | |
 | 20 | `retrospective-written-and-cited` | 6 | AT-33-E6-002 | not-started | |

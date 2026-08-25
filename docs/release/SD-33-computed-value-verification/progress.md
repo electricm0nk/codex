@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 started, AT-33-E5-001 in-progress (11 of 1,741 fixture-verified units re-examined against a live oracle round-trip, row 16 not yet complete)
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 started, AT-33-E5-001 in-progress (11 of 1,741 fixture-verified units re-examined) and AT-33-E5-002 in-progress (21 of 6,589 literal-verified units re-examined), rows 16-17 not yet complete
 date: 2026-08-24
 ---
 
@@ -105,6 +105,25 @@ this cycle's mechanism until Epic 1's probe surface widens. No `## Open blockers
 too large for one cycle, not an escalation. Full detail:
 `artifacts/epic-5-reverification/README.md` and `AT-33-E5-001_cycle_receipt.md`.
 
+**`AT-33-E5-002` (row 17) is also `in-progress`, not `complete`.** The `literal-verified`
+population is **6,589** — a separate, non-overlapping population from `AT-33-E5-001`'s 1,741
+`fixture-verified` units (equipment 5,170 / monster 843 / monster_ability 148 / spell 217 /
+companion 99 / equipment_modifier 46 / race 36 / class_feature 17 / race_trait 13 —
+`jq -r '[.units[]|select(.status=="literal-verified")]|group_by(.kind)|map({kind:.[0].kind,count:length})' docs/work-inventory.json`).
+This cycle re-used `AT-33-E5-001`'s already-proven mechanism (the built PCGen jar, the
+`e5-equip-stats.txt.ftl` template, the `Belt`/`Headband` `.pcg` slot convention) against a new,
+21-item slice of the `literal-verified` `equipment` kind carrying the same single-ability
+`STAT|<ability>|<n>|TYPE=Enhancement` shape — **21 of 21 agree, 0 disagree**, verified through
+`scripts/oracle_harness/run.py` and independently through
+`scripts/box_ledger.py --check --oracle-results ...` (exit 0). The remaining **6,568 of 6,589**
+are not yet examined and are **not** folded into a false 100%: 5,478 (`equipment` remainder +
+`spell` + `equipment_modifier` + `race` + `class_feature` + `race_trait`) carry a real magnitude
+probe and are queued with a concrete next-cycle plan; 1,090 (`companion`+`monster`+`monster_ability`)
+carry **no** magnitude probe at all (`AT-33-E1-003`'s pre-existing finding, same structural gap
+`AT-33-E5-001` already named). No `## Open blockers` entry is filed. Full detail:
+`artifacts/epic-5-reverification/README.md` ("AT-33-E5-002" section) and
+`AT-33-E5-002_cycle_receipt.md`.
+
 ## Cycle entry schema
 
 Each entry states, at minimum:
@@ -120,6 +139,55 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E5-002 — reverify-literal-verified (row 17, Epic 5) — in-progress
+
+- **Criterion:** `AT-33-E5-002` — the 6,589 `literal-verified` units are re-examined against the oracle.
+- **Files:** `artifacts/epic-5-reverification/README.md` (extended, new "AT-33-E5-002" section),
+  `AT-33-E5-002_cycle_receipt.md` (new),
+  `equipment-literal.oracle-export.txt` / `equipment-literal.ours.json` / `equipment-literal.oracle-results.json` (new),
+  `fixtures/equipment-literal-pcg/*.pcg` (new, 21), `fixtures/equipment-literal-oracle-txt/*.txt` (new, 21),
+  2 build-transcript files (new),
+  `ours-derivation/equipment-literal-ours-probe.{rs,Cargo.toml,output.json}` (new — reference copy
+  of a scratch program that reads the `codex` crate as a path dependency from outside this repo;
+  it writes nothing into the repo).
+- **What landed:** re-used `AT-33-E5-001`'s already-proven mechanism (built PCGen jar, template,
+  `.pcg` slot convention) against 21 of the 6,589 `literal-verified` `equipment` units carrying the
+  same single-ability `STAT|<ability>|<n>|TYPE=Enhancement`/`Belt`-or-`Headband` shape — 21 live
+  `.pcg` characters, each real-`EQUIPSET`-equipped, exported through `./gradlew run` for real
+  (21/21 exit 0) against a real `ours` value from a live call into
+  `codex::rules_core::equipment_effects::compute_equipment_effects`. **21 of 21 agree, 0 disagree**,
+  verified through `scripts/oracle_harness/run.py` and independently through
+  `scripts/box_ledger.py --check --oracle-results ...` (exit 0).
+- **Figures:** see `AT-33-E5-002_cycle_receipt.md`'s figures table — every value with its
+  denominator and re-derive command. Headline: 21 of 6,589 (0.32%) examined this cycle; 5,478 of
+  6,589 not-yet-examined but probe-bearing; 1,090 of 6,589 not-yet-examined and probe-less
+  (pre-existing gap, not created this cycle).
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — no unit's `status` field changed; this cycle re-uses existing
+  instruments without finding a defect in any of them.
+- **RED→GREEN:** before this cycle, `AT-33-E5-002`'s evidence obligation had zero real rows —
+  `equipment-literal.oracle-results.json` did not exist and no `literal-verified`-population
+  `.pcg`/template pair had been authored. After: 21 real per-unit rows, each backed by an
+  independently-derived live PCGen export (21/21 `./gradlew run` exit 0) and a live engine call
+  (`cargo run --release` exit 0), compared for real (`agree=21 disagree=0 unverifiable=0`),
+  independently re-verified by `scripts/box_ledger.py --check` exiting 0 on the same file.
+- **Status: in-progress, not complete** — same disposition and same reasoning `AT-33-E5-001`
+  (the sibling criterion) used: the criterion's evidence bar asks for the full population's
+  per-unit rows, and marking 21 of 6,589 `complete` would be the false-100% shape `decisions.md`
+  §2 and `AGENTS.md` rule 2 forbid. No `## Open blockers` entry filed; not an escalation.
+- **Notes:** the pinned PCGen checkout, already built and jarred by `AT-33-E5-001` earlier in this
+  same dispatch session, was reused unmodified (no rebuild) via the shared per-session scratchpad
+  directory. 8 same-shape `equipment` candidates (5 multi-ability, 2 different-slot, 1
+  different-book) were identified but excluded from this slice, named explicitly in the receipt
+  and `README.md` rather than silently dropped.
+- **Test scoping:** ran `scripts/oracle_harness/run.py` and `scripts/box_ledger.py --check`
+  (both unmodified this cycle) against this cycle's real output. Did not re-run
+  `scripts/tests/test_oracle_harness.py` or `scripts/tests/test_box_ledger.py` (neither file
+  changed). Did not run the Rust workspace's `cargo test`/`cargo build` (no `src/` file changed —
+  the scratch `equip_probe` crate lives outside this repo). Did not run `apps/desktop/src-tauri`
+  (separate cargo workspace, untouched).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md`.
 
 ### Cycle AT-33-E5-001 — reverify-fixture-verified (row 16, Epic 5) — in-progress
 

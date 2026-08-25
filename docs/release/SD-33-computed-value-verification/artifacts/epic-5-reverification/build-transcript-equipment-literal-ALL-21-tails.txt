@@ -1,0 +1,147 @@
+=== anaconda_s_coils ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== belt_of_the_weasel ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== belt_of_thunderous_charging ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== cord_of_stubborn_resolve ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== elemental_earth_belt ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== gorgon_belt ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_cha_2 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_cha_4 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_cha_6 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_int_2 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_int_4 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_int_6 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_wis_2 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_wis_4 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_aerial_agility_wis_6 ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_ponderous_recollection ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== headband_of_unshakeable_resolve ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== minotaur_belt ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== monkey_belt ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== plague_rat_belt ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+=== shadowform_belt ===
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
