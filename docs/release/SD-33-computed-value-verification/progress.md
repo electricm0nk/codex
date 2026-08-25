@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epic 1 dispatched, rows 1-2 (AT-33-E1-001, AT-33-E1-002) complete
+status: in progress — Epic 1 dispatched, rows 1-3 (AT-33-E1-001, AT-33-E1-002, AT-33-E1-003) complete
 date: 2026-08-24
 ---
 
@@ -18,9 +18,19 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 2. SD-32's instrument debt closed **inside SD-32** — 29 total / 0 open deferrals, `EXCLUDED_BOOKS = frozenset()`
 3. `tranche/13` cut from `develop` and pushed — `origin/tranche/13` = `f652db7ac7`
 
-Epic 1 dispatched; cycles 1-2 (`AT-33-E1-001` row 1, `AT-33-E1-002` row 2) landed.
+Epic 1 dispatched; cycles 1-3 (`AT-33-E1-001` row 1, `AT-33-E1-002` row 2, `AT-33-E1-003` row 3) landed.
 
-**Cards complete: 2 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body).
+**Bundle-level figure (`AT-33-E1-003`'s own evidence bar, not a footnote):** of the corpus's **19**
+distinct `kind` values (`jq -r '.units[].kind' docs/work-inventory.json | sort -u | wc -l`), **8**
+carry a probe capable of verifying a computed magnitude and **11** do not
+(`python3 scripts/probe_surface_census.py --check` → `kinds_with_probe=8 kinds_without_probe=11`).
+Of the 11: 8 have no engine table at all (`ability`, `template`, `deity`, `power`, `domain`,
+`skill`, `language`, `trait`), and 3 have an engine table but only a presence/lookup check, never a
+computed-delta observation (`monster`, `monster_ability`, `companion`) — see
+`artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
+per-kind table and the source citations.
+
+**Cards complete: 3 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body).
 
 ## Cycle entry schema
 
@@ -37,6 +47,54 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E1-003 — probe-surface-census (row 3, Epic 1)
+
+- **Criterion:** `AT-33-E1-003` — the probe surface is enumerated for real.
+- **Files:** `scripts/probe_surface_census.py` (new), `scripts/tests/test_probe_surface_census.py`
+  (new), `artifacts/epic-1-instruments/probe-surface-census.json` (new, generated).
+- **What landed:** every corpus `kind` (19, live) enumerated by reading `src/bin/v06_work_inventory.rs`'s
+  exhaustive verdict match arm-by-arm, cross-checked against live evidence strings for every claim
+  (not from memory or prior prose, per `decisions.md §7`). 8 kinds carry a probe function that
+  changes an input and observes a delta on a rendered computed snapshot (`class`, `class_feature`,
+  `feat`, `spell`, `equipment`, `equipment_modifier`, `race`, `race_trait`); 11 do not — 8 with no
+  engine table at all, 3 with an engine table but only a presence/lookup check (`monster`,
+  `monster_ability`, `companion`).
+- **Figures:**
+  - Distinct corpus `kind` count: 19 (`jq -r '.units[].kind' docs/work-inventory.json | sort -u | wc -l`)
+  - Kinds with a magnitude probe: **8 of 19**; without: **11 of 19**
+    (`python3 scripts/probe_surface_census.py --check` → `kinds_with_probe=8 kinds_without_probe=11`)
+  - Units covered by a probe-bearing kind: 34,246 of 49,438
+    (`jq '[.units[] | select(.kind | IN("class","class_feature","feat","spell","equipment","equipment_modifier","race","race_trait"))] | length' docs/work-inventory.json`)
+  - Units in a no-probe kind: 15,192 of 49,438
+    (`jq '[.units[] | select(.kind | IN("monster","monster_ability","companion","ability","template","deity","power","domain","skill","language","trait"))] | length' docs/work-inventory.json`)
+  - Per-kind probe-fire confirmation (live, execution-derived): `class`=28, `class_feature`=26,
+    `feat`=108, `spell`=966, `equipment`+`equipment_modifier`=605, `race`=39, `race_trait`=309 real
+    units each — proving each claimed probe genuinely fired, not merely exists in source. All 11
+    no-probe kinds confirmed at 0.
+  - Full per-kind table with unit counts and re-derive commands: cycle receipt.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — this cycle builds and runs an enumeration instrument; it moves no
+  unit's status.
+- **RED→GREEN:** `ModuleNotFoundError: No module named 'probe_surface_census'` before the module
+  existed (intended reason); 11/11 green after, including 3 live-corpus acceptance tests run
+  against the real `docs/work-inventory.json`. 3 mutation proofs on `--check`'s fail-closed gate:
+  an unmapped-kind unit, a `probe_exists:true` kind whose only unit never fires the probe, and a
+  `probe_exists:false` kind carrying probe-shaped evidence — all three correctly detected and
+  reported by name. Regression: `scripts/tests/test_box_ledger.py` re-run, 25/25 still green
+  (untouched this cycle).
+- **Notes:** presence-only lookups (`monster`/`monster_ability`/`companion`) are deliberately NOT
+  counted as magnitude probes even though the inventory's own vocabulary calls their result
+  `grounded` — the criterion's bar is "can verify a computed magnitude", and a `holds_key` table
+  lookup answers a different, weaker question. See the receipt's Notes for the full reasoning and
+  the recursive-find hazard check (confirmed no probe implementation exists outside
+  `v06_work_inventory.rs`'s sibling `v06_content_state_dump.rs`, and confirmed `data/corpus/`'s
+  extra `*_generic`/`_parity` directory names are storage-layout artifacts, not a 20th kind).
+- **Test scoping:** ran `scripts/tests/test_probe_surface_census.py` (11/11) and
+  `scripts/tests/test_box_ledger.py` (25/25, regression). Did not run `scripts/verify.sh` (any
+  stage — `AT-33-E1-004` owns wiring this cycle's files into it), the Rust workspace, or
+  `apps/desktop/src-tauri` (no `.rs` file touched).
+- **Receipt:** `artifacts/epic-1-instruments/AT-33-E1-003_cycle_receipt.md`.
 
 ### Cycle AT-33-E1-002 — box-fail-closed (row 2, Epic 1)
 

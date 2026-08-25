@@ -1,0 +1,245 @@
+{
+  "derived_at_commit": "e88b8e9b0bcd694e1c8e27eb90476d7e19310174",
+  "generator_source": "src/bin/v06_work_inventory.rs",
+  "population_source": "docs/work-inventory.json",
+  "population": 49438,
+  "kind_count": 19,
+  "kinds_with_probe": 8,
+  "kinds_without_probe": 11,
+  "kinds": [
+    {
+      "kind": "ability",
+      "unit_count": 4337,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9553"
+      ],
+      "notes": "Unconditional not_ingested('ability_content_has_no_engine_table') -- no engine table exists for this kind at all."
+    },
+    {
+      "kind": "class",
+      "unit_count": 185,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_class_effect_wiring",
+        "class_probe_ceiling_report"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:6920",
+        "src/bin/v06_work_inventory.rs:6961"
+      ],
+      "notes": "Applies class_probe_input to the probe fixture and observes a delta on the rendered computed snapshot vs. a classless baseline."
+    },
+    {
+      "kind": "class_feature",
+      "unit_count": 18043,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_class_feature_effect_wiring"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:10783"
+      ],
+      "notes": "Observes a delta attributable to the specific class-feature record, not merely to its owning class."
+    },
+    {
+      "kind": "companion",
+      "unit_count": 1696,
+      "probe_exists": false,
+      "category": "presence_only",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9477"
+      ],
+      "notes": "Same holds_key() presence check pattern as monster/monster_ability."
+    },
+    {
+      "kind": "deity",
+      "unit_count": 459,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9549"
+      ],
+      "notes": "Unconditional not_ingested('deity_content_has_no_engine_table')."
+    },
+    {
+      "kind": "domain",
+      "unit_count": 183,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9551"
+      ],
+      "notes": "Unconditional not_ingested('domain_content_has_no_engine_table')."
+    },
+    {
+      "kind": "equipment",
+      "unit_count": 6223,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_equipment_effect_wiring"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:6265"
+      ],
+      "notes": "Shared with equipment_modifier -- both kinds hit the same Equipment match arm and the same probe."
+    },
+    {
+      "kind": "equipment_modifier",
+      "unit_count": 1532,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_equipment_effect_wiring"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:6265"
+      ],
+      "notes": "Kind::Equipment | Kind::EquipmentModifier is one match arm (src/bin/v06_work_inventory.rs:8596) -- the probe does not distinguish the two kinds."
+    },
+    {
+      "kind": "feat",
+      "unit_count": 2764,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_feat_effect_wiring",
+        "feat_probe_input"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:5610",
+        "src/bin/v06_work_inventory.rs:5624"
+      ],
+      "notes": "A feat whose presence changes what compute_pilot_base_chassis returns."
+    },
+    {
+      "kind": "language",
+      "unit_count": 136,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9552"
+      ],
+      "notes": "Unconditional not_ingested('language_content_has_no_engine_table')."
+    },
+    {
+      "kind": "monster",
+      "unit_count": 1270,
+      "probe_exists": false,
+      "category": "presence_only",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:8725",
+        "src/bin/v06_work_inventory.rs:8811"
+      ],
+      "notes": "monster_resolve()/holds_key() is a table LOOKUP -- confirms the engine holds a real stat block, never observes a computed delta attributable to the record. rules_core's monster_resolve() functions return a static MonsterStatBlock by key, not a value derived through a formula evaluator."
+    },
+    {
+      "kind": "monster_ability",
+      "unit_count": 3806,
+      "probe_exists": false,
+      "category": "presence_only",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:8738"
+      ],
+      "notes": "Same holds_key() presence check as monster; text_only promotion path checks for real prose, not a computed magnitude."
+    },
+    {
+      "kind": "power",
+      "unit_count": 421,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9550"
+      ],
+      "notes": "Unconditional not_ingested('power_content_has_no_engine_table')."
+    },
+    {
+      "kind": "race",
+      "unit_count": 95,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_race_creation_roster",
+        "race_magnitude_consumer_races"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:5889"
+      ],
+      "notes": "Reads the same race_creation_chassis function the player-facing roster calls; a race passes only if it states a real ability-score magnitude (BONUS:STAT or a floating pool) that changes the submitted sheet. Conservative/race-level, not trait-key-level."
+    },
+    {
+      "kind": "race_trait",
+      "unit_count": 2561,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_race_trait_corpus",
+        "race_trait_magnitude_read_by_creation_chassis"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:5914"
+      ],
+      "notes": "Two independent observations: a race-level race_ids_with_a_magnitude_consumer check, and a record-level check for the exact trait whose BONUS:STAT the creation chassis reads."
+    },
+    {
+      "kind": "skill",
+      "unit_count": 149,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9537"
+      ],
+      "notes": "Unconditional not_ingested('skill_content_has_no_engine_table')."
+    },
+    {
+      "kind": "spell",
+      "unit_count": 2843,
+      "probe_exists": true,
+      "category": "magnitude_probe",
+      "probe_functions": [
+        "probe_spell_effect_wiring",
+        "spell_probe_input"
+      ],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:6567",
+        "src/bin/v06_work_inventory.rs:6446"
+      ],
+      "notes": "Observes a computed delta (e.g. a real save DC) attributable to the spell."
+    },
+    {
+      "kind": "template",
+      "unit_count": 2248,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9548"
+      ],
+      "notes": "Unconditional not_ingested('template_content_has_no_engine_table')."
+    },
+    {
+      "kind": "trait",
+      "unit_count": 487,
+      "probe_exists": false,
+      "category": "no_engine_table",
+      "probe_functions": [],
+      "probe_locations": [
+        "src/bin/v06_work_inventory.rs:9554"
+      ],
+      "notes": "Unconditional not_ingested('trait_content_has_no_engine_table')."
+    }
+  ]
+}
