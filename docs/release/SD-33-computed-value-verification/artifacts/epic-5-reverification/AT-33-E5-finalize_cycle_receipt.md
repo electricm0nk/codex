@@ -1,7 +1,7 @@
 # Cycle AT-33-E5-finalize — Epic 5 Re-verification / AT-33-E5-001, AT-33-E5-002, AT-33-E5-003
 
-- **Commit SHA:** recorded by a follow-up commit, per this bundle's own precedent (`AT-33-E5-001`'s
-  `e10dead123`, `AT-33-E5-002`'s `56dc837d8d`).
+- **Commit SHA:** `9de465ee12` (landed on `tranche/13`; recorded by this follow-up commit, per this
+  bundle's own precedent — `AT-33-E5-001`'s `e10dead123`, `AT-33-E5-002`'s `56dc837d8d`).
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-verified.combined-oracle-results.json` (regenerated — the full 1,741-row merge)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/literal-verified.oracle-results.json` (regenerated — the 6,198-row merge)
