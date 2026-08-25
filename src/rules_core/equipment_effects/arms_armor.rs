@@ -112,13 +112,78 @@ fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> 
         // still never the first `COMBAT|AC` chain on an unbroken record
         // (see this function's own doc comment above), so taking the
         // first match is still the correct default.
-        let is_ac_bonus = qualifiers.len() >= 3 && qualifiers[0] == "COMBAT" && qualifiers[1] == "AC";
+        //
+        // SD-33 remediation wave 4 (`AT-33-E5-003`): `TYPE=Circumstance`
+        // is excluded from this otherwise-unconditional match. A
+        // circumstance AC bonus is, by PF1's own rules definition,
+        // conditional on a specific in-game situation the item's holder
+        // must be in (the one real corpus instance,
+        // `advanced_race_guide:equipment:sea_knife`'s
+        // `BONUS:COMBAT|AC|-2|TYPE=Circumstance`, only applies while
+        // "swimming, flying, or prone" per the record's own `SPROP`) —
+        // never a standing armor/shield/deflection/natural-armor/
+        // enhancement-style AC contribution, which is what every other
+        // `TYPE=` this widened match accepts represents. Reading it
+        // unconditionally produced a real, confirmed disagreement
+        // against the pinned oracle's standing (not prone/swimming)
+        // reference character (`ours=-2`, oracle=`0`,
+        // `AT-33-E5-003.combined-oracle-results.json`). Confirmed the
+        // only record in the whole corpus with this exact shape (a
+        // `python3` sweep of every `data/corpus/*/equipment*/**/*.json`
+        // record's own `raw_bonus_chains` for `COMBAT|AC|*|TYPE=Circumstance`
+        // finds exactly 1), so this exclusion cannot regress any other
+        // already-verified unit.
+        let is_ac_bonus = qualifiers.len() >= 3
+            && qualifiers[0] == "COMBAT"
+            && qualifiers[1] == "AC"
+            && !qualifiers.iter().any(|q| q == "TYPE=Circumstance");
         if is_ac_bonus {
             qualifiers[2].parse::<i16>().ok()
         } else {
             None
         }
     })
+}
+
+/// Sums every EQMOD-referenced modifier record's own `COMBAT|AC` chain
+/// (via [`armor_class_bonus_from_bonus_chains`], applied to each
+/// modifier's own record) into `effect.armor_class_bonus`.
+///
+/// SD-33 remediation wave 4 (`AT-33-E5-003`): a base armor/shield item's
+/// own literal `COMBAT|AC` chain (what [`compute_arms_armor_effect`]
+/// alone reads) is only the item's OWN base value. A real magic
+/// armor/shield item's enhancement bonus is stated on a *separate*
+/// `equipment_modifier` corpus record the base item's own `EQMOD:` token
+/// references by name (e.g. `KEY:Armor of Grim Triumph`'s own
+/// `BONUS:COMBAT|AC|6|TYPE=Armor` chain is Breastplate's base 6; its
+/// `EQMOD:...Special Ability ~ +1 ~ Armor...` token names a *different*,
+/// separately-resolvable corpus record whose own
+/// `BONUS:COMBAT|AC|1|TYPE=ArmorEnhancement` chain is the real +1
+/// enhancement — oracle's real total is 7, not 6). Neither
+/// `compute_arms_armor_effect` nor any prior cycle resolved and summed
+/// that second record; this is the real, root-caused engine gap named
+/// across 21 of `AT-33-E5-003`'s 26 disagreements
+/// (`eqmod_embedded_modifier_chain_not_summed`) plus one more this cycle
+/// root-caused the same way (`diviner_s_blight`, previously
+/// "undiagnosed" — `9 - 4` under the same mechanism reproduces its
+/// prior wave's own oracle value exactly).
+///
+/// Every EQMOD-referenced non-`+N`/enhancement modifier this cycle
+/// examined (materials, cosmetic special qualities like Spikes/
+/// Martyring) carries no `COMBAT|AC` chain of its own at all (confirmed
+/// directly against each real corpus record this fix's own tests and
+/// the disagreement-fix verification pass reference), so calling this
+/// unconditionally on every resolved modifier is safe: it adds exactly
+/// the real enhancement records' own magnitude and nothing else, never
+/// fabricated, never double-counted.
+pub fn apply_eqmod_armor_class_bonus(effect: &mut EquipmentStatEffect, eqmod_records: &[&EquipmentRecord]) {
+    let extra: i16 = eqmod_records
+        .iter()
+        .filter_map(|modifier| armor_class_bonus_from_bonus_chains(modifier))
+        .sum();
+    if extra != 0 {
+        effect.armor_class_bonus = Some(effect.armor_class_bonus.unwrap_or(0) + extra);
+    }
 }
 
 /// An `equipment_modifier` record's own `BONUS:EQMARMOR|<field>|<n>[|...]`
@@ -316,6 +381,67 @@ mod tests {
             effect.armor_check_penalty,
             Some(0),
             "the record's own real ACCHECK:0 token must win over the conditional Broken EQMARMOR chain"
+        );
+    }
+
+    /// SD-33 remediation wave 4 (`AT-33-E5-003`): real verbatim tokens
+    /// copied from `advanced_race_guide/arg_equip_arms_armor.lst:46`
+    /// (`KEY`-less, identity is `name`). This is the ONE real corpus
+    /// record with a `TYPE=Circumstance` `COMBAT|AC` chain — the pinned
+    /// oracle's standing reference character shows `0`, not the chain's
+    /// literal `-2`, because the bonus only applies while "swimming,
+    /// flying, or prone" (this record's own `SPROP`), a situational
+    /// state this engine has no standing model of.
+    #[test]
+    fn a_circumstance_typed_ac_chain_is_conditional_not_a_standing_bonus() {
+        let text = "Sea-Knife\tKEY:Sea-Knife\tTYPE:Weapon.Resizable.Light.Melee.Piercing.Slashing.Exotic.Finesseable\tCOST:8\tWT:1\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d4\tEQMOD:Material ~ Steel\tWIELD:Light\tSIZE:M\tBONUS:COMBAT|AC|-2|TYPE=Circumstance\tSPROP:The wearer cannot use a leg with a sea-knife strapped to it for walking or running.\n";
+        let result = parse_equipment_entries("arg_equip_arms_armor.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_class_bonus, None,
+            "a TYPE=Circumstance AC chain is situational, never a standing bonus this function reports"
+        );
+    }
+
+    /// SD-33 remediation wave 4 (`AT-33-E5-003`): real verbatim tokens
+    /// copied from `inner_sea_races/isr_equip_arms_armor.lst:12`
+    /// (`Armor of Grim Triumph`) plus the base-armor-record's own
+    /// `EQMOD:`-referenced modifier's real corpus record
+    /// (`core_rulebook/cr_equipmods.lst`, `Special Ability ~ +1 ~
+    /// Armor`). The base item's own chain alone (`Some(6)`) is
+    /// Breastplate's base value; the pinned oracle's real total is `7`
+    /// (`AT-33-E5-003.combined-oracle-results.json`) — the modifier's own
+    /// separate `+1` enhancement chain, summed by
+    /// `apply_eqmod_armor_class_bonus`.
+    #[test]
+    fn eqmod_referenced_enhancement_modifier_sums_into_the_base_items_ac_bonus() {
+        let base_text = "Armor of Grim Triumph\tKEY:Armor of Grim Triumph\tTYPE:Armor.Magic.Medium.ArmorProfMedium.Suit.Specific\tCOST:250\tWT:40\tACCHECK:-4\tEQMOD:Special Ability ~ Enhancement Cost|12600.Special Ability ~ +1 ~ Armor.Special Quality ~ Spikes ~ Armor.Material ~ Steel\tMAXDEX:3\tSPELLFAILURE:25\tBONUS:COMBAT|AC|6|TYPE=Armor\n";
+        let result = parse_equipment_entries("isr_equip_arms_armor.lst", base_text);
+        let base_record = &result.entries[0];
+
+        let modifier_text = "+1 (Enhancement to Armor)\tKEY:Special Ability ~ +1 ~ Armor\tTYPE:Armor\tPLUS:1\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\n";
+        let modifier_result = parse_equipment_entries("cr_equipmods.lst", modifier_text);
+        let modifier_record = &modifier_result.entries[0];
+
+        // A real Spikes/Material-only reference resolves too (no chain
+        // of its own) -- proving the sum is not just "the one modifier
+        // that happens to matter", it genuinely adds only real per-record
+        // magnitudes.
+        let spikes_text = "Armor Spikes\tKEY:Special Quality ~ Spikes ~ Armor\tTYPE:Armor\tCOST:50\n";
+        let spikes_result = parse_equipment_entries("cr_equipmods.lst", spikes_text);
+        let spikes_record = &spikes_result.entries[0];
+
+        let mut effect = compute_arms_armor_effect(base_record);
+        assert_eq!(effect.armor_class_bonus, Some(6), "the base item's own chain alone is Breastplate's base value");
+
+        apply_eqmod_armor_class_bonus(&mut effect, &[modifier_record, spikes_record]);
+        assert_eq!(
+            effect.armor_class_bonus,
+            Some(7),
+            "the EQMOD-referenced +1 Armor modifier's own separate chain must sum in; Spikes contributes 0"
         );
     }
 }

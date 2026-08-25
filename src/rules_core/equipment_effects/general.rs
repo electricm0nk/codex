@@ -134,6 +134,38 @@ pub fn compute_var_effect(record: &EquipmentRecord) -> Vec<VarBonus> {
         .collect()
 }
 
+/// Sums every EQMOD-referenced modifier record's own `VAR` chains into
+/// `base`, matched by name — the `VAR`-shape sibling of
+/// [`arms_armor::apply_eqmod_armor_class_bonus`].
+///
+/// SD-33 remediation wave 4 (`AT-33-E5-003`): the same
+/// base-item-plus-attached-EQMOD summation gap that
+/// `apply_eqmod_armor_class_bonus` closes for `COMBAT|AC` chains recurs
+/// here for `VAR` chains — confirmed by
+/// `inner_sea_races:equipment:panoply_of_the_fierani_knight`'s real
+/// disagreement (`ours=6`, oracle=`3`): the base item's own
+/// `BONUS:VAR|ArmorCheckPenalty|6` chain is its Full Plate base ACP; its
+/// `EQMOD:...Material ~ Mithril ~ Armor / Heavy` token names a real
+/// corpus record whose OWN `BONUS:VAR|ArmorCheckPenalty|-3|
+/// TYPE=Enhancement` chain is Mithral's real ACP improvement (already
+/// *signed negative* in the corpus data, so summing — not subtracting —
+/// reaches the real total: `6 + (-3) = 3`, matching the oracle exactly).
+/// A modifier record with no `VAR` chain at all (materials without an
+/// ACP effect, cosmetic special qualities) contributes nothing, same
+/// resolve-or-skip discipline as every other `equipment_effects`
+/// resolver.
+pub fn apply_eqmod_var_bonus(base: &mut Vec<VarBonus>, eqmod_records: &[&EquipmentRecord]) {
+    for modifier in eqmod_records {
+        for extra in compute_var_effect(modifier) {
+            if let Some(existing) = base.iter_mut().find(|v| v.name == extra.name) {
+                existing.bonus += extra.bonus;
+            } else {
+                base.push(extra);
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -312,5 +344,40 @@ mod tests {
 
         let effect = compute_var_effect(record);
         assert_eq!(effect, Vec::<VarBonus>::new());
+    }
+
+    /// SD-33 remediation wave 4 (`AT-33-E5-003`): real verbatim tokens
+    /// copied from `inner_sea_races/isr_equip_arms_armor.lst:20`
+    /// (`Panoply of the Fierani Knight`) plus its own `EQMOD:`-referenced
+    /// Mithral Heavy Armor modifier record
+    /// (`core_rulebook/cr_equipmods.lst:104`). The base item's own
+    /// `ArmorCheckPenalty` chain alone (`6`) is Full Plate's base ACP;
+    /// the pinned oracle's real total is `3`
+    /// (`AT-33-E5-003.combined-oracle-results.json`) — Mithral's own
+    /// separate, already-signed-negative `-3` chain, summed by
+    /// `apply_eqmod_var_bonus`.
+    #[test]
+    fn eqmod_referenced_material_var_chain_sums_into_the_base_items_var_bonus() {
+        let base_text = "Panoply of the Fierani Knight\tKEY:Panoply of the Fierani Knight\tTYPE:Armor.Magic.Heavy.ArmorProfHeavy.Suit.Specific\tCOST:1500\tWT:50\tACCHECK:-6\tEQMOD:Special Ability ~ Enhancement Cost|12000.Special Ability ~ +2 ~ Armor.Material ~ Mithril ~ Armor / Heavy\tMAXDEX:1\tSPELLFAILURE:35\tBONUS:COMBAT|AC|9|TYPE=Armor\tBONUS:VAR|ArmorCheckPenalty|6\n";
+        let result = parse_equipment_entries("isr_equip_arms_armor.lst", base_text);
+        let base_record = &result.entries[0];
+
+        let mithral_text = "Mithral\tKEY:Material ~ Mithril ~ Armor / Heavy\tTYPE:BaseMaterial.MasterworkQuality.Armor\tCOST:9000\tBONUS:VAR|ArmorCheckPenalty|-3|TYPE=Enhancement\tBONUS:EQMARMOR|ACCHECK|3|TYPE=Enhancement.REPLACE\tBONUS:EQMARMOR|MAXDEX|2\tBONUS:EQMARMOR|SPELLFAILURE|-10|TYPE=Enhancement\n";
+        let mithral_result = parse_equipment_entries("cr_equipmods.lst", mithral_text);
+        let mithral_record = &mithral_result.entries[0];
+
+        let mut effect = compute_var_effect(base_record);
+        assert_eq!(
+            effect,
+            vec![VarBonus { name: "ArmorCheckPenalty".to_string(), bonus: 6 }],
+            "the base item's own chain alone is Full Plate's base ACP"
+        );
+
+        apply_eqmod_var_bonus(&mut effect, &[mithral_record]);
+        assert_eq!(
+            effect,
+            vec![VarBonus { name: "ArmorCheckPenalty".to_string(), bonus: 3 }],
+            "Mithral's own separate, already-negative-signed VAR chain must sum in: 6 + (-3) = 3"
+        );
     }
 }
