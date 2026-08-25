@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epic 1 dispatched, rows 1-3 (AT-33-E1-001, AT-33-E1-002, AT-33-E1-003) complete
+status: in progress — Epic 1 complete, rows 1-4 (AT-33-E1-001..004) all complete
 date: 2026-08-24
 ---
 
@@ -18,7 +18,9 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 2. SD-32's instrument debt closed **inside SD-32** — 29 total / 0 open deferrals, `EXCLUDED_BOOKS = frozenset()`
 3. `tranche/13` cut from `develop` and pushed — `origin/tranche/13` = `f652db7ac7`
 
-Epic 1 dispatched; cycles 1-3 (`AT-33-E1-001` row 1, `AT-33-E1-002` row 2, `AT-33-E1-003` row 3) landed.
+Epic 1 complete; cycles 1-4 (`AT-33-E1-001` row 1, `AT-33-E1-002` row 2, `AT-33-E1-003` row 3,
+`AT-33-E1-004` row 4) all landed. Epic 1 gates every other epic
+(`workflow-instruction.md §3`) — Epics 2/3/4 (`parallel: yes`, worktree-isolated) are next.
 
 **Bundle-level figure (`AT-33-E1-003`'s own evidence bar, not a footnote):** of the corpus's **19**
 distinct `kind` values (`jq -r '.units[].kind' docs/work-inventory.json | sort -u | wc -l`), **8**
@@ -30,7 +32,14 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 3 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body).
+**Cards complete: 4 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body).
+
+**Denominator gate is now live** (`AT-33-E1-004`): `scripts/verify.sh --only denominator-gate`
+runs `scripts/denominator_gate.py --check` against this bundle's own `artifacts/**/*_cycle_receipt.md`
++ `progress.md` (4 files as of this commit, 0 violations) and fails closed on a bare percentage —
+proven both ways through the real stage invocation, not just the underlying script:
+`DENOMINATOR_GATE_PATHS=<malformed file> bash scripts/verify.sh --only denominator-gate` → exit 1;
+corrected form → exit 0. See the cycle receipt for the full transcript.
 
 ## Cycle entry schema
 
@@ -47,6 +56,51 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E1-004 — denominator-gate (row 4, Epic 1)
+
+- **Criterion:** `AT-33-E1-004` — the denominator gate is a real `scripts/verify.sh` stage.
+- **Files:** `scripts/denominator_gate.py` (new), `scripts/tests/test_denominator_gate.py` (new),
+  `scripts/verify.sh` (extended — new `denominator-gate` stage in both stage sets + dispatch case).
+- **What landed:** a line-level check — a line carrying a bare percentage with no denominator
+  marker (`of <N>` / `out of <N>` / `<N>/<M>` fraction / literal `denominator <N>`) anywhere on
+  that same line is a violation. Wired into `scripts/verify.sh`'s stage list directly (not a
+  standalone script — closes the `SD-31-.../forward-scope-register.md` C1.8 gap named for
+  `v06_corpus_trap_report`), in both `ALL_STAGES` and `QUICK_STAGES`. Default scope is
+  deliberately this bundle's own generated evidence (`artifacts/**/*_cycle_receipt.md` +
+  `progress.md`) — not this bundle's planning prose (outside this criterion's write scope) and not
+  every prior bundle's receipts (261 files repo-wide, unaudited, a separate task); overridable via
+  `DENOMINATOR_GATE_PATHS`.
+- **Figures:**
+  - Unit test suite (new): 17 passed, 0 failed (`python3 -m unittest scripts.tests.test_denominator_gate -v`)
+  - Regression: `test_box_ledger.py` 25/25, `test_probe_surface_census.py` 11/11 — 36/36
+    (`python3 -m unittest scripts.tests.test_box_ledger scripts.tests.test_probe_surface_census -v`)
+  - Live default-scope check: 4 files checked, 0 violations (`python3 scripts/denominator_gate.py --check`)
+  - Stage present in both stage sets: `bash scripts/verify.sh --list | grep denominator-gate` →
+    `denominator-gate     yes   yes`
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — this cycle builds an instrument (a gate with an exit code); it moves
+  no inventory unit.
+- **RED→GREEN:** `ModuleNotFoundError: No module named 'denominator_gate'` before the module
+  existed (intended reason); 17/17 green after. **The criterion's own evidence obligation** — a
+  mutation proof through `scripts/verify.sh --only denominator-gate` itself:
+  `DENOMINATOR_GATE_PATHS=<a deliberately-malformed synthetic receipt carrying "**97.9% recognised**"
+  with no denominator> bash scripts/verify.sh --only denominator-gate` → `FAIL`, exit 1; same
+  invocation against the corrected form (denominator added in the same construct) → `PASS`, exit
+  0; default invocation with no override, against the real committed 4-file scope → `PASS`, exit 0.
+  Full transcripts in the receipt.
+- **Notes:** scope is deliberately narrow — this bundle's own receipts + `progress.md`, not
+  repo-wide and not this bundle's own planning prose (which narrates the exact "41%"/"97.9%"
+  figures `decisions.md` §2 cites as the motivating defect, and is outside this criterion's write
+  scope). See the receipt's Notes for the full reasoning and the 261-file repo-wide sweep that
+  informed the scoping decision.
+- **Test scoping:** ran `scripts/tests/test_denominator_gate.py` (17/17, new) and
+  `scripts/tests/test_box_ledger.py` + `test_probe_surface_census.py` (36/36, regression).
+  `bash -n scripts/verify.sh` (syntax check) and `bash scripts/verify.sh --only denominator-gate`
+  (three invocations — default GREEN, override RED, override GREEN). Did not run `scripts/verify.sh`
+  in full (other stages' preconditions unrelated to this cycle's files), the Rust workspace (no
+  `.rs` file touched), or `apps/desktop/src-tauri` (separate cargo workspace, untouched).
+- **Receipt:** `artifacts/epic-1-instruments/AT-33-E1-004_cycle_receipt.md`.
 
 ### Cycle AT-33-E1-003 — probe-surface-census (row 3, Epic 1)
 
