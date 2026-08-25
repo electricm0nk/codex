@@ -1,6 +1,6 @@
 # Cycle AT-33-E1-003 — Epic 1 Instruments / AT-33-E1-003
 
-- **Commit SHA:** (this receipt's own commit — see the pushed commit that lands this file, `scripts/probe_surface_census.py`, `scripts/tests/test_probe_surface_census.py`, and the artifact JSON together)
+- **Commit SHA:** `6d1e8c9028`
 - **Files touched:**
   - `scripts/probe_surface_census.py` (new)
   - `scripts/tests/test_probe_surface_census.py` (new)
