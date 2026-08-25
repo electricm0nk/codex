@@ -554,16 +554,42 @@ mod tests {
     /// still answers the stale 6,032 the frozen file carries. This is the
     /// literal shape of the SD-33 defect: a true number (6,032) that was
     /// the right answer against the wrong (stale) denominator.
+    ///
+    /// `AT-33-E6-001` (2026-08-25): 6,308 itself went stale 44 minutes after
+    /// this test's own landing commit (`347e9d1a34`, 2026-08-24 23:56:11) —
+    /// `AT-33-E4-002` (`00ca087775`, 2026-08-25 00:39:59, the very next
+    /// commit to touch `docs/work-inventory.json` on this branch)
+    /// regenerated that file (4,224 units reclassified off `unknown`, plus
+    /// 3,985 units of disclosed unrelated SD-32-engine drift), which moves
+    /// `shape_ledger.py`'s F1 rollup by construction: F1's population is
+    /// built from `coverage_ledger.py`'s `not_done_population()`, gated on
+    /// `doneness_verdict(unit) != DONE` for every unit not in
+    /// `EXCLUDED_BOOKS` — the same `docs/work-inventory.json` this cycle's
+    /// own Shortfall-1 fix reads. Re-derived fresh against the CURRENT
+    /// committed file with the identical command this test's own doc
+    /// comment already names:
+    /// `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+    /// -> `family rollup: F1 6278`, matching this test's own live
+    /// `report.families["F1"].population` exactly (both walk the identical
+    /// `not_done_population()` gate, so they cannot honestly disagree).
+    /// 6,308 - 6,278 = 30 units moved off the F1-eligible population by the
+    /// regen — a real content shift, not a defect this cycle introduced:
+    /// unaffected by which non-`done` doneness word Shortfall 1 chose for
+    /// the 11 `(ambiguous, unmeasurable)` units, since `not_done_population`
+    /// only tests `verdict != DONE`, never which specific non-`done` verdict
+    /// a unit carries.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 6308,
-            "F1 population must equal the CURRENT true formula-bearing count (6,308, re-derived \
-             2026-08-24 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`), \
-             not SD-32's frozen 2026-08-14 census (6,032) — AT-33-E3-002"
+            f1.population, 6278,
+            "F1 population must equal the CURRENT true formula-bearing count (6,278, re-derived \
+             2026-08-25 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` \
+             against the post-`AT-33-E4-002` inventory), not the pre-regen 6,308 this test pinned \
+             on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — AT-33-E3-002 / \
+             AT-33-E6-001"
         );
     }
 }
