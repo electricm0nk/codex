@@ -1,6 +1,6 @@
 ---
 title: SD-33 — Computed-Value Verification — Release Package
-status: planning
+status: planning-ready
 bundle_id: SD-33
 slug: computed-value-verification
 scope: docs/release/SD-33-computed-value-verification
@@ -30,7 +30,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 |---|---|
 | Bundle ID | SD-33 |
 | Slug | `computed-value-verification` |
-| Canonical branch | `tranche/13` (**not yet cut** — see §9 launch gates) |
+| Canonical branch | `tranche/13` @ `f652db7ac7` (cut from `develop` after PR #376, pushed) |
 | Kanban board | retired — local-file `./kanban.md` per `SD-30-.../decisions.md` Decision 14a |
 | Epics / criteria | 6 epics / 21 criteria |
 | Target version | `0.13.0` |
@@ -120,11 +120,11 @@ Identical to `../template/template.md §6`, unchanged. It fires **once**, as the
 
 ## 9. Launch gates (must be true before Epic 1's first cycle)
 
-These are **open** at authoring time and are tracked in `technical-requirements.md §1`:
+All three **passed** 2026-08-25; full command output in `workflow-instruction.md §1` and `technical-requirements.md §1`:
 
-1. **SD-32's closure PR is merged to `develop`.** As of 2026-08-24 `origin/develop`'s HEAD is `1bb523773d` (PR #374, `tranche/11`); `tranche/12` is unmerged. SD-33 is a Tier-1 dependent — it reads SD-32's corpus and engines.
-2. **SD-32's own instrument debt is closed inside SD-32** — the `retro.py` `deferrals.open` defect, the 7 unverified deferrals, and the `EXCLUDED_BOOKS = ['beginner_box']` carve-out. All three are named in `../../retro/sd32-compute-library-and-cause-closure-retrospective.md`. **These are not SD-33 epics**; importing them would be exactly the laundering `blocker-closure-doctrine.md` forbids.
-3. **`tranche/13` cut from `develop` and pushed.**
+1. **SD-32's closure PR is merged to `develop`.** PR #376 (`tranche/12`) `MERGED` 2026-08-25T02:12Z; `origin/develop` HEAD is `f53b8e32da`, the merge commit. SD-33 is a Tier-1 dependent — it reads SD-32's corpus and engines.
+2. **SD-32's own instrument debt is closed inside SD-32** — the `retro.py` `deferrals.open` defect (now `len(open_deferrals)`), the SD-32 window's deferrals (29 total, 0 open), and the `EXCLUDED_BOOKS` carve-out (now `frozenset()`, empty). All three were named in `../../retro/sd32-compute-library-and-cause-closure-retrospective.md`. **These were not SD-33 epics**; they closed inside SD-32 itself, per `blocker-closure-doctrine.md`.
+3. **`tranche/13` cut from `develop` and pushed.** `origin/tranche/13` = `f652db7ac7`, cut from post-#376 `develop`.
 
 ## 10. Cross-reference
 

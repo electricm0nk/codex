@@ -11,10 +11,10 @@ date: 2026-08-24
 
 | # | Requirement | State at authoring | Check |
 |---|---|---|---|
-| 1 | SD-32's closure PR merged to `develop` | ⛔ **OPEN** — `origin/develop` HEAD is `1bb523773d` (PR #374, `tranche/11`) | `git log origin/develop --oneline \| head -3` |
-| 2 | SD-32's instrument debt closed **inside SD-32** | ⛔ **OPEN** — three named items | `../../retro/sd32-compute-library-and-cause-closure-retrospective.md` findings 1 and 3 |
-| 3 | `tranche/13` cut from `develop` and pushed | ⛔ **OPEN** | `git ls-remote --heads origin tranche/13` → 1 line |
-| 4 | Working tree clean on `tranche/13` | pending #3 | `git status --porcelain \| wc -l` → 0 |
+| 1 | SD-32's closure PR merged to `develop` | ✅ **met** — PR #376 `MERGED` 2026-08-25T02:12Z; `origin/develop` HEAD is `f53b8e32da` | `gh pr view 376 --json state,mergedAt,mergeCommit` |
+| 2 | SD-32's instrument debt closed **inside SD-32** | ✅ **met** — `retro.py` `open` is now `len(open_deferrals)`; SD-32 window is 29 total / 0 open; `EXCLUDED_BOOKS = frozenset()` | `python3 scripts/retro.py summary --since 2026-08-22 --json`; `grep -n "^EXCLUDED_BOOKS" scripts/observer/pf1e_dashboard_producer.py` |
+| 3 | `tranche/13` cut from `develop` and pushed | ✅ **met** — `origin/tranche/13` = `f652db7ac7` | `git ls-remote --heads origin tranche/13` → 1 line |
+| 4 | Working tree clean on `tranche/13` | ✅ **met** — one dirty line belongs to another lane (`docs/retro/events/sd31-transcribe.jsonl`), not this bundle's tree | `git status --porcelain` |
 | 5 | Oracle pin readable | ✅ met | `grep -E "^[A-Z_]+=" scripts/pcgen-oracle-pin.env` |
 | 6 | Repo-local oracle slot populated | ✅ met | slot at `SD-32-.../artifacts/corpus/operator-supplied/pcgen` |
 | 7 | JDK present for Epic 2's spike | ✅ met — OpenJDK 25 (Temurin) | `java -version` |

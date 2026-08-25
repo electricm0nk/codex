@@ -104,7 +104,9 @@ F2–F9 reach full population coverage.
 
 The regenerated `formula_interpreter.corpus-wide.json` covers **11,652 of 11,652**, and the receipt states both numbers.
 
-**Evidence:** the artifact plus the comparison command from `README.md §4` row G returning `0`.
+**Output path (must, not the binary's default):** `cargo run --locked --bin formula_interpreter -- --corpus-wide --output docs/release/SD-33-computed-value-verification/artifacts/epic-3-engine-coverage/formula_interpreter.corpus-wide.json` (`--output` flag confirmed in `src/bin/formula_interpreter.rs`'s argument parser and `--help` text). The binary's default output, `artifacts/gate-2-engines/formula_interpreter.corpus-wide.json`, is SD-32's closed Gate 2 evidence file — **never overwrite it.**
+
+**Evidence:** the artifact at the SD-33 path above, plus the comparison command from `README.md §4` row G returning `0`.
 
 **Note:** recognition rate is a *separate* number from coverage. A refused unit is a named finding with its refusal reason, not a coverage failure — and not a silent exclusion either.
 

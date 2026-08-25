@@ -44,7 +44,7 @@ Doctrine, skills, sibling bundles, and the retrospectives this package is derive
 
 ## 5. Skills
 
-- `.claude/skills/stc-authoring/SKILL.md` — the skill this package was authored with.
+- `../../../../.claude/skills/stc-authoring/SKILL.md` — the skill this package was authored with.
 - `.claude/skills/publish-site/`, `.claude/skills/swarm-status-sync/` — project skills, not used by this bundle's dispatch.
 
 ## 6. Oracle

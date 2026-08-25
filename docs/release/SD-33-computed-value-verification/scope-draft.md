@@ -1,7 +1,7 @@
 ---
 canonical: true
 owner: god-emporer
-status: planning-ready pending §6 launch gates
+status: planning-ready
 bundle_id: SD-33
 date: 2026-08-24
 companion_to: ./README.md
@@ -69,15 +69,15 @@ Re-derived at `1d6ae1e72b`, 2026-08-24, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd
 | 5 | **Re-verification** — the 8,330 fixture/literal-blessed units against the oracle | Epic 2 | — |
 | 6 | **Closure epilogue** | Epics 1–5 all `complete` | — |
 
-**Epics 2, 3 and 4 are write-disjoint and run concurrently** — verified file-touch sets in `workflow-instruction.md §3`/`§4`. That is why the oracle spike being uncertain does not stall the bundle: coverage and classification advance regardless.
+**Epics 2, 3 and 4 are write-disjoint except `THE-BOX.md`, which is append-only under §5** and run concurrently — verified file-touch sets in `workflow-instruction.md §3`/`§4`. That is why the oracle spike being uncertain does not stall the bundle: coverage and classification advance regardless.
 
 ## 6. Launch gates
 
-Open at authoring time. Full detail in `README.md §9` and `technical-requirements.md §1`:
+All three **passed 2026-08-25**. Full detail in `README.md §9` and `technical-requirements.md §1`:
 
-1. SD-32's closure PR merged to `develop`.
+1. SD-32's closure PR merged to `develop` — PR #376 MERGED, `origin/develop` = `f53b8e32da`.
 2. **SD-32's own instrument debt closed inside SD-32** — not imported here.
-3. `tranche/13` cut from `develop` and pushed.
+3. `tranche/13` cut from `develop` and pushed — `origin/tranche/13` = `f652db7ac7`.
 
 ## 7. The bundle's own standing hazard
 

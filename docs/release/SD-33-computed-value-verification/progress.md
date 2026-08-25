@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: not launched — §1 launch gates open
+status: not launched — §1 launch gates passed 2026-08-25, not yet dispatched
 date: 2026-08-24
 ---
 
@@ -12,11 +12,11 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
-**Not launched.** Three launch gates are open (`technical-requirements.md §1`):
+**Not launched, not yet dispatched.** All three launch gates passed 2026-08-25 (`technical-requirements.md §1`, `workflow-instruction.md §1`):
 
-1. SD-32's closure PR merged to `develop`
-2. SD-32's instrument debt closed **inside SD-32**
-3. `tranche/13` cut from `develop` and pushed
+1. SD-32's closure PR merged to `develop` — PR #376 MERGED, `origin/develop` = `f53b8e32da`
+2. SD-32's instrument debt closed **inside SD-32** — 29 total / 0 open deferrals, `EXCLUDED_BOOKS = frozenset()`
+3. `tranche/13` cut from `develop` and pushed — `origin/tranche/13` = `f652db7ac7`
 
 **Cards complete: 0 / 21.**
 
