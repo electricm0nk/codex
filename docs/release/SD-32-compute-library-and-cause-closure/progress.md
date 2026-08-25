@@ -1580,21 +1580,25 @@ still passes (`no_record` sits exactly at the committed baseline, not above it).
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
      card id, what failed, the command that shows it, named owner. Empty at launch. -->
 
-### Card 13 `closure-epilogue` — desktop cargo suite regression, `beginner_box` not swept into `CORPUS_BOOK_IDS` (filed 2026-08-24)
+### Card 13 `closure-epilogue` — desktop cargo suite regression, `beginner_box` not swept into `CORPUS_BOOK_IDS` (filed 2026-08-24) — RESOLVED, commit `21bef06d95` (2026-08-24)
 
-`cd apps/desktop/src-tauri && cargo test --locked --bin codex-desktop` → **541 passed, 7 failed**
-(prior cycle's own receipt recorded 548/0 at the same command, before `beginner_box` was ingested).
-`beginner_box` is a real, now-ingested corpus book missing from
-`apps/desktop/src-tauri/src/reach_gate.rs::CORPUS_BOOK_IDS`, plus at least one downstream count pin
-(`advanced_race_guide` 2207 vs a live 2208) that never got re-derived for the population growing
-34,397 → 34,416. Non-self-healable by this cycle: fixing it means editing
-`apps/desktop/src-tauri/src/*.rs`, which is outside a planning-doc closure epilogue's write scope
-(orchestrator/executor boundary, `docs/governance/STC-Skill-Creation.md`). Escalated to the
-orchestrating session per `docs/governance/blocker-closure-doctrine.md` — needs a dispatched
-build-scoped cycle against `apps/desktop/src-tauri`, then a retry of this closure epilogue's Step 1.
-See `artifacts/epic-5-protective-sweep/sd32-closure-epilogue-final_cycle_receipt.md` for full test
-names, panic text, and the recommended fix scope. Named owner: next dispatched build cycle against
-`apps/desktop/src-tauri`.
+`cd apps/desktop/src-tauri && cargo test --locked --bin codex-desktop` → **548 passed, 0 failed**
+(re-run after the fix). Root cause confirmed as filed: `beginner_box` (ingested per `decisions.md
+§27b`) was missing from `apps/desktop/src-tauri/src/reach_gate.rs::CORPUS_BOOK_IDS` and had no
+`reach_of` arm — added both, matching the `UW`/`AG`/`ISM` no-hand-authored-table shape. Six
+`equipment_catalog.rs` pins re-derived for beginner_box's 19 new `BB`-coded rows (total 8100→8119,
+description coverage 4756→4769, ArmsArmor filter 1095→1097, cross-book key collisions 225→230 — 5
+new BB-involving keys, each verified against the gap lane by the test's own existing loop); none
+deleted. **Instrument correction on the filing itself:** fresh reproduction before any edit found
+542 passed / 6 failed, not 541/7 — the filing's 7th named test
+(`corpus_ingest_diagnostic::tests::the_two_ingested_books_totals_reconcile_with_their_license_
+artifacts`) already passed; its count source is `rules_tables`, unaffected by either population
+change named in the filing. The filing's other named cause — `advanced_race_guide`'s feat-self-
+erasure fix — does not touch this workspace at all; no failing test here referenced an
+`advanced_race_guide` count, and `corpus_ingest_diagnostic::tests::
+advanced_race_guide_counts_match_the_real_underlying_tables` passed both before and after this
+cycle. See `artifacts/epic-5-protective-sweep/sd32-desktop-count-resweep_cycle_receipt.md` for the
+full per-assertion old/new/command table.
 
 ### Card 13 `closure-epilogue` — `declared-pi-audit` did not complete at the widened population (filed 2026-08-24)
 
