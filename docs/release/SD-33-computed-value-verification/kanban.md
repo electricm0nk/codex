@@ -36,7 +36,7 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | 16 | `reverify-fixture-verified` | 5 | AT-33-E5-001 | in-progress | `artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md` (1,128 of 1,741 examined — 279 agree/103 disagree/746 unverifiable; remaining 613 named: 598 no-casting-ability-mapping + 15 class_feature) |
 | 17 | `reverify-literal-verified` | 5 | AT-33-E5-002 | complete | `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md` (5,812 of 6,589 dispositioned: 41 agree, 5,771 unverifiable-with-reason; 777 remain unexamined, named per-shape) |
 | 18 | `disagreement-resolution` | 5 | AT-33-E5-003 | complete | `artifacts/epic-5-reverification/AT-33-E5-003_cycle_receipt.md` (0 of 6,940 examined units disagree — 103 found, root-caused to a harness fixture bug, fixed + re-run) |
-| 19 | `final-acceptance-scan` | 6 | AT-33-E6-001 | blocked-escalated | `artifacts/epic-6-closure/AT-33-E6-001_cycle_receipt.md` (gate FAIL — rows 16/17/18 short) |
+| 19 | `final-acceptance-scan` | 6 | AT-33-E6-001 | blocked-escalated | attempt 1 `artifacts/epic-6-closure/AT-33-E6-001_cycle_receipt.md`; attempt 2 `artifacts/epic-6-closure/AT-33-E6-001-attempt2_cycle_receipt.md` (gate FAIL again — rows 16/17 short of their populations, row 18 inherits; gate + deferral shortfalls closed) |
 | 20 | `retrospective-written-and-cited` | 6 | AT-33-E6-002 | not-started | |
 | 21 | `sweep-archdocs-graphify-pr` | 6 | AT-33-E6-003 | not-started | |
 
