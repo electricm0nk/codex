@@ -168,6 +168,21 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E6-001 — final-acceptance-scan (row 19, Epic 6) — blocked-escalated, gate **FAIL**
+
+- **Criterion:** `AT-33-E6-001` — final-acceptance scan. Read-only adversarial check on the whole bundle; touched no `src/`, `scripts/`, `apps/`, or `data/`.
+- **Gate result: FAIL.** The bundle **stops here** per the criterion's own instruction: no retrospective, no worktree sweep, **no PR**. This is the criterion working, not a cycle failure.
+- **Four shortfalls, each with the command that shows it:**
+  1. Rows **16** and **17** (`AT-33-E5-001`, `AT-33-E5-002`) are `in-progress` — `git show origin/tranche/13:docs/release/SD-33-computed-value-verification/kanban.md | grep -E '^\| 1[67] \|'`. Their own receipts read `## Status: in-progress`, so the lanes did not over-claim.
+  2. Row **18** (`AT-33-E5-003`) is `complete` over **32 of 8,330** units (denominator 8,330 = 1,741 `fixture-verified` + 6,589 `literal-verified`) — a `complete`-with-a-deferred-half, which the criterion names as blocking. Re-derive: `python3 -c "import json;a=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment.oracle-results.json'));b=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-literal.oracle-results.json'));print(len(a['results'])+len(b['results']))"` → `32`.
+  3. `scripts/verify.sh --only denominator-gate` is **RED**: `violations=7 of files_checked=16`, exit 1. `AT-33-E1-004`'s evidence obligation is that this stage passes.
+  4. **4 open of 8 total** deferrals since 2026-08-24 (`python3 scripts/retro.py summary --since 2026-08-24 --json`); two of them (`sd33-e5-fixture`, `sd33-e5-literal`) defer **DoD** scope — 1,730 of 1,741 and 6,568 of 6,589 units — which `../../governance/blocker-closure-doctrine.md` does not permit. All four do carry a named revisit condition.
+- **`retro.py` field trustworthiness:** SD-32's fix **has** landed — `grep -n 'len(open_deferrals)' scripts/retro.py` → `772:            "open": len(open_deferrals),`. The `open` figure above is therefore the corrected field, quoted knowingly.
+- **Checks re-run by the scanner that PASSED:** `box_ledger.py --check` exit 0 (`uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False`, population 49,438 = whole inventory); `jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json` → **0** of 49,438; Epic 3 corpus-wide coverage **11,652 of 11,652** (10,626 recognised + 240 refused + 786 unjoined) at the SD-33 artifact path; SD-32's `artifacts/gate-2-engines/formula_interpreter.corpus-wide.json` **untouched** (last commit `25dbee17aa`, an SD-32 commit); code-level carve-out sweep of six closure instruments clean, `EXCLUDED_BOOKS` still `frozenset()`; **15 of 15** receipts present, each carrying the §7 figures row and four-buckets row.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0 — a scan moves no unit and corrects no instrument.
+- **Next:** **not** `AT-33-E6-002`. The bundle re-enters Epic 5 — re-dispatch `AT-33-E5-001` and `AT-33-E5-002` to carry their populations to completion, re-open `AT-33-E5-003` over the full 8,330, and turn the denominator gate green. `AT-33-E6-001` re-runs only after rows 16–18 all read `complete`.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-003 — disagreement-resolution (row 18, Epic 5) — complete
 
 - **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
