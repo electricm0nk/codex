@@ -1,8 +1,7 @@
 # Cycle sd33-r5-disagreements — Epic 5 Re-verification / AT-33-E5-003 (last 4 disagreements)
 
-- **Commit SHA:** recorded on landing (see `progress.md` entry `sd33-r5-disagreements`; a small
-  follow-up commit records it back into this receipt, per this bundle's own established
-  precedent — `AT-33-E5-finalize-wave4`'s receipt did the same).
+- **Commit SHA:** `a68fbeea3d` (`docs(sd33): AT-33-E5-003 wave 5 -- last 4 disagreements resolved,
+  harness route`, pushed to `origin/tranche/13`).
 - **Files touched:**
   - `src/bin/e5_ac_isolator.rs` (new) — repo-local probe: (1) recomputes each AC-shape item's
     CURRENT `armor_class_bonus` via the real `compute_equipment_effects` (catches a row whose real

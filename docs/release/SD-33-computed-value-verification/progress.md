@@ -340,7 +340,7 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 ### Cycle sd33-r5-disagreements — remediation wave 5, the last 4 disagreements (row 18, AT-33-E5-003) — complete
 
 - **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
-- **Commit:** recorded on landing (see the follow-up SHA-record commit).
+- **Commit:** `a68fbeea3d`.
 - **Files:** `src/bin/e5_ac_isolator.rs` (new probe), `artifacts/epic-5-reverification/combat-shape-work-wave5/` (new — isolating `.ftl` template, batch driver, 66 raw live PCGen exports), `artifacts/epic-5-reverification/disagreement-fixes-wave5.oracle-results.json` (new, 4 rows), `artifacts/epic-5-reverification/full-rerun-wave5.oracle-results.json` (new, 66 rows — the harness-fix route's full re-run), `docs/retro/events/sd33-r5-disagreements.jsonl` (new, 1 correction).
 
 **Route: harness, not our-compute.** All 4 remaining disagreements were `baseline_diff_harness_limitation`
