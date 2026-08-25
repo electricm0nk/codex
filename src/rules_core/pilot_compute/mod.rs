@@ -37281,6 +37281,23 @@ fn monk_maneuver_training_cmb_bonus(level: u8) -> i16 {
     level - (level * 3 / 4)
 }
 
+/// Monk AC Bonus's level-4+ dodge-bonus progression (PF1 Core Rulebook Monk
+/// class table, AC Bonus feature): "starting at 4th level, she gains a
+/// further +1 dodge bonus to her AC and CMD... every four levels
+/// thereafter... this bonus increases by a further +1." `+0` below level 4,
+/// `+1` at 4-7, `+2` at 8-11, `+3` at 12-15, `+4` at 16-19, `+5` at 20 —
+/// confirmed against the real pinned PCGen oracle
+/// (`core_rulebook:class_feature:monk_ac_bonus`, L20 Human Monk: real
+/// export `7` = Wisdom-to-AC `2` + this progression's `5`;
+/// `AT-33-E5-remainder-charbuild_cycle_receipt.md`).
+fn monk_ac_bonus_dodge_progression(level: u8) -> i16 {
+    if level < 4 {
+        0
+    } else {
+        1 + i16::from((level - 4) / 4)
+    }
+}
+
 /// Monk High Jump's flat bonus on Acrobatics checks made to jump:
 /// `HighJumpBonus = HighJumpLVL = MonkLVL` -- verified against
 /// `BONUS:SITUATION|Acrobatics=When Jumping|HighJumpBonus`.
@@ -37515,23 +37532,27 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (3/6): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
-    // any, to her AC" — only a positive Wisdom modifier is added, never subtracted
-    // here for a negative Wisdom modifier. This grounds only the flat value at the
-    // supported level; it grounds no level-4+ dodge-bonus progression and no
-    // "unarmored and unencumbered" runtime state-check engine (no such engine
-    // exists anywhere in this codebase yet), so the value is asserted
-    // unconditionally on the deterministic Human Monk fixture, which is by
-    // construction unarmored.
-    let ac_bonus = ability_modifiers.wisdom.max(0);
+    // Grounded (3/6): AC Bonus (Wisdom-to-AC + level-4+ dodge progression). PF1:
+    // "she adds her Wisdom bonus, if any, to her AC" (only a positive Wisdom
+    // modifier is added, never subtracted for a negative Wisdom modifier) "and
+    // starting at 4th level, she gains a further +1 dodge bonus... every four
+    // levels thereafter... increases by a further +1" (`monk_ac_bonus_dodge_progression`,
+    // AT-33-E5-003 fix — confirmed against the real pinned PCGen oracle:
+    // `core_rulebook:class_feature:monk_ac_bonus` at L20 exports `7`, not the
+    // Wisdom-only component alone). This still grounds no "unarmored and
+    // unencumbered" runtime state-check engine (no such engine exists anywhere
+    // in this codebase yet), so the value is asserted unconditionally on the
+    // deterministic Human Monk fixture, which is by construction unarmored.
+    let ac_bonus_dodge = monk_ac_bonus_dodge_progression(level);
+    let ac_bonus = ability_modifiers.wisdom.max(0) + ac_bonus_dodge;
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.ac_bonus".to_owned(),
         value: ac_bonus,
         detail: format!(
             "Monk level {level} AC Bonus: Wisdom bonus (if positive) added to AC and CMD while \
-             unarmored and unencumbered = max({}, 0) = {ac_bonus}. This grounds only the flat \
-             Wisdom-to-AC value at this level, not the level-4+ dodge-bonus progression, and not \
-             an \"unarmored and unencumbered\" runtime state-check engine (none exists in this \
+             unarmored and unencumbered = max({}, 0), plus the level-4+ dodge-bonus progression \
+             ({ac_bonus_dodge} at this level) = {ac_bonus}. This still grounds no \
+             \"unarmored and unencumbered\" runtime state-check engine (none exists in this \
              codebase yet); the value is asserted unconditionally on the deterministic Human Monk \
              fixture, which is by construction unarmored",
             ability_modifiers.wisdom
@@ -68518,9 +68539,10 @@ mod bloodrager_damage_reduction_tests {
 #[cfg(test)]
 mod monk_task36_feature_tests {
     use super::{
-        build_pilot_headless_receipt, monk_fast_movement_bonus_feet,
-        monk_high_jump_acrobatics_bonus, monk_maneuver_training_cmb_bonus,
-        monk_wholeness_of_body_healing, CharacterClassLevel, CharacterInput, MONK_CLASS_ID,
+        build_pilot_headless_receipt, monk_ac_bonus_dodge_progression,
+        monk_fast_movement_bonus_feet, monk_high_jump_acrobatics_bonus,
+        monk_maneuver_training_cmb_bonus, monk_wholeness_of_body_healing, CharacterClassLevel,
+        CharacterInput, MONK_CLASS_ID,
     };
     use crate::rules_core::character_input::load_character_input_fixture;
 
@@ -68575,6 +68597,49 @@ mod monk_task36_feature_tests {
         assert_eq!(monk_high_jump_acrobatics_bonus(12), 12);
         assert_eq!(monk_wholeness_of_body_healing(7), 7);
         assert_eq!(monk_wholeness_of_body_healing(12), 12);
+    }
+
+    /// AC Bonus's level-4+ dodge-bonus progression: `+0` below level 4,
+    /// stepping `+1` every four levels starting at 4, reaching `+5` at 20 —
+    /// the real PF1 Monk class table, confirmed against the pinned PCGen
+    /// oracle's real export for a level-20 Monk
+    /// (`core_rulebook:class_feature:monk_ac_bonus`,
+    /// `AT-33-E5-remainder-charbuild_cycle_receipt.md`: oracle `7` at WIS-
+    /// mod `2`, i.e. dodge component `5` at level 20).
+    #[test]
+    fn ac_bonus_dodge_progression_steps_every_four_levels_from_four() {
+        assert_eq!(monk_ac_bonus_dodge_progression(1), 0);
+        assert_eq!(monk_ac_bonus_dodge_progression(3), 0);
+        assert_eq!(monk_ac_bonus_dodge_progression(4), 1);
+        assert_eq!(monk_ac_bonus_dodge_progression(7), 1);
+        assert_eq!(monk_ac_bonus_dodge_progression(8), 2);
+        assert_eq!(monk_ac_bonus_dodge_progression(11), 2);
+        assert_eq!(monk_ac_bonus_dodge_progression(12), 3);
+        assert_eq!(monk_ac_bonus_dodge_progression(15), 3);
+        assert_eq!(monk_ac_bonus_dodge_progression(16), 4);
+        assert_eq!(monk_ac_bonus_dodge_progression(19), 4);
+        assert_eq!(monk_ac_bonus_dodge_progression(20), 5);
+    }
+
+    /// The dispatched `class_chassis.monk.ac_bonus` value carries the
+    /// dodge progression on top of whatever this fixture's own Wisdom
+    /// modifier contributes -- isolating the dodge delta so this test does
+    /// not depend on the fixture's specific ability scores.
+    #[test]
+    fn dispatched_ac_bonus_carries_the_dodge_progression_on_top_of_wisdom() {
+        let wisdom_only = value(1, "class_chassis.monk.ac_bonus").expect("grounded at level 1");
+        assert_eq!(
+            value(4, "class_chassis.monk.ac_bonus"),
+            Some(wisdom_only + 1)
+        );
+        assert_eq!(
+            value(8, "class_chassis.monk.ac_bonus"),
+            Some(wisdom_only + 2)
+        );
+        assert_eq!(
+            value(20, "class_chassis.monk.ac_bonus"),
+            Some(wisdom_only + 5)
+        );
     }
 
     /// Every gate read off the corpus's own grant lines: 3/3/5/7. Each

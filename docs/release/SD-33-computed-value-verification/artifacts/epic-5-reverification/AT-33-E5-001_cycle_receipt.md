@@ -274,3 +274,27 @@ receipt's own figures above, which remain this cycle's own 1,128-of-1,741 result
 - **Results file:** `artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json`
   (all 81 rows; re-derive this receipt's own 15-unit subset via
   `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); st={u['id']:u['status'] for u in inv['units']}; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json')); print([r for r in d['results'] if st.get(r['unit_id'])=='fixture-verified'])"`).
+
+## Finalized by `AT-33-E5-finalize` — final totals, kanban row 16 → `complete`
+
+Merged this receipt's own 1,128 rows with the `spell-remainder` (598) and `charbuild-remainder`
+(15) sibling-lane contributions above, split by `docs/work-inventory.json`'s own `status` field
+(not by the lanes' self-reported `contributes_to` claims), with an explicit duplicate-`unit_id`
+check (0 found — every lane's claimed split was correct).
+
+- **Population:** 1,741 `fixture-verified` units (unchanged).
+- **Rows committed:** **1,741 of 1,741 (100%)** — `fixture-verified.combined-oracle-results.json`.
+  Re-derive: `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-verified.combined-oracle-results.json')); r=d['results']; print(len(r), len(set(x['unit_id'] for x in r))); print(collections.Counter(x['verdict'] for x in r))"` → `1741 1741`, `Counter({'unverifiable': 1345, 'agree': 396})`.
+- **Verdict histogram:** 396 agree / 1,345 unverifiable / **0 disagree**, independently re-derived
+  by the command above (not hand-summed). This cycle's own original 103 disagreements (this
+  receipt's §"1,128 examined" figures table) were already fixed to 0 by `AT-33-E5-003`'s wave-1
+  remediation (`dded72f0b4`) before this finalize cycle ran; the finalize cycle's own merge adds
+  `spell-remainder`'s and `charbuild-remainder`'s `fixture-verified` rows on top, contributing 0
+  further disagreements (both lanes' own receipts report 0 disagree on their `fixture-verified`
+  slices).
+- **Reasonless `unverifiable` rows:** 0 (was 319, all in this receipt's own `spell` sub-population;
+  closed by the finalize cycle populating a real `reason` from this receipt's own already-confirmed
+  "PCGen drops rather than relocates a mismatched-level `SPELLNAME` line" finding — see "A real,
+  uniform finding" section above and `progress.md`'s `AT-33-E5-finalize` entry).
+- **Kanban row 16:** marked `complete` — the full 1,741-unit population is rowed, 0 disagree, 0
+  reasonless unverifiable. Full detail: `AT-33-E5-finalize_cycle_receipt.md`.

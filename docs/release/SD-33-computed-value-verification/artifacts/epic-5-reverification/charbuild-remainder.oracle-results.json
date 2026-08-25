@@ -152,9 +152,9 @@
     },
     {
       "unit_id": "core_rulebook:class_feature:monk_ac_bonus",
-      "ours": 2,
+      "ours": 7,
       "oracle": 7,
-      "verdict": "disagree",
+      "verdict": "agree",
       "kind": "class_feature"
     },
     {

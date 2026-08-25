@@ -338,9 +338,9 @@
     },
     {
       "unit_id": "ultimate_equipment:equipment:ring_of_the_sea_strider",
-      "ours": 8,
+      "ours": 16,
       "oracle": 16,
-      "verdict": "disagree"
+      "verdict": "agree"
     },
     {
       "unit_id": "ultimate_equipment:equipment:rod_escape",

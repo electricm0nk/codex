@@ -390,3 +390,31 @@ Reported here per the wave-2 dispatch's own instruction; does not alter this rec
 - **Results file:** `artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json`
   (all 81 rows; re-derive this receipt's own 66-unit subset via
   `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); st={u['id']:u['status'] for u in inv['units']}; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json')); print([r for r in d['results'] if st.get(r['unit_id'])=='literal-verified'])"`).
+
+## Finalized by `AT-33-E5-finalize` — final totals, kanban row 17 stays `in-progress` (honest, not a false 100%)
+
+Merged this receipt's own 5,812 rows with the `spell-remainder` (217), `equipment-remainder` (103),
+and `charbuild-remainder` (66) sibling-lane contributions above, split by
+`docs/work-inventory.json`'s own `status` field (not the lanes' self-reported `contributes_to`
+claims), with an explicit duplicate-`unit_id` check (0 found).
+
+- **Population:** 6,589 `literal-verified` units (unchanged).
+- **Rows committed:** **6,198 of 6,589 (94.1%)** — `literal-verified.oracle-results.json`.
+  Re-derive: `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/literal-verified.oracle-results.json')); r=d['results']; print(len(r), len(set(x['unit_id'] for x in r))); print(collections.Counter(x['verdict'] for x in r))"` → `6198 6198`, `Counter({'unverifiable': 5991, 'agree': 207})`.
+- **Verdict histogram:** 207 agree / 5,991 unverifiable / **0 disagree** — the `equipment-remainder`
+  lane's 1 real disagreement (`ring_of_the_sea_strider`) was root-caused and fixed by the finalize
+  cycle (`src/rules_core/equipment_effects/general.rs`; `progress.md`'s dedicated entry), then
+  re-verified live to `agree`.
+- **391 of 6,589 remain genuinely unrowed — not a false 100%.** All 391 belong to the
+  `equipment-remainder` lane's own named, unexamined `other_bonus_shape`/`equipment_modifier`
+  remainder (`VAR` 108 / `COMBAT` 92 / `STAT_multi_or_other_slot` 43 / `SITUATION` 34 / `SAVE` 24 /
+  `WEAPON` 18 / +smaller shapes — `AT-33-E5-remainder-equipment_cycle_receipt.md`'s own next-cycle
+  plan is the concrete worklist). Re-derive: `6589 - 6198 = 391`, both terms independently
+  re-derived by the commands above and `AT-33-E1-001`'s own `jq` population command.
+- **Reasonless `unverifiable` rows in this criterion's population:** 0 (none of the 319 fixed by
+  the finalize cycle belonged to `literal-verified` — all 319 were in `fixture-verified`'s `spell`
+  sub-population, `AT-33-E5-001`'s own scope; this receipt's own 5,771 unverifiable-with-reason
+  rows already carried a real `reason` before this cycle).
+- **Kanban row 17:** kept `in-progress`, honestly — 391 short of the 6,589 denominator is a real,
+  named gap with a concrete next-cycle plan, not a false 100%. Full detail:
+  `AT-33-E5-finalize_cycle_receipt.md`.

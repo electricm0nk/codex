@@ -265,3 +265,40 @@ and the harness/fixture inputs, not only the delta pattern (this cycle's own mis
 `src/` if the defect is in computation, or the harness/fixture if the defect is in how the oracle
 was asked the question, re-running everything the corrected harness already judged; (3) adds one
 `progress.md` entry per disagreement, resolved to a commit SHA or an explicit operator escalation.
+
+## Finalized by `AT-33-E5-finalize` (wave-2 finalize cycle) — this prediction happened, and was handled per the plan above
+
+Three wave-2 sibling lanes (`spell-remainder`, `equipment-remainder`, `charbuild-remainder`) closed
+the 1,390-unit remainder this receipt named above, examining 999 of it for real (815 + 103 + 81)
+and surfacing exactly 2 NEW disagreements — both in the `src/` bucket this receipt's own plan
+anticipated, neither a harness/fixture defect this time. Both were root-caused and **fixed with a
+real commit** by the finalize cycle (`src/rules_core/` write scope this criterion's own evidence
+line — "either our computation is wrong (fix it)" — covers, even though the individual wave-2
+lanes correctly declined to touch it themselves): one `progress.md` entry per disagreement, per
+this receipt's own plan item (3).
+
+- **`ultimate_equipment:equipment:ring_of_the_sea_strider`** (`ours=8`, `oracle=16`): PF1's
+  swim-speed-grants-+8-racial-Swim-bonus auto-rule, missing from `compute_general_effect`
+  (`src/rules_core/equipment_effects/general.rs`). Fixed; re-verified live via a real re-run of
+  `e5_equipment_remainder_skill_ours` + `scripts/oracle_harness/run.py` (unmodified) — `agree`.
+- **`core_rulebook:class_feature:monk_ac_bonus`** (`ours=2`, `oracle=7`): the Monk's level-4+
+  AC-Bonus dodge-bonus progression, missing from `class_chassis.monk.ac_bonus`
+  (`src/rules_core/pilot_compute/mod.rs`). Fixed; re-verified live via a real re-run of
+  `v06_work_inventory --charbuild-remainder-probe` + `charbuild-remainder-compare.py` (unmodified)
+  — `agree`.
+
+**Disagreements remaining after this fix + re-run, across the full 7,939-unit examined population**
+(re-derive: `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json')); print(len(d['results'])); print(collections.Counter(r['verdict'] for r in d['results']))"`
+→ `7939`, `Counter({'unverifiable': 7336, 'agree': 603})`): **0**.
+
+**Disagree-capability re-proof, repeated at the finalize cycle's own initiative** (a 0-disagreement
+result across 7,939 units is a suspicious result, not a happy one — same discipline this receipt's
+own §108 section used): fed a deliberately-wrong `ours=999` for `ring_of_the_sea_strider` through
+the unmodified `scripts/oracle_harness/run.py` batch path against the real committed oracle export
+→ `disagree`, correctly. The batch path was not silently swallowing disagreements.
+
+**This criterion is kept `in-progress`, not `complete`**, in `kanban.md` row 18 — not because a
+disagreement survived (none did), but because row 17 (`AT-33-E5-002`) is still 391 short of its own
+6,589-unit denominator. A unit with no row at all has not been checked for disagreement either way,
+so "every disagreement is resolved" cannot be asserted over the FULL 8,330-unit population yet,
+only over the 7,939 actually examined. Full detail: `AT-33-E5-finalize_cycle_receipt.md`.

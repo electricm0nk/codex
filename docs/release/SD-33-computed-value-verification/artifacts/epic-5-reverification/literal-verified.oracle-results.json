@@ -40642,6 +40642,3096 @@
       "oracle": null,
       "verdict": "unverifiable",
       "reason": "no_probe_surface: AT-33-E1-003 probe-surface census finds probe_exists=false for kind=companion (category: presence_only) -- our engine holds no magnitude-producing computation for this kind to compare against an oracle value"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:memorize_page",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:mirror_polish",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:stricken_heart",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:thunderstomp_greater",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:time_shudder",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:wave_shield",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Wave Shield' at level 1 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:accelerate_poison",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:beguiling_gift",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:blood_biography",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Blood Biography' at level 2 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:create_treasure_map",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Create Treasure Map' at level 2 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:fire_of_vengeance",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Fire of Vengeance' at level 4 (class Paladin) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:fool_s_forbiddance",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:grace",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Grace' at level 1 (class Cleric) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:hero_s_defiance",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Hero's Defiance' at level 1 (class Paladin) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:holy_whisper",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:hydraulic_torrent",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Hydraulic Torrent' at level 3 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:jester_s_jaunt",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:nap_stack",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:nature_s_exile",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:residual_tracking",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Residual Tracking' at level 1 (class Ranger) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:rest_eternal",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Rest Eternal' at level 4 (class Cleric) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:reviving_finale",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:sculpt_corpse",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:sift",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Sift' at level 0 (class Bard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:swarm_skin",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Swarm Skin' at level 6 (class Druid) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:threefold_aspect",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Threefold Aspect' at level 4 (class Druid) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:venomous_bolt",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:arcane_mark",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Arcane Mark' at level 0 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:atonement",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Atonement' at level 5 (class Cleric) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:awaken",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:bestow_curse",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Bestow Curse' at level 3 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:bless_water",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:clone",
+      "ours": 22,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Clone' at level 8 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:color_spray",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:contact_other_plane",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Contact Other Plane' at level 5 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:contagion",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Contagion' at level 3 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:continual_flame",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Continual Flame' at level 2 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:control_weather",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Control Weather' at level 7 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:curse_water",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:demand",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:detect_scrying",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Detect Scrying' at level 4 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:discern_location",
+      "ours": 22,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Discern Location' at level 8 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:dream",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Dream' at level 5 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:endure_elements",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:explosive_runes",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:freedom",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:ghoul_touch",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:guidance",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:gust_of_wind",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:hallow",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:heal_mount",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:imbue_with_spell_ability",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:imprisonment",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:instant_summons",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Instant Summons' at level 7 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:irresistible_dance",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Irresistible Dance' at level 6 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:know_direction",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Know Direction' at level 0 (class Druid) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:legend_lore",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Legend Lore' at level 4 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:limited_wish",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:mage_s_lucubration",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Mage's Lucubration' at level 6 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:magic_stone",
+      "ours": 15,
+      "oracle": 15,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:mark_of_justice",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Mark of Justice' at level 4 (class Cleric) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:miracle",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:mnemonic_enhancer",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Mnemonic Enhancer' at level 4 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:permanency",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Permanency' at level 5 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:phantom_trap",
+      "ours": 16,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Phantom Trap' at level 2 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_binding",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_binding_greater",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:plane_shift",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Plane Shift' at level 5 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:poison",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Poison' at level 3 (class Cleric) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:prestidigitation",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:prismatic_spray",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:refuge",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Refuge' at level 7 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:reincarnate",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_blindness_deafness",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_curse",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Remove Curse' at level 3 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_disease",
+      "ours": 17,
+      "oracle": 17,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:resistance",
+      "ours": 14,
+      "oracle": 14,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:restoration",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:restoration_greater",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:restoration_lesser",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Restoration (Lesser)' at level 1 (class Cleric) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:secret_page",
+      "ours": 17,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Secret Page' at level 3 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:sending",
+      "ours": 18,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "oracle_export_dropped_declared_level: PCGen's own BatchExporter produced NO SPELL.*.NAME entry at all for 'Sending' at level 4 (class Wizard) -- this engine declared that level via the per-school generic table (compute_spellbook_coverage's resolved SpellEffect.level), and a wrongly-declared level is silently dropped by PCGen rather than relocated (confirmed empirically, AT-33-E5-001's own Notes); a real, named candidate root cause for AT-33-E5-003 (the per-school generic table and this class's own per-class spell-list table may disagree about this spell's real level) -- not an ordinary no-save absence"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shades",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_conjuration",
+      "ours": 18,
+      "oracle": 18,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_conjuration_greater",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_evocation",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:shadow_evocation_greater",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:simulacrum",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Simulacrum' at level 7 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:spellstaff",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:symbol_of_stunning",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:teleport_greater",
+      "ours": 21,
+      "oracle": 21,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:temporal_stasis",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:time_stop",
+      "ours": 23,
+      "oracle": 23,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:transport_via_plants",
+      "ours": 20,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Transport via Plants' at level 6 (class Druid) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:true_strike",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'True Strike' at level 1 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:unhallow",
+      "ours": 19,
+      "oracle": 19,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "core_rulebook:spell:virtue",
+      "ours": 14,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Virtue' at level 0 (class Cleric) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:waves_of_exhaustion",
+      "ours": 21,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Waves of Exhaustion' at level 7 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:waves_of_fatigue",
+      "ours": 19,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_on_oracle: PCGen's own BatchExporter resolved 'Waves of Fatigue' at level 5 (class Wizard) but produced a blank SPELL.*.DC token for it -- a real, live-confirmed absence of a saving throw on the oracle side"
+    },
+    {
+      "unit_id": "core_rulebook:spell:word_of_recall",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "spell"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:blade_lash",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Blade Lash' (advanced_class_guide) is on the spell list of [Magus (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:sense_spirit_magic",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Sense Spirit Magic' (advanced_class_guide) is on the spell list of [Shaman (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:alchemical_allocation",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Alchemical Allocation' (advanced_players_guide) is on the spell list of [Alchemist (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:borrow_fortune",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Borrow Fortune' (advanced_players_guide) is on the spell list of [Oracle (Charisma)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:brand_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Brand (Greater)' (advanced_players_guide) is on the spell list of [Inquisitor (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:purified_calling",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Purified Calling' in book 'advanced_players_guide' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:screech",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Screech' (advanced_players_guide) is on the spell list of [Witch (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:universal_formula",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Universal Formula' (advanced_players_guide) is on the spell list of [Alchemist (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:wrath",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Wrath' (advanced_players_guide) is on the spell list of [Inquisitor (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_binding_devils_and_fiendish_creatures_only",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_class_list_binding: 'Planar Binding (Devils and Fiendish Creatures Only)' (core_rulebook) carries neither a CLASSES nor a DOMAINS token \u2014 no data exists in this record to derive a governing class or ability from at all"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:abstemiousness",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Abstemiousness' (inner_sea_gods) is on the spell list of [Witch (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:channel_the_gift",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Channel the Gift' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'inner_sea_gods' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:dream_feast",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Dream Feast' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'inner_sea_gods' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:fractions_of_heal_and_harm",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Fractions of Heal and Harm' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'inner_sea_gods' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:inheritor_s_smite",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Inheritor's Smite' names mapped class(es) [Paladin] (a real spell_save_dc formula exists for Paladin via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'inner_sea_gods' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:read_weather",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Read Weather' (inner_sea_gods) is on the spell list of [Witch (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:replenish_ki",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Replenish Ki' names mapped class(es) [Cleric] (a real spell_save_dc formula exists for Cleric via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'inner_sea_gods' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "inner_sea_gods:spell:symbol_of_dispelling",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Symbol of Dispelling' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'inner_sea_gods' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:akashic_form",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Akashic Form' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:awaken_construct",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Awaken Construct' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:burst_of_adrenaline",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Burst of Adrenaline' (occult_adventures) is on the spell list of [Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:burst_of_insight",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Burst of Insight' (occult_adventures) is on the spell list of [Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:call_spirit",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Call Spirit' (occult_adventures) is on the spell list of [Medium (Charisma), Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:charge_object",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Charge Object' (occult_adventures) is on the spell list of [Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:demand_offering",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Demand Offering' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:detect_psychic_significance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Detect Psychic Significance' (occult_adventures) is on the spell list of [Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:divide_mind",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Divide Mind' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:dream_council",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Dream Council' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:dream_scan",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Dream Scan' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:erase_impressions",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Erase Impressions' (occult_adventures) is on the spell list of [Medium (Charisma), Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:grave_words",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Grave Words' (occult_adventures) is on the spell list of [Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:hypercognition",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Hypercognition' names mapped class(es) [Bard, Wizard] (a real spell_save_dc formula exists for Bard/Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:intellect_fortress_i",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Intellect Fortress I' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:intellect_fortress_ii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Intellect Fortress II' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:intellect_fortress_iii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Intellect Fortress III' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:mental_barrier_i",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Mental Barrier I' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:mental_barrier_ii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Mental Barrier II' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:mental_barrier_iii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Mental Barrier III' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:mental_barrier_iv",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Mental Barrier IV' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:mental_barrier_v",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Mental Barrier V' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:mindlink",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Mindlink' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:node_of_blasting",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Node of Blasting' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_asylum",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Psychic Asylum' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'occult_adventures' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_surgery",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Psychic Surgery' (occult_adventures) is on the spell list of [Mesmerist (Charisma)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:remote_viewing",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Remote Viewing' (occult_adventures) is on the spell list of [Medium (Charisma), Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:repress_memory",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Repress Memory' (occult_adventures) is on the spell list of [Mesmerist (Charisma)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:synaptic_pulse",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Synaptic Pulse' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:synaptic_pulse_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Synaptic Pulse (Greater)' (occult_adventures) is on the spell list of [Mesmerist (Charisma)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:thought_shield_i",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Thought Shield I' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:thought_shield_ii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Thought Shield II' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:thought_shield_iii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Thought Shield III' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:thought_shield_iv",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Thought Shield IV' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:tower_of_iron_will_i",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Tower of Iron Will I' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:tower_of_iron_will_ii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Tower of Iron Will II' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:tower_of_iron_will_iii",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Tower of Iron Will III' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:tower_of_iron_will_iv",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Tower of Iron Will IV' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:tower_of_iron_will_v",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Tower of Iron Will V' (occult_adventures) is on the spell list of [Psychic (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "occult_adventures:spell:withdraw_affliction",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Withdraw Affliction' (occult_adventures) is on the spell list of [Spiritualist (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:blistering_invective",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Blistering Invective' (ultimate_combat) is on the spell list of [Inquisitor (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:burst_of_speed",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Burst of Speed' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:endure_elements_communal",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Endure Elements (Communal)' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:fabricate_bullets",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Fabricate Bullets' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:find_quarry",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Find Quarry' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_defense",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Litany of Defense' names mapped class(es) [Paladin] (a real spell_save_dc formula exists for Paladin via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_sight",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Litany of Sight' names mapped class(es) [Paladin] (a real spell_save_dc formula exists for Paladin via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_warding",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Litany of Warding' names mapped class(es) [Paladin] (a real spell_save_dc formula exists for Paladin via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:mirror_strike",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Mirror Strike' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:mutagenic_touch",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Mutagenic Touch' (ultimate_combat) is on the spell list of [Alchemist (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_combat:spell:pellet_blast",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Pellet Blast' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_combat' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:break_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Break (Greater)' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:fabricate_disguise",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Fabricate Disguise' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:false_resurrection_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'False Resurrection (Greater)' names mapped class(es) [Cleric] (a real spell_save_dc formula exists for Cleric via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:glimpse_of_truth",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Glimpse of Truth' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:meticulous_match",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Meticulous Match' names mapped class(es) [Ranger, Wizard] (a real spell_save_dc formula exists for Ranger/Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:prognostication",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Prognostication' (ultimate_intrigue) is on the spell list of [Medium (Charisma), Witch (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:reincarnate_spy",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Reincarnate Spy' (ultimate_intrigue) is on the spell list of [Shaman (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:treacherous_teleport",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Treacherous Teleport' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:true_prognostication",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'True Prognostication' (ultimate_intrigue) is on the spell list of [Witch (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:voluminous_vocabulary",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Voluminous Vocabulary' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_intrigue' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:age_resistance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Age Resistance' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:age_resistance_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Age Resistance (Greater)' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:age_resistance_lesser",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Age Resistance (Lesser)' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:animate_dead_lesser",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Animate Dead (Lesser)' names mapped class(es) [Cleric, Wizard] (a real spell_save_dc formula exists for Cleric/Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:blood_transcription",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Blood Transcription' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:call_construct",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Call Construct' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:chord_of_shards",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Chord of Shards' names mapped class(es) [Bard] (a real spell_save_dc formula exists for Bard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:cursed_earth",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Cursed Earth' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:decompose_corpse",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Decompose Corpse' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:frigid_touch",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Frigid Touch' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:fungal_infestation",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Fungal Infestation' names mapped class(es) [Druid] (a real spell_save_dc formula exists for Druid via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:horn_of_pursuit",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Horn of Pursuit' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:interplanetary_teleport",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Interplanetary Teleport' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:joyful_rapture",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Joyful Rapture' names mapped class(es) [Bard, Wizard] (a real spell_save_dc formula exists for Bard/Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:ki_arrow",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Ki Arrow' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:know_the_enemy",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Know the Enemy' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:masterwork_transformation",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Masterwork Transformation' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:plane_shift_plane_of_air_only",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Plane Shift (Plane of Air Only)' in book 'ultimate_magic' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:plane_shift_plane_of_earth_only",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Plane Shift (Plane of Earth Only)' in book 'ultimate_magic' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:plane_shift_plane_of_fire_only",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Plane Shift (Plane of Fire Only)' in book 'ultimate_magic' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:plane_shift_plane_of_water_only",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Plane Shift (Plane of Water Only)' in book 'ultimate_magic' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:polypurpose_panacea",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Polypurpose Panacea' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:raise_animal_companion",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Raise Animal Companion' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:restore_corpse",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Restore Corpse' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:restore_eidolon",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Restore Eidolon' in book 'ultimate_magic' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:restore_eidolon_lesser",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_corpus_level: corpus record for 'Restore Eidolon (Lesser)' in book 'ultimate_magic' carries no resolvable spell level (evidence=spell_list_entry_with_description_but_no_corpus_level) \u2014 no computed magnitude (save DC, caster level, or bonus spells) can be derived without a level"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:sanctify_corpse",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Sanctify Corpse' (ultimate_magic) is on the spell list of [Witch (Intelligence)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:sculpt_simulacrum",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Sculpt Simulacrum' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:share_memory",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Share Memory' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:temporary_resurrection",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Temporary Resurrection' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:touch_of_slime",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Touch of Slime' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_magic:spell:toxic_gift",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Toxic Gift' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_magic' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:bleed_for_your_master",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Bleed for Your Master' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_wilderness' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:green_caress",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Green Caress' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_wilderness' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:sea_of_dust",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Sea of Dust' names mapped class(es) [Druid] (a real spell_save_dc formula exists for Druid via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_wilderness' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:signs_of_the_land",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_save_dc_computed: 'Signs of the Land' (ultimate_wilderness) is on the spell list of [Shaman (Wisdom)], none of which is one of the seven classes src/rules_core/spellbook.rs::casting_ability_for_class covers (Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin) \u2014 this engine's compute_spellbook_coverage computes no spell_save_dc entry for any other class's spell selection, confirmed by this cycle's own casting-ability mapping (scripts/oracle_harness/spell_casting_ability_mapping.json, derived from the pinned PCGen oracle's own CLASS:...SPELLSTAT: declarations), which states each named class's real governing ability but cannot make the engine compute a DC it has no consumer for"
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:vigilant_rest",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Vigilant Rest' names mapped class(es) [Ranger] (a real spell_save_dc formula exists for Ranger via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_wilderness' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:wandering_weather",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "spell",
+      "reason": "no_engine_spell_list_entry: 'Wandering Weather' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_wilderness' (which is outside that three-book scope)"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment_modifier:cloudb",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment_modifier:special_ability_cloudburst_armor",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:brace",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:disarm",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:monk",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:nonlethal",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_brace",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_disarm",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_double",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_nonlethal",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_reach",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_trip",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:trip",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:blocking",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:deadly",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:distracting",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:firearm_scatter",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:fragile",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:grapple",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:performance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_blocking",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_deadly",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_distracting",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_fragile",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_grapple",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_performance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_scatter_firearm",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_throwing_shield_shield",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:thrw_shld",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment_modifier:special_quality_blood_reservoir_of_physical_prowess_weapon",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment_modifier:special_quality_performance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment_modifier:special_quality_scatter_firearm",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_bonus_chain"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:alchemist_s_lab_portable",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:cauldron_of_brewing",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:halfling_jugglesticks",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:living_garments",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:training_harness",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:alchemist_s_lab",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:boots_of_elvenkind",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:climber_s_kit",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_elvenkind",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_the_bat",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:disguise_kit",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:eyes_of_the_eagle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:goggles_of_minute_seeing",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:healer_s_kit",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_pale_green_prism",
+      "ours": 1,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "skill_type_qualifier_no_literal_skill_name"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:lens_of_detection",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_climbing",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_climbing_improved",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_swimming",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_swimming_improved",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:robe_of_eyes",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:vest_of_escape",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:featherscale_cloak",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:great_barghest_hero_cloak",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_serene_contortions",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:robe_of_the_master_of_masters",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:silent_blade_vest",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:wayfinder_of_zephyrs",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "occult_adventures:equipment:caduceus_rod",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:aquatic_cummerbund",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bell_net",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_the_glib_entertainer",
+      "ours": 5,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "skill_type_qualifier_no_literal_skill_name"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cackling_hag_s_blouse",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:claws_of_the_ice_bear",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:dead_man_s_headband",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:eyes_of_keen_sight",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:filter_hood",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gambler_s_kit_cheating",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gloves_of_larceny",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_counterspelling",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_stupidity",
+      "ours": -2,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "skill_type_qualifier_no_literal_skill_name"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:healer_s_gloves",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle_mount",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:inquisitor_s_monocle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:lenses_of_detection",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:lion_cloak",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:mask_of_a_thousand_tomes",
+      "ours": 10,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "skill_type_qualifier_no_literal_skill_name"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:maw_of_the_wyrm",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:needles_of_fleshgraving",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:prestidigitator_s_cloak",
+      "ours": 8,
+      "oracle": 8,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_tactical_precision",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_the_sea_strider",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_escape",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_sapling",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_trap_stealer_s",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:scholar_s_ring",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:seducer_s_bane",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt_greater",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:staff_of_accompaniment",
+      "ours": 2,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "skill_type_qualifier_no_literal_skill_name"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:stalker_s_mask",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:survival_kit_masterwork",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:trapspringer_s_gloves",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:veterinarian_s_kit",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:xorn_robe",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:guiding_scarab",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:investigator_alchemy",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_talent_foil_scrutiny",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_players_guide:class_feature:inquisitor_track",
+      "ours": 10,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "PCGen's real DESCRIPTION text for 'Track' carries no bonus-shaped numeric token this comparison's regex recognizes. Real DESC text: 'An inquisitor adds half her level on Survival skill checks made to follow or identify tracks.'"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:barbarian_uncanny_dodge",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:druid_nature_sense",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:druid_wild_empathy",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:monk_ac_bonus",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:monk_high_jump",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:monk_wholeness_of_body",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_aura_of_righteousness",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_holy_champion",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:ranger_hunter_s_bond",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:ranger_track",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_talent_resiliency",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_sneak_attack",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_uncanny_dodge",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "pathfinder_unchained:class_feature:unchained_rogue_sneak_attack",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:catfolk",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:dhampir",
+      "ours": {
+        "charisma": 2,
+        "constitution": -2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:drow",
+      "ours": {
+        "charisma": 2,
+        "constitution": -2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:duergar",
+      "ours": {
+        "charisma": -4,
+        "constitution": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "constitution": 2,
+        "wisdom": 2,
+        "charisma": -4
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:dwarf",
+      "ours": {
+        "charisma": -2,
+        "constitution": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "constitution": 2,
+        "wisdom": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:elf",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "intelligence": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "intelligence": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:fetchling",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:gillman",
+      "ours": {
+        "charisma": 2,
+        "constitution": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "constitution": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:gnome",
+      "ours": {
+        "charisma": 2,
+        "constitution": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "constitution": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:goblin",
+      "ours": {
+        "charisma": -2,
+        "dexterity": 4,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 4,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:grippli",
+      "ours": {
+        "dexterity": 2,
+        "strength": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:half_elf",
+      "ours": {
+        "floating_bonus_points": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race",
+      "reason": "this race grants a floating +2 to a player-chosen ability rather than a fixed set; this cycle's minimal .pcg makes no ability selection, so PCGen shows all six scores at the unmodified base (no per-ability delta exists to compare the floating magnitude against in an unselected build)."
+    },
+    {
+      "unit_id": "advanced_race_guide:race:half_orc",
+      "ours": {
+        "floating_bonus_points": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race",
+      "reason": "this race grants a floating +2 to a player-chosen ability rather than a fixed set; this cycle's minimal .pcg makes no ability selection, so PCGen shows all six scores at the unmodified base (no per-ability delta exists to compare the floating magnitude against in an unselected build)."
+    },
+    {
+      "unit_id": "advanced_race_guide:race:halfling",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:hobgoblin",
+      "ours": {
+        "constitution": 2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:human",
+      "ours": {
+        "floating_bonus_points": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race",
+      "reason": "this race grants a floating +2 to a player-chosen ability rather than a fixed set; this cycle's minimal .pcg makes no ability selection, so PCGen shows all six scores at the unmodified base (no per-ability delta exists to compare the floating magnitude against in an unselected build)."
+    },
+    {
+      "unit_id": "advanced_race_guide:race:ifrit",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:kobold",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "strength": -4
+      },
+      "oracle": {
+        "strength": -4,
+        "dexterity": 2,
+        "constitution": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:merfolk",
+      "ours": {
+        "charisma": 2,
+        "constitution": 2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:orc",
+      "ours": {
+        "charisma": -2,
+        "intelligence": -2,
+        "strength": 4,
+        "wisdom": -2
+      },
+      "oracle": {
+        "strength": 4,
+        "intelligence": -2,
+        "wisdom": -2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:oread",
+      "ours": {
+        "charisma": -2,
+        "strength": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "wisdom": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:ratfolk",
+      "ours": {
+        "dexterity": 2,
+        "intelligence": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "intelligence": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:strix",
+      "ours": {
+        "charisma": -2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:suli",
+      "ours": {
+        "charisma": 2,
+        "intelligence": -2,
+        "strength": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "intelligence": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:svirfneblin",
+      "ours": {
+        "charisma": -4,
+        "dexterity": 2,
+        "strength": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "wisdom": 2,
+        "charisma": -4
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:sylph",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "intelligence": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "intelligence": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:tengu",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:undine",
+      "ours": {
+        "dexterity": 2,
+        "strength": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:vanara",
+      "ours": {
+        "charisma": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:vishkanya",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:kitsune",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:nagaji",
+      "ours": {
+        "charisma": 2,
+        "intelligence": -2,
+        "strength": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "intelligence": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:samsaran",
+      "ours": {
+        "constitution": -2,
+        "intelligence": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "constitution": -2,
+        "intelligence": 2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:wayang",
+      "ours": {
+        "dexterity": 2,
+        "intelligence": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "intelligence": 2,
+        "wisdom": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_5:race:skinwalker",
+      "ours": {
+        "intelligence": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "intelligence": -2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_6:race:rougarou",
+      "ours": {
+        "intelligence": -2,
+        "strength": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "intelligence": -2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_earthfoot",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_firehand",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_icewalk",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_shockshield",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:world_walker_skilled",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_ability_scores",
+      "ours": {
+        "charisma": 2,
+        "wisdom": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "real engine-side magnitude computed ({'charisma': 2, 'wisdom': 2}, floating_bonus_points=0) via the same race_creation_chassis(...) read the `race` population uses, but this cycle built no PCGen .pcg for 'Aasimar' itself (it is a race_trait unit, not one of the 36 race units already built) -- no live oracle round-trip was run for this specific unit this cycle."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_celestial_resistance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_skilled",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_speed",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_vision",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "horror_adventures:race_trait:deep_jungle_halfling_poison_use",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "inner_sea_races:race_trait:junk_tinker_skilled",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "monster_codex:race_trait:oversized_goblin_ability_scores",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_creation_chassis did not resolve for this race_trait's own race in this cycle's probe run"
     }
   ]
 }
