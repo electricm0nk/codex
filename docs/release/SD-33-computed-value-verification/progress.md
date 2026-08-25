@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 as of AT-33-E5-finalize-wave5 (this cycle, owns the kanban call on rows 16/17/18): AT-33-E5-001 (row 16) complete, 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) in-progress, 6,550 of 6,589 literal-verified units rowed, 39 remain unrowed (23 weapon-shape + 9 skill-combat-shape + 7 eqm-shape, all named by AT-33-E5-last67-{weapon,skill-combat,eqm}'s own shape tables); AT-33-E5-003 (row 18) blocked-escalated, 1 of 8,291 examined units disagree (`advanced_race_guide:equipment:rending_claw_blades` — a corpus-extraction gap, root-caused and escalated under `## Open blockers`, not fixable by a resolver change) — 27 of the 28 disagreements this criterion has ever surfaced are resolved to a commit, including this wave's real `heavy_hammer` engine fix (`compute_equipmods_effect` multi-chain summing). AT-33-E6-001's next attempt is still blocked on rows 17 and 18.
+status: Epics 1-4 complete (rows 1-15); Epic 5 as of AT-33-E5-finalize-wave6 (this cycle, owns the kanban call on rows 16/17/18) — ALL THREE COMPLETE: AT-33-E5-001 (row 16) complete, 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) complete, 6,589 of 6,589 literal-verified units rowed (the prior 39-unit remainder fully closed: 23 weapon-shape + 11 skill-combat-shape + 7 eqm-shape, 2 unit_ids deduped across the weapon/skill-combat lanes — see `## Cycles`), 0 unrowed; AT-33-E5-003 (row 18) complete, 0 of 8,330 examined units disagree — `advanced_race_guide:equipment:rending_claw_blades` FIXED this cycle (two real `src/rules_core/equipment_effects.rs`/`equipmods.rs` defects: `eqmod_referenced_records` only ever read the first of a record's possibly-multiple `EQMOD:` tokens, and the weapon path never folded an `EQMOD:`-referenced modifier's own chain in at all), `## Open blockers` is now empty. 29 of 29 disagreements this criterion has ever surfaced are dispositioned (28 fixed to a commit, 0 remain escalated). AT-33-E6-001's next attempt is unblocked on rows 16/17/18 (Epic 4's own `cargo test --locked --lib` debt, `AT-33-E6-001-attempt6`'s Shortfall 4, is out of this row's scope and remains for its own owner).
 date: 2026-08-25
 ---
 
@@ -280,6 +280,21 @@ Each entry states, at minimum:
 
 **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
+**Empty as of `AT-33-E5-finalize-wave6`, 2026-08-25.** The one entry this section carried
+(`rending_claw_blades` compute_equipment_effects weapon-path EQMOD-resolution gap) is **CLEARED,
+not superseded by a new entry**: fixed via `eqmod_referenced_records` now scanning every `EQMOD:`
+token (not only the first) and a new `equipmods::apply_eqmod_weapon_enhancement_bonus` folding
+`EQMOD:`-referenced modifier records' own weapon-enhancement chains into the weapon dimension
+(per-dimension MAX, mirroring Pathfinder's same-`TYPE=Enhancement` stacking rule), mirroring the
+AC dimension's already-shipped `resolve_category_effect` pattern. RED→GREEN, real corpus tokens,
+`equipment_effects::` 76/76 green (3 new), corpus-wide 191-record blast-radius scan cross-checked
+against every currently-`agree` unit_id in the population — 0 regressions. `box_ledger.py --check`
+now prints `oracle_disagreement=0`, exit 0. Full detail in the `## Cycles` entry below and
+`AT-33-E5-finalize-wave6_cycle_receipt.md`. History preserved for audit trail:
+
+<details>
+<summary>Historical entry (CLEARED 2026-08-25, kept for audit trail — not an active blocker)</summary>
+
 ### `rending_claw_blades` compute_equipment_effects weapon-path EQMOD-resolution gap (`AT-33-E5-003`) — filed `sd33-r6-corpus-extraction`, 2026-08-25 (supersedes the `sd33-r5-e5-finalize` corpus-extraction entry below, CLEARED this cycle)
 
 **The prior entry's blocker is CLEARED, not merely narrowed.** The corpus-extraction `.MOD`-attached-EQMOD
@@ -342,7 +357,139 @@ newly-skill-computable units named above (owned by whichever lane holds the lite
 population, row 17 — not this lane's mandate). Revisit condition: this ruling, or a future cycle's own
 RED→GREEN landing the widening.
 
+**Resolution (2026-08-25, `AT-33-E5-finalize-wave6`):** the ruling requested above was exercised —
+the widening was landed this cycle, with the same-type-stacking correction (`max`, not the naive
+`sum` the entry above proposed) the live oracle data required. See the `## Cycles` entry below.
+
+</details>
+
 ## Cycles
+
+### Cycle AT-33-E5-finalize-wave6 — total Epic 5 across wave-6 lanes, fix `rending_claw_blades`, own the kanban call on rows 16/17/18 — complete
+
+- **Criterion:** `AT-33-E5-001`/`AT-33-E5-002`/`AT-33-E5-003` — merge the five wave-6 lanes'
+  results (`corpus-extraction-fix`, `method-rerun`, `last39-{weapon,skill-combat,eqm}`) into the
+  three canonical artifacts, derive the unexamined set, resolve the last `disagree`, and make the
+  kanban call.
+- **Files touched:** `src/rules_core/equipment_effects.rs` (`eqmod_referenced_records` now scans
+  every `EQMOD:` token, not only the first; new end-to-end test), `src/rules_core/equipment_effects/
+  equipmods.rs` (new `apply_eqmod_weapon_enhancement_bonus`, per-dimension MAX), `artifacts/
+  epic-5-reverification/{AT-33-E5-003.combined-oracle-results.json,
+  literal-verified.oracle-results.json}` (merged), `progress.md`, `kanban.md`, this cycle's
+  receipt.
+- **Merge, precedence stated:** started from the pre-wave-6 combined file (8,291 rows). The
+  `corpus-extraction-fix` lane's 13 rows SUPERSEDED their pre-existing stale rows in both
+  `AT-33-E5-003.combined-oracle-results.json` and `literal-verified.oracle-results.json` (all 13
+  are `literal-verified`, confirmed via `docs/work-inventory.json`). The `method-rerun` lane's 21
+  rows were already merged into the combined file by its own commit (`63b519dcaf`) — verified 0
+  mismatches between that file and `method-rerun-wave6.oracle-results.json` before propagating the
+  same 21 rows into `literal-verified.oracle-results.json`, which had not yet received them. The
+  three remainder lanes' 39 rows (weapon 23, skill-combat 11, eqm 7) were added as new rows to both
+  files. **Duplicate finding, root-caused, not last-writer-wins:** the union of the three
+  remainder lanes' unit_ids is 39, not 23+11+7=41 — `ultimate_psionics:equipment:{flurry_of_fists,
+  flurry_of_strikes}` were independently rowed by BOTH the weapon and skill-combat lanes (both are
+  genuinely `BONUS:WEAPON|...` chains AND trigger via a "Blade Skill" ability, so both lanes'
+  partition of the 39-unit residual claimed them). Compared both lanes' rows directly: byte-for-
+  byte identical verdict (`unverifiable`, `ours=None`, `oracle=None`, `reason` starting
+  `no_resolver`) — a dispatch-partition overlap, not a data conflict. Deduped to one row per
+  unit_id, keeping the skill-combat lane's version (its `reason` text names the specific
+  cross-record `DEFINE:`/`BONUS:VAR` resolution the weapon lane's shorter note omits).
+- **Figures, re-derived, not read from any lane's report:**
+  `AT-33-E5-003.combined-oracle-results.json` — **8,330 of 8,330** rows, 8,330 distinct, 811 agree
+  / 7,519 unverifiable / **0 disagree** (before `rending_claw_blades`'s fix: 810/7,519/1).
+  `literal-verified.oracle-results.json` — **6,589 of 6,589** rows, 6,589 distinct, 415 agree /
+  6,174 unverifiable / 0 disagree. `fixture-verified.combined-oracle-results.json` — unchanged,
+  **1,741 of 1,741**, 396 agree / 1,345 unverifiable / 0 disagree (0 of the 34+39 units this cycle
+  touched belong to the fixture-verified population, confirmed via `docs/work-inventory.json`).
+  Re-derive:
+  `python3 -c "import json,collections; d=json.load(open('artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json')); print(len(d['results'])); print(collections.Counter(r['verdict'] for r in d['results']))"`
+  → `8330`, `Counter({'unverifiable': 7519, 'agree': 811})`.
+- **Unexamined set, derived not assumed:**
+  `python3 -c "import json; wi=json.load(open('docs/work-inventory.json'))['units']; pop={u['id'] for u in wi if u.get('status') in ('literal-verified','fixture-verified')}; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json'))['results']; print(len(pop-{r['unit_id'] for r in d}))"`
+  → `0`.
+- **`rending_claw_blades` (`AT-33-E5-003`'s last `disagree`) — FIXED, not re-escalated.** Two real
+  `src/rules_core/` defects, both closed with TDD RED→GREEN:
+  1. `eqmod_referenced_records` used `.find()` on the record's `EQMOD:` tokens — this record now
+     carries TWO (its own line's `Material ~ Steel` plus a second, richer token the corpus-
+     extraction fix folded in from its `.MOD` row), so the one naming the real `+1 Weapon`
+     modifier was silently never inspected. Fixed to scan every `EQMOD:` token.
+  2. `compute_equipment_effects`'s weapon path (`let weapon_enhancement_bonus =
+     equipmods::compute_equipmods_effect(record);`) never folded `EQMOD:`-referenced modifier
+     records' own chains in at all — unlike the AC dimension's already-shipped
+     `resolve_category_effect` → `arms_armor::apply_eqmod_armor_class_bonus` pattern (wave 4).
+     Fixed via a new `equipmods::apply_eqmod_weapon_enhancement_bonus`, called from
+     `compute_equipment_effects` the same way the AC path is.
+  **Combining rule is per-dimension MAX, not sum** — discovered mid-cycle, not assumed: a first
+  pass summed (matching the corpus-extraction lane's own escalation note, which proposed
+  "Option-sum"), and live-recomputing against the real on-disk record produced `tohit_bonus=Some(2)`
+  against the oracle's own `MAGICHIT=+1` — a NEW disagreement traded for the old one. Root cause:
+  the base record's own `BONUS:WEAPON|TOHIT|1|TYPE=Enhancement` and the referenced modifier's
+  `BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement` carry the IDENTICAL `TYPE=Enhancement` qualifier —
+  Pathfinder's same-type stacking rule takes the higher, never the sum. Corrected to `max` per
+  dimension; `tohit_bonus` becomes `max(1,1)=1` (matches); `damage_bonus` has no competing base
+  chain (`None`, never treated as `0`), so the modifier's `1` is simply the result (matches). RED
+  test: `equipment_effects::book_agnostic_resolution_tests::
+  eqmod_referenced_modifier_sums_into_weapon_enhancement_bonus_across_two_eqmod_tokens`, real
+  verbatim tokens (the base record's post-corpus-fix shape plus core_rulebook's own `Special
+  Ability ~ +1 ~ Weapon`, already used verbatim by an existing test) — failed for the intended
+  reason before the fix (`tohit_bonus` `Some(1)` vs the then-expected `Some(2)`, itself corrected
+  once the stacking rule was found), passed after. `equipment_effects::` **76 of 76** green (3
+  new), 0 regressions: `cargo test --locked --lib equipment_effects`.
+  **Blast-radius and regression sweep, corpus-wide, live:** a scratch scan (removed after use,
+  never committed) over every book found **191 of 2,210** equipment records carrying an `EQMOD:`
+  token where the new fold path now engages. Cross-referenced all 191 corpus keys against every
+  currently-`agree` unit_id in the 8,330 population: **4 matches**, 1 a false positive (`Chaos
+  Hammer` — a spell, name coincidence only), 1 this fix's own target (`rending_claw_blades`), 1
+  unaffected in value (`core_rulebook:equipment:rod_thunder_and_lightning` — base chain and
+  modifier chain are both `(1,1)`, `max` leaves it identical, re-verified live via
+  `e5_last67_weapon_ours`), and 2 out-of-population (`ultimate_equipment:equipment:
+  {hammer_dwarfbond,bastard_s_sting}`, `status=ingested-magnitude`, never literal/fixture-
+  verified). **0 regressions.** The other two agree-population keys the 191-list matched
+  (`fork_of_the_forgotten_one`, `staff_of_mithral_might`) agree on the SKILL/ABILITY dimension,
+  not `weapon_enhancement_bonus`, which is `None` for both before and after this fix.
+  **Scope this fix does NOT cover** (`AGENTS.md` Rule 7): the other ~187 of the 191 affected
+  records were already `unverifiable`/`no_resolver` (`weapon_enhancement_bonus` was `None`) — this
+  fix likely gives many of them a real `ours` value now, but no live-oracle capture was performed
+  for them this cycle, so their verdict is deliberately unchanged; their `no_resolver` reason text
+  is now stale (a resolver exists) and is named here as a real next-cycle item, not claimed as
+  closed.
+  Full corpus-wide command and per-record detail, and the RED output, are in this cycle's receipt.
+- **`box_ledger.py --check` re-derived, current artifact:**
+  `python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json`
+  → `uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False`,
+  exit 0.
+- **`disagree` capability re-proven live** on a copy of the current closure artifact: injected
+  `core_rulebook:equipment:rod_thunder_and_lightning` `ours=99`/`verdict=disagree`,
+  `oracle_disagreement` moved `0 → 1`, the injected unit named, probe file removed, real artifact
+  re-checked clean (`oracle_disagreement=0`, exit 0) immediately after.
+- **Reasonless `unverifiable`, all three files:** 0 of 7,519 (combined), 0 of 6,174 (literal), 0 of
+  1,345 (fixture) — re-derived per-file, not assumed from the combined total.
+- **Duplicate `unit_id`s, all three files:** 0/0/0 — re-derived per-file after the dedup above.
+- **`## Open blockers`:** empty. The `rending_claw_blades` entry is cleared (fixed, not
+  superseded), history preserved under a collapsed `<details>` block for audit trail.
+- **Rust suite:** `cargo test --locked --lib` — **2,832 of 2,836** executed lib tests pass, same 4
+  failures as `AT-33-E6-001-attempt6`'s already-attributed Shortfall 4 (3 Epic 4's own
+  `('ambiguous','unmeasurable')` doneness-mapper debt, 1 inherited `equipment_resolver.rs:863`
+  catalog-count mismatch) — confirmed unrelated to this cycle's diff (neither touches
+  `pf1e_dashboard_producer.py`, `coverage_ledger.py`, or `equipment_resolver.rs`) and out of this
+  row's mandate (Epic 4's, not Epic 5's). Not claimed fixed here.
+- **Denominator gate:** `bash scripts/verify.sh --only denominator-gate` → `PASS denominator-gate
+  (files_checked=52 violations=0)`.
+- **Movement, four buckets:** closure 1 (`rending_claw_blades`, `disagree` → `agree`, a real fix).
+  Reclassification 0. Reachability 0 (the 39 new rows are newly EXAMINED, not newly reachable —
+  38 of 39 remain `unverifiable`, 1 `agree`, per the three lanes' own live probes).
+  Instrument-correction 0 (the corpus-extraction/method-rerun supersessions were already the prior
+  cycles' own instrument-correction movement, merged here without altering their disposition).
+- **Kanban call:** row 16 `complete` (unchanged, re-confirmed 0 overlap with any wave-6 lane), row
+  17 `complete` (6,589 of 6,589, 0 unrowed, 0 disagree), row 18 `complete` (0 of 8,330 disagree,
+  `## Open blockers` empty).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-finalize-wave6_cycle_receipt.md`.
+- **Next:** `AT-33-E6-001`'s next attempt can re-run rows 16/17/18 clean. Two real, named, non-
+  blocking items remain for a future cycle, neither part of this row's mandate: (a) Epic 4's own
+  Shortfall-4 test debt (`('ambiguous','unmeasurable')` unmapped in `pf1e_dashboard_producer.py`,
+  plus the inherited `equipment_resolver.rs:863` catalog-count mismatch); (b) a live-oracle
+  capture sweep across the ~187 corpus-wide records this cycle's fix newly made resolvable but did
+  not verify against a live oracle value.
 
 ### Cycle AT-33-E5-last39-skill-combat — remediation wave 6, skill-combat-final lane (row 17, AT-33-E5-002 remediation) — complete (lane-scoped, 0 agree/disagree)
 

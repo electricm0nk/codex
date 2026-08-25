@@ -309,12 +309,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse",
-      "ours": 11,
+      "method": "ac_isolated_bonus_by_type",
       "oracle": 11,
-      "verdict": "agree",
+      "ours": 11,
       "prior_diff_oracle": 10,
-      "method": "ac_isolated_bonus_by_type"
+      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -1378,11 +1378,13 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "equipment_id_resolve_no_match_keyless_outputname_record",
+      "correction": "identity-resolve",
+      "method": "var_diff_isolated(LOADSCORE)",
+      "note": "Identity-resolve fix blast radius (corpus_loader.rs KEY-synthesis, 9df1c0b514): 'Backpack (Masterwork)' has raw_tokens (OUTPUTNAME/TYPE/CONTAINS/COST/WT/SOURCEPAGE) but no literal KEY: token, and name ('Backpack, Masterwork') != key ('Backpack (Masterwork)') -- exactly the shape the fix addresses. equipment_id_resolve now succeeds (confirmed live, e6_identity_rerun_ours). Oracle side never previously attempted (prior lane recorded ours=None, oracle=None, dropped before any PCGen invocation) -- new single-item .pcg fixture + a VAR.LOADSCORE export template built this cycle, run against a matching-context baseline (bare L1 Human Fighter, same convention wave-3's own 44-unit VAR-shape population uses): item=17.0, baseline=16.0, diff=+1, matching the corpus's own literal BONUS:VAR|LOADSCORE|1|TYPE=Masterwork exactly. No other LOADSCORE-affecting source exists on this baseline (single-variable diff, not the multi-component AC.Total shape the AC-isolator fix was needed for).",
+      "oracle": 1,
+      "ours": 1,
       "unit_id": "advanced_players_guide:equipment:backpack_masterwork",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -1825,11 +1827,11 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "advanced_players_guide:equipment:crossbow_double",
-      "ours": null,
       "oracle": -4,
-      "verdict": "unverifiable",
-      "reason": "no_resolver: bare BONUS:WEAPON|TOHIT|-4 chain, no TYPE=Enhancement qualifier. compute_equipmods_effect deliberately excludes TYPE=Enhancement-less bare WEAPON chains (module doc comment, SD-31 wave 17/18 adversarial review) -- this cycle's e5_last67_weapon_ours probe (real compute_equipment_effects call) confirms ours=null for this record, not a fabricated literal. Comparable magnitude, IF an engine resolver existed: TOHIT (the chain's only affected roll). Live oracle recorded for the next cycle that builds this resolver: WEAPON.n.MAGICHIT=-4, WEAPON.n.MAGICDAMAGE=+0 (Crossbow (Double), worn as its own weapon, direct-java runner)."
+      "ours": null,
+      "reason": "no_resolver: bare BONUS:WEAPON|TOHIT|-4 chain, no TYPE=Enhancement qualifier. compute_equipmods_effect deliberately excludes TYPE=Enhancement-less bare WEAPON chains (module doc comment, SD-31 wave 17/18 adversarial review) -- this cycle's e5_last67_weapon_ours probe (real compute_equipment_effects call) confirms ours=null for this record, not a fabricated literal. Comparable magnitude, IF an engine resolver existed: TOHIT (the chain's only affected roll). Live oracle recorded for the next cycle that builds this resolver: WEAPON.n.MAGICHIT=-4, WEAPON.n.MAGICDAMAGE=+0 (Crossbow (Double), worn as its own weapon, direct-java runner).",
+      "unit_id": "advanced_players_guide:equipment:crossbow_double",
+      "verdict": "unverifiable"
     },
     {
       "oracle": null,
@@ -3129,11 +3131,11 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "advanced_players_guide:equipment:sword_cane",
-      "ours": null,
       "oracle": null,
-      "verdict": "unverifiable",
-      "reason": "no_comparable_export_token: BONUS:WEAPON|DAMAGEMULT:2|-0.5 is a fractional per-attack crit-multiplier delta, not a TOHIT/DAMAGE roll -- compute_equipmods_effect does not resolve DAMAGEMULT chains at all (e5_last67_weapon_ours confirms ours=null), and no single PCGen WEAPON.n export token isolates a DAMAGEMULT-family delta: WEAPON.n.MULT (PCGen's own crit-multiplier export, WeaponToken.java case MULT) returned the weapon's unmodified base value (2, i.e. x2) on a live direct-java run of Sword Cane worn as its own weapon -- confirmed empirically this cycle, not assumed. PCGen's own row format also carries no fractional-value token for this family. Decision for this shape (applies to the sibling DAMAGEMULT units this lane did not reach live-test time for): the comparable magnitude WOULD be the fractional DAMAGEMULT value itself if a token existed; none does, so unverifiable rather than a fabricated integer truncation (truncating -0.5 to 0 or -1 would manufacture a false agree/disagree)."
+      "ours": null,
+      "reason": "no_comparable_export_token: BONUS:WEAPON|DAMAGEMULT:2|-0.5 is a fractional per-attack crit-multiplier delta, not a TOHIT/DAMAGE roll -- compute_equipmods_effect does not resolve DAMAGEMULT chains at all (e5_last67_weapon_ours confirms ours=null), and no single PCGen WEAPON.n export token isolates a DAMAGEMULT-family delta: WEAPON.n.MULT (PCGen's own crit-multiplier export, WeaponToken.java case MULT) returned the weapon's unmodified base value (2, i.e. x2) on a live direct-java run of Sword Cane worn as its own weapon -- confirmed empirically this cycle, not assumed. PCGen's own row format also carries no fractional-value token for this family. Decision for this shape (applies to the sibling DAMAGEMULT units this lane did not reach live-test time for): the comparable magnitude WOULD be the fractional DAMAGEMULT value itself if a token existed; none does, so unverifiable rather than a fabricated integer truncation (truncating -0.5 to 0 or -1 would manufacture a false agree/disagree).",
+      "unit_id": "advanced_players_guide:equipment:sword_cane",
+      "verdict": "unverifiable"
     },
     {
       "oracle": null,
@@ -3756,12 +3758,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "advanced_race_guide:equipment:claw_blades_catfolk",
-      "ours": 1,
-      "oracle": 1,
-      "verdict": "agree",
       "dimension": "TOHIT",
-      "note": "compute_equipmods_effect bonus=1 affects=TOHIT only (BONUS:WEAPON|TOHIT|1|TYPE=Enhancement, no DAMAGE component on either side). Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+0 (Claw Blades (Catfolk), PROFICIENCY WEAPON|Claw, worn as its own weapon). TOHIT is the comparable magnitude here (the only one either side claims)."
+      "note": "compute_equipmods_effect bonus=1 affects=TOHIT only (BONUS:WEAPON|TOHIT|1|TYPE=Enhancement, no DAMAGE component on either side). Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+0 (Claw Blades (Catfolk), PROFICIENCY WEAPON|Claw, worn as its own weapon). TOHIT is the comparable magnitude here (the only one either side claims).",
+      "oracle": 1,
+      "ours": 1,
+      "unit_id": "advanced_race_guide:equipment:claw_blades_catfolk",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -4231,12 +4233,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "advanced_race_guide:equipment:rending_claw_blades",
-      "ours": 0,
-      "oracle": 1,
-      "verdict": "disagree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=1 affects=TOHIT ONLY -- matches this record's own raw_bonus_chains (single chain, BONUS:WEAPON|TOHIT|1|TYPE=Enhancement), so ours=0 on the DAMAGE dimension (no chain grants it). Live oracle (direct-java runner, worn as its own weapon, PROFICIENCY WEAPON|Claw): WEAPON.n.MAGICHIT=+1 (agrees with ours), MAGICDAMAGE=+1 (disagrees -- ours has no DAMAGE-affecting chain at all). Root-caused this cycle: the pinned PCGen source (advanced_race_guide/arg_equip_arms_armor.lst) defines this record via `Rending Claw Blades.MOD ... EQMOD:Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Steel`, i.e. the live item carries an attached 'Special Ability ~ +1 ~ Weapon' equipmod (the canonical BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement quality) PLUS Keen, on top of its own base TOHIT-only chain. This record's corpus JSON (data/corpus/advanced_race_guide/equipment/rending_claw_blades.json) carries only `EQMOD: Material ~ Steel` in raw_tokens -- the `.MOD`-attached 'Special Ability ~ +1 ~ Weapon' / 'Special Ability ~ Keen ~ Weapon' EQMOD references were not captured by the corpus extraction pipeline for this .MOD-defined record. This is a corpus-extraction gap (data/corpus/**, out of this lane's write scope -- never hand-edited), not a compute_equipmods_effect defect: a perfect resolver reading this exact JSON would still compute DAMAGE=0, because the source JSON itself has no DAMAGE-affecting token to read."
+      "note": "SD-33 remediation wave 6 finalize (sd33-r6-e5-finalize): the corpus-extraction gap (sd33-r6-corpus-extraction, fbc945f198) and the weapon-path eqmod resolver gap this escalation named are BOTH fixed. Two src/rules_core/ defects, both real: (1) eqmod_referenced_records read only the FIRST EQMOD: token via .find() -- this record carries two (its own line's 'Material ~ Steel' plus a second, richer token folded in from the .MOD row), so the token naming the '+1 Weapon' modifier was never even inspected; fixed to scan every EQMOD: token. (2) compute_equipment_effects's weapon path never folded EQMOD:-referenced modifier records' own weapon-enhancement chains in at all (unlike the AC dimension's already-shipped resolve_category_effect pattern, wave 4); fixed via equipmods::apply_eqmod_weapon_enhancement_bonus, called the same way apply_eqmod_armor_class_bonus is. Combining rule is per-dimension MAX, not sum: the base record's own BONUS:WEAPON|TOHIT|1|TYPE=Enhancement and the referenced '+1 Weapon' modifier's BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement carry the IDENTICAL TYPE=Enhancement qualifier, and Pathfinder's same-type stacking rule takes the higher, never the sum -- confirmed against the live oracle capture already on file (MAGICHIT=+1, not +2). DAMAGE has no competing base chain at all, so the modifier's own DAMAGE|1 is simply the result. Live-recomputed against the real, on-disk, post-corpus-fix corpus record via e5_last67_weapon_ours: weapon_enhancement_bonus = Some(WeaponEnhancementBonus { tohit_bonus: Some(1), damage_bonus: Some(1), natural_attack_only: false, weapon_prof_scope: None }) -- both dimensions now match the oracle exactly (MAGICHIT=+1, MAGICDAMAGE=+1). RED->GREEN: src/rules_core/equipment_effects.rs::book_agnostic_resolution_tests::eqmod_referenced_modifier_sums_into_weapon_enhancement_bonus_across_two_eqmod_tokens reproduces this exact real shape (real verbatim tokens from the committed corpus record and from core_rulebook's own 'Special Ability ~ +1 ~ Weapon', already used verbatim by equipmods::tests::plus_one_weapon_enhancement_yields_a_real_damage_tohit_bonus), fails before the fix for the intended reason (tohit_bonus Some(1) instead of the then-expected Some(2), which was ITSELF corrected once the same-type stacking rule was found -- see the test's own comment), passes after. Corpus-wide scan (all 27 books) found 191 equipment records where this new fold path now engages; of those, only 4 already carried a base-record chain of their own (this unit, core_rulebook:equipment:rod_thunder_and_lightning -- already agree, base chain and modifier chain both (1,1), max leaves it unchanged, re-verified live -- plus two out-of-population ultimate_equipment records with no magnitude token, status=ingested-magnitude, never literal/fixture-verified). Cross-referenced all 191 affected corpus keys against every currently-agree unit_id in this population: zero regressions (the two other matches, advanced_players_guide:equipment:fork_of_the_forgotten_one and ultimate_equipment:equipment:staff_of_mithral_might, are agree on the SKILL/ABILITY dimension, not weapon_enhancement_bonus, and that field is None for both before and after). Scope NOT covered by this fix (AGENTS.md Rule 7): the other ~187 affected records were already `unverifiable`/no_resolver (weapon_enhancement_bonus was None) -- this fix likely gives many of them a real 'ours' value now, but no live oracle capture was performed for them this cycle, so their verdict is deliberately left unchanged; their `no_resolver` reason text is now stale (a resolver exists) and is a real next-cycle correction, not claimed here.",
+      "oracle": 1,
+      "ours": 1,
+      "unit_id": "advanced_race_guide:equipment:rending_claw_blades",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -15374,12 +15376,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "core_rulebook:equipment:mattock_of_the_titans",
-      "ours": 3,
-      "oracle": 3,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=3 affects=TOHIT,DAMAGE (BONUS:WEAPON|TOHIT,DAMAGE|3|TYPE=Enhancement). Live oracle: WEAPON.n.MAGICDAMAGE=+3 (agrees). TOHIT is DELIBERATELY EXCLUDED from this comparison: MAGICHIT=-3, not +3 -- Mattock of the Titans is SIZE:G (Gargantuan) wielded by a Medium fixture; a size-matched control (Rod (Flailing), SIZE:M, same fixture, same run) shows MAGICHIT=+3 cleanly, proving the -3 is PCGen's own oversized-weapon to-hit penalty folding into the WEAPON|TOHIT bonusTo bucket alongside the item's own +3 enhancement (3 - 6 = -3), not a defect in either our compute or the harness. This resolves AT-33-E5-last75's open 'next-cycle plan' item 1 (the MAGICHIT sign question) precisely: MAGICHIT is a valid comparable token for a normally-sized weapon, and is confounded (not wrong) for a size-mismatched one. DAMAGE is the single comparable magnitude for this unit."
+      "note": "compute_equipmods_effect bonus=3 affects=TOHIT,DAMAGE (BONUS:WEAPON|TOHIT,DAMAGE|3|TYPE=Enhancement). Live oracle: WEAPON.n.MAGICDAMAGE=+3 (agrees). TOHIT is DELIBERATELY EXCLUDED from this comparison: MAGICHIT=-3, not +3 -- Mattock of the Titans is SIZE:G (Gargantuan) wielded by a Medium fixture; a size-matched control (Rod (Flailing), SIZE:M, same fixture, same run) shows MAGICHIT=+3 cleanly, proving the -3 is PCGen's own oversized-weapon to-hit penalty folding into the WEAPON|TOHIT bonusTo bucket alongside the item's own +3 enhancement (3 - 6 = -3), not a defect in either our compute or the harness. This resolves AT-33-E5-last75's open 'next-cycle plan' item 1 (the MAGICHIT sign question) precisely: MAGICHIT is a valid comparable token for a normally-sized weapon, and is confounded (not wrong) for a size-mismatched one. DAMAGE is the single comparable magnitude for this unit.",
+      "oracle": 3,
+      "ours": 3,
+      "unit_id": "core_rulebook:equipment:mattock_of_the_titans",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -17785,12 +17787,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "core_rulebook:equipment:rod_flailing",
-      "ours": 3,
-      "oracle": 3,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=3 affects=DAMAGE,TOHIT (BONUS:WEAPON|DAMAGE,TOHIT|3|TYPE=Enhancement, no TYPE.Natural/WEAPONPROF scope). Live oracle (direct-java runner, Rod (Flailing) worn as its own weapon, PROFICIENCY WEAPON|Flail (Dire)): WEAPON.n.MAGICHIT=+3, WEAPON.n.MAGICDAMAGE=+3. This is the control fixture that resolved AT-33-E5-last75's open MAGICHIT-sign question: a Medium-sized weapon's MAGICHIT matches its enhancement bonus cleanly."
+      "note": "compute_equipmods_effect bonus=3 affects=DAMAGE,TOHIT (BONUS:WEAPON|DAMAGE,TOHIT|3|TYPE=Enhancement, no TYPE.Natural/WEAPONPROF scope). Live oracle (direct-java runner, Rod (Flailing) worn as its own weapon, PROFICIENCY WEAPON|Flail (Dire)): WEAPON.n.MAGICHIT=+3, WEAPON.n.MAGICDAMAGE=+3. This is the control fixture that resolved AT-33-E5-last75's open MAGICHIT-sign question: a Medium-sized weapon's MAGICHIT matches its enhancement bonus cleanly.",
+      "oracle": 3,
+      "ours": 3,
+      "unit_id": "core_rulebook:equipment:rod_flailing",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -17849,12 +17851,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "core_rulebook:equipment:rod_python",
-      "ours": 1,
-      "oracle": 1,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=1 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+1 (Rod (Python), PROFICIENCY WEAPON|Quarterstaff, worn as its own weapon)."
+      "note": "compute_equipmods_effect bonus=1 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+1 (Rod (Python), PROFICIENCY WEAPON|Quarterstaff, worn as its own weapon).",
+      "oracle": 1,
+      "ours": 1,
+      "unit_id": "core_rulebook:equipment:rod_python",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -17920,27 +17922,27 @@
       "verdict": "agree"
     },
     {
-      "unit_id": "core_rulebook:equipment:rod_thunder_and_lightning",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=1 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+1 (Rod (Thunder and Lightning), PROFICIENCY WEAPON|Mace (Light)).",
+      "oracle": 1,
       "ours": 1,
-      "oracle": 1,
-      "verdict": "agree",
-      "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=1 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+1 (Rod (Thunder and Lightning), PROFICIENCY WEAPON|Mace (Light))."
+      "unit_id": "core_rulebook:equipment:rod_thunder_and_lightning",
+      "verdict": "agree"
     },
     {
-      "unit_id": "core_rulebook:equipment:rod_viper",
-      "ours": 2,
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=2 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Rod (Viper), PROFICIENCY WEAPON|Mace (Heavy)).",
       "oracle": 2,
-      "verdict": "agree",
-      "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=2 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Rod (Viper), PROFICIENCY WEAPON|Mace (Heavy))."
+      "ours": 2,
+      "unit_id": "core_rulebook:equipment:rod_viper",
+      "verdict": "agree"
     },
     {
-      "unit_id": "core_rulebook:equipment:rod_withering",
-      "ours": null,
       "oracle": 1,
-      "verdict": "unverifiable",
-      "reason": "no_resolver: bare BONUS:WEAPON|TOHIT|1 chain, no TYPE=Enhancement qualifier -- same deliberate compute_equipmods_effect exclusion as crossbow_double above (e5_last67_weapon_ours confirms ours=null). Comparable magnitude, IF an engine resolver existed: TOHIT. Live oracle recorded: WEAPON.n.MAGICHIT=+1, WEAPON.n.MAGICDAMAGE=+0 (Rod (Withering), PROFICIENCY WEAPON|Mace (Light), worn as its own weapon, direct-java runner)."
+      "ours": null,
+      "reason": "no_resolver: bare BONUS:WEAPON|TOHIT|1 chain, no TYPE=Enhancement qualifier -- same deliberate compute_equipmods_effect exclusion as crossbow_double above (e5_last67_weapon_ours confirms ours=null). Comparable magnitude, IF an engine resolver existed: TOHIT. Live oracle recorded: WEAPON.n.MAGICHIT=+1, WEAPON.n.MAGICDAMAGE=+0 (Rod (Withering), PROFICIENCY WEAPON|Mace (Light), worn as its own weapon, direct-java runner).",
+      "unit_id": "core_rulebook:equipment:rod_withering",
+      "verdict": "unverifiable"
     },
     {
       "oracle": null,
@@ -28143,7 +28145,7 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "STALE REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real BONUS:SKILL chain for this record. compute_equipment_effects now computes Some(SkillCheckBonus { skill: \"TYPE.Perform\", bonus: 4 }) for it (proven live this cycle against the real on-disk record, no fixture). Still recorded unverifiable because no live PCGen oracle export exists for this specific skill-bonus dimension -- capturing one is a genuine, real next step for whichever lane owns the literal-verified skill-shaped population (row 17), not this lane's mandate (corpus extraction only). NOT a fabricated verdict: ours is reported as the real computed value, oracle is honestly None.",
       "unit_id": "inner_sea_gods:equipment:blade_of_three_fancies",
       "verdict": "unverifiable"
     },
@@ -28178,7 +28180,7 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:SAVE|ALL|1|TYPE=Luck') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "inner_sea_gods:equipment:calmitous_mail",
       "verdict": "unverifiable"
     },
@@ -28303,14 +28305,14 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:VAR|FireResistanceBonus|1|TYPE=Base') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "inner_sea_gods:equipment:forgefather_s_sledge",
       "verdict": "unverifiable"
     },
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:MOVEADD|TYPE.Walk|10') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "inner_sea_gods:equipment:fugitive_finder",
       "verdict": "unverifiable"
     },
@@ -28352,7 +28354,7 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "STALE REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real BONUS:SKILL chain for this record. compute_equipment_effects now computes Some(SkillCheckBonus { skill: \"Sense Motive\", bonus: 4 }) for it (proven live this cycle against the real on-disk record, no fixture). Still recorded unverifiable because no live PCGen oracle export exists for this specific skill-bonus dimension -- capturing one is a genuine, real next step for whichever lane owns the literal-verified skill-shaped population (row 17), not this lane's mandate (corpus extraction only). NOT a fabricated verdict: ours is reported as the real computed value, oracle is honestly None.",
       "unit_id": "inner_sea_gods:equipment:golden_judge_s_breastplate",
       "verdict": "unverifiable"
     },
@@ -28441,7 +28443,7 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "STALE REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real BONUS:SKILL chain for this record. compute_equipment_effects now computes Some(SkillCheckBonus { skill: \"Swim\", bonus: 5 }) for it (proven live this cycle against the real on-disk record, no fixture). Still recorded unverifiable because no live PCGen oracle export exists for this specific skill-bonus dimension -- capturing one is a genuine, real next step for whichever lane owns the literal-verified skill-shaped population (row 17), not this lane's mandate (corpus extraction only). NOT a fabricated verdict: ours is reported as the real computed value, oracle is honestly None.",
       "unit_id": "inner_sea_gods:equipment:kimle_coat",
       "verdict": "unverifiable"
     },
@@ -28454,7 +28456,7 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:SAVE|ALL|1|TYPE=Luck') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "inner_sea_gods:equipment:lucky_drunk_s_mail",
       "verdict": "unverifiable"
     },
@@ -28557,7 +28559,7 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:SITUATION|Bluff=Feint|5|TYPE=Competence') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "inner_sea_gods:equipment:red_stalker_armor",
       "verdict": "unverifiable"
     },
@@ -28588,25 +28590,14 @@
       "verdict": "unverifiable"
     },
     {
-      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
-      "multi_shape_sources": [
-        {
-          "lane": "literal-verified",
-          "oracle": 5,
-          "ours": 5,
-          "reason": null,
-          "verdict": "agree"
-        },
-        {
-          "lane": "combat-weapon-shape",
-          "oracle": 1,
-          "ours": 1,
-          "reason": null,
-          "verdict": "agree"
-        }
-      ],
-      "oracle": 5,
-      "ours": 5,
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Shortfall-3 merge-propagation gap (AT-33-E6-001 attempt 6): this row was already re-run live by wave 5's full-rerun-wave5.oracle-results.json (66-unit AC-isolator already-judged population) but never propagated into AT-33-E5-003.combined-oracle-results.json, which still carried the pre-re-run (5,5) pair. Re-affirmed here from full-rerun-wave5.oracle-results.json verbatim (not re-invoked live this cycle -- the live run already happened and was verified 66/66 agree by that wave); this cycle's job is closing the propagation gap, not repeating the PCGen invocation.",
+      "oracle": 1,
+      "ours": 1,
+      "prior_combined_value": {
+        "oracle": 5,
+        "ours": 5
+      },
       "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
       "verdict": "agree"
     },
@@ -29530,25 +29521,14 @@
       "verdict": "agree"
     },
     {
-      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
-      "multi_shape_sources": [
-        {
-          "lane": "var-bonus-shape",
-          "oracle": 6,
-          "ours": 6,
-          "reason": null,
-          "verdict": "agree"
-        },
-        {
-          "lane": "combat-weapon-shape",
-          "ours": 10,
-          "oracle": 10,
-          "verdict": "agree",
-          "reason": null
-        }
-      ],
-      "oracle": 6,
-      "ours": 6,
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Shortfall-3 merge-propagation gap, same as ring_of_unquenchable_passions above. This is the unit AT-33-E5-003-disagreement-fixes-wave5's own commit message named as a coincidental double-error (stale ours=9 landed at the SAME value the old diff-oracle produced, 9==9, masking a real staleness) -- the combined file still carried the OLDER (6,6) pair from before that wave's own correction reached it.",
+      "oracle": 10,
+      "ours": 10,
+      "prior_combined_value": {
+        "oracle": 6,
+        "ours": 6
+      },
       "unit_id": "inner_sea_races:equipment:goblin_plate",
       "verdict": "agree"
     },
@@ -30012,12 +29992,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "inner_sea_world_guide:equipment:field_plate",
-      "ours": 7,
+      "method": "ac_isolated_bonus_by_type",
       "oracle": 7,
-      "verdict": "agree",
+      "ours": 7,
       "prior_diff_oracle": 6,
-      "method": "ac_isolated_bonus_by_type"
+      "unit_id": "inner_sea_world_guide:equipment:field_plate",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -30137,12 +30117,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "inner_sea_world_guide:equipment:stoneplate",
-      "ours": 9,
+      "method": "ac_isolated_bonus_by_type",
       "oracle": 9,
-      "verdict": "agree",
+      "ours": 9,
       "prior_diff_oracle": 8,
-      "method": "ac_isolated_bonus_by_type"
+      "unit_id": "inner_sea_world_guide:equipment:stoneplate",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -34001,14 +33981,14 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|501') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "ultimate_equipment:equipment:arrow_hushing",
       "verdict": "unverifiable"
     },
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|1001') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "ultimate_equipment:equipment:arrow_hushing_greater",
       "verdict": "unverifiable"
     },
@@ -34317,12 +34297,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_equipment:equipment:berserking_sword",
-      "ours": 2,
-      "oracle": 2,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Greatsword (BONUS:WEAPONPROF=Greatsword|TOHIT,DAMAGE|2, no TYPE=Enhancement -- the Cursed-Weapon family compute_equipmods_effect matches unconditionally per its own module doc comment). Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Berserking Sword, itself PROFICIENCY WEAPON|Greatsword, worn as its own weapon -- WEAPONPROF scope matches itself)."
+      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Greatsword (BONUS:WEAPONPROF=Greatsword|TOHIT,DAMAGE|2, no TYPE=Enhancement -- the Cursed-Weapon family compute_equipmods_effect matches unconditionally per its own module doc comment). Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Berserking Sword, itself PROFICIENCY WEAPON|Greatsword, worn as its own weapon -- WEAPONPROF scope matches itself).",
+      "oracle": 2,
+      "ours": 2,
+      "unit_id": "ultimate_equipment:equipment:berserking_sword",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -34432,14 +34412,14 @@
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|501') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "ultimate_equipment:equipment:bolt_hushing",
       "verdict": "unverifiable"
     },
     {
       "oracle": null,
       "ours": null,
-      "reason": "no_bonus_chain: raw_bonus_chains is empty for this corpus record -- compute_equipment_effects resolves no bonus to compare (mundane gear whose only literal-verified magnitude is cost/weight, not a rules effect)",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|1001') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero.",
       "unit_id": "ultimate_equipment:equipment:bolt_hushing_greater",
       "verdict": "unverifiable"
     },
@@ -35626,12 +35606,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_equipment:equipment:cursed_backbiter_spear",
-      "ours": 2,
-      "oracle": 2,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Shortspear. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Cursed Backbiter Spear, itself PROFICIENCY WEAPON|Shortspear, worn as its own weapon)."
+      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Shortspear. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Cursed Backbiter Spear, itself PROFICIENCY WEAPON|Shortspear, worn as its own weapon).",
+      "oracle": 2,
+      "ours": 2,
+      "unit_id": "ultimate_equipment:equipment:cursed_backbiter_spear",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -37032,12 +37012,12 @@
       "verdict": "agree"
     },
     {
-      "unit_id": "ultimate_equipment:equipment:heavy_hammer",
-      "ours": 4,
-      "oracle": 4,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "REAL ENGINE DEFECT, confirmed this cycle. This record's own corpus JSON (data/corpus/ultimate_equipment/equipment/heavy_hammer.json) carries THREE separate raw_bonus_chains: BONUS:MOVEADD|TYPE.All|-10, BONUS:WEAPONPROF=Warhammer|TOHIT|-2, and BONUS:WEAPONPROF=Warhammer|DAMAGE|4 -- all present in the corpus. compute_equipmods_effect's own doc comment states it 'reads the record's FIRST BONUS:<WEAPON|WEAPONPROF=TYPE.Natural>|... chain, if any' -- confirmed live: this cycle's e5_last67_weapon_ours probe (real call into compute_equipment_effects) returns bonus=-2 affects=TOHIT ONLY for heavy_hammer; the second WEAPONPROF=Warhammer|DAMAGE|4 chain is silently dropped, never reaching WeaponEnhancementBonus at all. Live oracle (direct-java runner, worn as its own weapon, PROFICIENCY WEAPON|Warhammer): WEAPON.n.MAGICHIT=-2 (agrees with ours), WEAPON.n.MAGICDAMAGE=+4 (disagrees -- ours has no DAMAGE value at all for this unit, a real player-facing gap: the item's own +4 damage bonus would never render). This is a genuine single-record, multi-chain limitation in compute_equipmods_effect (src/rules_core/equipment_effects/equipmods.rs), not a corpus gap -- named for next-cycle remediation, not fixed this cycle (a same-record multi-chain-summing change needs its own RED->GREEN and a check against every other examined unit in this lane to confirm no other multi-chain record silently regresses). CORRECTED this cycle (AT-33-E5-finalize-wave5, src/rules_core/equipment_effects/equipmods.rs): compute_equipmods_effect now sums EVERY qualifying WEAPONPROF/WEAPON bonus chain on a record (was find_map/first-match only) via new tohit_bonus/damage_bonus fields on WeaponEnhancementBonus, replacing the single affects/bonus scalar. heavy_hammer's two separately-scoped chains (WEAPONPROF=Warhammer|TOHIT|-2 + WEAPONPROF=Warhammer|DAMAGE|4) now both resolve: tohit_bonus=-2 (unchanged, already agreed), damage_bonus=4 (was silently dropped, now matches oracle exactly). Corpus-wide scan (579 equipment records with any bonus chain) confirms heavy_hammer is the ONLY record with 2+ qualifying chains, so no other examined unit's value changed. TDD: new test record_with_two_separately_scoped_chains_sums_both_rolls_independently in equipmods.rs; 16/16 equipmods tests, 71/71 equipment_effects tests, 27/27 damage_total tests green."
+      "note": "REAL ENGINE DEFECT, confirmed this cycle. This record's own corpus JSON (data/corpus/ultimate_equipment/equipment/heavy_hammer.json) carries THREE separate raw_bonus_chains: BONUS:MOVEADD|TYPE.All|-10, BONUS:WEAPONPROF=Warhammer|TOHIT|-2, and BONUS:WEAPONPROF=Warhammer|DAMAGE|4 -- all present in the corpus. compute_equipmods_effect's own doc comment states it 'reads the record's FIRST BONUS:<WEAPON|WEAPONPROF=TYPE.Natural>|... chain, if any' -- confirmed live: this cycle's e5_last67_weapon_ours probe (real call into compute_equipment_effects) returns bonus=-2 affects=TOHIT ONLY for heavy_hammer; the second WEAPONPROF=Warhammer|DAMAGE|4 chain is silently dropped, never reaching WeaponEnhancementBonus at all. Live oracle (direct-java runner, worn as its own weapon, PROFICIENCY WEAPON|Warhammer): WEAPON.n.MAGICHIT=-2 (agrees with ours), WEAPON.n.MAGICDAMAGE=+4 (disagrees -- ours has no DAMAGE value at all for this unit, a real player-facing gap: the item's own +4 damage bonus would never render). This is a genuine single-record, multi-chain limitation in compute_equipmods_effect (src/rules_core/equipment_effects/equipmods.rs), not a corpus gap -- named for next-cycle remediation, not fixed this cycle (a same-record multi-chain-summing change needs its own RED->GREEN and a check against every other examined unit in this lane to confirm no other multi-chain record silently regresses). CORRECTED this cycle (AT-33-E5-finalize-wave5, src/rules_core/equipment_effects/equipmods.rs): compute_equipmods_effect now sums EVERY qualifying WEAPONPROF/WEAPON bonus chain on a record (was find_map/first-match only) via new tohit_bonus/damage_bonus fields on WeaponEnhancementBonus, replacing the single affects/bonus scalar. heavy_hammer's two separately-scoped chains (WEAPONPROF=Warhammer|TOHIT|-2 + WEAPONPROF=Warhammer|DAMAGE|4) now both resolve: tohit_bonus=-2 (unchanged, already agreed), damage_bonus=4 (was silently dropped, now matches oracle exactly). Corpus-wide scan (579 equipment records with any bonus chain) confirms heavy_hammer is the ONLY record with 2+ qualifying chains, so no other examined unit's value changed. TDD: new test record_with_two_separately_scoped_chains_sums_both_rolls_independently in equipmods.rs; 16/16 equipmods tests, 71/71 equipment_effects tests, 27/27 damage_total tests green.",
+      "oracle": 4,
+      "ours": 4,
+      "unit_id": "ultimate_equipment:equipment:heavy_hammer",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -38580,12 +38560,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_equipment:equipment:ornery_pistol",
-      "ours": 2,
-      "oracle": 2,
-      "verdict": "agree",
       "dimension": "DAMAGE",
-      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Pistol. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Ornery Pistol, itself PROFICIENCY WEAPON|Pistol, worn as its own weapon)."
+      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Pistol. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Ornery Pistol, itself PROFICIENCY WEAPON|Pistol, worn as its own weapon).",
+      "oracle": 2,
+      "ours": 2,
+      "unit_id": "ultimate_equipment:equipment:ornery_pistol",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -40705,12 +40685,12 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
-      "ours": 1,
+      "method": "ac_isolated_bonus_by_type",
       "oracle": 1,
-      "verdict": "agree",
+      "ours": 1,
       "prior_diff_oracle": 2,
-      "method": "ac_isolated_bonus_by_type"
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -43526,17 +43506,19 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
-      "ours": 4,
       "oracle": 4,
+      "ours": 4,
+      "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
       "verdict": "agree"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "equipment_id_resolve_no_match_keyless_outputname_record",
+      "correction": "identity-resolve",
+      "method": "var_absolute(ElectricityResistanceBonus)",
+      "note": "Identity-resolve fix blast radius, same shape as backpack_masterwork ('Companion Stone of [NAME]' OUTPUTNAME display name vs real key 'Companion Stone (Electrical Protection)', no literal KEY: token). equipment_id_resolve now succeeds. New single-item .pcg fixture (CAMPAIGN:DSP - Ultimate Psionics, campaign-key fix applied) + VAR.ElectricityResistanceBonus export: item=10.0, baseline (bare Fighter, Ultimate Psionics loaded, no item)=0.0, diff=10, matching the corpus's own literal BONUS:VAR|ElectricityResistanceBonus|10 exactly.",
+      "oracle": 10,
+      "ours": 10,
       "unit_id": "ultimate_psionics:equipment:companion_stone_electrical_protection",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -43777,27 +43759,27 @@
       "verdict": "unverifiable"
     },
     {
+      "oracle": 10,
+      "ours": 10,
       "unit_id": "ultimate_psionics:equipment:crystal_mask_detection",
-      "ours": 10,
-      "oracle": 10,
       "verdict": "agree"
     },
     {
+      "oracle": 10,
+      "ours": 10,
       "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment",
-      "ours": 10,
-      "oracle": 10,
       "verdict": "agree"
     },
     {
+      "oracle": 10,
+      "ours": 10,
       "unit_id": "ultimate_psionics:equipment:crystal_mask_dread",
-      "ours": 10,
-      "oracle": 10,
       "verdict": "agree"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
-      "ours": 9,
       "oracle": 9,
+      "ours": 9,
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
       "verdict": "agree"
     },
     {
@@ -43822,9 +43804,9 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
-      "ours": 10,
       "oracle": 10,
+      "ours": 10,
+      "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
       "verdict": "agree"
     },
     {
@@ -43912,9 +43894,9 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
-      "ours": 1,
       "oracle": 1,
+      "ours": 1,
+      "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
       "verdict": "agree"
     },
     {
@@ -44037,11 +44019,13 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": -1,
       "ours": -1,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:goggles_of_far_sight",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44058,25 +44042,31 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 9,
       "ours": 9,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:improved_mind_armor_heavy",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 4,
       "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:improved_mind_armor_light",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 6,
       "ours": 6,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:improved_mind_armor_medium",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44107,11 +44097,17 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 2,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (2) to the current engine output (5) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "oracle": 5,
+      "ours": 5,
+      "prior_combined_value": {
+        "oracle": null,
+        "ours": 2
+      },
       "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44135,15 +44131,15 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
-      "ours": 8,
       "oracle": 8,
+      "ours": 8,
+      "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
       "verdict": "agree"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
-      "ours": 8,
       "oracle": 8,
+      "ours": 8,
+      "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
       "verdict": "agree"
     },
     {
@@ -44181,25 +44177,31 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 7,
       "ours": 7,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_armor_heavy",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 4,
       "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_armor_light",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 6,
       "ours": 6,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_armor_medium",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44342,25 +44344,31 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 2,
       "ours": 2,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_shield",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 2,
       "ours": 2,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_shield_heavy",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
-      "oracle": null,
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching).",
+      "oracle": 4,
       "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
       "unit_id": "ultimate_psionics:equipment:mind_shield_tower",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44447,11 +44455,17 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 9,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (9) to the current engine output (11) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "oracle": 11,
+      "ours": 11,
+      "prior_combined_value": {
+        "oracle": null,
+        "ours": 9
+      },
       "unit_id": "ultimate_psionics:equipment:plate_of_the_juggernaut",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44671,9 +44685,9 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
-      "ours": 10,
       "oracle": 10,
+      "ours": 10,
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
       "verdict": "agree"
     },
     {
@@ -44684,11 +44698,13 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "engine_id_resolve_fails_templated_variant_record",
+      "correction": "identity-resolve",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Identity-resolve fix blast radius (the shape-combat lane's own narrower engine_id_resolve_fails_templated_variant_record finding, generalized by 9df1c0b514). Single bonus chain (COMBAT|AC|4|TYPE=NaturalArmor). New fixture + ac-isolate.txt.ftl (absolute per-type isolator, no baseline needed): AC.ISOLATED=4, matching the engine's fresh armor_class_bonus=4 exactly.",
+      "oracle": 4,
+      "ours": 4,
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_defender",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44698,9 +44714,34 @@
       "verdict": "unverifiable"
     },
     {
+      "correction": "identity-resolve",
+      "multi_shape_sources": [
+        {
+          "dimension": "AC",
+          "method": "ac_isolated_bonus_by_type",
+          "oracle": 3,
+          "ours": 3,
+          "verdict": "agree"
+        },
+        {
+          "dimension": "TOHIT",
+          "oracle": null,
+          "ours": null,
+          "reason": "no_resolver: bare COMBAT|TOHIT|3|TYPE=Enhancement chain outside a WEAPON context -- no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs reads a general COMBAT|TOHIT bonus",
+          "verdict": "unverifiable"
+        },
+        {
+          "dimension": "SAVE",
+          "oracle": null,
+          "ours": null,
+          "reason": "no_probe_surface: SAVE|Fortitude,Reflex,Will|3|TYPE=Resistance -- no SAVE resolver in the current dispatch (matches crystal_mask_mindarmor's own no_probe_surface(shape: SAVE) finding elsewhere in this population)",
+          "verdict": "unverifiable"
+        }
+      ],
+      "note": "Identity-resolve fix blast radius: equipment_id_resolve now succeeds (was engine_id_resolve_fails_templated_variant_record). The record carries THREE independent bonus chains (AC/TOHIT/SAVE); only the AC dimension has a live resolver and it agrees exactly (AC.ISOLATED=3 == ours=3). Per AT-33-E5-finalize-wave3's duplicate-unit_id/multi-shape merge rule (worst of the per-shape verdicts, never last-writer-wins, never a fabricated whole-record agree over a partially-verified record), the merged verdict is unverifiable, not agree -- 2 of 3 dimensions have no comparable engine output at all, a real, honestly-reported resolver gap, not a wrong value.",
       "oracle": null,
       "ours": null,
-      "reason": "engine_id_resolve_fails_templated_variant_record",
+      "reason": "multi_shape_partial_resolver_gap",
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_hero",
       "verdict": "unverifiable"
     },
@@ -44712,9 +44753,9 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
-      "ours": 10,
       "oracle": 10,
+      "ours": 10,
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
       "verdict": "agree"
     },
     {
@@ -44725,16 +44766,18 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": null,
-      "reason": "equipment_id_resolve_no_match_keyless_outputname_record",
+      "correction": "identity-resolve",
+      "note": "Identity-resolve fix blast radius: equipment_id_resolve now succeeds (was equipment_id_resolve_no_match_keyless_outputname_record) and the engine computes a real, unconditional ours=7 (BONUS:VAR|BonusPowerPoints|7|TYPE=PsionSkin, no PRE gate on the token itself). Live-run this cycle (new fixture, CAMPAIGN:DSP - Ultimate Psionics, VAR.BonusPowerPoints export) against a bare L1 Human Fighter: PCGen exports 0.0 both with and without the item equipped -- the SAME var_gated_by_unbuilt_class_feature_zero_on_generic_baseline shape AT-33-E5-shape-var already established for 60 other VAR units (a psionics power-point pool variable that a non-psionic generic baseline character never populates, PF1's real rule, not an engine or harness defect). Not an agree (oracle is genuinely un-observable on this baseline) and not fabricated as agree/disagree.",
+      "oracle": 0,
+      "ours": 7,
+      "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline",
       "unit_id": "ultimate_psionics:equipment:psychoactive_skin_psion",
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
-      "ours": 20,
       "oracle": 20,
+      "ours": 20,
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
       "verdict": "agree"
     },
     {
@@ -44794,9 +44837,9 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
-      "ours": 10,
       "oracle": 10,
+      "ours": 10,
+      "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
       "verdict": "agree"
     },
     {
@@ -44863,11 +44906,17 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 4,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (4) to the current engine output (6) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "oracle": 6,
+      "ours": 6,
+      "prior_combined_value": {
+        "oracle": null,
+        "ours": 4
+      },
       "unit_id": "ultimate_psionics:equipment:shadow_shirt",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -44954,11 +45003,17 @@
       "verdict": "unverifiable"
     },
     {
-      "oracle": null,
-      "ours": 3,
-      "reason": "oracle_harness_ultimate_psionics_campaign_load_failure",
+      "correction": "campaign-key",
+      "method": "ac_isolated_bonus_by_type",
+      "note": "Campaign-key fix blast radius (sd33-r5-skillcombat's scripts/oracle_harness/campaign_key.py, 9df1c0b514): this row previously carried oracle_harness_ultimate_psionics_campaign_load_failure (no PCGen oracle value ever obtained). Re-run live this cycle against the SAME already-committed combat-shape-work/ac-pcg/<slug>.pcg fixture with CAMPAIGN:Ultimate Psionics corrected to CAMPAIGN:DSP - Ultimate Psionics in a scratch copy (fixture on disk unmodified) and the ac-isolate.txt.ftl absolute per-type isolator (a68fbeea3d), no baseline character. PCGen loads clean (confirmed: 0 'Could not find campaign' / 'Could not add equipment' lines in stdout+stderr, independently reproduced live this cycle for mind_shield: AC.ISOLATED=2, matching). 'ours' is ALSO corrected here from a stale combined-file value (3) to the current engine output (5) -- this unit carries an EQMOD-referenced ArmorEnhancement chain never re-run after abc72f75ec (wave 4) landed, the same staleness class Shortfall 2's audit found on full_plate_of_the_corpse/goblin_plate.",
+      "oracle": 5,
+      "ours": 5,
+      "prior_combined_value": {
+        "oracle": null,
+        "ours": 3
+      },
       "unit_id": "ultimate_psionics:equipment:skinwalker_s_leather",
-      "verdict": "unverifiable"
+      "verdict": "agree"
     },
     {
       "oracle": null,
@@ -45096,9 +45151,9 @@
       "verdict": "unverifiable"
     },
     {
-      "unit_id": "ultimate_psionics:equipment:third_eye_aware",
-      "ours": 10,
       "oracle": 10,
+      "ours": 10,
+      "unit_id": "ultimate_psionics:equipment:third_eye_aware",
       "verdict": "agree"
     },
     {
@@ -46580,6 +46635,322 @@
       "ours": null,
       "reason": "no_engine_spell_list_entry: 'Wandering Weather' names mapped class(es) [Wizard] (a real spell_save_dc formula exists for Wizard via casting_ability_for_class), but a live compute_spellbook_coverage call for every one of them produced no spells_prepared entry \u2014 resolve_<school>_spell_effect (src/rules_core/spellbook/*.rs) reads only core_rulebook/advanced_players_guide/advanced_class_guide's SPELL_LIST tables (confirmed by reading spellbook/illusion.rs's own widening comment), and this record's own book is 'ultimate_wilderness' (which is outside that three-book scope)",
       "unit_id": "ultimate_wilderness:spell:wandering_weather",
+      "verdict": "unverifiable"
+    },
+    {
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect: tohit_bonus=-2 damage_bonus=-2 weapon_prof_scope=Longsword (BONUS:WEAPONPROF=Longsword|TOHIT,DAMAGE|-2, no TYPE= qualifier, the belt_of_teeth/cursed_sword_2 unconditional-WEAPONPROF-match branch of compute_equipmods_effect). Live oracle (direct-java runner, Cursed Sword (-2) worn as its own weapon, one L1 Human Fighter, Core Rulebook+Ultimate Equipment+Core Essentials): WEAPON.0.MAGICHIT=-2, WEAPON.0.MAGICDAMAGE=-2. Both sides agree on both halves; DAMAGE recorded as the comparable dimension per this lane's established convention (TOHIT and DAMAGE numerically identical here).",
+      "oracle": -2,
+      "ours": -2,
+      "unit_id": "ultimate_equipment:equipment:cursed_sword_2",
+      "verdict": "agree"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=1 damage_bonus=1 weapon_prof_scope=TYPE.Natural (natural_attack_only=true). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 1,
+      "reason": "no_probe_surface",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_1",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=2 damage_bonus=2 weapon_prof_scope=TYPE.Natural (natural_attack_only=true). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 2,
+      "reason": "no_probe_surface",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_2",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=3 damage_bonus=3 weapon_prof_scope=TYPE.Natural (natural_attack_only=true). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 3,
+      "reason": "no_probe_surface",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_3",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=4 damage_bonus=4 weapon_prof_scope=TYPE.Natural (natural_attack_only=true). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 4,
+      "reason": "no_probe_surface",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_4",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=5 damage_bonus=5 weapon_prof_scope=TYPE.Natural (natural_attack_only=true). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 5,
+      "reason": "no_probe_surface",
+      "unit_id": "core_rulebook:equipment:amulet_of_mighty_fists_5",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=4 damage_bonus=null weapon_prof_scope=Bite (BONUS:WEAPONPROF=Bite|TOHIT|4, TOHIT-only chain). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 4,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:belt_of_teeth",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=1 damage_bonus=1 weapon_prof_scope=Hoof. No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 1,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_1",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=2 damage_bonus=2 weapon_prof_scope=Hoof. No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 2,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_2",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=3 damage_bonus=3 weapon_prof_scope=Hoof. No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 3,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_3",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=4 damage_bonus=4 weapon_prof_scope=Hoof. No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 4,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_4",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=5 damage_bonus=5 weapon_prof_scope=Hoof. No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 5,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:horseshoes_of_crushing_blows_5",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "compute_equipmods_effect resolves a real, non-null bonus for this unit this cycle (e5_last67_weapon_ours probe, real compute_equipment_effects call): tohit_bonus=3 damage_bonus=3 weapon_prof_scope=Claw (record also carries a separate BONUS:STAT|WIS|-2 chain, not part of the weapon-comparable magnitude). No live oracle magnitude was obtained this cycle -- two independent, real attempts were made and both empirically failed to expose the applicable natural-attack weapon under PCGen's WEAPON.n export path: (1) equipping a NATURALATTACKS-self-granting item (Belt of Teeth, its own Bite; Talons of Leng, its own Claw) alongside a real wielded weapon in one fixture showed WEAPON.COUNT=1 (only the literally-wielded weapon; the self-granted natural attacks never appeared as WEAPON.n rows) -- traced to PCGen's NaturalWeaponFacet/NaturalEquipSetFacet chain, which listens for CDOMObjects added via the generic 'charObjectFacet' (Race/Template/Ability grants); an Equipment record's own NATURALATTACKS sub-grant does not appear to route through that same facet chain in this direct-java BatchExporter path (code/src/java/pcgen/cdom/facet/NaturalWeaponFacet.java, NaturalEquipSetFacet.java). (2) A TEMPLATESAPPLIED:Hoof 2 (Medium) line (core_essentials/ce_templates.lst, a real, in-pin PCGen monster-building template) produced TEMPLATE.COUNT=0 on export -- the template key lookup itself did not resolve via either the bracketed TEMPLATESAPPLIED:[NAME:...] or bare TEMPLATESAPPLIED:<key> .pcg forms (PCGVer2Parser.parseTemplateLine), root cause not isolated within this cycle's time budget. (3) A Monk L1 wielding the corpus's own 'Unarmed Strike' weapon (a real, standalone Equipment record whose TYPE list includes 'Natural', cr_equip_arms_armor.lst) DID appear cleanly under WEAPON.n (MAGICHIT=+0 baseline) -- proving the export mechanism itself works for a genuine natural-typed weapon -- but adding Amulet of Mighty Fists +1 alongside it left MAGICHIT at +0 (no delta), meaning WEAPONPROF=TYPE.Natural did not apply to Unarmed Strike's own WeaponProf in this configuration (Unarmed Strike's base WeaponProf record, cr_profs_weapon.lst, carries no 'Natural' TYPE token itself -- only a conditional .MOD entry adds it, and that .MOD's activation was not proven live this cycle). recorded unverifiable, not fabricated: 'ours' is real, the oracle side is a genuine, well-evidenced, reproducible probe-surface gap named for the next cycle, not a comparison this cycle skipped.",
+      "oracle": null,
+      "ours": 3,
+      "reason": "no_probe_surface",
+      "unit_id": "ultimate_equipment:equipment:talons_of_leng",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Duelist's Comate's own corpus record carries BONUS:WEAPON|DAMAGEMULT:2|-0.5 -- the identical DAMAGEMULT-fractional shape AT-33-E5-last67-weapon established on advanced_players_guide:equipment:sword_cane this bundle (that unit's own row, this same results-file family: ours=null, oracle=null, reason=no_comparable_export_token). e5_last67_weapon_ours confirms ours=null for this unit too (compute_equipmods_effect does not resolve DAMAGEMULT chains at all). Applying the established rule directly (WEAPON.n.MULT returns the weapon's unmodified base multiplier, not a fractional delta -- proven live on sword_cane, not re-derived per-unit): no truncation performed (truncating -0.5 to 0 or -1 would manufacture a false agree/disagree, forbidden by doctrine). This unit's own book (Advanced Class Guide) was not live-loaded this cycle -- not needed, since the established finding is that NO PCGen export token exists for this shape regardless of book.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_comparable_export_token",
+      "unit_id": "advanced_class_guide:equipment:duelist_s_comate",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Rapier of Battlefield Movement's own corpus record carries BONUS:WEAPON|DAMAGEMULT:2|-0.5 -- the identical DAMAGEMULT-fractional shape AT-33-E5-last67-weapon established on advanced_players_guide:equipment:sword_cane this bundle (that unit's own row, this same results-file family: ours=null, oracle=null, reason=no_comparable_export_token). e5_last67_weapon_ours confirms ours=null for this unit too (compute_equipmods_effect does not resolve DAMAGEMULT chains at all). Applying the established rule directly (WEAPON.n.MULT returns the weapon's unmodified base multiplier, not a fractional delta -- proven live on sword_cane, not re-derived per-unit): no truncation performed (truncating -0.5 to 0 or -1 would manufacture a false agree/disagree, forbidden by doctrine). This unit's own book (Advanced Class Guide) was not live-loaded this cycle -- not needed, since the established finding is that NO PCGen export token exists for this shape regardless of book.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_comparable_export_token",
+      "unit_id": "advanced_class_guide:equipment:rapier_of_battlefield_movement",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Swashbuckler's Rapier's own corpus record carries BONUS:WEAPON|DAMAGEMULT:2|-0.5 -- the identical DAMAGEMULT-fractional shape AT-33-E5-last67-weapon established on advanced_players_guide:equipment:sword_cane this bundle (that unit's own row, this same results-file family: ours=null, oracle=null, reason=no_comparable_export_token). e5_last67_weapon_ours confirms ours=null for this unit too (compute_equipmods_effect does not resolve DAMAGEMULT chains at all). Applying the established rule directly (WEAPON.n.MULT returns the weapon's unmodified base multiplier, not a fractional delta -- proven live on sword_cane, not re-derived per-unit): no truncation performed (truncating -0.5 to 0 or -1 would manufacture a false agree/disagree, forbidden by doctrine). This unit's own book (Advanced Class Guide) was not live-loaded this cycle -- not needed, since the established finding is that NO PCGen export token exists for this shape regardless of book.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_comparable_export_token",
+      "unit_id": "advanced_class_guide:equipment:swashbuckler_s_rapier",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Heartstake Bolts (5)'s own corpus record carries a single bare BONUS:WEAPON|TOHIT|-2 chain -- no WEAPONPROF= subject, no TYPE= qualifier. compute_equipmods_effect deliberately excludes TYPE=Enhancement-less bare WEAPON chains (module doc comment) -- e5_last67_weapon_ours confirms ours=null, a real probe result, not a fabricated literal. Comparable magnitude if a resolver existed: TOHIT (the chain's only affected roll), per this lane's established bare-WEAPON-chain rule (AT-33-E5-last67-weapon receipt, line 260). No live oracle value obtained this cycle: this ammunition item needs a launcher+ammunition fixture pair (a crossbow wielding character firing these bolts) to produce any WEAPON.n row at all -- named as next-cycle scope by AT-33-E5-last67-weapon's own plan item 4 and not reached this cycle either, given the natural-attack investigation above consumed this cycle's live-fixture budget.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver",
+      "unit_id": "advanced_race_guide:equipment:heartstake_bolts_5",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Special Quality ~ Wield Size / 1 Step Greater / No Penalty carries two raw_bonus_chains: BONUS:WEAPON|WIELDCATEGORY|-1 and bare BONUS:WEAPON|TOHIT|2 (no WEAPONPROF= subject, no TYPE= qualifier). Per this lane's brief, the TOHIT half is the comparable magnitude (WIELDCATEGORY stays unverifiable/non-scalar per AT-33-E5-last75, not re-litigated here). e5_last67_weapon_ours confirms ours=null for the TOHIT half -- compute_equipmods_effect's same TYPE=Enhancement-less-bare-WEAPON exclusion applies here exactly as it does to heartstake_bolts_5 and the sibling crossbow_double/rod_withering units this bundle already recorded. This is an equipment_modifier record (attached to a base weapon via CUSTOMIZATION:[BASEITEM:<weapon>|DATA:EQMOD=<key>], not a standalone equippable item), so unlike heartstake_bolts_5 it cannot even be given its own EQUIPNAME/EQUIPSET line for a live-oracle attempt -- AT-33-E5-last67-weapon's Finding 5 named proving that attachment syntax live as open next-cycle scope; not reached this cycle either. Verdict is settled by ours=null regardless (no_resolver does not depend on oracle reachability): no fabricated comparison was made.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_1_step_greater_no_penalty",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Special Quality ~ Wield Size / 2 Steps Greater / No Penalty carries two raw_bonus_chains: BONUS:WEAPON|WIELDCATEGORY|-2 and bare BONUS:WEAPON|TOHIT|4 (no WEAPONPROF= subject, no TYPE= qualifier). Per this lane's brief, the TOHIT half is the comparable magnitude (WIELDCATEGORY stays unverifiable/non-scalar per AT-33-E5-last75, not re-litigated here). e5_last67_weapon_ours confirms ours=null for the TOHIT half -- compute_equipmods_effect's same TYPE=Enhancement-less-bare-WEAPON exclusion applies here exactly as it does to heartstake_bolts_5 and the sibling crossbow_double/rod_withering units this bundle already recorded. This is an equipment_modifier record (attached to a base weapon via CUSTOMIZATION:[BASEITEM:<weapon>|DATA:EQMOD=<key>], not a standalone equippable item), so unlike heartstake_bolts_5 it cannot even be given its own EQUIPNAME/EQUIPSET line for a live-oracle attempt -- AT-33-E5-last67-weapon's Finding 5 named proving that attachment syntax live as open next-cycle scope; not reached this cycle either. Verdict is settled by ours=null regardless (no_resolver does not depend on oracle reachability): no fabricated comparison was made.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_2_steps_greater_no_penalty",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Special Quality ~ Wield Size / 3 Steps Greater / No Penalty carries two raw_bonus_chains: BONUS:WEAPON|WIELDCATEGORY|-3 and bare BONUS:WEAPON|TOHIT|6 (no WEAPONPROF= subject, no TYPE= qualifier). Per this lane's brief, the TOHIT half is the comparable magnitude (WIELDCATEGORY stays unverifiable/non-scalar per AT-33-E5-last75, not re-litigated here). e5_last67_weapon_ours confirms ours=null for the TOHIT half -- compute_equipmods_effect's same TYPE=Enhancement-less-bare-WEAPON exclusion applies here exactly as it does to heartstake_bolts_5 and the sibling crossbow_double/rod_withering units this bundle already recorded. This is an equipment_modifier record (attached to a base weapon via CUSTOMIZATION:[BASEITEM:<weapon>|DATA:EQMOD=<key>], not a standalone equippable item), so unlike heartstake_bolts_5 it cannot even be given its own EQUIPNAME/EQUIPSET line for a live-oracle attempt -- AT-33-E5-last67-weapon's Finding 5 named proving that attachment syntax live as open next-cycle scope; not reached this cycle either. Verdict is settled by ours=null regardless (no_resolver does not depend on oracle reachability): no fabricated comparison was made.",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_3_steps_greater_no_penalty",
+      "verdict": "unverifiable"
+    },
+    {
+      "note": "Brawler's Flurry's own corpus record carries BONUS:WEAPON|ATTACKS|BrawlersFlurryExtraAttacks and BONUS:WEAPON|TOHIT|BrawlersFlurryAttackPenalty. The comparable magnitude for this shape is an ATTACK COUNT, not a to-hit value (per this lane's brief) -- but grep across src/rules_core/equipment_effects.rs and equipment_effects/*.rs for any 'ATTACKS' token handling returns zero matches: the engine has NO resolver for BONUS:WEAPON|ATTACKS chains at all, confirmed empirically by e5_last67_weapon_ours (ours=null). The formula-valued extra-attacks token itself (BrawlersFlurryExtraAttacks / FlurryOfFistsExtraAttacks / MeditantFlurryExtraAttacks) is also a named PCGen VAR reference, not a literal magnitude in the corpus record -- resolving it requires the engine's own formula evaluation, which is a separate, larger gap than a missing ATTACKS-token mapping alone. Recorded unverifiable/no_resolver rather than fabricating an attack-count 'ours'. No live oracle attack-count was pursued this cycle (verdict is settled by ours=null regardless of oracle reachability; this cycle's live-fixture budget went to the 12-unit natural-attack investigation above, which was the larger population).",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver",
+      "unit_id": "advanced_class_guide:equipment:brawler_s_flurry",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: two chains -- `BONUS:WEAPON|ATTACKS|FlurryOfFistsExtraAttacks` (a variable-named formula whose value is only meaningful in the context of the SEPARATE `Blade Skill ~ Flurry of Fists` ability record's own `DEFINE:FlurryOfFistsExtraAttacks|0` + `BONUS:VAR|FlurryOfFistsExtraAttacks|1` -- genuine cross-record resolution, deliberately out of scope for `resolve_var_reference`'s same-record-only discipline, see `equipmods.rs`'s own doc comment) and `BONUS:WEAPON|TOHIT|-2` (a bare, no-`TYPE=` chain, deliberately excluded by `compute_equipmods_effect`'s module doc comment -- same shape as `crossbow_double`/`rod_withering`'s established `no_resolver` disposition, `AT-33-E5-last67-weapon`). Confirmed live via `e5_last39_skill_combat_ours`: `weapon_enhancement_bonus`=None, `to_hit_bonus`=0 (real but unrelated -- this IS a real weapon record, Unarmed Strike proficiency, but with no applied_modifiers).",
+      "unit_id": "ultimate_psionics:equipment:flurry_of_fists",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: same shape as `flurry_of_fists` -- `BONUS:WEAPON|WEAPONBAB|MeditantFlurryBABBonus`, `BONUS:WEAPON|ATTACKS|MeditantFlurryExtraAttacks` (both cross-record class-feature-defined variables, out of `resolve_var_reference`'s same-record scope) and a bare `BONUS:WEAPON|TOHIT|-2` (deliberately excluded, same as `flurry_of_fists`). Confirmed live via `e5_last39_skill_combat_ours`: `weapon_enhancement_bonus`=None, `to_hit_bonus`=0 (real, unrelated).",
+      "unit_id": "ultimate_psionics:equipment:flurry_of_strikes",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": {
+        "damage_bonus": 1,
+        "tohit_bonus": 1
+      },
+      "reason": "no_probe_surface: this cycle landed a real engine fix (RED->GREEN, `src/rules_core/equipment_effects/equipmods.rs`'s new `resolve_var_reference`/`resolve_bonus_magnitude` + case-insensitive `TYPE=Enhancement` match) so `compute_equipmods_effect` now resolves this record's own `BONUS:VAR|DissonanceEnhancementBonusMain|1` + `BONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusMain|TYPE=ENHANCEMENT` pair to a real, non-fabricated tohit_bonus=1/damage_bonus=1 (confirmed live via `e5_last39_skill_combat_ours` against the real corpus record, not hand-typed). The comparable magnitude is stated and applied consistently to both dissonance units (TOHIT and DAMAGE, the chain's own affected rolls -- same convention `AT-33-E5-last67-weapon`'s own bare-WEAPON-chain audit already established). No live-oracle round-trip is proven this cycle: this is an `ITYPE:WeaponEnhancement.Psionic` Special-Quality-category eqmod, and a live attachment attempt this cycle (real `.pcg` fixture, `CUSTOMIZATION:[BASEITEM:Longsword (Base)|DATA:EQMOD=Special Quality ~ Dissonance / Enhancement Bonus / Main]`, corrected `CAMPAIGN:DSP - Ultimate Psionics` KEY per `campaign_key.py`, direct-java run against the pinned oracle, character loaded cleanly with no SEVERE/equip-failure line) exported `WEAPON.0.MAGICHIT=+0`/`WEAPON.0.MAGICDAMAGE=+0` -- the eqmod silently did not apply, the SAME unproven-live-attachment shape `AT-33-E5-last67-eqm`'s own receipt already named for the sibling `special_quality_wield_size_*` Special-Quality-category eqmods (\"This cycle did not prove a live attachment round-trip for a Special-Quality-category eqmod ... within its time budget\"). Not a new failure of this cycle's own making -- an independently re-confirmed, pre-existing gap in the oracle-harness's Special-Quality-eqmod attachment mechanism. See `last39-skill-combat-work/dissonance_main.pcg` + `run2.log` (real, live invocation artifacts, kept for re-derivation).",
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_main",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": {
+        "damage_bonus": 1,
+        "tohit_bonus": 1
+      },
+      "reason": "no_probe_surface: identical shape and identical engine fix as `special_quality_dissonance_enhancement_bonus_main` (the record's own `BONUS:VAR|DissonanceEnhancementBonusAlt|1` + `BONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusAlt|TYPE=ENHANCEMENT` pair resolves to tohit_bonus=1/damage_bonus=1, confirmed live). Comparable magnitude (TOHIT and DAMAGE) applied consistently with the Main unit. No live-oracle attachment round-trip proven this cycle -- same Special-Quality-category eqmod attachment gap named on the Main unit's row above, not separately re-attempted (same mechanism, same expected outcome).",
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_alt",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: the record's own comparable chain is `BONUS:COMBAT|INITIATIVE|1|TYPE=Insight` -- confirmed live via `e5_last39_skill_combat_ours` (real `compute_equipment_effects` call): `armor_class_bonus`=None (not an AC subtoken), `skill_bonus`=None (not a SKILL chain), `weapon_enhancement_bonus`=None (not a WEAPON/equipmods record), `to_hit_bonus`=0 (an unrelated field -- the weapon-modifier attachment slot, not this record's own INITIATIVE bonus; Rod (Alertness) is itself a +1 light mace so `is_weapon_record` is true, but no applied_modifiers means that field is a real, unrelated 0, not a stand-in for INITIATIVE). No `src/rules_core/` field aggregates a COMBAT|INITIATIVE contribution at all -- confirmed still open from `AT-33-E5-shape-combat`/`AT-33-E5-last67-skill-combat`. Additionally, and independently: `AT-33-E5-last67-skill-combat`'s own live oracle round-trip on this exact unit already found the ORACLE side has no comparable token either -- `rod_alertness`'s live `INITIATIVEMOD`/`INITIATIVEMISC` export shows the equipment Insight bonus unreflected in either token -- so even a future engine resolver would still have no oracle value to compare against without also closing that export-token gap.",
+      "unit_id": "core_rulebook:equipment:rod_alertness",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: three chains, all formula-valued (`1+Global_LuckBonus`) -- `COMBAT|INITIATIVE`, `SAVE|ALL`, `SKILL|TYPE.Strength,TYPE.Dexterity,TYPE.Intelligence,TYPE.Wisdom,TYPE.Charisma`. Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None, `skill_bonus`=None (the SKILL chain's own magnitude segment `1+Global_LuckBonus` fails `i16::parse`, so `compute_general_effect`'s `find_map` yields None for this record, not a fabricated zero), `weapon_enhancement_bonus`=None, `to_hit_bonus`=None (not a weapon record). No `src/rules_core/` resolver exists for COMBAT|INITIATIVE or SAVE at all (same gap as `rod_alertness`), and there is no formula evaluator for `Global_LuckBonus`-style chain values (confirmed architecturally 0 for an isolated test character in the pinned corpus per `AT-33-E5-003-disagreement-fixes-wave5`'s own finding, but 'the variable resolves to a real number' is a different question from 'the engine has code that evaluates a formula string at all' -- it does not, for any of this record's three dimensions).",
+      "unit_id": "core_rulebook:equipment:stone_of_good_luck_luckstone",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: `BONUS:COMBAT|AC|2+Global_LuckBonus|TYPE=Luck` -- an AC subtoken, which DOES have an engine resolver (`arms_armor.rs`'s widened AC match), but the magnitude segment `2+Global_LuckBonus` is not a literal integer and there is no formula evaluator to resolve it (`i16::parse` fails, matching `armor_class_bonus`=None confirmed live via `e5_last39_skill_combat_ours`). Same shape `AT-33-E5-shape-combat`'s own receipt already named as 'not attempted' for `staff_of_power`/`gunfighter_s_poncho`/`staff_of_the_hierophant` (formula-valued AC, no evaluator for `Global_LuckBonus`).",
+      "unit_id": "ultimate_equipment:equipment:gunfighter_s_poncho",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": {
+        "bonus": -2,
+        "skill": "ALL"
+      },
+      "reason": "no_comparable_export_token: four literal chains -- `COMBAT|INITIATIVE|-5`, `COMBAT|TOHIT|-2`, `SAVE|ALL|-2`, `SKILL|ALL|-2`. Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None, `weapon_enhancement_bonus`=None, `to_hit_bonus`=None (not a weapon record) -- INITIATIVE/TOHIT/SAVE have no engine resolver at all, the same gap named on `rod_alertness`'s row. `skill_bonus` DOES resolve (`compute_general_effect` matches any `SKILL|<qualifier>|<n>` chain literally, including a qualifier of `ALL`), yielding a real `SkillCheckBonus{skill:\"ALL\", bonus:-2}` -- but `\"ALL\"` is not a real PF1 skill name and no single PCGen `SKILL.<name>.MISC` export token represents 'every skill at once', so this real engine value has no oracle counterpart to compare against (the same 'no single PCGen token' shape wave 4 already established for multi-skill comma-joined chains, extended here to the `ALL` qualifier rather than a comma list -- not a fabricated comparison either way).",
+      "unit_id": "ultimate_equipment:equipment:robe_of_vermin",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: `BONUS:COMBAT|TOHIT.Ranged|-2`, a bare (no `TYPE=`) non-AC COMBAT subtoken. Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None (not `AC`), `skill_bonus`=None, `weapon_enhancement_bonus`=None (this is a general equipment record, not an `equipmods`-category record, so `compute_equipmods_effect`'s WEAPON-chain match never applies), `to_hit_bonus`=None (not a weapon record). No `src/rules_core/` field aggregates a non-AC COMBAT subtoken -- same gap as `rod_alertness`/`companion_stone_far_sight`.",
+      "unit_id": "ultimate_equipment:equipment:scattershot_bracers",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: `BONUS:COMBAT|AC|2+Global_LuckBonus|TYPE=Luck` + `BONUS:SAVE|ALL|2+Global_LuckBonus|TYPE=Luck` -- both formula-valued, no evaluator (same `Global_LuckBonus` gap as `gunfighter_s_poncho`/`stone_of_good_luck_luckstone`). Confirmed live via `e5_last39_skill_combat_ours`: `armor_class_bonus`=None (formula parse fails), `skill_bonus`=None, `weapon_enhancement_bonus`=None (this record's own separate Staff/`EQMOD` weapon-enhancement dimension is a distinct unit_id/dimension, out of this row's scope), `to_hit_bonus`=0 (real but unrelated -- the item is itself a Quarterstaff weapon with no applied_modifiers).",
+      "unit_id": "ultimate_equipment:equipment:staff_of_the_hierophant",
+      "verdict": "unverifiable"
+    },
+    {
+      "oracle": null,
+      "ours": null,
+      "reason": "no_resolver: `BONUS:COMBAT|TOHIT.RANGED|2|TYPE=Competence` -- a bare non-AC COMBAT subtoken, same gap as `scattershot_bracers`. Confirmed live via `e5_last39_skill_combat_ours` (resolved by KEY `Companion Stone (Far Sight)`, not the OUTPUTNAME-divergent display `Companion Stone of [NAME]` -- the wave-5 `corpus_loader.rs` OUTPUTNAME fix confirmed still applying, record resolves cleanly): `armor_class_bonus`=None, `skill_bonus`=None, `weapon_enhancement_bonus`=None, `to_hit_bonus`=None (not a weapon record).",
+      "unit_id": "ultimate_psionics:equipment:companion_stone_far_sight",
+      "verdict": "unverifiable"
+    },
+    {
+      "dimension": "VAR.ArmorCheckPenalty",
+      "kind": "equipment_modifier",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): draco is a COPY-style alias record (corpus_key DRACO, visible=false) resolving to the same real modifier KEY:Material ~ Dragonhide as dragonhide and material_dragonhide (confirmed by direct corpus-record read: data/corpus/core_rulebook/equipment/equipmods/draco.json's own KEY token is 'Material ~ Dragonhide', identical raw_bonus_chains to the other two). Mechanism: a NEW live-oracle host (scripts/oracle_harness/eqm-fixtures/sd33r6_eqm.pcc / sd33r6_eqm_items.lst / sd33r6_eqm_combo.pcg) -- an EQMOD:Material ~ Dragonhide token baked directly into a custom homebrew armor item's own LST line (the same encoding PCGen's own real magic items use, e.g. Armor of Grim Triumph -- NOT wave 5's CUSTOMIZATION:[...] .pcg-time attachment, which was proven this cycle's predecessor to never take effect). Host: a Leather Armor (Base)-shaped item (ACCHECK:0, matching core_rulebook:equipment:leather_armor_base's own literal tokens) so the modifier is the ONLY source of VAR.ArmorCheckPenalty on the whole test character (no shield/outfit VAR chain present -- confirmed by reading both sibling hosts' own LST lines in the same fixture file, neither carries a VAR chain). Live oracle run (charbuild_remainder_run_one.sh, PCGen 6.09.08.RC1, pinned SHA 7f818006e371188e5717fd18d74d18a420747fc6): VAR.ArmorCheckPenalty.INTVAL=-1 (docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/eqm-final-work/combo.txt). Ours: compute_var_effect() called directly on the resolved modifier record (no host needed -- the VAR|ArmorCheckPenalty|-1|TYPE=Enhancement chain lives on the modifier's own record), via src/bin/e5_eqm_final_ours.rs, equipment_id_resolve('DRACO', RuleSetId::Crb, corpus) -> ArmorCheckPenalty=-1. Re-derive: /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d17c6032-727-5/target/debug/e5_eqm_final_ours <repo_root> <out.json>.",
+      "oracle": -1,
+      "ours": -1,
+      "unit_id": "core_rulebook:equipment_modifier:draco",
+      "verdict": "agree"
+    },
+    {
+      "dimension": "VAR.ArmorCheckPenalty",
+      "kind": "equipment_modifier",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): dragonhide is a second alias record (corpus_key 'Dragonhide', visible=false) for the same real modifier KEY:Material ~ Dragonhide as draco and material_dragonhide -- same method, same fixture, same live-oracle run as draco's own row (VAR.ArmorCheckPenalty.INTVAL=-1). Ours: equipment_id_resolve('Dragonhide', RuleSetId::Crb, corpus) -> compute_var_effect() -> ArmorCheckPenalty=-1, confirming the OUTPUTNAME/KEY-alias resolution wave 5's equipment_id_resolve fix established holds for this second alias too. Re-derive: same command as draco's row.",
+      "oracle": -1,
+      "ours": -1,
+      "unit_id": "core_rulebook:equipment_modifier:dragonhide",
+      "verdict": "agree"
+    },
+    {
+      "dimension": "VAR.ArmorCheckPenalty",
+      "kind": "equipment_modifier",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): material_dragonhide is the canonical, visible=true declared record (corpus_key 'Material ~ Dragonhide') that draco and dragonhide both alias to -- same method, same fixture, same live-oracle run (VAR.ArmorCheckPenalty.INTVAL=-1). Ours: equipment_id_resolve('Material ~ Dragonhide', RuleSetId::Crb, corpus) -> compute_var_effect() -> ArmorCheckPenalty=-1. Re-derive: same command as draco's row. Note the item-level EQ.MERGELOC.0.ACCHECK export token showed 0 (unchanged) on this same live run, not 1 as the EQMARMOR|ACCHECK|1 chain alone would suggest in isolation -- PCGen appears to floor a masterwork-quality ACCHECK improvement at the base item's own 0-penalty value (Leather Armor's own ACCHECK:0 already has no penalty to reduce). This cycle used the unambiguous PC-level VAR.ArmorCheckPenalty magnitude (which is not floored, and matches the modifier's own literal -1 chain exactly) as the comparable quantity rather than the floored item-level ACCHECK field, and states this explicitly rather than silently picking whichever field agreed.",
+      "oracle": -1,
+      "ours": -1,
+      "unit_id": "core_rulebook:equipment_modifier:material_dragonhide",
+      "verdict": "agree"
+    },
+    {
+      "dimension": "WEAPON.0.DAMAGE (die size, not a scalar)",
+      "kind": "equipment_modifier",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): spike_sb (corpus_key SPIKE_SB, visible=false) aliases to the same real modifier KEY:Special Quality ~ Spikes ~ Shieldbash as special_quality_spikes_shieldbash (BONUS:EQMWEAPON|DAMAGESIZE|1, no scalar). Comparable magnitude is a die STEP, not a scalar, per the dispatch brief's own routing -- recorded as the die string. Mechanism: same EQMOD-baked-into-a-homebrew-LST-item approach as the dragonhide rows, host = a Heavy Wooden Shield (Base)-shaped item (DAMAGE:1d4, ACCHECK:-2, matching core_rulebook:equipment:heavy_wooden_shield_base's own literal tokens) with EQMOD:Special Quality ~ Spikes ~ Shieldbash baked into its own LST line. Live oracle run: WEAPON.0.DAMAGE=1d6+3 (the +3 is the wielder's own STR 16 modifier, applied by PCGen's normal weapon-damage export regardless of this modifier -- not part of the DAMAGESIZE effect; the die-size term is the comparable part, 1d4 base -> 1d6). Engine gap closed this cycle: EQMWEAPON|DAMAGESIZE had NO resolver anywhere in src/rules_core/ before this cycle (confirmed absent: git log shows resolve_eqmweapon_damagesize_effect + step_single_die new this commit in src/rules_core/damage_total.rs, RED->GREEN, cargo test --locked --lib damage_total::eqmweapon_damagesize_tests -- 3/3 passed). Ours: resolve_eqmweapon_damagesize_effect() on a synthetic host built to the identical literal tokens as the live-oracle fixture (src/bin/e5_eqm_final_ours.rs) -> Some(DiceExpression{count:1,die_size:6}) -> '1d6'.",
+      "oracle": "1d6",
+      "ours": "1d6",
+      "unit_id": "core_rulebook:equipment_modifier:spike_sb",
+      "verdict": "agree"
+    },
+    {
+      "dimension": "WEAPON.0.DAMAGE (die size, not a scalar)",
+      "kind": "equipment_modifier",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): special_quality_spikes_shieldbash is the canonical, visible=true declared record (corpus_key 'Special Quality ~ Spikes ~ Shieldbash') that spike_sb aliases to -- same method, same fixture, same live-oracle run and same new resolve_eqmweapon_damagesize_effect resolver as spike_sb's own row. Re-derive: same command as spike_sb's row.",
+      "oracle": "1d6",
+      "ours": "1d6",
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_spikes_shieldbash",
+      "verdict": "agree"
+    },
+    {
+      "dimension": "weight (EQ.MERGELOC.x.WT)",
+      "kind": "equipment_modifier",
+      "note": "SD-33 remediation wave 6 (eqm-modifier-final lane): BONUS:EQM|WEIGHTDIV|2 -- weight is a real computed magnitude, not silently truncated (8/2=4 happens to be an exact integer here; resolve_eqm_weightdiv_effect returns an f32 and would report a real fraction had one occurred). Mechanism: EQMOD:Material ~ Darkleaf Cloth ~ Clothing baked into a homebrew LST item shaped like core_rulebook:equipment:outfit_explorer_s (WT:8, TYPE:Goods.Clothing.Resizable.Starting, matching that record's own literal WT token). Live oracle run: EQ.MERGELOC.2.WT=4 (docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/eqm-final-work/combo.txt). Engine gap closed this cycle: EQM|WEIGHTDIV had NO resolver anywhere in src/rules_core/ before this cycle (confirmed absent by grep across equipment_effects*.rs pre-cycle). New: resolve_eqm_weightdiv_effect() in src/rules_core/equipment_effects.rs, RED->GREEN, cargo test --locked --lib eqm_weightdiv_tests -- 2/2 passed. Ours: resolve_eqm_weightdiv_effect() on a synthetic host built to the identical literal WT:8 token as the live-oracle fixture -> Some(4.0).",
+      "oracle": 4,
+      "ours": 4.0,
+      "unit_id": "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_clothing",
+      "verdict": "agree"
+    },
+    {
+      "kind": "equipment",
+      "oracle": null,
+      "ours": null,
+      "reason": "no_comparable_export_token (SD-33 remediation wave 6, eqm-modifier-final lane: this record's own raw_bonus_chains, BONUS:EQMWEAPON|RANGEADD|10 and BONUS:WEAPON|DAMAGE|-1, are carried on the AMMUNITION item itself and are meant to modify the wielding ranged weapon's exported RANGE/DAMAGE when this ammo is loaded/fired -- a real PCGen ammo-transfer mechanic, not the base-item-with-EQMOD-attached shape the other 6 units in this lane use. Proven by execution + source read, not by attempt failure: (1) root-caused and FIXED wave 5's separate blocker first -- Ultimate Combat's own uc_abilities_class.lst references AbilityCategory 'Cavalier Class Feature', which is defined only in advanced_players_guide/apg_abilitycategories.lst, not in Ultimate Combat's own uc_abilitycategories.lst; adding CAMPAIGN:Advanced Player's Guide to the .pcg makes Ultimate Combat load cleanly (0 SEVERE lines, exit 0) -- a real, pre-existing pinned-oracle data-loading defect, unrelated to this modifier, now unblocked for every ultimate_combat unit, not just this one. (2) With Ultimate Combat loading cleanly, equipped a real Longbow (Base) (CONTAINS:UNLIM|Arrow) with the arrow nested inside it (EQUIPSET ID 0.1.01.01 under the bow's 0.1.01) and queried WEAPON.0.RANGE via the SAME BatchExporter template family every other row in this lane uses: result was 100 ft (the bow's own unmodified base RANGE:100, the arrow's RANGEADD:10 not reflected) despite a clean load. (3) Read PCGen's own export-token source (pcgen/io/exporttoken/WeaponToken.java's getRangeToken(eq, pc, units) -> EqToken.getRange(pc, eq), and Equipment.java's private bonusTo(...) which iterates only getEqModifierList(bPrimary) -- EquipmentModifiers explicitly EQMOD-attached to THIS SAME Equipment object) -- RANGE is computed purely from the weapon's own attached EquipmentModifier list; a separately-contained ammunition Equipment object's own raw BONUS:EQMWEAPON tokens are never read by this call, confirmed by WeaponToken's RANGE case never accepting an ammo index parameter (unlike its DAMAGE/hit-roll cases, which do). This is a structural fact about BatchExporter's own export surface, proven by source code and confirmed live, not a limitation of this cycle's attachment mechanism -- the ammo-to-weapon RANGEADD/DAMAGE transfer this record's own chains implement has no reachable BatchExporter export token to compare against, on any host, via any mechanism this or the prior cycle tried.",
+      "unit_id": "ultimate_combat:equipment:arrow_iron_tipped_distance_20",
       "verdict": "unverifiable"
     }
   ]

@@ -286,6 +286,78 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
     })
 }
 
+/// Folds each `EQMOD:`-referenced modifier record's own weapon-enhancement
+/// contribution (via [`compute_equipmods_effect`] applied recursively to
+/// each modifier) into `effect`, mirroring
+/// `arms_armor::apply_eqmod_armor_class_bonus`'s pattern for the AC
+/// dimension (SD-33 remediation wave 4) with one deliberate difference:
+/// **per-dimension MAX, not sum.**
+///
+/// A magic weapon's real enhancement bonus frequently lives on a SEPARATE
+/// `equipment_modifier` record the base weapon's `EQMOD:` token names,
+/// never on the base record's own chain -- confirmed by the real corpus
+/// example this fix closes, `advanced_race_guide:equipment:rending_claw_
+/// blades`: the base record's own chain is `BONUS:WEAPON|TOHIT|1|
+/// TYPE=Enhancement`; its `.MOD`-attached `EQMOD:`-referenced `Special
+/// Ability ~ +1 ~ Weapon` modifier carries the separate
+/// `BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement` chain. Both chains carry
+/// the identical `TYPE=Enhancement` qualifier -- every chain
+/// [`compute_equipmods_effect`]'s `WEAPON`/`WEAPONPROF=TYPE.Natural`
+/// match arms requires it (see that function's own doc comment) -- and
+/// Pathfinder's core stacking rule is that bonuses of the SAME type never
+/// stack; only the highest applies. Live-oracle-confirmed on this exact
+/// record: `MAGICHIT=+1` (not `+2` -- base `TOHIT|1` and the modifier's
+/// own `TOHIT|1` are the SAME Enhancement type, `max(1, 1) = 1`, matching)
+/// and `MAGICDAMAGE=+1` (base contributes no `DAMAGE` chain at all; the
+/// modifier's own `DAMAGE|1` is the only contributor, so it is simply the
+/// result -- absence is `None`, never `0`, so it never wins a `max`
+/// against a real contributed value it should not suppress). This is
+/// unlike the AC dimension's `apply_eqmod_armor_class_bonus`, which
+/// correctly SUMS: a base armor's own `TYPE=Armor` value and an
+/// enhancement modifier's `TYPE=ArmorEnhancement` bonus are two DIFFERENT
+/// bonus types by Pathfinder rule (armor's base AC value plus its
+/// enhancement bonus, always additive -- that pattern's own real corpus
+/// witness, `inner_sea_races:equipment:armor_of_grim_triumph`, is
+/// `6 + 1 = 7`, proven against the oracle).
+///
+/// **Scope this proof does NOT cover** (`AGENTS.md` Non-Negotiable Rule
+/// 7): the `WEAPONPROF=<name>` bare-chain shape `compute_equipmods_effect`
+/// also matches carries NO `TYPE=` qualifier at all (a different,
+/// untyped bonus family -- see that function's own doc comment), so
+/// treating it identically to a same-typed `Enhancement` chain here (via
+/// `max`) is a simplification, not a proven rule; no real corpus record
+/// combines a `WEAPONPROF=<name>`-shaped base chain with an `EQMOD:`-
+/// referenced modifier in the population this cycle examined, so the
+/// question is unexercised, not answered.
+///
+/// `effect` starts `None` when the base record's own chain matched
+/// nothing at all -- an eqmod-only contribution (no real corpus example
+/// observed yet, but not excluded) still surfaces correctly, the same way
+/// `apply_eqmod_armor_class_bonus` allows a base item with no armor chain
+/// of its own to still gain one from a referenced modifier.
+pub fn apply_eqmod_weapon_enhancement_bonus(
+    effect: &mut Option<WeaponEnhancementBonus>,
+    eqmod_records: &[&EquipmentRecord],
+) {
+    for modifier in eqmod_records {
+        let Some(modifier_bonus) = compute_equipmods_effect(modifier) else {
+            continue;
+        };
+        let target = effect.get_or_insert(WeaponEnhancementBonus {
+            tohit_bonus: None,
+            damage_bonus: None,
+            natural_attack_only: false,
+            weapon_prof_scope: None,
+        });
+        if let Some(tohit) = modifier_bonus.tohit_bonus {
+            target.tohit_bonus = Some(target.tohit_bonus.map_or(tohit, |current| current.max(tohit)));
+        }
+        if let Some(damage) = modifier_bonus.damage_bonus {
+            target.damage_bonus = Some(target.damage_bonus.map_or(damage, |current| current.max(damage)));
+        }
+    }
+}
+
 /// Resolve one `equipmods` corpus record's flat Spell Resistance
 /// contribution.
 ///

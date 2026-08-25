@@ -94,19 +94,36 @@ pub fn eqmod_referenced_records<'a>(
     rule_set: RuleSetId,
     corpus: &'a SourcePackageContent,
 ) -> Vec<&'a EquipmentRecord> {
-    let Some(eqmod_value) = record.tokens.iter().find(|t| t.key == "EQMOD").map(|t| t.value.as_str())
-    else {
+    // SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated `rending_claw_
+    // blades` blocker): a record can carry MORE THAN ONE `EQMOD:` token --
+    // its own line's token, plus a further one `enrich_equipment_raw_
+    // tokens.rs`'s `.MOD`-fold APPENDS (never merges) when a separate
+    // `<record_key>.MOD` row elsewhere in the LST also attaches an
+    // `EQMOD:`. Confirmed against the real committed corpus record
+    // (`data/corpus/advanced_race_guide/equipment/rending_claw_blades.json`,
+    // two `EQMOD` entries in `raw_tokens`). The prior `.find()` read only
+    // the first, so a record whose *own* line already carried an `EQMOD:`
+    // (however trivial -- `Material ~ Steel` here has no bonus chain of
+    // its own) silently never inspected the richer, `.MOD`-folded token at
+    // all. Every `EQMOD:` token is now scanned; each is independently safe
+    // by the same "non-key candidates simply fail to resolve" discipline
+    // documented above.
+    let eqmod_values: Vec<&str> =
+        record.tokens.iter().filter(|t| t.key == "EQMOD").map(|t| t.value.as_str()).collect();
+    if eqmod_values.is_empty() {
         return Vec::new();
-    };
+    }
     let mut resolved = Vec::new();
-    for instance in eqmod_value.split('.') {
-        for candidate in instance.split('|') {
-            let candidate = candidate.trim();
-            if candidate.is_empty() {
-                continue;
-            }
-            if let Some((modifier_record, _table_cell)) = equipment_id_resolve(candidate, rule_set, corpus) {
-                resolved.push(modifier_record);
+    for eqmod_value in eqmod_values {
+        for instance in eqmod_value.split('.') {
+            for candidate in instance.split('|') {
+                let candidate = candidate.trim();
+                if candidate.is_empty() {
+                    continue;
+                }
+                if let Some((modifier_record, _table_cell)) = equipment_id_resolve(candidate, rule_set, corpus) {
+                    resolved.push(modifier_record);
+                }
             }
         }
     }
@@ -292,7 +309,16 @@ pub fn compute_equipment_effects(
         let effect = resolve_category_effect(record, RuleSetId::Crb, corpus);
         let skill_bonus = general::compute_general_effect(record);
         let ability_bonus = magic_items::compute_magic_items_effect(record);
-        let weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        let mut weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        // SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated
+        // `rending_claw_blades` blocker): fold the record's own `EQMOD:`-
+        // referenced modifier records' weapon enhancement into the total,
+        // mirroring `resolve_category_effect`'s already-shipped AC-
+        // dimension pattern (wave 4) -- see
+        // `equipmods::apply_eqmod_weapon_enhancement_bonus`'s own doc
+        // comment.
+        let weapon_eqmod_records = eqmod_referenced_records(record, RuleSetId::Crb, corpus);
+        equipmods::apply_eqmod_weapon_enhancement_bonus(&mut weapon_enhancement_bonus, &weapon_eqmod_records);
         let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(record);
         let has_arms_armor_effect = effect.armor_class_bonus.is_some()
             || effect.max_dex.is_some()
@@ -991,6 +1017,72 @@ Armor Spikes\tKEY:Special Quality ~ Spikes ~ Armor\tTYPE:Armor\tCOST:50\n";
             "base item's own 6 plus the EQMOD-referenced +1 Armor modifier's own separate chain"
         );
         assert_eq!(effects.armor_class_delta, 7);
+    }
+
+    /// SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated blocker,
+    /// `rending_claw_blades`): end-to-end proof of the shape the corpus-
+    /// extraction fix (`fbc945f198`) newly surfaced. Real verbatim tokens
+    /// from `advanced_race_guide:equipment:rending_claw_blades`'s own
+    /// post-fix corpus record (`data/corpus/advanced_race_guide/equipment/
+    /// rending_claw_blades.json`) and Core Rulebook's own `Special Ability
+    /// ~ +1 ~ Weapon` (already proven in isolation by
+    /// `equipmods::tests::plus_one_weapon_enhancement_yields_a_real_
+    /// damage_tohit_bonus`).
+    ///
+    /// Two distinct gaps, both real, both closed by this cycle:
+    ///
+    /// 1. The base record itself carries TWO separate `EQMOD:` tokens
+    ///    (one from its own line, `Material ~ Steel`; a second folded in
+    ///    from a `.MOD` row citing `Keen`/`+1`/`Material ~ Steel` --
+    ///    `enrich_equipment_raw_tokens.rs`'s fold appends rather than
+    ///    merges, confirmed against the real committed JSON). Before this
+    ///    fix, `eqmod_referenced_records` read only the FIRST `EQMOD:`
+    ///    token (`.find()`), so the richer, `.MOD`-folded token -- the one
+    ///    that actually names the `+1` modifier -- was never even
+    ///    inspected, regardless of any weapon-dimension gap.
+    /// 2. `compute_equipment_effects`'s weapon path summed only the base
+    ///    record's own `raw_bonus_chains` (`TOHIT` only, per its own real
+    ///    chain) into `weapon_enhancement_bonus`, unlike the AC dimension,
+    ///    which already folds `EQMOD:`-referenced records in
+    ///    (`resolve_category_effect`). The `+1 Weapon` modifier's own
+    ///    `DAMAGE` contribution was never reachable at all.
+    ///
+    /// Before this fix: `tohit_bonus` matches the oracle (`Some(1)`,
+    /// TOHIT already resolves), `damage_bonus` is `None` against the
+    /// oracle's real `MAGICDAMAGE=+1` -- the exact
+    /// `AT-33-E5-003.combined-oracle-results.json` disagreement (`ours=0
+    /// oracle=1`, dimension `DAMAGE`).
+    #[test]
+    fn eqmod_referenced_modifier_sums_into_weapon_enhancement_bonus_across_two_eqmod_tokens() {
+        let text = "\
+Rending Claw Blades\tKEY:Rending Claw Blades\tTYPE:Weapon.Resizable.Light.Melee.Slashing.Finesseable\tCOST:305\tWT:2\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d4\tEQMOD:Material ~ Steel\tEQMOD:Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Steel\tWIELD:Light\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n\
++1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\n\
+Keen\tKEY:Special Ability ~ Keen ~ Weapon\tTYPE:Weapon\tCOST:0\n\
+Material Steel\tKEY:Material ~ Steel\tTYPE:Weapon\tCOST:0\n";
+        let corpus = arg_corpus(text, "arg_equip_arms_armor.lst");
+        let equipped_items = vec![equipped("Rending Claw Blades")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item.len(), 1);
+        let bonus = effects.per_item[0]
+            .weapon_enhancement_bonus
+            .as_ref()
+            .expect("the base record's own TOHIT chain alone already makes this Some");
+        assert_eq!(
+            bonus.tohit_bonus,
+            Some(1),
+            "base TOHIT|1 and the +1 modifier's own TOHIT|1 are the SAME TYPE=Enhancement bonus -- \
+             Pathfinder's same-type stacking rule takes the higher, not the sum (max(1, 1) = 1); \
+             live-oracle-confirmed MAGICHIT=+1, never +2"
+        );
+        assert_eq!(
+            bonus.damage_bonus,
+            Some(1),
+            "the EQMOD-referenced +1 Weapon modifier's own separate DAMAGE chain must fold in -- \
+             this is the real rending_claw_blades disagreement (ours=0 oracle=1, dimension DAMAGE); \
+             base contributes no DAMAGE chain at all, so the modifier's 1 is simply the result"
+        );
     }
 }
 
