@@ -1,0 +1,81 @@
+2026-08-25T10:17:06.148521218 INFO main Main:105 Starting PCGen v6.09.08.RC1
+2026-08-25T10:17:08.603339612 INFO main LanguageBundle:134 Initialising language bundle with locale en.
+2026-08-25T10:17:17.065221038 INFO main BatchExporter:117 Started export of /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_inner_sea_world_guide.pcg using /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-check.txt.ftl to /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-oracle-txt/baseline_inner_sea_world_guide.txt
+2026-08-25T10:17:17.139136315 INFO main BatchExporter:122 Loading sources [Core Rulebook, Advanced Player's Guide, Inner Sea World Guide] using game mode Pathfinder_RPG
+2026-08-25T10:17:17.217790273 INFO main SourceFileLoader:507 Loading game Pathfinder_RPG and sources [Core Rulebook, Advanced Player's Guide, Inner Sea World Guide].
+2026-08-25T10:17:31.012937425 LSTERROR main LstUtils:145 Illegal FACT subtoken 'IsOrc' 'True' for pcgen.core.PCTemplate IsOrc (Source: file:/tmp/pcgen-oracle-sd33-r3-combat/build/install/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst )
+2026-08-25T10:17:31.018847849 LSTERROR main LstUtils:145 Failed in parsing typeStr: FACT IsOrc|True for pcgen.core.PCTemplate IsOrc
+2026-08-25T10:17:31.020359291 LSTERROR main LstUtils:145 Illegal Token 'FACT' 'IsOrc|True' for pcgen.core.PCTemplate IsOrc in file:/tmp/pcgen-oracle-sd33-r3-combat/build/install/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+2026-08-25T10:17:45.535305960 INFO main CharacterManager:193 Loaded character E5 R3 baseline inner_sea_world_guide - /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1f33bc36-e5f-2/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_inner_sea_world_guide.pcg
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number

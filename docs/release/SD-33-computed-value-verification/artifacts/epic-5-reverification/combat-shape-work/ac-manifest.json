@@ -1,0 +1,712 @@
+{
+  "items": [
+    {
+      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse",
+      "slug": "full_plate_of_the_corpse",
+      "book": "advanced_class_guide",
+      "key": "Full Plate of the Corpse",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/full_plate_of_the_corpse.pcg",
+      "expected_bonus": 9
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:hero_s_hauberk",
+      "slug": "hero_s_hauberk",
+      "book": "advanced_class_guide",
+      "key": "Hero's Hauberk",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/hero_s_hauberk.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_cold",
+      "slug": "stalking_armor_cold",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Cold)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_cold.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_desert",
+      "slug": "stalking_armor_desert",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Desert)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_desert.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_forest",
+      "slug": "stalking_armor_forest",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Forest)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_forest.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_jungle",
+      "slug": "stalking_armor_jungle",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Jungle)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_jungle.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_mountain",
+      "slug": "stalking_armor_mountain",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Mountain)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_mountain.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_plains",
+      "slug": "stalking_armor_plains",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Plains)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_plains.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_swamp",
+      "slug": "stalking_armor_swamp",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Swamp)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_swamp.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_underground",
+      "slug": "stalking_armor_underground",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Underground)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_underground.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_urban",
+      "slug": "stalking_armor_urban",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Urban)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_urban.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_water",
+      "slug": "stalking_armor_water",
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Water)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stalking_armor_water.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:tireless_tracking_hide",
+      "slug": "tireless_tracking_hide",
+      "book": "advanced_class_guide",
+      "key": "Tireless Tracking Hide",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/tireless_tracking_hide.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:sea_knife",
+      "slug": "sea_knife",
+      "book": "advanced_race_guide",
+      "key": "Sea-Knife",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/sea_knife.pcg",
+      "expected_bonus": -2
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_1",
+      "slug": "amulet_of_natural_armor_1",
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +1",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/amulet_of_natural_armor_1.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_2",
+      "slug": "amulet_of_natural_armor_2",
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +2",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/amulet_of_natural_armor_2.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_3",
+      "slug": "amulet_of_natural_armor_3",
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +3",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/amulet_of_natural_armor_3.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_4",
+      "slug": "amulet_of_natural_armor_4",
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +4",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/amulet_of_natural_armor_4.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_5",
+      "slug": "amulet_of_natural_armor_5",
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +5",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/amulet_of_natural_armor_5.pcg",
+      "expected_bonus": 5
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_1",
+      "slug": "bracers_of_armor_1",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +1",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_1.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_2",
+      "slug": "bracers_of_armor_2",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +2",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_2.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_3",
+      "slug": "bracers_of_armor_3",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +3",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_3.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_4",
+      "slug": "bracers_of_armor_4",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +4",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_4.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_5",
+      "slug": "bracers_of_armor_5",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +5",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_5.pcg",
+      "expected_bonus": 5
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_6",
+      "slug": "bracers_of_armor_6",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +6",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_6.pcg",
+      "expected_bonus": 6
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_7",
+      "slug": "bracers_of_armor_7",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +7",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_7.pcg",
+      "expected_bonus": 7
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_8",
+      "slug": "bracers_of_armor_8",
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +8",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_armor_8.pcg",
+      "expected_bonus": 8
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_dusty_rose_prism",
+      "slug": "ioun_stone_dusty_rose_prism",
+      "book": "core_rulebook",
+      "key": "Ioun Stone (Dusty rose Prism)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ioun_stone_dusty_rose_prism.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_force_shield",
+      "slug": "ring_of_force_shield",
+      "book": "core_rulebook",
+      "key": "Ring of Force Shield",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_force_shield.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_1",
+      "slug": "ring_of_protection_1",
+      "book": "core_rulebook",
+      "key": "Ring of Protection +1",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_protection_1.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_2",
+      "slug": "ring_of_protection_2",
+      "book": "core_rulebook",
+      "key": "Ring of Protection +2",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_protection_2.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_3",
+      "slug": "ring_of_protection_3",
+      "book": "core_rulebook",
+      "key": "Ring of Protection +3",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_protection_3.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_4",
+      "slug": "ring_of_protection_4",
+      "book": "core_rulebook",
+      "key": "Ring of Protection +4",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_protection_4.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_5",
+      "slug": "ring_of_protection_5",
+      "book": "core_rulebook",
+      "key": "Ring of Protection +5",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_protection_5.pcg",
+      "expected_bonus": 5
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:knight_inheritor_s_ring",
+      "slug": "knight_inheritor_s_ring",
+      "book": "inner_sea_gods",
+      "key": "Knight-Inheritor's Ring",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/knight_inheritor_s_ring.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:profane_seal_signet",
+      "slug": "profane_seal_signet",
+      "book": "inner_sea_gods",
+      "key": "Profane Seal Signet",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/profane_seal_signet.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:red_hound_ring",
+      "slug": "red_hound_ring",
+      "book": "inner_sea_gods",
+      "key": "Red Hound Ring",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/red_hound_ring.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_seven_lovely_colors",
+      "slug": "ring_of_seven_lovely_colors",
+      "book": "inner_sea_gods",
+      "key": "Ring Of Seven Lovely Colors",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_seven_lovely_colors.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "slug": "ring_of_unquenchable_passions",
+      "book": "inner_sea_gods",
+      "key": "Ring Of Unquenchable Passions",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/ring_of_unquenchable_passions.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+      "slug": "armor_of_grim_triumph",
+      "book": "inner_sea_races",
+      "key": "Armor of Grim Triumph",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/armor_of_grim_triumph.pcg",
+      "expected_bonus": 6
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:coat_of_shells",
+      "slug": "coat_of_shells",
+      "book": "inner_sea_races",
+      "key": "Coat of Shells",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/coat_of_shells.pcg",
+      "expected_bonus": 5
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+      "slug": "gnome_scrap_armor",
+      "book": "inner_sea_races",
+      "key": "Gnome Scrap Armor",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/gnome_scrap_armor.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:goblin_plate",
+      "slug": "goblin_plate",
+      "book": "inner_sea_races",
+      "key": "Goblin Plate",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/goblin_plate.pcg",
+      "expected_bonus": 9
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain",
+      "slug": "hallowed_chain",
+      "book": "inner_sea_races",
+      "key": "Hallowed Chain",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/hallowed_chain.pcg",
+      "expected_bonus": 6
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+      "slug": "hallowed_chain_greater",
+      "book": "inner_sea_races",
+      "key": "Hallowed Chain (Greater)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/hallowed_chain_greater.pcg",
+      "expected_bonus": 6
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+      "slug": "hide_of_grim_triumph",
+      "book": "inner_sea_races",
+      "key": "Hide of Grim Triumph",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/hide_of_grim_triumph.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+      "slug": "mail_of_sly_steps",
+      "book": "inner_sea_races",
+      "key": "Mail of Sly Steps",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mail_of_sly_steps.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+      "slug": "panoply_of_the_fierani_knight",
+      "book": "inner_sea_races",
+      "key": "Panoply of the Fierani Knight",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/panoply_of_the_fierani_knight.pcg",
+      "expected_bonus": 9
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:field_plate",
+      "slug": "field_plate",
+      "book": "inner_sea_world_guide",
+      "key": "Field Plate",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/field_plate.pcg",
+      "expected_bonus": 7
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:klar_as_shield",
+      "slug": "klar_as_shield",
+      "book": "inner_sea_world_guide",
+      "key": "Klar (as Shield)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/klar_as_shield.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:leaf_armor",
+      "slug": "leaf_armor",
+      "book": "inner_sea_world_guide",
+      "key": "Leaf Armor",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/leaf_armor.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:stoneplate",
+      "slug": "stoneplate",
+      "book": "inner_sea_world_guide",
+      "key": "Stoneplate",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/stoneplate.pcg",
+      "expected_bonus": 9
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_defenselessness",
+      "slug": "bracers_of_defenselessness",
+      "book": "ultimate_equipment",
+      "key": "Bracers of Defenselessness",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/bracers_of_defenselessness.pcg",
+      "expected_bonus": -5
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cape_of_bravado",
+      "slug": "cape_of_bravado",
+      "book": "ultimate_equipment",
+      "key": "Cape of Bravado",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/cape_of_bravado.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:guardian_gorget",
+      "slug": "guardian_gorget",
+      "book": "ultimate_equipment",
+      "key": "Guardian Gorget",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/guardian_gorget.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:jingasa_of_the_fortunate_soldier",
+      "slug": "jingasa_of_the_fortunate_soldier",
+      "book": "ultimate_equipment",
+      "key": "Jingasa of the Fortunate Soldier",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/jingasa_of_the_fortunate_soldier.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_dark_naga",
+      "slug": "naga_scale_bindi_dark_naga",
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Dark Naga)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/naga_scale_bindi_dark_naga.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_guardian_naga",
+      "slug": "naga_scale_bindi_guardian_naga",
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Guardian Naga)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/naga_scale_bindi_guardian_naga.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_lunar_naga",
+      "slug": "naga_scale_bindi_lunar_naga",
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Lunar Naga)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/naga_scale_bindi_lunar_naga.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_royal_naga",
+      "slug": "naga_scale_bindi_royal_naga",
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Royal Naga)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/naga_scale_bindi_royal_naga.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_spirit_naga",
+      "slug": "naga_scale_bindi_spirit_naga",
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Spirit Naga)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/naga_scale_bindi_spirit_naga.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_water_naga",
+      "slug": "naga_scale_bindi_water_naga",
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Water Naga)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/naga_scale_bindi_water_naga.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
+      "slug": "snakeskin_tunic",
+      "book": "ultimate_equipment",
+      "key": "Snakeskin Tunic",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/snakeskin_tunic.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:vambraces_of_defense",
+      "slug": "vambraces_of_defense",
+      "book": "ultimate_equipment",
+      "key": "Vambraces of Defense",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/vambraces_of_defense.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+      "slug": "diviner_s_blight",
+      "book": "ultimate_intrigue",
+      "key": "Diviner's Blight",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/diviner_s_blight.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "ultimate_magic:equipment:scroll_shield",
+      "slug": "scroll_shield",
+      "book": "ultimate_magic",
+      "key": "Scroll Shield",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/scroll_shield.pcg",
+      "expected_bonus": 1
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:goggles_of_far_sight",
+      "slug": "goggles_of_far_sight",
+      "book": "ultimate_psionics",
+      "key": "Goggles of Far Sight",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/goggles_of_far_sight.pcg",
+      "expected_bonus": -1
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_heavy",
+      "slug": "improved_mind_armor_heavy",
+      "book": "ultimate_psionics",
+      "key": "Improved Mind Armor (Heavy)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/improved_mind_armor_heavy.pcg",
+      "expected_bonus": 9
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_light",
+      "slug": "improved_mind_armor_light",
+      "book": "ultimate_psionics",
+      "key": "Improved Mind Armor (Light)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/improved_mind_armor_light.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_medium",
+      "slug": "improved_mind_armor_medium",
+      "book": "ultimate_psionics",
+      "key": "Improved Mind Armor (Medium)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/improved_mind_armor_medium.pcg",
+      "expected_bonus": 6
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces",
+      "slug": "leather_of_confined_spaces",
+      "book": "ultimate_psionics",
+      "key": "Leather of Confined Spaces",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/leather_of_confined_spaces.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_heavy",
+      "slug": "mind_armor_heavy",
+      "book": "ultimate_psionics",
+      "key": "Mind Armor (Heavy)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mind_armor_heavy.pcg",
+      "expected_bonus": 7
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_light",
+      "slug": "mind_armor_light",
+      "book": "ultimate_psionics",
+      "key": "Mind Armor (Light)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mind_armor_light.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_armor_medium",
+      "slug": "mind_armor_medium",
+      "book": "ultimate_psionics",
+      "key": "Mind Armor (Medium)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mind_armor_medium.pcg",
+      "expected_bonus": 6
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield",
+      "slug": "mind_shield",
+      "book": "ultimate_psionics",
+      "key": "Mind Shield",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mind_shield.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield_heavy",
+      "slug": "mind_shield_heavy",
+      "book": "ultimate_psionics",
+      "key": "Mind Shield (Heavy)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mind_shield_heavy.pcg",
+      "expected_bonus": 2
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:mind_shield_tower",
+      "slug": "mind_shield_tower",
+      "book": "ultimate_psionics",
+      "key": "Mind Shield (Tower)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/mind_shield_tower.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:plate_of_the_juggernaut",
+      "slug": "plate_of_the_juggernaut",
+      "book": "ultimate_psionics",
+      "key": "Plate of the Juggernaut",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/plate_of_the_juggernaut.pcg",
+      "expected_bonus": 9
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_defender",
+      "slug": "psychoactive_skin_defender",
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Defender)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/psychoactive_skin_defender.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_hero",
+      "slug": "psychoactive_skin_hero",
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Hero)",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/psychoactive_skin_hero.pcg",
+      "expected_bonus": 3
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:shadow_shirt",
+      "slug": "shadow_shirt",
+      "book": "ultimate_psionics",
+      "key": "Shadow Shirt",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/shadow_shirt.pcg",
+      "expected_bonus": 4
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment:skinwalker_s_leather",
+      "slug": "skinwalker_s_leather",
+      "book": "ultimate_psionics",
+      "key": "Skinwalker's Leather",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/skinwalker_s_leather.pcg",
+      "expected_bonus": 3
+    }
+  ],
+  "baselines": [
+    {
+      "book": "advanced_class_guide",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_advanced_class_guide.pcg",
+      "slug": "baseline_advanced_class_guide"
+    },
+    {
+      "book": "advanced_race_guide",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_advanced_race_guide.pcg",
+      "slug": "baseline_advanced_race_guide"
+    },
+    {
+      "book": "core_rulebook",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_core_rulebook.pcg",
+      "slug": "baseline_core_rulebook"
+    },
+    {
+      "book": "inner_sea_gods",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_inner_sea_gods.pcg",
+      "slug": "baseline_inner_sea_gods"
+    },
+    {
+      "book": "inner_sea_races",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_inner_sea_races.pcg",
+      "slug": "baseline_inner_sea_races"
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_inner_sea_world_guide.pcg",
+      "slug": "baseline_inner_sea_world_guide"
+    },
+    {
+      "book": "ultimate_equipment",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_ultimate_equipment.pcg",
+      "slug": "baseline_ultimate_equipment"
+    },
+    {
+      "book": "ultimate_intrigue",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_ultimate_intrigue.pcg",
+      "slug": "baseline_ultimate_intrigue"
+    },
+    {
+      "book": "ultimate_magic",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_ultimate_magic.pcg",
+      "slug": "baseline_ultimate_magic"
+    },
+    {
+      "book": "ultimate_psionics",
+      "pcg_path": "docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/combat-shape-work/ac-pcg/baseline_ultimate_psionics.pcg",
+      "slug": "baseline_ultimate_psionics"
+    }
+  ]
+}
