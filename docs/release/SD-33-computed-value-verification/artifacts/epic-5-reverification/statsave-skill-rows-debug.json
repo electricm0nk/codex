@@ -1,0 +1,173 @@
+{
+ "rows": [
+  {
+   "unit_id": "advanced_players_guide:equipment:fork_of_the_forgotten_one",
+   "ours": 10,
+   "oracle": 10,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Intimidate\"), declared_bonus=10, engine_raw_skill_field='Diplomacy,Intimidate'"
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:ring_of_maniacal_devices",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Craft (Traps) (first named of \"Craft (Traps),Disable Device\"), declared_bonus=5, engine_raw_skill_field='Craft (Traps),Disable Device'"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:cloak_of_the_diplomat",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Sense Motive\"), declared_bonus=5, engine_raw_skill_field='Diplomacy,Sense Motive'"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:ring_of_the_sophisticate",
+   "ours": 4,
+   "oracle": 4,
+   "verdict": "agree",
+   "note": "target_skill=Sense Motive (first named of \"Sense Motive,Knowledge (Local)\"), declared_bonus=4, engine_raw_skill_field='Sense Motive,Knowledge (Local)'"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:circlet_of_persuasion",
+   "ours": 3,
+   "oracle": 3,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device\"), declared_bonus=3, engine_raw_skill_field='Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device'"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:gloves_of_swimming_and_climbing",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Swim (first named of \"Swim,Climb\"), declared_bonus=5, engine_raw_skill_field='Swim,Climb'"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:besmara_s_bicorne",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Acrobatics (first named of \"Acrobatics,Climb\"), declared_bonus=2, engine_raw_skill_field='Acrobatics,Climb'"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:besmara_s_tricorne",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Profession (Sailor) (first named of \"Profession (Sailor),Swim\"), declared_bonus=2, engine_raw_skill_field='Profession (Sailor),Swim'"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:deadeye_s_spotter_ring",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Perception (first named of \"Perception,Survival\"), declared_bonus=2, engine_raw_skill_field='Perception,Survival'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:bracelet_of_bargaining",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Diplomacy,Sense Motive\"), declared_bonus=5, engine_raw_skill_field='Bluff,Diplomacy,Sense Motive'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cloak_of_the_diplomat",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Sense Motive\"), declared_bonus=5, engine_raw_skill_field='Diplomacy,Sense Motive'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:heritage_book",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Knowledge (Nobility) (first named of \"Knowledge (Nobility)\"), declared_bonus=2, engine_raw_skill_field='Knowledge (Nobility)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:judge_s_wig",
+   "ours": 4,
+   "oracle": 4,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Intimidate\"), declared_bonus=4, engine_raw_skill_field='Diplomacy,Intimidate'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:juggler_s_kit",
+   "ours": 1,
+   "oracle": 1,
+   "verdict": "agree",
+   "note": "target_skill=Perform (Act) (first named of \"Perform (Act),Perform (Comedy)\"), declared_bonus=1, engine_raw_skill_field='Perform (Act),Perform (Comedy)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mask_of_ugliness",
+   "ours": -4,
+   "oracle": -4,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Diplomacy\"), declared_bonus=-4, engine_raw_skill_field='Bluff,Diplomacy'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:musical_staff",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Perform (String Instruments) (first named of \"Perform (String Instruments),Perform (Wind Instruments)\"), declared_bonus=5, engine_raw_skill_field='Perform (String Instruments),Perform (Wind Instruments)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pirate_s_eye_patch",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Swim (first named of \"Swim,Climb\"), declared_bonus=2, engine_raw_skill_field='Swim,Climb'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pliant_gloves",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Escape Artist (first named of \"Escape Artist,Acrobatics\"), declared_bonus=5, engine_raw_skill_field='Escape Artist,Acrobatics'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_maniacal_devices",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Craft (Traps) (first named of \"Craft (Traps),Disable Device\"), declared_bonus=5, engine_raw_skill_field='Craft (Traps),Disable Device'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_the_ecclesiarch",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Knowledge (Religion)\"), declared_bonus=5, engine_raw_skill_field='Diplomacy,Knowledge (Religion)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_the_sophisticate",
+   "ours": 4,
+   "oracle": 4,
+   "verdict": "agree",
+   "note": "target_skill=Sense Motive (first named of \"Sense Motive,Knowledge (Local)\"), declared_bonus=4, engine_raw_skill_field='Sense Motive,Knowledge (Local)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:rod_beguiling",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Sleight of Hand\"), declared_bonus=5, engine_raw_skill_field='Bluff,Sleight of Hand'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:suzerain_scepter",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Knowledge (Nobility) (first named of \"Knowledge (Nobility),Diplomacy\"), declared_bonus=5, engine_raw_skill_field='Knowledge (Nobility),Diplomacy'"
+  }
+ ],
+ "missing_export": [
+  "advanced_class_guide:equipment:hunter_s_sight",
+  "advanced_class_guide:equipment:ring_of_eloquence",
+  "book_of_the_damned_volume_2:equipment:demon_senses",
+  "inner_sea_races:equipment:scarf_of_glorious_histories",
+  "ultimate_psionics:equipment:eyes_of_expanded_vision",
+  "ultimate_psionics:equipment:third_eye_aware"
+ ]
+}
