@@ -1,7 +1,8 @@
 # Cycle AT-33-E5-002 — Epic 5 Re-verification / AT-33-E5-002
 
-- **Commit SHA:** (recorded after commit — see progress.md/kanban.md entries for the final SHA;
-  this receipt is committed in the same commit as the artifacts it describes)
+- **Commit SHA:** `1fffe1c03d` (the artifact-landing commit this receipt describes; a follow-up
+  commit records this SHA back into the receipt itself, matching `AT-33-E5-001`'s
+  `e10dead123` precedent)
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/README.md` (extended — new `AT-33-E5-002` section appended after `AT-33-E5-001`'s)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md` (this file)
