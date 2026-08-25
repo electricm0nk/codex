@@ -91,8 +91,8 @@ fn equipmods_resolve_real_per_item_weapon_enhancement_bonuses_from_the_corpus() 
         .weapon_enhancement_bonus
         .as_ref()
         .expect("+1 (Enhancement to Weapon) carries a real BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement token");
-    assert_eq!(bonus.affects, "DAMAGE,TOHIT");
-    assert_eq!(bonus.bonus, 1);
+    assert_eq!(bonus.tohit_bonus, Some(1));
+    assert_eq!(bonus.damage_bonus, Some(1));
     assert!(
         plus_one_weapon.table_cell.is_some(),
         "Special Ability ~ +1 ~ Weapon is a real canonical-store entry and must carry a TableCellRef"
@@ -107,8 +107,8 @@ fn equipmods_resolve_real_per_item_weapon_enhancement_bonuses_from_the_corpus() 
         .weapon_enhancement_bonus
         .as_ref()
         .expect("Adamantine carries a real BONUS:WEAPON|TOHIT|1|TYPE=Enhancement token");
-    assert_eq!(bonus.affects, "TOHIT");
-    assert_eq!(bonus.bonus, 1);
+    assert_eq!(bonus.tohit_bonus, Some(1));
+    assert_eq!(bonus.damage_bonus, None);
 
     let wield_size = effects
         .per_item

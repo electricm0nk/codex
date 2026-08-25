@@ -306,7 +306,38 @@ Each entry states, at minimum:
 
 **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
-**Empty as of `AT-33-E5-finalize-wave6`, 2026-08-25.** The one entry this section carried
+### `corpus_literal_sweep` mismatch on 10 weapon records — filed `sd33-r8-build-green`, 2026-08-25
+
+`scripts/verify.sh`'s `corpus-sweep` stage (`cargo run --locked --bin corpus_literal_sweep`) FAILs:
+**105 findings across 10 `data/corpus/**/equipment/*.json` records** (5 confirmed visible before the
+log's own 40-item cap: `ultimate_equipment/equipment/{blade_of_the_sword_saint,blade_of_the_rising_sun,
+hammer_polarity,hellscourge}.json`, `inner_sea_gods/equipment/fugitive_finder.json`) — every one of a
+record's own `raw_tokens` entries reported "not byte-present in the corpus token closure" the sweep
+independently re-derives from the pinned PCGen oracle `.lst` via `.MOD`-chain walking.
+
+**Root-caused to SD-33's own wave-6 corpus regeneration, not fixed.** `git diff f652db7ac7..HEAD` on
+each of the 5 confirmed records shows `data.raw_tokens`/`data.raw_bonus_chains` moved from `[]`
+(empty — vacuously passing this sweep, since the check's population is "every token the record
+itself claims") to fully populated, written exclusively by `src/bin/enrich_equipment_raw_tokens.rs`
+(+243 lines this bundle, wave 6). The populated tokens do not byte-match what
+`corpus_literal_sweep`'s own independent closure-builder (`src/rules_core/corpus_literal_sweep.rs::token_closure`,
+unchanged since the cut) computes for the same record from the pinned oracle. All 5 confirmed records
+are inside SD-33's own 137-file corpus diff (`git diff --name-only f652db7ac7..HEAD -- 'data/corpus/**'`).
+
+**Why escalated, not fixed:** root-causing requires reading `enrich_equipment_raw_tokens.rs`'s own
+`.MOD`-identity fold logic against `corpus_literal_sweep.rs`'s independent one and reconciling
+whichever is wrong — a different subsystem than this cycle's named defect (the
+`WeaponEnhancementBonus` struct-rename test-compile break) and outside this lane's granted write
+scope and turn budget. Full evidence, exact command, and the 5 confirmed record paths:
+`artifacts/epic-6-closure/AT-33-E6-001-build-green_cycle_receipt.md`.
+
+**What's needed:** a dedicated cycle with `src/bin/enrich_equipment_raw_tokens.rs` (or
+`src/rules_core/corpus_literal_sweep.rs`, whichever is wrong) write scope to reconcile the two, then
+re-run `cargo run --locked --bin corpus_literal_sweep` to confirm `0 findings`. Revisit condition:
+that re-run, or an operator ruling that the 10 affected records are out of this bundle's DoD scope.
+
+**Empty as of `AT-33-E5-finalize-wave6`, 2026-08-25** (this section's history below, unaffected by
+the new entry above). The one entry this section carried
 (`rending_claw_blades` compute_equipment_effects weapon-path EQMOD-resolution gap) is **CLEARED,
 not superseded by a new entry**: fixed via `eqmod_referenced_records` now scanning every `EQMOD:`
 token (not only the first) and a new `equipmods::apply_eqmod_weapon_enhancement_bonus` folding
@@ -390,6 +421,62 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 </details>
 
 ## Cycles
+
+### Cycle AT-33-E6-001 (build-green lane) — Shortfall 1 closed — complete
+
+- **Criterion / card:** `AT-33-E6-001`'s Shortfall 1 (workspace test build did not compile), kanban
+  row 19's own named blocker — not row 19 itself, which stays the final-acceptance scan's own card.
+- **Commit SHA:** this cycle's own landing commit.
+- **Files:** `tests/sd20_equipment_equipmods.rs`, `tests/sd20_tabletop_readiness_integration.rs`
+  (sibling, found only by the full build), `tests/sd25_monk_level_up_explanation_filter_audit.rs`,
+  `tests/v06_work_inventory.rs`.
+- **What landed:** updated `tests/sd20_equipment_equipmods.rs:94-111` to the post-`2f1d52f22d`
+  `WeaponEnhancementBonus` shape (`tohit_bonus`/`damage_bonus`, both `Option<i16>`), preserving each
+  assertion's real intent — timeline re-verified live (matches attempt 8's scan exactly, attributed
+  to `2f1d52f22d`). A full-workspace sibling search (name-grep AND a full `--no-run` build) found a
+  SECOND broken target the name-grep alone missed (`tests/sd20_tabletop_readiness_integration.rs:1528-1529`,
+  a local var named `enhancement` not `weaponenhancement`) and fixed it the same way.
+  `cargo test --locked --no-run` → **exit 0, all 543 targets built.**
+- **Two further genuine SD-33 failures found only once the build ran to completion, both fixed
+  RED→GREEN** (full evidence in the receipt): `sd25_monk_level_up_explanation_filter_audit.rs`'s
+  `AC_BONUS_ID` exclusion went stale the moment `AT-33-E5-remainder-charbuild` legitimately grounded
+  Monk's level-4+ AC dodge progression — rewrote the test to positively prove the level-up filter now
+  surfaces all 5 real transitions, rather than asserting the (now-false) "never surfaces" claim.
+  `v06_work_inventory.rs`'s `zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown`
+  fixture went stale because `AT-33-E4-002`'s regeneration surfaced already-shipped SD-32 drift
+  (`class_feature_pool_catalog.rs` itself is byte-identical to the cut) — re-picked to a `null`-description
+  record per the test's own documented self-healing design, which cannot go stale the same way twice.
+- **Figures:**
+  - `cargo test --locked --no-fail-fast` (full workspace, first time all 543 integration targets
+    execute this bundle): **7,974 passed, 49 failed (31 targets), 67 ignored, 599 suites**
+    (`grep '^test result:' <log> | awk ...`, full command in the receipt).
+  - **31 of 33 originally-failing targets confirmed pre-existing at `f652db7ac7`** — byte-identical
+    pass/fail counts in a clean cut worktree, same order (re-derive: diff the two logs named in the
+    receipt). **2 of 33 were genuine SD-33 regressions**, both fixed here.
+  - `apps/desktop/src-tauri`: **548 passed, 0 failed, exit 0** — unaffected (`git diff --stat
+    f652db7ac7..HEAD -- apps/desktop/` is empty, the whole crate is byte-identical to the cut).
+  - `scripts/verify.sh --only denominator-gate` → **PASS, files_checked=56 violations=0, exit 0.**
+  - `scripts/verify.sh` (full): 32 passed, 5 FAILED. `root-full` is subsumed by the 31 pre-existing
+    figure above. `clippy`/`frontend-test` are pre-existing (`apps/desktop/` and the one flagged
+    `rules_tables` file are both byte-identical to the cut). `corpus-sweep` (105 findings/10 records)
+    is a **new, genuinely SD-33-caused finding, NOT fixed this cycle** — filed under `## Open
+    blockers` above. `site-dashboard-check` timed out, not root-caused (plausibly environmental).
+  - `box_ledger.py --check --oracle-results .../AT-33-E5-003.combined-oracle-results.json` →
+    **`oracle_disagreement=0`, exit 0** — Epic 5 re-confirmed undisturbed.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — this cycle repairs two test files' stale expectations and one
+  struct-rename gap; no `docs/work-inventory.json` field, unit, or instrument changed.
+- **RED→GREEN:** all four fixes confirmed RED (`error[E0609]` x2 for the struct rename, real
+  `assert` panics for the two stale-fixture tests) before editing, GREEN after, per-target
+  `cargo test --locked --test <name>` transcripts in the receipt.
+- **Notes:** the shared checkout at `/home/ubuntu/workspace/repos/codex` was 14 commits behind
+  `origin/tranche/13` with 157 foreign `git status` entries this agent did not create at cycle
+  start — per `AGENTS.md`'s "One writer per tree", the entire cycle ran in a clean
+  `git worktree add` off `origin/tranche/13`, nothing written to the shared tree. Rows 17/18's
+  Notes carry a pointer to this cycle (pointer only).
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-build-green_cycle_receipt.md`.
+- **Next-cycle plan:** re-run `AT-33-E6-001`'s final-acceptance scan now that the workspace build is
+  green; separately, a dedicated cycle to clear the new `corpus_literal_sweep` blocker filed above.
 
 ### Cycle AT-33-E6-001 (attempt 8) — final-acceptance scan — blocked-escalated (gate FAIL)
 

@@ -59,12 +59,9 @@
 //! unmodified by this cycle (per the brief: "do not invent a fix for a bug
 //! that isn't there").
 //!
-//! **Four documented, verified exclusions from the "must eventually
+//! **Three documented, verified exclusions from the "must eventually
 //! surface" requirement** (none is a silent drop — each is confirmed
-//! separately below; the AC Bonus exclusion (#1a) was found live by this
-//! test's own first RED run against the real, unmodified module, not
-//! anticipated in advance — mirroring Druid's own "second finding,
-//! surfaced by this test's own RED run" precedent):
+//! separately below):
 //!
 //! 1. `BOUNDED_PROGRESSION_RECOGNITION_ID` — a flat +0 recognition record,
 //!    present and unchanged at every supported level from Monk level 1
@@ -72,17 +69,19 @@
 //!    pass `is_monk_pillar_id`, but its value never changes between
 //!    `from_level` and `to_level` anywhere in the 1..=12 sweep, so it can
 //!    never itself drive a value-change grant.
-//! 1a. `AC_BONUS_ID` (`"class_chassis.monk.ac_bonus"`) — `pilot_compute.rs`
-//!    grounds this as `ability_modifiers.wisdom.max(0)` only: a pure
-//!    Wisdom-modifier readout with NO level dependency in its formula at
-//!    all (the module's own doc comment: "no level-4+ AC Bonus dodge-bonus
-//!    progression" is grounded). Since this audit's fixture holds ability
-//!    scores fixed across every simulated level-up transition (identical
-//!    to every other Epic 7 class fixture — a level-up never itself
-//!    changes ability scores in this codebase), the value is provably
-//!    constant across the whole 1..=12 sweep, so it can never itself drive
-//!    a value-change grant — the identical structural shape as Druid's own
-//!    flat `nature_sense` finding, confirmed (not assumed) below.
+//! 1a. **RESOLVED, no longer an exclusion** (`AT-33-E5-remainder-charbuild`,
+//!    2026-08-25): this audit's own first RED run found `AC_BONUS_ID`
+//!    (`"class_chassis.monk.ac_bonus"`) flat because `pilot_compute.rs`
+//!    grounded only `ability_modifiers.wisdom.max(0)`, omitting the real
+//!    PF1 Monk table's level-4+ dodge-bonus progression ("every four
+//!    levels thereafter... increases by a further +1"). SD-33 grounded
+//!    that progression (`monk_ac_bonus_dodge_progression`, confirmed
+//!    against the pinned oracle's real L20 export), so the id is no
+//!    longer level-independent: it now legitimately changes at levels
+//!    3->4, 7->8, 11->12, 15->16 and 19->20, and this audit's own filter
+//!    correctly surfaces every one of those five transitions — verified
+//!    below, not assumed, the same way exclusion #1a's flatness was
+//!    originally verified rather than assumed.
 //! 2. `CLASS_TABLE_COVERED_IDS` (the four base-attack/base-save ids) —
 //!    `monk.rs`'s own `is_covered_elsewhere` check deliberately excludes
 //!    these from `append_class_feature_grants` because
@@ -123,12 +122,12 @@ const MAX_SUPPORTED_MONK_LEVEL: u8 = 20;
 /// sweep this codebase models.
 const BOUNDED_PROGRESSION_RECOGNITION_ID: &str = "class_chassis.monk.bounded_progression";
 
-/// The filter-INCLUDED but structurally-never-diffing AC Bonus id (see
-/// this file's own header comment's exclusion #1a, found live by this
-/// test's own first RED run): passes `is_monk_pillar_id` but its raw
-/// formula is a pure Wisdom-modifier readout with no level term at all, so
-/// it is constant across the whole 1..=12 sweep for a fixed-ability-score
-/// character.
+/// The AC Bonus id (see this file's own header comment's exclusion #1a,
+/// RESOLVED): passes `is_monk_pillar_id` and, since SD-33's
+/// `AT-33-E5-remainder-charbuild` grounded the level-4+ dodge-bonus
+/// progression, its value genuinely changes at levels 3->4, 7->8, 11->12,
+/// 15->16 and 19->20 for a fixed-ability-score character — no longer a
+/// flat, filter-exempt id.
 const AC_BONUS_ID: &str = "class_chassis.monk.ac_bonus";
 
 /// The four ids `monk.rs`'s own `CLASS_TABLE_COVERED_EXPLANATION_IDS`
@@ -234,7 +233,6 @@ fn every_real_monk_explanation_id_survives_the_level_up_filter_except_the_docume
         .iter()
         .filter(|id| {
             id.as_str() != BOUNDED_PROGRESSION_RECOGNITION_ID
-                && id.as_str() != AC_BONUS_ID
                 && !CLASS_TABLE_COVERED_IDS.contains(&id.as_str())
                 && !surfaced_ids.contains(id.as_str())
         })
@@ -296,23 +294,34 @@ fn the_flat_bounded_progression_recognition_id_is_deliberately_never_granted() {
 }
 
 #[test]
-fn the_flat_ac_bonus_id_passes_the_filter_but_is_verified_constant_across_the_whole_range() {
-    // Confirms exclusion #1a is legitimate: the raw pilot_compute.rs value
-    // truly never changes and is truly present at every level in the
-    // sweep for this audit's fixed-ability-score fixture (so its absence
-    // from surfaced_ids above is a structural "no from_level >= 1
-    // transition can ever surface it" fact, not evidence the filter
-    // dropped it) -- the identical shape as Druid's own
-    // FLAT_LEVEL_ONE_ID/nature_sense verification.
-    let surfaced_ids = all_surfaced_source_ids();
-    assert!(
-        !surfaced_ids.contains(AC_BONUS_ID),
-        "the flat, level-independent AC Bonus id must never itself drive a grant or \
-         resource-pool delta for a fixed-ability-score character: {surfaced_ids:?}"
-    );
-
-    let mut values = Vec::new();
-    for level in 1..=MAX_SUPPORTED_MONK_LEVEL {
+fn the_ac_bonus_id_now_legitimately_surfaces_the_level_4_plus_dodge_progression() {
+    // Confirms exclusion #1a is RESOLVED: the raw pilot_compute.rs value
+    // for a fixed-ability-score character (WIS 17 -> +3 modifier) steps at
+    // exactly the five real PF1 Monk table breakpoints (4, 8, 12, 16, 20)
+    // and is otherwise flat -- verified per-level below, not assumed.
+    let expected_by_level: [(u8, i16); 20] = [
+        (1, 3),
+        (2, 3),
+        (3, 3),
+        (4, 4),
+        (5, 4),
+        (6, 4),
+        (7, 4),
+        (8, 5),
+        (9, 5),
+        (10, 5),
+        (11, 5),
+        (12, 6),
+        (13, 6),
+        (14, 6),
+        (15, 6),
+        (16, 7),
+        (17, 7),
+        (18, 7),
+        (19, 7),
+        (20, 8),
+    ];
+    for (level, expected_value) in expected_by_level {
         let input = human_monk_input(level);
         let computation = compute_pilot_base_chassis(&input);
         let explanation = computation
@@ -322,18 +331,60 @@ fn the_flat_ac_bonus_id_passes_the_filter_but_is_verified_constant_across_the_wh
             .unwrap_or_else(|| {
                 panic!("expected {AC_BONUS_ID} present at every level, missing at level {level}")
             });
-        values.push(explanation.value);
+        assert_eq!(
+            explanation.value, expected_value,
+            "{AC_BONUS_ID} at level {level}: WIS +3 plus the level-4+ dodge progression"
+        );
     }
+
+    // The five real value-change transitions this progression creates.
+    const DODGE_STEP_TRANSITIONS: [u8; 5] = [3, 7, 11, 15, 19];
+
+    let surfaced_ids = all_surfaced_source_ids();
     assert!(
-        values.iter().all(|&v| v == values[0]),
-        "{AC_BONUS_ID} must be constant across levels 1..=12 (pure Wisdom-modifier readout, no \
-         level term) to justify excluding it from the 'must eventually surface' requirement \
-         above: {values:?}"
+        surfaced_ids.contains(AC_BONUS_ID),
+        "the AC Bonus id now genuinely changes with level and must surface via the level-up \
+         filter (this is the exact SD-24 Wizard bug shape -- a real, later-landing grounding \
+         whose value-change the filter must not silently drop): {surfaced_ids:?}"
     );
-    assert_eq!(
-        values[0], 3,
-        "WIS 17 -> +3 modifier for this audit's deterministic fixture"
-    );
+
+    // Per-transition proof: exactly the five documented breakpoints emit a
+    // real AC_BONUS_ID grant or resource-pool-change entry with the
+    // correct magnitude; every other adjacent transition emits none.
+    for from_level in 1..MAX_SUPPORTED_MONK_LEVEL {
+        let to_level = from_level + 1;
+        let character = human_monk_input(from_level);
+        let plan = compute_monk_level_up_grants(&character, from_level, to_level);
+        let surfaced_here: Vec<i16> = plan
+            .automatic_features
+            .iter()
+            .filter(|grant| grant.source_table.column_key == AC_BONUS_ID)
+            .flat_map(|grant| grant.effects.iter().map(|effect| effect.value))
+            .chain(
+                plan.resource_pool_change
+                    .pools
+                    .iter()
+                    .filter(|pool| pool.source_table.column_key == AC_BONUS_ID)
+                    .map(|pool| pool.to_value - pool.from_value),
+            )
+            .collect();
+
+        if DODGE_STEP_TRANSITIONS.contains(&from_level) {
+            assert!(
+                !surfaced_here.is_empty(),
+                "level {from_level} -> {to_level} is a documented AC Bonus dodge-progression \
+                 breakpoint but no {AC_BONUS_ID} grant or resource-pool-change surfaced: \
+                 {plan:?}"
+            );
+        } else {
+            assert!(
+                surfaced_here.is_empty(),
+                "level {from_level} -> {to_level} is NOT a documented AC Bonus dodge-progression \
+                 breakpoint, but {AC_BONUS_ID} surfaced anyway (spurious/duplicate emission): \
+                 {surfaced_here:?}"
+            );
+        }
+    }
 }
 
 #[test]
