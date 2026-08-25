@@ -230,7 +230,7 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 - **Criterion:** `AT-33-E5-002` remediation — the equipment `other_bonus_shape` `COMBAT`/`WEAPON`/
   `WEAPONPROF=*` population (125 units of the 391 unexamined-of-6,589 `literal-verified` total).
 - **Two real, additive engine fixes landed** (`src/rules_core/equipment_effects/arms_armor.rs`,
-  `equipmods.rs`; commit `b32920cbe9`, pushed ahead of the oracle-verification work): widened
+  `equipmods.rs`; commit `66984fe7bc`, pushed ahead of the oracle-verification work): widened
   `armor_class_bonus_from_bonus_chains` from an Armor/Shield-only `TYPE=` allowlist to any
   `COMBAT|AC` chain (a real Ring of Protection/Amulet of Natural Armor/etc. previously resolved
   to `None`); added the `WEAPONPROF=<name>` (bare, non-`TYPE.`) shape to `compute_equipmods_effect`
@@ -262,8 +262,9 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 - **Status: blocked-escalated** (82 rows < 125 population, per this wave's own row-count-is-status
   rule). Not a failure — 82 real, per-unit `(ours, oracle, verdict)` rows landed, with 2 real
   engine fixes and 26 real, root-caused disagreements for the next cycle.
-- **Commits:** `b32920cbe9` (engine fixes), `c99609071f` (results + receipt), `aba4b9c7e5`
-  (receipt SHA record).
+- **Commits:** `66984fe7bc` (engine fixes), `f66ae64320` (results + receipt), `3aadb9442e`
+  (receipt SHA record) — hashes as landed on `tranche/13`; each was rebased at least once from
+  its own pre-push local hash, which this entry does not cite.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-shape-combat_cycle_receipt.md`.
 
 ### Cycle AT-33-E5-shape-var — VAR-bonus-shape lane (rows 16/17, Epic 5) — complete
