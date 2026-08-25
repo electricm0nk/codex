@@ -265,12 +265,31 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
             bonus_chains.push(BonusToken { line_number: 1, raw_bonus, qualifiers });
         }
     }
-    // If no raw_tokens were present (record not yet enriched, or no LST
-    // citation to enrich from), still synthesize a KEY: token -- every
-    // existing resolver's key-match path (`equipment_key_token`) reads
-    // this generically, not knowing or caring whether it came from a real
-    // multi-token parse or this thin fallback.
-    if tokens.is_empty() {
+    // SD-33 remediation wave 5 (`sd33-r5-skillcombat`): synthesize a KEY:
+    // token from the ingested `data.key` field whenever `raw_tokens` did
+    // not itself carry a literal `KEY:` entry -- not only when
+    // `raw_tokens` was completely empty. `data.key` is ALWAYS the
+    // ingestion pipeline's own record identity (the real `KEY:` token
+    // when the LST line had one, else the record's own bare name --
+    // `equipment_id_resolve`'s doc comment states this rule and the
+    // ingestion `source.record_key` field already computes it this way).
+    // Before this fix, a record with a non-empty `raw_tokens` list but no
+    // literal `KEY:` entry among them (common: a keyless LST line whose
+    // identity is its own first-column name) fell through
+    // `equipment_key_token` to `None`, and `equipment_id_resolve` fell
+    // back to matching on `.name` instead -- which is `data.name`, NOT
+    // `data.key`, and diverges from it whenever the record also carries
+    // an `OUTPUTNAME:` token (ingestion substitutes `OUTPUTNAME` into
+    // `name` for display, e.g. `Companion Stone (Diplomacy)`'s real key
+    // vs. its `name: "Companion Stone of [NAME]"`, an unresolved
+    // OUTPUTNAME placeholder never meant to be an identity). That
+    // silently broke `equipment_id_resolve` for every OUTPUTNAME-bearing,
+    // KEY-less record -- 12 of `ultimate_psionics`'s own equipment
+    // records among them, plus the shape-combat lane's own narrower
+    // `engine_id_resolve_fails_templated_variant_record` finding
+    // (`Psychoactive Skin (Defender)`/`(Hero)`), which this fix also
+    // resolves as a side effect, not just those two instances.
+    if !tokens.iter().any(|t| t.key == "KEY") {
         tokens.push(EquipmentToken {
             key: "KEY".to_string(),
             value: key.to_string(),
@@ -402,6 +421,45 @@ mod tests {
         let roots = [BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") }];
         let package = load_spell_corpus(&roots);
         assert!(package.is_empty());
+    }
+
+    /// SD-33 remediation wave 5 (`sd33-r5-skillcombat`): a record whose
+    /// ingested corpus JSON carries `data.key` != `data.name` (the LST
+    /// record has no explicit `KEY:` token, but its `OUTPUTNAME:` token
+    /// makes ingestion's own `name` field a *display* string, not the
+    /// record's real identity) must still resolve by its real `key`, not
+    /// silently fall through to `None`. Real, verbatim on-disk record:
+    /// Ultimate Psionics' `Companion Stone (Diplomacy)`
+    /// (`data/corpus/ultimate_psionics/equipment/companion_stone_diplomacy.json`)
+    /// -- `key: "Companion Stone (Diplomacy)"`, `name: "Companion Stone of
+    /// [NAME]"` (an unresolved `OUTPUTNAME:Companion Stone of [NAME]`
+    /// placeholder, never meant to be an identity). Before this fix,
+    /// `equipment_id_resolve("Companion Stone (Diplomacy)", ...)` returned
+    /// `None`: no raw `KEY:` token exists among `raw_tokens` (the field
+    /// simply isn't present on this LST line), so `equipment_key_token`
+    /// returned `None` and identity fell back to `.name`, the OUTPUTNAME
+    /// placeholder -- not `Companion Stone (Diplomacy)`. This is the same
+    /// underlying defect the shape-combat lane named narrowly as
+    /// `engine_id_resolve_fails_templated_variant_record` for two other
+    /// units (`Psychoactive Skin (Defender)`/`(Hero)`); this fix closes
+    /// the general case, not just those two instances.
+    #[test]
+    fn outputname_divergent_record_still_resolves_by_its_real_key() {
+        let roots = [BookCorpusRoot {
+            book_id: "ultimate_psionics",
+            dir: Path::new("data/corpus/ultimate_psionics"),
+        }];
+        let package = load_equipment_corpus(&roots);
+
+        let (record, _) = equipment_id_resolve("Companion Stone (Diplomacy)", RuleSetId::Crb, &package)
+            .expect("Companion Stone (Diplomacy) must resolve by its real KEY, not its OUTPUTNAME display string");
+        let bonus = record
+            .bonus_chains
+            .iter()
+            .find(|b| b.qualifiers.first().map(String::as_str) == Some("SKILL"))
+            .expect("real BONUS:SKILL|Diplomacy|4|TYPE=Competence chain must be present");
+        assert_eq!(bonus.qualifiers.get(1).map(String::as_str), Some("Diplomacy"));
+        assert_eq!(bonus.qualifiers.get(2).map(String::as_str), Some("4"));
     }
 }
 

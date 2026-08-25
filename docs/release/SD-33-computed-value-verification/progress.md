@@ -401,6 +401,50 @@ touched here); once both close, `AT-33-E6-001` can re-run the final-acceptance s
 
 **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003-disagreement-fixes-wave5_cycle_receipt.md`.
 
+### Cycle AT-33-E5-last67-skill-combat — remediation wave 5, SKILL+COMBAT token-family lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
+
+- **Criterion:** `AT-33-E5-002` — this lane's own 23-unit slice (of the 67 named unrowed by
+  `AT-33-E6-001` attempt 5) covering the `SKILL` and `COMBAT` token families, `ultimate_psionics`
+  included.
+- **Files:** `src/rules_core/corpus_loader.rs` (real engine fix), `scripts/oracle_harness/campaign_key.py`
+  (new), `artifacts/epic-5-reverification/last67-skill-combat.oracle-results.json` (new, 14 rows).
+- **Two real, root-caused, FIXED defects** (full detail in the receipt):
+  1. **The real cause of every prior wave's `ultimate_psionics` "Could not find campaign" failure**
+     — a `CAMPAIGN:` display-name vs. `KEY:` divergence (`ultimate_psionics.pcc` carries
+     `CAMPAIGN:Ultimate Psionics` **and** `KEY:DSP - Ultimate Psionics`), not a fundamental
+     oracle-data gap as every prior wave (including this wave's own `AT-33-E5-last75`) assumed.
+     Fixed via `scripts/oracle_harness/campaign_key.py` (reusable). Live proof: same fixture, same
+     runner, `CAMPAIGN:Ultimate Psionics` → `SKILL.MISC=0`; `CAMPAIGN:DSP - Ultimate Psionics` →
+     `SKILL.MISC=10`, matching the corpus.
+  2. **`equipment_id_resolve` silently failed on any KEY-less, OUTPUTNAME-bearing record** — the
+     general case of `AT-33-E5-shape-combat`'s narrower 2-unit
+     `engine_id_resolve_fails_templated_variant_record` finding. Fixed in
+     `src/rules_core/corpus_loader.rs` (RED→GREEN, `outputname_divergent_record_still_resolves_by_its_real_key`).
+     `cargo test --locked --lib corpus_loader::` 6/6; `equipment_effects::` 70/70, no regression.
+- **Figures:**
+  - Population: 23 of 67 (`docs/work-inventory.json` `literal-verified`/`fixture-verified` minus
+    `AT-33-E5-003.combined-oracle-results.json`'s covered ids, filtered to `SKILL`/`COMBAT`-family
+    `raw_bonus_chains` — full re-derivation command in the receipt)
+  - Rows written: 14 of 23 (`python3 -c "import json; print(len(json.load(open('artifacts/epic-5-reverification/last67-skill-combat.oracle-results.json'))['results']))"` → `14`)
+  - Verdicts: **14 agree, 0 disagree, 0 unverifiable, 0 reasonless-unverifiable**
+  - 9 of 23 not examined this cycle: 7 `COMBAT`-family (no engine resolver for non-`AC` subtokens,
+    confirmed still open from `AT-33-E5-shape-combat`; **a new, independently-confirmed oracle
+    export-token gap** — `rod_alertness`'s live `INITIATIVEMOD`/`INITIATIVEMISC` round-trip shows
+    the equipment Insight bonus unreflected in either token; 3 of the 7 also formula-valued) + 2
+    `ultimate_psionics` dissonance pair (case-sensitivity bug + no base-weapon+`EQMOD` fixture
+    pattern exists yet).
+- **Movement (four buckets):** closure 14 (real, first-time oracle dispositions) / reclassification
+  0 / reachability 0 for the COMBAT/dissonance shapes (confirmed not regressed, not widened) /
+  instrument-correction 2 (both fixed, not just named).
+- **RED→GREEN:** `outputname_divergent_record_still_resolves_by_its_real_key` fails before the fix
+  (`panicked ... "Companion Stone (Diplomacy) must resolve by its real KEY..."`), passes after.
+  `e5_statsave_skill_ours` (reused unmodified): 2/14 resolved before the engine fix, 14/14 after.
+- **Notes:** the pre-existing `equipment_resolver::tests::catalog_rows_span_every_ingested_book_with_their_real_counts`
+  failure (`8100` vs. live `8119`) observed during scoped test runs is confirmed unrelated to this
+  cycle's diff (its whole call chain never references `corpus_loader.rs`) — named, not fixed,
+  outside this lane's write scope.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last67-skill-combat_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-finalize-wave4 — total Epic 5 across wave-4's two lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
 
 - **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.
