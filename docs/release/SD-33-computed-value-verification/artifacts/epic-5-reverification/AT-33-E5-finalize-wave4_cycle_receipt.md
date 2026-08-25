@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-finalize-wave4 — Epic 5 Re-verification / totals + kanban call (rows 16, 17, 18)
 
-- **Commit SHA:** recorded on landing (see `progress.md` entry `AT-33-E5-finalize-wave4`)
+- **Commit SHA:** `2edc9583cd`
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/finalize-wave4-merge.py` (new — the merge script, run for real, output below)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/literal-verified.oracle-results.json` (merged in place)
