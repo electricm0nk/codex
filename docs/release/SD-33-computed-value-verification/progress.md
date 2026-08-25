@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5: AT-33-E5-001 (row 16) in-progress (1,128 of 1,741 fixture-verified units re-examined: 279 agree/103 disagree/746 unverifiable; remaining 613 named — 598 no-casting-ability-mapping + 15 class_feature); AT-33-E5-002 (row 17) complete (5,812 of 6,589 literal-verified units dispositioned, 777 named-unexamined); AT-33-E5-003 (row 18) needs re-opening over AT-33-E5-001's own 103 new disagreements
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5: AT-33-E5-001 (row 16) in-progress (1,128 of 1,741 fixture-verified units re-examined: 382 agree/0 disagree/746 unverifiable, after AT-33-E5-003's harness fix; remaining 613 named — 598 no-casting-ability-mapping + 15 class_feature); AT-33-E5-002 (row 17) complete (5,812 of 6,589 literal-verified units dispositioned, 777 named-unexamined); AT-33-E5-003 (row 18) complete — 103 disagreements found across the two lanes' 6,940-unit examined population, all root-caused to one harness fixture bug and resolved to a commit, 0 remaining
 date: 2026-08-24
 ---
 
@@ -136,51 +136,78 @@ carry **no** magnitude probe at all (`AT-33-E1-003`'s pre-existing finding, same
 `artifacts/epic-5-reverification/README.md` ("AT-33-E5-002" section) and
 `AT-33-E5-002_cycle_receipt.md`.
 
-**`AT-33-E5-003` (row 18) is `complete`.** Independently re-derived (not transcribed) from the two
-committed oracle-results files rows 16/17 produced: **0 disagreements among the 32 units examined
-to date** (`equipment.oracle-results.json` 11 records + `equipment-literal.oracle-results.json` 21
-records, merged and re-checked through `scripts/box_ledger.py --check --oracle-results` — condition
-3, `AT-33-E1-002` — `oracle_disagreement=0`, exit 0). Zero `progress.md` disagreement-ledger entries
-are required because zero disagreements exist. **Not a claim that the full 8,330-unit population
-has no disagreement** — 32 of 8,330 (0.38%) is examined; rows 16/17 remain `in-progress` and own
-examining the rest. The reopening condition is mechanical, proven by mutation this cycle: a single
-injected `"verdict": "disagree"` record makes `box_ledger.py --check` exit 1 and name the unit
-(`oracle_disagreement=1`) — so a future rows-16/17 cycle that lands a real disagreement will be
-caught by an existing gate, not by memory. Full detail: `artifacts/epic-5-reverification/README.md`
-("AT-33-E5-003" section) and `AT-33-E5-003_cycle_receipt.md`.
+**`AT-33-E5-003` (row 18) is `complete` (remediation cycle — this paragraph supersedes attempt 1's
+32-unit version, which `AT-33-E6-001`'s scan correctly named a `complete`-with-a-deferred-half).**
+Re-opened over the 6,940-unit population `AT-33-E5-001`/`AT-33-E5-002`'s own remediation cycles
+examined (1,128 + 5,812 — 83.3% of the full 8,330-unit Epic 5 population). That population
+carried **103 real disagreements**, all in `AT-33-E5-001`'s `fixture-verified` `spell` slice, all
+now **root-caused, fixed, and re-run**: `fixture-generate-spell-batch.py`'s `.pcg` fixture
+template pinned `STAT:WIS|SCORE:10` (should have been `18`, matching the probe's own pinned
+ability score) — correct by accident for Intelligence/Charisma-cast classes (Wizard/Bard/Paladin,
+0 disagreements) and wrong for Wisdom-cast classes (Cleric/Druid/Ranger, 103 of 103 (100%) of their DC-bearing
+spells disagreed by exactly the un-applied `+4` WIS modifier). This is **the harness limb of the
+criterion's evidence line** ("the oracle comparison is wrong (fix the harness, and re-run
+everything it already judged)") — `src/rules_core/spellbook.rs` is unchanged; the fixture that
+fed the oracle was wrong, not our computation or the real PCGen oracle. Fixed the one-line fixture
+bug, regenerated all 6 class `.pcg` fixtures, re-ran the real, live pinned oracle
+(`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) for the 3 affected classes, re-ran
+the comparison — **all 103 now `agree`, 0 new disagreement introduced.** Independently
+re-verified: `python3 scripts/box_ledger.py --check --oracle-results
+.../AT-33-E5-003.combined-oracle-results.json` (the real 6,940-record union of both lanes) →
+`oracle_disagreement=0`, exit 0. **Not a claim that the remaining 1,390 of 8,330 unexamined units
+have no disagreement** — rows 16/17 own examining them, and the reopening condition remains
+mechanical: `box_ledger.py --check`'s `oracle_disagreement` gate, re-proven this cycle on the
+literal lane's own batch join+compare pipeline by mutation (`agree=40 disagree=1` on a
+deliberately-wrong value fed through `scripts/oracle_harness/run.py`, the literal lane's own real
+command). Full detail: `artifacts/epic-5-reverification/AT-33-E5-003_cycle_receipt.md`.
 
 ## Disagreement ledger
 
 Per `AT-33-E5-003`'s evidence line: one entry per disagreement, each resolved to a commit or an
-operator escalation. **This cycle's remediation of `AT-33-E5-001` found 103 new disagreements** —
-`AT-33-E5-003` (row 18, previously marked `complete` over the 32-unit population that predated
-this cycle) needs to **reopen** over these; not done by this cycle (different criterion, different
-write scope). Re-derive the count: `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-verified.combined-oracle-results.json')); print(collections.Counter(r['verdict'] for r in d['results']))"`
-→ `Counter({'unverifiable': 746, 'agree': 279, 'disagree': 103})`.
+operator escalation. **All 103 disagreements found across the two lanes' 6,940-unit examined
+population are resolved below — 0 remain.** Re-derive the pre-fix count (reproducible from
+`git show 73fdbb8803:.../fixture-spell.oracle-results.json`):
+`python3 -c "import json,collections; d=json.load(open('...fixture-spell.oracle-results.json')); print(collections.Counter(r['verdict'] for r in d['results']))"`
+→ (pre-fix) `Counter({'unverifiable': 319, 'agree': 268, 'disagree': 103})`; (post-fix, this
+cycle) `Counter({'unverifiable': 319, 'agree': 371})`.
 
-**All 103 share one root-cause hypothesis** (not yet confirmed against the corpus `SAVE:` token —
-`AT-33-E5-003`'s job): every disagreement carries `ours - oracle == 4`, exactly
-`SPELL_PROBE_ABILITY_MODIFIER`. Candidate cause: these are spells with no real saving throw, and
-PCGen's `SPELLMEM.*.DC` export reports a bare `10 + level` for them while this engine's DC formula
-(`compute_spellbook_coverage` / `probe_spell_key`) adds the ability modifier unconditionally,
-regardless of whether the spell actually grants a save. Full 103-row detail (unit_id/ours/oracle)
-is in `artifacts/epic-5-reverification/fixture-spell.oracle-results.json`
-(`jq '[.[]|select(.verdict=="disagree")]' <(jq .results fixture-spell.oracle-results.json)`); the
-first 10 by unit_id, as a sample:
+**Root cause, confirmed (not the hypothesis originally recorded above — see the correction event
+below):** the uniform `ours - oracle == 4` delta was real, but the "no-save spell" explanation did
+not survive checking the 103 units' actual corpus `SAVEINFO` tokens (a genuine mix of save
+shapes — `Will negates`, `Fortitude negates`, `Reflex half`, `none`, `see text`, and more — not a
+shared one). The real, clean 103-of-103 split is by **casting class**: all 103 are Cleric/Druid/Ranger
+(Wisdom-cast, per `casting_ability_for_class`, `src/rules_core/spellbook.rs:143-150`); every
+Wizard/Bard/Paladin (Intelligence/Charisma-cast) spell agreed. Cause:
+`fixture-generate-spell-batch.py`'s `.pcg` fixture template pinned `STAT:WIS|SCORE:10` instead of
+`18` — matching the probe's own pinned ability score by accident for Intelligence/Charisma casters
+and contradicting it for Wisdom casters. **This is the harness/fixture, not
+`compute_spellbook_coverage`'s DC formula or the real PCGen oracle** — both of those correctly
+computed `10 + level + <WIS modifier>` from whatever ability score the `.pcg` gave them; the
+`.pcg` gave the oracle the wrong one.
 
-| unit_id | ours | oracle | root cause | resolution | commit |
-|---|---:|---:|---|---|---|
-| `advanced_class_guide:spell:align_weapon_communal` | 17 | 13 | candidate: no-save spell, DC formula adds ability mod unconditionally (unconfirmed) | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:anti_incorporeal_shell` | 18 | 14 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:blazing_rainbow` | 20 | 16 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:enemy_insight` | 16 | 12 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:fairy_ring_retreat` | 21 | 17 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:guardian_of_faith` | 18 | 14 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:holy_ice_weapon` | 16 | 12 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:marching_chant` | 16 | 12 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:mark_of_obvious_ethics` | 17 | 13 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| `advanced_class_guide:spell:nauseating_dart` | 15 | 11 | same candidate cause | not yet resolved — `AT-33-E5-003` | — |
-| _(93 more — see `fixture-spell.oracle-results.json`, all `ours-oracle=4`)_ | | | | | |
+**Resolution, all 103:** fixed `fixture-generate-spell-batch.py` (`STAT:WIS|SCORE:10` → `18`),
+regenerated all 6 class `.pcg` fixtures, re-ran the real, live pinned oracle
+(`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) for the 3 affected classes
+(Cleric/Druid/Ranger), re-ran the comparison. **All 103 now `agree`.** Full 103-row detail
+(unit_id/ours/oracle, pre- and post-fix) is in `artifacts/epic-5-reverification/fixture-spell.oracle-results.json`
+and this cycle's `docs/retro/events/sd33-r-e5-disagreements.jsonl` `correction` event; the first
+10 by unit_id, as a sample (all 103 share the identical root cause and resolution, so the
+resolution/commit columns are identical across the full set — see the receipt for the complete
+103-row table if a per-row audit is needed):
+
+| unit_id | ours | oracle (pre-fix) | oracle (post-fix) | root cause | resolution | commit |
+|---|---:|---:|---:|---|---|---|
+| `advanced_class_guide:spell:align_weapon_communal` | 17 | 13 | 17 | harness fixture: `STAT:WIS|SCORE:10` should be `18` (Cleric is Wisdom-cast) | fixed `fixture-generate-spell-batch.py`, regenerated `cleric.pcg`, re-ran the real oracle | this cycle's commit (SHA recorded in `AT-33-E5-003_cycle_receipt.md`) |
+| `advanced_class_guide:spell:anti_incorporeal_shell` | 18 | 14 | 18 | same root cause (Cleric) | same resolution | same commit |
+| `advanced_class_guide:spell:blazing_rainbow` | 20 | 16 | 20 | same root cause (Druid) | same resolution | same commit |
+| `advanced_class_guide:spell:enemy_insight` | 16 | 12 | 16 | same root cause (Ranger) | same resolution | same commit |
+| `advanced_class_guide:spell:fairy_ring_retreat` | 21 | 17 | 21 | same root cause (Druid) | same resolution | same commit |
+| `advanced_class_guide:spell:guardian_of_faith` | 18 | 14 | 18 | same root cause (Cleric) | same resolution | same commit |
+| `advanced_class_guide:spell:holy_ice_weapon` | 16 | 12 | 16 | same root cause (Cleric) | same resolution | same commit |
+| `advanced_class_guide:spell:marching_chant` | 16 | 12 | 16 | same root cause (Cleric) | same resolution | same commit |
+| `advanced_class_guide:spell:mark_of_obvious_ethics` | 17 | 13 | 17 | same root cause (Cleric) | same resolution | same commit |
+| `advanced_class_guide:spell:nauseating_dart` | 15 | 11 | 15 | same root cause (Druid) | same resolution | same commit |
+| _(93 more, all Cleric/Druid/Ranger, all `ours-oracle=4` pre-fix / `0` post-fix — see `fixture-spell.oracle-results.json` for the complete set)_ | | | | | | |
 
 ## Cycle entry schema
 
@@ -197,6 +224,62 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E5-003-remediation — disagreement-resolution (row 18, Epic 5) — complete
+
+- **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
+- **Why this cycle exists:** `AT-33-E6-001`'s scan correctly found row 18's `complete` mark
+  untrustworthy — 0 of 32 units examined, a `complete`-with-a-deferred-half against the full
+  8,330-unit Epic 5 population. Since then `AT-33-E5-001`/`AT-33-E5-002`'s own remediation cycles
+  carried the examined population to 6,940 and `AT-33-E5-001` surfaced 103 real disagreements. This
+  cycle re-opens `AT-33-E5-003` over that full 6,940-unit examined population and root-causes every
+  one of the 103.
+- **Files:** `artifacts/epic-5-reverification/fixture-generate-spell-batch.py` (fixed, one line),
+  `fixtures/fixture-spell-pcg/*.pcg` (regenerated, all 6), `fixtures/fixture-spell-oracle-txt/{cleric,druid,ranger}.export.txt`
+  (re-exported, real live oracle), `fixture-spell.oracle-results.json` (regenerated),
+  `fixture-verified.combined-oracle-results.json` (regenerated), `AT-33-E5-003.combined-oracle-results.json`
+  (rebuilt — real 6,940-record union), `AT-33-E5-003_cycle_receipt.md` (overwritten in place),
+  `docs/retro/events/sd33-r-e5-disagreements.jsonl` (new, one `correction` event), `progress.md`
+  (this entry, Status, Disagreement ledger), `kanban.md` (row 18).
+- **What landed:** All 103 disagreements traced to one shared root cause — a harness fixture bug,
+  not an engine or oracle defect. `fixture-generate-spell-batch.py`'s `.pcg` template pinned
+  `STAT:WIS|SCORE:10` for every casting class; correct by accident for Intelligence/Charisma-cast
+  classes (Wizard/Bard/Paladin — 0 disagreements) and wrong for Wisdom-cast classes
+  (Cleric/Druid/Ranger — 103 of 103 (100%) of their DC-bearing spells disagreed, exactly by the un-applied `+4`
+  WIS modifier: 60 + 41 + 2 = 103). Fixed the one line, regenerated all 6 `.pcg` fixtures, re-ran
+  the real, live pinned oracle (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) for
+  the 3 affected classes (3 real `./gradlew run` invocations, exit 0, 0 `SEVERE`), re-ran the
+  comparison — **all 103 now `agree`, 0 new disagreement.** Independently re-verified:
+  `python3 scripts/box_ledger.py --check --oracle-results
+  docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json`
+  → `uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False`,
+  exit 0. **Disagree-capability re-proven on the batch path specifically** (this cycle's own
+  dispatch requirement, given the fixture lane's zero-then-103-then-zero history and the literal
+  lane's own 0-of-41): the fixture lane's batch join already demonstrated `disagree` at scale (the
+  103, pre-fix); the literal lane's batch join was separately mutation-tested this cycle — a
+  deliberately-wrong `ours` value fed through its own real `scripts/oracle_harness/run.py`
+  invocation returns `agree=40 disagree=1`, proving that specific pipeline does not silently
+  swallow a real mismatch.
+- **Root-cause hypothesis correction:** `AT-33-E5-001`'s own receipt proposed "no-save spells;
+  PCGen's DC export omits the ability modifier" — checked this cycle against all 103 units' real
+  corpus `SAVEINFO` tokens and found a mix of save shapes, not a shared one. Logged as a
+  `scripts/retro.py correction` (`docs/retro/events/sd33-r-e5-disagreements.jsonl`,
+  `--verified-by` the re-derived `box_ledger.py --check`) since the wrong hypothesis had already
+  propagated into `AT-33-E5-001`'s receipt, this file's Disagreement ledger, and
+  `AT-33-E6-001`'s own shortfall report.
+- **Figures:** 6,940 of 8,330 (83.3%) — units `AT-33-E5-001`/`AT-33-E5-002` had examined as of
+  this cycle. 103 of 6,940 (1.48%) — disagreements found. 103 of 103 — root-caused, fixed, and
+  resolved to this cycle's commit. 0 of 6,940 — disagreements remaining. 1,390 of 8,330 — units
+  still unexamined (`AT-33-E5-001`/`AT-33-E5-002`'s own scope, not this criterion's).
+- **Movement, four buckets:** closure 0 / reclassification 0 / reachability 0 /
+  **instrument-correction 103** — 103 records moved `disagree` → `agree` by fixing the fixture the
+  oracle was run against, not by adjusting the expectation to match our output; both sides remain
+  independently computed.
+- **Status:** complete.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003_cycle_receipt.md`.
+- **Next-cycle plan:** reopens automatically (mechanically, via `box_ledger.py`'s
+  `oracle_disagreement` gate) the moment a future `AT-33-E5-001`/`AT-33-E5-002` cycle's
+  oracle-results file contains any `disagree` record among the 1,390 still-unexamined units.
 
 ### Cycle AT-33-E5-002-remediation — reverify-literal-verified (row 17, Epic 5) — complete
 

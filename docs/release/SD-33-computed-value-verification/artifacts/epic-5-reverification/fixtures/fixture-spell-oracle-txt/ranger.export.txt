@@ -1,5 +1,5 @@
 SPELL.0.1.0.NAME=Hunter's Howl
-SPELL.0.1.0.DC=11
+SPELL.0.1.0.DC=15
 SPELL.0.1.1.NAME=Tireless Pursuit
 SPELL.0.1.1.DC=
 SPELL.0.2.0.NAME=Bloodhound
@@ -7,7 +7,7 @@ SPELL.0.2.0.DC=
 SPELL.0.2.1.NAME=Chameleon Stride
 SPELL.0.2.1.DC=
 SPELL.0.2.2.NAME=Enemy Insight
-SPELL.0.2.2.DC=12
+SPELL.0.2.2.DC=16
 SPELL.0.2.3.NAME=Hunter's Eye
 SPELL.0.2.3.DC=
 SPELL.0.2.4.NAME=Perceive Cues

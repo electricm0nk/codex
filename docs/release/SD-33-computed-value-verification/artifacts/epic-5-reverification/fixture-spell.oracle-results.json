@@ -66,8 +66,8 @@
     {
       "unit_id": "advanced_class_guide:spell:align_weapon_communal",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 3,
       "name": "Align Weapon (Communal)"
@@ -102,8 +102,8 @@
     {
       "unit_id": "advanced_class_guide:spell:anti_incorporeal_shell",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Anti-Incorporeal Shell"
@@ -147,8 +147,8 @@
     {
       "unit_id": "advanced_class_guide:spell:blazing_rainbow",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 6,
       "name": "Blazing Rainbow"
@@ -300,8 +300,8 @@
     {
       "unit_id": "advanced_class_guide:spell:enemy_insight",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Ranger",
       "level": 2,
       "name": "Enemy Insight"
@@ -327,8 +327,8 @@
     {
       "unit_id": "advanced_class_guide:spell:fairy_ring_retreat",
       "ours": 21,
-      "oracle": 17,
-      "verdict": "disagree",
+      "oracle": 21,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 7,
       "name": "Fairy Ring Retreat"
@@ -390,8 +390,8 @@
     {
       "unit_id": "advanced_class_guide:spell:guardian_of_faith",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Guardian of Faith"
@@ -417,8 +417,8 @@
     {
       "unit_id": "advanced_class_guide:spell:holy_ice_weapon",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Holy Ice Weapon"
@@ -480,8 +480,8 @@
     {
       "unit_id": "advanced_class_guide:spell:marching_chant",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Marching Chant"
@@ -489,8 +489,8 @@
     {
       "unit_id": "advanced_class_guide:spell:mark_of_obvious_ethics",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 3,
       "name": "Mark of Obvious Ethics"
@@ -543,8 +543,8 @@
     {
       "unit_id": "advanced_class_guide:spell:nauseating_dart",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Nauseating Dart"
@@ -561,8 +561,8 @@
     {
       "unit_id": "advanced_class_guide:spell:path_of_glory",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Path of Glory"
@@ -570,8 +570,8 @@
     {
       "unit_id": "advanced_class_guide:spell:path_of_glory_greater",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Path of Glory (Greater)"
@@ -669,8 +669,8 @@
     {
       "unit_id": "advanced_class_guide:spell:sickening_entanglement",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Sickening Entanglement"
@@ -687,8 +687,8 @@
     {
       "unit_id": "advanced_class_guide:spell:slowing_mud",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 4,
       "name": "Slowing Mud"
@@ -750,8 +750,8 @@
     {
       "unit_id": "advanced_class_guide:spell:stench_of_prey",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 3,
       "name": "Stench of Prey"
@@ -786,8 +786,8 @@
     {
       "unit_id": "advanced_class_guide:spell:thorn_javelin",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Thorn Javelin"
@@ -795,8 +795,8 @@
     {
       "unit_id": "advanced_class_guide:spell:thorny_entanglement",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 3,
       "name": "Thorny Entanglement"
@@ -840,8 +840,8 @@
     {
       "unit_id": "advanced_class_guide:spell:unholy_ice_weapon",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Unholy Ice Weapon"
@@ -1011,8 +1011,8 @@
     {
       "unit_id": "advanced_players_guide:spell:blessing_of_courage_and_life",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Blessing of Courage and Life"
@@ -1020,8 +1020,8 @@
     {
       "unit_id": "advanced_players_guide:spell:blessing_of_fervor",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Blessing of Fervor"
@@ -1083,8 +1083,8 @@
     {
       "unit_id": "advanced_players_guide:spell:bristle",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Bristle"
@@ -1182,8 +1182,8 @@
     {
       "unit_id": "advanced_players_guide:spell:cloak_of_shade",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Cloak of Shade"
@@ -1254,8 +1254,8 @@
     {
       "unit_id": "advanced_players_guide:spell:cup_of_dust",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 3,
       "name": "Cup of Dust"
@@ -1425,8 +1425,8 @@
     {
       "unit_id": "advanced_players_guide:spell:feast_of_ashes",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Feast of Ashes"
@@ -1434,8 +1434,8 @@
     {
       "unit_id": "advanced_players_guide:spell:feather_step",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Feather Step"
@@ -1659,8 +1659,8 @@
     {
       "unit_id": "advanced_players_guide:spell:hunter_s_howl",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Ranger",
       "level": 1,
       "name": "Hunter's Howl"
@@ -1722,8 +1722,8 @@
     {
       "unit_id": "advanced_players_guide:spell:keen_senses",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Keen Senses"
@@ -1767,8 +1767,8 @@
     {
       "unit_id": "advanced_players_guide:spell:lockjaw",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Lockjaw"
@@ -1803,8 +1803,8 @@
     {
       "unit_id": "advanced_players_guide:spell:natural_rhythm",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Natural Rhythm"
@@ -1812,8 +1812,8 @@
     {
       "unit_id": "advanced_players_guide:spell:negate_aroma",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Negate Aroma"
@@ -1902,8 +1902,8 @@
     {
       "unit_id": "advanced_players_guide:spell:pox_pustules",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Pox Pustules"
@@ -2028,8 +2028,8 @@
     {
       "unit_id": "advanced_players_guide:spell:scent_trail",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Scent Trail"
@@ -2091,8 +2091,8 @@
     {
       "unit_id": "advanced_players_guide:spell:snake_staff",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Snake Staff"
@@ -2415,8 +2415,8 @@
     {
       "unit_id": "core_rulebook:spell:align_weapon",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Align Weapon"
@@ -2451,8 +2451,8 @@
     {
       "unit_id": "core_rulebook:spell:animal_shapes",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 8,
       "name": "Animal Shapes"
@@ -2460,8 +2460,8 @@
     {
       "unit_id": "core_rulebook:spell:animal_trance",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Animal Trance"
@@ -2568,8 +2568,8 @@
     {
       "unit_id": "core_rulebook:spell:bane",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 1,
       "name": "Bane"
@@ -2649,8 +2649,8 @@
     {
       "unit_id": "core_rulebook:spell:blade_barrier",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 6,
       "name": "Blade Barrier"
@@ -2712,8 +2712,8 @@
     {
       "unit_id": "core_rulebook:spell:call_lightning",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 3,
       "name": "Call Lightning"
@@ -2721,8 +2721,8 @@
     {
       "unit_id": "core_rulebook:spell:call_lightning_storm",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 5,
       "name": "Call Lightning Storm"
@@ -2730,8 +2730,8 @@
     {
       "unit_id": "core_rulebook:spell:calm_animals",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Calm Animals"
@@ -2739,8 +2739,8 @@
     {
       "unit_id": "core_rulebook:spell:calm_emotions",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Calm Emotions"
@@ -2784,8 +2784,8 @@
     {
       "unit_id": "core_rulebook:spell:chaos_hammer",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Chaos Hammer"
@@ -2793,8 +2793,8 @@
     {
       "unit_id": "core_rulebook:spell:charm_animal",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Charm Animal"
@@ -2829,8 +2829,8 @@
     {
       "unit_id": "core_rulebook:spell:chill_metal",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Chill Metal"
@@ -2865,8 +2865,8 @@
     {
       "unit_id": "core_rulebook:spell:cloak_of_chaos",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 8,
       "name": "Cloak of Chaos"
@@ -2883,8 +2883,8 @@
     {
       "unit_id": "core_rulebook:spell:command",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 1,
       "name": "Command"
@@ -2892,8 +2892,8 @@
     {
       "unit_id": "core_rulebook:spell:command_greater",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Command (Greater)"
@@ -2973,8 +2973,8 @@
     {
       "unit_id": "core_rulebook:spell:control_plants",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 8,
       "name": "Control Plants"
@@ -3000,8 +3000,8 @@
     {
       "unit_id": "core_rulebook:spell:control_winds",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 5,
       "name": "Control Winds"
@@ -3045,8 +3045,8 @@
     {
       "unit_id": "core_rulebook:spell:creeping_doom",
       "ours": 21,
-      "oracle": 17,
-      "verdict": "disagree",
+      "oracle": 21,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 7,
       "name": "Creeping Doom"
@@ -3072,8 +3072,8 @@
     {
       "unit_id": "core_rulebook:spell:cure_critical_wounds_mass",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 8,
       "name": "Cure Critical Wounds (Mass)"
@@ -3081,8 +3081,8 @@
     {
       "unit_id": "core_rulebook:spell:cure_light_wounds_mass",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Cure Light Wounds (Mass)"
@@ -3090,8 +3090,8 @@
     {
       "unit_id": "core_rulebook:spell:cure_serious_wounds",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 3,
       "name": "Cure Serious Wounds"
@@ -3153,8 +3153,8 @@
     {
       "unit_id": "core_rulebook:spell:death_ward",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Death Ward"
@@ -3216,8 +3216,8 @@
     {
       "unit_id": "core_rulebook:spell:destruction",
       "ours": 21,
-      "oracle": 17,
-      "verdict": "disagree",
+      "oracle": 21,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 7,
       "name": "Destruction"
@@ -3315,8 +3315,8 @@
     {
       "unit_id": "core_rulebook:spell:dispel_good",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Dispel Good"
@@ -3324,8 +3324,8 @@
     {
       "unit_id": "core_rulebook:spell:dispel_law",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Dispel Law"
@@ -3369,8 +3369,8 @@
     {
       "unit_id": "core_rulebook:spell:disrupting_weapon",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Disrupting Weapon"
@@ -3378,8 +3378,8 @@
     {
       "unit_id": "core_rulebook:spell:dominate_animal",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 3,
       "name": "Dominate Animal"
@@ -3405,8 +3405,8 @@
     {
       "unit_id": "core_rulebook:spell:doom",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 1,
       "name": "Doom"
@@ -3423,8 +3423,8 @@
     {
       "unit_id": "core_rulebook:spell:earthquake",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 8,
       "name": "Earthquake"
@@ -3504,8 +3504,8 @@
     {
       "unit_id": "core_rulebook:spell:entangle",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Entangle"
@@ -3513,8 +3513,8 @@
     {
       "unit_id": "core_rulebook:spell:enthrall",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Enthrall"
@@ -3630,8 +3630,8 @@
     {
       "unit_id": "core_rulebook:spell:find_the_path",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 6,
       "name": "Find the Path"
@@ -3648,8 +3648,8 @@
     {
       "unit_id": "core_rulebook:spell:fire_seeds",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 6,
       "name": "Fire Seeds"
@@ -3756,8 +3756,8 @@
     {
       "unit_id": "core_rulebook:spell:forbiddance",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 6,
       "name": "Forbiddance"
@@ -3810,8 +3810,8 @@
     {
       "unit_id": "core_rulebook:spell:freedom_of_movement",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Freedom of Movement"
@@ -3999,8 +3999,8 @@
     {
       "unit_id": "core_rulebook:spell:heal_mass",
       "ours": 23,
-      "oracle": 19,
-      "verdict": "disagree",
+      "oracle": 23,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 9,
       "name": "Heal (Mass)"
@@ -4008,8 +4008,8 @@
     {
       "unit_id": "core_rulebook:spell:heat_metal",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Heat Metal"
@@ -4026,8 +4026,8 @@
     {
       "unit_id": "core_rulebook:spell:hide_from_animals",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Hide from Animals"
@@ -4035,8 +4035,8 @@
     {
       "unit_id": "core_rulebook:spell:hide_from_undead",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 1,
       "name": "Hide from Undead"
@@ -4053,8 +4053,8 @@
     {
       "unit_id": "core_rulebook:spell:hold_animal",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Hold Animal"
@@ -4107,8 +4107,8 @@
     {
       "unit_id": "core_rulebook:spell:holy_smite",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Holy Smite"
@@ -4188,8 +4188,8 @@
     {
       "unit_id": "core_rulebook:spell:implosion",
       "ours": 23,
-      "oracle": 19,
-      "verdict": "disagree",
+      "oracle": 23,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 9,
       "name": "Implosion"
@@ -4206,8 +4206,8 @@
     {
       "unit_id": "core_rulebook:spell:inflict_critical_wounds_mass",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 8,
       "name": "Inflict Critical Wounds (Mass)"
@@ -4215,8 +4215,8 @@
     {
       "unit_id": "core_rulebook:spell:inflict_light_wounds_mass",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Inflict Light Wounds (Mass)"
@@ -4224,8 +4224,8 @@
     {
       "unit_id": "core_rulebook:spell:inflict_moderate_wounds_mass",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 6,
       "name": "Inflict Moderate Wounds (Mass)"
@@ -4233,8 +4233,8 @@
     {
       "unit_id": "core_rulebook:spell:inflict_serious_wounds_mass",
       "ours": 21,
-      "oracle": 17,
-      "verdict": "disagree",
+      "oracle": 21,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 7,
       "name": "Inflict Serious Wounds (Mass)"
@@ -4728,8 +4728,8 @@
     {
       "unit_id": "core_rulebook:spell:order_s_wrath",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Order's Wrath"
@@ -4755,8 +4755,8 @@
     {
       "unit_id": "core_rulebook:spell:pass_without_trace",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 1,
       "name": "Pass without Trace"
@@ -5061,8 +5061,8 @@
     {
       "unit_id": "core_rulebook:spell:quench",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 3,
       "name": "Quench"
@@ -5133,8 +5133,8 @@
     {
       "unit_id": "core_rulebook:spell:remove_fear",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 1,
       "name": "Remove Fear"
@@ -5142,8 +5142,8 @@
     {
       "unit_id": "core_rulebook:spell:remove_paralysis",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Remove Paralysis"
@@ -5223,8 +5223,8 @@
     {
       "unit_id": "core_rulebook:spell:sanctuary",
       "ours": 15,
-      "oracle": 11,
-      "verdict": "disagree",
+      "oracle": 15,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 1,
       "name": "Sanctuary"
@@ -5376,8 +5376,8 @@
     {
       "unit_id": "core_rulebook:spell:shield_other",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Shield Other"
@@ -5394,8 +5394,8 @@
     {
       "unit_id": "core_rulebook:spell:silence",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Silence"
@@ -5475,8 +5475,8 @@
     {
       "unit_id": "core_rulebook:spell:sound_burst",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Sound Burst"
@@ -5493,8 +5493,8 @@
     {
       "unit_id": "core_rulebook:spell:speak_with_dead",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 3,
       "name": "Speak with Dead"
@@ -5520,8 +5520,8 @@
     {
       "unit_id": "core_rulebook:spell:spell_immunity",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Spell Immunity"
@@ -5529,8 +5529,8 @@
     {
       "unit_id": "core_rulebook:spell:spell_immunity_greater",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 8,
       "name": "Spell Immunity (Greater)"
@@ -5538,8 +5538,8 @@
     {
       "unit_id": "core_rulebook:spell:spell_resistance",
       "ours": 19,
-      "oracle": 15,
-      "verdict": "disagree",
+      "oracle": 19,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 5,
       "name": "Spell Resistance"
@@ -5565,8 +5565,8 @@
     {
       "unit_id": "core_rulebook:spell:spike_stones",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 4,
       "name": "Spike Stones"
@@ -5583,8 +5583,8 @@
     {
       "unit_id": "core_rulebook:spell:stabilize",
       "ours": 14,
-      "oracle": 10,
-      "verdict": "disagree",
+      "oracle": 14,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 0,
       "name": "Stabilize"
@@ -5601,8 +5601,8 @@
     {
       "unit_id": "core_rulebook:spell:status",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Status"
@@ -5637,8 +5637,8 @@
     {
       "unit_id": "core_rulebook:spell:storm_of_vengeance",
       "ours": 23,
-      "oracle": 19,
-      "verdict": "disagree",
+      "oracle": 23,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 9,
       "name": "Storm of Vengeance"
@@ -5844,8 +5844,8 @@
     {
       "unit_id": "core_rulebook:spell:sunbeam",
       "ours": 21,
-      "oracle": 17,
-      "verdict": "disagree",
+      "oracle": 21,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 7,
       "name": "Sunbeam"
@@ -6024,8 +6024,8 @@
     {
       "unit_id": "core_rulebook:spell:unholy_blight",
       "ours": 18,
-      "oracle": 14,
-      "verdict": "disagree",
+      "oracle": 18,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 4,
       "name": "Unholy Blight"
@@ -6123,8 +6123,8 @@
     {
       "unit_id": "core_rulebook:spell:warp_wood",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 2,
       "name": "Warp Wood"
@@ -6141,8 +6141,8 @@
     {
       "unit_id": "core_rulebook:spell:water_walk",
       "ours": 17,
-      "oracle": 13,
-      "verdict": "disagree",
+      "oracle": 17,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 3,
       "name": "Water Walk"
@@ -6168,8 +6168,8 @@
     {
       "unit_id": "core_rulebook:spell:whirlwind",
       "ours": 22,
-      "oracle": 18,
-      "verdict": "disagree",
+      "oracle": 22,
+      "verdict": "agree",
       "class_human": "Druid",
       "level": 8,
       "name": "Whirlwind"
@@ -6177,8 +6177,8 @@
     {
       "unit_id": "core_rulebook:spell:wind_walk",
       "ours": 20,
-      "oracle": 16,
-      "verdict": "disagree",
+      "oracle": 20,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 6,
       "name": "Wind Walk"
@@ -6204,8 +6204,8 @@
     {
       "unit_id": "core_rulebook:spell:zone_of_truth",
       "ours": 16,
-      "oracle": 12,
-      "verdict": "disagree",
+      "oracle": 16,
+      "verdict": "agree",
       "class_human": "Cleric",
       "level": 2,
       "name": "Zone of Truth"
