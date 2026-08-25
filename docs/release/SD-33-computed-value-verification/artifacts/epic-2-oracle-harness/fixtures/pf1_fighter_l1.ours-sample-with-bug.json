@@ -1,0 +1,7 @@
+{
+  "pf1_fighter_l1.HP": ["HP", 12],
+  "pf1_fighter_l1.AC_TOTAL": ["AC.TOTAL", 12],
+  "pf1_fighter_l1.BAB": ["BAB", 2],
+  "pf1_fighter_l1.CMB": ["VAR.CMB", 4],
+  "pf1_fighter_l1.SPELL_DC": ["SPELLDC.0", 15]
+}

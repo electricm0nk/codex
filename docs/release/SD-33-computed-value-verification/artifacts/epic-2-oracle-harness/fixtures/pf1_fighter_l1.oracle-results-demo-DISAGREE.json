@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "unit_id": "pf1_fighter_l1.HP",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "pf1_fighter_l1.AC_TOTAL",
+      "ours": 12,
+      "oracle": 12,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "pf1_fighter_l1.BAB",
+      "ours": 2,
+      "oracle": 1,
+      "verdict": "disagree"
+    },
+    {
+      "unit_id": "pf1_fighter_l1.CMB",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "pf1_fighter_l1.SPELL_DC",
+      "ours": 15,
+      "oracle": null,
+      "verdict": "unverifiable"
+    }
+  ]
+}
