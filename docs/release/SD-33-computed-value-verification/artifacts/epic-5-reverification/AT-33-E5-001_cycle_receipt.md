@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-001 (remediation) — Epic 5 Re-verification / AT-33-E5-001
 
-- **Commit SHA:** recorded by the commit that lands this receipt on `tranche/13` (see `git log -1` after push)
+- **Commit SHA:** `73fdbb8803` (landed on `tranche/13`; this line updated in a follow-up commit per this bundle's own precedent)
 - **Files touched:**
   - `src/bin/fixture_verified_oracle_probe.rs` (new) — repo-local batch "ours" probe binary. Reads `docs/work-inventory.json`, filters `fixture-verified`, and for every `spell` unit calls the REAL `codex::rules_core::spellbook::compute_spellbook_coverage` (the same library function `probe_spell_key` in `v06_work_inventory.rs` calls) against the real per-book corpus — never a hand-derived formula standing in for the engine. Also enumerates the 427 `companion`/`monster`/`monster_ability` units with no magnitude probe (`AT-33-E1-003`) as `unverifiable`, per-unit, with their real reason.
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-generate-spell-batch.py` (new) — batches every DC-probe-eligible spell unit into one `.pcg` per casting class (6 files: Wizard/Cleric/Druid/Bard/Paladin/Ranger; Sorcerer's list is a subset of Wizard's for this population, 0 units), so one PCGen JVM start per class verifies dozens to hundreds of units at once.
