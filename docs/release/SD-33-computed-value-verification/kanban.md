@@ -22,10 +22,10 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | 2 | `box-fail-closed` | 1 | AT-33-E1-002 | complete | `artifacts/epic-1-instruments/AT-33-E1-002_cycle_receipt.md` |
 | 3 | `probe-surface-census` | 1 | AT-33-E1-003 | complete | `artifacts/epic-1-instruments/AT-33-E1-003_cycle_receipt.md` |
 | 4 | `denominator-gate` | 1 | AT-33-E1-004 | complete | `artifacts/epic-1-instruments/AT-33-E1-004_cycle_receipt.md` |
-| 5 | `oracle-path-a-feasibility` | 2 | AT-33-E2-001 | not-started | |
-| 6 | `oracle-character-roundtrip` | 2 | AT-33-E2-002 | not-started | |
-| 7 | `oracle-comparison-harness` | 2 | AT-33-E2-003 | not-started | |
-| 8 | `oracle-path-ruling` | 2 | AT-33-E2-004 | not-started | |
+| 5 | `oracle-path-a-feasibility` | 2 | AT-33-E2-001 | complete | `artifacts/epic-2-oracle-harness/AT-33-E2-001_cycle_receipt.md` |
+| 6 | `oracle-character-roundtrip` | 2 | AT-33-E2-002 | complete | `artifacts/epic-2-oracle-harness/AT-33-E2-002_cycle_receipt.md` |
+| 7 | `oracle-comparison-harness` | 2 | AT-33-E2-003 | complete | `artifacts/epic-2-oracle-harness/AT-33-E2-003_cycle_receipt.md` |
+| 8 | `oracle-path-ruling` | 2 | AT-33-E2-004 | complete | `artifacts/epic-2-oracle-harness/AT-33-E2-004_cycle_receipt.md` |
 | 9 | `coverage-gap-rootcause` | 3 | AT-33-E3-001 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
 | 10 | `coverage-f1` | 3 | AT-33-E3-002 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
 | 11 | `coverage-f2-f9` | 3 | AT-33-E3-003 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |

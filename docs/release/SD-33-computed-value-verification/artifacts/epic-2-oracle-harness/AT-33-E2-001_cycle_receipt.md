@@ -1,6 +1,6 @@
 # Cycle AT-33-E2-001 — Epic 2 Oracle harness / AT-33-E2-001
 
-- **Commit SHA:** (recorded post-commit — see `progress.md`'s pointer entry for this cycle, added in the same commit)
+- **Commit SHA:** `84a5781c11`
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/README.md` (new)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/.gitignore` (new)

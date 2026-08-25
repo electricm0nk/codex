@@ -1,6 +1,6 @@
 # Cycle AT-33-E2-002 — Epic 2 Oracle harness / AT-33-E2-002
 
-- **Commit SHA:** (recorded post-commit — see `progress.md`'s pointer entry for this cycle, added in the same commit)
+- **Commit SHA:** `84a5781c11`
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/fixtures/pf1_fighter_l1.pcg` (new)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/computed-values.txt.ftl` (new)

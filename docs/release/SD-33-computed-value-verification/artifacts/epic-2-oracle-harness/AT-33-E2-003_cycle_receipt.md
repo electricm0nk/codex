@@ -1,6 +1,6 @@
 # Cycle AT-33-E2-003 — Epic 2 Oracle harness / AT-33-E2-003
 
-- **Commit SHA:** (recorded post-commit — see `progress.md`'s pointer entry for this cycle, added in the same commit)
+- **Commit SHA:** `84a5781c11`
 - **Files touched:**
   - `scripts/oracle_harness/__init__.py` (new)
   - `scripts/oracle_harness/compare.py` (new)

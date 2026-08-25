@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epic 1 complete (rows 1-4); Epic 3 complete (rows 9-12, AT-33-E3-001..004)
+status: in progress — Epics 1-3 complete, rows 1-12 (AT-33-E1-001..004, AT-33-E2-001..004, AT-33-E3-001..004) all complete
 date: 2026-08-24
 ---
 
@@ -22,6 +22,22 @@ Epic 1 complete; cycles 1-4 (`AT-33-E1-001` row 1, `AT-33-E1-002` row 2, `AT-33-
 `AT-33-E1-004` row 4) all landed. Epic 1 gates every other epic
 (`workflow-instruction.md §3`) — Epics 2/3/4 (`parallel: yes`, worktree-isolated) are next.
 
+**Epic 2 complete; rows 5-8 (`AT-33-E2-001..004`) all landed.
+RULING: Path A** — the pinned PCGen builds headless on this box, and a
+hand-authored `.pcg` round-trips through `BatchExporter` via a
+hand-authored template producing real, independently-cross-checked
+computed values (13 of 13 hand-derived RAW fields match the real oracle
+export exactly). `scripts/oracle_harness/` answers
+`(ours, oracle, agree|disagree|unverifiable)` per unit, proven both by
+16/16 unit tests (all three verdicts, including a known-disagreeing case)
+and by a live end-to-end run whose `disagree` record feeds the real
+`scripts/box_ledger.py --check` fail-closed gate to exit 1. **No Path B
+fallback was needed; no throughput-reduction escalation is raised** — Epic
+5 (gated on Epic 2) can run the live-PCGen path at full mechanism
+availability. See `artifacts/epic-2-oracle-harness/AT-33-E2-004_cycle_receipt.md`
+and `artifacts/epic-2-oracle-harness/oracle-comparison-fixtures.md` for the
+full ruling.
+
 **Bundle-level figure (`AT-33-E1-003`'s own evidence bar, not a footnote):** of the corpus's **19**
 distinct `kind` values (`jq -r '.units[].kind' docs/work-inventory.json | sort -u | wc -l`), **8**
 carry a probe capable of verifying a computed magnitude and **11** do not
@@ -32,8 +48,8 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 8 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
-Epic 1 (rows 1-4) plus Epic 3 (rows 9-12); Epics 2/4 (rows 5-8, 13-15) are concurrent worktree-isolated lanes, status as of this cycle's own commit.
+**Cards complete: 12 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
+Epics 1-3 (rows 1-12); Epic 4 (rows 13-15) is a concurrent worktree-isolated lane, status as of this cycle's own commit.
 
 **Denominator gate is now live** (`AT-33-E1-004`): `scripts/verify.sh --only denominator-gate`
 runs `scripts/denominator_gate.py --check` against this bundle's own `artifacts/**/*_cycle_receipt.md`
@@ -112,6 +128,67 @@ None. **This section is not a parking lot.** An entry here is a request for an o
   run the full `cargo test --locked --lib -p codex` workspace sweep (2,824+ tests, no other module
   touched) or `apps/desktop/src-tauri` (separate cargo workspace, untouched).
 - **Receipt:** `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md`.
+
+### Cycle AT-33-E2-004 — oracle-path-ruling (row 8, Epic 2)
+
+- **Criterion:** `AT-33-E2-004` — the Path A / Path B ruling is recorded and escalated.
+- **Commit SHA:** `84a5781c11`
+- **Files:** `artifacts/epic-2-oracle-harness/oracle-comparison-fixtures.md` (new — carries the ruling), `artifacts/epic-2-oracle-harness/AT-33-E2-004_cycle_receipt.md` (new), `progress.md` (this entry).
+- **Ruling: Path A.** All three named risks (`decisions.md §5`) resolved in Path A's favor by execution (`AT-33-E2-001`); a real round-trip export produced real values (`AT-33-E2-002`); the comparison harness is built and proven live (`AT-33-E2-003`).
+- **Figures:**
+  - Named risks resolved without forcing Path B: 3 of 3 named in `decisions.md §5` (`AT-33-E2-001_cycle_receipt.md`)
+  - Path B fallback invocations this cycle: 0 of 1 (Epic 2's own spike) (no Java-source-reading fallback file exists under `artifacts/epic-2-oracle-harness/`)
+- **Consequence for Epic 5:** none negative — Epic 5 can run the live-PCGen path this cycle proved, at full mechanism availability, rather than the slower per-shape Path B fallback. **No escalation filed** — `decisions.md §5`'s escalation clause is conditioned on Path A *failing*, and it did not.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0 — this is a ruling, not a unit-status change.
+- **Receipt:** `artifacts/epic-2-oracle-harness/AT-33-E2-004_cycle_receipt.md`.
+
+### Cycle AT-33-E2-003 — oracle-comparison-harness (row 7, Epic 2)
+
+- **Criterion:** `AT-33-E2-003` — the comparison harness answers the per-unit question.
+- **Commit SHA:** `84a5781c11`
+- **Files:** `scripts/oracle_harness/__init__.py`, `scripts/oracle_harness/compare.py`, `scripts/oracle_harness/oracle_export.py`, `scripts/oracle_harness/run.py` (all new), `scripts/tests/test_oracle_harness.py` (new), four fixture JSONs under `artifacts/epic-2-oracle-harness/fixtures/` (new), `artifacts/epic-2-oracle-harness/oracle-comparison-fixtures.md` (new).
+- **What landed:** `compare_unit(unit_id, ours, oracle)` returns `{"unit_id","ours","oracle","verdict"}`, `verdict ∈ {agree, disagree, unverifiable}`; `unverifiable` is a normal return value on a missing/blank oracle value, never an exception, never folded into `agree`. `run_comparison`/`run.py` produce the exact shape `scripts/box_ledger.py::load_oracle_results` reads.
+- **Figures:**
+  - Unit test suite (new): 16 passed, 0 failed, of `scripts/tests/test_oracle_harness.py`'s own 16 cases (`python3 -m unittest scripts.tests.test_oracle_harness -v`)
+  - Combined with existing box_ledger suite: 41 passed, 0 failed, of both files' combined 41 cases (`python3 -m unittest scripts.tests.test_oracle_harness scripts.tests.test_box_ledger -v`)
+  - Live CLI run, agree-only fixture: agree=4, disagree=0, unverifiable=1, of 5 units (`python3 scripts/oracle_harness/run.py --oracle-export .../pf1_fighter_l1.computed.txt --ours .../fixtures/pf1_fighter_l1.ours-sample.json --output .../fixtures/pf1_fighter_l1.oracle-results-demo.json`)
+  - Live CLI run, known-disagreeing fixture: agree=3, disagree=1, unverifiable=1, of 5 units (same command with `ours-sample-with-bug.json`) — then fed to `python3 scripts/box_ledger.py --check --oracle-results .../fixtures/pf1_fighter_l1.oracle-results-demo-DISAGREE.json` → exit 1, `oracle_disagreement=1`
+- **Fixture discipline:** every `oracle=...` literal in the unit tests was hand-transcribed from the real committed `pf1_fighter_l1.computed.txt` bytes (read by eye, typed as a Python literal); the test file never opens that file, and the one test class that *does* exercise the real parser (`OracleExportParsingTest`) uses only an inline string, never the committed file.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0 — this cycle builds and proves the instrument; the demo fixtures use synthetic unit ids scoped to this cycle's `.pcg`, not real `docs/work-inventory.json` units.
+- **RED→GREEN:** `ImportError: cannot import name 'compare' from 'oracle_harness'` before the package existed (intended reason); 16/16 green after.
+- **Receipt:** `artifacts/epic-2-oracle-harness/AT-33-E2-003_cycle_receipt.md`.
+
+### Cycle AT-33-E2-002 — oracle-character-roundtrip (row 6, Epic 2)
+
+- **Criterion:** `AT-33-E2-002` — a character round-trips through the oracle.
+- **Commit SHA:** `84a5781c11`
+- **Files:** `artifacts/epic-2-oracle-harness/fixtures/pf1_fighter_l1.pcg` (new), `artifacts/epic-2-oracle-harness/computed-values.txt.ftl` (new), `artifacts/epic-2-oracle-harness/pf1_fighter_l1.computed.txt` (new), `artifacts/epic-2-oracle-harness/build-transcript-05-batchexport-SUCCESS.log` (new).
+- **What landed:** a hand-authored Level 1 Human Fighter `.pcg` (Core Rulebook only) exported through the pinned PCGen's `BatchExporter` via a hand-authored FreeMarker template emitting `pcstring(...)`-token computed variables (HP, AC, BAB, `VAR.CMB`/`VAR.CMD`, all three saves) as machine-readable `KEY=VALUE` lines.
+- **Figures:**
+  - Export command exit code: 0, of 1 (final, corrected) attempt (`build-transcript-05-batchexport-SUCCESS.log`, last line `BUILD SUCCESSFUL`)
+  - `SEVERE`-level log lines: 0, of the full transcript (`grep -c SEVERE artifacts/epic-2-oracle-harness/build-transcript-05-batchexport-SUCCESS.log`)
+  - Independently-derived RAW values matching the real oracle output: 13 of 13 fields checked (table in the cycle receipt; re-derive the oracle side with `cat artifacts/epic-2-oracle-harness/pf1_fighter_l1.computed.txt`)
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0 — proves a round-trip mechanism, moves no inventory unit.
+- **Notes:** first export attempt failed for the intended reason (`data/homebrew`/`data/_universal` outside the checkout's initial sparse scope) — see `AT-33-E2-001`'s entry below.
+- **Receipt:** `artifacts/epic-2-oracle-harness/AT-33-E2-002_cycle_receipt.md`.
+
+### Cycle AT-33-E2-001 — oracle-path-a-feasibility (row 5, Epic 2)
+
+- **Criterion:** `AT-33-E2-001` — Path A feasibility is established by execution.
+- **Commit SHA:** `84a5781c11`
+- **Files:** `artifacts/epic-2-oracle-harness/README.md` (new), `artifacts/epic-2-oracle-harness/.gitignore` (new), `artifacts/epic-2-oracle-harness/build-transcript-{01..04}-*.log` (new).
+- **What landed:** fetched the pinned PCGen (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) into a scratch, gitignored, cone-mode sparse checkout inside this cycle's own write scope (never `~/workspace/repos/pcgen`), and ran `./gradlew --version`/`compileJava`/`jar` for real on `OpenJDK 25 Temurin`.
+- **All three named risks (`decisions.md §5`) resolved to facts:**
+  1. Gradle vs Java 25 — not a conflict (`build.gradle` pins `javaVersion = 25`; Gradle `9.5.1` ran cleanly).
+  2. `pcgen.gui2.UIPropertyContext` coupling — real (registered even in batch mode) but non-blocking (its properties are `javafx.scene.paint.Color` value objects, no display-server call; confirmed by a successful headless export in `AT-33-E2-002`).
+  3. `.pcg` input authoring — solved by hand-authoring one, using the repo's own `code/testsuite/PCGfiles/*.pcg` samples only to confirm tag vocabulary.
+- **Figures:**
+  - Named risks resolved to a fact: 3 of 3 named in `decisions.md §5` (manual: read `Main.java`/`UIPropertyContext.java`, then the commands below)
+  - `./gradlew compileJava` first attempt: exit 1, of 1 attempt, failed for the intended reason (missing `PCGen-Formula` subproject dir in the initial sparse cone) (`build-transcript-02-compileJava-first-attempt-FAILED.log`)
+  - `./gradlew compileJava` corrected attempt: exit 0, of 1 attempt (`build-transcript-03-compileJava-SUCCESS.log`)
+  - Plugin jars produced: 11 of 11 `createJarTask` calls in `code/gradle/plugins.gradle` (`ls pcgen-oracle-checkout/plugins/*.jar | wc -l`)
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 0 — proves a build-feasibility fact, moves no inventory unit.
+- **Receipt:** `artifacts/epic-2-oracle-harness/AT-33-E2-001_cycle_receipt.md`.
 
 ### Cycle AT-33-E1-004 — denominator-gate (row 4, Epic 1)
 

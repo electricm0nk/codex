@@ -1,6 +1,6 @@
 # Cycle AT-33-E2-004 — Epic 2 Oracle harness / AT-33-E2-004
 
-- **Commit SHA:** (recorded post-commit — see `progress.md`'s pointer entry for this cycle, added in the same commit)
+- **Commit SHA:** `84a5781c11`
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/oracle-comparison-fixtures.md` (new — carries the ruling, written in the same cycle as AT-33-E2-003)
   - `docs/release/SD-33-computed-value-verification/progress.md` (updated — records the ruling per this criterion's evidence requirement)
