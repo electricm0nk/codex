@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-shape-combat — Epic 5 Re-verification / AT-33-E5-002 (combat/weapon shape lane)
 
-- **Commit SHA:** PLACEHOLDER
+- **Commit SHA:** `c99609071f` (engine-fix commit `b32920cbe9` landed and pushed separately, earlier this cycle)
 - **Files touched:**
   - `src/rules_core/equipment_effects/arms_armor.rs` — widened `armor_class_bonus_from_bonus_chains` to any `COMBAT|AC` chain (see engine-fix commit, landed and pushed separately this cycle)
   - `src/rules_core/equipment_effects/equipmods.rs` — added the `WEAPONPROF=<name>` (non-`TYPE.`) bare-chain shape to `compute_equipmods_effect`
