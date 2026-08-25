@@ -155,8 +155,8 @@ publishing to `main`, not at this `develop` merge. **No version file edit made.*
 the dispatch brief's Step 6 instruction to "bump per this bundle's convention" — the convention,
 read directly, says the opposite for this step.
 
-PR opened `tranche/12 → develop` via `gh pr create`. PR number and URL: see the git push /
-`gh pr create` output for this cycle.
+PR opened `tranche/12 → develop` via `gh pr create`: **PR #376**,
+https://github.com/electricm0nk/codex/pull/376.
 
 ## Step 7 — Kanban row 13
 

@@ -173,8 +173,6 @@ was measured, not as a live forward-scope list:
 - **Build version:** `0.12.0` (`grep -h '"version"' apps/desktop/package.json
   apps/desktop/src-tauri/tauri.conf.json`).
 - **`tranche/12 → develop` PR:** PR #375 was opened 2026-08-22 against the rejected closure and is
-  **CLOSED** (`decisions.md §10`). The real PR opens once `closure-epilogue` (`kanban.md` row 13)
-  itself reaches `complete` — blocked this cycle on the worktree/branch sweep step, see
-  `docs/retro/sd32-compute-library-and-cause-closure-retrospective.md`.
-- **Merge SHA:** [Populated once the real PR merges — operator approves this merge per standing
-  scope]
+  **CLOSED** (`decisions.md §10`). The real PR is **#376** (opened 2026-08-25, `closure-epilogue`
+  kanban row 13 `complete`) — https://github.com/electricm0nk/codex/pull/376.
+- **Merge SHA:** [Populated once PR #376 merges — operator approves this merge per standing scope]
