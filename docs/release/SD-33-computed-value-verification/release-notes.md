@@ -10,7 +10,7 @@ date: 2026-08-24
 
 Generated at bundle closure (AT-33-E6-003), not written by hand at authoring time.
 
-**Version:** `0.13.<build_at_launch>` — resolved in cycle 1 per `decisions.md §3`. `develop` was at `0.12.0` on 2026-08-24.
+**Version:** `0.13.0` (`apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json`)
 
 ## Generation rule
 

@@ -17,7 +17,7 @@ Authored from `../../governance/workflow-instruction-template.md`, not from a pr
 - **Board:** local-file `./kanban.md` (Hermes board retired 2026-08-01, `SD-30-.../decisions.md` Decision 14a)
 - **Cadence:** N/A — dispatch is a live `Workflow` session, not a timer loop
 - **Epics / criteria:** 6 / 21
-- **First concrete build value:** `develop` is at `0.12.0`; SD-33's first concrete build is `0.13.<build_at_launch>`, resolved in cycle 1 per `decisions.md §3`. **This is a documented deferred placeholder, not an unresolved template marker.**
+- **First concrete build value:** `0.13.0` (`apps/desktop/package.json` + `apps/desktop/src-tauri/tauri.conf.json`), resolved on `tranche/13` cut per `decisions.md §3`.
 
 ## 1. Pre-launch checklist
 
@@ -250,7 +250,7 @@ The **figures** and **four buckets** rows are SD-33 additions, enforcing `decisi
 grep -rn '<[a-z_-]*>' docs/release/SD-33-computed-value-verification/*.md
 ```
 
-Every match must resolve to a real value or be a **documented** deferral. SD-33 ships exactly one: `<build_at_launch>`, resolved in cycle 1 per `decisions.md §3`.
+Every match must resolve to a real value or be a **documented** deferral. All SD-33 placeholders resolved: `0.13.0` per `decisions.md §3`.
 
 ## 10. Epic wrap-up (after every epic)
 

@@ -49,11 +49,9 @@ Bundle-specific ADRs. §1–§4 are derived directly from `../../retro/sd32-comp
 
 ## §3 — Version and branch placeholders, and where they resolve
 
-**Decision.** `target_version: 0.13.<build_at_launch>` is a **deliberately deferred placeholder**. It resolves in SD-33's first cycle, once `tranche/13` exists, by reading `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` and writing the literal value into `README.md §7` and `workflow-instruction.md §0`.
+**Decision.** `target_version: 0.13.0` (resolved). The placeholder was deliberately deferred per `workflow-instruction-template.md §1` item 7 (which forbids shipping `0.N.<current_build>` as live text). Resolution: on `tranche/13` cut, read `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` and write the literal value into `README.md §7` and all workflow docs.
 
-`develop` is at **`0.12.0`** (both files, verified 2026-08-24). The tranche digit bumps to `13` because SD-33 **cuts a new tranche branch** — per the standing rule that the digit moves on a new `tranche/N` cut, not on a bundle's own closure.
-
-**Why flagged rather than filled:** `workflow-instruction-template.md §1` item 7 forbids shipping `0.N.<current_build>` as live text, and `§9`'s placeholder gate would catch it. It is recorded here as the documented resolution point so the gate passes on a *justified* deferral rather than an oversight.
+`develop` was at **`0.12.0`** (both files, verified 2026-08-24). The tranche digit bumped to `13` because SD-33 **cuts a new tranche branch** — per the standing rule that the digit moves on a new `tranche/N` cut, not on a bundle's own closure.
 
 ---
 

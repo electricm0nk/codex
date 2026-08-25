@@ -7,7 +7,7 @@ scope: docs/release/SD-33-computed-value-verification
 artifact_type: release-index
 canonical_branch: tranche/13
 kanban_board: retired — local-file dispatch via ./kanban.md
-target_version: 0.13.<build_at_launch>
+target_version: 0.13.0
 canonical_source: docs/release/SD-33-computed-value-verification (this folder)
 date: 2026-08-24
 ---
@@ -33,7 +33,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 | Canonical branch | `tranche/13` (**not yet cut** — see §9 launch gates) |
 | Kanban board | retired — local-file `./kanban.md` per `SD-30-.../decisions.md` Decision 14a |
 | Epics / criteria | 6 epics / 21 criteria |
-| Target version | `0.13.<build_at_launch>` (**deferred placeholder** — resolved at first cycle per `decisions.md §3`) |
+| Target version | `0.13.0` |
 | Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
 | Closure gate | `tranche/13 → develop` PR; retrospective written + cited; worktree/branch sweep; release-notes generation; architecture-docs refresh (§6) — full sequence in `workflow-instruction.md §11` |
@@ -104,13 +104,13 @@ Every reference is repo-relative.
 
 ## 7. Build version target
 
-For SD-33 the release version triple is `0.13.<build_at_launch>`:
+For SD-33 the release version triple is `0.13.0`:
 
 - **`major`** — `0` until first publish to `main`.
 - **`tranche-base`** — `13`, the base digit of `tranche/13`. Bumps because SD-33 cuts a **new** tranche branch.
 - **`build`** — monotonic counter across all builds across all branches.
 
-`develop` is at `0.12.0` (`apps/desktop/package.json` + `apps/desktop/src-tauri/tauri.conf.json`, verified 2026-08-24). **`<build_at_launch>` is a deferred placeholder**, resolved in SD-33's first cycle once `tranche/13` exists — per `decisions.md §3` and `workflow-instruction.md §9`.
+Per `decisions.md §3`, the placeholder is resolved on `tranche/13` cut. `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` both show `0.13.0`.
 
 ## 8. Architecture-docs, graphify, and PR closure obligation
 
