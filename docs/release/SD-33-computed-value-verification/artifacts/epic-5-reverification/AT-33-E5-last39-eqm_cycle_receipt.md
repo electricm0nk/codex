@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-last39-eqm — Epic 5 Re-verification / AT-33-E5-002
 
-- **Commit SHA:** recorded below at push time (`sd33-r6-eqm`, remediation wave 6)
+- **Commit SHA:** `a488e0abaf` (main lane commit, `sd33-r6-eqm`, remediation wave 6); `d3dccbc66d`/`5d0a4df39a` (trailing retro-event-only follow-ups). Pushed to `origin/tranche/13` at `5d0a4df39a`.
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last39-eqm.oracle-results.json` (new — this lane's committed deliverable, 7 rows)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-last39-eqm_cycle_receipt.md` (this file)
